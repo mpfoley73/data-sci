@@ -1,0 +1,10 @@
+# Appendix
+
+Here are some related skills, knowledge, and technologies I should know.
+
+## Publishing to BookDown
+
+The bookdown package, written by Yihui Xie is built on top of R Markdown.  Use it to publish a book or long manuscript where each chapter is a separate file.  There are instructions for how to author a book in his bookdown book at [https://bookdown.org/yihui/bookdown/](https://bookdown.org/yihui/bookdown/).
+
+First you need to install the bookdown package, create an account at bookdown.org, and connect the account to RStudio.  Follow the instructions at [https://bookdown.org/home/about/](https://bookdown.org/home/about/).
+
