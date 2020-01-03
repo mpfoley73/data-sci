@@ -4,27 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Non-linear Models | A Minimal Book Example</title>
-  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <title>Chapter 7 Non-linear Models | My Data Science Notes</title>
+  <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Non-linear Models | A Minimal Book Example" />
+  <meta property="og:title" content="Chapter 7 Non-linear Models | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta property="og:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Non-linear Models | A Minimal Book Example" />
+  <meta name="twitter:title" content="Chapter 7 Non-linear Models | My Data Science Notes" />
   
-  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
 
-<meta name="author" content="Yihui Xie" />
+<meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2019-12-27" />
+<meta name="date" content="2020-01-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,15 +32,15 @@
   
   
 <link rel="prev" href="regularization.html"/>
-<link rel="next" href="classification-and-regression-trees.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+<link rel="next" href="splines.html"/>
+<script src="assets/jquery-2.2.3/jquery.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -133,40 +133,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
-<li class="chapter" data-level="2" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>2</b> Probability</a><ul>
-<li class="chapter" data-level="2.1" data-path="probability.html"><a href="probability.html#normal"><i class="fa fa-check"></i><b>2.1</b> Normal</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="probability.html"><a href="probability.html#example"><i class="fa fa-check"></i><b>2.1.1</b> Example</a></li>
-<li class="chapter" data-level="2.1.2" data-path="probability.html"><a href="probability.html#example-1"><i class="fa fa-check"></i><b>2.1.2</b> Example</a></li>
-<li class="chapter" data-level="2.1.3" data-path="probability.html"><a href="probability.html#example-2"><i class="fa fa-check"></i><b>2.1.3</b> Example</a></li>
-<li class="chapter" data-level="2.1.4" data-path="probability.html"><a href="probability.html#example-3"><i class="fa fa-check"></i><b>2.1.4</b> Example</a></li>
-<li class="chapter" data-level="2.1.5" data-path="probability.html"><a href="probability.html#normal-approximation-to-binomial"><i class="fa fa-check"></i><b>2.1.5</b> Normal Approximation to Binomial</a></li>
-<li class="chapter" data-level="2.1.6" data-path="probability.html"><a href="probability.html#example-4"><i class="fa fa-check"></i><b>2.1.6</b> Example</a></li>
-<li class="chapter" data-level="2.1.7" data-path="probability.html"><a href="probability.html#example-5"><i class="fa fa-check"></i><b>2.1.7</b> Example</a></li>
-<li class="chapter" data-level="2.1.8" data-path="probability.html"><a href="probability.html#from-sample-to-population"><i class="fa fa-check"></i><b>2.1.8</b> From Sample to Population</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Intro</a></li>
+<li class="chapter" data-level="1" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>1</b> Probability</a><ul>
+<li class="chapter" data-level="1.1" data-path="principles.html"><a href="principles.html"><i class="fa fa-check"></i><b>1.1</b> Principles</a></li>
+<li class="chapter" data-level="1.2" data-path="discrete-distributions.html"><a href="discrete-distributions.html"><i class="fa fa-check"></i><b>1.2</b> Discrete Distributions</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="discrete-distributions.html"><a href="discrete-distributions.html#binomial"><i class="fa fa-check"></i><b>1.2.1</b> Binomial</a></li>
+<li class="chapter" data-level="1.2.2" data-path="discrete-distributions.html"><a href="discrete-distributions.html#negative-binomial"><i class="fa fa-check"></i><b>1.2.2</b> Negative-Binomial</a></li>
+<li class="chapter" data-level="1.2.3" data-path="discrete-distributions.html"><a href="discrete-distributions.html#geometric"><i class="fa fa-check"></i><b>1.2.3</b> Geometric</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="continuous-distributions.html"><a href="continuous-distributions.html"><i class="fa fa-check"></i><b>1.3</b> Continuous Distributions</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="continuous-distributions.html"><a href="continuous-distributions.html#normal"><i class="fa fa-check"></i><b>1.3.1</b> Normal</a></li>
+<li class="chapter" data-level="1.3.2" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-1"><i class="fa fa-check"></i><b>1.3.2</b> Example</a></li>
+<li class="chapter" data-level="1.3.3" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-2"><i class="fa fa-check"></i><b>1.3.3</b> Example</a></li>
+<li class="chapter" data-level="1.3.4" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-3"><i class="fa fa-check"></i><b>1.3.4</b> Example</a></li>
+<li class="chapter" data-level="1.3.5" data-path="continuous-distributions.html"><a href="continuous-distributions.html#normal-approximation-to-binomial"><i class="fa fa-check"></i><b>1.3.5</b> Normal Approximation to Binomial</a></li>
+<li class="chapter" data-level="1.3.6" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-4"><i class="fa fa-check"></i><b>1.3.6</b> Example</a></li>
+<li class="chapter" data-level="1.3.7" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-5"><i class="fa fa-check"></i><b>1.3.7</b> Example</a></li>
+<li class="chapter" data-level="1.3.8" data-path="continuous-distributions.html"><a href="continuous-distributions.html#from-sample-to-population"><i class="fa fa-check"></i><b>1.3.8</b> From Sample to Population</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>3</b> Inference</a></li>
-<li class="chapter" data-level="4" data-path="experiments.html"><a href="experiments.html"><i class="fa fa-check"></i><b>4</b> Experiments</a><ul>
-<li class="chapter" data-level="4.1" data-path="experiments.html"><a href="experiments.html#example-one"><i class="fa fa-check"></i><b>4.1</b> Example one</a></li>
-<li class="chapter" data-level="4.2" data-path="experiments.html"><a href="experiments.html#example-two"><i class="fa fa-check"></i><b>4.2</b> Example two</a></li>
+<li class="chapter" data-level="2" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>2</b> Inference</a></li>
+<li class="chapter" data-level="3" data-path="experiments.html"><a href="experiments.html"><i class="fa fa-check"></i><b>3</b> Experiments</a><ul>
+<li class="chapter" data-level="3.1" data-path="example-one.html"><a href="example-one.html"><i class="fa fa-check"></i><b>3.1</b> Example one</a></li>
+<li class="chapter" data-level="3.2" data-path="example-two.html"><a href="example-two.html"><i class="fa fa-check"></i><b>3.2</b> Example two</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>5</b> Regression</a></li>
-<li class="chapter" data-level="6" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>6</b> Classification</a></li>
-<li class="chapter" data-level="7" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>7</b> Regularization</a></li>
-<li class="chapter" data-level="8" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>8</b> Non-linear Models</a><ul>
-<li class="chapter" data-level="8.1" data-path="non-linear-models.html"><a href="non-linear-models.html#splines"><i class="fa fa-check"></i><b>8.1</b> Splines</a></li>
-<li class="chapter" data-level="8.2" data-path="non-linear-models.html"><a href="non-linear-models.html#mars"><i class="fa fa-check"></i><b>8.2</b> MARS</a></li>
-<li class="chapter" data-level="8.3" data-path="non-linear-models.html"><a href="non-linear-models.html#gam"><i class="fa fa-check"></i><b>8.3</b> GAM</a></li>
+<li class="chapter" data-level="4" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>4</b> Regression</a></li>
+<li class="chapter" data-level="5" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>5</b> Classification</a></li>
+<li class="chapter" data-level="6" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>6</b> Regularization</a></li>
+<li class="chapter" data-level="7" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>7</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="7.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.1</b> Splines</a></li>
+<li class="chapter" data-level="7.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.2</b> MARS</a></li>
+<li class="chapter" data-level="7.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>7.3</b> GAM</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="classification-and-regression-trees.html"><a href="classification-and-regression-trees.html"><i class="fa fa-check"></i><b>9</b> Classification and Regression Trees</a></li>
-<li class="chapter" data-level="10" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>10</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="11" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>11</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="12" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>12</b> Clustering</a></li>
-<li class="chapter" data-level="13" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>13</b> Text Mining</a></li>
-<li class="chapter" data-level="14" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>14</b> Appendix</a><ul>
-<li class="chapter" data-level="14.1" data-path="appendix.html"><a href="appendix.html#publishing-to-bookdown"><i class="fa fa-check"></i><b>14.1</b> Publishing to BookDown</a></li>
-</ul></li>
+<li class="chapter" data-level="8" data-path="classification-and-regression-trees.html"><a href="classification-and-regression-trees.html"><i class="fa fa-check"></i><b>8</b> Classification and Regression Trees</a></li>
+<li class="chapter" data-level="9" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>9</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="10" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>10</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="11" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>11</b> Clustering</a></li>
+<li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
+<li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -180,7 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">My Data Science Notes</a>
           </h1>
         </div>
 
@@ -189,79 +194,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="non-linear-models" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Non-linear Models</h1>
-<p>Linear methods can model nonlinear relationships by including polynomial terms, interaction effects, and variable transformations. However, it is often difficult to identify how to formulate the model. Nonlinear models may be preferable because you do not need to know the the exact form of the nonlinearity prior to model training.</p>
-<div id="splines" class="section level2">
-<h2><span class="header-section-number">8.1</span> Splines</h2>
-<p>A regression spline fits a piecewise polynomial to the range of <em>X</em> partitioned by <em>knots</em> (<em>K</em> knots produce <em>K + 1</em> piecewise polynomials) <strong>James et al</strong> <span class="citation">(Gareth James <a href="#ref-James2013" role="doc-biblioref">2013</a>)</span>. The polynomials can be of any degree <em>d</em>, but are usually in the range [0, 3], most commonly 3 (a cubic spline). To avoid discontinuities in the fit, a degree-<em>d</em> spline is constrained to have continuity in derivatives up to degree <em>d</em>−1 at each knot.</p>
-<p>A cubic spline fit to a data set with <em>K</em> knots, performs least squares regression with an intercept and 3 + <em>K</em> predictors, of the form</p>
-<p><span class="math display">\[y_i = \beta_0 + \beta_1X + \beta_2X^2 + \beta_3X^3 + \beta_4h(X, \xi_1) + \beta_5h(X, \xi_2) + \dots + \beta_{K+3}h(X, \xi_K)\]</span></p>
-<p>where <span class="math inline">\(\xi_1, \dots, \xi_K\)</span> are the knots are truncated power basis functions <span class="math inline">\(h(X, \xi) = (X - \xi)^3\)</span> if <span class="math inline">\(X &gt; \xi\)</span>, else 0.</p>
-<p>Splines can have high variance at the outer range of the predictors. A <strong>natural spline</strong> is a regression spline additionally constrained to be linear at the boundaries.</p>
-<p>How many knots should there be, and Where should the knots be placed? It is common to place knots in a uniform fashion, with equal numbers of points between each knot. The number of knots is typically chosen by trial and error using cross-validation to minimize the RSS. The number of knots is usually expressed in terms of degrees of freedom. A cubic spline will have <em>K</em> + 3 + 1 degrees of freedom. A natural spline has <em>K</em> + 3 + 1 - 5 degrees of freedom due to the constraints at the endpoints.</p>
-<p>A further constraint can be added to reduce overfitting by enforcing smoothness in the spline. Instead of minimizing the loss function <span class="math inline">\(\sum{(y - g(x))^2}\)</span> where <span class="math inline">\(g(x)\)</span> is a natural spline, minimize a loss function with an additional penalty for variability:</p>
-<p><span class="math display">\[L = \sum{(y_i - g(x_i))^2 + \lambda \int g&#39;&#39;(t)^2dt}.\]</span></p>
-<p>The function <span class="math inline">\(g(x)\)</span> that minimizes the loss function is a <em>natural cubic spline</em> with knots at each <span class="math inline">\(x_1, \dots, x_n\)</span>. This is called a <strong>smoothing spline</strong>. The larger g is, the greater the penalty on variation in the spline. In a smoothing spline, you do not optimize the number or location of the knots – there is a knot at each training observation. Instead, you optimize <span class="math inline">\(\lambda\)</span>. One way to optimze is cross-validation to minimize RSS. Leave-one-out cross-validation (LOOCV) can be computed efficiently for smoothing splines.</p>
-</div>
-<div id="mars" class="section level2">
-<h2><span class="header-section-number">8.2</span> MARS</h2>
-<p>Multivariate adaptive regression splines (MARS) is a non-parametric algorithm that creates a piecewise linear model to capture nonlinearities and interactions effects. The resulting model is a weighted sum of <em>basis</em> functions <span class="math inline">\(B_i(X)\)</span>:</p>
-<p><span class="math display">\[\hat{y} = \sum_{i=1}^{k}{w_iB_i(x)}\]</span></p>
-<p>The basis functions are either a constant (for the intercept), a <em>hinge</em> function of the form <span class="math inline">\(\max(0, x - x_0)\)</span> or <span class="math inline">\(\max(0, x_0 - x)\)</span> (a more concise representation is <span class="math inline">\([\pm(x - x_0)]_+\)</span>), or products of two or more hinge functions (for interactions). MARS automatically selects which predictors to use and what predictor values to serve as the <em>knots</em> of the hinge functions.</p>
-<p>MARS builds a model in two phases: the forward pass and the backward pass, similar to growing and pruning of tree models. MARS starts with a model consisting of just the intercept term equaling the mean of the response values. It then asseses every predictor to find a basis function pair consisting of opposing sides of a mirrored hinge function which produces the maximum improvement in the model error. MARS repeats the process until either it reaches a predefined limit of terms or the error improvement reaches a predefined limit. MARS generalizes the model by removing terms according to the generalized cross validation (GCV) criterion. GCV is a form of regularization: it trades off goodness-of-fit against model complexity.</p>
-<p>The <code>earth::earth()</code> function (<a href="https://www.rdocumentation.org/packages/earth/versions/5.1.2/topics/earth">documentation</a>) performs the MARS algorithm (<em>the term “MARS” is trademarked, so open-source implementations use “Earth” instead</em>). The caret implementation tunes two parameters: <code>nprune</code> and <code>degree</code>. <code>nprune</code> is the maximum number of terms in the pruned model. <code>degree</code> is the maximum degree of interaction (default is 1 (no interactions)). However, there are other hyperparameters in the model that may improve performance, including <code>minspan</code> which regulates the number of knots in the predictors.</p>
-<p>Here is an example using the Ames housing data set (following <a href="http://uc-r.github.io/mars">this</a> tutorial.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="non-linear-models.html#cb1-1"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="non-linear-models.html#cb1-2"></a><span class="kw">library</span>(earth)</span>
-<span id="cb1-3"><a href="non-linear-models.html#cb1-3"></a><span class="kw">library</span>(caret)</span>
-<span id="cb1-4"><a href="non-linear-models.html#cb1-4"></a></span>
-<span id="cb1-5"><a href="non-linear-models.html#cb1-5"></a><span class="co"># set up</span></span>
-<span id="cb1-6"><a href="non-linear-models.html#cb1-6"></a>ames &lt;-<span class="st"> </span>AmesHousing<span class="op">::</span><span class="kw">make_ames</span>()</span>
-<span id="cb1-7"><a href="non-linear-models.html#cb1-7"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb1-8"><a href="non-linear-models.html#cb1-8"></a>idx &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(ames<span class="op">$</span>Sale_Price, <span class="dt">p =</span> <span class="fl">0.80</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb1-9"><a href="non-linear-models.html#cb1-9"></a>ames_train &lt;-<span class="st"> </span>ames[idx, ] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()</span>
-<span id="cb1-10"><a href="non-linear-models.html#cb1-10"></a>ames_test  &lt;-<span class="st"> </span>ames[<span class="op">-</span>idx, ]</span>
-<span id="cb1-11"><a href="non-linear-models.html#cb1-11"></a></span>
-<span id="cb1-12"><a href="non-linear-models.html#cb1-12"></a>m &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
-<span id="cb1-13"><a href="non-linear-models.html#cb1-13"></a>  <span class="dt">x =</span> <span class="kw">subset</span>(ames_train, <span class="dt">select =</span> <span class="op">-</span>Sale_Price),</span>
-<span id="cb1-14"><a href="non-linear-models.html#cb1-14"></a>  <span class="dt">y =</span> ames_train<span class="op">$</span>Sale_Price,</span>
-<span id="cb1-15"><a href="non-linear-models.html#cb1-15"></a>  <span class="dt">method =</span> <span class="st">&quot;earth&quot;</span>,</span>
-<span id="cb1-16"><a href="non-linear-models.html#cb1-16"></a>  <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>,</span>
-<span id="cb1-17"><a href="non-linear-models.html#cb1-17"></a>  <span class="dt">minspan =</span> <span class="dv">-15</span>,</span>
-<span id="cb1-18"><a href="non-linear-models.html#cb1-18"></a>  <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>),</span>
-<span id="cb1-19"><a href="non-linear-models.html#cb1-19"></a>  <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(</span>
-<span id="cb1-20"><a href="non-linear-models.html#cb1-20"></a>    <span class="dt">degree =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, </span>
-<span id="cb1-21"><a href="non-linear-models.html#cb1-21"></a>    <span class="dt">nprune =</span> <span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">100</span>, <span class="dt">length.out =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">floor</span>()</span>
-<span id="cb1-22"><a href="non-linear-models.html#cb1-22"></a>  )</span>
-<span id="cb1-23"><a href="non-linear-models.html#cb1-23"></a>)</span></code></pre></div>
-<p>The model plot shows the best tuning parameter combination.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="non-linear-models.html#cb2-1"></a><span class="kw">plot</span>(m, <span class="dt">main =</span> <span class="st">&quot;MARS Parameter Tuning&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="non-linear-models.html#cb3-1"></a>m<span class="op">$</span>bestTune</span></code></pre></div>
-<pre><code>##    nprune degree
-## 25     45      3</code></pre>
-<p>How does this model perform against the holdout data?</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="non-linear-models.html#cb5-1"></a>caret<span class="op">::</span><span class="kw">postResample</span>(</span>
-<span id="cb5-2"><a href="non-linear-models.html#cb5-2"></a>  <span class="dt">pred =</span> <span class="kw">log</span>(<span class="kw">predict</span>(m, <span class="dt">newdata =</span> ames_test)),</span>
-<span id="cb5-3"><a href="non-linear-models.html#cb5-3"></a>  <span class="dt">obs =</span> <span class="kw">log</span>(ames_test<span class="op">$</span>Sale_Price)</span>
-<span id="cb5-4"><a href="non-linear-models.html#cb5-4"></a>)</span></code></pre></div>
-<pre><code>##       RMSE   Rsquared        MAE 
-## 0.16515620 0.85470300 0.09319503</code></pre>
-</div>
-<div id="gam" class="section level2">
-<h2><span class="header-section-number">8.3</span> GAM</h2>
-<p>Generalized additive models (GAM) allow for non-linear relationships between each feature and the response by replacing each linear component <span class="math inline">\(\beta_j x_{ij}\)</span> with a nonlinear function <span class="math inline">\(f_j(x_{ij})\)</span>. The GAM model is of the form</p>
-<p><span class="math display">\[y_i = \beta_0 + \sum{f_j(x_{ij})} + \epsilon_i.\]</span></p>
-<p>It is called an additive model because we calculate a separate <span class="math inline">\(f_j\)</span> for each <span class="math inline">\(X_j\)</span>, and then add together all of their contributions.</p>
-<p>The advantage of GAMs is that they automatically model non-linear relationships so you do not need to manually try out many diﬀerent transformations on each variable individually. And because the model is additive, you can still examine the eﬀect of each <span class="math inline">\(X_j\)</span> on <span class="math inline">\(Y\)</span> individually while holding all of the other variables ﬁxed. The main limitation of GAMs is that the model is restricted to be additive, so important interactions can be missed unless you explicitly add them.</p>
-
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-James2013">
-<p>Gareth James, Trevor Hastie, Daniela Witten. 2013. <em>An Introduction to Statistical Learning : With Applications in R</em>. 1st ed. New York, NY: Springer. <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/book.html">http://faculty.marshall.usc.edu/gareth-james/ISL/book.html</a>.</p>
-</div>
+<h1><span class="header-section-number">Chapter 7</span> Non-linear Models</h1>
+<p>Linear methods can model nonlinear relationships by including polynomial terms, interaction effects, and variable transformations. However, it is often difficult to identify how to formulate the model. Nonlinear models may be preferable because you do not need to know the the exact form of the nonlinearity prior to model training.</p> 
 </div>
             </section>
 
@@ -269,18 +203,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="regularization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="classification-and-regression-trees.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="splines.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -314,6 +248,9 @@ gitbook.start({
 "download": ["data-sci.pdf", "data-sci.epub"],
 "toc": {
 "collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
 }
 });
 });

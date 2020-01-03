@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>7.1 Splines | My Data Science Notes</title>
+  <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="7.1 Splines | My Data Science Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="7.1 Splines | My Data Science Notes" />
+  
+  <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+<meta name="author" content="Michael Foley" />
+
+
+<meta name="date" content="2020-01-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="non-linear-models.html"/>
+<link rel="next" href="mars.html"/>
+<script src="assets/jquery-2.2.3/jquery.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Intro</a></li>
+<li class="chapter" data-level="1" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>1</b> Probability</a><ul>
+<li class="chapter" data-level="1.1" data-path="principles.html"><a href="principles.html"><i class="fa fa-check"></i><b>1.1</b> Principles</a></li>
+<li class="chapter" data-level="1.2" data-path="discrete-distributions.html"><a href="discrete-distributions.html"><i class="fa fa-check"></i><b>1.2</b> Discrete Distributions</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="discrete-distributions.html"><a href="discrete-distributions.html#binomial"><i class="fa fa-check"></i><b>1.2.1</b> Binomial</a></li>
+<li class="chapter" data-level="1.2.2" data-path="discrete-distributions.html"><a href="discrete-distributions.html#negative-binomial"><i class="fa fa-check"></i><b>1.2.2</b> Negative-Binomial</a></li>
+<li class="chapter" data-level="1.2.3" data-path="discrete-distributions.html"><a href="discrete-distributions.html#geometric"><i class="fa fa-check"></i><b>1.2.3</b> Geometric</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="continuous-distributions.html"><a href="continuous-distributions.html"><i class="fa fa-check"></i><b>1.3</b> Continuous Distributions</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="continuous-distributions.html"><a href="continuous-distributions.html#normal"><i class="fa fa-check"></i><b>1.3.1</b> Normal</a></li>
+<li class="chapter" data-level="1.3.2" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-1"><i class="fa fa-check"></i><b>1.3.2</b> Example</a></li>
+<li class="chapter" data-level="1.3.3" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-2"><i class="fa fa-check"></i><b>1.3.3</b> Example</a></li>
+<li class="chapter" data-level="1.3.4" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-3"><i class="fa fa-check"></i><b>1.3.4</b> Example</a></li>
+<li class="chapter" data-level="1.3.5" data-path="continuous-distributions.html"><a href="continuous-distributions.html#normal-approximation-to-binomial"><i class="fa fa-check"></i><b>1.3.5</b> Normal Approximation to Binomial</a></li>
+<li class="chapter" data-level="1.3.6" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-4"><i class="fa fa-check"></i><b>1.3.6</b> Example</a></li>
+<li class="chapter" data-level="1.3.7" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-5"><i class="fa fa-check"></i><b>1.3.7</b> Example</a></li>
+<li class="chapter" data-level="1.3.8" data-path="continuous-distributions.html"><a href="continuous-distributions.html#from-sample-to-population"><i class="fa fa-check"></i><b>1.3.8</b> From Sample to Population</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>2</b> Inference</a></li>
+<li class="chapter" data-level="3" data-path="experiments.html"><a href="experiments.html"><i class="fa fa-check"></i><b>3</b> Experiments</a><ul>
+<li class="chapter" data-level="3.1" data-path="example-one.html"><a href="example-one.html"><i class="fa fa-check"></i><b>3.1</b> Example one</a></li>
+<li class="chapter" data-level="3.2" data-path="example-two.html"><a href="example-two.html"><i class="fa fa-check"></i><b>3.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>4</b> Regression</a></li>
+<li class="chapter" data-level="5" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>5</b> Classification</a></li>
+<li class="chapter" data-level="6" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>6</b> Regularization</a></li>
+<li class="chapter" data-level="7" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>7</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="7.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.1</b> Splines</a></li>
+<li class="chapter" data-level="7.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.2</b> MARS</a></li>
+<li class="chapter" data-level="7.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>7.3</b> GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="classification-and-regression-trees.html"><a href="classification-and-regression-trees.html"><i class="fa fa-check"></i><b>8</b> Classification and Regression Trees</a></li>
+<li class="chapter" data-level="9" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>9</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="10" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>10</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="11" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>11</b> Clustering</a></li>
+<li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
+<li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">My Data Science Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="splines" class="section level2">
+<h2><span class="header-section-number">7.1</span> Splines</h2>
+<p>A regression spline fits a piecewise polynomial to the range of <em>X</em> partitioned by <em>knots</em> (<em>K</em> knots produce <em>K + 1</em> piecewise polynomials) <strong>James et al</strong> <span class="citation">(al <a href="#ref-James2013" role="doc-biblioref">2013</a>)</span>. The polynomials can be of any degree <em>d</em>, but are usually in the range [0, 3], most commonly 3 (a cubic spline). To avoid discontinuities in the fit, a degree-<em>d</em> spline is constrained to have continuity in derivatives up to degree <em>d</em>−1 at each knot.</p>
+<p>A cubic spline fit to a data set with <em>K</em> knots, performs least squares regression with an intercept and 3 + <em>K</em> predictors, of the form</p>
+<p><span class="math display">\[y_i = \beta_0 + \beta_1X + \beta_2X^2 + \beta_3X^3 + \beta_4h(X, \xi_1) + \beta_5h(X, \xi_2) + \dots + \beta_{K+3}h(X, \xi_K)\]</span></p>
+<p>where <span class="math inline">\(\xi_1, \dots, \xi_K\)</span> are the knots are truncated power basis functions <span class="math inline">\(h(X, \xi) = (X - \xi)^3\)</span> if <span class="math inline">\(X &gt; \xi\)</span>, else 0.</p>
+<p>Splines can have high variance at the outer range of the predictors. A <strong>natural spline</strong> is a regression spline additionally constrained to be linear at the boundaries.</p>
+<p>How many knots should there be, and Where should the knots be placed? It is common to place knots in a uniform fashion, with equal numbers of points between each knot. The number of knots is typically chosen by trial and error using cross-validation to minimize the RSS. The number of knots is usually expressed in terms of degrees of freedom. A cubic spline will have <em>K</em> + 3 + 1 degrees of freedom. A natural spline has <em>K</em> + 3 + 1 - 5 degrees of freedom due to the constraints at the endpoints.</p>
+<p>A further constraint can be added to reduce overfitting by enforcing smoothness in the spline. Instead of minimizing the loss function <span class="math inline">\(\sum{(y - g(x))^2}\)</span> where <span class="math inline">\(g(x)\)</span> is a natural spline, minimize a loss function with an additional penalty for variability:</p>
+<p><span class="math display">\[L = \sum{(y_i - g(x_i))^2 + \lambda \int g&#39;&#39;(t)^2dt}.\]</span></p>
+<p>The function <span class="math inline">\(g(x)\)</span> that minimizes the loss function is a <em>natural cubic spline</em> with knots at each <span class="math inline">\(x_1, \dots, x_n\)</span>. This is called a <strong>smoothing spline</strong>. The larger g is, the greater the penalty on variation in the spline. In a smoothing spline, you do not optimize the number or location of the knots – there is a knot at each training observation. Instead, you optimize <span class="math inline">\(\lambda\)</span>. One way to optimze <span class="math inline">\(\lambda\)</span> is cross-validation to minimize RSS. Leave-one-out cross-validation (LOOCV) can be computed efficiently for smoothing splines.</p>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-James2013">
+<p>al, Gareth James et. 2013. <em>An Introduction to Statistical Learning : With Applications in R</em>. 1st ed. New York, NY: Springer. <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/book.html">http://faculty.marshall.usc.edu/gareth-james/ISL/book.html</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="non-linear-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="mars.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["data-sci.pdf", "data-sci.epub"],
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

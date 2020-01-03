@@ -20,7 +20,7 @@ A further constraint can be added to reduce overfitting by enforcing smoothness 
 
 $$L = \sum{(y_i - g(x_i))^2 + \lambda \int g''(t)^2dt}.$$
 
-The function $g(x)$ that minimizes the loss function is a *natural cubic spline* with knots at each $x_1, \dots, x_n$. This is called a **smoothing spline**.  The larger g is, the greater the penalty on variation in the spline.  In a smoothing spline, you do not optimize the number or location of the knots -- there is a knot at each training observation. Instead, you optimize $\lambda$. One way to optimze \lambda is cross-validation to minimize RSS. Leave-one-out cross-validation (LOOCV) can be computed efficiently for smoothing splines.
+The function $g(x)$ that minimizes the loss function is a *natural cubic spline* with knots at each $x_1, \dots, x_n$. This is called a **smoothing spline**.  The larger g is, the greater the penalty on variation in the spline.  In a smoothing spline, you do not optimize the number or location of the knots -- there is a knot at each training observation. Instead, you optimize $\lambda$. One way to optimze $\lambda$ is cross-validation to minimize RSS. Leave-one-out cross-validation (LOOCV) can be computed efficiently for smoothing splines.
 
 
 ## MARS

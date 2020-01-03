@@ -1,0 +1,19 @@
+# Appendix {-}
+
+Here are miscellaneous skills, knowledge, and technologies I should know.
+
+# Publishing to BookDown {-}
+
+The **bookdown** package, written by Yihui Xie, is built on top of R Markdown and the **knitr** package.  Use it to publish a book or long manuscript where each chapter is a separate file.  There are instructions for how to author a book in his [bookdown book](https://bookdown.org/yihui/bookdown/) [@xie2019].  The main advantage of **bookdown** over R Markdown is that you can produce multi-page HTML output with numbered headers, equations, figures, etc., just like in a book.  I'm using **bookdown** to create a compendium of all my data science notes.  
+
+The first step to using **bookdown** is installing the **bookdown* package with `install.packages("bookdown")`.
+
+Next, create an account at [bookdown.org](http://bookdown.org), and connect the account to RStudio.  Follow the instructions at [https://bookdown.org/home/about/](https://bookdown.org/home/about/).
+
+Finally, create a project in R Studio by creating a new project of type *Book Project using Bookdown*.
+
+After creating all of your Markdown pages, knit the book or click the **Build Book** button in the Build panel.
+
+
+# Shiny Apps {-}
+
