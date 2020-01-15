@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8.6 Summary | My Data Science Notes</title>
+  <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8.6 Summary | My Data Science Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8.6 Summary | My Data Science Notes" />
+  
+  <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+<meta name="author" content="Michael Foley" />
+
+
+<meta name="date" content="2020-01-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="gradient-boosting.html"/>
+<link rel="next" href="reference.html"/>
+<script src="assets/jquery-2.2.3/jquery.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Intro</a></li>
+<li class="chapter" data-level="1" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>1</b> Probability</a><ul>
+<li class="chapter" data-level="1.1" data-path="principles.html"><a href="principles.html"><i class="fa fa-check"></i><b>1.1</b> Principles</a></li>
+<li class="chapter" data-level="1.2" data-path="discrete-distributions.html"><a href="discrete-distributions.html"><i class="fa fa-check"></i><b>1.2</b> Discrete Distributions</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="discrete-distributions.html"><a href="discrete-distributions.html#binomial"><i class="fa fa-check"></i><b>1.2.1</b> Binomial</a></li>
+<li class="chapter" data-level="1.2.2" data-path="discrete-distributions.html"><a href="discrete-distributions.html#negative-binomial"><i class="fa fa-check"></i><b>1.2.2</b> Negative-Binomial</a></li>
+<li class="chapter" data-level="1.2.3" data-path="discrete-distributions.html"><a href="discrete-distributions.html#geometric"><i class="fa fa-check"></i><b>1.2.3</b> Geometric</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="continuous-distributions.html"><a href="continuous-distributions.html"><i class="fa fa-check"></i><b>1.3</b> Continuous Distributions</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="continuous-distributions.html"><a href="continuous-distributions.html#normal"><i class="fa fa-check"></i><b>1.3.1</b> Normal</a></li>
+<li class="chapter" data-level="1.3.2" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-1"><i class="fa fa-check"></i><b>1.3.2</b> Example</a></li>
+<li class="chapter" data-level="1.3.3" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-2"><i class="fa fa-check"></i><b>1.3.3</b> Example</a></li>
+<li class="chapter" data-level="1.3.4" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-3"><i class="fa fa-check"></i><b>1.3.4</b> Example</a></li>
+<li class="chapter" data-level="1.3.5" data-path="continuous-distributions.html"><a href="continuous-distributions.html#normal-approximation-to-binomial"><i class="fa fa-check"></i><b>1.3.5</b> Normal Approximation to Binomial</a></li>
+<li class="chapter" data-level="1.3.6" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-4"><i class="fa fa-check"></i><b>1.3.6</b> Example</a></li>
+<li class="chapter" data-level="1.3.7" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-5"><i class="fa fa-check"></i><b>1.3.7</b> Example</a></li>
+<li class="chapter" data-level="1.3.8" data-path="continuous-distributions.html"><a href="continuous-distributions.html#from-sample-to-population"><i class="fa fa-check"></i><b>1.3.8</b> From Sample to Population</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>2</b> Inference</a></li>
+<li class="chapter" data-level="3" data-path="experiments.html"><a href="experiments.html"><i class="fa fa-check"></i><b>3</b> Experiments</a><ul>
+<li class="chapter" data-level="3.1" data-path="example-one.html"><a href="example-one.html"><i class="fa fa-check"></i><b>3.1</b> Example one</a></li>
+<li class="chapter" data-level="3.2" data-path="example-two.html"><a href="example-two.html"><i class="fa fa-check"></i><b>3.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>4</b> Regression</a></li>
+<li class="chapter" data-level="5" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>5</b> Classification</a></li>
+<li class="chapter" data-level="6" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>6</b> Regularization</a></li>
+<li class="chapter" data-level="7" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>7</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="7.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.1</b> Splines</a></li>
+<li class="chapter" data-level="7.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.2</b> MARS</a></li>
+<li class="chapter" data-level="7.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>7.3</b> GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>8</b> Decision Trees</a><ul>
+<li class="chapter" data-level="8.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>8.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>8.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="8.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>8.1.2</b> ROC Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>8.2</b> Regression Trees</a></li>
+<li class="chapter" data-level="8.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>8.3</b> Bagging</a></li>
+<li class="chapter" data-level="8.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>8.4</b> Random Forests</a></li>
+<li class="chapter" data-level="8.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>8.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="8.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8.6</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>9</b> Reference</a></li>
+<li class="chapter" data-level="10" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>10</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="11" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>11</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="12" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>12</b> Clustering</a></li>
+<li class="chapter" data-level="13" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>13</b> Text Mining</a></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
+<li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
+<li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">My Data Science Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="summary" class="section level2">
+<h2><span class="header-section-number">8.6</span> Summary</h2>
+<p>Okay, I’m going to tally up the results! For the classification division, the winner is the manual classification tree! Gradient boosting made a valiant run at it, but came up just a little short.</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="summary.html#cb141-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual Class&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_1b_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)), </span>
+<span id="cb141-2"><a href="summary.html#cb141-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Class w/tuneLength&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_<span class="dv">2</span>_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)),</span>
+<span id="cb141-3"><a href="summary.html#cb141-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Class w.tuneGrid&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_<span class="dv">3</span>_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)),</span>
+<span id="cb141-4"><a href="summary.html#cb141-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.bag.acc, <span class="dv">5</span>)),</span>
+<span id="cb141-5"><a href="summary.html#cb141-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.frst.acc, <span class="dv">5</span>)),</span>
+<span id="cb141-6"><a href="summary.html#cb141-6"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.gbm.acc, <span class="dv">5</span>))</span>
+<span id="cb141-7"><a href="summary.html#cb141-7"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Acc))</span></code></pre></div>
+<pre><code>##                model     Acc
+## 1       Manual Class 0.85915
+## 2  Gradient Boosting 0.84977
+## 3 Class w/tuneLength 0.84507
+## 4   Class w.tuneGrid 0.84507
+## 5      Random Forest 0.82629
+## 6            Bagging 0.81221</code></pre>
+<p>And now for the regression division, the winnner is… gradient boosting!</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="summary.html#cb143-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual ANOVA&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.anova.rmse, <span class="dv">5</span>)), </span>
+<span id="cb143-2"><a href="summary.html#cb143-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;ANOVA w/tuneLength&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.anova.rmse2, <span class="dv">5</span>)),</span>
+<span id="cb143-3"><a href="summary.html#cb143-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;ANOVA w.tuneGrid&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.anova.rmse3, <span class="dv">5</span>)),</span>
+<span id="cb143-4"><a href="summary.html#cb143-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.bag.rmse, <span class="dv">5</span>)),</span>
+<span id="cb143-5"><a href="summary.html#cb143-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.frst.rmse, <span class="dv">5</span>)),</span>
+<span id="cb143-6"><a href="summary.html#cb143-6"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.gbm.rmse, <span class="dv">5</span>))</span>
+<span id="cb143-7"><a href="summary.html#cb143-7"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(RMSE)</span></code></pre></div>
+<pre><code>##                model    RMSE
+## 1  Gradient Boosting 1.05312
+## 2      Random Forest 1.35362
+## 3            Bagging 1.64055
+## 4   ANOVA w.tuneGrid 1.66476
+## 5       Manual ANOVA 2.20792
+## 6 ANOVA w/tuneLength 2.20792</code></pre>
+<p>Here are plots of the ROC curves for all the models (one from each chapter) on the same graph. The ROCR package provides the prediction() and performance() functions which generate the data required for plotting the ROC curve, given a set of predictions and actual (true) values.
+The more “up and to the left” the ROC curve of a model is, the better the model. The AUC performance metric is literally the “Area Under the ROC Curve”, so the greater the area under this curve, the higher the AUC, and the better-performing the model is.</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="summary.html#cb145-1"></a><span class="kw">library</span>(ROCR)</span></code></pre></div>
+<pre><code>## Loading required package: gplots</code></pre>
+<pre><code>## 
+## Attaching package: &#39;gplots&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     lowess</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="summary.html#cb149-1"></a><span class="co"># List of predictions</span></span>
+<span id="cb149-2"><a href="summary.html#cb149-2"></a>oj.class.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_<span class="dv">3</span>, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb149-3"><a href="summary.html#cb149-3"></a>oj.bag.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.bag, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb149-4"><a href="summary.html#cb149-4"></a>oj.frst.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.frst, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb149-5"><a href="summary.html#cb149-5"></a>oj.gbm.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.gbm, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb149-6"><a href="summary.html#cb149-6"></a></span>
+<span id="cb149-7"><a href="summary.html#cb149-7"></a>preds_list &lt;-<span class="st"> </span><span class="kw">list</span>(oj.class.pred, oj.bag.pred, oj.frst.pred, oj.gbm.pred)</span>
+<span id="cb149-8"><a href="summary.html#cb149-8"></a><span class="co">#preds_list &lt;- list(oj.class.pred)</span></span>
+<span id="cb149-9"><a href="summary.html#cb149-9"></a></span>
+<span id="cb149-10"><a href="summary.html#cb149-10"></a><span class="co"># List of actual values (same for all)</span></span>
+<span id="cb149-11"><a href="summary.html#cb149-11"></a>m &lt;-<span class="st"> </span><span class="kw">length</span>(preds_list)</span>
+<span id="cb149-12"><a href="summary.html#cb149-12"></a>actuals_list &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">list</span>(oj_test<span class="op">$</span>Purchase), m)</span>
+<span id="cb149-13"><a href="summary.html#cb149-13"></a></span>
+<span id="cb149-14"><a href="summary.html#cb149-14"></a><span class="co"># Plot the ROC curves</span></span>
+<span id="cb149-15"><a href="summary.html#cb149-15"></a>pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(preds_list, actuals_list)</span>
+<span id="cb149-16"><a href="summary.html#cb149-16"></a><span class="co">#pred &lt;- prediction(oj.class.pred[,2], oj_test$Purchase)</span></span>
+<span id="cb149-17"><a href="summary.html#cb149-17"></a>rocs &lt;-<span class="st"> </span><span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb149-18"><a href="summary.html#cb149-18"></a><span class="kw">plot</span>(rocs, <span class="dt">col =</span> <span class="kw">as.list</span>(<span class="dv">1</span><span class="op">:</span>m), <span class="dt">main =</span> <span class="st">&quot;Test Set ROC Curves&quot;</span>)</span>
+<span id="cb149-19"><a href="summary.html#cb149-19"></a><span class="kw">legend</span>(<span class="dt">x =</span> <span class="st">&quot;bottomright&quot;</span>, </span>
+<span id="cb149-20"><a href="summary.html#cb149-20"></a>       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Decision Tree&quot;</span>, <span class="st">&quot;Bagged Trees&quot;</span>, <span class="st">&quot;Random Forest&quot;</span>, <span class="st">&quot;GBM&quot;</span>),</span>
+<span id="cb149-21"><a href="summary.html#cb149-21"></a>       <span class="dt">fill =</span> <span class="dv">1</span><span class="op">:</span>m)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="gradient-boosting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="reference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["data-sci.pdf", "data-sci.epub"],
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
