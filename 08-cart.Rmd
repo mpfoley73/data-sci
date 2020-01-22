@@ -22,16 +22,18 @@ where $\hat{p}_{kc}$ is the proportion of training observations in node $k$ node
 
 CART repeats the splitting process for each of the child nodes until a *stopping criterion* is satisfied, usually when no node size surpasses a predefined maximum, or continued splitting does not improve the model significantly.  CART may also impose a minimum number of observations in each node.
 
-The resulting tree likely over-fits the training data and therefore does not generalize well to test data, so CART *prunes* the tree, minimizing the cross-validated prediction error. Rather than cross-validating every possible subtree to find the one with minimum error, CART uses *cost-complexity pruning*. Cost-complexity is the tradeoff between error (cost) and tree size (complexity) where the tradeoff is quantified with cost-complexity parameter $\alpha$.  In the equation below, the cost complexity of the tree $R_\alpha(T)$ is the sum of its risk (error) plus a factor $\alpha$ of the tree size $|T|$.  
+The resulting tree likely over-fits the training data and therefore does not generalize well to test data, so CART *prunes* the tree, minimizing the cross-validated prediction error. Rather than cross-validating every possible subtree to find the one with minimum error, CART uses *cost-complexity pruning*. Cost-complexity is the tradeoff between error (cost) and tree size (complexity) where the tradeoff is quantified with cost-complexity parameter $c_p$.  In the equation below, the cost complexity of the tree $R_{c_p}(T)$ is the sum of its risk (error) plus a "cost complexity" factor $c_p$ multiple of the tree size $|T|$.  
 
-$$R_\alpha(T) = R(T) + \alpha|T|$$
+$$R_{c_p}(T) = R(T) + c_p|T|$$
 
-The factor is the cost complexity parameter (CP). There are a unique set of CP values that minimize $R_\alpha(T)$ [@James2013] [@Therneau2019].  *Read more on pages 12-13 of the [rpart vignette](https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf) [@Therneau2019]*.  Cost-complexity prunity minimizes the cross-validated error over the range of complexity parameters.
+$c_p$ can take on any value from $[0..\infty]$, but it turns out there is an optimal tree for *ranges* of $c_p$ values, so there are only a finite set of *interesting* values for $c_p$ [@James2013] [@Therneau2019] [@Kuhn2016].  A parametric algorithm identifies the interesting $c_p$ values and their associated pruned trees, $T_{c_p}$.
+
+CART uses cross-validation to determine which $c_p$ is optimal.
 
 
 ## Classification Tree
 
-A simple classification tree is rarely performed on its own; the bagged, random forest, and gradient boosting methods build on this logic.  However, it is good to start here to build understanding. I'll learn by example. Using the `ISLR::OJ` data set, I will predict which brand of orange juice, Citrus Hill (CH) or Minute Maid = (MM), customers `Purchase` using from the 17 feature variables.  Load the libraries and data.
+A simple classification tree is rarely performed on its own; the bagged, random forest, and gradient boosting methods build on this logic. However, it is good to start here to build understanding. I'll learn by example. Using the `ISLR::OJ` data set, I will predict which brand of orange juice, Citrus Hill (CH) or Minute Maid = (MM), customers `Purchase` using from the 17 feature variables.  Load the libraries and data.
 
 ```{r warning=FALSE, message=FALSE}
 library(ISLR)  # OJ dataset
@@ -39,6 +41,7 @@ library(rpart)  # classification and regression trees
 library(caret)  # modeling workflow
 library(rpart.plot)  # better formatted plots than the ones in rpart
 library(plotROC)  # ROC curves
+library(ROCR)
 library(tidyverse)
 library(skimr)  # neat alternative to glance & summary
 
@@ -83,13 +86,13 @@ rpart.plot(oj_model_1, yesno = TRUE)
 
 The boxes show the node classification (based on mode), the proportion of observations that are *not* `CH`, and the proportion of observations included in the node. 
 
-`rpart()` not only grew the full tree, it also used cross-validation to test the performance of the possible complexity hyperparameters. `printcp()` displays the candidate $\alpha$ values. You can use this table to decide how to prune the tree.
+`rpart()` not only grew the full tree, it identified the set of cost complexity parameters, and measured the model performance of each corresponding tree using cross-validation. `printcp()` displays the candidate $c_p$ values. You can use this table to decide how to prune the tree.
 
 ```{r}
 printcp(oj_model_1)
 ```
 
-There are only 4 possible $\alpha$ values in this model.  The model with the smallest complexity parameter allows the most splits (`nsplit`).  The highest complexity parameter corresponds to a tree with just a root node.  `rel error` is the error rate relative to the root node.  The root node absolute error is 0.38973162 (the proportion of MM), so its `rel error` is 0.38973162/0.38973162 = 1.0.  That means the absolute error of the full tree (at CP = 0.01) is 0.42814 * 0.38973162 = 0.1669.  You can vefify that by evaluating the predicted values:
+There are 4 $c_p$ values in this model.  The model with the smallest complexity parameter allows the most splits (`nsplit`).  The highest complexity parameter corresponds to a tree with just a root node.  `rel error` is the error rate relative to the root node.  The root node absolute error is 0.38973162 (the proportion of MM), so its `rel error` is 0.38973162/0.38973162 = 1.0.  That means the absolute error of the full tree (at CP = 0.01) is 0.42814 * 0.38973162 = 0.1669.  You can verify that by calculating the error rate of the predicted values:
 
 ```{r}
 data.frame(pred = predict(oj_model_1, newdata = oj_train, type = "class")) %>%
@@ -98,7 +101,7 @@ data.frame(pred = predict(oj_model_1, newdata = oj_train, type = "class")) %>%
    summarize(mean_err = mean(err))
 ```
 
-Finishing the CP table tour, `xerror` is the cross-validated error rate and `xstd` is its standard error. If you want the lowest possible error, then prune to the tree with the smallest relative error (`xerror`).  If you want to balance predictive power with simplicity, prune to the smallest tree within 1 SE of the one with the smallest relative error.  The CP table is not super-helpful for finding that tree. I'll add a column to find it.
+Finishing the CP table tour, `xerror` is the relative cross-validated error rate and `xstd` is its standard error. If you want the lowest possible error, then prune to the tree with the smallest relative CV error (`xerror`) ($c_p$ = 0.01, CV error = `r round(0.46407*0.38973162, 4)`).  If you want to balance predictive power with simplicity, prune to the smallest tree within 1 SE of the one with the smallest relative error.  The CP table is not super-helpful for finding that tree. I'll add a column to find it.
 
 ```{r}
 oj_model_1$cptable %>%
@@ -113,13 +116,13 @@ oj_model_1$cptable %>%
    select(-rownum, -min_xerror_idx) 
 ```
 
-Okay, so the simplest tree is the one with CP = 0.01347305.  Fortunately, `plotcp()` presents a nice graphical representation of the relationship between `xerror` and `cp`.
+The simplest tree using the 1-SE rule is $c_p = 0.01347305, CV error = `r round(0.4700599*0.38973162, 4)`).  Fortunately, `plotcp()` presents a nice graphical representation of the relationship between `xerror` and `cp`.
 
 ```{r}
 plotcp(oj_model_1, upper = "splits")
 ```
 
-The dashed line is set at the minimum `xerror` + `xstd`.  The top axis shows the number of splits in the tree.  I'm not sure why the CP values are not the same as in the table (they are close, but not the same).  The figure suggests I should prune to CP = 0.012 or CP = 0.021.  I see this curve never really hits a minimum - it is still decreasing at CP = 0.012.  The default parameter value `cp = 0.01` is probably too small, so I'll set it to `cp = 0.001` and start over.
+The dashed line is set at the minimum `xerror` + `xstd`.  The top axis shows the number of splits in the tree.  I'm not sure why the CP values are not the same as in the table (they are close, but not the same).  The figure suggests I should prune to 5 or 3 splits.  I see this curve never really hits a minimum - it is still decreasing at 5 splits.  The default tuning parameter value `cp = 0.01` may be too small, so I'll set it to `cp = 0.001` and start over.
 
 ```{r}
 set.seed(123)
@@ -148,11 +151,17 @@ oj_model_1b_pruned <- prune(
 rpart.plot(oj_model_1b_pruned, yesno = TRUE)
 ```
 
-The most "important" indicator of `Purchase` is `LoyalCH`.  From the **rpart** [vignette](https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf) (page 12), 
+The most "important" indicator of `Purchase` appears to be `LoyalCH`.  From the **rpart** [vignette](https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf) (page 12), 
 
-> "An overall measure of variable importance is the sum of the goodness of split measures for each split for which it was the primary variable, plus goodness * (adjusted agreement) for all splits in which it was a surrogate."
+> "An overall measure of variable importance is the sum of the goodness of split measures for each split for which it was the primary variable, plus goodness (adjusted agreement) for all splits in which it was a surrogate."
 
-I don't know what that means, but here are the importance values from my model anyway. There is no plot for this in `rpart` that I'm aware of, so I'll make my own.
+Surrogates refer to alternative features for a node to handle missing data. For each split, CART evaluates a variety of alternative "surrogate" splits to use when the feature value for the primary split is NA. Surrogate splits are splits that produce results similar to the original split. 
+
+A variable's importance is the sum of the improvement in the overall Gini (or RMSE) measure produced by the nodes in which it appears. Here is the variable importance for this model.
+
+```{r}
+oj_model_1b_pruned$variable.importance
+```
 
 ```{r}
 oj_model_1b_pruned$variable.importance %>% 
@@ -166,7 +175,13 @@ oj_model_1b_pruned$variable.importance %>%
    labs(x = "", y = "", title = "Variable Importance with Simple Classication")
 ```
 
-There are a lot of variables with importance > 0 that are not in the pruned model. In fact, they are not even the same variables as in the unpruned model.  I am confused.  
+`LoyalCH` is by far the most important variable, as expected from its position at the top of the tree, and one level down. 
+
+You can see how the surrogates appear in the model with the `summary()` function.
+
+```{r}
+summary(oj_model_1b_pruned)
+```
 
 The last step is to make predictions on the validation data set.  For a classification tree, set argument `type = "class"`. 
 
@@ -284,7 +299,7 @@ I can also fit the model with `caret::train()`.  There are two ways to tune hype
 * set the number of tuning parameter values to consider by setting `tuneLength`, or
 * set particular values to consider for each parameter by defining a `tuneGrid`.
 
-If you don't have any idea what the tuning parameter ought to look like, use `tuneLength` to get close, then fine-tune with `tuneGrid`.  That's what I'll do.  I'll build the model using 10-fold cross-validation to optimize the hyperparameter, $\alpha$. I'll create a training control object that I can re-use in other model builds.  
+I'll build the model using 10-fold cross-validation to optimize the hyperparameter CP. If you don't have any idea what the tuning parameter ought to look like, use `tuneLength` to get close, then fine-tune with `tuneGrid`.  That's what I'll do.  I'll create a training control object that I can re-use in other model builds.  
 
 ```{r}
 oj_trControl = trainControl(
@@ -296,41 +311,58 @@ oj_trControl = trainControl(
    )
 ```
 
+Now fit the model.
 
 ```{r}
+set.seed(1234)
 oj_model_2 = train(
    Purchase ~ ., 
    data = oj_train, 
    method = "rpart",
-   tuneLength = 5,  # choose up to 5 combinations of tuning parameters (cp)
-   metric = "Accuracy",  # evaluate hyperparamter combinations with ROC
+   tuneLength = 5,
+   metric = "Accuracy",
    trControl = oj_trControl
    )
 ```
 
-`caret` built a full tree using `rpart`'s default parameters: gini splitting index, at least 20 observations in a node in order to consider splitting it, and at least 6 observations in each node.  Caret then calculated the area under the ROC curve for each candidate value of $\alpha$.  Here is the results.
+`caret` built a full tree using `rpart`'s default parameters: gini splitting index, at least 20 observations in a node in order to consider splitting it, and at least 6 observations in each node.  Caret then calculated the accuracy for each candidate value of $\alpha$.  Here is the results.
 
 ```{r}
 print(oj_model_2)
 ```
 
-So the smallest value of `cp` produced the highest area under the ROC curve.  Here are the rules in the final model.  
+The second `cp` (0.008982036) produced the highest accuracy.  I can drill into the best value of `cp` using a tuning grid.  I'll try that now.
 
 ```{r}
-oj_model_2$finalModel
+set.seed(1234)
+oj_model_3 = train(
+   Purchase ~ ., 
+   data = oj_train, 
+   method = "rpart",
+   tuneGrid = expand.grid(cp = seq(from = 0.001, to = 0.010, length = 11)),  
+   metric='Accuracy',
+   trControl = oj_trControl
+   )
+print(oj_model_3)
+```
+
+The beset model is at cp = 0.009.  Here are the rules in the final model.  
+
+```{r}
+oj_model_3$finalModel
 ```
 
 Here is the tree.
 
 ```{r}
-rpart.plot(oj_model_2$finalModel)
+rpart.plot(oj_model_3$finalModel)
 ```
 
 Here is the ROC curve.
 
 ```{r}
 library(plotROC)
-ggplot(oj_model_2$pred) + 
+ggplot(oj_model_3$pred) + 
     geom_roc(
        aes(
           m = MM, 
@@ -341,81 +373,38 @@ ggplot(oj_model_2$pred) +
    coord_equal()
 ```
 
-Here are the AUCs for each all candidate $\alpha$ values.
+Here are the cross-validated Accuracy for each candidate cp value.
 
 ```{r}
-plot(oj_model_2)
+plot(oj_model_3)
 ```
  
-It sure looks like the best value of $\alpha$ was near zero.  Evaluate the model by making predictions with the test data set.  
+Evaluate the model by making predictions with the test data set.  
 
 ```{r}
-oj_model_2_preds <- predict(oj_model_2, oj_test, type = "raw")
+oj_model_3_preds <- predict(oj_model_3, oj_test, type = "raw")
 ```
 
 The confusion matrix shows the true positives and true negatives.
 
 ```{r}
-oj_model_2_cm <- confusionMatrix(
-   data = oj_model_2_preds, 
+oj_model_3_cm <- confusionMatrix(
+   data = oj_model_3_preds, 
    reference = oj_test$Purchase
 )
-oj_model_2_cm
+oj_model_3_cm
 ```
 
 The accuracy metric is the slightly worse than in my previous model.  Here is a graphical representation of the confusion matrix.
 
 ```{r}
-plot(oj_test$Purchase, oj_model_2_preds, 
+plot(oj_test$Purchase, oj_model_3_preds, 
      main = "Simple Classification: Predicted vs. Actual",
      xlab = "Actual",
      ylab = "Predicted")
 ```
 
 Finally, here is the variable importance plot.
-
-```{r}
-plot(varImp(oj_model_2), main="Variable Importance with Simple Classication")
-```
-
-I could have drilled into the best value of $\alpha$ using a tuning grid.  I'll try that now.
-
-```{r}
-set.seed(1234)
-oj_model_3 = train(
-   Purchase ~ ., 
-   data = oj_train, 
-   method = "rpart",
-   tuneGrid = expand.grid(cp = seq(from = 0.001, to = 0.010, length = 10)),  
-   metric='ROC',  # evaluate hyperparamter combinations with ROC
-   trControl = oj_trControl
-   )
-```
-
-I tweaked the grid searching for the min.
-```{r}
-plot(oj_model_3)
-```
-
-The ROC curve is maximized at 0.005.  You can see that in the model summary.
-
-```{r}
-print(oj_model_3)
-```
-
-Now make predictions.
-
-```{r}
-oj_model_3_preds <- predict(oj_model_3, oj_test, type = "raw")
-oj_model_3_cm <- confusionMatrix(data = oj_model_3_preds, reference = oj_test$Purchase)
-oj_model_3_cm$overall["Accuracy"]
-```
-
-The final model is 
-
-```{r}
-rpart.plot(oj_model_3$finalModel)
-```
 
 ```{r}
 plot(varImp(oj_model_3), main="Variable Importance with Simple Classication")
@@ -425,7 +414,6 @@ Looks like the manual effort faired best.  Here is a summary the accuracy rates 
 
 ```{r}
 rbind(data.frame(model = "Manual Class", Acc = round(oj_model_1b_cm$overall["Accuracy"], 5)), 
-      data.frame(model = "Caret w/tuneLength", Acc = round(oj_model_2_cm$overall["Accuracy"], 5)),
       data.frame(model = "Caret w/tuneGrid", Acc = round(oj_model_3_cm$overall["Accuracy"], 5))
 )
 ```
@@ -433,141 +421,231 @@ rbind(data.frame(model = "Manual Class", Acc = round(oj_model_1b_cm$overall["Acc
 
 ## Regression Trees
 
-A simple regression tree is built the same way as a simple classificatioon tree.  Like the simple classification tree, it is rarely invoked on its own; the bagged, random forest, and gradient boosting methods build on this logic.
-
-#### Example
-
-Using the `Carseats` data set from `ISLR`, I'll predict `Sales` using the available feature variables.  
+A simple regression tree is built in a manner similar to a simple classificatioon tree, and like the simple classification tree, it is rarely invoked on its own; the bagged, random forest, and gradient boosting methods build on this logic.  I'll learn by example again. Using the `ISLR::Carseats` data set, I will predict `Sales` using from the 10 feature variables.  Load the data.
 
 ```{r}
 carseats_dat <- Carseats
-skim_to_wide(carseats_dat)
-partition <- createDataPartition(y = carseats_dat$Sales, p = 0.8, list = FALSE)
-carseats.train <- carseats_dat[partition, ]
-carseats.test <- carseats_dat[-partition, ]
-rm(partition)
+skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, 
+                                p100 = NULL, hist = NULL))
+skim(carseats_dat)
 ```
 
-The first step is to build a full tree, then perform k-fold cross-validation to help select the optimal cost complexity ($cp$).  The only difference here is the `rpart()` parameter `method = "anova"` to produce a regression tree.
+I'll split `careseats_dat` (n = 400) into `carseats_train` (80%, n = 321) and `carseats_test` (20%, n = 79).  I'll fit a simple decision tree with `carseats_train`, then later a bagged tree, a random forest, and a gradient boosting tree.  I'll compare their predictive performance with `carseats_test`.
+
+```{r}
+set.seed(12345)
+partition <- createDataPartition(y = carseats_dat$Sales, p = 0.8, list = FALSE)
+carseats_train <- carseats_dat[partition, ]
+carseats_test <- carseats_dat[-partition, ]
+```
+
+The first step is to build a full tree, then perform k-fold cross-validation to help select the optimal cost complexity (cp).  The only difference here is the `rpart()` parameter `method = "anova"` to produce a regression tree.
 
 ```{r}
 set.seed(1234)
-# Specify model = TRUE to handle plotting splits with factor variables.
-carseats.full_anova <- rpart(formula = Sales ~ .,
-                             data = carseats.train,
-                             method = "anova", 
-                             xval = 10,
-                             model = TRUE)
-rpart.plot(carseats.full_anova, yesno = TRUE)
-printcp(carseats.full_anova)
+carseats_model_1 <- rpart(
+   formula = Sales ~ .,
+   data = carseats_train,
+   method = "anova", 
+   xval = 10,
+   model = TRUE  # to plot splits with factor variables.
+)
+print(carseats_model_1)
 ```
 
-The algorithm included `r length(carseats.full_anova$variable.importance)` variables in the full tree.  
+The output starts with the root node.  The predicted `Sales` at the root is the mean `Sales` for the training data set, 7.535950 (values are $000s).  The deviance at the root is the SSE, 2567.768.  The child nodes of node "x" are labeled 2x) and 2x+1), so the child nodes of 1) are 2) and 3), and the child nodes of 2) are 4) and 5).  Terminal nodes are labeled with an asterisk (*).
 
-The second step is to prune the tree to avoid overfitting.  The CP table shows the relavent statistics to choose the appropriate pruning paramter.  The CP table is included in the model summary.  The `rel error` column is the error rate / root node error produced when pruning the tree using complexity parameter `CP` to `nsplits` splits. The `xerror` column shows the error rate.  A plot of `xerror` vs `cp` shows the relationship.
+The first split is at `ShelveLoc` = [Bad, Medium] vs Good.  Here is what the full (unpruned) tree looks like.
 
 ```{r}
-plotcp(carseats.full_anova)
+rpart.plot(carseats_model_1, yesno = TRUE)
 ```
 
-In this case, the smallest relative error is at `r carseats.full_anova$cptable[which.min(carseats.full_anova$cptable[, "xerror"]), "CP"]`, but the maximum CP below the dashed line (one standard deviation above the mimimum error) is at `cp ~ .039`.Use the `prune()` function to prune the tree by specifying the associated cost-complexity `cp`.  
+The boxes show the node predicted value (mean) and the proportion of observations that are in the node (or child nodes). 
+
+`rpart()` not only grew the full tree, it also used cross-validation to test the performance of the possible complexity hyperparameters. `printcp()` displays the candidate cp values. You can use this table to decide how to prune the tree.
 
 ```{r}
-carseats.anova <- prune(carseats.full_anova, 
-                        cp = 0.039)
-rpart.plot(carseats.anova, yesno = TRUE)
-rm(carseats.full_anova)
+printcp(carseats_model_1)
 ```
 
-The pruned tree has `r length(carseats.anova$variable.importance)` variables.  The most important indicator of `Sales` is shelving location.  
+There are 16 possible cp values in this model.  The model with the smallest complexity parameter allows the most splits (`nsplit`).  The highest complexity parameter corresponds to a tree with just a root node.  `rel error` is the SSE relative to the root node.  The root node SSE is 2567.76800, so its `rel error` is 2567.76800/2567.76800 = 1.0.  That means the absolute error of the full tree (at CP = 0.01) is 0.30963 * 2567.76800 = 795.058. You can verify that by calculating the SSE of the model predicted values:
 
-The third and last step is to make predictions on the validation data set and record the root mean squared error (RMSE) for comparison to other models.  The root mean squared error ($RMSE = \sqrt{(1/2) \sum{(actual - pred)^2}})$ and mean absolute error ($MAE = (1/n) \sum{|actual - pred|}$) are the two most common measures of predictive accuracy.  The key difference is that RMSE punishes large errors more harshly. For a regression tree, set argument `type = "vector"` (or do not specify at all). 
+```{r}
+data.frame(pred = predict(carseats_model_1, newdata = carseats_train)) %>%
+   mutate(obs = carseats_train$Sales,
+          sq_err = (obs - pred)^2) %>%
+   summarize(sse = sum(sq_err))
+```
+
+Finishing the CP table tour, `xerror` is the cross-validated SSE and `xstd` is its standard error. If you want the lowest possible error, then prune to the tree with the smallest relative SSE (`xerror`).  If you want to balance predictive power with simplicity, prune to the smallest tree within 1 SE of the one with the smallest relative SSE.  The CP table is not super-helpful for finding that tree. I'll add a column to find it.
+
+```{r}
+carseats_model_1$cptable %>%
+   data.frame() %>%
+   mutate(min_xerror_idx = which.min(carseats_model_1$cptable[, "xerror"]),
+          rownum = row_number(),
+          xerror_cap = carseats_model_1$cptable[min_xerror_idx, "xerror"] + 
+             carseats_model_1$cptable[min_xerror_idx, "xstd"],
+          eval = case_when(rownum == min_xerror_idx ~ "min xerror",
+                           xerror < xerror_cap ~ "under cap",
+                           TRUE ~ "")) %>%
+   select(-rownum, -min_xerror_idx) 
+```
+
+Okay, so the simplest tree is the one with CP = 0.01544139 (8 splits).  Fortunately, `plotcp()` presents a nice graphical representation of the relationship between `xerror` and `cp`.
+
+```{r}
+plotcp(carseats_model_1, upper = "splits")
+```
+
+The dashed line is set at the minimum `xerror` + `xstd`.  The top axis shows the number of splits in the tree.  I'm not sure why the CP values are not the same as in the table (they are close, but not the same).  The smallest relative error is at `r carseats_model_1$cptable[which.min(carseats_model_1$cptable[, "xerror"]), "CP"]`, but the maximum CP below the dashed line (one standard deviation above the mimimum error) is at CP = .019 (8 splits). Use the `prune()` function to prune the tree by specifying the associated cost-complexity `cp`.  
+
+```{r}
+carseats_model_1_pruned <- prune(
+   carseats_model_1,
+   cp = carseats_model_1$cptable[carseats_model_1$cptable[, 2] == 8, "CP"]
+)
+rpart.plot(carseats_model_1_pruned, yesno = TRUE)
+```
+
+The most "important" indicator of `Sales` is `ShelveLoc`.  Here are the importance values from the model. 
+
+```{r}
+carseats_model_1_pruned$variable.importance %>% 
+   data.frame() %>%
+   rownames_to_column(var = "Feature") %>%
+   rename(Overall = '.') %>%
+   ggplot(aes(x = fct_reorder(Feature, Overall), y = Overall)) +
+   geom_pointrange(aes(ymin = 0, ymax = Overall), color = "cadetblue", size = .3) +
+   theme_minimal() +
+   coord_flip() +
+   labs(x = "", y = "", title = "Variable Importance with Simple Regression")
+```
+
+The most important indicator of `Sales` is `ShelveLoc`, then `Price`, then `Age`, all of which appear in the final model.  `CompPrice` was also important.
+
+The last step is to make predictions on the validation data set. The root mean squared error ($RMSE = \sqrt{(1/2) \sum{(actual - pred)^2}})$ and mean absolute error ($MAE = (1/n) \sum{|actual - pred|}$) are the two most common measures of predictive accuracy. The key difference is that RMSE punishes large errors more harshly. For a regression tree, set argument `type = "vector"` (or do not specify at all). 
 
 ```{r message=FALSE, warning=FALSE}
-carseats.anova.pred <- predict(carseats.anova, carseats.test, type = "vector")
-plot(carseats.test$Sales, carseats.anova.pred, 
+carseats_model_1_preds <- predict(
+   carseats_model_1_pruned, 
+   carseats_test, 
+   type = "vector"
+)
+
+carseats_model_1_pruned_rmse <- RMSE(
+   pred = carseats_model_1_preds,
+   obs = carseats_test$Sales
+)
+carseats_model_1_pruned_rmse
+```
+
+The pruning process leads to an average prediction error of `r round(carseats_model_1_pruned_rmse, 3)` in the test data set.  Not too bad considering the standard deviation of `Sales` is `r round(sd(carseats_test$Sales), 3)`. Here is a predicted vs actual plot. 
+
+```{r message=FALSE, warning=FALSE}
+plot(carseats_test$Sales, carseats_model_1_preds, 
      main = "Simple Regression: Predicted vs. Actual",
      xlab = "Actual",
      ylab = "Predicted")
 abline(0, 1)
-
-(carseats.anova.rmse <- RMSE(pred = carseats.anova.pred,
-                            obs = carseats.test$Sales))
-rm(carseats.anova.pred)
 ```
 
-The pruning process leads to an average prediction error of `r round(carseats.anova.rmse, 3)` in the test data set.  Not too bad considering the standard deviation of `Sales` is `r round(sd(carseats.test$Sales), 3)`.
+The 6 possible predicted values do a decent job of binning the observations.
 
-All of this can happen more or less automatically with the `caret::train()` function, specifying `method = "rpart"` and specifying either `tuneLength` or `tuneGrid`.
+### Caret Approach
 
-I'll do this with `tuneLength` first.
+I can also fit the model with `caret::train()`, specifying `method = "rpart"`.
+
+I'll build the model using 10-fold cross-validation to optimize the hyperparameter CP. 
 
 ```{r}
-carseats.anova2 = train(Sales ~ ., 
-                    data = carseats.train, 
-                    method = "rpart",  # for classification tree
-                    tuneLength = 5,  # choose up to 5 combinations of tuning parameters (cp)
-                    metric = "RMSE",  # evaluate hyperparamter combinations with RMSE
-                    trControl = trainControl(
-                      method = "cv",  # k-fold cross validation
-                      number = 10,  # 10 folds
-                      savePredictions = "final"       # save predictions for the optimal tuning parameter
-                      )
-                    )
-carseats.anova2
-plot(carseats.anova2)
-carseats.anova.pred <- predict(carseats.anova2, carseats.test, type = "raw")
-plot(carseats.test$Sales, carseats.anova.pred, 
-     main = "Simple Regression: Predicted vs. Actual",
-     xlab = "Actual",
-     ylab = "Predicted")
-
-(carseats.anova.rmse2 <- RMSE(pred = carseats.anova.pred,
-                             obs = carseats.test$Sales))
-rm(oj.class.pred)
-rpart.plot(carseats.anova2$finalModel)
-plot(varImp(carseats.anova2), main="Variable Importance with Simple Regression")
+carseats_trControl = trainControl(
+   method = "cv",  # k-fold cross validation
+   number = 10,  # 10 folds
+   savePredictions = "final"       # save predictions for the optimal tuning parameter
+)
 ```
 
-Now with `tuneGrid`.
+
+I'll let the model look for the best CP tuning parameter with `tuneLength` to get close, then fine-tune with `tuneGrid`.  
 
 ```{r}
-myGrid <-  expand.grid(cp = (0:2)/10)
-carseats.anova3 = train(Sales ~ ., 
-                    data = carseats.train, 
-                    method = "rpart",  # for classification tree
-                    tuneGrid = myGrid,  # choose up to 5 combinations of tuning parameters (cp)
-                    metric = "RMSE",  # evaluate hyperparamter combinations with RMSE
-                    trControl = trainControl(
-                      method = "cv",  # k-fold cross validation
-                      number = 10,  # 10 folds
-                      savePredictions = "final"       # save predictions for the optimal tuning parameter
-                      )
-                    )
-carseats.anova3
-plot(carseats.anova3)
-carseats.anova.pred <- predict(carseats.anova3, carseats.test, type = "raw")
-plot(carseats.test$Sales, carseats.anova.pred, 
-     main = "Simple Regression: Predicted vs. Actual",
-     xlab = "Actual",
-     ylab = "Predicted")
-
-(carseats.anova.rmse3 <- RMSE(pred = carseats.anova.pred,
-                             obs = carseats.test$Sales))
-rm(carseats.anova.pred)
-rpart.plot(carseats.anova3$finalModel)
-plot(varImp(carseats.anova3), main="Variable Importance with Simple Regression")
+set.seed(1234)
+carseats_model_2 = train(
+   Sales ~ ., 
+   data = carseats_train, 
+   method = "rpart",  # for classification tree
+   tuneLength = 5,  # choose up to 5 combinations of tuning parameters (cp)
+   metric = "RMSE",  # evaluate hyperparamter combinations with RMSE
+   trControl = carseats_trControl
+)
+print(carseats_model_2)
 ```
 
-Looks like the manual effort faired best again.  Here is a summary the RMSE values of the three models.
+The first `cp` (0.04167149) produced the smallest RMSE.  I can drill into the best value of `cp` using a tuning grid.  I'll try that now.
+
+```{r}
+myGrid <-  expand.grid(cp = seq(from = 0, to = 0.1, by = 0.01))
+carseats_model_3 = train(
+   Sales ~ ., 
+   data = carseats_train, 
+   method = "rpart",  # for classification tree
+   tuneGrid = myGrid,  # choose up to 5 combinations of tuning parameters (cp)
+   metric = "RMSE",  # evaluate hyperparamter combinations with RMSE
+   trControl = carseats_trControl
+)
+print(carseats_model_3)
+```
+
+It looks like the best performing tree is the unpruned one.
+
+```{r}
+plot(carseats_model_3)
+```
+
+Lets's see the final model.
+
+```{r}
+rpart.plot(carseats_model_3$finalModel)
+```
+
+What were the most important variables?
+```{r}
+plot(varImp(carseats_model_3), main="Variable Importance with Simple Regression")
+```
+
+Evaluate the model by making predictions with the test data set.  
+
+```{r}
+carseats_model_3_preds <- predict(carseats_model_3, carseats_test, type = "raw")
+data.frame(Actual = carseats_test$Sales, Predicted = carseats_model_3_preds) %>%
+ggplot(aes(x = Actual, y = Predicted)) +
+   geom_point() +
+   geom_smooth() +
+   geom_abline(slope = 1, intercept = 0) + 
+   scale_y_continuous(limits = c(0, 15)) +
+   labs(title = "Simple Regression: Predicted vs. Actual")
+```
+
+Looks like the model over-estimates at the low end and undestimates at the high end.  Calculate the test data set RMSE.
+
+```{r}
+carseats_model_3_pruned_rmse <- RMSE(
+   pred = carseats_model_3_preds,
+   obs = carseats_test$Sales
+)
+carseats_model_3_pruned_rmse
+```
+
+
+Caret faired better in this model.  Here is a summary the RMSE values of the two models.
 
 ```{r}
 rbind(data.frame(model = "Manual ANOVA", 
-                 RMSE = round(carseats.anova.rmse, 5)), 
-      data.frame(model = "Caret w/tuneLength", 
-                 RMSE = round(carseats.anova.rmse2, 5)),
-      data.frame(model = "Caret w.tuneGrid", 
-                 RMSE = round(carseats.anova.rmse3, 5))
+                 RMSE = round(carseats_model_1_pruned_rmse, 5)), 
+      data.frame(model = "Caret", 
+                 RMSE = round(carseats_model_3_pruned_rmse, 5))
 )
 ```
 
@@ -668,8 +746,7 @@ The bagging (accuracy = 0.80751) and random forest (accuracy = 0.81690) models f
 
 ```{r}
 rbind(data.frame(model = "Manual Class", Accuracy = round(oj_model_1b_cm$overall["Accuracy"], 5)), 
-      data.frame(model = "Class w/tuneLength", Accuracy = round(oj_model_2_cm$overall["Accuracy"], 5)),
-      data.frame(model = "Class w.tuneGrid", Accuracy = round(oj_model_3_cm$overall["Accuracy"], 5)),
+      data.frame(model = "Caret w.tuneGrid", Accuracy = round(oj_model_3_cm$overall["Accuracy"], 5)),
       data.frame(model = "Bagging", Accuracy = round(oj.bag.acc, 5)),
       data.frame(model = "Random Forest", Accuracy = round(oj.frst.acc, 5))
 ) %>% arrange(desc(Accuracy))
@@ -681,7 +758,7 @@ Again using the `Carseats` data set to predict `Sales`, this time I'll use the b
 
 ```{r}
 carseats.bag = train(Sales ~ ., 
-               data = carseats.train, 
+               data = carseats_train, 
                method = "treebag",  # for bagging
                tuneLength = 5,  # choose up to 5 combinations of tuning parameters
                metric = "RMSE",  # evaluate hyperparamter combinations with RMSE
@@ -693,15 +770,15 @@ carseats.bag = train(Sales ~ .,
                )
 carseats.bag
 #plot(carseats.bag$finalModel)
-carseats.pred <- predict(carseats.bag, carseats.test, type = "raw")
-plot(carseats.test$Sales, carseats.pred, 
+carseats.pred <- predict(carseats.bag, carseats_test, type = "raw")
+plot(carseats_test$Sales, carseats.pred, 
      main = "Bagging Regression: Predicted vs. Actual",
      xlab = "Actual",
      ylab = "Predicted")
 abline(0, 1)
 
 (carseats.bag.rmse <- RMSE(pred = carseats.pred,
-                           obs = carseats.test$Sales))
+                           obs = carseats_test$Sales))
 rm(carseats.pred)
 plot(varImp(carseats.bag), main="Variable Importance with Regression Bagging")
 ```
@@ -717,7 +794,7 @@ Now I'll try it with the random forest method by specifying `method = "ranger"`.
 
 ```{r}
 carseats.frst = train(Sales ~ ., 
-               data = carseats.train, 
+               data = carseats_train, 
                method = "ranger",  # for random forest
                tuneLength = 5,  # choose up to 5 combinations of tuning parameters
                metric = "RMSE",  # evaluate hyperparamter combinations with RMSE
@@ -729,14 +806,14 @@ carseats.frst = train(Sales ~ .,
                )
 carseats.frst
 plot(carseats.frst)
-carseats.pred <- predict(carseats.frst, carseats.test, type = "raw")
-plot(carseats.test$Sales, carseats.pred, 
+carseats.pred <- predict(carseats.frst, carseats_test, type = "raw")
+plot(carseats_test$Sales, carseats.pred, 
      main = "Random Forest Regression: Predicted vs. Actual",
      xlab = "Actual",
      ylab = "Predicted")
 abline(0, 1)
 (carseats.frst.rmse <- RMSE(pred = carseats.pred,
-                           obs = carseats.test$Sales))
+                           obs = carseats_test$Sales))
 rm(carseats.pred)
 #plot(varImp(carseats.frst), main="Variable Importance with Regression Random Forest")
 ```
@@ -746,9 +823,8 @@ The model algorithm explains *"RMSE was used to select the optimal model using t
 The bagging and random forest models faired very well - they took over the first and second place!
 
 ```{r}
-rbind(data.frame(model = "Manual ANOVA", RMSE = round(carseats.anova.rmse, 5)), 
-      data.frame(model = "ANOVA w/tuneLength", RMSE = round(carseats.anova.rmse2, 5)),
-      data.frame(model = "ANOVA w.tuneGrid", RMSE = round(carseats.anova.rmse3, 5)),
+rbind(data.frame(model = "Manual ANOVA", RMSE = round(carseats_model_1_pruned_rmse, 5)), 
+      data.frame(model = "ANOVA w.tuneGrid", RMSE = round(carseats_model_3_pruned_rmse, 5)),
       data.frame(model = "Bagging", RMSE = round(carseats.bag.rmse, 5)),
       data.frame(model = "Random Forest", RMSE = round(carseats.frst.rmse, 5))
 ) %>% arrange(RMSE)
@@ -822,7 +898,7 @@ Again using the `Carseats` data set to predict `Sales`, this time I'll use the g
 
 ```{r}
 carseats.gbm <- train(Sales ~ ., 
-                      data = carseats.train, 
+                      data = carseats_train, 
                       method = "gbm",  # for bagged tree
                       tuneLength = 5,  # choose up to 5 combinations of tuning parameters
                       metric = "RMSE",  # evaluate hyperparamter combinations with ROC
@@ -836,15 +912,15 @@ carseats.gbm <- train(Sales ~ .,
                       )
 carseats.gbm
 plot(carseats.gbm)
-carseats.pred <- predict(carseats.gbm, carseats.test, type = "raw")
-plot(carseats.test$Sales, carseats.pred, 
+carseats.pred <- predict(carseats.gbm, carseats_test, type = "raw")
+plot(carseats_test$Sales, carseats.pred, 
      main = "Gradient Boosing Regression: Predicted vs. Actual",
      xlab = "Actual",
      ylab = "Predicted")
 abline(0,1)
 
 (carseats.gbm.rmse <- RMSE(pred = carseats.pred,
-                           obs = carseats.test$Sales))
+                           obs = carseats_test$Sales))
 rm(carseats.pred)
 
 #plot(varImp(carseats.gbm), main="Variable Importance with Gradient Boosting")
@@ -856,7 +932,6 @@ Okay, I'm going to tally up the results!  For the classification division, the w
 
 ```{r}
 rbind(data.frame(model = "Manual Class", Acc = round(oj_model_1b_cm$overall["Accuracy"], 5)), 
-      data.frame(model = "Class w/tuneLength", Acc = round(oj_model_2_cm$overall["Accuracy"], 5)),
       data.frame(model = "Class w.tuneGrid", Acc = round(oj_model_3_cm$overall["Accuracy"], 5)),
       data.frame(model = "Bagging", Acc = round(oj.bag.acc, 5)),
       data.frame(model = "Random Forest", Acc = round(oj.frst.acc, 5)),
@@ -867,9 +942,8 @@ rbind(data.frame(model = "Manual Class", Acc = round(oj_model_1b_cm$overall["Acc
 And now for the regression division, the winnner is... gradient boosting!
 
 ```{r}
-rbind(data.frame(model = "Manual ANOVA", RMSE = round(carseats.anova.rmse, 5)), 
-      data.frame(model = "ANOVA w/tuneLength", RMSE = round(carseats.anova.rmse2, 5)),
-      data.frame(model = "ANOVA w.tuneGrid", RMSE = round(carseats.anova.rmse3, 5)),
+rbind(data.frame(model = "Manual ANOVA", RMSE = round(carseats_model_1_pruned_rmse, 5)), 
+      data.frame(model = "ANOVA w.tuneGrid", RMSE = round(carseats_model_3_pruned_rmse, 5)),
       data.frame(model = "Bagging", RMSE = round(carseats.bag.rmse, 5)),
       data.frame(model = "Random Forest", RMSE = round(carseats.frst.rmse, 5)),
       data.frame(model = "Gradient Boosting", RMSE = round(carseats.gbm.rmse, 5))

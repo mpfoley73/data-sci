@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-01-02" />
+<meta name="date" content="2020-01-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -165,13 +165,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.2</b> MARS</a></li>
 <li class="chapter" data-level="7.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>7.3</b> GAM</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="classification-and-regression-trees.html"><a href="classification-and-regression-trees.html"><i class="fa fa-check"></i><b>8</b> Classification and Regression Trees</a></li>
-<li class="chapter" data-level="9" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>9</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="10" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>10</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="11" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>11</b> Clustering</a></li>
-<li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a></li>
+<li class="chapter" data-level="8" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>8</b> Decision Trees</a><ul>
+<li class="chapter" data-level="8.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>8.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>8.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="8.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>8.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="8.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>8.1.3</b> Caret Approach</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>8.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>8.2.1</b> Caret Approach</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>8.3</b> Bagging</a></li>
+<li class="chapter" data-level="8.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>8.4</b> Random Forests</a></li>
+<li class="chapter" data-level="8.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>8.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="8.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8.6</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>9</b> Reference</a></li>
+<li class="chapter" data-level="10" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>10</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="11" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>11</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="12" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>12</b> Clustering</a></li>
+<li class="chapter" data-level="13" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>13</b> Text Mining</a></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a></li>
 <li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
+<li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -230,10 +245,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>What is the expected number of heads in 25 coin flips if the probability of heads is 0.3?</em></p>
 <p>The expected value, <span class="math inline">\(\mu = np\)</span>, is 7.5. Here’s an empirical test from 10,000 samples.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="discrete-distributions.html#cb6-1"></a><span class="kw">mean</span>(<span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">prob =</span> <span class="fl">.3</span>))</span></code></pre></div>
-<pre><code>## [1] 7.506</code></pre>
+<pre><code>## [1] 7.4892</code></pre>
 <p>The variance, <span class="math inline">\(\sigma^2 = np (1 - p)\)</span>, is 5.25. Here’s an empirical test.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="discrete-distributions.html#cb8-1"></a><span class="kw">var</span>(<span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">prob =</span> <span class="fl">.3</span>))</span></code></pre></div>
-<pre><code>## [1] 5.239621</code></pre>
+<pre><code>## [1] 5.366026</code></pre>
 <p><em>Suppose X and Y are independen random variables distributed X ~ b(10, .6) and Y ~ b(10, .7). What is the probability that either variable is &lt;=4?</em></p>
 <p>Let <span class="math inline">\(P(A) = P(X&lt;=4)\)</span> and <span class="math inline">\(P(B) = P(Y&lt;=4)\)</span>. Then <span class="math inline">\(P(A|B) = P(A) + P(B) - P(AB)\)</span>, and because the events are independent, <span class="math inline">\(P(AB) = P(A)P(B)\)</span>.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="discrete-distributions.html#cb10-1"></a>p_a &lt;-<span class="st"> </span><span class="kw">pbinom</span>(<span class="dt">q =</span> <span class="dv">4</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="fl">0.6</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span>
@@ -246,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-3"><a href="discrete-distributions.html#cb12-3"></a>  <span class="dt">y =</span> <span class="kw">rbinom</span>(<span class="dv">10000</span>, <span class="dv">10</span>, <span class="fl">0.7</span>)</span>
 <span id="cb12-4"><a href="discrete-distributions.html#cb12-4"></a>  )</span>
 <span id="cb12-5"><a href="discrete-distributions.html#cb12-5"></a><span class="kw">mean</span>(<span class="kw">if_else</span>(df<span class="op">$</span>x <span class="op">&lt;=</span><span class="st"> </span><span class="dv">4</span> <span class="op">|</span><span class="st"> </span>df<span class="op">$</span>y <span class="op">&lt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
-<pre><code>## [1] 0.2063</code></pre>
+<pre><code>## [1] 0.2073</code></pre>
 </div>
 <div id="negative-binomial" class="section level3">
 <h3><span class="header-section-number">1.2.2</span> Negative-Binomial</h3>

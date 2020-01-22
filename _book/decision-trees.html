@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-01-14" />
+<meta name="date" content="2020-01-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -169,8 +169,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>8.1</b> Classification Tree</a><ul>
 <li class="chapter" data-level="8.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>8.1.1</b> Confusion Matrix</a></li>
 <li class="chapter" data-level="8.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>8.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="8.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>8.1.3</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>8.2</b> Regression Trees</a></li>
+<li class="chapter" data-level="8.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>8.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>8.2.1</b> Caret Approach</a></li>
+</ul></li>
 <li class="chapter" data-level="8.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>8.3</b> Bagging</a></li>
 <li class="chapter" data-level="8.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>8.4</b> Random Forests</a></li>
 <li class="chapter" data-level="8.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>8.5</b> Gradient Boosting</a></li>
@@ -218,14 +221,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[D = - \sum_{c=1}^C{\hat{p}_{kc} \log \hat{p}_{kc}}\]</span></p>
 <p>where <span class="math inline">\(\hat{p}_{kc}\)</span> is the proportion of training observations in node <span class="math inline">\(k\)</span> node that are class <span class="math inline">\(c\)</span>. A completely <em>pure</em> node in a binary tree will have <span class="math inline">\(\hat{p} \in [0, 1]\)</span> and <span class="math inline">\(G = D = 0\)</span>. A completely impure node in a binary tree will have <span class="math inline">\(\hat{p} = 0.5\)</span> and <span class="math inline">\(G = 0.5^2 \cdot 2 = 0.25\)</span> and <span class="math inline">\(D = -(0.5 \log(0.5)) \cdot 2 = 0.69\)</span>.</p>
 <p>CART repeats the splitting process for each of the child nodes until a <em>stopping criterion</em> is satisfied, usually when no node size surpasses a predefined maximum, or continued splitting does not improve the model significantly. CART may also impose a minimum number of observations in each node.</p>
-<p>The resulting tree likely over-fits the training data and therefore does not generalize well to test data, so CART <em>prunes</em> the tree, minimizing the cross-validated prediction error. Rather than cross-validating every possible subtree to find the one with minimum error, CART uses <em>cost-complexity pruning</em>. Cost-complexity is the tradeoff between error (cost) and tree size (complexity) where the tradeoff is quantified with cost-complexity parameter <span class="math inline">\(\alpha\)</span>. In the equation below, the cost complexity of the tree <span class="math inline">\(R_\alpha(T)\)</span> is the sum of its risk (error) plus a factor <span class="math inline">\(\alpha\)</span> of the tree size <span class="math inline">\(|T|\)</span>.</p>
-<p><span class="math display">\[R_\alpha(T) = R(T) + \alpha|T|\]</span></p>
-<p>The factor is the cost complexity parameter (CP). There are a unique set of CP values that minimize <span class="math inline">\(R_\alpha(T)\)</span> <span class="citation">(James et al. <a href="#ref-James2013" role="doc-biblioref">2013</a>)</span> <span class="citation">(Therneau and Atkinson <a href="#ref-Therneau2019" role="doc-biblioref">2019</a>)</span>. <em>Read more on pages 12-13 of the <a href="https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf">rpart vignette</a> <span class="citation">(Therneau and Atkinson <a href="#ref-Therneau2019" role="doc-biblioref">2019</a>)</span></em>. Cost-complexity prunity minimizes the cross-validated error over the range of complexity parameters.</p> 
+<p>The resulting tree likely over-fits the training data and therefore does not generalize well to test data, so CART <em>prunes</em> the tree, minimizing the cross-validated prediction error. Rather than cross-validating every possible subtree to find the one with minimum error, CART uses <em>cost-complexity pruning</em>. Cost-complexity is the tradeoff between error (cost) and tree size (complexity) where the tradeoff is quantified with cost-complexity parameter <span class="math inline">\(c_p\)</span>. In the equation below, the cost complexity of the tree <span class="math inline">\(R_{c_p}(T)\)</span> is the sum of its risk (error) plus a “cost complexity” factor <span class="math inline">\(c_p\)</span> multiple of the tree size <span class="math inline">\(|T|\)</span>.</p>
+<p><span class="math display">\[R_{c_p}(T) = R(T) + c_p|T|\]</span></p>
+<p><span class="math inline">\(c_p\)</span> can take on any value from <span class="math inline">\([0..\infty]\)</span>, but it turns out there is an optimal tree for <em>ranges</em> of <span class="math inline">\(c_p\)</span> values, so there are only a finite set of <em>interesting</em> values for <span class="math inline">\(c_p\)</span> <span class="citation">(James et al. <a href="#ref-James2013" role="doc-biblioref">2013</a>)</span> <span class="citation">(Therneau and Atkinson <a href="#ref-Therneau2019" role="doc-biblioref">2019</a>)</span> <span class="citation">(Kuhn and Johnson <a href="#ref-Kuhn2016" role="doc-biblioref">2016</a>)</span>. A parametric algorithm identifies the interesting <span class="math inline">\(c_p\)</span> values and their associated pruned trees, <span class="math inline">\(T_{c_p}\)</span>.</p>
+<p>CART uses cross-validation to determine which <span class="math inline">\(c_p\)</span> is optimal.</p> 
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-James2013">
 <p>James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning : With Applications in R</em>. 1st ed. New York, NY: Springer. <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/book.html">http://faculty.marshall.usc.edu/gareth-james/ISL/book.html</a>.</p>
+</div>
+<div id="ref-Kuhn2016">
+<p>Kuhn, Max, and Kjell Johnson. 2016. <em>Applied Predictive Modeling</em>. 1st ed. New York, NY: Springer. <a href="http://appliedpredictivemodeling.com/">http://appliedpredictivemodeling.com/</a>.</p>
 </div>
 <div id="ref-Therneau2019">
 <p>Therneau, Terry, and Elizabeth Atkinson. 2019. <em>An Introduction to Recursive Partitioning Using the Rpart Routines</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf">https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf</a>.</p>

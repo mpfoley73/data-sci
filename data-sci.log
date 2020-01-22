@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/W32TeX) (preloaded format=xelatex 2019.12.19)  2 JAN 2020 18:43
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/W32TeX) (preloaded format=xelatex 2019.12.19)  22 JAN 2020 04:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -954,46 +954,1134 @@ Underfull \vbox (badness 7291) has occurred while \output is active []
 
 ]
 Chapter 8.
-[41] [42
+[41] [42]
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1050--1050
+[]\TU/lmtt/m/n/10 ## -- Variable type:factor ----------------------------------
+------------------[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 1050--1050
+[]\TU/lmtt/m/n/10 ##  variable missing complete    n n_unique               top
+_counts ordered[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 1050--1050
+[]\TU/lmtt/m/n/10 ##  Purchase       0     1070 1070        2  CH: 653, MM: 417
+, NA: 0   FALSE[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 1050--1050
+[]\TU/lmtt/m/n/10 ##    Store7       0     1070 1070        2 No: 714, Yes: 356
+, NA: 0   FALSE[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1050--1050
+[]\TU/lmtt/m/n/10 ## -- Variable type:numeric ---------------------------------
+------------------[] 
+ []
+
+[43]
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1104--1104
+[]\TU/lmtt/m/n/10 ##      4) LoyalCH>=0.7648795 271  13 CH (0.95202952 0.047970
+48) *[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1104--1104
+[]\TU/lmtt/m/n/10 ##       10) PriceDiff>=-0.165 226  50 CH (0.77876106 0.22123
+894) *[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1104--1104
+[]\TU/lmtt/m/n/10 ##       11) PriceDiff< -0.165 40   9 MM (0.22500000 0.775000
+00) *[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1104--1104
+[]\TU/lmtt/m/n/10 ##       12) SalePriceMM>=2.04 71  31 CH (0.56338028 0.436619
+72) *[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1104--1104
+[]\TU/lmtt/m/n/10 ##       13) SalePriceMM< 2.04 75  18 MM (0.24000000 0.760000
+00) *[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1104--1104
+[]\TU/lmtt/m/n/10 ##      7) LoyalCH< 0.2761415 174  22 MM (0.12643678 0.873563
+22) *[] 
+ []
+
+[44]
+File: data-sci_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-26-1.pdf>
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1145--1145
+[]\TU/lmtt/m/n/10 ## rpart(formula = Purchase ~ ., data = oj_train, method = "c
+lass")[] 
+ []
+
+[45] [46]
+Overfull \hbox (48.75pt too wide) in paragraph at lines 1186--1186
+[]\TU/lmtt/m/n/10 ##           CP nsplit rel.error    xerror       xstd xerror_
+cap       eval[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 1186--1186
+[]\TU/lmtt/m/n/10 ## 3 0.01347305      3 0.4550898 0.4700599 0.03390486  0.4978
+082  under cap[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 1186--1186
+[]\TU/lmtt/m/n/10 ## 4 0.01000000      5 0.4281437 0.4640719 0.03373631  0.4978
+082 min xerror[] 
+ []
+
+File: data-sci_files/figure-latex/unnamed-chunk-30-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-30-1.pdf>
+[47]
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##       4) LoyalCH>=0.7648795 271  13 CH (0.95202952 0.04797
+048) *[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##        10) PriceDiff>=-0.165 226  50 CH (0.77876106 0.2212
+3894)[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##          20) ListPriceDiff>=0.255 115  11 CH (0.90434783 0
+.09565217) *[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##          21) ListPriceDiff< 0.255 111  39 CH (0.64864865 0
+.35135135)[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##            42) PriceMM>=2.155 19   2 CH (0.89473684 0.1052
+6316) *[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##            43) PriceMM< 2.155 92  37 CH (0.59782609 0.4021
+7391)[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##              86) DiscCH>=0.115 7   0 CH (1.00000000 0.0000
+0000) *[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##              87) DiscCH< 0.115 85  37 CH (0.56470588 0.435
+29412)[] 
+ []
+
+
+Overfull \hbox (64.5pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##               174) ListPriceDiff>=0.215 45  15 CH (0.66666
+667 0.33333333) *[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##               175) ListPriceDiff< 0.215 40  18 MM (0.45000
+000 0.55000000)[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##                 350) LoyalCH>=0.527571 28  13 CH (0.535714
+29 0.46428571)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##                   700) WeekofPurchase< 266.5 21   8 CH (0.
+61904762 0.38095238) *[] 
+ []
+
+
+Overfull \hbox (85.5pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##                   701) WeekofPurchase>=266.5 7   2 MM (0.2
+8571429 0.71428571) *[] 
+ []
+
+
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##                 351) LoyalCH< 0.527571 12   3 MM (0.250000
+00 0.75000000) *[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##        11) PriceDiff< -0.165 40   9 MM (0.22500000 0.77500
+000) *[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##          24) LoyalCH< 0.303104 7   0 CH (1.00000000 0.0000
+0000) *[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##          25) LoyalCH>=0.303104 64  31 CH (0.51562500 0.484
+37500)[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##            50) WeekofPurchase>=246.5 52  22 CH (0.57692308
+ 0.42307692)[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##             100) PriceCH< 1.94 35  11 CH (0.68571429 0.314
+28571)[] 
+ []
+
+
+Overfull \hbox (17.25pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##               200) StoreID< 1.5 9   1 CH (0.88888889 0.111
+11111) *[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##               201) StoreID>=1.5 26  10 CH (0.61538462 0.38
+461538)[] 
+ []
+
+
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##                 402) LoyalCH< 0.410969 17   4 CH (0.764705
+88 0.23529412) *[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##                 403) LoyalCH>=0.410969 9   3 MM (0.3333333
+3 0.66666667) *[] 
+ []
+
+
+Overfull \hbox (17.25pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##             101) PriceCH>=1.94 17   6 MM (0.35294118 0.647
+05882) *[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##            51) WeekofPurchase< 246.5 12   3 MM (0.25000000
+ 0.75000000) *[] 
+ []
+
+[48]
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##          26) SpecialCH>=0.5 14   6 CH (0.57142857 0.428571
+43) *[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##          27) SpecialCH< 0.5 61  10 MM (0.16393443 0.836065
+57) *[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##        14) LoyalCH>=0.035047 117  21 MM (0.17948718 0.8205
+1282)[] 
+ []
+
+
+Overfull \hbox (33.0pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##          28) WeekofPurchase< 273.5 104  21 MM (0.20192308 
+0.79807692)[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##            56) PriceCH>=1.875 20   9 MM (0.45000000 0.5500
+0000)[] 
+ []
+
+
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##             112) WeekofPurchase>=252.5 12   5 CH (0.583333
+33 0.41666667) *[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##             113) WeekofPurchase< 252.5 8   2 MM (0.2500000
+0 0.75000000) *[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##            57) PriceCH< 1.875 84  12 MM (0.14285714 0.8571
+4286) *[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##          29) WeekofPurchase>=273.5 13   0 MM (0.00000000 1
+.00000000) *[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1262--1262
+[]\TU/lmtt/m/n/10 ##        15) LoyalCH< 0.035047 57   1 MM (0.01754386 0.98245
+614) *[] 
+ []
+
+File: data-sci_files/figure-latex/unnamed-chunk-32-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-32-1.pdf>
+File: data-sci_files/figure-latex/unnamed-chunk-33-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-33-1.pdf>
+[49]
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1309--1309
+[]\TU/lmtt/m/n/10 ##        LoyalCH      PriceDiff    SalePriceMM        StoreI
+D WeekofPurchase[] 
+ []
+
+
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1309--1309
+[]\TU/lmtt/m/n/10 ##     150.237336      20.843067      11.567443       9.96541
+9       8.386282[] 
+ []
+
+
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1309--1309
+[]\TU/lmtt/m/n/10 ##         DiscMM        PriceMM      PctDiscMM        PriceC
+H    SalePriceCH[] 
+ []
+
+
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1309--1309
+[]\TU/lmtt/m/n/10 ##       7.081470       7.065493       6.252920       3.05559
+4       1.042153[] 
+ []
+
+[50]
+File: data-sci_files/figure-latex/unnamed-chunk-35-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-35-1.pdf>
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ## rpart(formula = Purchase ~ ., data = oj_train, method = "c
+lass",[] 
+ []
+
+[51]
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##        LoyalCH      PriceDiff    SalePriceMM        StoreI
+D WeekofPurchase[] 
+ []
+
+
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##             67              9              5              
+4              4[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       LoyalCH       < 0.48285   to the right, improve=132.
+56800, (0 missing)[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       StoreID       < 3.5       to the right, improve= 40.
+12097, (0 missing)[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       PriceDiff     < 0.015     to the right, improve= 24.
+26552, (0 missing)[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       ListPriceDiff < 0.255     to the right, improve= 22.
+79117, (0 missing)[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       SalePriceMM   < 1.84      to the right, improve= 20.
+16447, (0 missing)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       StoreID        < 3.5       to the right, agree=0.646
+, adj=0.053, (0 split)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       PriceMM        < 1.89      to the right, agree=0.638
+, adj=0.031, (0 split)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       WeekofPurchase < 229.5     to the right, agree=0.632
+, adj=0.016, (0 split)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       DiscMM         < 0.77      to the left,  agree=0.629
+, adj=0.006, (0 split)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       SalePriceMM    < 1.385     to the right, agree=0.629
+, adj=0.006, (0 split)[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ## Node number 2: 537 observations,    complexity param=0.032
+93413[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##   predicted class=CH  expected loss=0.1750466  P(node) =0.
+6266044[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       LoyalCH       < 0.7648795 to the right, improve=17.6
+69310, (0 missing)[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       PriceDiff     < 0.015     to the right, improve=15.4
+75200, (0 missing)[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       SalePriceMM   < 1.84      to the right, improve=13.9
+51730, (0 missing)[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       ListPriceDiff < 0.255     to the right, improve=11.4
+07560, (0 missing)[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       DiscMM        < 0.15      to the left,  improve= 7.7
+95122, (0 missing)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       WeekofPurchase < 257.5     to the right, agree=0.594
+, adj=0.180, (0 split)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       PriceCH        < 1.775     to the right, agree=0.590
+, adj=0.173, (0 split)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       StoreID        < 3.5       to the right, agree=0.587
+, adj=0.165, (0 split)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       PriceMM        < 2.04      to the right, agree=0.587
+, adj=0.165, (0 split)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       SalePriceMM    < 2.04      to the right, agree=0.587
+, adj=0.165, (0 split)[] 
+ []
+
+[52]
+Overfull \hbox (17.25pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##   predicted class=CH  expected loss=0.04797048  P(node) =0
+.3162194[] 
+ []
+
+
+Overfull \hbox (1.5pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ## Node number 5: 266 observations,    complexity param=0.032
+93413[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##   predicted class=CH  expected loss=0.3045113  P(node) =0.
+3103851[] 
+ []
+
+
+Overfull \hbox (64.5pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       PriceDiff     < -0.165    to the right, improve=20.8
+4307, (0 missing)[] 
+ []
+
+
+Overfull \hbox (64.5pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       ListPriceDiff < 0.235     to the right, improve=20.8
+2404, (0 missing)[] 
+ []
+
+
+Overfull \hbox (64.5pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       SalePriceMM   < 1.84      to the right, improve=16.8
+0587, (0 missing)[] 
+ []
+
+
+Overfull \hbox (64.5pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       DiscMM        < 0.15      to the left,  improve=10.0
+5120, (0 missing)[] 
+ []
+
+
+Overfull \hbox (64.5pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       PctDiscMM     < 0.0729725 to the left,  improve=10.0
+5120, (0 missing)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       SalePriceMM    < 1.585     to the right, agree=0.906
+, adj=0.375, (0 split)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       DiscMM         < 0.57      to the left,  agree=0.895
+, adj=0.300, (0 split)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       PctDiscMM      < 0.264375  to the left,  agree=0.895
+, adj=0.300, (0 split)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       WeekofPurchase < 274.5     to the left,  agree=0.872
+, adj=0.150, (0 split)[] 
+ []
+
+
+Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##       SalePriceCH    < 2.075     to the left,  agree=0.857
+, adj=0.050, (0 split)[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1427--1427
+[]\TU/lmtt/m/n/10 ##   predicted class=CH  expected loss=0.2212389  P(node) =0.
+2637106[] 
+ []
+
+[53] [54]
+Overfull \hbox (43.5pt too wide) in paragraph at lines 1502--1502
+[]\TU/lmtt/m/n/10 ## alternative hypothesis: true probability of success is not
+ equal to 0.5[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 1525--1525
+[]\TU/lmtt/m/n/10 ## alternative hypothesis: true probability of success is gre
+ater than 0.6103286[] 
+ []
+
+[55]
+File: data-sci_files/figure-latex/unnamed-chunk-42-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-42-1.pdf>
+[56]
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1581--1581
+[]\TU/lmtt/m/n/10 ##       Accuracy          Kappa  AccuracyLower  AccuracyUppe
+r   AccuracyNull[] 
+ []
+
+
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1581--1581
+[]\TU/lmtt/m/n/10 ##   8.226371e-01   6.323113e-01   7.953840e-01   8.476497e-0
+1   6.102684e-01[] 
+ []
+
+File: data-sci_files/figure-latex/unnamed-chunk-44-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-44-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[57]
+File: data-sci_files/figure-latex/unnamed-chunk-45-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-45-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[58]
+Underfull \hbox (badness 10000) in paragraph at lines 1627--1629
+
+ []
+
+[59] [60]
+Overfull \hbox (38.25pt too wide) in paragraph at lines 1714--1714
+[]\TU/lmtt/m/n/10 ## Accuracy was used to select the optimal model using the la
+rgest value.[] 
+ []
+
+[61]
+Overfull \hbox (38.25pt too wide) in paragraph at lines 1760--1760
+[]\TU/lmtt/m/n/10 ## Accuracy was used to select the optimal model using the la
+rgest value.[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1793--1793
+[]\TU/lmtt/m/n/10 ##       4) LoyalCH>=0.7648795 271  13 CH (0.95202952 0.04797
+048) *[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1793--1793
+[]\TU/lmtt/m/n/10 ##        10) PriceDiff>=-0.165 226  50 CH (0.77876106 0.2212
+3894) *[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1793--1793
+[]\TU/lmtt/m/n/10 ##        11) PriceDiff< -0.165 40   9 MM (0.22500000 0.77500
+000) *[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1793--1793
+[]\TU/lmtt/m/n/10 ##          24) LoyalCH< 0.303104 7   0 CH (1.00000000 0.0000
+0000) *[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1793--1793
+[]\TU/lmtt/m/n/10 ##          25) LoyalCH>=0.303104 64  31 CH (0.51562500 0.484
+37500)[] 
+ []
+
+
+Overfull \hbox (38.25pt too wide) in paragraph at lines 1793--1793
+[]\TU/lmtt/m/n/10 ##            50) WeekofPurchase>=246.5 52  22 CH (0.57692308
+ 0.42307692)[] 
+ []
+
+
+Overfull \hbox (17.25pt too wide) in paragraph at lines 1793--1793
+[]\TU/lmtt/m/n/10 ##             100) PriceCH< 1.94 35  11 CH (0.68571429 0.314
+28571) *[] 
+ []
+
+
+Overfull \hbox (17.25pt too wide) in paragraph at lines 1793--1793
+[]\TU/lmtt/m/n/10 ##             101) PriceCH>=1.94 17   6 MM (0.35294118 0.647
+05882) *[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 1793--1793
+[]\TU/lmtt/m/n/10 ##            51) WeekofPurchase< 246.5 12   3 MM (0.25000000
+ 0.75000000) *[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1793--1793
+[]\TU/lmtt/m/n/10 ##        13) SalePriceMM< 2.04 75  18 MM (0.24000000 0.76000
+000) *[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 1793--1793
+[]\TU/lmtt/m/n/10 ##       7) LoyalCH< 0.2761415 174  22 MM (0.12643678 0.87356
+322) *[] 
+ []
+
+[62]
+File: data-sci_files/figure-latex/unnamed-chunk-51-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-51-1.pdf>
+
+Overfull \hbox (64.5pt too wide) in paragraph at lines 1824--1824
+[]\TU/lmtt/m/n/10 ## Warning in verify_d(data$d): D not labeled 0/1, assuming C
+H = 0 and MM = 1![] 
+ []
+
+File: data-sci_files/figure-latex/unnamed-chunk-52-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-52-1.pdf>
+
+Underfull \vbox (badness 1199) has occurred while \output is active []
+
+[63]
+File: data-sci_files/figure-latex/unnamed-chunk-53-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-53-1.pdf>
+[64]
+File: data-sci_files/figure-latex/unnamed-chunk-56-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-56-1.pdf>
+[65]
+File: data-sci_files/figure-latex/unnamed-chunk-57-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-57-1.pdf>
+[66]
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1966--1966
+[]\TU/lmtt/m/n/10 ## -- Variable type:factor ----------------------------------
+------------------[] 
+ []
+
+
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1966--1966
+[]\TU/lmtt/m/n/10 ##   variable missing complete   n n_unique                  
+      top_counts[] 
+ []
+
+
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1966--1966
+[]\TU/lmtt/m/n/10 ##  ShelveLoc       0      400 400        3 Med: 219, Bad: 96
+, Goo: 85, NA: 0[] 
+ []
+
+
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1966--1966
+[]\TU/lmtt/m/n/10 ##      Urban       0      400 400        2          Yes: 282
+, No: 118, NA: 0[] 
+ []
+
+
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1966--1966
+[]\TU/lmtt/m/n/10 ##         US       0      400 400        2          Yes: 258
+, No: 142, NA: 0[] 
+ []
+
+
+Overfull \hbox (69.75pt too wide) in paragraph at lines 1966--1966
+[]\TU/lmtt/m/n/10 ## -- Variable type:numeric ---------------------------------
+------------------[] 
+ []
+
+[67] [68]
+File: data-sci_files/figure-latex/unnamed-chunk-62-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-62-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[69]
+Overfull \hbox (22.5pt too wide) in paragraph at lines 2087--2087
+[]\TU/lmtt/m/n/10 ## rpart(formula = Sales ~ ., data = carseats_train, method =
+ "anova",[] 
+ []
+
+
+Overfull \hbox (33.0pt too wide) in paragraph at lines 2087--2087
+[]\TU/lmtt/m/n/10 ## [1] Advertising Age         CompPrice   Income      Popula
+tion  Price[] 
+ []
+
+[70] [71]
+Overfull \hbox (54.0pt too wide) in paragraph at lines 2140--2140
+[]\TU/lmtt/m/n/10 ##            CP nsplit rel.error    xerror       xstd xerror
+_cap       eval[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 2140--2140
+[]\TU/lmtt/m/n/10 ## 9  0.01544139      8 0.4071533 0.5806072 0.04173785  0.594
+7744  under cap[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 2140--2140
+[]\TU/lmtt/m/n/10 ## 10 0.01469771      9 0.3917119 0.5641331 0.04136793  0.594
+7744  under cap[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 2140--2140
+[]\TU/lmtt/m/n/10 ## 11 0.01464055     10 0.3770142 0.5627713 0.04127139  0.594
+7744  under cap[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 2140--2140
+[]\TU/lmtt/m/n/10 ## 12 0.01423309     11 0.3623736 0.5608073 0.04109662  0.594
+7744  under cap[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 2140--2140
+[]\TU/lmtt/m/n/10 ## 13 0.01401541     12 0.3481405 0.5564663 0.03830810  0.594
+7744 min xerror[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 2140--2140
+[]\TU/lmtt/m/n/10 ## 14 0.01393771     13 0.3341251 0.5564663 0.03830810  0.594
+7744  under cap[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 2140--2140
+[]\TU/lmtt/m/n/10 ## 15 0.01055959     14 0.3201874 0.5710951 0.03887227  0.594
+7744  under cap[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 2140--2140
+[]\TU/lmtt/m/n/10 ## 16 0.01000000     15 0.3096278 0.5667561 0.03808991  0.594
+7744  under cap[] 
+ []
+
+File: data-sci_files/figure-latex/unnamed-chunk-66-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-66-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[72]
+File: data-sci_files/figure-latex/unnamed-chunk-67-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-67-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[73]
+File: data-sci_files/figure-latex/unnamed-chunk-68-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-68-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[74] [75]
+File: data-sci_files/figure-latex/unnamed-chunk-70-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-70-1.pdf>
+[76]
+Overfull \hbox (22.5pt too wide) in paragraph at lines 2260--2260
+[]\TU/lmtt/m/n/10 ## Warning in nominalTrainWorkflow(x = x, y = y, wts = weight
+s, info =[] 
+ []
+
+
+Overfull \hbox (54.0pt too wide) in paragraph at lines 2260--2260
+[]\TU/lmtt/m/n/10 ## trainInfo, : There were missing values in resampled perfor
+mance measures.[] 
+ []
+
+
+Overfull \hbox (22.5pt too wide) in paragraph at lines 2288--2288
+[]\TU/lmtt/m/n/10 ## RMSE was used to select the optimal model using the smalle
+st value.[] 
+ []
+
+[77]
+Overfull \hbox (22.5pt too wide) in paragraph at lines 2333--2333
+[]\TU/lmtt/m/n/10 ## RMSE was used to select the optimal model using the smalle
+st value.[] 
+ []
+
+File: data-sci_files/figure-latex/unnamed-chunk-74-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-74-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[78]
+File: data-sci_files/figure-latex/unnamed-chunk-75-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-75-1.pdf>
+[79]
+File: data-sci_files/figure-latex/unnamed-chunk-76-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-76-1.pdf>
+File: data-sci_files/figure-latex/unnamed-chunk-77-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-77-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[80] [81] [82]
+File: data-sci_files/figure-latex/unnamed-chunk-80-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-80-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[83] [84]
+File: data-sci_files/figure-latex/unnamed-chunk-80-2.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-80-2.pdf>
+[85]
+Overfull \hbox (17.25pt too wide) in paragraph at lines 2600--2600
+[]\TU/lmtt/m/n/10 ## Tuning parameter []min.node.size[] was held constant at a 
+value of 1[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 2600--2600
+[]\TU/lmtt/m/n/10 ## ROC was used to select the optimal model using the largest
+ value.[] 
+ []
+
+
+Overfull \hbox (22.5pt too wide) in paragraph at lines 2600--2600
+[]\TU/lmtt/m/n/10 ## The final values used for the model were mtry = 9, splitru
+le = gini[] 
+ []
+
+
+Underfull \vbox (badness 1292) has occurred while \output is active []
+
+[86]
+File: data-sci_files/figure-latex/unnamed-chunk-81-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-81-1.pdf>
+File: data-sci_files/figure-latex/unnamed-chunk-81-2.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-81-2.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[87] [88] [89]
+File: data-sci_files/figure-latex/unnamed-chunk-83-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-83-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[90]
+File: data-sci_files/figure-latex/unnamed-chunk-83-2.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-83-2.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[91] [92]
+Overfull \hbox (17.25pt too wide) in paragraph at lines 2821--2821
+[]\TU/lmtt/m/n/10 ## Tuning parameter []min.node.size[] was held constant at a 
+value of 5[] 
+ []
+
+
+Overfull \hbox (22.5pt too wide) in paragraph at lines 2821--2821
+[]\TU/lmtt/m/n/10 ## RMSE was used to select the optimal model using the smalle
+st value.[] 
+ []
+
+File: data-sci_files/figure-latex/unnamed-chunk-84-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-84-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[93]
+File: data-sci_files/figure-latex/unnamed-chunk-84-2.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-84-2.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[94] [95] [96] [97] [98] [99] [100] [101] [102] [103] [104] [105] [106] [107] [
+108] [109] [110] [111] [112] [113] [114] [115] [116] [117] [118] [119] [120] [1
+21] [122] [123] [124] [125]
+Overfull \hbox (6.75pt too wide) in paragraph at lines 4252--4252
+[]\TU/lmtt/m/n/10 ## Tuning parameter []shrinkage[] was held constant at a valu
+e of 0.1[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 4252--4252
+[]\TU/lmtt/m/n/10 ## Tuning parameter []n.minobsinnode[] was held constant at a
+ value of 10[] 
+ []
+
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 4252--4252
+[]\TU/lmtt/m/n/10 ## ROC was used to select the optimal model using the largest
+ value.[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 4252--4252
+[]\TU/lmtt/m/n/10 ## The final values used for the model were n.trees = 50, int
+eraction.depth[] 
+ []
+
+File: data-sci_files/figure-latex/unnamed-chunk-86-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-86-1.pdf>
+File: data-sci_files/figure-latex/unnamed-chunk-86-2.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-86-2.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[126] [127] [128] [129] [130] [131] [132] [133] [134] [135] [136] [137] [138] [
+139] [140] [141] [142] [143] [144] [145] [146] [147] [148] [149] [150] [151] [1
+52] [153] [154] [155] [156]
+Overfull \hbox (6.75pt too wide) in paragraph at lines 5680--5680
+[]\TU/lmtt/m/n/10 ## Tuning parameter []shrinkage[] was held constant at a valu
+e of 0.1[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 5680--5680
+[]\TU/lmtt/m/n/10 ## Tuning parameter []n.minobsinnode[] was held constant at a
+ value of 10[] 
+ []
+
+
+Overfull \hbox (22.5pt too wide) in paragraph at lines 5680--5680
+[]\TU/lmtt/m/n/10 ## RMSE was used to select the optimal model using the smalle
+st value.[] 
+ []
+
+
+Overfull \hbox (6.75pt too wide) in paragraph at lines 5680--5680
+[]\TU/lmtt/m/n/10 ##  interaction.depth = 1, shrinkage = 0.1 and n.minobsinnode
+ = 10.[] 
+ []
+
+File: data-sci_files/figure-latex/unnamed-chunk-87-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-87-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[157]
+File: data-sci_files/figure-latex/unnamed-chunk-87-2.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-87-2.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[158] [159] [160]
+File: data-sci_files/figure-latex/unnamed-chunk-90-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-90-1.pdf>
+[161] [162
 
 ]
 Chapter 9.
-[43] [44
+
+Underfull \hbox (badness 2351) in paragraph at lines 5806--5807
+\TU/lmr/m/n/10 ing”, Machine Learning Mastery. []$[][][][][] [] [] [] [][][][][
+][][][][][][][][][][][][][][][][][] [] [][][] []
+ []
+
+
+Underfull \hbox (badness 2181) in paragraph at lines 5808--5809
+\TU/lmr/m/n/10 gorithm for Machine Learning”, Machine Learning Mastery. []$[][]
+[][][] [] [] []
+ []
+
+
+Overfull \hbox (83.59998pt too wide) in paragraph at lines 5808--5809
+[][][][][][][][][][][][][][][][][][][][][][] [] [][][] [] [][][][][][][][][][][
+][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+[][][][][][][][][][][][][][][][][][][][][]$[]\TU/lmr/m/n/10 . 
+ []
+
+[163] [164
 
 ]
 Chapter 10.
-[45] [46
+[165] [166
 
 ]
 Chapter 11.
-[47] [48
+[167] [168
 
 ]
 Chapter 12.
-[49] [50
+[169] [170
 
-] [51] [52
+]
+Chapter 13.
+[171] [172
 
-] (./data-sci.bbl [53] [54
+] [173] [174
+
+] [175] [176
+
+] (./data-sci.bbl [177] [178
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1004.
-[55]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1004.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 5867.
+[179]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 5867.
 (./data-sci.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1004.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1004.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 5867.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 5867.
 
 Package rerunfilecheck Info: File `data-sci.out' has not changed.
-(rerunfilecheck)             Checksum: FF766F32BFD078F4B8B905F51FB00B97;1279.
+(rerunfilecheck)             Checksum: 3C01C3E4DD5B5797FFDDBFE14A1A1370;1722.
  ) 
 Here is how much of TeX's memory you used:
- 23680 strings out of 494458
- 447916 string characters out of 6172051
- 541561 words of memory out of 5000000
- 27769 multiletter control sequences out of 15000+600000
+ 23918 strings out of 494458
+ 458961 string characters out of 6172051
+ 611207 words of memory out of 5000000
+ 27972 multiletter control sequences out of 15000+600000
  545081 words of font info for 57 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 52i,6n,47p,805b,429s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 52i,6n,47p,848b,442s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on data-sci.pdf (55 pages).
+Output written on data-sci.pdf (179 pages).
