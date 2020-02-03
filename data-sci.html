@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>My Data Science Notes</title>
+  <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  <meta name="generator" content="bookdown #bookdown:version# and GitBook 2.6.7" />
+
+  <meta property="og:title" content="My Data Science Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="My Data Science Notes" />
+  
+  <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+<meta name="author" content="Michael Foley" />
+
+
+<meta name="date" content="2020-01-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+<script src="assets/jquery-2.2.3/jquery.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+<!--bookdown:title:start-->
+<div id="header">
+<h1 class="title">My Data Science Notes</h1>
+<p class="author"><em>Michael Foley</em></p>
+<p class="date"><em>2020-01-29</em></p>
+</div>
+<!--bookdown:title:end-->
+
+<!--bookdown:toc:start-->
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+<!--bookdown:toc2:start-->
+<ul>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#probability"><span class="toc-section-number">1</span> Probability</a><ul>
+<li><a href="#principles"><span class="toc-section-number">1.1</span> Principles</a></li>
+<li><a href="#discrete-distributions"><span class="toc-section-number">1.2</span> Discrete Distributions</a><ul>
+<li><a href="#binomial"><span class="toc-section-number">1.2.1</span> Binomial</a></li>
+<li><a href="#negative-binomial"><span class="toc-section-number">1.2.2</span> Negative-Binomial</a></li>
+<li><a href="#geometric"><span class="toc-section-number">1.2.3</span> Geometric</a></li>
+</ul></li>
+<li><a href="#continuous-distributions"><span class="toc-section-number">1.3</span> Continuous Distributions</a><ul>
+<li><a href="#normal"><span class="toc-section-number">1.3.1</span> Normal</a></li>
+<li><a href="#example-1"><span class="toc-section-number">1.3.2</span> Example</a></li>
+<li><a href="#example-2"><span class="toc-section-number">1.3.3</span> Example</a></li>
+<li><a href="#example-3"><span class="toc-section-number">1.3.4</span> Example</a></li>
+<li><a href="#normal-approximation-to-binomial"><span class="toc-section-number">1.3.5</span> Normal Approximation to Binomial</a></li>
+<li><a href="#example-4"><span class="toc-section-number">1.3.6</span> Example</a></li>
+<li><a href="#example-5"><span class="toc-section-number">1.3.7</span> Example</a></li>
+<li><a href="#from-sample-to-population"><span class="toc-section-number">1.3.8</span> From Sample to Population</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#inference"><span class="toc-section-number">2</span> Inference</a></li>
+<li><a href="#experiments"><span class="toc-section-number">3</span> Experiments</a><ul>
+<li><a href="#example-one"><span class="toc-section-number">3.1</span> Example one</a></li>
+<li><a href="#example-two"><span class="toc-section-number">3.2</span> Example two</a></li>
+</ul></li>
+<li><a href="#regression"><span class="toc-section-number">4</span> Regression</a></li>
+<li><a href="#classification"><span class="toc-section-number">5</span> Classification</a></li>
+<li><a href="#regularization"><span class="toc-section-number">6</span> Regularization</a></li>
+<li><a href="#non-linear-models"><span class="toc-section-number">7</span> Non-linear Models</a><ul>
+<li><a href="#splines"><span class="toc-section-number">7.1</span> Splines</a></li>
+<li><a href="#mars"><span class="toc-section-number">7.2</span> MARS</a></li>
+<li><a href="#gam"><span class="toc-section-number">7.3</span> GAM</a></li>
+</ul></li>
+<li><a href="#decision-trees"><span class="toc-section-number">8</span> Decision Trees</a><ul>
+<li><a href="#classification-tree"><span class="toc-section-number">8.1</span> Classification Tree</a><ul>
+<li><a href="#confusion-matrix"><span class="toc-section-number">8.1.1</span> Confusion Matrix</a></li>
+<li><a href="#roc-curve"><span class="toc-section-number">8.1.2</span> ROC Curve</a></li>
+<li><a href="#caret-approach"><span class="toc-section-number">8.1.3</span> Caret Approach</a></li>
+</ul></li>
+<li><a href="#regression-trees"><span class="toc-section-number">8.2</span> Regression Trees</a><ul>
+<li><a href="#caret-approach-1"><span class="toc-section-number">8.2.1</span> Caret Approach</a></li>
+</ul></li>
+<li><a href="#bagging"><span class="toc-section-number">8.3</span> Bagging</a></li>
+<li><a href="#random-forests"><span class="toc-section-number">8.4</span> Random Forests</a></li>
+<li><a href="#gradient-boosting"><span class="toc-section-number">8.5</span> Gradient Boosting</a></li>
+<li><a href="#summary"><span class="toc-section-number">8.6</span> Summary</a></li>
+</ul></li>
+<li><a href="#support-vector-machines"><span class="toc-section-number">9</span> Support Vector Machines</a><ul>
+<li><a href="#maximal-margin-classifier"><span class="toc-section-number">9.1</span> Maximal Margin Classifier</a></li>
+<li><a href="#support-vector-classifier"><span class="toc-section-number">9.2</span> Support Vector Classifier</a></li>
+</ul></li>
+<li><a href="#principal-components-analysis"><span class="toc-section-number">10</span> Principal Components Analysis</a></li>
+<li><a href="#clustering"><span class="toc-section-number">11</span> Clustering</a></li>
+<li><a href="#text-mining"><span class="toc-section-number">12</span> Text Mining</a></li>
+<li><a href="#appendix">Appendix</a><ul>
+<li><a href="#open-source-software-for-data-science"><span class="toc-section-number">12.1</span> Open Source Software for Data Science</a></li>
+<li><a href="#data-visualization-and-designing-with-ai"><span class="toc-section-number">12.2</span> Data, visualization, and designing with AI</a></li>
+<li><a href="#deploying-end-to-end-data-science-with-shiny-plumber-and-pins"><span class="toc-section-number">12.3</span> Deploying End-to-End Data Science with Shiny, Plumber, and Pins</a></li>
+<li><a href="#health-connected-siloed-data-sources-and-streamlined-reporting-using-r"><span class="toc-section-number">12.4</span> Health Connected Siloed Data Sources and Streamlined Reporting Using R</a></li>
+<li><a href="#builiding-a-new-data-science-pipeline-for-teh-ft-with-rstudio-connect"><span class="toc-section-number">12.5</span> Builiding a new data science pipeline for teh FT with RStudio Connect</a></li>
+<li><a href="#how-to-win-an-ai-hackathon-without-using-ai"><span class="toc-section-number">12.6</span> How to win an AI Hackathon without using AI</a></li>
+<li><a href="#production-grade-shiny-apps-with-golem"><span class="toc-section-number">12.7</span> Production-grade Shiny Apps with golem</a></li>
+<li><a href="#making-the-shiny-contest"><span class="toc-section-number">12.8</span> Making the Shiny Contest</a></li>
+<li><a href="#styling-shiny-apps-with-sass-and-bootstrap-4"><span class="toc-section-number">12.9</span> Styling Shiny apps with Sass and Bootstrap 4</a></li>
+<li><a href="#r-then-and-now"><span class="toc-section-number">12.10</span> R: Then and Now</a></li>
+<li><a href="#journalism-with-rstudio-r-and-teh-tidyverse"><span class="toc-section-number">12.11</span> Journalism with RStudio, R, and teh Tidyverse</a></li>
+<li><a href="#learning-r-with-humorous-side-projects---or---technical-debt-is-a-social-problem"><span class="toc-section-number">12.12</span> Learning R with humorous side projects - or - Technical debt is a social problem</a></li>
+<li><a href="#flatironkitchen-how-we-overhauled-a-frankensteinian-sql-workflow-with-the-tidyverse"><span class="toc-section-number">12.13</span> FlatironKitchen: How we overhauled a Frankensteinian SQL workflow with the tidyverse</a></li>
+<li><a href="#making-better-spaghetti-plots-exploring-longitudinal-data-with-brolgar-package"><span class="toc-section-number">12.14</span> Making better spaghetti (plots): Exploring longitudinal data with brolgar package</a></li>
+<li><a href="#object-of-type-closure-is-not-subsettable"><span class="toc-section-number">12.15</span> Object of type ‘closure’ is not subsettable</a></li>
+<li><a href="#branding-and-packaging-reports-with-r-markdown"><span class="toc-section-number">12.16</span> Branding and Packaging Reports with R Markdown</a></li>
+<li><a href="#the-glamour-of-graphics"><span class="toc-section-number">12.17</span> The Glamour of Graphics</a></li>
+<li><a href="#dont-repeat-yourself-talk-to-yourself-repeated-reporting-in-the-r-universe"><span class="toc-section-number">12.18</span> Don’t repeat yourself, talk to yourself! Repeated reporting in the R universe</a></li>
+<li><a href="#rstudio-1.3-sneak-preview"><span class="toc-section-number">12.19</span> RStudio 1.3 Sneak Preview</a></li>
+<li><a href="#one-r-markdown-document-fourteen-demos---or---tidyverse-2019-20"><span class="toc-section-number">12.20</span> One R Markdown Document, Fourteen Demos - or - Tidyverse 2019-20</a></li>
+<li><a href="#best-practices-for-programing-with-ggplot2"><span class="toc-section-number">12.21</span> Best Practices for programing with ggplot2</a></li>
+<li><a href="#spruce-up-your-ggplot2-visualization-with-formatted-text"><span class="toc-section-number">12.22</span> Spruce up your ggplot2 visualization with formatted text</a></li>
+<li><a href="#the-little-package-that-could-taking-visualization-to-the-next-level-with-the-scales-package"><span class="toc-section-number">12.23</span> The little package that could: taking visualization to the next level with the scales package</a></li>
+<li><a href="#advances-in-tidyeval"><span class="toc-section-number">12.24</span> Advances in tidyeval</a></li>
+<li><a href="#section"><span class="toc-section-number">12.25</span> </a></li>
+</ul></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!--bookdown:toc2:end-->
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">My Data Science Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!--bookdown:toc:end-->
+<!--bookdown:body:start-->
+<div id="intro" class="section level1 unnumbered">
+<h1>Intro</h1>
+<p>These notes are pulled from various classes, tutorials, books, etc. and are intended for my own consumption. If you are finding this on the internet, I hope it is useful to you, but you should know that I am just a student and there’s a good chance whatever you’re reading here is mistaken. In fact, that should probably be your null hypothesis… or your prior. Whatever.</p>
+<!--chapter:end:index.Rmd-->
+</div>
+<div id="probability" class="section level1">
+<h1><span class="header-section-number">1</span> Probability</h1>
+<p>Placeholder</p>
+<div id="principles" class="section level2">
+<h2><span class="header-section-number">1.1</span> Principles</h2>
+</div>
+<div id="discrete-distributions" class="section level2">
+<h2><span class="header-section-number">1.2</span> Discrete Distributions</h2>
+<div id="binomial" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> Binomial</h3>
+</div>
+<div id="negative-binomial" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Negative-Binomial</h3>
+</div>
+<div id="geometric" class="section level3">
+<h3><span class="header-section-number">1.2.3</span> Geometric</h3>
+</div>
+</div>
+<div id="continuous-distributions" class="section level2">
+<h2><span class="header-section-number">1.3</span> Continuous Distributions</h2>
+<div id="normal" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Normal</h3>
+<div id="example" class="section level4 unnumbered">
+<h4>Example</h4>
+</div>
+</div>
+<div id="example-1" class="section level3">
+<h3><span class="header-section-number">1.3.2</span> Example</h3>
+</div>
+<div id="example-2" class="section level3">
+<h3><span class="header-section-number">1.3.3</span> Example</h3>
+</div>
+<div id="example-3" class="section level3">
+<h3><span class="header-section-number">1.3.4</span> Example</h3>
+</div>
+<div id="normal-approximation-to-binomial" class="section level3">
+<h3><span class="header-section-number">1.3.5</span> Normal Approximation to Binomial</h3>
+</div>
+<div id="example-4" class="section level3">
+<h3><span class="header-section-number">1.3.6</span> Example</h3>
+</div>
+<div id="example-5" class="section level3">
+<h3><span class="header-section-number">1.3.7</span> Example</h3>
+</div>
+<div id="from-sample-to-population" class="section level3">
+<h3><span class="header-section-number">1.3.8</span> From Sample to Population</h3>
+<!--chapter:end:01-probability.Rmd-->
+</div>
+</div>
+</div>
+<div id="inference" class="section level1">
+<h1><span class="header-section-number">2</span> Inference</h1>
+<!--chapter:end:02-inference.Rmd-->
+</div>
+<div id="experiments" class="section level1">
+<h1><span class="header-section-number">3</span> Experiments</h1>
+<p>Some <em>significant</em> applications are demonstrated in this chapter.</p>
+<div id="example-one" class="section level2">
+<h2><span class="header-section-number">3.1</span> Example one</h2>
+</div>
+<div id="example-two" class="section level2">
+<h2><span class="header-section-number">3.2</span> Example two</h2>
+<!--chapter:end:03-experiment.Rmd-->
+</div>
+</div>
+<div id="regression" class="section level1">
+<h1><span class="header-section-number">4</span> Regression</h1>
+<!--chapter:end:04-regression.Rmd-->
+</div>
+<div id="classification" class="section level1">
+<h1><span class="header-section-number">5</span> Classification</h1>
+<!--chapter:end:05-classification.Rmd-->
+</div>
+<div id="regularization" class="section level1">
+<h1><span class="header-section-number">6</span> Regularization</h1>
+<!--chapter:end:06-regularization.Rmd-->
+</div>
+<div id="non-linear-models" class="section level1">
+<h1><span class="header-section-number">7</span> Non-linear Models</h1>
+<p>Placeholder</p>
+<div id="splines" class="section level2">
+<h2><span class="header-section-number">7.1</span> Splines</h2>
+</div>
+<div id="mars" class="section level2">
+<h2><span class="header-section-number">7.2</span> MARS</h2>
+</div>
+<div id="gam" class="section level2">
+<h2><span class="header-section-number">7.3</span> GAM</h2>
+<!--chapter:end:07-nonlin.Rmd-->
+</div>
+</div>
+<div id="decision-trees" class="section level1">
+<h1><span class="header-section-number">8</span> Decision Trees</h1>
+<p>Placeholder</p>
+<div id="classification-tree" class="section level2">
+<h2><span class="header-section-number">8.1</span> Classification Tree</h2>
+<div id="confusion-matrix" class="section level3">
+<h3><span class="header-section-number">8.1.1</span> Confusion Matrix</h3>
+</div>
+<div id="roc-curve" class="section level3">
+<h3><span class="header-section-number">8.1.2</span> ROC Curve</h3>
+</div>
+<div id="caret-approach" class="section level3">
+<h3><span class="header-section-number">8.1.3</span> Caret Approach</h3>
+</div>
+</div>
+<div id="regression-trees" class="section level2">
+<h2><span class="header-section-number">8.2</span> Regression Trees</h2>
+<div id="caret-approach-1" class="section level3">
+<h3><span class="header-section-number">8.2.1</span> Caret Approach</h3>
+</div>
+</div>
+<div id="bagging" class="section level2">
+<h2><span class="header-section-number">8.3</span> Bagging</h2>
+</div>
+<div id="random-forests" class="section level2">
+<h2><span class="header-section-number">8.4</span> Random Forests</h2>
+<div id="bagging-classification-example" class="section level4">
+<h4><span class="header-section-number">8.4.0.1</span> Bagging Classification Example</h4>
+</div>
+<div id="random-forest-classification-example" class="section level4">
+<h4><span class="header-section-number">8.4.0.2</span> Random Forest Classification Example</h4>
+</div>
+<div id="bagging-regression-example" class="section level4">
+<h4><span class="header-section-number">8.4.0.3</span> Bagging Regression Example</h4>
+</div>
+<div id="random-forest-regression-example" class="section level4">
+<h4><span class="header-section-number">8.4.0.4</span> Random Forest Regression Example</h4>
+</div>
+</div>
+<div id="gradient-boosting" class="section level2">
+<h2><span class="header-section-number">8.5</span> Gradient Boosting</h2>
+<div id="gradient-boosting-classification-example" class="section level4">
+<h4><span class="header-section-number">8.5.0.1</span> Gradient Boosting Classification Example</h4>
+</div>
+<div id="gradient-boosting-regression-example" class="section level4">
+<h4><span class="header-section-number">8.5.0.2</span> Gradient Boosting Regression Example</h4>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2><span class="header-section-number">8.6</span> Summary</h2>
+<!--chapter:end:08-cart.Rmd-->
+</div>
+</div>
+<div id="support-vector-machines" class="section level1">
+<h1><span class="header-section-number">9</span> Support Vector Machines</h1>
+<p>These notes rely on <span class="citation">(James et al. <a href="#ref-James2013">2013</a>)</span>, <span class="citation">(Hastie, Tibshirani, and Friedman <a href="#ref-Hastie2017">2017</a>)</span>, and <span class="citation">(Kuhn and Johnson <a href="#ref-Kuhn2016">2016</a>)</span>. I also reviewed the material in PSU’s Applied Data Mining and Statistical Learning (<a href="https://online.stat.psu.edu/stat508/">STAT 508</a>).</p>
+<p>The SVM algorithm searches for a linearly separable hyperplane separating members of one class from the other. If such a hyperplane does not exist, SVM uses a nonlinear mapping to transform the training data into a higher dimension. With an appropriate nonlinear mapping to a sufficiently high dimension, data from two classes can always be separated by a hyperplane. The SVM algorithm finds this hyperplane using support vectors and margins. SVM has relatively high accuracy, and is less prone to overfitting.</p>
+<p>The support vector machine (SVM) is an extension of the <em>support vector classifier</em> which in turn is a generalization of the simple and intuitive <em>maximal margin classifier</em>.</p>
+<div id="maximal-margin-classifier" class="section level2">
+<h2><span class="header-section-number">9.1</span> Maximal Margin Classifier</h2>
+<p>The maximal margin classifier is elegant and simple, but rarely applicable to data sets since it requires that the classes be separable by a linear boundary. However it is the foundation of SVM and therefore a good path to understanding.</p>
+<p>Given an <span class="math inline">\(n \times p\)</span> data matrix <strong>X</strong> with binary response variable <span class="math inline">\(y \in [-1, 1]\)</span> it <em>may</em> be possible to define a <em>p</em>-dimensional hyperplane</p>
+<p><span class="math display">\[\beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = 0\]</span></p>
+<p>such that all observations of each class fall on opposite sides of the hyperplane. This “separating hyperplane” has the property that</p>
+<p><span class="math display">\[y_i (\beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = 0) \ge M\]</span></p>
+<p>where <span class="math inline">\(M\)</span> is some positive margin. If the <span class="math inline">\(\beta\)</span> values are constrained so that <span class="math inline">\(\sum\beta^2 = 1\)</span>, then (it can be shown that) <span class="math inline">\(M\)</span> is the perpendicular distance from observation <em>i</em> and the hyperplane. The maximal margin classifier <em>maximizes</em> <span class="math inline">\(M\)</span>. The maximization of <span class="math inline">\(M\)</span> is a straight-forward task for your computer (<span class="citation">(James et al. <a href="#ref-James2013">2013</a>)</span>).</p>
+<p>It should be obvious that in most cases a separating hyperplane does not exist. In fact, even if a separating hyperplane does exist, it may not be desirable, such as when the resulting margin is extremely narrow.</p>
+</div>
+<div id="support-vector-classifier" class="section level2">
+<h2><span class="header-section-number">9.2</span> Support Vector Classifier</h2>
+<p>The maximal margin classifier can be generalized to non-separable cases using a so-called “soft margin”. The generalization is called the <em>support vector classifier</em>. The soft margin allows some misclassification in the interest of greater robustness to individual observations.</p>
+<p>The support vector classifier optimizes</p>
+<p><span class="math display">\[y_i (\beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = 0) \ge M(1 - \epsilon_i)\]</span></p>
+<p>where the <span class="math inline">\(\epsilon_i\)</span> are <em>slack variables</em> which sum to some constant tuning parameter <span class="math inline">\(\sum{\epsilon_i} = C\)</span>. The slack variable values indicate where the observation lies. <span class="math inline">\(\epsilon_i = 0\)</span> means the observation is on the correct side of the margin. <span class="math inline">\(\epsilon_i &gt; 0\)</span> means the observation is on the wrong side of the margin. <span class="math inline">\(\epsilon_i &gt; 1\)</span> means the observation is on the wrong side of the hyperplane. <span class="math inline">\(C\)</span> sets the tolerance for margin violation. If <span class="math inline">\(C = 0\)</span>, then all observations must reside on the correct side of the margin, as in the maximal margin classifier. Notice that <span class="math inline">\(C\)</span> is a also an upper bound on the number of observations that violate the hyperplane. <span class="math inline">\(C\)</span> controls the bias-variance trade-off. As <span class="math inline">\(C\)</span> increases, the margin widens allows more violations. The classifier bias increases but its variance decreases.</p>
+<p>The optimization problem has an interesting property in that only observations that either lie on the margin or that violate the margin affect the hyperplane. These observations are known as support vectors. As <span class="math inline">\(C\)</span> increases, the number of violating observations increase, and thus the number of support vectors increases. This property makes the algorith robust to the extreme observations far away from the hyperplane.</p>
+<p>The only shortcoming with the algorithm is that</p>
+<p>The Support Vector Machine (SVM) algorithm finds the optimal hyperplane that classifies the data points. The optimal hyperplane is the one which maximizes the margin betweeen the data points and the hyperplane. Support vectors are data points close to the hyperplane and influence the position and orientation of the hyperplane.</p>
+<p>Maximize the margin with the hinge loss function:</p>
+<p><span class="math display">\[c(x, y, f(x)) = \begin{cases} 
+0, &amp; \mbox{if } y \cdot f(x)&gt;1 \\ 
+1-y \cdot f(x), &amp; \mbox{else} 
+\end{cases}\]</span></p>
+<p>dfd</p>
+<p><span class="math display">\[f(n) = \begin{cases} n/2, &amp; \mbox{if } n\mbox{ is even} \\ 3n+1, &amp; \mbox{if } n\mbox{ is odd} \end{cases}\]</span></p>
+<p>A <strong>separable</strong> dataset is one in which the classes do not overlap, so the classes can be separated by a decision boundary. The <strong>maximal margin separator</strong> is the decision boundary that is furthest from both classes. It is located at the mean of the relevant extreme points from each class.</p>
+<p>The <strong>kernal</strong> is the type of decision boundary (linear, polynomial, etc.).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<pre><code>## Warning: package &#39;tidyverse&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## -- Attaching packages ----------------------------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.2.1     v purrr   0.3.3
+## v tibble  2.1.3     v dplyr   0.8.3
+## v tidyr   1.0.0     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.4.0</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## Warning: package &#39;readr&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## Warning: package &#39;purrr&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## Warning: package &#39;stringr&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## Warning: package &#39;forcats&#39; was built under R version 3.5.3</code></pre>
+<pre><code>## -- Conflicts -------------------------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb14-2" title="2">  <span class="dt">samp =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,</a>
+<a class="sourceLine" id="cb14-3" title="3">  <span class="dt">sugar =</span> <span class="kw">c</span>(<span class="fl">10.9</span>, <span class="fl">10.9</span>, <span class="fl">10.6</span>, <span class="dv">10</span>, <span class="dv">8</span>, </a>
+<a class="sourceLine" id="cb14-4" title="4">            <span class="fl">8.2</span>, <span class="fl">8.6</span>, <span class="fl">10.9</span>, <span class="fl">10.7</span>, <span class="dv">8</span>,</a>
+<a class="sourceLine" id="cb14-5" title="5">            <span class="fl">7.7</span>, <span class="fl">7.8</span>, <span class="fl">8.4</span>, <span class="fl">11.5</span>, <span class="fl">11.2</span>,</a>
+<a class="sourceLine" id="cb14-6" title="6">            <span class="fl">8.9</span>, <span class="fl">8.7</span>, <span class="fl">7.4</span>, <span class="fl">10.9</span>, <span class="dv">10</span>, </a>
+<a class="sourceLine" id="cb14-7" title="7">            <span class="fl">11.4</span>, <span class="fl">10.8</span>, <span class="fl">8.5</span>, <span class="fl">8.2</span>, <span class="fl">10.6</span>)</a>
+<a class="sourceLine" id="cb14-8" title="8">)</a>
+<a class="sourceLine" id="cb14-9" title="9"></a>
+<a class="sourceLine" id="cb14-10" title="10"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x =</span> sugar)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-11" title="11"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> <span class="dv">0</span>))</a></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>The <strong>e1071</strong> library implements the SVM algorithm. The following function builds a linear SVM classifier.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">library</span>(e1071)</a></code></pre></div>
+<pre><code>## Warning: package &#39;e1071&#39; was built under R version 3.5.3</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">svm_model &lt;-<span class="st"> </span><span class="kw">svm</span>(samp <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb17-2" title="2">                 df,</a>
+<a class="sourceLine" id="cb17-3" title="3">                 <span class="dt">type =</span> <span class="st">&quot;C-classification&quot;</span>,</a>
+<a class="sourceLine" id="cb17-4" title="4">                 <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>,</a>
+<a class="sourceLine" id="cb17-5" title="5">                 <span class="dt">scale =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb17-6" title="6"></a>
+<a class="sourceLine" id="cb17-7" title="7"><span class="kw">print</span>(svm_model)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## svm(formula = samp ~ ., data = df, type = &quot;C-classification&quot;, kernel = &quot;linear&quot;, 
+##     scale = FALSE)
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  linear 
+##        cost:  1 
+## 
+## Number of Support Vectors:  25</code></pre>
+<p>Build the weight vector from the coeficients and sv elements in the model.</p>
+<p>J</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">w &lt;-<span class="st"> </span><span class="kw">t</span>(svm_model<span class="op">$</span>coefs) <span class="op">%*%</span><span class="st"> </span>svm_model<span class="op">$</span>SV</a>
+<a class="sourceLine" id="cb19-2" title="2">slope_<span class="dv">1</span> &lt;-<span class="st"> </span>w[<span class="dv">1</span>]<span class="op">/</span>w[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb19-3" title="3">intercept_<span class="dv">1</span> &lt;-<span class="st"> </span>svm_model<span class="op">$</span>rho<span class="op">/</span>w[<span class="dv">2</span>]</a></code></pre></div>
+<p>The illustration below shows two classes of observations with measurements on two variables and a separating hyperplane. The dashed lines show the maximal margin separating the classes. Three observations lie along the maximal margin lines. These three observations are <em>support vectors</em>. They “support” the maximal margin hyperplane in the sense that if these points were moved the maximal margin hyperplane would move as well. The maximal margin hyperplane depends on the support vectors, but not on the other observations.</p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-4-1.png" width="480" /></p>
+<!--chapter:end:09-svm.Rmd-->
+</div>
+</div>
+<div id="principal-components-analysis" class="section level1">
+<h1><span class="header-section-number">10</span> Principal Components Analysis</h1>
+<!--chapter:end:10-pca.Rmd-->
+</div>
+<div id="clustering" class="section level1">
+<h1><span class="header-section-number">11</span> Clustering</h1>
+<!--chapter:end:11-cluster.Rmd-->
+</div>
+<div id="text-mining" class="section level1">
+<h1><span class="header-section-number">12</span> Text Mining</h1>
+<!--chapter:end:12-text-mining.Rmd-->
+</div>
+<div id="appendix" class="section level1 unnumbered">
+<h1>Appendix</h1>
+<p>Placeholder</p>
+<div id="open-source-software-for-data-science" class="section level2">
+<h2><span class="header-section-number">12.1</span> Open Source Software for Data Science</h2>
+</div>
+<div id="data-visualization-and-designing-with-ai" class="section level2">
+<h2><span class="header-section-number">12.2</span> Data, visualization, and designing with AI</h2>
+</div>
+<div id="deploying-end-to-end-data-science-with-shiny-plumber-and-pins" class="section level2">
+<h2><span class="header-section-number">12.3</span> Deploying End-to-End Data Science with Shiny, Plumber, and Pins</h2>
+</div>
+<div id="health-connected-siloed-data-sources-and-streamlined-reporting-using-r" class="section level2">
+<h2><span class="header-section-number">12.4</span> Health Connected Siloed Data Sources and Streamlined Reporting Using R</h2>
+</div>
+<div id="builiding-a-new-data-science-pipeline-for-teh-ft-with-rstudio-connect" class="section level2">
+<h2><span class="header-section-number">12.5</span> Builiding a new data science pipeline for teh FT with RStudio Connect</h2>
+</div>
+<div id="how-to-win-an-ai-hackathon-without-using-ai" class="section level2">
+<h2><span class="header-section-number">12.6</span> How to win an AI Hackathon without using AI</h2>
+</div>
+<div id="production-grade-shiny-apps-with-golem" class="section level2">
+<h2><span class="header-section-number">12.7</span> Production-grade Shiny Apps with golem</h2>
+</div>
+<div id="making-the-shiny-contest" class="section level2">
+<h2><span class="header-section-number">12.8</span> Making the Shiny Contest</h2>
+</div>
+<div id="styling-shiny-apps-with-sass-and-bootstrap-4" class="section level2">
+<h2><span class="header-section-number">12.9</span> Styling Shiny apps with Sass and Bootstrap 4</h2>
+</div>
+<div id="r-then-and-now" class="section level2">
+<h2><span class="header-section-number">12.10</span> R: Then and Now</h2>
+</div>
+<div id="journalism-with-rstudio-r-and-teh-tidyverse" class="section level2">
+<h2><span class="header-section-number">12.11</span> Journalism with RStudio, R, and teh Tidyverse</h2>
+</div>
+<div id="learning-r-with-humorous-side-projects---or---technical-debt-is-a-social-problem" class="section level2">
+<h2><span class="header-section-number">12.12</span> Learning R with humorous side projects - or - Technical debt is a social problem</h2>
+</div>
+<div id="flatironkitchen-how-we-overhauled-a-frankensteinian-sql-workflow-with-the-tidyverse" class="section level2">
+<h2><span class="header-section-number">12.13</span> FlatironKitchen: How we overhauled a Frankensteinian SQL workflow with the tidyverse</h2>
+</div>
+<div id="making-better-spaghetti-plots-exploring-longitudinal-data-with-brolgar-package" class="section level2">
+<h2><span class="header-section-number">12.14</span> Making better spaghetti (plots): Exploring longitudinal data with brolgar package</h2>
+</div>
+<div id="object-of-type-closure-is-not-subsettable" class="section level2">
+<h2><span class="header-section-number">12.15</span> Object of type ‘closure’ is not subsettable</h2>
+</div>
+<div id="branding-and-packaging-reports-with-r-markdown" class="section level2">
+<h2><span class="header-section-number">12.16</span> Branding and Packaging Reports with R Markdown</h2>
+</div>
+<div id="the-glamour-of-graphics" class="section level2">
+<h2><span class="header-section-number">12.17</span> The Glamour of Graphics</h2>
+</div>
+<div id="dont-repeat-yourself-talk-to-yourself-repeated-reporting-in-the-r-universe" class="section level2">
+<h2><span class="header-section-number">12.18</span> Don’t repeat yourself, talk to yourself! Repeated reporting in the R universe</h2>
+</div>
+<div id="rstudio-1.3-sneak-preview" class="section level2">
+<h2><span class="header-section-number">12.19</span> RStudio 1.3 Sneak Preview</h2>
+</div>
+<div id="one-r-markdown-document-fourteen-demos---or---tidyverse-2019-20" class="section level2">
+<h2><span class="header-section-number">12.20</span> One R Markdown Document, Fourteen Demos - or - Tidyverse 2019-20</h2>
+</div>
+<div id="best-practices-for-programing-with-ggplot2" class="section level2">
+<h2><span class="header-section-number">12.21</span> Best Practices for programing with ggplot2</h2>
+</div>
+<div id="spruce-up-your-ggplot2-visualization-with-formatted-text" class="section level2">
+<h2><span class="header-section-number">12.22</span> Spruce up your ggplot2 visualization with formatted text</h2>
+</div>
+<div id="the-little-package-that-could-taking-visualization-to-the-next-level-with-the-scales-package" class="section level2">
+<h2><span class="header-section-number">12.23</span> The little package that could: taking visualization to the next level with the scales package</h2>
+</div>
+<div id="advances-in-tidyeval" class="section level2">
+<h2><span class="header-section-number">12.24</span> Advances in tidyeval</h2>
+</div>
+<div id="section" class="section level2">
+<h2><span class="header-section-number">12.25</span> </h2>
+<!--chapter:end:13-appendix.Rmd-->
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<!--chapter:end:14-references.Rmd-->
+<div id="refs" class="references">
+<div id="ref-Hastie2017">
+<p>Hastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2017. <em>The Elements of Statistical Learning</em>. 2nd ed. New York, NY: Springer. <a href="https://web.stanford.edu/~hastie/ElemStatLearn/">https://web.stanford.edu/~hastie/ElemStatLearn/</a>.</p>
+</div>
+<div id="ref-James2013">
+<p>James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning: With Applications in R</em>. 1st ed. New York, NY: Springer. <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/book.html">http://faculty.marshall.usc.edu/gareth-james/ISL/book.html</a>.</p>
+</div>
+<div id="ref-Kuhn2016">
+<p>Kuhn, Max, and Kjell Johnson. 2016. <em>Applied Predictive Modeling</em>. 1st ed. New York, NY: Springer. <a href="http://appliedpredictivemodeling.com/">http://appliedpredictivemodeling.com/</a>.</p>
+</div>
+</div>
+</div>
+<!--bookdown:body:end-->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+    </div>
+  </div>
+<!--bookdown:config-->
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

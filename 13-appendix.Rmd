@@ -17,3 +17,30 @@ After creating all of your Markdown pages, knit the book or click the **Build Bo
 
 # Shiny Apps {-}
 
+# rstudio::conf
+## Open Source Software for Data Science
+## Data, visualization, and designing with AI
+## Deploying End-to-End Data Science with Shiny, Plumber, and Pins
+## Health Connected Siloed Data Sources and Streamlined Reporting Using R
+## Builiding a new data science pipeline for teh FT with RStudio Connect
+## How to win an AI Hackathon without using AI
+## Production-grade Shiny Apps with golem
+## Making the Shiny Contest
+## Styling Shiny apps with Sass and Bootstrap 4
+## R: Then and Now
+## Journalism with RStudio, R, and teh Tidyverse
+## Learning R with humorous side projects - or - Technical debt is a social problem
+## FlatironKitchen: How we overhauled a Frankensteinian SQL workflow with the tidyverse
+## Making better spaghetti (plots): Exploring longitudinal data with brolgar package
+
+## Object of type 'closure' is not subsettable
+## Branding and Packaging Reports with R Markdown
+## The Glamour of Graphics
+## Don't repeat yourself, talk to yourself! Repeated reporting in the R universe
+## RStudio 1.3 Sneak Preview
+## One R Markdown Document, Fourteen Demos - or - Tidyverse 2019-20
+## Best Practices for programing with ggplot2
+## Spruce up your ggplot2 visualization with formatted text
+## The little package that could: taking visualization to the next level with the scales package
+## Advances in tidyeval
+## 
