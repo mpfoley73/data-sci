@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 10 Support Vector Machines | My Data Science Notes</title>
+  <title>10.1 Maximal Margin Classifier | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 10 Support Vector Machines | My Data Science Notes" />
+  <meta property="og:title" content="10.1 Maximal Margin Classifier | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 10 Support Vector Machines | My Data Science Notes" />
+  <meta name="twitter:title" content="10.1 Maximal Margin Classifier | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reference.html"/>
-<link rel="next" href="maximal-margin-classifier.html"/>
+<link rel="prev" href="support-vector-machines.html"/>
+<link rel="next" href="support-vector-classifier.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -241,31 +241,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="support-vector-machines" class="section level1">
-<h1><span class="header-section-number">Chapter 10</span> Support Vector Machines</h1>
-<p>These notes rely on <span class="citation">(James et al. <a href="#ref-James2013" role="doc-biblioref">2013</a>)</span>, <span class="citation">(Hastie, Tibshirani, and Friedman <a href="#ref-Hastie2017" role="doc-biblioref">2017</a>)</span>, and <span class="citation">(Kuhn and Johnson <a href="#ref-Kuhn2016" role="doc-biblioref">2016</a>)</span>. I also reviewed the material in PSU’s Applied Data Mining and Statistical Learning (<a href="https://online.stat.psu.edu/stat508/">STAT 508</a>), and the <em>e1071</em> <a href="https://cran.r-project.org/web/packages/e1071/vignettes/svmdoc.pdf">Support Vector Machines</a> vignette.</p>
-<p>The Support Vector Machines (SVM) algorithm finds the optimal separating hyperplane between members of two classes using an appropriate nonlinear mapping to a sufficiently high dimension. The hyperplane is defined by the observations that lie within a margin optimized by a cost hyperparameter. These observations are called the <em>support vectors</em>.</p>
-<p>SVM is an extension of the <em>support vector classifier</em> which in turn is a generalization of the simple and intuitive <em>maximal margin classifier</em>.</p> 
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-Hastie2017">
-<p>Hastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2017. <em>The Elements of Statistical Learning</em>. 2nd ed. New York, NY: Springer. <a href="https://web.stanford.edu/~hastie/ElemStatLearn/">https://web.stanford.edu/~hastie/ElemStatLearn/</a>.</p>
-</div>
-<div id="ref-James2013">
-<p>James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning: With Applications in R</em>. 1st ed. New York, NY: Springer. <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/book.html">http://faculty.marshall.usc.edu/gareth-james/ISL/book.html</a>.</p>
-</div>
-<div id="ref-Kuhn2016">
-<p>Kuhn, Max, and Kjell Johnson. 2016. <em>Applied Predictive Modeling</em>. 1st ed. New York, NY: Springer. <a href="http://appliedpredictivemodeling.com/">http://appliedpredictivemodeling.com/</a>.</p>
-</div>
+<div id="maximal-margin-classifier" class="section level2">
+<h2><span class="header-section-number">10.1</span> Maximal Margin Classifier</h2>
+<p>The maximal margin classifier is the optimal hyperplane defined in the (rare) case where two classes are <em>linearly separable</em>. Given an <span class="math inline">\(n \times p\)</span> data matrix <span class="math inline">\(X\)</span> with binary response variable defined as <span class="math inline">\(y \in [-1, 1]\)</span> it <em>may</em> be possible to define a <em>p</em>-dimensional hyperplane <span class="math inline">\(h(X) = \beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = x_i^T \beta + \beta_0 = 0\)</span> such that all observations of each class fall on opposite sides of the hyperplane. This “separating hyperplane” has the property that if <span class="math inline">\(\beta\)</span> is constrained to be a unit vector, <span class="math inline">\(||\beta|| = \sum\beta^2 = 1\)</span>, then the product of the hyperplane and response variables are positive perpendicular distances from the hyperplane, the smallest of which may be termed the hyperplane <em>margin</em>, <span class="math inline">\(M\)</span>,</p>
+<p><span class="math display">\[y_i (x_i^{&#39;} \beta + \beta_0) \ge M.\]</span></p>
+<p>The maximal margin classifier is the hyperplane with the maximum margin. That is, <span class="math inline">\(\max \{M\}\)</span> subject to <span class="math inline">\(||\beta|| = 1\)</span>. A separating hyperplane rarely exists. In fact, even if a separating hyperplane does exist, its resulting margin is probably undesirably narrow.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="reference.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="maximal-margin-classifier.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="support-vector-machines.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="support-vector-classifier.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

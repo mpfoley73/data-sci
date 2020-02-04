@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 10 Support Vector Machines | My Data Science Notes</title>
+  <title>10.4 Example | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 10 Support Vector Machines | My Data Science Notes" />
+  <meta property="og:title" content="10.4 Example | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 10 Support Vector Machines | My Data Science Notes" />
+  <meta name="twitter:title" content="10.4 Example | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reference.html"/>
-<link rel="next" href="maximal-margin-classifier.html"/>
+<link rel="prev" href="support-vector-machines-1.html"/>
+<link rel="next" href="using-caret.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -241,31 +241,251 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="support-vector-machines" class="section level1">
-<h1><span class="header-section-number">Chapter 10</span> Support Vector Machines</h1>
-<p>These notes rely on <span class="citation">(James et al. <a href="#ref-James2013" role="doc-biblioref">2013</a>)</span>, <span class="citation">(Hastie, Tibshirani, and Friedman <a href="#ref-Hastie2017" role="doc-biblioref">2017</a>)</span>, and <span class="citation">(Kuhn and Johnson <a href="#ref-Kuhn2016" role="doc-biblioref">2016</a>)</span>. I also reviewed the material in PSU’s Applied Data Mining and Statistical Learning (<a href="https://online.stat.psu.edu/stat508/">STAT 508</a>), and the <em>e1071</em> <a href="https://cran.r-project.org/web/packages/e1071/vignettes/svmdoc.pdf">Support Vector Machines</a> vignette.</p>
-<p>The Support Vector Machines (SVM) algorithm finds the optimal separating hyperplane between members of two classes using an appropriate nonlinear mapping to a sufficiently high dimension. The hyperplane is defined by the observations that lie within a margin optimized by a cost hyperparameter. These observations are called the <em>support vectors</em>.</p>
-<p>SVM is an extension of the <em>support vector classifier</em> which in turn is a generalization of the simple and intuitive <em>maximal margin classifier</em>.</p> 
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-Hastie2017">
-<p>Hastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2017. <em>The Elements of Statistical Learning</em>. 2nd ed. New York, NY: Springer. <a href="https://web.stanford.edu/~hastie/ElemStatLearn/">https://web.stanford.edu/~hastie/ElemStatLearn/</a>.</p>
-</div>
-<div id="ref-James2013">
-<p>James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning: With Applications in R</em>. 1st ed. New York, NY: Springer. <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/book.html">http://faculty.marshall.usc.edu/gareth-james/ISL/book.html</a>.</p>
-</div>
-<div id="ref-Kuhn2016">
-<p>Kuhn, Max, and Kjell Johnson. 2016. <em>Applied Predictive Modeling</em>. 1st ed. New York, NY: Springer. <a href="http://appliedpredictivemodeling.com/">http://appliedpredictivemodeling.com/</a>.</p>
-</div>
+<div id="example-6" class="section level2">
+<h2><span class="header-section-number">10.4</span> Example</h2>
+<p>Here is a data set of two classes <span class="math inline">\(y \in [-1, 1]\)</span> described by two features <span class="math inline">\(X1\)</span> and <span class="math inline">\(X2\)</span>.</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="example-6.html#cb200-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb200-2"><a href="example-6.html#cb200-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb200-3"><a href="example-6.html#cb200-3"></a>x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span> (<span class="dv">20</span><span class="op">*</span><span class="dv">2</span>), <span class="dt">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb200-4"><a href="example-6.html#cb200-4"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">10</span>), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>))</span>
+<span id="cb200-5"><a href="example-6.html#cb200-5"></a>x[y<span class="op">==</span><span class="dv">1</span>, ] &lt;-<span class="st"> </span>x[y<span class="op">==</span><span class="dv">1</span>, ] <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb200-6"><a href="example-6.html#cb200-6"></a>train_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</span>
+<span id="cb200-7"><a href="example-6.html#cb200-7"></a>train_data<span class="op">$</span>y &lt;-<span class="st"> </span><span class="kw">as.factor</span>(y)</span></code></pre></div>
+<p>A scatter plot reveals whether the classes are linearly separable.</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="example-6.html#cb201-1"></a><span class="kw">ggplot</span>(train_data, <span class="kw">aes</span>(<span class="dt">x =</span> X1, <span class="dt">y =</span> X2, <span class="dt">color =</span> y)) <span class="op">+</span></span>
+<span id="cb201-2"><a href="example-6.html#cb201-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb201-3"><a href="example-6.html#cb201-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Binary response with two features&quot;</span>) <span class="op">+</span></span>
+<span id="cb201-4"><a href="example-6.html#cb201-4"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
+<p>No, they are not linearly separable. Now fit a support vector machine. The <strong>e1071</strong> library implements the SVM algorithm. <code>svm(..., kernel="linear")</code> fits a support vector classifier. Change the kernal to <code>c("polynomial", "radial")</code> for SVM. Try a cost of 10.</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="example-6.html#cb202-1"></a><span class="kw">library</span>(e1071)</span>
+<span id="cb202-2"><a href="example-6.html#cb202-2"></a>m &lt;-<span class="st"> </span><span class="kw">svm</span>(</span>
+<span id="cb202-3"><a href="example-6.html#cb202-3"></a>  y <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb202-4"><a href="example-6.html#cb202-4"></a>  <span class="dt">data =</span> train_data,</span>
+<span id="cb202-5"><a href="example-6.html#cb202-5"></a>  <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>,</span>
+<span id="cb202-6"><a href="example-6.html#cb202-6"></a>  <span class="dt">type =</span> <span class="st">&quot;C-classification&quot;</span>,  <span class="co"># (default) for classification</span></span>
+<span id="cb202-7"><a href="example-6.html#cb202-7"></a>  <span class="dt">cost =</span> <span class="dv">10</span>,  <span class="co"># default is 1</span></span>
+<span id="cb202-8"><a href="example-6.html#cb202-8"></a>  <span class="dt">scale =</span> <span class="ot">FALSE</span>  <span class="co"># do not standardize features</span></span>
+<span id="cb202-9"><a href="example-6.html#cb202-9"></a>)</span>
+<span id="cb202-10"><a href="example-6.html#cb202-10"></a><span class="kw">plot</span>(m, train_data)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
+<p>The support vectors are plotted as “x’s”. There are seven of them.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="example-6.html#cb203-1"></a>m<span class="op">$</span>index</span></code></pre></div>
+<pre><code>## [1]  1  2  5  7 14 16 17</code></pre>
+<p>The summary shows adds additional information, including the distribution of the support vector classes.</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="example-6.html#cb205-1"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## svm(formula = y ~ ., data = train_data, kernel = &quot;linear&quot;, type = &quot;C-classification&quot;, 
+##     cost = 10, scale = FALSE)
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  linear 
+##        cost:  10 
+## 
+## Number of Support Vectors:  7
+## 
+##  ( 4 3 )
+## 
+## 
+## Number of Classes:  2 
+## 
+## Levels: 
+##  -1 1</code></pre>
+<p>The seven support vectors are comprised of four in one class, three in the other. What if we lower the cost of margin violations? This will increase bias and lower variance.</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="example-6.html#cb207-1"></a>m &lt;-<span class="st"> </span><span class="kw">svm</span>(</span>
+<span id="cb207-2"><a href="example-6.html#cb207-2"></a>  y <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb207-3"><a href="example-6.html#cb207-3"></a>  <span class="dt">data =</span> train_data,</span>
+<span id="cb207-4"><a href="example-6.html#cb207-4"></a>  <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>,</span>
+<span id="cb207-5"><a href="example-6.html#cb207-5"></a>  <span class="dt">type =</span> <span class="st">&quot;C-classification&quot;</span>,  </span>
+<span id="cb207-6"><a href="example-6.html#cb207-6"></a>  <span class="dt">cost =</span> <span class="fl">0.1</span>,</span>
+<span id="cb207-7"><a href="example-6.html#cb207-7"></a>  <span class="dt">scale =</span> <span class="ot">FALSE</span></span>
+<span id="cb207-8"><a href="example-6.html#cb207-8"></a>)</span>
+<span id="cb207-9"><a href="example-6.html#cb207-9"></a><span class="kw">plot</span>(m, train_data)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
+<p>There are many more support vectors now. <em>(In case you hoped to see the linear decision boundary formulation, or at least a graphical representation of the margins, keep hoping. The model is generalized beyond two features, so it evidently does not worry too much about supporting sanitized two-feature demos.)</em></p>
+<p>Which cost level yields the <em>best</em> predictive performance on holdout data? Use cross validation to find out. SVM defaults to 10-fold CV. I’ll try seven candidate values for <code>cost</code>.</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="example-6.html#cb208-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb208-2"><a href="example-6.html#cb208-2"></a>m_tune &lt;-<span class="st"> </span><span class="kw">tune</span>(</span>
+<span id="cb208-3"><a href="example-6.html#cb208-3"></a>  svm,</span>
+<span id="cb208-4"><a href="example-6.html#cb208-4"></a>  y <span class="op">~</span><span class="st"> </span>.,</span>
+<span id="cb208-5"><a href="example-6.html#cb208-5"></a>  <span class="dt">data =</span> train_data,</span>
+<span id="cb208-6"><a href="example-6.html#cb208-6"></a>  <span class="dt">kernel =</span><span class="st">&quot;linear&quot;</span>,</span>
+<span id="cb208-7"><a href="example-6.html#cb208-7"></a>  <span class="dt">ranges =</span> <span class="kw">list</span>(<span class="dt">cost =</span> <span class="kw">c</span>(<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">100</span>))</span>
+<span id="cb208-8"><a href="example-6.html#cb208-8"></a>)</span>
+<span id="cb208-9"><a href="example-6.html#cb208-9"></a><span class="kw">summary</span>(m_tune)</span></code></pre></div>
+<pre><code>## 
+## Parameter tuning of &#39;svm&#39;:
+## 
+## - sampling method: 10-fold cross validation 
+## 
+## - best parameters:
+##  cost
+##   0.1
+## 
+## - best performance: 0.05 
+## 
+## - Detailed performance results:
+##    cost error dispersion
+## 1 1e-03  0.55  0.4377975
+## 2 1e-02  0.55  0.4377975
+## 3 1e-01  0.05  0.1581139
+## 4 1e+00  0.15  0.2415229
+## 5 5e+00  0.15  0.2415229
+## 6 1e+01  0.15  0.2415229
+## 7 1e+02  0.15  0.2415229</code></pre>
+<p>The lowest cross-validation error rate is 0.10 with cost = 0.1. <code>tune()</code> saves the best tuning parameter value.</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="example-6.html#cb210-1"></a>m_best &lt;-<span class="st"> </span>m_tune<span class="op">$</span>best.model</span>
+<span id="cb210-2"><a href="example-6.html#cb210-2"></a><span class="kw">summary</span>(m_best)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## best.tune(method = svm, train.x = y ~ ., data = train_data, ranges = list(cost = c(0.001, 
+##     0.01, 0.1, 1, 5, 10, 100)), kernel = &quot;linear&quot;)
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  linear 
+##        cost:  0.1 
+## 
+## Number of Support Vectors:  16
+## 
+##  ( 8 8 )
+## 
+## 
+## Number of Classes:  2 
+## 
+## Levels: 
+##  -1 1</code></pre>
+<p>There are 16 support vectors, 8 in each class. This is a pretty wide margin.</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="example-6.html#cb212-1"></a><span class="kw">plot</span>(m_best, train_data)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
+<p>What if the classes had been linearly separable? Then we could create a maximal margin classifier.</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="example-6.html#cb213-1"></a>train_data_<span class="dv">2</span> &lt;-<span class="st"> </span>train_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb213-2"><a href="example-6.html#cb213-2"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb213-3"><a href="example-6.html#cb213-3"></a>    <span class="dt">X1 =</span> X1 <span class="op">+</span><span class="st"> </span><span class="kw">ifelse</span>(y<span class="op">==</span><span class="dv">1</span>, <span class="fl">1.0</span>, <span class="dv">0</span>),</span>
+<span id="cb213-4"><a href="example-6.html#cb213-4"></a>    <span class="dt">X2 =</span> X2 <span class="op">+</span><span class="st"> </span><span class="kw">ifelse</span>(y<span class="op">==</span><span class="dv">1</span>, <span class="fl">1.0</span>, <span class="dv">0</span>)</span>
+<span id="cb213-5"><a href="example-6.html#cb213-5"></a>  )</span>
+<span id="cb213-6"><a href="example-6.html#cb213-6"></a><span class="kw">ggplot</span>(train_data_<span class="dv">2</span>, <span class="kw">aes</span>(<span class="dt">x =</span> X1, <span class="dt">y =</span> X2, <span class="dt">color =</span> y)) <span class="op">+</span></span>
+<span id="cb213-7"><a href="example-6.html#cb213-7"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb213-8"><a href="example-6.html#cb213-8"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Binary response with two features, linearly separable&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
+<p>Specify a huge cost = 1e5 so that no support vectors violate the margin.</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="example-6.html#cb214-1"></a>m2 &lt;-<span class="st"> </span><span class="kw">svm</span>(</span>
+<span id="cb214-2"><a href="example-6.html#cb214-2"></a>  y <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb214-3"><a href="example-6.html#cb214-3"></a>  <span class="dt">data =</span> train_data_<span class="dv">2</span>,</span>
+<span id="cb214-4"><a href="example-6.html#cb214-4"></a>  <span class="dt">kernel =</span> <span class="st">&quot;linear&quot;</span>,</span>
+<span id="cb214-5"><a href="example-6.html#cb214-5"></a>  <span class="dt">cost =</span> <span class="fl">1e5</span>,</span>
+<span id="cb214-6"><a href="example-6.html#cb214-6"></a>  <span class="dt">scale =</span> <span class="ot">FALSE</span>  <span class="co"># do not standardize features</span></span>
+<span id="cb214-7"><a href="example-6.html#cb214-7"></a>)</span>
+<span id="cb214-8"><a href="example-6.html#cb214-8"></a><span class="kw">plot</span>(m2, train_data_<span class="dv">2</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="example-6.html#cb215-1"></a><span class="kw">summary</span>(m2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## svm(formula = y ~ ., data = train_data_2, kernel = &quot;linear&quot;, 
+##     cost = 1e+05, scale = FALSE)
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  linear 
+##        cost:  1e+05 
+## 
+## Number of Support Vectors:  3
+## 
+##  ( 1 2 )
+## 
+## 
+## Number of Classes:  2 
+## 
+## Levels: 
+##  -1 1</code></pre>
+<p>This model will have very low bias, but very high variance. To fit an SVM, use a different kernel. You can use <code>kernal = c("polynomial", "radial", "sigmoid")</code>. For a polynomial model, also specify the polynomial degree. For a radial model, include the gamma value.</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="example-6.html#cb217-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb217-2"><a href="example-6.html#cb217-2"></a>m3_tune &lt;-<span class="st"> </span><span class="kw">tune</span>(</span>
+<span id="cb217-3"><a href="example-6.html#cb217-3"></a>  svm,</span>
+<span id="cb217-4"><a href="example-6.html#cb217-4"></a>  y <span class="op">~</span><span class="st"> </span>.,</span>
+<span id="cb217-5"><a href="example-6.html#cb217-5"></a>  <span class="dt">data =</span> train_data,</span>
+<span id="cb217-6"><a href="example-6.html#cb217-6"></a>  <span class="dt">kernel =</span><span class="st">&quot;polynomial&quot;</span>,</span>
+<span id="cb217-7"><a href="example-6.html#cb217-7"></a>  <span class="dt">ranges =</span> <span class="kw">list</span>(</span>
+<span id="cb217-8"><a href="example-6.html#cb217-8"></a>    <span class="dt">cost =</span> <span class="kw">c</span>(<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">100</span>),</span>
+<span id="cb217-9"><a href="example-6.html#cb217-9"></a>    <span class="dt">degree =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb217-10"><a href="example-6.html#cb217-10"></a>  )</span>
+<span id="cb217-11"><a href="example-6.html#cb217-11"></a>)</span>
+<span id="cb217-12"><a href="example-6.html#cb217-12"></a><span class="kw">summary</span>(m3_tune)</span></code></pre></div>
+<pre><code>## 
+## Parameter tuning of &#39;svm&#39;:
+## 
+## - sampling method: 10-fold cross validation 
+## 
+## - best parameters:
+##  cost degree
+##     1      1
+## 
+## - best performance: 0.1 
+## 
+## - Detailed performance results:
+##     cost degree error dispersion
+## 1  1e-03      1  0.55  0.4377975
+## 2  1e-02      1  0.55  0.4377975
+## 3  1e-01      1  0.30  0.2581989
+## 4  1e+00      1  0.10  0.2108185
+## 5  5e+00      1  0.10  0.2108185
+## 6  1e+01      1  0.15  0.2415229
+## 7  1e+02      1  0.15  0.2415229
+## 8  1e-03      2  0.70  0.4216370
+## 9  1e-02      2  0.70  0.4216370
+## 10 1e-01      2  0.70  0.4216370
+## 11 1e+00      2  0.65  0.2415229
+## 12 5e+00      2  0.50  0.3333333
+## 13 1e+01      2  0.50  0.3333333
+## 14 1e+02      2  0.50  0.3333333
+## 15 1e-03      3  0.65  0.3374743
+## 16 1e-02      3  0.65  0.3374743
+## 17 1e-01      3  0.50  0.3333333
+## 18 1e+00      3  0.40  0.3162278
+## 19 5e+00      3  0.35  0.3374743
+## 20 1e+01      3  0.35  0.3374743
+## 21 1e+02      3  0.35  0.3374743</code></pre>
+<p>The lowest cross-validation error rate is 0.10 with cost = 1, polynomial degree 1.</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="example-6.html#cb219-1"></a>m3_best &lt;-<span class="st"> </span>m3_tune<span class="op">$</span>best.model</span>
+<span id="cb219-2"><a href="example-6.html#cb219-2"></a><span class="kw">summary</span>(m3_best)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## best.tune(method = svm, train.x = y ~ ., data = train_data, ranges = list(cost = c(0.001, 
+##     0.01, 0.1, 1, 5, 10, 100), degree = c(1, 2, 3)), kernel = &quot;polynomial&quot;)
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  polynomial 
+##        cost:  1 
+##      degree:  1 
+##      coef.0:  0 
+## 
+## Number of Support Vectors:  12
+## 
+##  ( 6 6 )
+## 
+## 
+## Number of Classes:  2 
+## 
+## Levels: 
+##  -1 1</code></pre>
+<p>There are 12 support vectors, 6 in each class. This is a pretty wide margin.</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="example-6.html#cb221-1"></a><span class="kw">plot</span>(m3_best, train_data)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="reference.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="maximal-margin-classifier.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="support-vector-machines-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="using-caret.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

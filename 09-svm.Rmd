@@ -9,65 +9,96 @@ SVM is an extension of the *support vector classifier* which in turn is a genera
 
 ## Maximal Margin Classifier
 
-The maximal margin classifier is the optimal hyperplane defined in the (rare) case where two classes are *linearly separable*.  Given an $n \times p$ data matrix $X$ with binary response variable defined as $y \in [-1, 1]$ it *may* be possible to define a *p*-dimensional hyperplane $\beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = 0$ such that all observations of each class fall on opposite sides of the hyperplane. This "separating hyperplane" has the property that when multiplied by the response variables the resulting products are a positive numbers, the smallest of which may be termed the margin, $M$,  
+The maximal margin classifier is the optimal hyperplane defined in the (rare) case where two classes are *linearly separable*.  Given an $n \times p$ data matrix $X$ with binary response variable defined as $y \in [-1, 1]$ it *may* be possible to define a *p*-dimensional hyperplane $h(X) = \beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = x_i^T \beta + \beta_0 = 0$ such that all observations of each class fall on opposite sides of the hyperplane. This "separating hyperplane" has the property that if $\beta$ is constrained to be a unit vector, $||\beta|| = \sum\beta^2 = 1$, then the product of the hyperplane and response variables are positive perpendicular distances from the hyperplane, the smallest of which may be termed the hyperplane *margin*, $M$,  
 
-$$y_i (\beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = 0) \ge M.$$
+$$y_i (x_i^{'} \beta + \beta_0) \ge M.$$
 
-If $\beta$ is constrained to be a unit vector, $||\beta|| = \sum\beta^2 = 1$, then $M$ is the perpendicular distance from observation $i$ to the hyperplane.  The maximal margin classifier is the hyperplane with the maximum $M$.
-
-A separating hyperplane rarely exists.  In fact, even if a separating hyperplane does exist, its resulting margin is probably undesirably narrow. 
+The maximal margin classifier is the hyperplane with the maximum margin.  That is, $\max \{M\}$ subject to $||\beta|| = 1$.  A separating hyperplane rarely exists.  In fact, even if a separating hyperplane does exist, its resulting margin is probably undesirably narrow. 
 
 
 ## Support Vector Classifier
 
-The maximal margin classifier can be generalized to non-separable cases using a so-called "soft margin".  The generalization is called the *support vector classifier*.  The soft margin allows some misclassification in the interest of greater robustness to individual observations.
+The maximal margin classifier can be generalized to non-separable cases using a so-called "soft margin".  The generalization is called the *support vector classifier*.  The soft margin allows some misclassification in the interest of greater robustness to individual observations. The support vector classifier optimizes 
 
-The support vector classifier optimizes 
+$$y_i (x_i^{'} \beta + \beta_0) \ge M(1 - \xi_i)$$
 
-$$y_i (\beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = 0) \ge M(1 - \epsilon_i)$$
+where the $\xi_i$ are positive *slack variables* whose sum is bounded by some constant tuning parameter $\sum{\xi_i} \le constant$.  The slack variable values indicate where the observation lies:  $\xi_i = 0$ observations lie on the correct side of the margin;  $\xi_i > 0$ observation lie on the wrong side of the margin;  $\xi_i > 1$ observations lie on the wrong side of the hyperplane.  The constant sets the tolerance for margin violation.  If $constant = 0$, then all observations must reside on the correct side of the margin, as in the maximal margin classifier.  The $constant$ controls the bias-variance trade-off.  As the $constant$ increases, the margin widens and allows more violations.  The classifier bias increases but its variance decreases.
 
-where the $\epsilon_i$ are *slack variables* which sum to some constant tuning parameter $\sum{\epsilon_i} = constant$.  The slack variable values indicate where the observation lies:  $\epsilon_i = 0$ observation lie on the correct side of the margin;  $\epsilon_i > 0$ observation lie on the wrong side of the margin;  $\epsilon_i > 1$ observations lie on the wrong side of the hyperplane.  The constant sets the tolerance for margin violation.  If $constant = 0$, then all observations must reside on the correct side of the margin, as in the maximal margin classifier.  The $constant$ controls the bias-variance trade-off.  As the $constant$ increases, the margin widens and allows more violations.  The classifier bias increases but its variance decreases.
+The support vector classifier is usually defined by dropping the $||\beta|| = 1$ constraint, and defining $M = 1 / ||\beta||$.  The optimization problem then becomes
 
-The support vector classifier algorithm solves a different, but equivalent, formulation that drops the normalization constraint on $\beta$.  The optimization problem is to find
+$$
+ \min ||\beta|| \hspace{2mm} s.t. \hspace{2mm}  
+  \begin{cases} 
+   y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i &  \\
+   \xi_i \ge 0, \hspace{2mm} \sum \xi_i \le constant.      
+  \end{cases}
+$$
 
-$$\min_{\beta} {\frac{1}{2}} \beta^TQ\beta - e^T\beta$$
+This is a quadratic equation with linear inequality constraints, so it is a convex optimization problem which can be solved using Lagrange multipliers. Re-express the optimization problem as
 
-such that 
+$$
+\min_{\beta_0, \beta} \frac{1}{2}||\beta||^2 = C\sum_{i = 1}^N \xi_i \\
+s.t. \xi_i \ge 0, \hspace{2mm} y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i
+$$
 
-$$\min_{\beta, \beta_0} \frac{1}{2}||\beta||^2 + C\sum_{i = 1}^{n}{\epsilon_i}$$
+where the "cost" parameter $C$ replaces the constant and penalizes large residuals.  This optimization problem is equivalent to *another* optimization problem, the familiar *loss + penalty* formulation:
 
-where $C$ is a cost parameter.  As $C \rightarrow \infty$, the cost of margin violations increase and the resulting hyperplane margin narrows.
+$$\min_{\beta_0, \beta} \sum_{i=1}^N{[1 - y_if(x_i)]_+} + \frac{\lambda}{2} ||\beta||^2 $$
 
-The optimization problem has an interesting property in that only observations on or within the margin affect the hyperplane.  These observations are known as support vectors.  As $C$ increases, the number of violating observations increase, and thus the number of support vectors increases.  This property makes the algorithm robust to the extreme observations far away from the hyperplane.
+where $\lambda = 1 / C$ and $[1 - y_if(x_i)]_+$ is a "hinge" loss function with $f(x_i) = sign[Pr(Y = +1|x) - 1 / 2]$.  
+The parameter estimates can be written as functions of a set of unknown parameters $(\alpha_i)$ and data points. The solution to the optimization problem requires only the inner products of the observations, represented as $\langle x_i, x_j \rangle$,
 
+$$f(x) = \beta_0 + \sum_{i = 1}^n {\alpha_i \langle x, x_i \rangle}$$
+The solution has the interesting property that only observations on or within the margin affect the hyperplane.  These observations are known as support vectors.  As the constant increases, the number of violating observations increase, and thus the number of support vectors increases.  This property makes the algorithm robust to the extreme observations far away from the hyperplane.
+
+The parameter estimators for $\alpha_i$ are nonzero only for the support vectors in the solution—that is, if a training observation is not a support vector, then its $\alpha_i$ equals zero.
+ 
 The only shortcoming with the algorithm is that it presumes a linear decision boundary.  
+
 
 ## Support Vector Machines
 
-The support vector classifier is defined with a linear "kernel". The linear kernel quantifies the similarity of a pair of observations using Pearson correlation. It could use another form instead, such as polynomial or radial.  That is what the support vector machine does. 
+Enlarging the feature space of the support vector classifier accommodates nonlinar relationships.  Support vector machines do this in a specific way, using *kernals*.  The kernal is a generalization of the inner product with form $K(x_i, x_i^{'})$.  So the linear kernal is simply 
+
+$$K(x_i, x_i^{'}) = \langle x, x_i \rangle$$
+
+and the solution is 
+
+$$f(x) = \beta_0 + \sum_{i = 1}^n {\alpha_i K(x_i, x_i^{'})}$$
+
+$K$ can take onother form instead, such as polynomial 
+
+$$K(x, x') = (\gamma \langle x, x' \rangle + c_0)^d$$ 
+
+or radial 
+
+$$K(x, x') = \exp\{-\gamma ||x - x'||^2\}.$$
 
 
+## Example
 
-By way of example, here is a data set of two classes.
+Here is a data set of two classes $y \in [-1, 1]$ described by two features $X1$ and $X2$.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
 set.seed(1)
 x <- matrix(rnorm (20*2), ncol=2)
 y <- c(rep(-1, 10), rep(1, 10))
 x[y==1, ] <- x[y==1, ] + 1
-```
-
-Are the classes linearly separable?
-```{r message=FALSE, warning=FALSE}
-library(tidyverse)
 train_data <- data.frame(x, y)
 train_data$y <- as.factor(y)
-ggplot(train_data, aes(x = X1, y = X2, color = y)) +
-  geom_point(size = 2) +
-  labs(title = "Binary response with two features")
 ```
 
-No, they are not linearly separable.  Fit a support vector classifier. The **e1071** library implements the SVM algorithm.   `svm(..., kernel="linear")` fits a support vector classifier. Change the kernal to `c("polynomial", "radial")` for SVM.  Its formulation is slightly different from Gareth's above.  Instead of tuning parameter $C$ which acts as a budget for the amount the margin can be violated by the $n$ observations, the `cost` parameter specifies the cost of violations to the margin, so a small cost yields wide margins with many support vectors violating the margins and a large cost yields narrow margins with few support vectors violating the margins.  Try a cost of 10.
+A scatter plot reveals whether the classes are linearly separable.
+
+```{r}
+ggplot(train_data, aes(x = X1, y = X2, color = y)) +
+  geom_point(size = 2) +
+  labs(title = "Binary response with two features") +
+  theme(legend.position = "top")
+```
+
+No, they are not linearly separable.  Now fit a support vector machine. The **e1071** library implements the SVM algorithm.   `svm(..., kernel="linear")` fits a support vector classifier. Change the kernal to `c("polynomial", "radial")` for SVM.  Try a cost of 10.
 
 ```{r}
 library(e1071)
@@ -88,13 +119,13 @@ The support vectors are plotted as "x's".  There are seven of them.
 m$index
 ```
 
-The summary provides more detail.
+The summary shows adds additional information, including the distribution of the support vector classes.
 
 ```{r}
 summary(m)
 ```
 
-There were 7 support vectors: 4 in one class, 3 in the other. What if we lower the cost of margin violations?  This will increase bias and lower variance.
+The seven support vectors are comprised of four in one class, three in the other. What if we lower the cost of margin violations?  This will increase bias and lower variance.
 
 ```{r}
 m <- svm(
@@ -108,9 +139,10 @@ m <- svm(
 plot(m, train_data)
 ```
 
-There are many more support vectors now.  In case you hoped to see the linear decision boundary formulation, or at least a graphical representation of the margins, keep hoping. The model is generalized beyond two features, so it evidently does not worry too much about supporting sanitized two-feature demos.
+There are many more support vectors now.  *(In case you hoped to see the linear decision boundary formulation, or at least a graphical representation of the margins, keep hoping. The model is generalized beyond two features, so it evidently does not worry too much about supporting sanitized two-feature demos.)*
 
-Which cost level yields the *best* predictive performance on holdout data?  Use CV to find out.
+Which cost level yields the *best* predictive performance on holdout data?  Use cross validation to find out. SVM defaults to 10-fold CV.  I'll try seven candidate values for `cost`.
+
 ```{r}
 set.seed(1)
 m_tune <- tune(
@@ -199,6 +231,7 @@ The model can also be fit using **caret**.  I'll used LOOCV since the data set i
 
 ```{r message=FALSE, warning=FALSE}
 library(caret)
+library(kernlab)
 
 train_data_3 <- train_data %>%
   mutate(y = factor(y, labels = c("A", "B")))
