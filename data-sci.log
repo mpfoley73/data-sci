@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/W32TeX) (preloaded format=xelatex 2019.12.19)  22 JAN 2020 04:56
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/W32TeX) (preloaded format=xelatex 2019.12.19)  4 FEB 2020 07:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -847,114 +847,114 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 3.
 (c:/Users/mpfol/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [3])
+) [3] [4])
 \tf@toc=\write5
 \openout5 = `data-sci.toc'.
 
-[4] [5
+[5] [6
 
-] [6
+] [7] [8
 
 ]
 Chapter 1.
 Missing character: There is no ⋯ in font rm-lmr10!
-[7]
+[9]
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
 (amsmath)                 on input line 189.
 
-[8]
+[10]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `TU/lmtt/b/n' tried instead on input line 227.
-[9]
+[11]
 File: data-sci_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 
 <use data-sci_files/figure-latex/unnamed-chunk-3-1.pdf>
-[10] [11]
+[12] [13]
 File: data-sci_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-10-1.pdf>
-[12]
+[14]
 File: data-sci_files/figure-latex/unnamed-chunk-12-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-12-1.pdf>
-[13] [14]
+[15] [16]
 File: data-sci_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-13-1.pdf>
 
 Underfull \vbox (badness 1072) has occurred while \output is active []
 
-[15]
+[17]
 File: data-sci_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-14-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[16] [17]
+[18] [19]
 File: data-sci_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-15-1.pdf>
-[18]
+[20]
 File: data-sci_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-16-1.pdf>
 
 Underfull \vbox (badness 3098) has occurred while \output is active []
 
-[19] [20]
+[21] [22]
 File: data-sci_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-17-1.pdf>
-[21]
+[23]
 File: data-sci_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-18-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[22] [23]
+[24] [25]
 File: data-sci_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-19-1.pdf>
-[24]
+[26]
 Chapter 2.
-[25
+[27
 
-] [26
+] [28
 
 ]
 Chapter 3.
-[27] [28
-
-]
-Chapter 4.
 [29] [30
 
 ]
-Chapter 5.
+Chapter 4.
 [31] [32
 
 ]
-Chapter 6.
+Chapter 5.
 [33] [34
 
 ]
+Chapter 6.
+[35] [36
+
+]
 Chapter 7.
-[35] [36]
+[37] [38]
 File: data-sci_files/figure-latex/unnamed-chunk-21-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-21-1.pdf>
 
 Underfull \vbox (badness 7291) has occurred while \output is active []
 
-[37] [38] [39] [40
+[39] [40] [41] [42
 
 ]
 Chapter 8.
-[41] [42]
+[43] [44]
 Overfull \hbox (69.75pt too wide) in paragraph at lines 1050--1050
 []\TU/lmtt/m/n/10 ## -- Variable type:factor ----------------------------------
 ------------------[] 
@@ -984,7 +984,7 @@ Overfull \hbox (69.75pt too wide) in paragraph at lines 1050--1050
 ------------------[] 
  []
 
-[43]
+[45]
 Overfull \hbox (1.5pt too wide) in paragraph at lines 1104--1104
 []\TU/lmtt/m/n/10 ##      4) LoyalCH>=0.7648795 271  13 CH (0.95202952 0.047970
 48) *[] 
@@ -1020,7 +1020,7 @@ Overfull \hbox (1.5pt too wide) in paragraph at lines 1104--1104
 22) *[] 
  []
 
-[44]
+[46]
 File: data-sci_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-26-1.pdf>
@@ -1030,7 +1030,7 @@ Overfull \hbox (6.75pt too wide) in paragraph at lines 1145--1145
 lass")[] 
  []
 
-[45] [46]
+[47] [48]
 Overfull \hbox (48.75pt too wide) in paragraph at lines 1186--1186
 []\TU/lmtt/m/n/10 ##           CP nsplit rel.error    xerror       xstd xerror_
 cap       eval[] 
@@ -1051,7 +1051,7 @@ Overfull \hbox (48.75pt too wide) in paragraph at lines 1186--1186
 File: data-sci_files/figure-latex/unnamed-chunk-30-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-30-1.pdf>
-[47]
+[49]
 Overfull \hbox (6.75pt too wide) in paragraph at lines 1262--1262
 []\TU/lmtt/m/n/10 ##       4) LoyalCH>=0.7648795 271  13 CH (0.95202952 0.04797
 048) *[] 
@@ -1201,7 +1201,7 @@ Overfull \hbox (48.75pt too wide) in paragraph at lines 1262--1262
  0.75000000) *[] 
  []
 
-[48]
+[50]
 Overfull \hbox (1.5pt too wide) in paragraph at lines 1262--1262
 []\TU/lmtt/m/n/10 ##          26) SpecialCH>=0.5 14   6 CH (0.57142857 0.428571
 43) *[] 
@@ -1267,7 +1267,7 @@ File: data-sci_files/figure-latex/unnamed-chunk-32-1.pdf Graphic file (type pdf
 File: data-sci_files/figure-latex/unnamed-chunk-33-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-33-1.pdf>
-[49]
+[51]
 Overfull \hbox (59.25pt too wide) in paragraph at lines 1309--1309
 []\TU/lmtt/m/n/10 ##        LoyalCH      PriceDiff    SalePriceMM        StoreI
 D WeekofPurchase[] 
@@ -1291,7 +1291,7 @@ Overfull \hbox (59.25pt too wide) in paragraph at lines 1309--1309
 4       1.042153[] 
  []
 
-[50]
+[52]
 File: data-sci_files/figure-latex/unnamed-chunk-35-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-35-1.pdf>
@@ -1301,7 +1301,7 @@ Overfull \hbox (6.75pt too wide) in paragraph at lines 1427--1427
 lass",[] 
  []
 
-[51]
+[53]
 Overfull \hbox (59.25pt too wide) in paragraph at lines 1427--1427
 []\TU/lmtt/m/n/10 ##        LoyalCH      PriceDiff    SalePriceMM        StoreI
 D WeekofPurchase[] 
@@ -1445,7 +1445,7 @@ Overfull \hbox (90.75pt too wide) in paragraph at lines 1427--1427
 , adj=0.165, (0 split)[] 
  []
 
-[52]
+[54]
 Overfull \hbox (17.25pt too wide) in paragraph at lines 1427--1427
 []\TU/lmtt/m/n/10 ##   predicted class=CH  expected loss=0.04797048  P(node) =0
 .3162194[] 
@@ -1529,7 +1529,7 @@ Overfull \hbox (12.0pt too wide) in paragraph at lines 1427--1427
 2637106[] 
  []
 
-[53] [54]
+[55] [56]
 Overfull \hbox (43.5pt too wide) in paragraph at lines 1502--1502
 []\TU/lmtt/m/n/10 ## alternative hypothesis: true probability of success is not
  equal to 0.5[] 
@@ -1541,11 +1541,11 @@ Overfull \hbox (75.0pt too wide) in paragraph at lines 1525--1525
 ater than 0.6103286[] 
  []
 
-[55]
+[57]
 File: data-sci_files/figure-latex/unnamed-chunk-42-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-42-1.pdf>
-[56]
+[58]
 Overfull \hbox (59.25pt too wide) in paragraph at lines 1581--1581
 []\TU/lmtt/m/n/10 ##       Accuracy          Kappa  AccuracyLower  AccuracyUppe
 r   AccuracyNull[] 
@@ -1563,25 +1563,25 @@ File: data-sci_files/figure-latex/unnamed-chunk-44-1.pdf Graphic file (type pdf
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[57]
+[59]
 File: data-sci_files/figure-latex/unnamed-chunk-45-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-45-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[58]
+[60]
 Underfull \hbox (badness 10000) in paragraph at lines 1627--1629
 
  []
 
-[59] [60]
+[61] [62]
 Overfull \hbox (38.25pt too wide) in paragraph at lines 1714--1714
 []\TU/lmtt/m/n/10 ## Accuracy was used to select the optimal model using the la
 rgest value.[] 
  []
 
-[61]
+[63]
 Overfull \hbox (38.25pt too wide) in paragraph at lines 1760--1760
 []\TU/lmtt/m/n/10 ## Accuracy was used to select the optimal model using the la
 rgest value.[] 
@@ -1653,7 +1653,7 @@ Overfull \hbox (6.75pt too wide) in paragraph at lines 1793--1793
 322) *[] 
  []
 
-[62]
+[64]
 File: data-sci_files/figure-latex/unnamed-chunk-51-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-51-1.pdf>
@@ -1669,19 +1669,19 @@ File: data-sci_files/figure-latex/unnamed-chunk-52-1.pdf Graphic file (type pdf
 
 Underfull \vbox (badness 1199) has occurred while \output is active []
 
-[63]
+[65]
 File: data-sci_files/figure-latex/unnamed-chunk-53-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-53-1.pdf>
-[64]
+[66]
 File: data-sci_files/figure-latex/unnamed-chunk-56-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-56-1.pdf>
-[65]
+[67]
 File: data-sci_files/figure-latex/unnamed-chunk-57-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-57-1.pdf>
-[66]
+[68]
 Overfull \hbox (69.75pt too wide) in paragraph at lines 1966--1966
 []\TU/lmtt/m/n/10 ## -- Variable type:factor ----------------------------------
 ------------------[] 
@@ -1717,14 +1717,14 @@ Overfull \hbox (69.75pt too wide) in paragraph at lines 1966--1966
 ------------------[] 
  []
 
-[67] [68]
+[69] [70]
 File: data-sci_files/figure-latex/unnamed-chunk-62-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-62-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[69]
+[71]
 Overfull \hbox (22.5pt too wide) in paragraph at lines 2087--2087
 []\TU/lmtt/m/n/10 ## rpart(formula = Sales ~ ., data = carseats_train, method =
  "anova",[] 
@@ -1736,7 +1736,7 @@ Overfull \hbox (33.0pt too wide) in paragraph at lines 2087--2087
 tion  Price[] 
  []
 
-[70] [71]
+[72] [73]
 Overfull \hbox (54.0pt too wide) in paragraph at lines 2140--2140
 []\TU/lmtt/m/n/10 ##            CP nsplit rel.error    xerror       xstd xerror
 _cap       eval[] 
@@ -1796,25 +1796,25 @@ File: data-sci_files/figure-latex/unnamed-chunk-66-1.pdf Graphic file (type pdf
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[72]
+[74]
 File: data-sci_files/figure-latex/unnamed-chunk-67-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-67-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[73]
+[75]
 File: data-sci_files/figure-latex/unnamed-chunk-68-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-68-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[74] [75]
+[76] [77]
 File: data-sci_files/figure-latex/unnamed-chunk-70-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-70-1.pdf>
-[76]
+[78]
 Overfull \hbox (22.5pt too wide) in paragraph at lines 2260--2260
 []\TU/lmtt/m/n/10 ## Warning in nominalTrainWorkflow(x = x, y = y, wts = weight
 s, info =[] 
@@ -1832,7 +1832,7 @@ Overfull \hbox (22.5pt too wide) in paragraph at lines 2288--2288
 st value.[] 
  []
 
-[77]
+[79]
 Overfull \hbox (22.5pt too wide) in paragraph at lines 2333--2333
 []\TU/lmtt/m/n/10 ## RMSE was used to select the optimal model using the smalle
 st value.[] 
@@ -1844,11 +1844,11 @@ File: data-sci_files/figure-latex/unnamed-chunk-74-1.pdf Graphic file (type pdf
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[78]
+[80]
 File: data-sci_files/figure-latex/unnamed-chunk-75-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-75-1.pdf>
-[79]
+[81]
 File: data-sci_files/figure-latex/unnamed-chunk-76-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-76-1.pdf>
@@ -1858,18 +1858,18 @@ File: data-sci_files/figure-latex/unnamed-chunk-77-1.pdf Graphic file (type pdf
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[80] [81] [82]
+[82] [83] [84]
 File: data-sci_files/figure-latex/unnamed-chunk-80-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-80-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[83] [84]
+[85] [86]
 File: data-sci_files/figure-latex/unnamed-chunk-80-2.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-80-2.pdf>
-[85]
+[87]
 Overfull \hbox (17.25pt too wide) in paragraph at lines 2600--2600
 []\TU/lmtt/m/n/10 ## Tuning parameter []min.node.size[] was held constant at a 
 value of 1[] 
@@ -1890,7 +1890,7 @@ le = gini[]
 
 Underfull \vbox (badness 1292) has occurred while \output is active []
 
-[86]
+[88]
 File: data-sci_files/figure-latex/unnamed-chunk-81-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-81-1.pdf>
@@ -1900,21 +1900,21 @@ File: data-sci_files/figure-latex/unnamed-chunk-81-2.pdf Graphic file (type pdf
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[87] [88] [89]
+[89] [90] [91]
 File: data-sci_files/figure-latex/unnamed-chunk-83-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-83-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[90]
+[92]
 File: data-sci_files/figure-latex/unnamed-chunk-83-2.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-83-2.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[91] [92]
+[93] [94]
 Overfull \hbox (17.25pt too wide) in paragraph at lines 2821--2821
 []\TU/lmtt/m/n/10 ## Tuning parameter []min.node.size[] was held constant at a 
 value of 5[] 
@@ -1932,16 +1932,16 @@ File: data-sci_files/figure-latex/unnamed-chunk-84-1.pdf Graphic file (type pdf
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[93]
+[95]
 File: data-sci_files/figure-latex/unnamed-chunk-84-2.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-84-2.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[94] [95] [96] [97] [98] [99] [100] [101] [102] [103] [104] [105] [106] [107] [
-108] [109] [110] [111] [112] [113] [114] [115] [116] [117] [118] [119] [120] [1
-21] [122] [123] [124] [125]
+[96] [97] [98] [99] [100] [101] [102] [103] [104] [105] [106] [107] [108] [109]
+[110] [111] [112] [113] [114] [115] [116] [117] [118] [119] [120] [121] [122] [
+123] [124] [125] [126] [127]
 Overfull \hbox (6.75pt too wide) in paragraph at lines 4252--4252
 []\TU/lmtt/m/n/10 ## Tuning parameter []shrinkage[] was held constant at a valu
 e of 0.1[] 
@@ -1974,9 +1974,9 @@ File: data-sci_files/figure-latex/unnamed-chunk-86-2.pdf Graphic file (type pdf
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[126] [127] [128] [129] [130] [131] [132] [133] [134] [135] [136] [137] [138] [
-139] [140] [141] [142] [143] [144] [145] [146] [147] [148] [149] [150] [151] [1
-52] [153] [154] [155] [156]
+[128] [129] [130] [131] [132] [133] [134] [135] [136] [137] [138] [139] [140] [
+141] [142] [143] [144] [145] [146] [147] [148] [149] [150] [151] [152] [153] [1
+54] [155] [156] [157] [158]
 Overfull \hbox (6.75pt too wide) in paragraph at lines 5680--5680
 []\TU/lmtt/m/n/10 ## Tuning parameter []shrinkage[] was held constant at a valu
 e of 0.1[] 
@@ -2006,18 +2006,18 @@ File: data-sci_files/figure-latex/unnamed-chunk-87-1.pdf Graphic file (type pdf
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[157]
+[159]
 File: data-sci_files/figure-latex/unnamed-chunk-87-2.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-87-2.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[158] [159] [160]
+[160] [161] [162]
 File: data-sci_files/figure-latex/unnamed-chunk-90-1.pdf Graphic file (type pdf
 )
 <use data-sci_files/figure-latex/unnamed-chunk-90-1.pdf>
-[161] [162
+[163] [164
 
 ]
 Chapter 9.
@@ -2040,48 +2040,124 @@ Overfull \hbox (83.59998pt too wide) in paragraph at lines 5808--5809
 [][][][][][][][][][][][][][][][][][][][][]$[]\TU/lmr/m/n/10 . 
  []
 
-[163] [164
-
-]
-Chapter 10.
 [165] [166
 
 ]
+Chapter 10.
+[167] [168] [169]
+File: data-sci_files/figure-latex/unnamed-chunk-92-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-92-1.pdf>
+[170]
+File: data-sci_files/figure-latex/unnamed-chunk-93-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-93-1.pdf>
+
+Overfull \hbox (117.0pt too wide) in paragraph at lines 5995--5995
+[]\TU/lmtt/m/n/10 ## svm(formula = y ~ ., data = train_data, kernel = "linear",
+ type = "C-classification",[] 
+ []
+
+[171]
+File: data-sci_files/figure-latex/unnamed-chunk-96-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-96-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[172] [173]
+Overfull \hbox (138.0pt too wide) in paragraph at lines 6086--6086
+[]\TU/lmtt/m/n/10 ## best.tune(method = svm, train.x = y ~ ., data = train_data
+, ranges = list(cost = c(0.001,[] 
+ []
+
+[174]
+File: data-sci_files/figure-latex/unnamed-chunk-99-1.pdf Graphic file (type pdf
+)
+<use data-sci_files/figure-latex/unnamed-chunk-99-1.pdf>
+File: data-sci_files/figure-latex/unnamed-chunk-100-1.pdf Graphic file (type pd
+f)
+<use data-sci_files/figure-latex/unnamed-chunk-100-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[175]
+File: data-sci_files/figure-latex/unnamed-chunk-101-1.pdf Graphic file (type pd
+f)
+<use data-sci_files/figure-latex/unnamed-chunk-101-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[176] [177] [178]
+Overfull \hbox (138.0pt too wide) in paragraph at lines 6249--6249
+[]\TU/lmtt/m/n/10 ## best.tune(method = svm, train.x = y ~ ., data = train_data
+, ranges = list(cost = c(0.001,[] 
+ []
+
+
+Overfull \hbox (64.5pt too wide) in paragraph at lines 6249--6249
+[]\TU/lmtt/m/n/10 ##     0.01, 0.1, 1, 5, 10, 100), degree = c(1, 2, 3)), kerne
+l = "polynomial")[] 
+ []
+
+File: data-sci_files/figure-latex/unnamed-chunk-104-1.pdf Graphic file (type pd
+f)
+<use data-sci_files/figure-latex/unnamed-chunk-104-1.pdf>
+
+Underfull \vbox (badness 5832) has occurred while \output is active []
+
+[179] [180]
+File: data-sci_files/figure-latex/unnamed-chunk-106-1.pdf Graphic file (type pd
+f)
+<use data-sci_files/figure-latex/unnamed-chunk-106-1.pdf>
+[181] [182
+
+]
 Chapter 11.
-[167] [168
+[183] [184
 
 ]
 Chapter 12.
-[169] [170
+[185] [186
 
 ]
 Chapter 13.
-[171] [172
+[187] [188
 
-] [173] [174
+] [189] [190
 
-] [175] [176
+] [191] [192
 
-] (./data-sci.bbl [177] [178
+] [193] [194
 
-])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 5867.
-[179]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 5867.
+]
+Chapter 14.
+(./data-sci.bbl
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[195]
+Overfull \vbox (763.82486pt too high) has occurred while \output is active []
+
+[196])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 6418.
+[197
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 6418.
 (./data-sci.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 5867.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 5867.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 6418.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 6418.
 
 Package rerunfilecheck Info: File `data-sci.out' has not changed.
-(rerunfilecheck)             Checksum: 3C01C3E4DD5B5797FFDDBFE14A1A1370;1722.
+(rerunfilecheck)             Checksum: A2940D87FD466130FB01A1DFC2C9D3E0;5103.
  ) 
 Here is how much of TeX's memory you used:
- 23918 strings out of 494458
- 458961 string characters out of 6172051
- 611207 words of memory out of 5000000
- 27972 multiletter control sequences out of 15000+600000
+ 24002 strings out of 494458
+ 462844 string characters out of 6172051
+ 613565 words of memory out of 5000000
+ 28048 multiletter control sequences out of 15000+600000
  545081 words of font info for 57 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 52i,6n,47p,848b,442s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 52i,7n,47p,848b,442s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on data-sci.pdf (179 pages).
+Output written on data-sci.pdf (197 pages).

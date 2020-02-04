@@ -124,7 +124,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2020-01-22}
+    \date{2020-02-04}
 
 \usepackage{booktabs}
 
@@ -284,7 +284,7 @@ The expected value, \(\mu = np\), is 7.5. Here's an empirical test from 10,000 s
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 7.5227
+## [1] 7.5102
 \end{verbatim}
 
 The variance, \(\sigma^2 = np (1 - p)\), is 5.25. Here's an empirical test.
@@ -296,7 +296,7 @@ The variance, \(\sigma^2 = np (1 - p)\), is 5.25. Here's an empirical test.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5.411055
+## [1] 5.20409
 \end{verbatim}
 
 \emph{Suppose X and Y are independen random variables distributed X \textasciitilde{} b(10, .6) and Y \textasciitilde{} b(10, .7). What is the probability that either variable is \textless=4?}
@@ -328,7 +328,7 @@ Here's an empirical test.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2045
+## [1] 0.2036
 \end{verbatim}
 
 \hypertarget{negative-binomial}{%
@@ -468,7 +468,7 @@ Random variable \(X\) is distributed \(X \sim N(\mu, \sigma^2)\) if
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2693
+## [1] 0.2653
 \end{verbatim}
 
 \begin{Shaded}
@@ -5828,6 +5828,479 @@ Molnar, Christoph. ``Interpretable machine learning. A Guide for Making Black Bo
 \hypertarget{support-vector-machines}{%
 \chapter{Support Vector Machines}\label{support-vector-machines}}
 
+These notes rely on \citep{James2013}, \citep{Hastie2017}, and \citep{Kuhn2016}. I also reviewed the material in PSU's Applied Data Mining and Statistical Learning (\href{https://online.stat.psu.edu/stat508/}{STAT 508}), and the \emph{e1071} \href{https://cran.r-project.org/web/packages/e1071/vignettes/svmdoc.pdf}{Support Vector Machines} vignette.
+
+The Support Vector Machines (SVM) algorithm finds the optimal separating hyperplane between members of two classes using an appropriate nonlinear mapping to a sufficiently high dimension. The hyperplane is defined by the observations that lie within a margin optimized by a cost hyperparameter. These observations are called the \emph{support vectors}.
+
+SVM is an extension of the \emph{support vector classifier} which in turn is a generalization of the simple and intuitive \emph{maximal margin classifier}.
+
+\hypertarget{maximal-margin-classifier}{%
+\section{Maximal Margin Classifier}\label{maximal-margin-classifier}}
+
+The maximal margin classifier is the optimal hyperplane defined in the (rare) case where two classes are \emph{linearly separable}. Given an \(n \times p\) data matrix \(X\) with binary response variable defined as \(y \in [-1, 1]\) it \emph{may} be possible to define a \emph{p}-dimensional hyperplane \(h(X) = \beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = x_i^T \beta + \beta_0 = 0\) such that all observations of each class fall on opposite sides of the hyperplane. This ``separating hyperplane'' has the property that if \(\beta\) is constrained to be a unit vector, \(||\beta|| = \sum\beta^2 = 1\), then the product of the hyperplane and response variables are positive perpendicular distances from the hyperplane, the smallest of which may be termed the hyperplane \emph{margin}, \(M\),
+
+\[y_i (x_i^{'} \beta + \beta_0) \ge M.\]
+
+The maximal margin classifier is the hyperplane with the maximum margin. That is, \(\max \{M\}\) subject to \(||\beta|| = 1\). A separating hyperplane rarely exists. In fact, even if a separating hyperplane does exist, its resulting margin is probably undesirably narrow.
+
+\hypertarget{support-vector-classifier}{%
+\section{Support Vector Classifier}\label{support-vector-classifier}}
+
+The maximal margin classifier can be generalized to non-separable cases using a so-called ``soft margin''. The generalization is called the \emph{support vector classifier}. The soft margin allows some misclassification in the interest of greater robustness to individual observations. The support vector classifier optimizes
+
+\[y_i (x_i^{'} \beta + \beta_0) \ge M(1 - \xi_i)\]
+
+where the \(\xi_i\) are positive \emph{slack variables} whose sum is bounded by some constant tuning parameter \(\sum{\xi_i} \le constant\). The slack variable values indicate where the observation lies: \(\xi_i = 0\) observations lie on the correct side of the margin; \(\xi_i > 0\) observation lie on the wrong side of the margin; \(\xi_i > 1\) observations lie on the wrong side of the hyperplane. The constant sets the tolerance for margin violation. If \(constant = 0\), then all observations must reside on the correct side of the margin, as in the maximal margin classifier. The \(constant\) controls the bias-variance trade-off. As the \(constant\) increases, the margin widens and allows more violations. The classifier bias increases but its variance decreases.
+
+The support vector classifier is usually defined by dropping the \(||\beta|| = 1\) constraint, and defining \(M = 1 / ||\beta||\). The optimization problem then becomes
+
+\[
+ \min ||\beta|| \hspace{2mm} s.t. \hspace{2mm}  
+  \begin{cases} 
+   y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i &  \\
+   \xi_i \ge 0, \hspace{2mm} \sum \xi_i \le constant.      
+  \end{cases}
+\]
+
+This is a quadratic equation with linear inequality constraints, so it is a convex optimization problem which can be solved using Lagrange multipliers. Re-express the optimization problem as
+
+\[
+\min_{\beta_0, \beta} \frac{1}{2}||\beta||^2 = C\sum_{i = 1}^N \xi_i \\
+s.t. \xi_i \ge 0, \hspace{2mm} y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i
+\]
+
+where the ``cost'' parameter \(C\) replaces the constant and penalizes large residuals. This optimization problem is equivalent to \emph{another} optimization problem, the familiar \emph{loss + penalty} formulation:
+
+\[\min_{\beta_0, \beta} \sum_{i=1}^N{[1 - y_if(x_i)]_+} + \frac{\lambda}{2} ||\beta||^2 \]
+
+where \(\lambda = 1 / C\) and \([1 - y_if(x_i)]_+\) is a ``hinge'' loss function with \(f(x_i) = sign[Pr(Y = +1|x) - 1 / 2]\).\\
+The parameter estimates can be written as functions of a set of unknown parameters \((\alpha_i)\) and data points. The solution to the optimization problem requires only the inner products of the observations, represented as \(\langle x_i, x_j \rangle\),
+
+\[f(x) = \beta_0 + \sum_{i = 1}^n {\alpha_i \langle x, x_i \rangle}\]
+The solution has the interesting property that only observations on or within the margin affect the hyperplane. These observations are known as support vectors. As the constant increases, the number of violating observations increase, and thus the number of support vectors increases. This property makes the algorithm robust to the extreme observations far away from the hyperplane.
+
+The parameter estimators for \(\alpha_i\) are nonzero only for the support vectors in the solution---that is, if a training observation is not a support vector, then its \(\alpha_i\) equals zero.
+
+The only shortcoming with the algorithm is that it presumes a linear decision boundary.
+
+\hypertarget{support-vector-machines-1}{%
+\section{Support Vector Machines}\label{support-vector-machines-1}}
+
+Enlarging the feature space of the support vector classifier accommodates nonlinar relationships. Support vector machines do this in a specific way, using \emph{kernals}. The kernal is a generalization of the inner product with form \(K(x_i, x_i^{'})\). So the linear kernal is simply
+
+\[K(x_i, x_i^{'}) = \langle x, x_i \rangle\]
+
+and the solution is
+
+\[f(x) = \beta_0 + \sum_{i = 1}^n {\alpha_i K(x_i, x_i^{'})}\]
+
+\(K\) can take onother form instead, such as polynomial
+
+\[K(x, x') = (\gamma \langle x, x' \rangle + c_0)^d\]
+
+or radial
+
+\[K(x, x') = \exp\{-\gamma ||x - x'||^2\}.\]
+
+\hypertarget{example-6}{%
+\section{Example}\label{example-6}}
+
+Here is a data set of two classes \(y \in [-1, 1]\) described by two features \(X1\) and \(X2\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{ (}\DecValTok{20}\OperatorTok{*}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{))}
+\NormalTok{x[y}\OperatorTok{==}\DecValTok{1}\NormalTok{, ] <-}\StringTok{ }\NormalTok{x[y}\OperatorTok{==}\DecValTok{1}\NormalTok{, ] }\OperatorTok{+}\StringTok{ }\DecValTok{1}
+\NormalTok{train_data <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(x, y)}
+\NormalTok{train_data}\OperatorTok{$}\NormalTok{y <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+A scatter plot reveals whether the classes are linearly separable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(train_data, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ X1, }\DataTypeTok{y =}\NormalTok{ X2, }\DataTypeTok{color =}\NormalTok{ y)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Binary response with two features"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"top"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-92-1.pdf}
+
+No, they are not linearly separable. Now fit a support vector machine. The \textbf{e1071} library implements the SVM algorithm. \texttt{svm(...,\ kernel="linear")} fits a support vector classifier. Change the kernal to \texttt{c("polynomial",\ "radial")} for SVM. Try a cost of 10.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(e1071)}
+\NormalTok{m <-}\StringTok{ }\KeywordTok{svm}\NormalTok{(}
+\NormalTok{  y }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+  \DataTypeTok{data =}\NormalTok{ train_data,}
+  \DataTypeTok{kernel =} \StringTok{"linear"}\NormalTok{,}
+  \DataTypeTok{type =} \StringTok{"C-classification"}\NormalTok{,  }\CommentTok{# (default) for classification}
+  \DataTypeTok{cost =} \DecValTok{10}\NormalTok{,  }\CommentTok{# default is 1}
+  \DataTypeTok{scale =} \OtherTok{FALSE}  \CommentTok{# do not standardize features}
+\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(m, train_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-93-1.pdf}
+
+The support vectors are plotted as ``x's''. There are seven of them.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m}\OperatorTok{$}\NormalTok{index}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  1  2  5  7 14 16 17
+\end{verbatim}
+
+The summary shows adds additional information, including the distribution of the support vector classes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(m)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## svm(formula = y ~ ., data = train_data, kernel = "linear", type = "C-classification", 
+##     cost = 10, scale = FALSE)
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  linear 
+##        cost:  10 
+## 
+## Number of Support Vectors:  7
+## 
+##  ( 4 3 )
+## 
+## 
+## Number of Classes:  2 
+## 
+## Levels: 
+##  -1 1
+\end{verbatim}
+
+The seven support vectors are comprised of four in one class, three in the other. What if we lower the cost of margin violations? This will increase bias and lower variance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m <-}\StringTok{ }\KeywordTok{svm}\NormalTok{(}
+\NormalTok{  y }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+  \DataTypeTok{data =}\NormalTok{ train_data,}
+  \DataTypeTok{kernel =} \StringTok{"linear"}\NormalTok{,}
+  \DataTypeTok{type =} \StringTok{"C-classification"}\NormalTok{,  }
+  \DataTypeTok{cost =} \FloatTok{0.1}\NormalTok{,}
+  \DataTypeTok{scale =} \OtherTok{FALSE}
+\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(m, train_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-96-1.pdf}
+
+There are many more support vectors now. \emph{(In case you hoped to see the linear decision boundary formulation, or at least a graphical representation of the margins, keep hoping. The model is generalized beyond two features, so it evidently does not worry too much about supporting sanitized two-feature demos.)}
+
+Which cost level yields the \emph{best} predictive performance on holdout data? Use cross validation to find out. SVM defaults to 10-fold CV. I'll try seven candidate values for \texttt{cost}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{m_tune <-}\StringTok{ }\KeywordTok{tune}\NormalTok{(}
+\NormalTok{  svm,}
+\NormalTok{  y }\OperatorTok{~}\StringTok{ }\NormalTok{.,}
+  \DataTypeTok{data =}\NormalTok{ train_data,}
+  \DataTypeTok{kernel =}\StringTok{"linear"}\NormalTok{,}
+  \DataTypeTok{ranges =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{cost =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.001}\NormalTok{, }\FloatTok{0.01}\NormalTok{, }\FloatTok{0.1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{100}\NormalTok{))}
+\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(m_tune)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Parameter tuning of 'svm':
+## 
+## - sampling method: 10-fold cross validation 
+## 
+## - best parameters:
+##  cost
+##   0.1
+## 
+## - best performance: 0.05 
+## 
+## - Detailed performance results:
+##    cost error dispersion
+## 1 1e-03  0.55  0.4377975
+## 2 1e-02  0.55  0.4377975
+## 3 1e-01  0.05  0.1581139
+## 4 1e+00  0.15  0.2415229
+## 5 5e+00  0.15  0.2415229
+## 6 1e+01  0.15  0.2415229
+## 7 1e+02  0.15  0.2415229
+\end{verbatim}
+
+The lowest cross-validation error rate is 0.10 with cost = 0.1. \texttt{tune()} saves the best tuning parameter value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m_best <-}\StringTok{ }\NormalTok{m_tune}\OperatorTok{$}\NormalTok{best.model}
+\KeywordTok{summary}\NormalTok{(m_best)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## best.tune(method = svm, train.x = y ~ ., data = train_data, ranges = list(cost = c(0.001, 
+##     0.01, 0.1, 1, 5, 10, 100)), kernel = "linear")
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  linear 
+##        cost:  0.1 
+## 
+## Number of Support Vectors:  16
+## 
+##  ( 8 8 )
+## 
+## 
+## Number of Classes:  2 
+## 
+## Levels: 
+##  -1 1
+\end{verbatim}
+
+There are 16 support vectors, 8 in each class. This is a pretty wide margin.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(m_best, train_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-99-1.pdf}
+
+What if the classes had been linearly separable? Then we could create a maximal margin classifier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train_data_}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\NormalTok{train_data }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \DataTypeTok{X1 =}\NormalTok{ X1 }\OperatorTok{+}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(y}\OperatorTok{==}\DecValTok{1}\NormalTok{, }\FloatTok{1.0}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+    \DataTypeTok{X2 =}\NormalTok{ X2 }\OperatorTok{+}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(y}\OperatorTok{==}\DecValTok{1}\NormalTok{, }\FloatTok{1.0}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\NormalTok{  )}
+\KeywordTok{ggplot}\NormalTok{(train_data_}\DecValTok{2}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ X1, }\DataTypeTok{y =}\NormalTok{ X2, }\DataTypeTok{color =}\NormalTok{ y)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Binary response with two features, linearly separable"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-100-1.pdf}
+
+Specify a huge cost = 1e5 so that no support vectors violate the margin.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m2 <-}\StringTok{ }\KeywordTok{svm}\NormalTok{(}
+\NormalTok{  y }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+  \DataTypeTok{data =}\NormalTok{ train_data_}\DecValTok{2}\NormalTok{,}
+  \DataTypeTok{kernel =} \StringTok{"linear"}\NormalTok{,}
+  \DataTypeTok{cost =} \FloatTok{1e5}\NormalTok{,}
+  \DataTypeTok{scale =} \OtherTok{FALSE}  \CommentTok{# do not standardize features}
+\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(m2, train_data_}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-101-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(m2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## svm(formula = y ~ ., data = train_data_2, kernel = "linear", 
+##     cost = 1e+05, scale = FALSE)
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  linear 
+##        cost:  1e+05 
+## 
+## Number of Support Vectors:  3
+## 
+##  ( 1 2 )
+## 
+## 
+## Number of Classes:  2 
+## 
+## Levels: 
+##  -1 1
+\end{verbatim}
+
+This model will have very low bias, but very high variance. To fit an SVM, use a different kernel. You can use \texttt{kernal\ =\ c("polynomial",\ "radial",\ "sigmoid")}. For a polynomial model, also specify the polynomial degree. For a radial model, include the gamma value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{m3_tune <-}\StringTok{ }\KeywordTok{tune}\NormalTok{(}
+\NormalTok{  svm,}
+\NormalTok{  y }\OperatorTok{~}\StringTok{ }\NormalTok{.,}
+  \DataTypeTok{data =}\NormalTok{ train_data,}
+  \DataTypeTok{kernel =}\StringTok{"polynomial"}\NormalTok{,}
+  \DataTypeTok{ranges =} \KeywordTok{list}\NormalTok{(}
+    \DataTypeTok{cost =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.001}\NormalTok{, }\FloatTok{0.01}\NormalTok{, }\FloatTok{0.1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{100}\NormalTok{),}
+    \DataTypeTok{degree =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{  )}
+\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(m3_tune)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Parameter tuning of 'svm':
+## 
+## - sampling method: 10-fold cross validation 
+## 
+## - best parameters:
+##  cost degree
+##     1      1
+## 
+## - best performance: 0.1 
+## 
+## - Detailed performance results:
+##     cost degree error dispersion
+## 1  1e-03      1  0.55  0.4377975
+## 2  1e-02      1  0.55  0.4377975
+## 3  1e-01      1  0.30  0.2581989
+## 4  1e+00      1  0.10  0.2108185
+## 5  5e+00      1  0.10  0.2108185
+## 6  1e+01      1  0.15  0.2415229
+## 7  1e+02      1  0.15  0.2415229
+## 8  1e-03      2  0.70  0.4216370
+## 9  1e-02      2  0.70  0.4216370
+## 10 1e-01      2  0.70  0.4216370
+## 11 1e+00      2  0.65  0.2415229
+## 12 5e+00      2  0.50  0.3333333
+## 13 1e+01      2  0.50  0.3333333
+## 14 1e+02      2  0.50  0.3333333
+## 15 1e-03      3  0.65  0.3374743
+## 16 1e-02      3  0.65  0.3374743
+## 17 1e-01      3  0.50  0.3333333
+## 18 1e+00      3  0.40  0.3162278
+## 19 5e+00      3  0.35  0.3374743
+## 20 1e+01      3  0.35  0.3374743
+## 21 1e+02      3  0.35  0.3374743
+\end{verbatim}
+
+The lowest cross-validation error rate is 0.10 with cost = 1, polynomial degree 1.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m3_best <-}\StringTok{ }\NormalTok{m3_tune}\OperatorTok{$}\NormalTok{best.model}
+\KeywordTok{summary}\NormalTok{(m3_best)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## best.tune(method = svm, train.x = y ~ ., data = train_data, ranges = list(cost = c(0.001, 
+##     0.01, 0.1, 1, 5, 10, 100), degree = c(1, 2, 3)), kernel = "polynomial")
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  polynomial 
+##        cost:  1 
+##      degree:  1 
+##      coef.0:  0 
+## 
+## Number of Support Vectors:  12
+## 
+##  ( 6 6 )
+## 
+## 
+## Number of Classes:  2 
+## 
+## Levels: 
+##  -1 1
+\end{verbatim}
+
+There are 12 support vectors, 6 in each class. This is a pretty wide margin.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(m3_best, train_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-104-1.pdf}
+
+\hypertarget{using-caret}{%
+\section{Using Caret}\label{using-caret}}
+
+The model can also be fit using \textbf{caret}. I'll used LOOCV since the data set is so small. Normalize the variables to make their scale comparable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(caret)}
+\KeywordTok{library}\NormalTok{(kernlab)}
+
+\NormalTok{train_data_}\DecValTok{3}\NormalTok{ <-}\StringTok{ }\NormalTok{train_data }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{y =} \KeywordTok{factor}\NormalTok{(y, }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{)))}
+
+\NormalTok{m4 <-}\StringTok{ }\KeywordTok{train}\NormalTok{(}
+\NormalTok{  y }\OperatorTok{~}\StringTok{ }\NormalTok{.,}
+  \DataTypeTok{data =}\NormalTok{ train_data_}\DecValTok{3}\NormalTok{,}
+  \DataTypeTok{method =} \StringTok{"svmPoly"}\NormalTok{,}
+  \DataTypeTok{preProcess =} \KeywordTok{c}\NormalTok{(}\StringTok{"center"}\NormalTok{, }\StringTok{"scale"}\NormalTok{),}
+  \DataTypeTok{trControl =} \KeywordTok{trainControl}\NormalTok{(}
+    \DataTypeTok{method =} \StringTok{"cv"}\NormalTok{,}
+    \DataTypeTok{number =} \DecValTok{5}\NormalTok{,}
+    \DataTypeTok{summaryFunction =}\NormalTok{ twoClassSummary,  }\CommentTok{# Use AUC to pick the best model}
+    \DataTypeTok{classProbs=}\OtherTok{TRUE}
+\NormalTok{  )}
+\NormalTok{)}
+
+\NormalTok{m4}\OperatorTok{$}\NormalTok{bestTune}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   degree scale   C
+## 8      1   0.1 0.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(m4)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-106-1.pdf}
+
 \hypertarget{principal-components-analysis}{%
 \chapter{Principal Components Analysis}\label{principal-components-analysis}}
 
@@ -5860,6 +6333,84 @@ After creating all of your Markdown pages, knit the book or click the \textbf{Bu
 \hypertarget{shiny-apps}{%
 \chapter*{Shiny Apps}\label{shiny-apps}}
 \addcontentsline{toc}{chapter}{Shiny Apps}
+
+\hypertarget{rstudioconf}{%
+\chapter{rstudio::conf}\label{rstudioconf}}
+
+\hypertarget{open-source-software-for-data-science}{%
+\section{Open Source Software for Data Science}\label{open-source-software-for-data-science}}
+
+\hypertarget{data-visualization-and-designing-with-ai}{%
+\section{Data, visualization, and designing with AI}\label{data-visualization-and-designing-with-ai}}
+
+\hypertarget{deploying-end-to-end-data-science-with-shiny-plumber-and-pins}{%
+\section{Deploying End-to-End Data Science with Shiny, Plumber, and Pins}\label{deploying-end-to-end-data-science-with-shiny-plumber-and-pins}}
+
+\hypertarget{health-connected-siloed-data-sources-and-streamlined-reporting-using-r}{%
+\section{Health Connected Siloed Data Sources and Streamlined Reporting Using R}\label{health-connected-siloed-data-sources-and-streamlined-reporting-using-r}}
+
+\hypertarget{builiding-a-new-data-science-pipeline-for-teh-ft-with-rstudio-connect}{%
+\section{Builiding a new data science pipeline for teh FT with RStudio Connect}\label{builiding-a-new-data-science-pipeline-for-teh-ft-with-rstudio-connect}}
+
+\hypertarget{how-to-win-an-ai-hackathon-without-using-ai}{%
+\section{How to win an AI Hackathon without using AI}\label{how-to-win-an-ai-hackathon-without-using-ai}}
+
+\hypertarget{production-grade-shiny-apps-with-golem}{%
+\section{Production-grade Shiny Apps with golem}\label{production-grade-shiny-apps-with-golem}}
+
+\hypertarget{making-the-shiny-contest}{%
+\section{Making the Shiny Contest}\label{making-the-shiny-contest}}
+
+\hypertarget{styling-shiny-apps-with-sass-and-bootstrap-4}{%
+\section{Styling Shiny apps with Sass and Bootstrap 4}\label{styling-shiny-apps-with-sass-and-bootstrap-4}}
+
+\hypertarget{r-then-and-now}{%
+\section{R: Then and Now}\label{r-then-and-now}}
+
+\hypertarget{journalism-with-rstudio-r-and-teh-tidyverse}{%
+\section{Journalism with RStudio, R, and teh Tidyverse}\label{journalism-with-rstudio-r-and-teh-tidyverse}}
+
+\hypertarget{learning-r-with-humorous-side-projects---or---technical-debt-is-a-social-problem}{%
+\section{Learning R with humorous side projects - or - Technical debt is a social problem}\label{learning-r-with-humorous-side-projects---or---technical-debt-is-a-social-problem}}
+
+\hypertarget{flatironkitchen-how-we-overhauled-a-frankensteinian-sql-workflow-with-the-tidyverse}{%
+\section{FlatironKitchen: How we overhauled a Frankensteinian SQL workflow with the tidyverse}\label{flatironkitchen-how-we-overhauled-a-frankensteinian-sql-workflow-with-the-tidyverse}}
+
+\hypertarget{making-better-spaghetti-plots-exploring-longitudinal-data-with-brolgar-package}{%
+\section{Making better spaghetti (plots): Exploring longitudinal data with brolgar package}\label{making-better-spaghetti-plots-exploring-longitudinal-data-with-brolgar-package}}
+
+\hypertarget{object-of-type-closure-is-not-subsettable}{%
+\section{Object of type `closure' is not subsettable}\label{object-of-type-closure-is-not-subsettable}}
+
+\hypertarget{branding-and-packaging-reports-with-r-markdown}{%
+\section{Branding and Packaging Reports with R Markdown}\label{branding-and-packaging-reports-with-r-markdown}}
+
+\hypertarget{the-glamour-of-graphics}{%
+\section{The Glamour of Graphics}\label{the-glamour-of-graphics}}
+
+\hypertarget{dont-repeat-yourself-talk-to-yourself-repeated-reporting-in-the-r-universe}{%
+\section{Don't repeat yourself, talk to yourself! Repeated reporting in the R universe}\label{dont-repeat-yourself-talk-to-yourself-repeated-reporting-in-the-r-universe}}
+
+\hypertarget{rstudio-1.3-sneak-preview}{%
+\section{RStudio 1.3 Sneak Preview}\label{rstudio-1.3-sneak-preview}}
+
+\hypertarget{one-r-markdown-document-fourteen-demos---or---tidyverse-2019-20}{%
+\section{One R Markdown Document, Fourteen Demos - or - Tidyverse 2019-20}\label{one-r-markdown-document-fourteen-demos---or---tidyverse-2019-20}}
+
+\hypertarget{best-practices-for-programing-with-ggplot2}{%
+\section{Best Practices for programing with ggplot2}\label{best-practices-for-programing-with-ggplot2}}
+
+\hypertarget{spruce-up-your-ggplot2-visualization-with-formatted-text}{%
+\section{Spruce up your ggplot2 visualization with formatted text}\label{spruce-up-your-ggplot2-visualization-with-formatted-text}}
+
+\hypertarget{the-little-package-that-could-taking-visualization-to-the-next-level-with-the-scales-package}{%
+\section{The little package that could: taking visualization to the next level with the scales package}\label{the-little-package-that-could-taking-visualization-to-the-next-level-with-the-scales-package}}
+
+\hypertarget{advances-in-tidyeval}{%
+\section{Advances in tidyeval}\label{advances-in-tidyeval}}
+
+\hypertarget{section}{%
+\section{}\label{section}}
 
 \bibliography{book.bib,packages.bib}
 
