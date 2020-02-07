@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.2 Discrete Distributions | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.2 Discrete Distributions | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-02-04" />
+<meta name="date" content="2020-02-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -278,10 +278,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>What is the expected number of heads in 25 coin flips if the probability of heads is 0.3?</em></p>
 <p>The expected value, <span class="math inline">\(\mu = np\)</span>, is 7.5. Here’s an empirical test from 10,000 samples.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="discrete-distributions.html#cb6-1"></a><span class="kw">mean</span>(<span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">prob =</span> <span class="fl">.3</span>))</span></code></pre></div>
-<pre><code>## [1] 7.5288</code></pre>
+<pre><code>## [1] 7.4814</code></pre>
 <p>The variance, <span class="math inline">\(\sigma^2 = np (1 - p)\)</span>, is 5.25. Here’s an empirical test.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="discrete-distributions.html#cb8-1"></a><span class="kw">var</span>(<span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">prob =</span> <span class="fl">.3</span>))</span></code></pre></div>
-<pre><code>## [1] 5.3662</code></pre>
+<pre><code>## [1] 5.300042</code></pre>
 <p><em>Suppose X and Y are independen random variables distributed X ~ b(10, .6) and Y ~ b(10, .7). What is the probability that either variable is &lt;=4?</em></p>
 <p>Let <span class="math inline">\(P(A) = P(X&lt;=4)\)</span> and <span class="math inline">\(P(B) = P(Y&lt;=4)\)</span>. Then <span class="math inline">\(P(A|B) = P(A) + P(B) - P(AB)\)</span>, and because the events are independent, <span class="math inline">\(P(AB) = P(A)P(B)\)</span>.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="discrete-distributions.html#cb10-1"></a>p_a &lt;-<span class="st"> </span><span class="kw">pbinom</span>(<span class="dt">q =</span> <span class="dv">4</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="fl">0.6</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span>
@@ -294,7 +294,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-3"><a href="discrete-distributions.html#cb12-3"></a>  <span class="dt">y =</span> <span class="kw">rbinom</span>(<span class="dv">10000</span>, <span class="dv">10</span>, <span class="fl">0.7</span>)</span>
 <span id="cb12-4"><a href="discrete-distributions.html#cb12-4"></a>  )</span>
 <span id="cb12-5"><a href="discrete-distributions.html#cb12-5"></a><span class="kw">mean</span>(<span class="kw">if_else</span>(df<span class="op">$</span>x <span class="op">&lt;=</span><span class="st"> </span><span class="dv">4</span> <span class="op">|</span><span class="st"> </span>df<span class="op">$</span>y <span class="op">&lt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
-<pre><code>## [1] 0.2095</code></pre>
+<pre><code>## [1] 0.2005</code></pre>
 </div>
 <div id="negative-binomial" class="section level3">
 <h3><span class="header-section-number">1.2.2</span> Negative-Binomial</h3>
