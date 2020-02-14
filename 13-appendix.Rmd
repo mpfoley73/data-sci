@@ -17,15 +17,49 @@ After creating all of your Markdown pages, knit the book or click the **Build Bo
 
 ## Shiny Apps {-}
 
-## Create Package {-}
+## Packages {-}
 
-Consult the book **R Packages** [@Wickham2015] by Hadley Wickham.  Basic instructions:
+**R Packages** [@Wickham2015] by Hadley Wickham is a good manual on packages, but it does not include a full tutorial.  The [Developing R Packages](https://campus.datacamp.com/courses/developing-r-packages/) Data Camp course is also helpful.  I will set up my own exercise and present it here.  I will create a package for my pretend organization, "MF".  The package will include the following:
 
-1. In RStudio, File > New Project.  Select "New Directory".  Select "R Package".
+* R Markdown template.  My template will integrate code, output, and commentary in a single R Markdown. The template will produce a familiar work product containing standard content (summary, data management, exploratory analysis, methods, results, conclusions), and a standard style (colors, typeface, size, logo).
+
+* Functions.  Common I/O functions for database retrieval, writing to Excel.  Common graphing functions for ggplot styling.
+
+I am mostly copying the logic and code from the ggthemes [economist.R](https://rdrr.io/cran/ggthemes/src/R/economist.R) script.
+
+
+### Create a package {-}
+
+1. In the RStudio IDE, click File > New Project.  Select "New Directory".  Select "R Package".  You can also use `devtools::create("mfstylr")`.  This will create the minimum items for an R package.
+
+![](./images/create_pkg.png)
+
+    + R directory: R scripts with function definitions.
+    + man directory: documentation
+    + NAMESPACE file: information about imported functions and functions made available (managed by **roxygen2**)
+    + DESCRIPTION file: metadata about the package
+  
 2. Write functions in R scripts in R directory.  Document with tags readable by *roxygen2* package.
 3. Select XYZ > Install and Restart.
 
-If creating an Rmd template, use `use_this::use_rmarkdown_template()`.  Here is how I created the "Kaggle Report" template.
+### Create Data {-}
+
+Add an RData file to your package with `use_data()`
+
+### Create Vignette {-}
+
+Add a directory and template vignette with `use_vignette(name, title)`.
+
+```{r eval=FALSE}
+use_vignette("Creating-Plots-with-mfstylr", "Creating Plots with mfstylr")
+```
+
+
+#### Step 2: Create an R Markdown template {-}
+
+I relied on [this blog](http://freerangestats.info/blog/2017/09/09/rmarkdown) at *free range statistics* for a lot what follows.  There is also good information about R Markdown and templates in Yihui Xie's **R Markdown: The Definitive Guide** [@Xie2019b].  
+
+Use `use_this::use_rmarkdown_template()` to create an Rmd template.  I will create a "Kaggle Report" template.  In the Console (or a script), enter
 
 ```{r eval=FALSE}
 use_rmarkdown_template(
@@ -36,31 +70,18 @@ use_rmarkdown_template(
 )
 ```
 
-Learn more about R Markdown and templates in Yihui Xie's **R Markdown: The Definitive Guide** [@Xie2019b].
+Since my project directory is `C:\Users\mpfol\OneDrive\Documents\GitHub\mfstylr`, `use_rmarkdown_template()` creates subdirectories `.\inst\rmarkdown\templates\kaggle_report\skeleton` with three files
 
- Open Source Software for Data Science
- Data, visualization, and designing with AI
- Deploying End-to-End Data Science with Shiny, Plumber, and Pins
- Health Connected Siloed Data Sources and Streamlined Reporting Using R
- Builiding a new data science pipeline for teh FT with RStudio Connect
- How to win an AI Hackathon without using AI
- Production-grade Shiny Apps with golem
- Making the Shiny Contest
- Styling Shiny apps with Sass and Bootstrap 4
- R: Then and Now
- Journalism with RStudio, R, and teh Tidyverse
- Learning R with humorous side projects - or - Technical debt is a social problem
- FlatironKitchen: How we overhauled a Frankensteinian SQL workflow with the tidyverse
- Making better spaghetti (plots): Exploring longitudinal data with brolgar package
+* `.\inst\rmarkdown\templates\kaggle_report\template.yaml`
+* `.\inst\rmarkdown\templates\kaggle_report\skeleton\skeleton.Rmd`
 
- Object of type 'closure' is not subsettable
- Branding and Packaging Reports with R Markdown
- The Glamour of Graphics
- Don't repeat yourself, talk to yourself! Repeated reporting in the R universe
- RStudio 1.3 Sneak Preview
- One R Markdown Document, Fourteen Demos - or - Tidyverse 2019-20
- Best Practices for programing with ggplot2
- Spruce up your ggplot2 visualization with formatted text
- The little package that could: taking visualization to the next level with the scales package
- Advances in tidyeval
+My kaggle report template will include a logo.  Looks like there are two ways to embed an image in your document.  One is a direct image loading reference `!()`, but I don't think you can control the attributes this way.  A second way is adding html tags.
+
+```{r eval=FALSE}
+![](logo.png)
+
+# or for more control
+<img src="logo.png" style="position:absolute;top:0px;right:0px;" />
+```
+
  
