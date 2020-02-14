@@ -40,7 +40,18 @@ I am mostly copying the logic and code from the ggthemes [economist.R](https://r
     + DESCRIPTION file: metadata about the package
   
 2. Write functions in R scripts in R directory.  Document with tags readable by *roxygen2* package.
+
 3. Select XYZ > Install and Restart.
+
+### Document Functions with roxygen
+
+Add roxygen documentation with `#'` characters.  The first three lines are always the title, Description, and Details.  They don't need any tags, but you need to separate them with blank lines.
+
+```{r eval=FALSE}
+
+```
+
+
 
 ### Create Data {-}
 
@@ -59,10 +70,10 @@ use_vignette("Creating-Plots-with-mfstylr", "Creating Plots with mfstylr")
 
 I relied on [this blog](http://freerangestats.info/blog/2017/09/09/rmarkdown) at *free range statistics* for a lot what follows.  There is also good information about R Markdown and templates in Yihui Xie's **R Markdown: The Definitive Guide** [@Xie2019b].  
 
-Use `use_this::use_rmarkdown_template()` to create an Rmd template.  I will create a "Kaggle Report" template.  In the Console (or a script), enter
+Use `usethis::use_rmarkdown_template()` to create an Rmd template.  I will create a "Kaggle Report" template.  In the Console (or a script), enter
 
 ```{r eval=FALSE}
-use_rmarkdown_template(
+usethis::use_rmarkdown_template(
   template_name = "Kaggle Report",
   template_dir = "kaggle_report",
   template_description = "Template for creating Kaggle reports in RMarkdown.",
