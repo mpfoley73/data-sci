@@ -69,13 +69,46 @@ $${n \choose {n_1, n_2, \dots, n_k}} = \frac{11!}{3! 1! 3! 1! 1! 1! 1!} = 1,108,
 $${n \choose {n_1, n_2, \dots, n_k}} = \frac{15!}{5! 5! 5!} = 756,756$$
 
 
+## Likelihood
+
+The *likelihood function* is the likelihood of a parameter $\theta$ given an observed value.  The likelihood function is identical to the probability distribution function, except that it reverses which variable is considered fixed.  E.g., the binomial distribution $Bin(n, \pi)$ expresses the probability that $X = x$ given a sample of size $n$ from a binomial distribution with success probability $\pi$.
+
+$$f(x|\theta) = P(X=x|\pi) = \frac{{n!}}{{x!(n-x)!}} p^x (1-p)^{n-x}.$$
+
+The corresponding *likelihood* function expresses the probability that $\pi = p$ given the observed value $x$.
+
+$$L(\theta|x) = L(\pi|x) = \frac{{n!}}{{x!(n-x)!}} \pi^x (1-\pi)^{n-x} \propto \pi^x (1-\pi)^{n-x}.$$
+
+Any multiplicative constant which does not depend on $\theta$ is irrevelant and can be discarded, so
+
+$$L(\pi|x) =  \pi^x (1-\pi)^{n-x}$$
+
+In most cases, you work with the *loglikelihood*, $l(\theta|x) = \log L(\theta|x)$.  So for the binomial distribution, $l(\pi|x) = x \log \pi + (n - x) \log (1 - \pi)$.  Frequently you derive loglikelihood from a sample.  The overall likelihood is the product of the individual likelihoods, and the overall loglikelihood is the log of the overall likelihood.
+
+$$l(\theta|x) = \log \prod_{i=1}^n f(x_i|\theta)$$
+
+You usually want to know the *maximum* of the likelihood function.  The value of $\theta$ that maximizes $L$ is the maximum-likelihood estimator of $\theta$.  Suppose an experiment had $n=5$ Bernoulli trials, and $X = 3$ where successes.  $X \sim Bin(5, p)$.  What is the MLE?  A plot of $L(p|x) = p^3(1 - p)^2$ is maximized at $p = 0.6$.
+
+```{r}
+library(tidyverse)
+p <- 0:100*.01
+L <- p^3 * (1 - p)^2
+dat <- data.frame(L, p)
+ggplot(dat, aes(x = p, y = L)) +
+  geom_line() +
+  geom_vline(xintercept = 0.6)
+```
+
+Calculating the MLE is usually simplified using the loglikelihood function.
+
+
 ## Discrete Distributions
 
 ### Binomial
 
-If $X$ is the count of successful events in $n$ identical and independent Bernoulli trials of success probability $p$, then $X$ is a random variable with a binomial distribution $X \sim  b(n,p)$ with mean $\mu=np$ and variance $\sigma^2 = np(1-p)$. The probability of $X=x$ successes in $n$ trials is 
+If $X$ is the count of successful events in $n$ identical and independent Bernoulli trials of success probability $\pi$, then $X$ is a random variable with a binomial distribution $X \sim  Bin(n,\pi)$ with mean $\mu=n\pi$ and variance $\sigma^2 = n\pi(1-\pi)$. The probability of $X=x$ successes in $n$ trials is 
 
-$$P(X=x) = \frac{{n!}}{{x!(n-x)!}} p^x (1-p)^{n-x}.$$
+$$P(X=x) = \frac{{n!}}{{x!(n-x)!}} \pi^x (1-\pi)^{n-x}.$$
 
 *What is the probability 2 out of 10 coin flips are heads if the probability of heads is 0.3?*
 

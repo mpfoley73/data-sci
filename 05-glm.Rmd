@@ -17,8 +17,6 @@ Penn State University, STAT 501, "Lesson 15: Logistic, Poisson & Nonlinear Regre
 
 "Multiple and Logistic Regression".  DataCamp. [https://www.datacamp.com/courses/multiple-and-logistic-regression](https://www.datacamp.com/courses/multiple-and-logistic-regression).
 
-"The Difference Between Logistic and Probit Regression", The Analysis Factor.  [https://www.theanalysisfactor.com/the-difference-between-logistic-and-probit-regression/](https://www.theanalysisfactor.com/the-difference-between-logistic-and-probit-regression/).
-
 Molnar, Christoph. "Interpretable machine learning. A Guide for Making Black Box Models Explainable", 2019. [https://christophm.github.io/interpretable-ml-book/](https://christophm.github.io/interpretable-ml-book/).
 
 
@@ -36,7 +34,7 @@ where $\pi$ is the event probability.  For a probit regression, the link functio
 
 $$f(\mu_Y) = \Phi^{-1}(\pi).$$
 
-The difference between logistic and probit link function is theoretical - the practical significance is slight.  Logistic regression has the advantage that it can be back-transformed from log odds to odds ratios.  For a Poisson regression, the link function is
+The difference between logistic and probit link function is theoretical - [the practical significance is slight](https://www.theanalysisfactor.com/the-difference-between-logistic-and-probit-regression/).  Logistic regression has the advantage that it can be back-transformed from log odds to odds ratios.  For a Poisson regression, the link function is
 
 $$f(\mu_Y) = \ln(\lambda)$$
 
