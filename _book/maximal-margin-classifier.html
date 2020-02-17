@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9.1 Maximal Margin Classifier | My Data Science Notes</title>
+  <title>10.1 Maximal Margin Classifier | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9.1 Maximal Margin Classifier | My Data Science Notes" />
+  <meta property="og:title" content="10.1 Maximal Margin Classifier | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9.1 Maximal Margin Classifier | My Data Science Notes" />
+  <meta name="twitter:title" content="10.1 Maximal Margin Classifier | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-02-14" />
+<meta name="date" content="2020-02-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -158,42 +158,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="example-two.html"><a href="example-two.html"><i class="fa fa-check"></i><b>3.2</b> Example two</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>4</b> Regression</a></li>
-<li class="chapter" data-level="5" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>5</b> Classification</a></li>
-<li class="chapter" data-level="6" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>6</b> Regularization</a></li>
-<li class="chapter" data-level="7" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>7</b> Non-linear Models</a><ul>
-<li class="chapter" data-level="7.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>7.1</b> Splines</a></li>
-<li class="chapter" data-level="7.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>7.2</b> MARS</a></li>
-<li class="chapter" data-level="7.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>7.3</b> GAM</a></li>
+<li class="chapter" data-level="5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>5</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="5.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>5.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#example-6"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>8</b> Decision Trees</a><ul>
-<li class="chapter" data-level="8.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>8.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>8.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="8.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>8.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="8.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>8.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="5.2" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>5.2</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-7"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>8.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>8.2.1</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>8.3</b> Bagging</a></li>
-<li class="chapter" data-level="8.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>8.4</b> Random Forests</a></li>
-<li class="chapter" data-level="8.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>8.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="8.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8.6</b> Summary</a></li>
+<li class="chapter" data-level="6" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>6</b> Classification</a></li>
+<li class="chapter" data-level="7" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>7</b> Regularization</a></li>
+<li class="chapter" data-level="8" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>8</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="8.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>8.1</b> Splines</a></li>
+<li class="chapter" data-level="8.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>8.2</b> MARS</a></li>
+<li class="chapter" data-level="8.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>8.3</b> GAM</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>9</b> Support Vector Machines</a><ul>
-<li class="chapter" data-level="9.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>9.1</b> Maximal Margin Classifier</a></li>
-<li class="chapter" data-level="9.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>9.2</b> Support Vector Classifier</a></li>
-<li class="chapter" data-level="9.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>9.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="9.4" data-path="example-6.html"><a href="example-6.html"><i class="fa fa-check"></i><b>9.4</b> Example</a></li>
-<li class="chapter" data-level="9.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>9.5</b> Using Caret</a></li>
+<li class="chapter" data-level="9" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>9</b> Decision Trees</a><ul>
+<li class="chapter" data-level="9.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>9.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>9.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>9.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="9.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>9.1.3</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>10</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="11" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>11</b> Clustering</a></li>
-<li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a></li>
+<li class="chapter" data-level="9.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>9.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>9.2.1</b> Caret Approach</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>9.3</b> Bagging</a></li>
+<li class="chapter" data-level="9.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>9.4</b> Random Forests</a></li>
+<li class="chapter" data-level="9.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>9.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="9.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>9.6</b> Summary</a></li>
+<li class="chapter" data-level="9.7" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>9.7</b> Reference</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>10</b> Support Vector Machines</a><ul>
+<li class="chapter" data-level="10.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>10.1</b> Maximal Margin Classifier</a></li>
+<li class="chapter" data-level="10.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>10.2</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="10.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>10.3</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="10.4" data-path="example-8.html"><a href="example-8.html"><i class="fa fa-check"></i><b>10.4</b> Example</a></li>
+<li class="chapter" data-level="10.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>10.5</b> Using Caret</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>11</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="12" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>12</b> Clustering</a></li>
+<li class="chapter" data-level="13" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>13</b> Text Mining</a></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
 <li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
+<li class="chapter" data-level="13.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>13.0.1</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
@@ -220,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="maximal-margin-classifier" class="section level2">
-<h2><span class="header-section-number">9.1</span> Maximal Margin Classifier</h2>
+<h2><span class="header-section-number">10.1</span> Maximal Margin Classifier</h2>
 <p>The maximal margin classifier is the optimal hyperplane defined in the (rare) case where two classes are <em>linearly separable</em>. Given an <span class="math inline">\(n \times p\)</span> data matrix <span class="math inline">\(X\)</span> with binary response variable defined as <span class="math inline">\(y \in [-1, 1]\)</span> it <em>may</em> be possible to define a <em>p</em>-dimensional hyperplane <span class="math inline">\(h(X) = \beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = x_i^T \beta + \beta_0 = 0\)</span> such that all observations of each class fall on opposite sides of the hyperplane. This “separating hyperplane” has the property that if <span class="math inline">\(\beta\)</span> is constrained to be a unit vector, <span class="math inline">\(||\beta|| = \sum\beta^2 = 1\)</span>, then the product of the hyperplane and response variables are positive perpendicular distances from the hyperplane, the smallest of which may be termed the hyperplane <em>margin</em>, <span class="math inline">\(M\)</span>,</p>
 <p><span class="math display">\[y_i (x_i^{&#39;} \beta + \beta_0) \ge M.\]</span></p>
 <p>The maximal margin classifier is the hyperplane with the maximum margin. That is, <span class="math inline">\(\max \{M\}\)</span> subject to <span class="math inline">\(||\beta|| = 1\)</span>. A separating hyperplane rarely exists. In fact, even if a separating hyperplane does exist, its resulting margin is probably undesirably narrow.</p>

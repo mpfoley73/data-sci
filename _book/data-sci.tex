@@ -1,35 +1,46 @@
-\documentclass[]{book}
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\usepackage{hyperref}
-\hypersetup{unicode=true,
-            pdftitle={My Data Science Notes},
-            pdfauthor={Michael Foley},
-            pdfborder={0 0 0},
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
-\usepackage{natbib}
-\bibliographystyle{apalike}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={My Data Science Notes},
+  pdfauthor={Michael Foley},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -71,6 +82,14 @@
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -80,53 +99,21 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-
-%%% Use protect on footnotes to avoid problems with footnotes in titles
-\let\rmarkdownfootnote\footnote%
-\def\footnote{\protect\rmarkdownfootnote}
-
-%%% Change title format to be more compact
-\usepackage{titling}
-
-% Create subtitle command for use in maketitle
-\providecommand{\subtitle}[1]{
-  \posttitle{
-    \begin{center}\large#1\end{center}
-    }
-}
-
-\setlength{\droptitle}{-2em}
-
-  \title{My Data Science Notes}
-    \pretitle{\vspace{\droptitle}\centering\huge}
-  \posttitle{\par}
-    \author{Michael Foley}
-    \preauthor{\centering\large\emph}
-  \postauthor{\par}
-      \predate{\centering\large\emph}
-  \postdate{\par}
-    \date{2020-02-04}
-
 \usepackage{booktabs}
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+
+\title{My Data Science Notes}
+\author{Michael Foley}
+\date{2020-02-17}
 
 \begin{document}
 \maketitle
@@ -284,7 +271,7 @@ The expected value, \(\mu = np\), is 7.5. Here's an empirical test from 10,000 s
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 7.5102
+## [1] 7.5149
 \end{verbatim}
 
 The variance, \(\sigma^2 = np (1 - p)\), is 5.25. Here's an empirical test.
@@ -296,7 +283,7 @@ The variance, \(\sigma^2 = np (1 - p)\), is 5.25. Here's an empirical test.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5.20409
+## [1] 5.185593
 \end{verbatim}
 
 \emph{Suppose X and Y are independen random variables distributed X \textasciitilde{} b(10, .6) and Y \textasciitilde{} b(10, .7). What is the probability that either variable is \textless=4?}
@@ -328,7 +315,7 @@ Here's an empirical test.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2036
+## [1] 0.2061
 \end{verbatim}
 
 \hypertarget{negative-binomial}{%
@@ -468,7 +455,7 @@ Random variable \(X\) is distributed \(X \sim N(\mu, \sigma^2)\) if
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2653
+## [1] 0.2599
 \end{verbatim}
 
 \begin{Shaded}
@@ -521,7 +508,7 @@ Random variable \(X\) is distributed \(X \sim N(\mu, \sigma^2)\) if
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0061
+## [1] 0.0065
 \end{verbatim}
 
 \begin{Shaded}
@@ -840,6 +827,749 @@ Some \emph{significant} applications are demonstrated in this chapter.
 \hypertarget{regression}{%
 \chapter{Regression}\label{regression}}
 
+\hypertarget{generalized-linear-models}{%
+\chapter{Generalized Linear Models}\label{generalized-linear-models}}
+
+These notes are primarily from PSU Online course \href{https://online.stat.psu.edu/stat504}{Analysis of Discrete Data} which uses Alan Agresti's \textbf{Categorical Data Analysis} (which I have not yet purchased) \citep{Agresti2013}. I also reviewed:
+
+Penn State University, STAT 501, ``Lesson 15: Logistic, Poisson \& Nonlinear Regression''. \url{https://newonlinecourses.science.psu.edu/stat501/lesson/15}
+
+``Generalized Linar Models in R''. DataCamp. \url{https://www.datacamp.com/courses/generalized-linear-models-in-r}.
+
+``Multiple and Logistic Regression''. DataCamp. \url{https://www.datacamp.com/courses/multiple-and-logistic-regression}.
+
+``The Difference Between Logistic and Probit Regression'', The Analysis Factor. \url{https://www.theanalysisfactor.com/the-difference-between-logistic-and-probit-regression/}.
+
+Molnar, Christoph. ``Interpretable machine learning. A Guide for Making Black Box Models Explainable'', 2019. \url{https://christophm.github.io/interpretable-ml-book/}.
+
+In generalized linear models (GLMs), the modeled response is \emph{a function} of the mean of \(y\). There are three components to a GLM. The \emph{random component} is the probability distribution of the response variable (normal, binomial, Poisson, etc.). The \emph{systematic component} is the explanatory variables \(X\beta\). The \emph{link function} \(\eta\) specifies the link between random and systematic components. The link function converts the response value from a range \([0,1]\) in logistic and probit and \([0,+\infty]\) for Poisson to a value ranging from \([-\infty, +\infty]\), and creates a linear relationship with the predictor variables.
+
+For a standard linear regression, the link function is the identity function,
+
+\[f(\mu_Y) = \mu_Y.\]
+
+The standard linear regression is thus a special case of the GLM. For a logistic regression, the link function is
+
+\[f(\mu_Y) = \ln(\frac{\pi}{1-\pi})\]
+
+where \(\pi\) is the event probability. For a probit regression, the link function is
+
+\[f(\mu_Y) = \Phi^{-1}(\pi).\]
+
+The difference between logistic and probit link function is theoretical - the practical significance is slight. Logistic regression has the advantage that it can be back-transformed from log odds to odds ratios. For a Poisson regression, the link function is
+
+\[f(\mu_Y) = \ln(\lambda)\]
+
+where \(\lambda\) is the expected event rate.
+
+GLM uses maximum likelihood estimation (MLE) rather than ordinary least squares (OLS) to estimate the parameters, and thus relies on large-sample approximations.
+
+In R, specify a GLM just like an linear model, but with the \texttt{glm()} function, specifying the distribution with the \texttt{family} parameter.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{family\ =\ "gaussian"}: linear regression
+\item
+  \texttt{family\ =\ "binomial"}: logistic regression
+\item
+  \texttt{family\ =\ binomial(link\ =\ "probit")}: probit regression
+\item
+  \texttt{family\ =\ "poisson"}: Poisson regression
+\end{itemize}
+
+\hypertarget{logistic-regression}{%
+\section{Logistic Regression}\label{logistic-regression}}
+
+Logistic regression estimates the probability of a particular level of a categorical response variable given a set of predictors. The response levels can be binary, nominal (multiple categories), or ordinal (multiple levels).
+
+The \textbf{binary} logistic regression model is
+
+\[y_i = logit(\pi_i) = \log\left(\frac{\pi_i}{1-\pi_i}\right) = X_i\beta\]
+
+where \(\pi_i\) is the ``success probability'' that observation \(i\) is in a specified category of the binary \emph{y} variable. You can solve for \(\pi\) to get
+
+\[\pi = \frac{\exp(X \beta)}{1 + \exp(X \beta)}.\]
+
+The model predicts the \emph{log odds} of the response variable. The maximum likelihood estimator maximizes the the likelihood function
+
+\[L(\beta; y, X) = \prod_{i=1}^n \pi_i^{y_i}(1 - \pi_i)^{(1-y_i)} = \prod_{i=1}^n\frac{\exp(y_i X_i \beta)}{1 + \exp(X_i \beta)}.\]
+
+There is no closed-form solution, so GLM estimates coefficients with interatively reweighted least squares.
+
+\hypertarget{example-6}{%
+\subsection*{Example}\label{example-6}}
+\addcontentsline{toc}{subsection}{Example}
+
+Dataset \texttt{leuk} contains response variable \texttt{REMISS} indicating whether leukemia remission occurred (1\textbar0) and several explanatory variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data_dir <-}\StringTok{ "C:/Users/mpfol/OneDrive/Documents/Data Science/Data/"}
+\NormalTok{leuk <-}\StringTok{ }\KeywordTok{read_tsv}\NormalTok{(}\KeywordTok{paste}\NormalTok{(data_dir, }\StringTok{"leukemia_remission.txt"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"/"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   REMISS = col_double(),
+##   CELL = col_double(),
+##   SMEAR = col_double(),
+##   INFIL = col_double(),
+##   LI = col_double(),
+##   BLAST = col_double(),
+##   TEMP = col_double()
+## )
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(leuk)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Classes 'spec_tbl_df', 'tbl_df', 'tbl' and 'data.frame': 27 obs. of  7 variables:
+##  $ REMISS: num  1 1 0 0 1 0 1 0 0 0 ...
+##  $ CELL  : num  0.8 0.9 0.8 1 0.9 1 0.95 0.95 1 0.95 ...
+##  $ SMEAR : num  0.83 0.36 0.88 0.87 0.75 0.65 0.97 0.87 0.45 0.36 ...
+##  $ INFIL : num  0.66 0.32 0.7 0.87 0.68 0.65 0.92 0.83 0.45 0.34 ...
+##  $ LI    : num  1.9 1.4 0.8 0.7 1.3 0.6 1 1.9 0.8 0.5 ...
+##  $ BLAST : num  1.1 0.74 0.18 1.05 0.52 0.52 1.23 1.35 0.32 0 ...
+##  $ TEMP  : num  1 0.99 0.98 0.99 0.98 0.98 0.99 1.02 1 1.04 ...
+##  - attr(*, "spec")=
+##   .. cols(
+##   ..   REMISS = col_double(),
+##   ..   CELL = col_double(),
+##   ..   SMEAR = col_double(),
+##   ..   INFIL = col_double(),
+##   ..   LI = col_double(),
+##   ..   BLAST = col_double(),
+##   ..   TEMP = col_double()
+##   .. )
+\end{verbatim}
+
+Fit a logistic regression in R using \texttt{glm(formula,\ data,\ family\ =\ binomial)} where \texttt{family\ =\ binomial} specifies a binomial error distribution.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m1 <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(REMISS }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{family =}\NormalTok{ binomial, }\DataTypeTok{data =}\NormalTok{ leuk)}
+\NormalTok{m1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:  glm(formula = REMISS ~ ., family = binomial, data = leuk)
+## 
+## Coefficients:
+## (Intercept)         CELL        SMEAR        INFIL           LI        BLAST  
+##    64.25808     30.83006     24.68632    -24.97447      4.36045     -0.01153  
+##        TEMP  
+##  -100.17340  
+## 
+## Degrees of Freedom: 26 Total (i.e. Null);  20 Residual
+## Null Deviance:       34.37 
+## Residual Deviance: 21.59     AIC: 35.59
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(m1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = REMISS ~ ., family = binomial, data = leuk)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -1.95404  -0.66259  -0.02516   0.78184   1.57465  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(>|z|)
+## (Intercept)   64.25808   74.96480   0.857    0.391
+## CELL          30.83006   52.13520   0.591    0.554
+## SMEAR         24.68632   61.52601   0.401    0.688
+## INFIL        -24.97447   65.28088  -0.383    0.702
+## LI             4.36045    2.65798   1.641    0.101
+## BLAST         -0.01153    2.26634  -0.005    0.996
+## TEMP        -100.17340   77.75289  -1.288    0.198
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 34.372  on 26  degrees of freedom
+## Residual deviance: 21.594  on 20  degrees of freedom
+## AIC: 35.594
+## 
+## Number of Fisher Scoring iterations: 8
+\end{verbatim}
+
+The \emph{predicted} value \(\hat{y}\) is the estimated \textbf{log odds} of the response variable,
+
+\[\hat{y} = X \hat{\beta} = \ln (\frac{\pi}{1 - \pi}).\]
+
+Suppose each predictor equals its mean value, then the log odds of \texttt{REMISS} is \(-2.684\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(m1, }\DataTypeTok{newdata =} \KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{CELL =} \KeywordTok{mean}\NormalTok{(leuk}\OperatorTok{$}\NormalTok{CELL),}
+                                         \DataTypeTok{SMEAR =} \KeywordTok{mean}\NormalTok{(leuk}\OperatorTok{$}\NormalTok{SMEAR),}
+                                         \DataTypeTok{INFIL =} \KeywordTok{mean}\NormalTok{(leuk}\OperatorTok{$}\NormalTok{INFIL),}
+                                         \DataTypeTok{LI =} \KeywordTok{mean}\NormalTok{(leuk}\OperatorTok{$}\NormalTok{LI),}
+                                         \DataTypeTok{BLAST =} \KeywordTok{mean}\NormalTok{(leuk}\OperatorTok{$}\NormalTok{BLAST),}
+                                         \DataTypeTok{TEMP =} \KeywordTok{mean}\NormalTok{(leuk}\OperatorTok{$}\NormalTok{TEMP)))}
+\end{Highlighting}
+\end{Shaded}
+
+Log odds are not easy to interpet, but it is convenient for updating prior probabilities in Bayesian analyses. \emph{See \href{https://www.statisticshowto.datasciencecentral.com/log-odds/}{this article} in Statistics How To.} Exponentiate the log odds to get the more intuitive \textbf{odds}.
+
+\[\exp (\hat{y}) = \exp (X \hat{\beta}) = \frac{\pi}{1 - \pi}.\]
+
+The odds of having achieved remission when each predictor equals its mean value is \(\exp(\hat{y}) = 0.068\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{exp}\NormalTok{(pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          1 
+## 0.06826334
+\end{verbatim}
+
+You might express that more commonly as 1 / 0.068 = 15:1. So a person with average values of the predictors has an odds of ``15 to 1'' of having achieved remission.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1}\OperatorTok{/}\KeywordTok{exp}\NormalTok{(pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        1 
+## 14.64915
+\end{verbatim}
+
+Or, solve for \(\pi\) to get the \textbf{probability}.
+
+\[\pi = \frac{\exp (X \beta)}{1 + \exp (X \beta)}\]
+
+The probability of having achieved remission when each predictor equals its mean value is \(\pi = 0.064\). The \texttt{predict()} function for a logistic model returns log-odds, but can also return \(\pi\) by specifying parameter \texttt{type\ =\ "response"}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{exp}\NormalTok{(pred) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{+}\StringTok{ }\KeywordTok{exp}\NormalTok{(pred))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          1 
+## 0.06390123
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prob <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(m1, }\DataTypeTok{newdata =} \KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{CELL =} \KeywordTok{mean}\NormalTok{(leuk}\OperatorTok{$}\NormalTok{CELL),}
+                                         \DataTypeTok{SMEAR =} \KeywordTok{mean}\NormalTok{(leuk}\OperatorTok{$}\NormalTok{SMEAR),}
+                                         \DataTypeTok{INFIL =} \KeywordTok{mean}\NormalTok{(leuk}\OperatorTok{$}\NormalTok{INFIL),}
+                                         \DataTypeTok{LI =} \KeywordTok{mean}\NormalTok{(leuk}\OperatorTok{$}\NormalTok{LI),}
+                                         \DataTypeTok{BLAST =} \KeywordTok{mean}\NormalTok{(leuk}\OperatorTok{$}\NormalTok{BLAST),}
+                                         \DataTypeTok{TEMP =} \KeywordTok{mean}\NormalTok{(leuk}\OperatorTok{$}\NormalTok{TEMP)),}
+                \DataTypeTok{type =} \StringTok{"response"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+It is common to express the results in terms of the \textbf{odds ratio}. The \emph{odds ratio} is the ratio of the odds before and after an increment to the predictors. It tells you how much the odds would be multiplied after a \(X_1 - X_0\) unit increase in \(X\).
+
+\[\theta = \frac{\pi / (1 - \pi) |_{X = X_1}}{\pi / (1 - \pi) |_{X = X_0}} = \frac{\exp (X_1 \hat{\beta})}{\exp (X_0 \hat{\beta})} = \exp ((X_1-X_0) \hat{\beta}) = \exp (\delta \hat{\beta})\]
+
+For example, increasing \texttt{LI} by .01 increases the odds of remission by a factor of \(\exp(0.1 \cdot 4.36) = 1.547\) (from 15:1 to 23:1).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{exp}\NormalTok{(.}\DecValTok{1} \OperatorTok{*}\StringTok{ }\NormalTok{m1}\OperatorTok{$}\NormalTok{coefficients)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  (Intercept)         CELL        SMEAR        INFIL           LI        BLAST 
+## 6.175799e+02 2.182391e+01 1.180628e+01 8.229480e-02 1.546579e+00 9.988476e-01 
+##         TEMP 
+## 4.461948e-05
+\end{verbatim}
+
+You can calculate an odds ratio using \texttt{oddsratio::or\_glm()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(oddsratio)}
+\KeywordTok{or_glm}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ leuk, }
+       \DataTypeTok{model =}\NormalTok{ m1, }
+       \DataTypeTok{incr =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{CELL =} \FloatTok{0.01}\NormalTok{, }
+                   \DataTypeTok{SMEAR =} \FloatTok{0.01}\NormalTok{, }
+                   \DataTypeTok{INFIL =} \DecValTok{5}\NormalTok{, }
+                   \DataTypeTok{LI =} \FloatTok{0.1}\NormalTok{, }
+                   \DataTypeTok{BLAST =} \FloatTok{1.0}\NormalTok{, }
+                   \DataTypeTok{TEMP =} \FloatTok{0.3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 5
+##   predictor oddsratio `CI_low (2.5)` `CI_high (97.5)` increment
+##   <chr>         <dbl>          <dbl>            <dbl> <chr>    
+## 1 CELL          1.36           0.747         4.64e  0 0.01     
+## 2 SMEAR         1.28           0.537         5.15e  0 0.01     
+## 3 INFIL         0              0             1.09e152 5        
+## 4 LI            1.55           1.04          2.99e  0 0.1      
+## 5 BLAST         0.989          0.009         9.10e  1 1        
+## 6 TEMP          0              0             1.10e  3 0.3
+\end{verbatim}
+
+The predicted values can also be expressed as the probabilities \(\pi\). This produces the familiar signmoidal shape of the binary relationship.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{augment}\NormalTok{(m1, }\DataTypeTok{type.predict =} \StringTok{"response"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ LI, }\DataTypeTok{y =}\NormalTok{ REMISS)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ .fitted), }\DataTypeTok{color =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"LI"}\NormalTok{,}
+       \DataTypeTok{y =} \StringTok{"Probability of Event"}\NormalTok{,}
+       \DataTypeTok{title =} \StringTok{"Binary Fitted Line Plot"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-30-1.pdf}
+
+Whereas in linear regression the the coefficient p-values use the \emph{t} test (\emph{t} statistic), logistic regression coefficient p-values use the \emph{Wald test} **Z*-statistic).
+
+\[Z = \frac{\hat{\beta_i}}{SE(\hat{\beta}_i)}\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{round}\NormalTok{((z <-}\StringTok{ }\NormalTok{m1}\OperatorTok{$}\NormalTok{coefficients }\OperatorTok{/}\StringTok{ }\KeywordTok{summary}\NormalTok{(m1)}\OperatorTok{$}\NormalTok{coefficients[,}\StringTok{"Std. Error"}\NormalTok{]), }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## (Intercept)        CELL       SMEAR       INFIL          LI       BLAST 
+##       0.857       0.591       0.401      -0.383       1.641      -0.005 
+##        TEMP 
+##      -1.288
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{round}\NormalTok{(}\KeywordTok{pnorm}\NormalTok{(}\KeywordTok{abs}\NormalTok{(z), }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## (Intercept)        CELL       SMEAR       INFIL          LI       BLAST 
+##       0.391       0.554       0.688       0.702       0.101       0.996 
+##        TEMP 
+##       0.198
+\end{verbatim}
+
+Evaluate a logistic model fit with an analysis of deviance. Deviance is defined as -2 times the log-likelihood \(-2l(\beta)\). The null deviance is the deviance of the null model and is analagous to SST in ANOVA. The residual deviance is analagous to SSE in ANOVA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{logLik}\NormalTok{(}\KeywordTok{glm}\NormalTok{(REMISS }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ leuk, }\DataTypeTok{family =} \StringTok{"binomial"}\NormalTok{)) }\OperatorTok{*}\StringTok{ }\NormalTok{(}\OperatorTok{-}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'log Lik.' 21.59385 (df=7)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(m1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Deviance Table
+## 
+## Model: binomial, link: logit
+## 
+## Response: REMISS
+## 
+## Terms added sequentially (first to last)
+## 
+## 
+##       Df Deviance Resid. Df Resid. Dev
+## NULL                     26     34.372
+## CELL   1   2.5800        25     31.792
+## SMEAR  1   0.5188        24     31.273
+## INFIL  1   0.2927        23     30.980
+## LI     1   6.7818        22     24.199
+## BLAST  1   0.3271        21     23.871
+## TEMP   1   2.2775        20     21.594
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:  glm(formula = REMISS ~ ., family = binomial, data = leuk)
+## 
+## Coefficients:
+## (Intercept)         CELL        SMEAR        INFIL           LI        BLAST  
+##    64.25808     30.83006     24.68632    -24.97447      4.36045     -0.01153  
+##        TEMP  
+##  -100.17340  
+## 
+## Degrees of Freedom: 26 Total (i.e. Null);  20 Residual
+## Null Deviance:       34.37 
+## Residual Deviance: 21.59     AIC: 35.59
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(m1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = REMISS ~ ., family = binomial, data = leuk)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -1.95404  -0.66259  -0.02516   0.78184   1.57465  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(>|z|)
+## (Intercept)   64.25808   74.96480   0.857    0.391
+## CELL          30.83006   52.13520   0.591    0.554
+## SMEAR         24.68632   61.52601   0.401    0.688
+## INFIL        -24.97447   65.28088  -0.383    0.702
+## LI             4.36045    2.65798   1.641    0.101
+## BLAST         -0.01153    2.26634  -0.005    0.996
+## TEMP        -100.17340   77.75289  -1.288    0.198
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 34.372  on 26  degrees of freedom
+## Residual deviance: 21.594  on 20  degrees of freedom
+## AIC: 35.594
+## 
+## Number of Fisher Scoring iterations: 8
+\end{verbatim}
+
+The deviance of the null model (no regressors) is 34.372. The deviance of the full model is 26.073.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{glance}\NormalTok{(m1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 7
+##   null.deviance df.null logLik   AIC   BIC deviance df.residual
+##           <dbl>   <int>  <dbl> <dbl> <dbl>    <dbl>       <int>
+## 1          34.4      26  -10.8  35.6  44.7     21.6          20
+\end{verbatim}
+
+Use the \texttt{GainCurvePlot()} function to plot the gain curve (background on gain curve at \href{https://www.datasciencecentral.com/profiles/blogs/understanding-and-interpreting-gain-and-lift-charts}{Data Science Central} from the model predictions. The x-axis is the fraction of items seen when sorted by the predicted value, and the y-axis is the cumulative summed true outcome. The ``wizard'' curve is the gain curve when the data is sorted by the true outcome. If the model's gain curve is close to the wizard gain curve, then the model sorted the response variable well. The grey area is the gain over a random sorting.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{augment}\NormalTok{(m1) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{data.frame}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{GainCurvePlot}\NormalTok{(}\DataTypeTok{xvar =} \StringTok{".fitted"}\NormalTok{, }\DataTypeTok{truthVar =} \StringTok{"REMISS"}\NormalTok{, }\DataTypeTok{title =} \StringTok{"Logistic Model"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-34-1.pdf}
+
+\texttt{REMISS} equals 1 in 9 of the 27 responses.
+
+\begin{itemize}
+\tightlist
+\item
+  The wizard curve shows that after sorting the responses it encounters all 9 1s (100\%) after looking at 9 of the 27 response (33\%).\\
+\item
+  The bottom of the grey diagonal shows that after making random predictions and sorting the predictions, it encounters only 3 1s (33\%) after looking at 9 of the 27 responses (33\%). It has to look at all 27 responses (100\%) to encounter all 9 1s (100\%).\\
+\item
+  The gain curve encounters 5 1s (55\%) after looking at 9 of the 27 responses (33\%). It has to look at 14 responses to encounter all 9 1s (100\%).
+\end{itemize}
+
+Another way to evaluate the predictive model is the ROC curve. It evaluates all possible thresholds for splitting predicted probabilities into predicted classes. This is often a much more useful metric than simply ranking models by their accuracy at a set threshold, as different models might require different calibration steps (looking at a confusion matrix at each step) to find the optimal classification threshold for that model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(caTools)}
+\KeywordTok{colAUC}\NormalTok{(m1}\OperatorTok{$}\NormalTok{fitted.values, m1}\OperatorTok{$}\NormalTok{data}\OperatorTok{$}\NormalTok{REMISS, }\DataTypeTok{plotROC =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-35-1.pdf}
+
+\begin{verbatim}
+##              [,1]
+## 0 vs. 1 0.8950617
+\end{verbatim}
+
+\hypertarget{poisson-regression}{%
+\section{Poisson Regression}\label{poisson-regression}}
+
+Poisson models count data, like ``traffic tickets per day'', or ``website hits per day''. The response is an expected \emph{rate} or intensity. For count data, specify the generalized model, this time with \texttt{family\ =\ poisson} or \texttt{family\ =\ quasipoisson}.
+
+Recall that the probability of achieving a count \(y\) when the expected rate is \(\lambda\) is distributed
+
+\[P(Y = y|\lambda) = \frac{e^{-\lambda} \lambda^y}{y!}.\]
+
+The poisson regression model is
+
+\[\lambda = \exp(X \beta).\]
+
+You can solve this for \(y\) to get
+
+\[y = X\beta = \ln(\lambda).\]
+
+That is, the model predicts the log of the response rate. For a sample of size \emph{n}, the likelihood function is
+
+\[L(\beta; y, X) = \prod_{i=1}^n \frac{e^{-\exp({X_i\beta})}\exp({X_i\beta})^{y_i}}{y_i!}.\]
+
+The log-likelihood is
+
+\[l(\beta) = \sum_{i=1}^n (y_i X_i \beta - \sum_{i=1}^n\exp(X_i\beta) - \sum_{i=1}^n\log(y_i!).\]
+
+Maximizing the log-likelihood has no closed-form solution, so the coefficient estimates are found through interatively reweighted least squares.
+
+Poisson processes assume the variance of the response variable equals its mean. ``Equals'' means the mean and variance are of a similar order of magnitude. If that assumption does not hold, use the quasi-poisson. Use Poisson regression for large datasets. If the predicted counts are much greater than zero (\textgreater30), the linear regression will work fine. Whereas RMSE is not useful for logistic models, it is a good metric in Poisson.
+
+\hypertarget{example-7}{%
+\subsection*{Example}\label{example-7}}
+\addcontentsline{toc}{subsection}{Example}
+
+Dataset \texttt{fire} contains response variable \texttt{injuries} counting the number of injuries during the month and one explanatory variable, the month \texttt{mo}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fire <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\DataTypeTok{file =} \StringTok{"C:/Users/mpfol/OneDrive/Documents/Data Science/Data/CivilInjury_0.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   ID = col_double(),
+##   `Injury Date` = col_datetime(format = ""),
+##   `Total Injuries` = col_double()
+## )
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fire <-}\StringTok{ }\NormalTok{fire }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{mo =} \KeywordTok{as.POSIXlt}\NormalTok{(}\StringTok{`}\DataTypeTok{Injury Date}\StringTok{`}\NormalTok{)}\OperatorTok{$}\NormalTok{mon }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{dt =} \StringTok{`}\DataTypeTok{Injury Date}\StringTok{`}\NormalTok{,}
+         \DataTypeTok{injuries =} \StringTok{`}\DataTypeTok{Total Injuries}\StringTok{`}\NormalTok{)}
+\KeywordTok{str}\NormalTok{(fire)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Classes 'spec_tbl_df', 'tbl_df', 'tbl' and 'data.frame': 300 obs. of  4 variables:
+##  $ ID      : num  1 2 3 4 5 6 7 8 9 10 ...
+##  $ dt      : POSIXct, format: "2005-01-10" "2005-01-11" ...
+##  $ injuries: num  1 1 1 5 2 1 1 1 1 1 ...
+##  $ mo      : num  1 1 1 1 1 1 2 2 2 4 ...
+\end{verbatim}
+
+In a situation like this where there the relationship is bivariate, start with a visualization.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(fire, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ mo, }\DataTypeTok{y =}\NormalTok{ injuries)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_jitter}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"glm"}\NormalTok{, }\DataTypeTok{method.args =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{family =} \StringTok{"poisson"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Injuries by Month"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-37-1.pdf}
+
+Fit a poisson regression in R using \texttt{glm(formula,\ data,\ family\ =\ poisson)}. But first, check whether the mean and variance of \texttt{injuries} are the same magnitude? If not, then use \texttt{family\ =\ quasipoisson}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(fire}\OperatorTok{$}\NormalTok{injuries)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.36
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{var}\NormalTok{(fire}\OperatorTok{$}\NormalTok{injuries)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.020468
+\end{verbatim}
+
+They are of the same magnitude, so fit the regression with \texttt{family\ =\ poisson}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m2 <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(injuries }\OperatorTok{~}\StringTok{ }\NormalTok{mo, }\DataTypeTok{family =}\NormalTok{ poisson, }\DataTypeTok{data =}\NormalTok{ fire)}
+\KeywordTok{summary}\NormalTok{(m2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = injuries ~ mo, family = poisson, data = fire)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.3987  -0.3473  -0.3034  -0.2502   4.3185  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)  
+## (Intercept)  0.22805    0.10482   2.176   0.0296 *
+## mo           0.01215    0.01397   0.870   0.3844  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 139.87  on 299  degrees of freedom
+## Residual deviance: 139.11  on 298  degrees of freedom
+## AIC: 792.08
+## 
+## Number of Fisher Scoring iterations: 5
+\end{verbatim}
+
+The \emph{predicted} value \(\hat{y}\) is the estimated \textbf{log} of the response variable,
+
+\[\hat{y} = X \hat{\beta} = \ln (\lambda).\]
+
+Suppose \texttt{mo} is January (mo = \texttt{),\ then\ the\ log\ of}injuries` is \(\hat{y} = 0.323787\). Or, more intuitively, the expected count of injuries is \(\exp(0.323787) = 1.38\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{predict}\NormalTok{(m2, }\DataTypeTok{newdata =} \KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{mo=}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         1 
+## 0.2401999
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{predict}\NormalTok{(m2, }\DataTypeTok{newdata =} \KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{mo=}\DecValTok{1}\NormalTok{), }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        1 
+## 1.271503
+\end{verbatim}
+
+Here is a plot of the predicted counts in red.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{augment}\NormalTok{(m2, }\DataTypeTok{type.predict =} \StringTok{"response"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ mo, }\DataTypeTok{y =}\NormalTok{ injuries)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ .fitted), }\DataTypeTok{color =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\OtherTok{NA}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"Month"}\NormalTok{,}
+       \DataTypeTok{y =} \StringTok{"Injuries"}\NormalTok{,}
+       \DataTypeTok{title =} \StringTok{"Poisson Fitted Line Plot"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-41-1.pdf}
+
+Evaluate a logistic model fit with an analysis of deviance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(perf <-}\StringTok{ }\KeywordTok{glance}\NormalTok{(m2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 7
+##   null.deviance df.null logLik   AIC   BIC deviance df.residual
+##           <dbl>   <int>  <dbl> <dbl> <dbl>    <dbl>       <int>
+## 1          140.     299  -394.  792.  799.     139.         298
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(pseudoR2 <-}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{perf}\OperatorTok{$}\NormalTok{deviance }\OperatorTok{/}\StringTok{ }\NormalTok{perf}\OperatorTok{$}\NormalTok{null.deviance)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.005413723
+\end{verbatim}
+
+The deviance of the null model (no regressors) is 139.9. The deviance of the full model is 132.2. The psuedo-R2 is very low at .05. How about the RMSE?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{RMSE}\NormalTok{(}\DataTypeTok{pred =} \KeywordTok{predict}\NormalTok{(m2, }\DataTypeTok{type =} \StringTok{"response"}\NormalTok{), }\DataTypeTok{obs =}\NormalTok{ fire}\OperatorTok{$}\NormalTok{injuries)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.006791
+\end{verbatim}
+
+The average prediction error is about 0.99. That's almost as much as the variance of \texttt{injuries} - i.e., just predicting the mean of \texttt{injuries} would be almost as good! Use the \texttt{GainCurvePlot()} function to plot the gain curve.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{augment}\NormalTok{(m2, }\DataTypeTok{type.predict =} \StringTok{"response"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ injuries, }\DataTypeTok{y =}\NormalTok{ .fitted)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =}\StringTok{"lm"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"Actual"}\NormalTok{,}
+       \DataTypeTok{y =} \StringTok{"Predicted"}\NormalTok{,}
+       \DataTypeTok{title =} \StringTok{"Poisson Fitted vs Actual"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-44-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{augment}\NormalTok{(m2) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{data.frame}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{GainCurvePlot}\NormalTok{(}\DataTypeTok{xvar =} \StringTok{".fitted"}\NormalTok{, }\DataTypeTok{truthVar =} \StringTok{"injuries"}\NormalTok{, }\DataTypeTok{title =} \StringTok{"Poisson Model"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-45-1.pdf}
+
+It seems that \texttt{mo} was a poor predictor of \texttt{injuries}.
+
 \hypertarget{classification}{%
 \chapter{Classification}\label{classification}}
 
@@ -923,7 +1653,7 @@ The model plot shows the best tuning parameter combination.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-21-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-46-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1013,41 +1743,11 @@ A simple classification tree is rarely performed on its own; the bagged, random 
 \KeywordTok{library}\NormalTok{(skimr)  }\CommentTok{# neat alternative to glance & summary}
 
 \NormalTok{oj_dat <-}\StringTok{ }\NormalTok{OJ}
-\KeywordTok{skim_with}\NormalTok{(}\DataTypeTok{numeric =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{p0 =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{p25 =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{p50 =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{p75 =} \OtherTok{NULL}\NormalTok{, }
-                                \DataTypeTok{p100 =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{hist =} \OtherTok{NULL}\NormalTok{))}
-\KeywordTok{skim}\NormalTok{(oj_dat)}
+\CommentTok{#skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, }
+\CommentTok{#                                p100 = NULL, hist = NULL))}
+\CommentTok{#skim(oj_dat)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Skim summary statistics
-##  n obs: 1070 
-##  n variables: 18 
-## 
-## -- Variable type:factor ----------------------------------------------------
-##  variable missing complete    n n_unique               top_counts ordered
-##  Purchase       0     1070 1070        2  CH: 653, MM: 417, NA: 0   FALSE
-##    Store7       0     1070 1070        2 No: 714, Yes: 356, NA: 0   FALSE
-## 
-## -- Variable type:numeric ---------------------------------------------------
-##        variable missing complete    n    mean     sd
-##          DiscCH       0     1070 1070   0.052  0.12 
-##          DiscMM       0     1070 1070   0.12   0.21 
-##   ListPriceDiff       0     1070 1070   0.22   0.11 
-##         LoyalCH       0     1070 1070   0.57   0.31 
-##       PctDiscCH       0     1070 1070   0.027  0.062
-##       PctDiscMM       0     1070 1070   0.059  0.1  
-##         PriceCH       0     1070 1070   1.87   0.1  
-##       PriceDiff       0     1070 1070   0.15   0.27 
-##         PriceMM       0     1070 1070   2.09   0.13 
-##     SalePriceCH       0     1070 1070   1.82   0.14 
-##     SalePriceMM       0     1070 1070   1.96   0.25 
-##       SpecialCH       0     1070 1070   0.15   0.35 
-##       SpecialMM       0     1070 1070   0.16   0.37 
-##           STORE       0     1070 1070   1.63   1.43 
-##         StoreID       0     1070 1070   3.96   2.31 
-##  WeekofPurchase       0     1070 1070 254.38  15.56
-\end{verbatim}
 
 I'll split \texttt{oj\_dat} (n = 1,070) into \texttt{oj\_train} (80\%, n = 857) and \texttt{oj\_test} (20\%, n = 213). I'll fit a simple decision tree with \texttt{oj\_train}, then later a bagged tree, a random forest, and a gradient boosting tree. I'll compare their predictive performance with \texttt{oj\_test}.
 
@@ -1113,7 +1813,7 @@ Surprisingly, only 3 of the 17 features were used the in full tree: \texttt{Loya
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-26-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-51-1.pdf}
 
 The boxes show the node classification (based on mode), the proportion of observations that are \emph{not} \texttt{CH}, and the proportion of observations included in the node.
 
@@ -1193,7 +1893,7 @@ The simplest tree using the 1-SE rule is \$c\_p = 0.01347305, CV error = 0.1832)
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-30-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-55-1.pdf}
 
 The dashed line is set at the minimum \texttt{xerror} + \texttt{xstd}. The top axis shows the number of splits in the tree. I'm not sure why the CP values are not the same as in the table (they are close, but not the same). The figure suggests I should prune to 5 or 3 splits. I see this curve never really hits a minimum - it is still decreasing at 5 splits. The default tuning parameter value \texttt{cp\ =\ 0.01} may be too small, so I'll set it to \texttt{cp\ =\ 0.001} and start over.
 
@@ -1269,7 +1969,7 @@ This is a much larger tree. Did I find a \texttt{cp} value that produces a local
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-32-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-57-1.pdf}
 
 Yes, the min is at CP = 0.011 with 5 splits. The min + 1 SE is at CP = 0.021 with 3 splits. I'll prune the tree to 3 splits.
 
@@ -1283,7 +1983,7 @@ Yes, the min is at CP = 0.011 with 5 splits. The min + 1 SE is at CP = 0.021 wit
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-33-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-58-1.pdf}
 
 The most ``important'' indicator of \texttt{Purchase} appears to be \texttt{LoyalCH}. From the \textbf{rpart} \href{https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf}{vignette} (page 12),
 
@@ -1322,7 +2022,7 @@ A variable's importance is the sum of the improvement in the overall Gini (or RM
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-35-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-60-1.pdf}
 
 \texttt{LoyalCH} is by far the most important variable, as expected from its position at the top of the tree, and one level down.
 
@@ -1491,8 +2191,7 @@ The confusion matrix is at the top. It also includes a lot of statistics. It's w
 ##  Exact binomial test
 ## 
 ## data:  113 + 70 and 213
-## number of successes = 183, number of trials = 213, p-value <
-## 2.2e-16
+## number of successes = 183, number of trials = 213, p-value < 2.2e-16
 ## alternative hypothesis: true probability of success is not equal to 0.5
 ## 95 percent confidence interval:
 ##  0.8050785 0.9029123
@@ -1514,8 +2213,7 @@ The ``No Information Rate'' (NIR) statistic is the class rate for the largest cl
 ##  Exact binomial test
 ## 
 ## data:  113 + 70 and 213
-## number of successes = 183, number of trials = 213, p-value =
-## 1.265e-15
+## number of successes = 183, number of trials = 213, p-value = 1.265e-15
 ## alternative hypothesis: true probability of success is greater than 0.6103286
 ## 95 percent confidence interval:
 ##  0.8138446 1.0000000
@@ -1561,7 +2259,7 @@ Visuals are almost always helpful. Here is a plot of the confusion matrix.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-42-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-67-1.pdf}
 
 By the way, how does the validation set accuracy ()
 
@@ -1603,7 +2301,7 @@ Another measure of accuracy is the ROC (receiver operating characteristics) curv
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-44-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-69-1.pdf}
 
 You can also use \texttt{prediction()} and \texttt{plot.prediction()} from the \textbf{ROCR} package.
 
@@ -1615,7 +2313,7 @@ You can also use \texttt{prediction()} and \texttt{plot.prediction()} from the \
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-45-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-70-1.pdf}
 
 Hmm, not quite the same\ldots{}
 
@@ -1800,7 +2498,7 @@ Here is the tree.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-51-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-76-1.pdf}
 
 Here is the ROC curve.
 
@@ -1823,7 +2521,7 @@ Here is the ROC curve.
 ## Warning in verify_d(data$d): D not labeled 0/1, assuming CH = 0 and MM = 1!
 \end{verbatim}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-52-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-77-1.pdf}
 
 Here are the cross-validated Accuracy for each candidate cp value.
 
@@ -1833,7 +2531,7 @@ Here are the cross-validated Accuracy for each candidate cp value.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-53-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-78-1.pdf}
 
 Evaluate the model by making predictions with the test data set.
 
@@ -1896,7 +2594,7 @@ The accuracy metric is the slightly worse than in my previous model. Here is a g
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-56-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-81-1.pdf}
 
 Finally, here is the variable importance plot.
 
@@ -1906,7 +2604,7 @@ Finally, here is the variable importance plot.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-57-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-82-1.pdf}
 
 Looks like the manual effort faired best. Here is a summary the accuracy rates of the three models.
 
@@ -1932,38 +2630,11 @@ A simple regression tree is built in a manner similar to a simple classificatioo
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{carseats_dat <-}\StringTok{ }\NormalTok{Carseats}
-\KeywordTok{skim_with}\NormalTok{(}\DataTypeTok{numeric =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{p0 =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{p25 =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{p50 =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{p75 =} \OtherTok{NULL}\NormalTok{, }
-                                \DataTypeTok{p100 =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{hist =} \OtherTok{NULL}\NormalTok{))}
-\KeywordTok{skim}\NormalTok{(carseats_dat)}
+\CommentTok{#skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, }
+\CommentTok{#                                p100 = NULL, hist = NULL))}
+\CommentTok{#skim(carseats_dat)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Skim summary statistics
-##  n obs: 400 
-##  n variables: 11 
-## 
-## -- Variable type:factor ----------------------------------------------------
-##   variable missing complete   n n_unique                        top_counts
-##  ShelveLoc       0      400 400        3 Med: 219, Bad: 96, Goo: 85, NA: 0
-##      Urban       0      400 400        2          Yes: 282, No: 118, NA: 0
-##         US       0      400 400        2          Yes: 258, No: 142, NA: 0
-##  ordered
-##    FALSE
-##    FALSE
-##    FALSE
-## 
-## -- Variable type:numeric ---------------------------------------------------
-##     variable missing complete   n   mean     sd
-##  Advertising       0      400 400   6.63   6.65
-##          Age       0      400 400  53.32  16.2 
-##    CompPrice       0      400 400 124.97  15.33
-##    Education       0      400 400  13.9    2.62
-##       Income       0      400 400  68.66  27.99
-##   Population       0      400 400 264.84 147.38
-##        Price       0      400 400 115.8   23.68
-##        Sales       0      400 400   7.5    2.82
-\end{verbatim}
 
 I'll split \texttt{careseats\_dat} (n = 400) into \texttt{carseats\_train} (80\%, n = 321) and \texttt{carseats\_test} (20\%, n = 79). I'll fit a simple decision tree with \texttt{carseats\_train}, then later a bagged tree, a random forest, and a gradient boosting tree. I'll compare their predictive performance with \texttt{carseats\_test}.
 
@@ -2041,7 +2712,7 @@ The first split is at \texttt{ShelveLoc} = {[}Bad, Medium{]} vs Good. Here is wh
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-62-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-87-1.pdf}
 
 The boxes show the node predicted value (mean) and the proportion of observations that are in the node (or child nodes).
 
@@ -2147,7 +2818,7 @@ Okay, so the simplest tree is the one with CP = 0.01544139 (8 splits). Fortunate
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-66-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-91-1.pdf}
 
 The dashed line is set at the minimum \texttt{xerror} + \texttt{xstd}. The top axis shows the number of splits in the tree. I'm not sure why the CP values are not the same as in the table (they are close, but not the same). The smallest relative error is at 0.0140154, but the maximum CP below the dashed line (one standard deviation above the mimimum error) is at CP = .019 (8 splits). Use the \texttt{prune()} function to prune the tree by specifying the associated cost-complexity \texttt{cp}.
 
@@ -2161,7 +2832,7 @@ The dashed line is set at the minimum \texttt{xerror} + \texttt{xstd}. The top a
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-67-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-92-1.pdf}
 
 The most ``important'' indicator of \texttt{Sales} is \texttt{ShelveLoc}. Here are the importance values from the model.
 
@@ -2179,7 +2850,7 @@ The most ``important'' indicator of \texttt{Sales} is \texttt{ShelveLoc}. Here a
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-68-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-93-1.pdf}
 
 The most important indicator of \texttt{Sales} is \texttt{ShelveLoc}, then \texttt{Price}, then \texttt{Age}, all of which appear in the final model. \texttt{CompPrice} was also important.
 
@@ -2217,7 +2888,7 @@ The pruning process leads to an average prediction error of 2.388 in the test da
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-70-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-95-1.pdf}
 
 The 6 possible predicted values do a decent job of binning the observations.
 
@@ -2255,8 +2926,8 @@ I'll let the model look for the best CP tuning parameter with \texttt{tuneLength
 \end{Shaded}
 
 \begin{verbatim}
-## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info =
-## trainInfo, : There were missing values in resampled performance measures.
+## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo, :
+## There were missing values in resampled performance measures.
 \end{verbatim}
 
 \begin{Shaded}
@@ -2340,7 +3011,7 @@ It looks like the best performing tree is the unpruned one.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-74-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-99-1.pdf}
 
 Lets's see the final model.
 
@@ -2350,7 +3021,7 @@ Lets's see the final model.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-75-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-100-1.pdf}
 
 What were the most important variables?
 
@@ -2360,7 +3031,7 @@ What were the most important variables?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-76-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-101-1.pdf}
 
 Evaluate the model by making predictions with the test data set.
 
@@ -2381,7 +3052,7 @@ Evaluate the model by making predictions with the test data set.
 ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-77-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-102-1.pdf}
 
 Looks like the model over-estimates at the low end and undestimates at the high end. Calculate the test data set RMSE.
 
@@ -2484,7 +3155,7 @@ Again using the \texttt{OJ} data set to predict \texttt{Purchase}, this time I'l
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-80-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-105-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2533,7 +3204,7 @@ Again using the \texttt{OJ} data set to predict \texttt{Purchase}, this time I'l
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-80-2.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-105-2.pdf}
 
 \hypertarget{random-forest-classification-example}{%
 \subsubsection{Random Forest Classification Example}\label{random-forest-classification-example}}
@@ -2605,7 +3276,7 @@ Now I'll try it with the random forest method by specifying \texttt{method\ =\ "
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-81-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-106-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2617,7 +3288,7 @@ Now I'll try it with the random forest method by specifying \texttt{method\ =\ "
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-81-2.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-106-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2737,7 +3408,7 @@ Again using the \texttt{Carseats} data set to predict \texttt{Sales}, this time 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-83-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-108-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2757,7 +3428,7 @@ Again using the \texttt{Carseats} data set to predict \texttt{Sales}, this time 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-83-2.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-108-2.pdf}
 
 \hypertarget{random-forest-regression-example}{%
 \subsubsection{Random Forest Regression Example}\label{random-forest-regression-example}}
@@ -2816,8 +3487,8 @@ Now I'll try it with the random forest method by specifying \texttt{method\ =\ "
 ## 
 ## Tuning parameter 'min.node.size' was held constant at a value of 5
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were mtry = 6, splitrule =
-##  variance and min.node.size = 5.
+## The final values used for the model were mtry = 6, splitrule = variance
+##  and min.node.size = 5.
 \end{verbatim}
 
 \begin{Shaded}
@@ -2826,7 +3497,7 @@ Now I'll try it with the random forest method by specifying \texttt{method\ =\ "
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-84-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-109-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2839,7 +3510,7 @@ Now I'll try it with the random forest method by specifying \texttt{method\ =\ "
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-84-2.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-109-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4247,8 +4918,8 @@ Again using the \texttt{OJ} data set to predict \texttt{Purchase}, this time I'l
 ## 
 ## Tuning parameter 'n.minobsinnode' was held constant at a value of 10
 ## ROC was used to select the optimal model using the largest value.
-## The final values used for the model were n.trees = 50, interaction.depth
-##  = 2, shrinkage = 0.1 and n.minobsinnode = 10.
+## The final values used for the model were n.trees = 50, interaction.depth =
+##  2, shrinkage = 0.1 and n.minobsinnode = 10.
 \end{verbatim}
 
 \begin{Shaded}
@@ -4257,7 +4928,7 @@ Again using the \texttt{OJ} data set to predict \texttt{Purchase}, this time I'l
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-86-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-111-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4269,7 +4940,7 @@ Again using the \texttt{OJ} data set to predict \texttt{Purchase}, this time I'l
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-86-2.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-111-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5675,8 +6346,8 @@ Again using the \texttt{Carseats} data set to predict \texttt{Sales}, this time 
 ## 
 ## Tuning parameter 'n.minobsinnode' was held constant at a value of 10
 ## RMSE was used to select the optimal model using the smallest value.
-## The final values used for the model were n.trees = 250,
-##  interaction.depth = 1, shrinkage = 0.1 and n.minobsinnode = 10.
+## The final values used for the model were n.trees = 250, interaction.depth =
+##  1, shrinkage = 0.1 and n.minobsinnode = 10.
 \end{verbatim}
 
 \begin{Shaded}
@@ -5685,7 +6356,7 @@ Again using the \texttt{Carseats} data set to predict \texttt{Sales}, this time 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-87-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-112-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5698,7 +6369,7 @@ Again using the \texttt{Carseats} data set to predict \texttt{Sales}, this time 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-87-2.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-112-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5796,10 +6467,10 @@ The more ``up and to the left'' the ROC curve of a model is, the better the mode
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-90-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-115-1.pdf}
 
 \hypertarget{reference}{%
-\chapter{Reference}\label{reference}}
+\section{Reference}\label{reference}}
 
 Penn State University, STAT 508: Applied Data Mining and Statistical Learning, ``Lesson 11: Tree-based Methods''. \url{https://newonlinecourses.science.psu.edu/stat508/lesson/11}.
 
@@ -5902,8 +6573,8 @@ or radial
 
 \[K(x, x') = \exp\{-\gamma ||x - x'||^2\}.\]
 
-\hypertarget{example-6}{%
-\section{Example}\label{example-6}}
+\hypertarget{example-8}{%
+\section{Example}\label{example-8}}
 
 Here is a data set of two classes \(y \in [-1, 1]\) described by two features \(X1\) and \(X2\).
 
@@ -5930,7 +6601,7 @@ A scatter plot reveals whether the classes are linearly separable.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-92-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-117-1.pdf}
 
 No, they are not linearly separable. Now fit a support vector machine. The \textbf{e1071} library implements the SVM algorithm. \texttt{svm(...,\ kernel="linear")} fits a support vector classifier. Change the kernal to \texttt{c("polynomial",\ "radial")} for SVM. Try a cost of 10.
 
@@ -5949,7 +6620,7 @@ No, they are not linearly separable. Now fit a support vector machine. The \text
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-93-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-118-1.pdf}
 
 The support vectors are plotted as ``x's''. There are seven of them.
 
@@ -6010,7 +6681,7 @@ The seven support vectors are comprised of four in one class, three in the other
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-96-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-121-1.pdf}
 
 There are many more support vectors now. \emph{(In case you hoped to see the linear decision boundary formulation, or at least a graphical representation of the margins, keep hoping. The model is generalized beyond two features, so it evidently does not worry too much about supporting sanitized two-feature demos.)}
 
@@ -6093,7 +6764,7 @@ There are 16 support vectors, 8 in each class. This is a pretty wide margin.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-99-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-124-1.pdf}
 
 What if the classes had been linearly separable? Then we could create a maximal margin classifier.
 
@@ -6110,7 +6781,7 @@ What if the classes had been linearly separable? Then we could create a maximal 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-100-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-125-1.pdf}
 
 Specify a huge cost = 1e5 so that no support vectors violate the margin.
 
@@ -6127,7 +6798,7 @@ Specify a huge cost = 1e5 so that no support vectors violate the margin.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-101-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-126-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6138,8 +6809,8 @@ Specify a huge cost = 1e5 so that no support vectors violate the margin.
 \begin{verbatim}
 ## 
 ## Call:
-## svm(formula = y ~ ., data = train_data_2, kernel = "linear", 
-##     cost = 1e+05, scale = FALSE)
+## svm(formula = y ~ ., data = train_data_2, kernel = "linear", cost = 1e+05, 
+##     scale = FALSE)
 ## 
 ## 
 ## Parameters:
@@ -6256,7 +6927,7 @@ There are 12 support vectors, 6 in each class. This is a pretty wide margin.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-104-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-129-1.pdf}
 
 \hypertarget{using-caret}{%
 \section{Using Caret}\label{using-caret}}
@@ -6299,7 +6970,7 @@ The model can also be fit using \textbf{caret}. I'll used LOOCV since the data s
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-106-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-131-1.pdf}
 
 \hypertarget{principal-components-analysis}{%
 \chapter{Principal Components Analysis}\label{principal-components-analysis}}
@@ -6317,8 +6988,8 @@ The model can also be fit using \textbf{caret}. I'll used LOOCV since the data s
 Here are miscellaneous skills, knowledge, and technologies I should know.
 
 \hypertarget{publishing-to-bookdown}{%
-\chapter*{Publishing to BookDown}\label{publishing-to-bookdown}}
-\addcontentsline{toc}{chapter}{Publishing to BookDown}
+\section*{Publishing to BookDown}\label{publishing-to-bookdown}}
+\addcontentsline{toc}{section}{Publishing to BookDown}
 
 The \textbf{bookdown} package, written by Yihui Xie, is built on top of R Markdown and the \textbf{knitr} package. Use it to publish a book or long manuscript where each chapter is a separate file. There are instructions for how to author a book in his \href{https://bookdown.org/yihui/bookdown/}{bookdown book} \citep{xie2019}. The main advantage of \textbf{bookdown} over R Markdown is that you can produce multi-page HTML output with numbered headers, equations, figures, etc., just like in a book. I'm using \textbf{bookdown} to create a compendium of all my data science notes.
 
@@ -6331,88 +7002,116 @@ Finally, create a project in R Studio by creating a new project of type \emph{Bo
 After creating all of your Markdown pages, knit the book or click the \textbf{Build Book} button in the Build panel.
 
 \hypertarget{shiny-apps}{%
-\chapter*{Shiny Apps}\label{shiny-apps}}
-\addcontentsline{toc}{chapter}{Shiny Apps}
+\section*{Shiny Apps}\label{shiny-apps}}
+\addcontentsline{toc}{section}{Shiny Apps}
 
-\hypertarget{rstudioconf}{%
-\chapter{rstudio::conf}\label{rstudioconf}}
+\hypertarget{packages}{%
+\section*{Packages}\label{packages}}
+\addcontentsline{toc}{section}{Packages}
 
-\hypertarget{open-source-software-for-data-science}{%
-\section{Open Source Software for Data Science}\label{open-source-software-for-data-science}}
+\textbf{R Packages} \citep{Wickham2015} by Hadley Wickham is a good manual on packages, but it does not include a full tutorial. The \href{https://campus.datacamp.com/courses/developing-r-packages/}{Developing R Packages} Data Camp course is also helpful. I will set up my own exercise and present it here. I will create a package for my pretend organization, ``MF''. The package will include the following:
 
-\hypertarget{data-visualization-and-designing-with-ai}{%
-\section{Data, visualization, and designing with AI}\label{data-visualization-and-designing-with-ai}}
+\begin{itemize}
+\item
+  R Markdown template. My template will integrate code, output, and commentary in a single R Markdown. The template will produce a familiar work product containing standard content (summary, data management, exploratory analysis, methods, results, conclusions), and a standard style (colors, typeface, size, logo).
+\item
+  Functions. Common I/O functions for database retrieval, writing to Excel. Common graphing functions for ggplot styling.
+\end{itemize}
 
-\hypertarget{deploying-end-to-end-data-science-with-shiny-plumber-and-pins}{%
-\section{Deploying End-to-End Data Science with Shiny, Plumber, and Pins}\label{deploying-end-to-end-data-science-with-shiny-plumber-and-pins}}
+I am mostly copying the logic and code from the ggthemes \href{https://rdrr.io/cran/ggthemes/src/R/economist.R}{economist.R} script.
 
-\hypertarget{health-connected-siloed-data-sources-and-streamlined-reporting-using-r}{%
-\section{Health Connected Siloed Data Sources and Streamlined Reporting Using R}\label{health-connected-siloed-data-sources-and-streamlined-reporting-using-r}}
+\hypertarget{create-a-package}{%
+\subsection*{Create a package}\label{create-a-package}}
+\addcontentsline{toc}{subsection}{Create a package}
 
-\hypertarget{builiding-a-new-data-science-pipeline-for-teh-ft-with-rstudio-connect}{%
-\section{Builiding a new data science pipeline for teh FT with RStudio Connect}\label{builiding-a-new-data-science-pipeline-for-teh-ft-with-rstudio-connect}}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  In the RStudio IDE, click File \textgreater{} New Project. Select ``New Directory''. Select ``R Package''. You can also use \texttt{devtools::create("mfstylr")}. This will create the minimum items for an R package.
+\end{enumerate}
 
-\hypertarget{how-to-win-an-ai-hackathon-without-using-ai}{%
-\section{How to win an AI Hackathon without using AI}\label{how-to-win-an-ai-hackathon-without-using-ai}}
+\includegraphics{./images/create_pkg.png}
 
-\hypertarget{production-grade-shiny-apps-with-golem}{%
-\section{Production-grade Shiny Apps with golem}\label{production-grade-shiny-apps-with-golem}}
+\begin{verbatim}
++ R directory: R scripts with function definitions.
++ man directory: documentation
++ NAMESPACE file: information about imported functions and functions made available (managed by **roxygen2**)
++ DESCRIPTION file: metadata about the package
+\end{verbatim}
 
-\hypertarget{making-the-shiny-contest}{%
-\section{Making the Shiny Contest}\label{making-the-shiny-contest}}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  Write functions in R scripts in R directory. Document with tags readable by \emph{roxygen2} package.
+\item
+  Select XYZ \textgreater{} Install and Restart.
+\end{enumerate}
 
-\hypertarget{styling-shiny-apps-with-sass-and-bootstrap-4}{%
-\section{Styling Shiny apps with Sass and Bootstrap 4}\label{styling-shiny-apps-with-sass-and-bootstrap-4}}
+\hypertarget{document-functions-with-roxygen}{%
+\subsection{Document Functions with roxygen}\label{document-functions-with-roxygen}}
 
-\hypertarget{r-then-and-now}{%
-\section{R: Then and Now}\label{r-then-and-now}}
+Add roxygen documentation with \texttt{\#\textquotesingle{}} characters. The first three lines are always the title, Description, and Details. They don't need any tags, but you need to separate them with blank lines.
 
-\hypertarget{journalism-with-rstudio-r-and-teh-tidyverse}{%
-\section{Journalism with RStudio, R, and teh Tidyverse}\label{journalism-with-rstudio-r-and-teh-tidyverse}}
+\hypertarget{create-data}{%
+\subsection*{Create Data}\label{create-data}}
+\addcontentsline{toc}{subsection}{Create Data}
 
-\hypertarget{learning-r-with-humorous-side-projects---or---technical-debt-is-a-social-problem}{%
-\section{Learning R with humorous side projects - or - Technical debt is a social problem}\label{learning-r-with-humorous-side-projects---or---technical-debt-is-a-social-problem}}
+Add an RData file to your package with \texttt{use\_data()}
 
-\hypertarget{flatironkitchen-how-we-overhauled-a-frankensteinian-sql-workflow-with-the-tidyverse}{%
-\section{FlatironKitchen: How we overhauled a Frankensteinian SQL workflow with the tidyverse}\label{flatironkitchen-how-we-overhauled-a-frankensteinian-sql-workflow-with-the-tidyverse}}
+\hypertarget{create-vignette}{%
+\subsection*{Create Vignette}\label{create-vignette}}
+\addcontentsline{toc}{subsection}{Create Vignette}
 
-\hypertarget{making-better-spaghetti-plots-exploring-longitudinal-data-with-brolgar-package}{%
-\section{Making better spaghetti (plots): Exploring longitudinal data with brolgar package}\label{making-better-spaghetti-plots-exploring-longitudinal-data-with-brolgar-package}}
+Add a directory and template vignette with \texttt{use\_vignette(name,\ title)}.
 
-\hypertarget{object-of-type-closure-is-not-subsettable}{%
-\section{Object of type `closure' is not subsettable}\label{object-of-type-closure-is-not-subsettable}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{use_vignette}\NormalTok{(}\StringTok{"Creating-Plots-with-mfstylr"}\NormalTok{, }\StringTok{"Creating Plots with mfstylr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{branding-and-packaging-reports-with-r-markdown}{%
-\section{Branding and Packaging Reports with R Markdown}\label{branding-and-packaging-reports-with-r-markdown}}
+\hypertarget{step-2-create-an-r-markdown-template}{%
+\subsubsection*{Step 2: Create an R Markdown template}\label{step-2-create-an-r-markdown-template}}
+\addcontentsline{toc}{subsubsection}{Step 2: Create an R Markdown template}
 
-\hypertarget{the-glamour-of-graphics}{%
-\section{The Glamour of Graphics}\label{the-glamour-of-graphics}}
+I relied on \href{http://freerangestats.info/blog/2017/09/09/rmarkdown}{this blog} at \emph{free range statistics} for a lot what follows. There is also good information about R Markdown and templates in Yihui Xie's \textbf{R Markdown: The Definitive Guide} \citep{Xie2019b}.
 
-\hypertarget{dont-repeat-yourself-talk-to-yourself-repeated-reporting-in-the-r-universe}{%
-\section{Don't repeat yourself, talk to yourself! Repeated reporting in the R universe}\label{dont-repeat-yourself-talk-to-yourself-repeated-reporting-in-the-r-universe}}
+Use \texttt{usethis::use\_rmarkdown\_template()} to create an Rmd template. I will create a ``Kaggle Report'' template. In the Console (or a script), enter
 
-\hypertarget{rstudio-1.3-sneak-preview}{%
-\section{RStudio 1.3 Sneak Preview}\label{rstudio-1.3-sneak-preview}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\OperatorTok{::}\KeywordTok{use_rmarkdown_template}\NormalTok{(}
+  \DataTypeTok{template_name =} \StringTok{"Kaggle Report"}\NormalTok{,}
+  \DataTypeTok{template_dir =} \StringTok{"kaggle_report"}\NormalTok{,}
+  \DataTypeTok{template_description =} \StringTok{"Template for creating Kaggle reports in RMarkdown."}\NormalTok{,}
+  \DataTypeTok{template_create_dir =} \OtherTok{FALSE}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{one-r-markdown-document-fourteen-demos---or---tidyverse-2019-20}{%
-\section{One R Markdown Document, Fourteen Demos - or - Tidyverse 2019-20}\label{one-r-markdown-document-fourteen-demos---or---tidyverse-2019-20}}
+Since my project directory is \texttt{C:\textbackslash{}Users\textbackslash{}mpfol\textbackslash{}OneDrive\textbackslash{}Documents\textbackslash{}GitHub\textbackslash{}mfstylr}, \texttt{use\_rmarkdown\_template()} creates subdirectories \texttt{.\textbackslash{}inst\textbackslash{}rmarkdown\textbackslash{}templates\textbackslash{}kaggle\_report\textbackslash{}skeleton} with three files
 
-\hypertarget{best-practices-for-programing-with-ggplot2}{%
-\section{Best Practices for programing with ggplot2}\label{best-practices-for-programing-with-ggplot2}}
+\begin{itemize}
+\tightlist
+\item
+  \texttt{.\textbackslash{}inst\textbackslash{}rmarkdown\textbackslash{}templates\textbackslash{}kaggle\_report\textbackslash{}template.yaml}
+\item
+  \texttt{.\textbackslash{}inst\textbackslash{}rmarkdown\textbackslash{}templates\textbackslash{}kaggle\_report\textbackslash{}skeleton\textbackslash{}skeleton.Rmd}
+\end{itemize}
 
-\hypertarget{spruce-up-your-ggplot2-visualization-with-formatted-text}{%
-\section{Spruce up your ggplot2 visualization with formatted text}\label{spruce-up-your-ggplot2-visualization-with-formatted-text}}
+My kaggle report template will include a logo. Looks like there are two ways to embed an image in your document. One is a direct image loading reference \texttt{!()}, but I don't think you can control the attributes this way. A second way is adding html tags.
 
-\hypertarget{the-little-package-that-could-taking-visualization-to-the-next-level-with-the-scales-package}{%
-\section{The little package that could: taking visualization to the next level with the scales package}\label{the-little-package-that-could-taking-visualization-to-the-next-level-with-the-scales-package}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\OperatorTok{!}\NormalTok{[](logo.png)}
 
-\hypertarget{advances-in-tidyeval}{%
-\section{Advances in tidyeval}\label{advances-in-tidyeval}}
+\CommentTok{# or for more control}
+\OperatorTok{<}\NormalTok{img src=}\StringTok{"logo.png"}\NormalTok{ style=}\StringTok{"position:absolute;top:0px;right:0px;"} \OperatorTok{/}\ErrorTok{>}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{section}{%
-\section{}\label{section}}
-
-\bibliography{book.bib,packages.bib}
-
+  \bibliography{book.bib,packages.bib}
 
 \end{document}

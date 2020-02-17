@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5.2 Poisson Regression | My Data Science Notes</title>
+  <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5.2 Poisson Regression | My Data Science Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5.2 Poisson Regression | My Data Science Notes" />
+  
+  <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+<meta name="author" content="Michael Foley" />
+
+
+<meta name="date" content="2020-02-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="logistic-regression.html"/>
+<link rel="next" href="classification.html"/>
+<script src="assets/jquery-2.2.3/jquery.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Intro</a></li>
+<li class="chapter" data-level="1" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>1</b> Probability</a><ul>
+<li class="chapter" data-level="1.1" data-path="principles.html"><a href="principles.html"><i class="fa fa-check"></i><b>1.1</b> Principles</a></li>
+<li class="chapter" data-level="1.2" data-path="discrete-distributions.html"><a href="discrete-distributions.html"><i class="fa fa-check"></i><b>1.2</b> Discrete Distributions</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="discrete-distributions.html"><a href="discrete-distributions.html#binomial"><i class="fa fa-check"></i><b>1.2.1</b> Binomial</a></li>
+<li class="chapter" data-level="1.2.2" data-path="discrete-distributions.html"><a href="discrete-distributions.html#negative-binomial"><i class="fa fa-check"></i><b>1.2.2</b> Negative-Binomial</a></li>
+<li class="chapter" data-level="1.2.3" data-path="discrete-distributions.html"><a href="discrete-distributions.html#geometric"><i class="fa fa-check"></i><b>1.2.3</b> Geometric</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="continuous-distributions.html"><a href="continuous-distributions.html"><i class="fa fa-check"></i><b>1.3</b> Continuous Distributions</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="continuous-distributions.html"><a href="continuous-distributions.html#normal"><i class="fa fa-check"></i><b>1.3.1</b> Normal</a></li>
+<li class="chapter" data-level="1.3.2" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-1"><i class="fa fa-check"></i><b>1.3.2</b> Example</a></li>
+<li class="chapter" data-level="1.3.3" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-2"><i class="fa fa-check"></i><b>1.3.3</b> Example</a></li>
+<li class="chapter" data-level="1.3.4" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-3"><i class="fa fa-check"></i><b>1.3.4</b> Example</a></li>
+<li class="chapter" data-level="1.3.5" data-path="continuous-distributions.html"><a href="continuous-distributions.html#normal-approximation-to-binomial"><i class="fa fa-check"></i><b>1.3.5</b> Normal Approximation to Binomial</a></li>
+<li class="chapter" data-level="1.3.6" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-4"><i class="fa fa-check"></i><b>1.3.6</b> Example</a></li>
+<li class="chapter" data-level="1.3.7" data-path="continuous-distributions.html"><a href="continuous-distributions.html#example-5"><i class="fa fa-check"></i><b>1.3.7</b> Example</a></li>
+<li class="chapter" data-level="1.3.8" data-path="continuous-distributions.html"><a href="continuous-distributions.html#from-sample-to-population"><i class="fa fa-check"></i><b>1.3.8</b> From Sample to Population</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>2</b> Inference</a></li>
+<li class="chapter" data-level="3" data-path="experiments.html"><a href="experiments.html"><i class="fa fa-check"></i><b>3</b> Experiments</a><ul>
+<li class="chapter" data-level="3.1" data-path="example-one.html"><a href="example-one.html"><i class="fa fa-check"></i><b>3.1</b> Example one</a></li>
+<li class="chapter" data-level="3.2" data-path="example-two.html"><a href="example-two.html"><i class="fa fa-check"></i><b>3.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>4</b> Regression</a></li>
+<li class="chapter" data-level="5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>5</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="5.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>5.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#example-6"><i class="fa fa-check"></i>Example</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>5.2</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-7"><i class="fa fa-check"></i>Example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>6</b> Classification</a></li>
+<li class="chapter" data-level="7" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>7</b> Regularization</a></li>
+<li class="chapter" data-level="8" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>8</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="8.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>8.1</b> Splines</a></li>
+<li class="chapter" data-level="8.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>8.2</b> MARS</a></li>
+<li class="chapter" data-level="8.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>8.3</b> GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>9</b> Decision Trees</a><ul>
+<li class="chapter" data-level="9.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>9.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>9.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>9.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="9.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>9.1.3</b> Caret Approach</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>9.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>9.2.1</b> Caret Approach</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>9.3</b> Bagging</a></li>
+<li class="chapter" data-level="9.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>9.4</b> Random Forests</a></li>
+<li class="chapter" data-level="9.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>9.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="9.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>9.6</b> Summary</a></li>
+<li class="chapter" data-level="9.7" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>9.7</b> Reference</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>10</b> Support Vector Machines</a><ul>
+<li class="chapter" data-level="10.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>10.1</b> Maximal Margin Classifier</a></li>
+<li class="chapter" data-level="10.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>10.2</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="10.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>10.3</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="10.4" data-path="example-8.html"><a href="example-8.html"><i class="fa fa-check"></i><b>10.4</b> Example</a></li>
+<li class="chapter" data-level="10.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>10.5</b> Using Caret</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>11</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="12" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>12</b> Clustering</a></li>
+<li class="chapter" data-level="13" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>13</b> Text Mining</a></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
+<li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
+<li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
+<li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
+<li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
+<li class="chapter" data-level="13.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>13.0.1</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
+<li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">My Data Science Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="poisson-regression" class="section level2">
+<h2><span class="header-section-number">5.2</span> Poisson Regression</h2>
+<p>Poisson models count data, like “traffic tickets per day”, or “website hits per day”. The response is an expected <em>rate</em> or intensity. For count data, specify the generalized model, this time with <code>family = poisson</code> or <code>family = quasipoisson</code>.</p>
+<p>Recall that the probability of achieving a count <span class="math inline">\(y\)</span> when the expected rate is <span class="math inline">\(\lambda\)</span> is distributed</p>
+<p><span class="math display">\[P(Y = y|\lambda) = \frac{e^{-\lambda} \lambda^y}{y!}.\]</span></p>
+<p>The poisson regression model is</p>
+<p><span class="math display">\[\lambda = \exp(X \beta).\]</span></p>
+<p>You can solve this for <span class="math inline">\(y\)</span> to get</p>
+<p><span class="math display">\[y = X\beta = \ln(\lambda).\]</span></p>
+<p>That is, the model predicts the log of the response rate. For a sample of size <em>n</em>, the likelihood function is</p>
+<p><span class="math display">\[L(\beta; y, X) = \prod_{i=1}^n \frac{e^{-\exp({X_i\beta})}\exp({X_i\beta})^{y_i}}{y_i!}.\]</span></p>
+<p>The log-likelihood is</p>
+<p><span class="math display">\[l(\beta) = \sum_{i=1}^n (y_i X_i \beta - \sum_{i=1}^n\exp(X_i\beta) - \sum_{i=1}^n\log(y_i!).\]</span></p>
+<p>Maximizing the log-likelihood has no closed-form solution, so the coefficient estimates are found through interatively reweighted least squares.</p>
+<p>Poisson processes assume the variance of the response variable equals its mean. “Equals” means the mean and variance are of a similar order of magnitude. If that assumption does not hold, use the quasi-poisson. Use Poisson regression for large datasets. If the predicted counts are much greater than zero (&gt;30), the linear regression will work fine. Whereas RMSE is not useful for logistic models, it is a good metric in Poisson.</p>
+<div id="example-7" class="section level3 unnumbered">
+<h3>Example</h3>
+<p>Dataset <code>fire</code> contains response variable <code>injuries</code> counting the number of injuries during the month and one explanatory variable, the month <code>mo</code>.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="poisson-regression.html#cb92-1"></a>fire &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;C:/Users/mpfol/OneDrive/Documents/Data Science/Data/CivilInjury_0.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   ID = col_double(),
+##   `Injury Date` = col_datetime(format = &quot;&quot;),
+##   `Total Injuries` = col_double()
+## )</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="poisson-regression.html#cb94-1"></a>fire &lt;-<span class="st"> </span>fire <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb94-2"><a href="poisson-regression.html#cb94-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mo =</span> <span class="kw">as.POSIXlt</span>(<span class="st">`</span><span class="dt">Injury Date</span><span class="st">`</span>)<span class="op">$</span>mon <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb94-3"><a href="poisson-regression.html#cb94-3"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">dt =</span> <span class="st">`</span><span class="dt">Injury Date</span><span class="st">`</span>,</span>
+<span id="cb94-4"><a href="poisson-regression.html#cb94-4"></a>         <span class="dt">injuries =</span> <span class="st">`</span><span class="dt">Total Injuries</span><span class="st">`</span>)</span>
+<span id="cb94-5"><a href="poisson-regression.html#cb94-5"></a><span class="kw">str</span>(fire)</span></code></pre></div>
+<pre><code>## Classes &#39;spec_tbl_df&#39;, &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 300 obs. of  4 variables:
+##  $ ID      : num  1 2 3 4 5 6 7 8 9 10 ...
+##  $ dt      : POSIXct, format: &quot;2005-01-10&quot; &quot;2005-01-11&quot; ...
+##  $ injuries: num  1 1 1 5 2 1 1 1 1 1 ...
+##  $ mo      : num  1 1 1 1 1 1 2 2 2 4 ...</code></pre>
+<p>In a situation like this where there the relationship is bivariate, start with a visualization.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="poisson-regression.html#cb96-1"></a><span class="kw">ggplot</span>(fire, <span class="kw">aes</span>(<span class="dt">x =</span> mo, <span class="dt">y =</span> injuries)) <span class="op">+</span></span>
+<span id="cb96-2"><a href="poisson-regression.html#cb96-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="op">+</span></span>
+<span id="cb96-3"><a href="poisson-regression.html#cb96-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="dt">method.args =</span> <span class="kw">list</span>(<span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>)) <span class="op">+</span></span>
+<span id="cb96-4"><a href="poisson-regression.html#cb96-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Injuries by Month&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>Fit a poisson regression in R using <code>glm(formula, data, family = poisson)</code>. But first, check whether the mean and variance of <code>injuries</code> are the same magnitude? If not, then use <code>family = quasipoisson</code>.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="poisson-regression.html#cb97-1"></a><span class="kw">mean</span>(fire<span class="op">$</span>injuries)</span></code></pre></div>
+<pre><code>## [1] 1.36</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="poisson-regression.html#cb99-1"></a><span class="kw">var</span>(fire<span class="op">$</span>injuries)</span></code></pre></div>
+<pre><code>## [1] 1.020468</code></pre>
+<p>They are of the same magnitude, so fit the regression with <code>family = poisson</code>.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="poisson-regression.html#cb101-1"></a>m2 &lt;-<span class="st"> </span><span class="kw">glm</span>(injuries <span class="op">~</span><span class="st"> </span>mo, <span class="dt">family =</span> poisson, <span class="dt">data =</span> fire)</span>
+<span id="cb101-2"><a href="poisson-regression.html#cb101-2"></a><span class="kw">summary</span>(m2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = injuries ~ mo, family = poisson, data = fire)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.3987  -0.3473  -0.3034  -0.2502   4.3185  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)  
+## (Intercept)  0.22805    0.10482   2.176   0.0296 *
+## mo           0.01215    0.01397   0.870   0.3844  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 139.87  on 299  degrees of freedom
+## Residual deviance: 139.11  on 298  degrees of freedom
+## AIC: 792.08
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<p>The <em>predicted</em> value <span class="math inline">\(\hat{y}\)</span> is the estimated <strong>log</strong> of the response variable,</p>
+<p><span class="math display">\[\hat{y} = X \hat{\beta} = \ln (\lambda).\]</span></p>
+<p>Suppose <code>mo</code> is January (mo = <code>), then the log of</code>injuries` is <span class="math inline">\(\hat{y} = 0.323787\)</span>. Or, more intuitively, the expected count of injuries is <span class="math inline">\(\exp(0.323787) = 1.38\)</span></p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="poisson-regression.html#cb103-1"></a><span class="kw">predict</span>(m2, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">mo=</span><span class="dv">1</span>))</span></code></pre></div>
+<pre><code>##         1 
+## 0.2401999</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="poisson-regression.html#cb105-1"></a><span class="kw">predict</span>(m2, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">mo=</span><span class="dv">1</span>), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<pre><code>##        1 
+## 1.271503</code></pre>
+<p>Here is a plot of the predicted counts in red.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="poisson-regression.html#cb107-1"></a><span class="kw">augment</span>(m2, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb107-2"><a href="poisson-regression.html#cb107-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mo, <span class="dt">y =</span> injuries)) <span class="op">+</span></span>
+<span id="cb107-3"><a href="poisson-regression.html#cb107-3"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb107-4"><a href="poisson-regression.html#cb107-4"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .fitted), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb107-5"><a href="poisson-regression.html#cb107-5"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="ot">NA</span>)) <span class="op">+</span></span>
+<span id="cb107-6"><a href="poisson-regression.html#cb107-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Month&quot;</span>,</span>
+<span id="cb107-7"><a href="poisson-regression.html#cb107-7"></a>       <span class="dt">y =</span> <span class="st">&quot;Injuries&quot;</span>,</span>
+<span id="cb107-8"><a href="poisson-regression.html#cb107-8"></a>       <span class="dt">title =</span> <span class="st">&quot;Poisson Fitted Line Plot&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p>Evaluate a logistic model fit with an analysis of deviance.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="poisson-regression.html#cb108-1"></a>(perf &lt;-<span class="st"> </span><span class="kw">glance</span>(m2))</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 7
+##   null.deviance df.null logLik   AIC   BIC deviance df.residual
+##           &lt;dbl&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;
+## 1          140.     299  -394.  792.  799.     139.         298</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="poisson-regression.html#cb110-1"></a>(pseudoR2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>perf<span class="op">$</span>deviance <span class="op">/</span><span class="st"> </span>perf<span class="op">$</span>null.deviance)</span></code></pre></div>
+<pre><code>## [1] 0.005413723</code></pre>
+<p>The deviance of the null model (no regressors) is 139.9. The deviance of the full model is 132.2. The psuedo-R2 is very low at .05. How about the RMSE?</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="poisson-regression.html#cb112-1"></a><span class="kw">RMSE</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m2, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), <span class="dt">obs =</span> fire<span class="op">$</span>injuries)</span></code></pre></div>
+<pre><code>## [1] 1.006791</code></pre>
+<p>The average prediction error is about 0.99. That’s almost as much as the variance of <code>injuries</code> - i.e., just predicting the mean of <code>injuries</code> would be almost as good! Use the <code>GainCurvePlot()</code> function to plot the gain curve.</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="poisson-regression.html#cb114-1"></a><span class="kw">augment</span>(m2, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb114-2"><a href="poisson-regression.html#cb114-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> injuries, <span class="dt">y =</span> .fitted)) <span class="op">+</span></span>
+<span id="cb114-3"><a href="poisson-regression.html#cb114-3"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb114-4"><a href="poisson-regression.html#cb114-4"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span><span class="st">&quot;lm&quot;</span>) <span class="op">+</span></span>
+<span id="cb114-5"><a href="poisson-regression.html#cb114-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Actual&quot;</span>,</span>
+<span id="cb114-6"><a href="poisson-regression.html#cb114-6"></a>       <span class="dt">y =</span> <span class="st">&quot;Predicted&quot;</span>,</span>
+<span id="cb114-7"><a href="poisson-regression.html#cb114-7"></a>       <span class="dt">title =</span> <span class="st">&quot;Poisson Fitted vs Actual&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="poisson-regression.html#cb115-1"></a><span class="kw">augment</span>(m2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb115-2"><a href="poisson-regression.html#cb115-2"></a><span class="st">  </span><span class="kw">GainCurvePlot</span>(<span class="dt">xvar =</span> <span class="st">&quot;.fitted&quot;</span>, <span class="dt">truthVar =</span> <span class="st">&quot;injuries&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Poisson Model&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p>It seems that <code>mo</code> was a poor predictor of <code>injuries</code>.</p>
+
+</div>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="logistic-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="classification.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["data-sci.pdf", "data-sci.epub"],
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

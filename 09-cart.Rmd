@@ -46,9 +46,9 @@ library(tidyverse)
 library(skimr)  # neat alternative to glance & summary
 
 oj_dat <- OJ
-skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, 
-                                p100 = NULL, hist = NULL))
-skim(oj_dat)
+#skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, 
+#                                p100 = NULL, hist = NULL))
+#skim(oj_dat)
 ```
 
 I'll split `oj_dat` (n = 1,070) into `oj_train` (80%, n = 857) and `oj_test` (20%, n = 213).  I'll fit a simple decision tree with `oj_train`, then later a bagged tree, a random forest, and a gradient boosting tree.  I'll compare their predictive performance with `oj_test`. 
@@ -425,9 +425,9 @@ A simple regression tree is built in a manner similar to a simple classificatioo
 
 ```{r}
 carseats_dat <- Carseats
-skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, 
-                                p100 = NULL, hist = NULL))
-skim(carseats_dat)
+#skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, 
+#                                p100 = NULL, hist = NULL))
+#skim(carseats_dat)
 ```
 
 I'll split `careseats_dat` (n = 400) into `carseats_train` (80%, n = 321) and `carseats_test` (20%, n = 79).  I'll fit a simple decision tree with `carseats_train`, then later a bagged tree, a random forest, and a gradient boosting tree.  I'll compare their predictive performance with `carseats_test`.
