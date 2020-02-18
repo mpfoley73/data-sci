@@ -216,6 +216,27 @@ colAUC(m1$fitted.values, m1$data$REMISS, plotROC = TRUE)
 ```
 
 
+## Ordinal Logistic Regression
+
+The ordinal logistic regression model is
+
+$$logit(P(Y \le j)) = \beta_{j0} + \beta_{j1}x_1 + \cdots + \beta_{jp}x_p $$
+
+where 
+
+$$logit(P(Y \le j)) = log \frac{P(Y \le j)}{P(Y > j)}$$
+
+for each of the $j \in [1, J-1]$ levels of the ordinal outcome variable $Y$ and $p$ predictors. From the **parallel lines assumption**, the intercepts are different for each category but the slopes are constant across categories, and this simplifies the equation above to
+
+$$logit(P(Y \le j)) = \beta_{j0} + \beta_{1}x_1 + \cdots + \beta_{p}x_p.$$
+
+In R, the `polr()` function parameterizes the model with $\eta_i = -\beta_i$, so 
+
+$$logit(P(Y \le j)) = \beta_{j0} - \eta_{1}x_1 - \cdots - \eta_{p}x_p.$$
+
+
+
+
 ## Poisson Regression
 
 Poisson models count data, like "traffic tickets per day", or "website hits per day".  The response is an expected *rate* or intensity.  For count data, specify the generalized model, this time with `family = poisson` or `family = quasipoisson`. 
