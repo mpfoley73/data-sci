@@ -1,2 +1,6 @@
-# Inference
+# Discrete Analysis
 
+For categorical data you typically assume the data have been generated from a Poisson, binomial or multinomial distribution. Statistical analysis depends on the data generation mechanism, although in some situations, depending on the objective, we may ignore that mechanism and simplify our analysis.
+The following sampling methods correspond to the distributions considered
+Unrestricted sampling (corresponds to Poisson distribution)
+Sampling with fixed total sample size (corresponds to Binomial or Multinomial distributions)

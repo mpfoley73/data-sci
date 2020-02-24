@@ -85,7 +85,7 @@ $$P(F) = \frac{{4 \choose 3} {4 \choose 2}}{{52 \choose 5}}$$
 
 **Distinguishable permutations**.  The number of *unordered* arrangements (distinguishable permutations) of a set of $|S|=n$ items in which $n_1$ are of one type, $n_2$ are of another type, etc., is 
 
-$${n \choose {n_1, n_2, \dots, n_k}} = \frac{n!}{n_1! n_2! \dots n_k!}$$
+$${n \choose {n_1, n_2, \dots, n_k}} = \frac{n!}{n_{1}! n_{2}! \dots n_{k}!}$$
 
 *How many ordered arrangements are there of the letters in the word PHILIPPINES?*  There are n=11 objects.  $|P|=n_1=3$;  $|H|=n_2=1$; $|I|=n_3=3$; $|L|=n_4=1$; $|N|=n_5=1$; $|E|=n_6=1$; $|S|=n_7=1$.
 
@@ -100,9 +100,9 @@ $${n \choose {n_1, n_2, \dots, n_k}} = \frac{15!}{5! 5! 5!} = 756,756$$
 
 These notes rely heavily on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/209/).
 
-The most important discrete distributions are Bernoulli, Binomial, Poisson, and Multinomial.  Less important, but sometimes useful, are the negative binomial, geometric, and hypergeometric distributions.
+The most important discrete distributions are the Binomial, Poisson, and Multinomial.  Sometimes useful are the related Bernoulli, negative binomial, geometric, and hypergeometric distributions.
 
-A discrete random variable $X$ is described by its probability mass function $f(x) = P(X = x)$.  The set of $x$ values for which $f(x) > 0$ is called the *support*. If the distribution depends on unknown parameter(s) $\theta$ we write it as $f(x; \theta)$ (frequentists) or $f(x | \theta)$ (Bayesian). 
+A discrete random variable $X$ is described by its probability mass function $f(x) = P(X = x)$.  The set of $x$ values for which $f(x) > 0$ is called the *support*. If the distribution depends on unknown parameter(s) $\theta$ we write it as $f(x; \theta)$ (frequentist) or $f(x | \theta)$ (Bayesian). 
 
 
 ### Bernoulli
@@ -118,13 +118,13 @@ with $E(X) = \pi$ and $V(X) = \pi(1 - \pi)$.
 
 If $X$ is the count of successful events in $n$ identical and independent Bernoulli trials of success probability $\pi$, then $X$ is a random variable with a binomial distribution $X \sim  Bin(n,\pi)$ 
 
-$$f(x;\pi) = \frac{{n!}}{{x!(n-x)!}} \pi^x (1-\pi)^{n-x} \hspace{1cm} x \in (0, 1, ..., n), \hspace{2mm} \pi \in [0, 1]$$
+$$f(x;\pi) = \frac{n!}{x!(n-x)!} \pi^x (1-\pi)^{n-x} \hspace{1cm} x \in (0, 1, ..., n), \hspace{2mm} \pi \in [0, 1]$$
 
 with $E(X)=n\pi$ and $V(X) = n\pi(1-\pi)$.  
 
 The Bernoulli distribution is a special case of the binomial with $n = 1$. As n increases for fixed $\pi$, the binomial distribution approaches normal distribution $N(n\pi, n\pi(1−\pi))$.  The binomial distribution assumes independent trials - if sampling *without replacement from a finite population*, then the hypergeometric distribution is appropriate.
 
-#### Example {-}
+#### Examples {-}
 
 What is the probability 2 out of 10 coin flips are heads if the probability of heads is 0.3?
 
@@ -158,8 +158,6 @@ data.frame(cnt = rbinom(n = 10000, size = 10, prob = 0.3)) %>%
        caption = "Simulation from n = 10,000 binomial random samples.") 
 ```
 
-#### Example {-}
-
 What is the probability of <=2 heads in 10 coin flips where probability of heads is 0.3?
 
 The cumulative probability is the sum of the first three bars in the simulation above.  Function `pbinom()` calculates the *cumulative* binomial probability.
@@ -167,8 +165,6 @@ The cumulative probability is the sum of the first three bars in the simulation 
 ```{r}
 pbinom(q = 2, size = 10, prob = 0.3, lower.tail = TRUE)
 ```
-
-#### Example {-}
 
 What is the expected number of heads in 25 coin flips if the probability of heads is 0.3?
 
@@ -183,9 +179,6 @@ The variance, $\sigma^2 = np (1 - p)$, is `r 25 * .3 * (1 - .3)`.  Here's an emp
 ```{r}
 var(rbinom(n = 10000, size = 25, prob = .3))
 ```
-
-
-#### Example {-}
 
 Suppose X and Y are independent random variables distributed $X \sim Bin(10, .6)$ and $Y \sim Bin(10, .7)$.  What is the probability that either variable is <=4?
 
@@ -220,7 +213,7 @@ $Poison(\lambda) \rightarrow Bin(n, \pi)$ when $n\pi = \lambda$ and $n \rightarr
 
 When the observed variance is greater than $\lambda$ (overdispersion), the Negative Binomial distribution can be used instead of Poisson.
 
-#### Example {-}
+#### Examples {-}
 
 What is the probability of making 2 to 4 sales in a week if the average sales rate is 3 per week?
 
@@ -261,8 +254,6 @@ ggplot(df, aes(x = factor(events), y = density)) +
        y = "Density")
 ```
 
-#### Example {-}
-
 Suppose a baseball player has a p=.300 batting average.  What is the probability of X<=150 hits in n=500 at bats? X=150? X>150?
 
 ```{r}
@@ -274,8 +265,6 @@ ppois(q = 150, lambda = .300 * 500, lower.tail = FALSE)
 ```
 
 The Poisson distribution approximates the binomial distribution with $\lambda=np$ if $n>=20$ and $p<=0.05$.
-
-#### Example {-}
 
 What is the distribution of successes from a sample of n = 50 when the probability of success is p = .03?
 ```{r fig.height=3, fig.width=5}
@@ -297,9 +286,6 @@ ggplot(df_tidy, aes(x = factor(events), y = density, fill = Distribution)) +
        fill = "")
 
 ```
-
-
-#### Example {-}
 
 Suppose the probability that a drug produces a certain side effect is p =  = 0.1% and n = 1,000 patients in a clinical trial receive the drug. What is the probability 0 people experience the side effect?
 
@@ -331,15 +317,58 @@ ggplot(df, aes(x = x, y = density)) +
 
 
 ### Multinomial
+
+If $X = (X_1, X_2, \cdots, X_k)$ are the counts of successful events in $n$ identical and independent trials of success probabilities $\pi = (\pi_1, \pi_2, \cdots, \pi_k)$, then $X$ is a random variable with a multinomial distribution $X \sim  Mult(n,\pi)$ 
+
+$$f(x;\pi) = \frac{n!}{x_{1}! x_{2}! \cdots x_{k}!} \pi^{x_1} \pi^{x_2} \cdots \pi^{x_k} \hspace{1cm} x \in \{0, 1, ..., n \}, \hspace{2mm} \pi \in [0, 1]$$
+
+with $E(X)=n\pi = (n \pi_1 + n \pi_2 + \cdots + n \pi_k)$ and covariance matrix
+
+$$V(X) = \begin{bmatrix}n\pi_{1}(1-\pi_{1}) & -n\pi_{1}\pi_{2} & \cdots & -n\pi_{1}\pi_{k}\\
+-n\pi_{1}\pi_{2} & n\pi_{2}(1-\pi_{2}) & \cdots & -n\pi_{2}\pi_{k}\\
+\vdots & \vdots & \ddots & \vdots\\
+-n\pi_{1}\pi_{k} & -n\pi_{2}\pi_{k} & \cdots & n\pi_{k}(1-\pi_{k})
+\end{bmatrix}$$
+
+The individual components of a multinomial random vector are binomial and have a binomial distribution, $X_i = Bin(n, \pi_i)$. 
+
+#### Examples {-}
+
+Suppose a city population is 20% black, 15% Hispanic, and 65% other.  From a random sample of $n = 12$ persons, what is the probability of 4 black and 8 other?
+
+$$f(x;\pi) = \frac{12!}{4! 0! 8!} (0.20)^4 (0.15)^0 (0.65)^8 = 0.0252$$
+
+Function `dmultinom()` calculates the multinomial probability.
+
+```{r}
+dmultinom(x = c(4, 0, 8), prob = c(0.20, 0.15, 0.65))
+```
+
+To calculate the probability of *<= 1* black, combine Hispanic and other, then sum the probability of black = 1 and black = 2. 
+
+$$f(x;\pi) = \frac{12!}{0! 12!} (0.20)^0 (0.80)^{12} + \frac{12!}{1! 11!} (0.20)^1 (0.80)^{11} = 0.2748$$
+
+```{r}
+dmultinom(x = c(0, 12), prob = c(0.20, 0.80)) + 
+  dmultinom(x = c(1, 11), prob = c(0.20, 0.80))
+```
+
+
 ### Negative-Binomial
 
-If $X$ is the count of trials required to reach a target number $r$ of successful events in identical and independent Bernoulli trials of success probability $p$, then $X$ is a random variable with a negative-binomial distribution $X \sim  nb(r,p)$ with mean $\mu=r/p$ and variance $\sigma^2 = r(1-p)/p^2$. The probability of $X=x$ trials prior to $r$ successes is 
+If $X$ is the count of failure events ocurring prior to reaching $r$ successful events in a sequence of Bernouli trias of success probability $p$, then $X$ is a random variable with a negative-binomial distribution $X \sim NB(r, p)$. The probability of $X = x$ failures prior to $r$ successes is
 
-$$P(X=x) = {{x - 1} \choose {r - 1}} p^r (1-p)^{x-r}.$$
+$$f(x;r, p) = {{x + r - 1} \choose {r - 1}} p^r (1-p)^{x}.$$
 
-*An oil company has a p = 0.20 chance of striking oil when drilling a well.  What is the probability the company drills x = 7 wells to strike oil r = 3 times?*
+with $E(X) = r (1 - p) / p$ and $V(X) = r (1-p) / p^2$.
 
-$$P(X=7) = {{7 - 1} \choose {3 - 1}} (0.2)^3 (1-0.2)^{(7-3)} = 0.049.$$
+When the data has overdispersion, model the data with the negative-binomial distribution instead of Poission.
+
+#### Examples {-}
+
+An oil company has a $p = 0.20$ chance of striking oil when drilling a well.  What is the probability the company drills $x + r = 7$ wells to strike oil $r = 3$ times?  Note that the question is formulated as counting total events, $x + r = 7$, so translate it to total *failed* events, $x = 4$.
+
+$$f(x;r, p) = {{4 + 3 - 1} \choose {3 - 1}} (0.20)^3 (1 - 0.20)^4 = 0.049.$$
 
 Function `dnbinom()` calculates the negative-binomial probability.  Parameter `x` equals the number of failures, $x - r$.
 
@@ -347,42 +376,45 @@ Function `dnbinom()` calculates the negative-binomial probability.  Parameter `x
 dnbinom(x = 4, size = 3, prob = 0.2)
 ```
 
-Here is a simulation of n = 10,000 random samples.  `rnbinom()` generates a random sample of numbers from the negative-binomial distribution.
+The expected number of failures prior to 3 successes is $E(X) = 3 (1 - 0.20) / 0.20 = 12$ with variance $V(X) = 3 (1 - 0.20) / 0.20^2 = 60$. Confirm this with a simulation from n = 10,000 random samples using `rnbinom()`.
 
-```{r message=FALSE, warning=FALSE, fig.height=3, fig.width=5}
-data.frame(cnt = rnbinom(n = 10000, size = 3, prob = 0.2)) %>%
-  count(cnt) %>%
-  ungroup() %>%
-  mutate(pct = n / sum(n),
-         X_eq_x = cnt == 7-3,
-         cnt = cnt + 3) %>%
-  filter(cnt < 15) %>%
-  ggplot(aes(x = as.factor(cnt), y = n, fill = X_eq_x, label = pct)) +
-  geom_col(alpha = 0.8) +
-  scale_fill_manual(values = c(my_colors$grey, my_colors$red)) +
-  geom_label(aes(label = round(pct, 2)), size = 3, alpha = .6, check_overlap = TRUE) +
-  theme_minimal() +
-  theme(legend.position = "none") +
-  labs(title = "Negative-Binomial Distribution", 
-       subtitle = paste0("P(X=7) trials to reach 3 successes when p = 0.2 is ", round(dnbinom(4, 3, 0.2), 4), "."),
-       x = "Trials",
-       y = "Count",
-       caption = "Simulation from n = 10,000 negative-binomial random samples.") 
+```{r}
+my_dat <- rnbinom(n = 10000, size = 3, prob = 0.20)
+mean(my_dat)
+var(my_dat)
 ```
+
+
+```{r message=FALSE, warning=FALSE, fig.height=3, fig.width=6, echo=FALSE}
+data.frame(x = 0:40, d = dnbinom(x = 0:40, size = 3, prob = 0.20)) %>%
+  ggplot(aes(x = x, y = d, fill = x == 12)) +
+  geom_col() + 
+  theme_mf() +
+  scale_fill_mf() +
+  theme(legend.position = "none") +
+  labs(title = "NB(x; r = 3, p = 0.20)", 
+       subtitle = "Expected number of failures is 12.",
+       y = "dnbinom") 
+```
+
 
 ### Geometric
 
-If $X$ is the count of independent Bernoulli trials of success probability $p$ required to achieve the first successful trial, then $X$ is a random variable with a geometric distribution $X \sim  G(p)$ with mean $\mu=\frac{{n}}{{p}}$ and variance $\sigma^2 = \frac{{(1-p)}}{{p^2}}$ .  The probability of $X=n$ trials is 
+If $X$ is the count of Bernoulli trials of success probability $p$ required to achieve the first successful event, then $X$ is a random variable with a geometric distribution $X \sim G(p)$. The probability of $X = x$ trials is
 
-$$f(X=n) = p(1-p)^{n-1}.$$
+$$f(x; p) = p(1-p)^{x-1}.$$
 
-The probability of $X<=n$ trials is 
+with $E(X)=\frac{{n}}{{p}}$ and $V(X) = \frac{(1-p)}{p^2}$.  The probability of $X<=n$ trials is 
 
 $$F(X=n) = 1 - (1-p)^n.$$ 
 
-*Example.  A sports marketer randomly selects persons on the street until he encounters someone who attended a game last season. What is the probability the marketer encounters x = 3 people who did not attend a game before the first success if p = 0.20 of the population attended a game?*
+#### Examples {-}
 
-Function `pgeom()` calculates the geometric distribution probability.
+What is the probability a marketer encounters x = 3 people on the street who did not attend a sporting event before the first success if the population probability is p = 0.20?
+
+$$f(4; 0.20) = 0.20(1-0.20)^{4-1} = 0.102.$$
+
+Function `dgeom()` calculates the geometric distribution probability.  Parameter `x` is the number of *failures*, not the number of trials. 
 
 ```{r}
 dgeom(x = 3, prob = 0.20)
@@ -393,20 +425,108 @@ data.frame(cnt = rgeom(n = 10000, prob = 0.20)) %>%
   count(cnt) %>%
   top_n(n = 15, wt = n) %>%
   ungroup() %>%
-  mutate(pct = round(n / sum(n), 2),
+  mutate(pct = round(n / sum(n), 3),
          X_eq_x = cnt == 3) %>%
   ggplot(aes(x = as.factor(cnt), y = n, fill = X_eq_x, label = pct)) +
   geom_col(alpha = 0.8) +
-  scale_fill_manual(values = c(my_colors$grey, my_colors$red)) +
+  scale_fill_mf() +
   geom_text(size = 3) +
-  theme_minimal() +
+  theme_mf() +
   theme(legend.position = "none") +
   labs(title = "Distribution of trials prior to first success",
-       subtitle = paste("P(X = 3) | X ~ G(.2) = ", round(dgeom(3, .2), 4)),
+       subtitle = paste("P(X = 3) | X ~ G(.2) = ", round(dgeom(2, .2), 3)),
        x = "Unsuccessful trials",
        y = "Count",
        caption = "simulation of n = 10,000 samples from geometric dist.") 
 ```
+
+What is the probability the marketer fails to find someone who attended a game in x <= 5 trials before finding someone who attended a game on the sixth trial when the population probability is p = 0.20?
+
+```{r}
+p = 0.20
+n = 5
+# exact
+pgeom(q = n, prob = p, lower.tail = TRUE)
+# simulated
+mean(rgeom(n = 10000, prob = p) <= n)
+```
+
+
+```{r fig.width=5, echo=FALSE}
+data.frame(
+  x = 0:10, 
+  pmf = dgeom(x = 0:10, prob = p),
+  cdf = pgeom(q = 0:10, prob = p, lower.tail = TRUE)
+) %>%
+  mutate(Failures = ifelse(x <= n, n, "other")) %>%
+  ggplot(aes(x = factor(x), y = cdf, fill = Failures)) +
+  geom_col() +
+  geom_text(
+    aes(label = round(cdf,2), y = cdf + 0.01),
+    position = position_dodge(0.9),
+    size = 3,
+    vjust = 0
+  ) +
+  theme_mf() +
+  scale_fill_mf() +
+  labs(
+    title = "Cumulative Probability of X = 5 Failures.",
+    subtitle = "G(.3)",
+    x = "Failures prior to first success (x)",
+    y = "probability"
+  ) 
+```
+
+What is the probability the marketer fails to find someone who attended a game on x >= 5 trials before finding someone who attended a game on the next trial?
+
+```{r}
+p = 0.20
+n = 5
+# exact
+pgeom(q = n, prob = p, lower.tail = FALSE)
+# simulated
+mean(rgeom(n = 10000, prob = p) > n)
+```
+
+
+```{r fig.width=5, echo=FALSE}
+data.frame(x = 0:10, 
+           pmf = dgeom(x = -1:9, prob = p),
+           cdf = pgeom(q = -1:9, prob = p, lower.tail = FALSE)) %>%
+  mutate(Failures = ifelse(x >= n + 1, n + 1, "other")) %>%
+ggplot(aes(x = factor(x), y = cdf, fill = Failures)) +
+  geom_col() +
+  theme_mf() +
+  scale_fill_mf() +
+  geom_text(
+    aes(label = round(cdf,2), y = cdf + 0.01),
+    position = position_dodge(0.9),
+    size = 3,
+    vjust = 0
+  ) +
+  labs(title = "Cumulative Probability of X = 6 Failures (Right Tail).",
+       subtitle = "G(.3)",
+       x = "Failures prior to first success (x)",
+       y = "probability") 
+```
+
+The expected number of trials to achieve the first success is `1 / 0.20 = ` `r 1 / 0.20`, `V(X) = (1 - 0.20) / 0.20^2 = ` `r (1 - 0.20) / 0.20^2`? 
+
+```{r}
+p = 0.20
+# mean
+# exact
+1 / p
+# simulated
+mean(rgeom(n = 10000, prob = p)) + 1
+
+# Variance
+# exact
+(1 - p) / p^2
+# simulated
+var(rgeom(n = 100000, prob = p))
+```
+
 
 ### Hypergeometric
 
@@ -498,6 +618,37 @@ p +
        color = "")
 ```
 
+
+### Gamma
+
+If $X$ is the interval until the $\alpha^{th}$ successful event when the average interval is $\theta$, then $X$ is a random variable with a gamma distribution $X \sim \Gamma(\alpha, \theta)$. The probability of an interval of $X = x$ is
+
+$$f(x; \alpha, \theta) = \frac{1}{\Gamma(\alpha)\theta^\alpha}x^{\alpha-1}e^{-x/\theta}.$$
+
+where $\Gamma(\alpha) = (1 - \alpha)!$ with $E(X) = \alpha \theta$ and $V(X) = \alpha \theta^2$.  
+
+#### Examples {-}
+
+On average, someone sends a money order once per 15 minutes ($\theta = .25$).  What is the probability someone sends $\alpha = 10$ money orders in less than $x = 3$ hours?*
+
+```{r}
+pgamma(q = 3, shape = 10, scale = 0.25)
+```
+
+
+```{r message=FALSE, warning=FALSE}
+data.frame(x = 0:1000 / 100, prob = pgamma(q = 0:1000 / 100, shape = alpha, scale = theta, lower.tail = TRUE)) %>%
+  mutate(Interval = ifelse(x >= 0 & x <= 3, "0 to 3", "other")) %>%
+ggplot(aes(x = x, y = prob, fill = Interval)) +
+  geom_area(alpha = 0.9) +
+  theme_mf() +
+  scale_fill_mf() +
+  labs(title = "X ~ Gam(alpha = 10, theta = .25)",
+       subtitle = "Probability of 10 events in X hours when the mean time to an event is .25 hours.",
+       x = "Interval (x)",
+       y = "pgamma") 
+
+```
 
 ## Continuous Distributions
 
@@ -746,45 +897,110 @@ knitr::include_app("https://mpfoley73.shinyapps.io/shiny_dist/",
 ```
 
 
+## Join Distributions
+
 ## Likelihood
 
-The *likelihood function* is the likelihood of a parameter $\theta$ given an observed value.  The likelihood function is identical to the probability distribution function, except that it reverses which variable is considered fixed.  E.g., the binomial distribution $Bin(n, \pi)$ expresses the probability that $X = x$ given a sample of size $n$ from a binomial distribution with success probability $\pi$.
+The *likelihood function* is the likelihood of a parameter $\theta$ given an observed value of the random variable $X$.  The likelihood function is identical to the probability distribution function, except that it reverses which variable is considered fixed.  E.g., the binomial *probability* distribution expresses the probability that $X = x$ given the success probability $\theta = \pi$.
 
-$$f(x|\theta) = P(X=x|\pi) = \frac{{n!}}{{x!(n-x)!}} p^x (1-p)^{n-x}.$$
+$$f(x|\pi) = \frac{n!}{x!(n-x)!} \pi^x (1-\pi)^{n-x}.$$
 
 The corresponding *likelihood* function expresses the probability that $\pi = p$ given the observed value $x$.
 
-$$L(\theta|x) = L(\pi|x) = \frac{{n!}}{{x!(n-x)!}} \pi^x (1-\pi)^{n-x} \propto \pi^x (1-\pi)^{n-x}.$$
+$$L(p|x) = \frac{n!}{x!(n-x)!} p^x (1-p)^{n-x}.$$
 
-Any multiplicative constant which does not depend on $\theta$ is irrevelant and can be discarded, so
+You usually want to know the value of $\theta$ at the *maximum* of the likelihood function.  When taking derivatives, any multiplicative constant is irrevelant and can be discarded.  So for the binomial distribution, the likelihood function for $\pi$ may instead be expressed as
 
-$$L(\pi|x) =  \pi^x (1-\pi)^{n-x}$$
+$$L(p|x) \propto p^x (1-p)^{n-x}$$
 
-In most cases, you work with the *loglikelihood*, $l(\theta|x) = \log L(\theta|x)$.  So for the binomial distribution, $l(\pi|x) = x \log \pi + (n - x) \log (1 - \pi)$.  Frequently you derive loglikelihood from a sample.  The overall likelihood is the product of the individual likelihoods, and the overall loglikelihood is the log of the overall likelihood.
+Calculating the maximum is usually simplified using the *log-likelihood*, $l(\theta|x) = \log L(\theta|x)$.  For the binomial distribution, $l(p|x) = x \log p + (n - x) \log (1 - p)$.  Frequently you derive loglikelihood from a sample.  The overall likelihood is the product of the individual likelihoods, and the overall loglikelihood is the log of the overall likelihood.
 
 $$l(\theta|x) = \log \prod_{i=1}^n f(x_i|\theta)$$
 
-You usually want to know the *maximum* of the likelihood function.  The value of $\theta$ that maximizes $L$ is the maximum-likelihood estimator of $\theta$.  Suppose an experiment had $n=5$ Bernoulli trials, and $X = 3$ where successes.  $X \sim Bin(5, p)$.  What is the MLE?  A plot of $L(p|x) = p^3(1 - p)^2$ is maximized at $p = 0.6$.
+Here are plots of the binomial log-likelihood of $pi$ for several values of $X$ from a sample of size $n = 5$.
 
-```{r}
-library(tidyverse)
-p <- 0:100*.01
-L <- p^3 * (1 - p)^2
-dat <- data.frame(L, p)
-ggplot(dat, aes(x = p, y = L)) +
-  geom_line() +
-  geom_vline(xintercept = 0.6)
+```{r fig.height=3, fig.width=5, echo=FALSE}
+data.frame(
+  n = rep(5, 303),
+  p = rep((0:100)/100, 3),
+  x = c(rep(0, 101), rep(1, 101), rep(2, 101))
+) %>%
+  mutate(
+    L = p^x * (1 - p)^(n - x),
+    l = log(L),
+    l2 = x * log(p) + (n - x) * log(1 - p)
+  ) %>%
+  ggplot(aes(x = p, y = l, color = as.factor(x))) +
+    geom_point() +
+  theme_mf() +
+  scale_color_mf() +
+  labs(
+    x = "pi", 
+    y = "log-likelihood", 
+    title = "Binomial Log-Likelihood for pi",
+    subtitle = "Selected values of X from sample size n = 5",
+    caption = "",
+    color = "X")
 ```
 
-Calculating the MLE is usually simplified using the loglikelihood function.
+As the total sample size $n$ grows, the loglikelihood function becomes more sharply peaked around its maximum, and becomes nearly quadratic (i.e. a  parabola, if there is a single parameter).  Here is the same plot with $n = 500$.
+
+```{r fig.height=3, fig.width=5, echo=FALSE}
+data.frame(
+  n = rep(500, 303),
+  p = rep((0:100)/100, 3),
+  x = c(rep(0, 101), rep(100, 101), rep(200, 101))
+) %>%
+  mutate(
+    L = p^x * (1 - p)^(n - x),
+    l = log(L),
+    l2 = x * log(p) + (n - x) * log(1 - p)
+  ) %>%
+  ggplot(aes(x = p, y = l, color = as.factor(x))) +
+    geom_point() +
+  theme_mf() +
+  scale_color_mf() +
+  labs(
+    x = "pi", 
+    y = "log-likelihood", 
+    title = "Binomial Log-Likelihood for pi",
+    subtitle = "Selected values of X from sample size n = 5",
+    caption = "",
+    color = "X")
+```
+
+The value of $\theta$ that maximizes $l$ (and $L$) is the *maximum-likelihood estimator* (MLE) of $\theta$, $\hat{\theta}$. E.g., suppose you have an experiment of $n = 5$ Bernoulli trials  $\left(X \sim Bin(5, \pi) \right)$ with and $X = 3$ successful events. A plot of $L(p|x) = p^3(1 - p)^2$ shows the MLE is at $p = 0.6$.
+
+```{r fig.height=3, fig.width=5, echo=FALSE}
+data.frame(
+  p = 0:100*.01
+) %>%
+  mutate(L = p^3 * (1 - p)^2) %>%
+ggplot(aes(x = p, y = L)) +
+  geom_line() +
+  geom_vline(xintercept = 0.6) +
+  theme_mf() +
+  labs(
+    x = "pi",
+    y = "Likelihood",
+    title = "Likelihood Function for Binomial Dist.",
+    subtitle = "n = 5 trials with X = 3 successful events. Max is at 0.6."
+  )
+```
+
+This approach is called *maximum-likelihood* estimation. MLE usually involves setting the derivatives to zero and solving for $theta$. 
 
 
 
 
 <!--chapter:end:01-probability.Rmd-->
 
-# Inference
+# Discrete Analysis
 
+For categorical data you typically assume the data have been generated from a Poisson, binomial or multinomial distribution. Statistical analysis depends on the data generation mechanism, although in some situations, depending on the objective, we may ignore that mechanism and simplify our analysis.
+The following sampling methods correspond to the distributions considered
+Unrestricted sampling (corresponds to Poisson distribution)
+Sampling with fixed total sample size (corresponds to Binomial or Multinomial distributions)
 
 <!--chapter:end:02-inference.Rmd-->
 
@@ -796,11 +1012,11 @@ Some _significant_ applications are demonstrated in this chapter.
 
 ## Example two
 
-<!--chapter:end:03-experiment.Rmd-->
+<!--chapter:end:04-ci.Rmd-->
 
 # Regression
 
-<!--chapter:end:04-regression.Rmd-->
+<!--chapter:end:04-ols.Rmd-->
 
 # Generalized Linear Models
 
@@ -2518,8 +2734,8 @@ m4 <- train(
 m4$bestTune
 ```
 
-```{r}
-plot(m4)
+```{r svm_plot_m4}
+#plot(m4)
 ```
 
 

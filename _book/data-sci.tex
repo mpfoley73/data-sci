@@ -113,7 +113,7 @@
 
 \title{My Data Science Notes}
 \author{Michael Foley}
-\date{2020-02-17}
+\date{2020-02-20}
 
 \begin{document}
 \maketitle
@@ -127,688 +127,6 @@
 \addcontentsline{toc}{chapter}{Intro}
 
 These notes are pulled from various classes, tutorials, books, etc. and are intended for my own consumption. If you are finding this on the internet, I hope it is useful to you, but you should know that I am just a student and there's a good chance whatever you're reading here is mistaken. In fact, that should probably be your null hypothesis\ldots{} or your prior. Whatever.
-
-\hypertarget{probability}{%
-\chapter{Probability}\label{probability}}
-
-\hypertarget{principles}{%
-\section{Principles}\label{principles}}
-
-Here are three rules that come up all the time.
-
-\begin{itemize}
-\item
-  \(Pr(A \cup B) = Pr(A)+Pr(B) - Pr(AB)\). This rule generalizes to
-  \(Pr(A \cup B \cup C)=Pr(A)+Pr(B)+Pr(C)-Pr(AB)-Pr(AC)-Pr(BC)+Pr(ABC)\).
-\item
-  \(Pr(A|B) = \frac{P(AB)}{P(B)}\)
-\item
-  If A and B are independent, \(Pr(A \cap B) = Pr(A)Pr(B)\), and \(Pr(A|B)=Pr(A)\).
-\end{itemize}
-
-Uniform distributions on finite sample spaces often reduce to counting the elements of \emph{A} and the sample space \emph{S}, a process called combinatorics. Here are three important combinatorial rules.
-
-\textbf{Multiplication Rule}. \(|S|=|S_1 |⋯|S_k|\).
-
-\emph{How many outcomes are possible from a sequence of 4 coin flips and 2 rolls of a die?}
-\(|S|=|S_1| \cdot |S_2| \dots |S_6| = 2 \cdot 2 \cdot 2 \cdot 2 \cdot 6 \cdot 6 = 288\).
-
-\emph{How many subsets are possible from a set of n=10 elements?}
-In each subset, each element is either included or not, so there are \(2^n = 1024\) subsets.
-
-\emph{How many subsets are possible from a set of n=10 elements taken k at a time with replacement?}
-Each experiment has \(n\) possible outcomes and is repeated \(k\) times, so there are \(n^k\) subsets.
-
-\textbf{Permutations}. The number of \emph{ordered} arrangements (permutations) of a set of \(|S|=n\) items taken \(k\) at a time \emph{without} replacement has \(n(n-1) \dots (n-k+1)\) subsets because each draw is one of k experiments with decreasing number of possible outcomes.
-
-\[_nP_k = \frac{n!}{(n-k)!}\]
-
-Notice that if \(k=0\) then there is 1 permutation; if \(k=1\) then there are \(n\) permutations; if \(k=n\) then there are \(n!\) permutations.
-
-\emph{How many ways can you distribute 4 jackets among 4 people?}
-\(_nP_k = \frac{4!}{(4-4)!} = 4! = 24\)
-
-\emph{How many ways can you distribute 4 jackets among 2 people?}
-\(_nP_k = \frac{4!}{(4-2)!} = 12\)
-
-\textbf{Subsets}. The number of \emph{unordered} arrangements (combinations) of a set of \(|S|=n\) items taken \(k\) at a time \emph{without} replacement has
-
-\[_nC_k = {n \choose k} = \frac{n!}{k!(n-k)!}\]
-
-combinations and is called the binomial coefficient. The binomial coefficient is the number of different subsets. Notice that if k=0 then there is 1 subset; if k=1 then there are n subsets; if k=n then there is 1 subset. The connection with the permutation rule is that there are \(n!/(n-k)!\) permutations and each permutation has \(k!\) permutations.
-
-\emph{How many subsets of 7 people can be taken from a set of 12 persons?}
-\(_{12}C_7 = {12 \choose 7} = \frac{12!}{7!(12-7)!} = 792\)
-
-\emph{If you are dealt five cards, what is the probability of getting a ``full-house'' hand containing three kings and two aces (KKKAA)?}
-\[P(F) = \frac{{4 \choose 3} {4 \choose 2}}{{52 \choose 5}}\]
-
-\textbf{Distinguishable permutations}. The number of \emph{unordered} arrangements (distinguishable permutations) of a set of \(|S|=n\) items in which \(n_1\) are of one type, \(n_2\) are of another type, etc., is
-
-\[{n \choose {n_1, n_2, \dots, n_k}} = \frac{n!}{n_1! n_2! \dots n_k!}\]
-
-\emph{How many ordered arrangements are there of the letters in the word PHILIPPINES?} There are n=11 objects. \(|P|=n_1=3\); \(|H|=n_2=1\); \(|I|=n_3=3\); \(|L|=n_4=1\); \(|N|=n_5=1\); \(|E|=n_6=1\); \(|S|=n_7=1\).
-
-\[{n \choose {n_1, n_2, \dots, n_k}} = \frac{11!}{3! 1! 3! 1! 1! 1! 1!} = 1,108,800\]
-
-\emph{How many ways can a research pool of 15 subjects be divided into three equally sized test groups?}
-
-\[{n \choose {n_1, n_2, \dots, n_k}} = \frac{15!}{5! 5! 5!} = 756,756\]
-
-\hypertarget{discrete-distributions}{%
-\section{Discrete Distributions}\label{discrete-distributions}}
-
-\hypertarget{binomial}{%
-\subsection{Binomial}\label{binomial}}
-
-If \(X\) is the count of successful events in \(n\) identical and independent Bernoulli trials of success probability \(p\), then \(X\) is a random variable with a binomial distribution \(X \sim b(n,p)\) with mean \(\mu=np\) and variance \(\sigma^2 = np(1-p)\). The probability of \(X=x\) successes in \(n\) trials is
-
-\[P(X=x) = \frac{{n!}}{{x!(n-x)!}} p^x (1-p)^{n-x}.\]
-
-\emph{What is the probability 2 out of 10 coin flips are heads if the probability of heads is 0.3?}
-
-Function \texttt{dbinom()} calculates the binomial probability.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{dbinom}\NormalTok{(}\DataTypeTok{x =} \DecValTok{2}\NormalTok{, }\DataTypeTok{size =} \DecValTok{10}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{0.3}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.2334744
-\end{verbatim}
-
-A simulation of n = 10,000 random samples of size 10 gives a similar result. \texttt{rbinom()} generates a random sample of numbers from the binomial distribution.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(tidyverse)}
-
-\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{cnt =} \KeywordTok{rbinom}\NormalTok{(}\DataTypeTok{n =} \DecValTok{10000}\NormalTok{, }\DataTypeTok{size =} \DecValTok{10}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{0.3}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{count}\NormalTok{(cnt) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{pct =}\NormalTok{ n }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(n),}
-         \DataTypeTok{X_eq_x =}\NormalTok{ cnt }\OperatorTok{==}\StringTok{ }\DecValTok{2}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{as.factor}\NormalTok{(cnt), }\DataTypeTok{y =}\NormalTok{ n, }\DataTypeTok{fill =}\NormalTok{ X_eq_x, }\DataTypeTok{label =}\NormalTok{ pct)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_col}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.8}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{scale_fill_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(my_colors}\OperatorTok{$}\NormalTok{grey, my_colors}\OperatorTok{$}\NormalTok{red)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_label}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =} \KeywordTok{round}\NormalTok{(pct, }\DecValTok{2}\NormalTok{)), }\DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{.6}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Binomial Distribution"}\NormalTok{, }
-       \DataTypeTok{subtitle =} \KeywordTok{paste0}\NormalTok{(}\StringTok{"P(X=2) successes in 10 trials when p = 0.3 is "}\NormalTok{, }\KeywordTok{round}\NormalTok{(}\KeywordTok{dbinom}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{10}\NormalTok{, }\FloatTok{0.3}\NormalTok{), }\DecValTok{4}\NormalTok{), }\StringTok{"."}\NormalTok{),}
-       \DataTypeTok{x =} \StringTok{"Successes"}\NormalTok{,}
-       \DataTypeTok{y =} \StringTok{"Count"}\NormalTok{,}
-       \DataTypeTok{caption =} \StringTok{"Simulation from n = 10,000 binomial random samples."}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-3-1.pdf}
-
-\emph{What is the probability of \textless=2 heads in 10 coin flips where probability of heads is 0.3?}
-
-The cumulative probability is the sum of the first three bars in the simulation above. Function \texttt{pbinom()} calculates the \emph{cumulative} binomial probability.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{pbinom}\NormalTok{(}\DataTypeTok{q =} \DecValTok{2}\NormalTok{, }\DataTypeTok{size =} \DecValTok{10}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{0.3}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.3827828
-\end{verbatim}
-
-\emph{What is the expected number of heads in 25 coin flips if the probability of heads is 0.3?}
-
-The expected value, \(\mu = np\), is 7.5. Here's an empirical test from 10,000 samples.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{mean}\NormalTok{(}\KeywordTok{rbinom}\NormalTok{(}\DataTypeTok{n =} \DecValTok{10000}\NormalTok{, }\DataTypeTok{size =} \DecValTok{25}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{.3}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 7.5149
-\end{verbatim}
-
-The variance, \(\sigma^2 = np (1 - p)\), is 5.25. Here's an empirical test.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{var}\NormalTok{(}\KeywordTok{rbinom}\NormalTok{(}\DataTypeTok{n =} \DecValTok{10000}\NormalTok{, }\DataTypeTok{size =} \DecValTok{25}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{.3}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 5.185593
-\end{verbatim}
-
-\emph{Suppose X and Y are independen random variables distributed X \textasciitilde{} b(10, .6) and Y \textasciitilde{} b(10, .7). What is the probability that either variable is \textless=4?}
-
-Let \(P(A) = P(X<=4)\) and \(P(B) = P(Y<=4)\). Then \(P(A|B) = P(A) + P(B) - P(AB)\), and because the events are independent, \(P(AB) = P(A)P(B)\).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p_a <-}\StringTok{ }\KeywordTok{pbinom}\NormalTok{(}\DataTypeTok{q =} \DecValTok{4}\NormalTok{, }\DataTypeTok{size =} \DecValTok{10}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{0.6}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)}
-\NormalTok{p_b <-}\StringTok{ }\KeywordTok{pbinom}\NormalTok{(}\DataTypeTok{q =} \DecValTok{4}\NormalTok{, }\DataTypeTok{size =} \DecValTok{10}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{0.7}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)}
-\NormalTok{p_a }\OperatorTok{+}\StringTok{ }\NormalTok{p_b }\OperatorTok{-}\StringTok{ }\NormalTok{(p_a }\OperatorTok{*}\StringTok{ }\NormalTok{p_b)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.2057164
-\end{verbatim}
-
-Here's an empirical test.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}
-  \DataTypeTok{x =} \KeywordTok{rbinom}\NormalTok{(}\DecValTok{10000}\NormalTok{, }\DecValTok{10}\NormalTok{, }\FloatTok{0.6}\NormalTok{),}
-  \DataTypeTok{y =} \KeywordTok{rbinom}\NormalTok{(}\DecValTok{10000}\NormalTok{, }\DecValTok{10}\NormalTok{, }\FloatTok{0.7}\NormalTok{)}
-\NormalTok{  )}
-\KeywordTok{mean}\NormalTok{(}\KeywordTok{if_else}\NormalTok{(df}\OperatorTok{$}\NormalTok{x }\OperatorTok{<=}\StringTok{ }\DecValTok{4} \OperatorTok{|}\StringTok{ }\NormalTok{df}\OperatorTok{$}\NormalTok{y }\OperatorTok{<=}\StringTok{ }\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.2061
-\end{verbatim}
-
-\hypertarget{negative-binomial}{%
-\subsection{Negative-Binomial}\label{negative-binomial}}
-
-If \(X\) is the count of trials required to reach a target number \(r\) of successful events in identical and independent Bernoulli trials of success probability \(p\), then \(X\) is a random variable with a negative-binomial distribution \(X \sim nb(r,p)\) with mean \(\mu=r/p\) and variance \(\sigma^2 = r(1-p)/p^2\). The probability of \(X=x\) trials prior to \(r\) successes is
-
-\[P(X=x) = {{x - 1} \choose {r - 1}} p^r (1-p)^{x-r}.\]
-
-\emph{An oil company has a p = 0.20 chance of striking oil when drilling a well. What is the probability the company drills x = 7 wells to strike oil r = 3 times?}
-
-\[P(X=7) = {{7 - 1} \choose {3 - 1}} (0.2)^3 (1-0.2)^{(7-3)} = 0.049.\]
-
-Function \texttt{dnbinom()} calculates the negative-binomial probability. Parameter \texttt{x} equals the number of failures, \(x - r\).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{dnbinom}\NormalTok{(}\DataTypeTok{x =} \DecValTok{4}\NormalTok{, }\DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{0.2}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.049152
-\end{verbatim}
-
-Here is a simulation of n = 10,000 random samples. \texttt{rnbinom()} generates a random sample of numbers from the negative-binomial distribution.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{cnt =} \KeywordTok{rnbinom}\NormalTok{(}\DataTypeTok{n =} \DecValTok{10000}\NormalTok{, }\DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{0.2}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{count}\NormalTok{(cnt) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{pct =}\NormalTok{ n }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(n),}
-         \DataTypeTok{X_eq_x =}\NormalTok{ cnt }\OperatorTok{==}\StringTok{ }\DecValTok{7-3}\NormalTok{,}
-         \DataTypeTok{cnt =}\NormalTok{ cnt }\OperatorTok{+}\StringTok{ }\DecValTok{3}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(cnt }\OperatorTok{<}\StringTok{ }\DecValTok{15}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{as.factor}\NormalTok{(cnt), }\DataTypeTok{y =}\NormalTok{ n, }\DataTypeTok{fill =}\NormalTok{ X_eq_x, }\DataTypeTok{label =}\NormalTok{ pct)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_col}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.8}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{scale_fill_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(my_colors}\OperatorTok{$}\NormalTok{grey, my_colors}\OperatorTok{$}\NormalTok{red)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_label}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =} \KeywordTok{round}\NormalTok{(pct, }\DecValTok{2}\NormalTok{)), }\DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{.6}\NormalTok{, }\DataTypeTok{check_overlap =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Negative-Binomial Distribution"}\NormalTok{, }
-       \DataTypeTok{subtitle =} \KeywordTok{paste0}\NormalTok{(}\StringTok{"P(X=7) trials to reach 3 successes when p = 0.2 is "}\NormalTok{, }\KeywordTok{round}\NormalTok{(}\KeywordTok{dnbinom}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{3}\NormalTok{, }\FloatTok{0.2}\NormalTok{), }\DecValTok{4}\NormalTok{), }\StringTok{"."}\NormalTok{),}
-       \DataTypeTok{x =} \StringTok{"Trials"}\NormalTok{,}
-       \DataTypeTok{y =} \StringTok{"Count"}\NormalTok{,}
-       \DataTypeTok{caption =} \StringTok{"Simulation from n = 10,000 negative-binomial random samples."}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-10-1.pdf}
-
-\hypertarget{geometric}{%
-\subsection{Geometric}\label{geometric}}
-
-If \(X\) is the count of independent Bernoulli trials of success probability \(p\) required to achieve the first successful trial, then \(X\) is a random variable with a geometric distribution \(X \sim G(p)\) with mean \(\mu=\frac{{n}}{{p}}\) and variance \(\sigma^2 = \frac{{(1-p)}}{{p^2}}\) . The probability of \(X=n\) trials is
-
-\[f(X=n) = p(1-p)^{n-1}.\]
-
-The probability of \(X<=n\) trials is
-
-\[F(X=n) = 1 - (1-p)^n.\]
-
-\emph{Example. A sports marketer randomly selects persons on the street until he encounters someone who attended a game last season. What is the probability the marketer encounters x = 3 people who did not attend a game before the first success if p = 0.20 of the population attended a game?}
-
-Function \texttt{pgeom()} calculates the geometric distribution probability.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{dgeom}\NormalTok{(}\DataTypeTok{x =} \DecValTok{3}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{0.20}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.1024
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{cnt =} \KeywordTok{rgeom}\NormalTok{(}\DataTypeTok{n =} \DecValTok{10000}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{0.20}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{count}\NormalTok{(cnt) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{top_n}\NormalTok{(}\DataTypeTok{n =} \DecValTok{15}\NormalTok{, }\DataTypeTok{wt =}\NormalTok{ n) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{pct =} \KeywordTok{round}\NormalTok{(n }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(n), }\DecValTok{2}\NormalTok{),}
-         \DataTypeTok{X_eq_x =}\NormalTok{ cnt }\OperatorTok{==}\StringTok{ }\DecValTok{3}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{as.factor}\NormalTok{(cnt), }\DataTypeTok{y =}\NormalTok{ n, }\DataTypeTok{fill =}\NormalTok{ X_eq_x, }\DataTypeTok{label =}\NormalTok{ pct)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_col}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.8}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{scale_fill_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(my_colors}\OperatorTok{$}\NormalTok{grey, my_colors}\OperatorTok{$}\NormalTok{red)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Distribution of trials prior to first success"}\NormalTok{,}
-       \DataTypeTok{subtitle =} \KeywordTok{paste}\NormalTok{(}\StringTok{"P(X = 3) | X ~ G(.2) = "}\NormalTok{, }\KeywordTok{round}\NormalTok{(}\KeywordTok{dgeom}\NormalTok{(}\DecValTok{3}\NormalTok{, }\FloatTok{.2}\NormalTok{), }\DecValTok{4}\NormalTok{)),}
-       \DataTypeTok{x =} \StringTok{"Unsuccessful trials"}\NormalTok{,}
-       \DataTypeTok{y =} \StringTok{"Count"}\NormalTok{,}
-       \DataTypeTok{caption =} \StringTok{"simulation of n = 10,000 samples from geometric dist."}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-12-1.pdf}
-
-\hypertarget{continuous-distributions}{%
-\section{Continuous Distributions}\label{continuous-distributions}}
-
-\hypertarget{normal}{%
-\subsection{Normal}\label{normal}}
-
-Random variable \(X\) is distributed \(X \sim N(\mu, \sigma^2)\) if
-
-\[f(X)=\frac{{1}}{{\sigma \sqrt{{2\pi}}}}e^{-.5(\frac{{x-\mu}}{{\sigma}})^2}\].
-
-\hypertarget{example}{%
-\subsubsection*{Example}\label{example}}
-\addcontentsline{toc}{subsubsection}{Example}
-
-\emph{IQ scores are distributed \(X \sim N(100, 16^2\). What is the probability a randomly selected person's IQ is \textless90?}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my_mean =}\StringTok{ }\DecValTok{100}
-\NormalTok{my_sd =}\StringTok{ }\DecValTok{16}
-\NormalTok{my_x =}\StringTok{ }\DecValTok{90}
-\CommentTok{# exact}
-\KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =}\NormalTok{ my_x, }\DataTypeTok{mean =}\NormalTok{ my_mean, }\DataTypeTok{sd =}\NormalTok{ my_sd, }\DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.2659855
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# simulated}
-\KeywordTok{mean}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DataTypeTok{n =} \DecValTok{10000}\NormalTok{, }\DataTypeTok{mean =}\NormalTok{ my_mean, }\DataTypeTok{sd =}\NormalTok{ my_sd) }\OperatorTok{<=}\StringTok{ }\NormalTok{my_x)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.2599
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(dplyr)}
-\KeywordTok{library}\NormalTok{(ggplot2)}
-
-\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \DecValTok{0}\OperatorTok{:}\DecValTok{1500} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-           \DataTypeTok{prob =} \KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =} \DecValTok{0}\OperatorTok{:}\DecValTok{1500} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-                        \DataTypeTok{mean =}\NormalTok{ my_mean, }
-                        \DataTypeTok{sd =}\NormalTok{ my_sd, }
-                        \DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{cdf =} \KeywordTok{ifelse}\NormalTok{(x }\OperatorTok{>}\StringTok{ }\DecValTok{0} \OperatorTok{&}\StringTok{ }\NormalTok{x }\OperatorTok{<=}\StringTok{ }\NormalTok{my_x, prob, }\DecValTok{0}\NormalTok{)) }\OperatorTok{%>%}
-\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ prob)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_area}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ cdf), }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \KeywordTok{bquote}\NormalTok{(}\StringTok{'X~N('}\OperatorTok{~}\NormalTok{mu}\OperatorTok{==}\NormalTok{.(my_mean)}\OperatorTok{~}\StringTok{','}\OperatorTok{~}\NormalTok{sigma}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{==}\NormalTok{.(my_sd)}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{~}\StringTok{')'}\NormalTok{),}
-       \DataTypeTok{subtitle =} \KeywordTok{bquote}\NormalTok{(}\StringTok{'P(X<='}\OperatorTok{~}\NormalTok{.(my_x)}\OperatorTok{~}\StringTok{') when mean is'}\OperatorTok{~}\NormalTok{.(my_mean)}\OperatorTok{~}\StringTok{' and variance is'}\OperatorTok{~}\NormalTok{.(my_sd)}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{~}\StringTok{'.'}\NormalTok{),}
-       \DataTypeTok{x =} \StringTok{"x"}\NormalTok{,}
-       \DataTypeTok{y =} \StringTok{"Probability"}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-13-1.pdf}
-
-\hypertarget{example-1}{%
-\subsection{Example}\label{example-1}}
-
-\emph{IQ scores are distributed }\(X \sim N(100, 16^2\)\emph{. What is the probability a randomly selected person's IQ is \textgreater140?}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my_mean =}\StringTok{ }\DecValTok{100}
-\NormalTok{my_sd =}\StringTok{ }\DecValTok{16}
-\NormalTok{my_x =}\StringTok{ }\DecValTok{140}
-\CommentTok{# exact}
-\KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =}\NormalTok{ my_x, }\DataTypeTok{mean =}\NormalTok{ my_mean, }\DataTypeTok{sd =}\NormalTok{ my_sd, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.006209665
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# simulated}
-\KeywordTok{mean}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DataTypeTok{n =} \DecValTok{10000}\NormalTok{, }\DataTypeTok{mean =}\NormalTok{ my_mean, }\DataTypeTok{sd =}\NormalTok{ my_sd) }\OperatorTok{>}\StringTok{ }\NormalTok{my_x)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.0065
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(dplyr)}
-\KeywordTok{library}\NormalTok{(ggplot2)}
-
-\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \DecValTok{0}\OperatorTok{:}\DecValTok{1500} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-           \DataTypeTok{prob =} \KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =} \DecValTok{0}\OperatorTok{:}\DecValTok{1500} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-                        \DataTypeTok{mean =}\NormalTok{ my_mean, }
-                        \DataTypeTok{sd =}\NormalTok{ my_sd, }
-                        \DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{cdf =} \KeywordTok{ifelse}\NormalTok{(x }\OperatorTok{>}\StringTok{ }\NormalTok{my_x }\OperatorTok{&}\StringTok{ }\NormalTok{x }\OperatorTok{<}\StringTok{ }\DecValTok{1000}\NormalTok{, prob, }\DecValTok{0}\NormalTok{)) }\OperatorTok{%>%}
-\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ prob)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_area}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ cdf), }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \KeywordTok{bquote}\NormalTok{(}\StringTok{'X~N('}\OperatorTok{~}\NormalTok{mu}\OperatorTok{==}\NormalTok{.(my_mean)}\OperatorTok{~}\StringTok{','}\OperatorTok{~}\NormalTok{sigma}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{==}\NormalTok{.(my_sd)}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{~}\StringTok{')'}\NormalTok{),}
-       \DataTypeTok{subtitle =} \KeywordTok{bquote}\NormalTok{(}\StringTok{'P(X<='}\OperatorTok{~}\NormalTok{.(my_x)}\OperatorTok{~}\StringTok{') when mean is'}\OperatorTok{~}\NormalTok{.(my_mean)}\OperatorTok{~}\StringTok{' and variance is'}\OperatorTok{~}\NormalTok{.(my_sd)}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{~}\StringTok{'.'}\NormalTok{),}
-       \DataTypeTok{x =} \StringTok{"x"}\NormalTok{,}
-       \DataTypeTok{y =} \StringTok{"Probability"}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-14-1.pdf}
-
-\hypertarget{example-2}{%
-\subsection{Example}\label{example-2}}
-
-\emph{IQ scores are distributed }\(X \sim N(100, 16^2\)\emph{. What is the probability a randomly selected person's IQ is between 92 and 114?}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my_mean =}\StringTok{ }\DecValTok{100}
-\NormalTok{my_sd =}\StringTok{ }\DecValTok{16}
-\NormalTok{my_x_l =}\StringTok{ }\DecValTok{92}
-\NormalTok{my_x_h =}\StringTok{ }\DecValTok{114}
-\CommentTok{# exact}
-\KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =}\NormalTok{ my_x_h, }\DataTypeTok{mean =}\NormalTok{ my_mean, }\DataTypeTok{sd =}\NormalTok{ my_sd, }\DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{-}
-\StringTok{  }\KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =}\NormalTok{ my_x_l, }\DataTypeTok{mean =}\NormalTok{ my_mean, }\DataTypeTok{sd =}\NormalTok{ my_sd, }\DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.5006755
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(dplyr)}
-\KeywordTok{library}\NormalTok{(ggplot2)}
-
-\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \DecValTok{0}\OperatorTok{:}\DecValTok{1500} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-           \DataTypeTok{prob =} \KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =} \DecValTok{0}\OperatorTok{:}\DecValTok{1500} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-                        \DataTypeTok{mean =}\NormalTok{ my_mean, }
-                        \DataTypeTok{sd =}\NormalTok{ my_sd, }
-                        \DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{cdf =} \KeywordTok{ifelse}\NormalTok{(x }\OperatorTok{>}\StringTok{ }\NormalTok{my_x_l }\OperatorTok{&}\StringTok{ }\NormalTok{x }\OperatorTok{<=}\StringTok{ }\NormalTok{my_x_h, prob, }\DecValTok{0}\NormalTok{)) }\OperatorTok{%>%}
-\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ prob)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_area}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ cdf), }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \KeywordTok{bquote}\NormalTok{(}\StringTok{'X~N('}\OperatorTok{~}\NormalTok{mu}\OperatorTok{==}\NormalTok{.(my_mean)}\OperatorTok{~}\StringTok{','}\OperatorTok{~}\NormalTok{sigma}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{==}\NormalTok{.(my_sd)}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{~}\StringTok{')'}\NormalTok{),}
-       \DataTypeTok{subtitle =} \KeywordTok{bquote}\NormalTok{(}\StringTok{'P(X<='}\OperatorTok{~}\NormalTok{.(my_x)}\OperatorTok{~}\StringTok{') when mean is'}\OperatorTok{~}\NormalTok{.(my_mean)}\OperatorTok{~}\StringTok{' and variance is'}\OperatorTok{~}\NormalTok{.(my_sd)}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{~}\StringTok{'.'}\NormalTok{),}
-       \DataTypeTok{x =} \StringTok{"x"}\NormalTok{,}
-       \DataTypeTok{y =} \StringTok{"Probability"}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-15-1.pdf}
-
-\hypertarget{example-3}{%
-\subsection{Example}\label{example-3}}
-
-\emph{Class scores are distributed }\(X \sim N(70, 10^2\)\emph{. If the instructor wants to give A's to \textgreater=85th percentile and B's to 75th-85th percentile, what are the cutoffs?}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my_mean =}\StringTok{ }\DecValTok{70}
-\NormalTok{my_sd =}\StringTok{ }\DecValTok{10}
-\NormalTok{my_pct_l =}\StringTok{ }\FloatTok{.75}
-\NormalTok{my_pct_h =}\StringTok{ }\FloatTok{.85}
-
-\KeywordTok{qnorm}\NormalTok{(}\DataTypeTok{p =}\NormalTok{ my_pct_l, }\DataTypeTok{mean =}\NormalTok{ my_mean, }\DataTypeTok{sd =}\NormalTok{ my_sd, }\DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 76.7449
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{qnorm}\NormalTok{(}\DataTypeTok{p =}\NormalTok{ my_pct_h, }\DataTypeTok{mean =}\NormalTok{ my_mean, }\DataTypeTok{sd =}\NormalTok{ my_sd, }\DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 80.36433
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(dplyr)}
-\KeywordTok{library}\NormalTok{(ggplot2)}
-
-\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \DecValTok{0}\OperatorTok{:}\DecValTok{1000} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-           \DataTypeTok{prob =} \KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =} \DecValTok{0}\OperatorTok{:}\DecValTok{1000} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-                        \DataTypeTok{mean =}\NormalTok{ my_mean, }
-                        \DataTypeTok{sd =}\NormalTok{ my_sd, }
-                        \DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{cdf =} \KeywordTok{ifelse}\NormalTok{(prob }\OperatorTok{>}\StringTok{ }\NormalTok{my_pct_l }\OperatorTok{&}\StringTok{ }\NormalTok{prob }\OperatorTok{<=}\StringTok{ }\NormalTok{my_pct_h, prob, }\DecValTok{0}\NormalTok{)) }\OperatorTok{%>%}
-\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ prob)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_area}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ cdf), }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \KeywordTok{bquote}\NormalTok{(}\StringTok{'X~N('}\OperatorTok{~}\NormalTok{mu}\OperatorTok{==}\NormalTok{.(my_mean)}\OperatorTok{~}\StringTok{','}\OperatorTok{~}\NormalTok{sigma}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{==}\NormalTok{.(my_sd)}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{~}\StringTok{')'}\NormalTok{),}
-       \DataTypeTok{subtitle =} \KeywordTok{bquote}\NormalTok{(}\StringTok{'P(X<=x) = ['}\OperatorTok{~}\NormalTok{.(my_pct_l)}\OperatorTok{~}\StringTok{','}\OperatorTok{~}\NormalTok{.(my_pct_h)}\OperatorTok{~}\StringTok{'] when mean is'}\OperatorTok{~}\NormalTok{.(my_mean)}\OperatorTok{~}\StringTok{' and variance is'}\OperatorTok{~}\NormalTok{.(my_sd)}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{~}\StringTok{'.'}\NormalTok{),}
-       \DataTypeTok{x =} \StringTok{"x"}\NormalTok{,}
-       \DataTypeTok{y =} \StringTok{"Probability"}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-16-1.pdf}
-
-\hypertarget{normal-approximation-to-binomial}{%
-\subsection{Normal Approximation to Binomial}\label{normal-approximation-to-binomial}}
-
-The CLT implies that certain distributions can be approximated by the normal distribution.
-
-The binomial distribution \(X \sim B(n,p)\) is approximately normal with mean \(\mu = n p\) and variance \(\sigma^2=np(1-p)\). The approximation is useful when the expected number of successes and failures is at least 5: \(np>=5\) and \(n(1-p)>=5\).
-
-\hypertarget{example-4}{%
-\subsection{Example}\label{example-4}}
-
-\emph{A measure requires p\textgreater=50\% popular to pass. A sample of n=1,000 yields x=460 approvals. What is the probability that the overall population approves, P(X)\textgreater0.5?}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my_x =}\StringTok{ }\DecValTok{460}
-\NormalTok{my_p =}\StringTok{ }\FloatTok{0.50}
-\NormalTok{my_n =}\StringTok{ }\DecValTok{1000}
-
-\NormalTok{my_mean =}\StringTok{ }\NormalTok{my_p }\OperatorTok{*}\StringTok{ }\NormalTok{my_n}
-\NormalTok{my_sd =}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(my_n }\OperatorTok{*}\StringTok{ }\NormalTok{my_p }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{my_p)), }\DecValTok{1}\NormalTok{)}
-
-\CommentTok{# Exact binomial}
-\KeywordTok{pbinom}\NormalTok{(}\DataTypeTok{q =}\NormalTok{ my_x, }\DataTypeTok{size =}\NormalTok{ my_n, }\DataTypeTok{prob =}\NormalTok{ my_p, }\DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.006222073
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# Normal approximation}
-\KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =}\NormalTok{ my_x, }\DataTypeTok{mean =}\NormalTok{ my_p }\OperatorTok{*}\StringTok{ }\NormalTok{my_n, }\DataTypeTok{sd =} \KeywordTok{sqrt}\NormalTok{(my_n }\OperatorTok{*}\StringTok{ }\NormalTok{my_p }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{my_p)), }\DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.005706018
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(dplyr)}
-\KeywordTok{library}\NormalTok{(ggplot2)}
-\KeywordTok{library}\NormalTok{(tidyr)}
-
-\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \DecValTok{400}\OperatorTok{:}\DecValTok{600}\NormalTok{, }
-           \DataTypeTok{Normal =} \KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =} \DecValTok{400}\OperatorTok{:}\DecValTok{600}\NormalTok{, }
-                        \DataTypeTok{mean =}\NormalTok{ my_p }\OperatorTok{*}\StringTok{ }\NormalTok{my_n, }
-                        \DataTypeTok{sd =} \KeywordTok{sqrt}\NormalTok{(my_n }\OperatorTok{*}\StringTok{ }\NormalTok{my_p }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{my_p)), }
-                        \DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{),}
-           \DataTypeTok{Binomial =} \KeywordTok{pbinom}\NormalTok{(}\DataTypeTok{q =} \DecValTok{400}\OperatorTok{:}\DecValTok{600}\NormalTok{, }
-                        \DataTypeTok{size =}\NormalTok{ my_n, }
-                        \DataTypeTok{prob =}\NormalTok{ my_p, }
-                        \DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{gather}\NormalTok{(}\DataTypeTok{key =} \StringTok{"Distribution"}\NormalTok{, }\DataTypeTok{value =} \StringTok{"cdf"}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\NormalTok{x)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ cdf, }\DataTypeTok{color =}\NormalTok{ Distribution)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \KeywordTok{bquote}\NormalTok{(}\StringTok{'X~B(n='}\OperatorTok{~}\NormalTok{.(my_n)}\OperatorTok{~}\StringTok{', p='}\OperatorTok{~}\NormalTok{.(my_p)}\OperatorTok{~}\StringTok{'),  '}\OperatorTok{~}\StringTok{'X~N('}\OperatorTok{~}\NormalTok{mu}\OperatorTok{==}\NormalTok{.(my_mean)}\OperatorTok{~}\StringTok{','}\OperatorTok{~}\NormalTok{sigma}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{==}\NormalTok{.(my_sd)}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{~}\StringTok{')'}\NormalTok{),}
-       \DataTypeTok{subtitle =} \StringTok{"Normal approximation to the binomial"}\NormalTok{,}
-       \DataTypeTok{x =} \StringTok{"x"}\NormalTok{,}
-       \DataTypeTok{y =} \StringTok{"Probability"}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-17-1.pdf}
-
-The Poisson distribution \(x~P(\lambda)\) is approximately normal with mean \(\mu = \lambda\) and variance \(\sigma^2 = \lambda\), for large values of \(\lambda\).
-
-\hypertarget{example-5}{%
-\subsection{Example}\label{example-5}}
-
-\emph{The annual number of earthquakes registering at least 2.5 on the Richter Scale and having an epicenter within 40 miles of downtown Memphis follows a Poisson distribution with mean }\(\lambda=6.5\)\emph{. What is the probability that at least }\(x>=9\)* such earthquakes will strike next year?*
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my_x =}\StringTok{ }\DecValTok{9}
-\NormalTok{my_lambda =}\StringTok{ }\FloatTok{6.5}
-\NormalTok{my_sd =}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(my_lambda), }\DecValTok{2}\NormalTok{)}
-
-\CommentTok{# Exact Poisson}
-\KeywordTok{ppois}\NormalTok{(}\DataTypeTok{q =}\NormalTok{ my_x }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{, }\DataTypeTok{lambda =}\NormalTok{ my_lambda, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.208427
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# Normal approximation}
-\KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =}\NormalTok{ my_x }\OperatorTok{-}\StringTok{ }\FloatTok{0.5}\NormalTok{, }\DataTypeTok{mean =}\NormalTok{ my_lambda, }\DataTypeTok{sd =}\NormalTok{ my_sd, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.216428
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(dplyr)}
-\KeywordTok{library}\NormalTok{(ggplot2)}
-\KeywordTok{library}\NormalTok{(tidyr)}
-
-\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \DecValTok{0}\OperatorTok{:}\DecValTok{200} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-           \DataTypeTok{Normal =} \KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =} \DecValTok{0}\OperatorTok{:}\DecValTok{200} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-                        \DataTypeTok{mean =}\NormalTok{ my_lambda, }
-                        \DataTypeTok{sd =}\NormalTok{ my_sd, }
-                        \DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{),}
-           \DataTypeTok{Poisson =} \KeywordTok{ppois}\NormalTok{(}\DataTypeTok{q =} \DecValTok{0}\OperatorTok{:}\DecValTok{200} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-                        \DataTypeTok{lambda =}\NormalTok{ my_lambda, }
-                        \DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{gather}\NormalTok{(}\DataTypeTok{key =} \StringTok{"Distribution"}\NormalTok{, }\DataTypeTok{value =} \StringTok{"cdf"}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\NormalTok{x)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ cdf, }\DataTypeTok{color =}\NormalTok{ Distribution)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \KeywordTok{bquote}\NormalTok{(}\StringTok{'X~P('}\OperatorTok{~}\NormalTok{lambda}\OperatorTok{~}\StringTok{'='}\OperatorTok{~}\NormalTok{.(my_lambda)}\OperatorTok{~}\StringTok{'),  '}\OperatorTok{~}\StringTok{'X~N('}\OperatorTok{~}\NormalTok{mu}\OperatorTok{==}\NormalTok{.(my_lambda)}\OperatorTok{~}\StringTok{','}\OperatorTok{~}\NormalTok{sigma}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{==}\NormalTok{.(my_lambda)}\OperatorTok{~}\StringTok{')'}\NormalTok{),}
-       \DataTypeTok{subtitle =} \StringTok{"Normal approximation to the Poisson"}\NormalTok{,}
-       \DataTypeTok{x =} \StringTok{"x"}\NormalTok{,}
-       \DataTypeTok{y =} \StringTok{"Probability"}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-18-1.pdf}
-
-\hypertarget{from-sample-to-population}{%
-\subsection{From Sample to Population}\label{from-sample-to-population}}
-
-\emph{Suppose a person's blood pressure typically measures 160?20 mm. If one takes n=5 blood pressure readings, what is the probability the average will be \textless=150?}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{my_mu =}\StringTok{ }\DecValTok{160}
-\NormalTok{my_sigma =}\StringTok{ }\DecValTok{20}
-\NormalTok{my_n =}\StringTok{ }\DecValTok{5}
-\NormalTok{my_x =}\StringTok{ }\DecValTok{150}
-
-\NormalTok{my_se =}\StringTok{ }\KeywordTok{round}\NormalTok{(my_sigma }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(my_n), }\DecValTok{1}\NormalTok{)}
-
-\KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =}\NormalTok{ my_x, }\DataTypeTok{mean =}\NormalTok{ my_mu, }\DataTypeTok{sd =}\NormalTok{ my_sigma }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(my_n), }\DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.1317762
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(dplyr)}
-\KeywordTok{library}\NormalTok{(ggplot2)}
-
-\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1000}\OperatorTok{:}\DecValTok{2000} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-           \DataTypeTok{prob =} \KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =} \DecValTok{1000}\OperatorTok{:}\DecValTok{2000} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{, }
-                        \DataTypeTok{mean =}\NormalTok{ my_mu, }
-                        \DataTypeTok{sd =}\NormalTok{ my_sigma }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(my_n), }
-                        \DataTypeTok{lower.tail =} \OtherTok{TRUE}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{cdf =} \KeywordTok{ifelse}\NormalTok{(x }\OperatorTok{>}\StringTok{ }\DecValTok{0} \OperatorTok{&}\StringTok{ }\NormalTok{x }\OperatorTok{<=}\StringTok{ }\NormalTok{my_x, prob, }\DecValTok{0}\NormalTok{)) }\OperatorTok{%>%}
-\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ prob)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_area}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ cdf), }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \KeywordTok{bquote}\NormalTok{(}\StringTok{'X~N('}\OperatorTok{~}\NormalTok{mu}\OperatorTok{==}\NormalTok{.(my_mu)}\OperatorTok{~}\StringTok{','}\OperatorTok{~}\NormalTok{sigma}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{==}\NormalTok{.(my_se)}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{~}\StringTok{')'}\NormalTok{),}
-       \DataTypeTok{subtitle =} \KeywordTok{bquote}\NormalTok{(}\StringTok{'P(X<='}\OperatorTok{~}\NormalTok{.(my_x)}\OperatorTok{~}\StringTok{') when mean is'}\OperatorTok{~}\NormalTok{.(my_mu)}\OperatorTok{~}\StringTok{' and variance is'}\OperatorTok{~}\NormalTok{sigma}\OperatorTok{~}\StringTok{'/sqrt(n)'}\OperatorTok{~}\NormalTok{.(my_se)}\OperatorTok{^}\NormalTok{\{}\DecValTok{2}\NormalTok{\}}\OperatorTok{~}\StringTok{'.'}\NormalTok{),}
-       \DataTypeTok{x =} \StringTok{"x"}\NormalTok{,}
-       \DataTypeTok{y =} \StringTok{"Probability"}\NormalTok{) }
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-19-1.pdf}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{knitr}\OperatorTok{::}\KeywordTok{include_app}\NormalTok{(}\StringTok{"https://mpfoley73.shinyapps.io/shiny_dist/"}\NormalTok{, }
-  \DataTypeTok{height =} \StringTok{"600px"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
 
 \hypertarget{inference}{%
 \chapter{Inference}\label{inference}}
@@ -838,8 +156,6 @@ Penn State University, STAT 501, ``Lesson 15: Logistic, Poisson \& Nonlinear Reg
 
 ``Multiple and Logistic Regression''. DataCamp. \url{https://www.datacamp.com/courses/multiple-and-logistic-regression}.
 
-``The Difference Between Logistic and Probit Regression'', The Analysis Factor. \url{https://www.theanalysisfactor.com/the-difference-between-logistic-and-probit-regression/}.
-
 Molnar, Christoph. ``Interpretable machine learning. A Guide for Making Black Box Models Explainable'', 2019. \url{https://christophm.github.io/interpretable-ml-book/}.
 
 In generalized linear models (GLMs), the modeled response is \emph{a function} of the mean of \(y\). There are three components to a GLM. The \emph{random component} is the probability distribution of the response variable (normal, binomial, Poisson, etc.). The \emph{systematic component} is the explanatory variables \(X\beta\). The \emph{link function} \(\eta\) specifies the link between random and systematic components. The link function converts the response value from a range \([0,1]\) in logistic and probit and \([0,+\infty]\) for Poisson to a value ranging from \([-\infty, +\infty]\), and creates a linear relationship with the predictor variables.
@@ -856,7 +172,7 @@ where \(\pi\) is the event probability. For a probit regression, the link functi
 
 \[f(\mu_Y) = \Phi^{-1}(\pi).\]
 
-The difference between logistic and probit link function is theoretical - the practical significance is slight. Logistic regression has the advantage that it can be back-transformed from log odds to odds ratios. For a Poisson regression, the link function is
+The difference between logistic and probit link function is theoretical - \href{https://www.theanalysisfactor.com/the-difference-between-logistic-and-probit-regression/}{the practical significance is slight}. Logistic regression has the advantage that it can be back-transformed from log odds to odds ratios. For a Poisson regression, the link function is
 
 \[f(\mu_Y) = \ln(\lambda)\]
 
@@ -897,8 +213,8 @@ The model predicts the \emph{log odds} of the response variable. The maximum lik
 
 There is no closed-form solution, so GLM estimates coefficients with interatively reweighted least squares.
 
-\hypertarget{example-6}{%
-\subsection*{Example}\label{example-6}}
+\hypertarget{example}{%
+\subsection*{Example}\label{example}}
 \addcontentsline{toc}{subsection}{Example}
 
 Dataset \texttt{leuk} contains response variable \texttt{REMISS} indicating whether leukemia remission occurred (1\textbar0) and several explanatory variables.
@@ -1145,7 +461,7 @@ The predicted values can also be expressed as the probabilities \(\pi\). This pr
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-30-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-10-1.pdf}
 
 Whereas in linear regression the the coefficient p-values use the \emph{t} test (\emph{t} statistic), logistic regression coefficient p-values use the \emph{Wald test} **Z*-statistic).
 
@@ -1294,7 +610,7 @@ Use the \texttt{GainCurvePlot()} function to plot the gain curve (background on 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-34-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-14-1.pdf}
 
 \texttt{REMISS} equals 1 in 9 of the 27 responses.
 
@@ -1317,7 +633,7 @@ Another way to evaluate the predictive model is the ROC curve. It evaluates all 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-35-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-15-1.pdf}
 
 \begin{verbatim}
 ##              [,1]
@@ -1353,8 +669,8 @@ Maximizing the log-likelihood has no closed-form solution, so the coefficient es
 
 Poisson processes assume the variance of the response variable equals its mean. ``Equals'' means the mean and variance are of a similar order of magnitude. If that assumption does not hold, use the quasi-poisson. Use Poisson regression for large datasets. If the predicted counts are much greater than zero (\textgreater30), the linear regression will work fine. Whereas RMSE is not useful for logistic models, it is a good metric in Poisson.
 
-\hypertarget{example-7}{%
-\subsection*{Example}\label{example-7}}
+\hypertarget{example-1}{%
+\subsection*{Example}\label{example-1}}
 \addcontentsline{toc}{subsection}{Example}
 
 Dataset \texttt{fire} contains response variable \texttt{injuries} counting the number of injuries during the month and one explanatory variable, the month \texttt{mo}.
@@ -1403,7 +719,7 @@ In a situation like this where there the relationship is bivariate, start with a
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-37-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-17-1.pdf}
 
 Fit a poisson regression in R using \texttt{glm(formula,\ data,\ family\ =\ poisson)}. But first, check whether the mean and variance of \texttt{injuries} are the same magnitude? If not, then use \texttt{family\ =\ quasipoisson}.
 
@@ -1504,7 +820,7 @@ Here is a plot of the predicted counts in red.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-41-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-21-1.pdf}
 
 Evaluate a logistic model fit with an analysis of deviance.
 
@@ -1557,7 +873,7 @@ The average prediction error is about 0.99. That's almost as much as the varianc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-44-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-24-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1566,132 +882,15 @@ The average prediction error is about 0.99. That's almost as much as the varianc
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-45-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-25-1.pdf}
 
 It seems that \texttt{mo} was a poor predictor of \texttt{injuries}.
 
 \hypertarget{classification}{%
 \chapter{Classification}\label{classification}}
 
-\hypertarget{regularization}{%
-\chapter{Regularization}\label{regularization}}
-
-\hypertarget{non-linear-models}{%
-\chapter{Non-linear Models}\label{non-linear-models}}
-
-Linear methods can model nonlinear relationships by including polynomial terms, interaction effects, and variable transformations. However, it is often difficult to identify how to formulate the model. Nonlinear models may be preferable because you do not need to know the the exact form of the nonlinearity prior to model training.
-
-\hypertarget{splines}{%
-\section{Splines}\label{splines}}
-
-A regression spline fits a piecewise polynomial to the range of \emph{X} partitioned by \emph{knots} (\emph{K} knots produce \emph{K + 1} piecewise polynomials) \textbf{James et al} \citep{James2013}. The polynomials can be of any degree \emph{d}, but are usually in the range {[}0, 3{]}, most commonly 3 (a cubic spline). To avoid discontinuities in the fit, a degree-\emph{d} spline is constrained to have continuity in derivatives up to degree \emph{d}−1 at each knot.
-
-A cubic spline fit to a data set with \emph{K} knots, performs least squares regression with an intercept and 3 + \emph{K} predictors, of the form
-
-\[y_i = \beta_0 + \beta_1X + \beta_2X^2 + \beta_3X^3 + \beta_4h(X, \xi_1) + \beta_5h(X, \xi_2) + \dots + \beta_{K+3}h(X, \xi_K)\]
-
-where \(\xi_1, \dots, \xi_K\) are the knots are truncated power basis functions \(h(X, \xi) = (X - \xi)^3\) if \(X > \xi\), else 0.
-
-Splines can have high variance at the outer range of the predictors. A \textbf{natural spline} is a regression spline additionally constrained to be linear at the boundaries.
-
-How many knots should there be, and Where should the knots be placed? It is common to place knots in a uniform fashion, with equal numbers of points between each knot. The number of knots is typically chosen by trial and error using cross-validation to minimize the RSS. The number of knots is usually expressed in terms of degrees of freedom. A cubic spline will have \emph{K} + 3 + 1 degrees of freedom. A natural spline has \emph{K} + 3 + 1 - 5 degrees of freedom due to the constraints at the endpoints.
-
-A further constraint can be added to reduce overfitting by enforcing smoothness in the spline. Instead of minimizing the loss function \(\sum{(y - g(x))^2}\) where \(g(x)\) is a natural spline, minimize a loss function with an additional penalty for variability:
-
-\[L = \sum{(y_i - g(x_i))^2 + \lambda \int g''(t)^2dt}.\]
-
-The function \(g(x)\) that minimizes the loss function is a \emph{natural cubic spline} with knots at each \(x_1, \dots, x_n\). This is called a \textbf{smoothing spline}. The larger g is, the greater the penalty on variation in the spline. In a smoothing spline, you do not optimize the number or location of the knots -- there is a knot at each training observation. Instead, you optimize \(\lambda\). One way to optimze \(\lambda\) is cross-validation to minimize RSS. Leave-one-out cross-validation (LOOCV) can be computed efficiently for smoothing splines.
-
-\hypertarget{mars}{%
-\section{MARS}\label{mars}}
-
-Multivariate adaptive regression splines (MARS) is a non-parametric algorithm that creates a piecewise linear model to capture nonlinearities and interactions effects. The resulting model is a weighted sum of \emph{basis} functions \(B_i(X)\):
-
-\[\hat{y} = \sum_{i=1}^{k}{w_iB_i(x)}\]
-
-The basis functions are either a constant (for the intercept), a \emph{hinge} function of the form \(\max(0, x - x_0)\) or \(\max(0, x_0 - x)\) (a more concise representation is \([\pm(x - x_0)]_+\)), or products of two or more hinge functions (for interactions). MARS automatically selects which predictors to use and what predictor values to serve as the \emph{knots} of the hinge functions.
-
-MARS builds a model in two phases: the forward pass and the backward pass, similar to growing and pruning of tree models. MARS starts with a model consisting of just the intercept term equaling the mean of the response values. It then asseses every predictor to find a basis function pair consisting of opposing sides of a mirrored hinge function which produces the maximum improvement in the model error. MARS repeats the process until either it reaches a predefined limit of terms or the error improvement reaches a predefined limit. MARS generalizes the model by removing terms according to the generalized cross validation (GCV) criterion. GCV is a form of regularization: it trades off goodness-of-fit against model complexity.
-
-The \texttt{earth::earth()} function (\href{https://www.rdocumentation.org/packages/earth/versions/5.1.2/topics/earth}{documentation}) performs the MARS algorithm (\emph{the term ``MARS'' is trademarked, so open-source implementations use ``Earth'' instead}). The caret implementation tunes two parameters: \texttt{nprune} and \texttt{degree}. \texttt{nprune} is the maximum number of terms in the pruned model. \texttt{degree} is the maximum degree of interaction (default is 1 (no interactions)). However, there are other hyperparameters in the model that may improve performance, including \texttt{minspan} which regulates the number of knots in the predictors.
-
-Here is an example using the Ames housing data set (following \href{http://uc-r.github.io/mars}{this} tutorial.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(tidyverse)}
-\KeywordTok{library}\NormalTok{(earth)}
-\KeywordTok{library}\NormalTok{(caret)}
-
-\CommentTok{# set up}
-\NormalTok{ames <-}\StringTok{ }\NormalTok{AmesHousing}\OperatorTok{::}\KeywordTok{make_ames}\NormalTok{()}
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{12345}\NormalTok{)}
-\NormalTok{idx <-}\StringTok{ }\KeywordTok{createDataPartition}\NormalTok{(ames}\OperatorTok{$}\NormalTok{Sale_Price, }\DataTypeTok{p =} \FloatTok{0.80}\NormalTok{, }\DataTypeTok{list =} \OtherTok{FALSE}\NormalTok{)}
-\NormalTok{ames_train <-}\StringTok{ }\NormalTok{ames[idx, ] }\OperatorTok{%>%}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{()}
-\NormalTok{ames_test  <-}\StringTok{ }\NormalTok{ames[}\OperatorTok{-}\NormalTok{idx, ]}
-
-\NormalTok{m <-}\StringTok{ }\KeywordTok{train}\NormalTok{(}
-  \DataTypeTok{x =} \KeywordTok{subset}\NormalTok{(ames_train, }\DataTypeTok{select =} \OperatorTok{-}\NormalTok{Sale_Price),}
-  \DataTypeTok{y =}\NormalTok{ ames_train}\OperatorTok{$}\NormalTok{Sale_Price,}
-  \DataTypeTok{method =} \StringTok{"earth"}\NormalTok{,}
-  \DataTypeTok{metric =} \StringTok{"RMSE"}\NormalTok{,}
-  \DataTypeTok{minspan =} \DecValTok{-15}\NormalTok{,}
-  \DataTypeTok{trControl =} \KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method =} \StringTok{"cv"}\NormalTok{, }\DataTypeTok{number =} \DecValTok{10}\NormalTok{),}
-  \DataTypeTok{tuneGrid =} \KeywordTok{expand.grid}\NormalTok{(}
-    \DataTypeTok{degree =} \DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{, }
-    \DataTypeTok{nprune =} \KeywordTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DataTypeTok{length.out =} \DecValTok{10}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{floor}\NormalTok{()}
-\NormalTok{  )}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-The model plot shows the best tuning parameter combination.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(m, }\DataTypeTok{main =} \StringTok{"MARS Parameter Tuning"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-46-1.pdf}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{m}\OperatorTok{$}\NormalTok{bestTune}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##    nprune degree
-## 25     45      3
-\end{verbatim}
-
-How does this model perform against the holdout data?
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{caret}\OperatorTok{::}\KeywordTok{postResample}\NormalTok{(}
-  \DataTypeTok{pred =} \KeywordTok{log}\NormalTok{(}\KeywordTok{predict}\NormalTok{(m, }\DataTypeTok{newdata =}\NormalTok{ ames_test)),}
-  \DataTypeTok{obs =} \KeywordTok{log}\NormalTok{(ames_test}\OperatorTok{$}\NormalTok{Sale_Price)}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##       RMSE   Rsquared        MAE 
-## 0.16515620 0.85470300 0.09319503
-\end{verbatim}
-
-\hypertarget{gam}{%
-\section{GAM}\label{gam}}
-
-Generalized additive models (GAM) allow for non-linear relationships between each feature and the response by replacing each linear component \(\beta_j x_{ij}\) with a nonlinear function \(f_j(x_{ij})\). The GAM model is of the form
-
-\[y_i = \beta_0 + \sum{f_j(x_{ij})} + \epsilon_i.\]
-
-It is called an additive model because we calculate a separate \(f_j\) for each \(X_j\), and then add together all of their contributions.
-
-The advantage of GAMs is that they automatically model non-linear relationships so you do not need to manually try out many diﬀerent transformations on each variable individually. And because the model is additive, you can still examine the eﬀect of each \(X_j\) on \(Y\) individually while holding all of the other variables ﬁxed. The main limitation of GAMs is that the model is restricted to be additive, so important interactions can be missed unless you explicitly add them.
+\hypertarget{classification-1}{%
+\chapter{Classification}\label{classification-1}}
 
 \hypertarget{decision-trees}{%
 \chapter{Decision Trees}\label{decision-trees}}
@@ -1813,7 +1012,7 @@ Surprisingly, only 3 of the 17 features were used the in full tree: \texttt{Loya
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-51-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-29-1.pdf}
 
 The boxes show the node classification (based on mode), the proportion of observations that are \emph{not} \texttt{CH}, and the proportion of observations included in the node.
 
@@ -1893,7 +1092,7 @@ The simplest tree using the 1-SE rule is \$c\_p = 0.01347305, CV error = 0.1832)
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-55-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-33-1.pdf}
 
 The dashed line is set at the minimum \texttt{xerror} + \texttt{xstd}. The top axis shows the number of splits in the tree. I'm not sure why the CP values are not the same as in the table (they are close, but not the same). The figure suggests I should prune to 5 or 3 splits. I see this curve never really hits a minimum - it is still decreasing at 5 splits. The default tuning parameter value \texttt{cp\ =\ 0.01} may be too small, so I'll set it to \texttt{cp\ =\ 0.001} and start over.
 
@@ -1969,7 +1168,7 @@ This is a much larger tree. Did I find a \texttt{cp} value that produces a local
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-57-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-35-1.pdf}
 
 Yes, the min is at CP = 0.011 with 5 splits. The min + 1 SE is at CP = 0.021 with 3 splits. I'll prune the tree to 3 splits.
 
@@ -1983,7 +1182,7 @@ Yes, the min is at CP = 0.011 with 5 splits. The min + 1 SE is at CP = 0.021 wit
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-58-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-36-1.pdf}
 
 The most ``important'' indicator of \texttt{Purchase} appears to be \texttt{LoyalCH}. From the \textbf{rpart} \href{https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf}{vignette} (page 12),
 
@@ -2022,7 +1221,7 @@ A variable's importance is the sum of the improvement in the overall Gini (or RM
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-60-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-38-1.pdf}
 
 \texttt{LoyalCH} is by far the most important variable, as expected from its position at the top of the tree, and one level down.
 
@@ -2259,7 +1458,7 @@ Visuals are almost always helpful. Here is a plot of the confusion matrix.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-67-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-45-1.pdf}
 
 By the way, how does the validation set accuracy ()
 
@@ -2301,7 +1500,7 @@ Another measure of accuracy is the ROC (receiver operating characteristics) curv
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-69-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-47-1.pdf}
 
 You can also use \texttt{prediction()} and \texttt{plot.prediction()} from the \textbf{ROCR} package.
 
@@ -2313,7 +1512,7 @@ You can also use \texttt{prediction()} and \texttt{plot.prediction()} from the \
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-70-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-48-1.pdf}
 
 Hmm, not quite the same\ldots{}
 
@@ -2498,7 +1697,7 @@ Here is the tree.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-76-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-54-1.pdf}
 
 Here is the ROC curve.
 
@@ -2521,7 +1720,7 @@ Here is the ROC curve.
 ## Warning in verify_d(data$d): D not labeled 0/1, assuming CH = 0 and MM = 1!
 \end{verbatim}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-77-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-55-1.pdf}
 
 Here are the cross-validated Accuracy for each candidate cp value.
 
@@ -2531,7 +1730,7 @@ Here are the cross-validated Accuracy for each candidate cp value.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-78-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-56-1.pdf}
 
 Evaluate the model by making predictions with the test data set.
 
@@ -2594,7 +1793,7 @@ The accuracy metric is the slightly worse than in my previous model. Here is a g
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-81-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-59-1.pdf}
 
 Finally, here is the variable importance plot.
 
@@ -2604,7 +1803,7 @@ Finally, here is the variable importance plot.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-82-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-60-1.pdf}
 
 Looks like the manual effort faired best. Here is a summary the accuracy rates of the three models.
 
@@ -2712,7 +1911,7 @@ The first split is at \texttt{ShelveLoc} = {[}Bad, Medium{]} vs Good. Here is wh
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-87-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-65-1.pdf}
 
 The boxes show the node predicted value (mean) and the proportion of observations that are in the node (or child nodes).
 
@@ -2818,7 +2017,7 @@ Okay, so the simplest tree is the one with CP = 0.01544139 (8 splits). Fortunate
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-91-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-69-1.pdf}
 
 The dashed line is set at the minimum \texttt{xerror} + \texttt{xstd}. The top axis shows the number of splits in the tree. I'm not sure why the CP values are not the same as in the table (they are close, but not the same). The smallest relative error is at 0.0140154, but the maximum CP below the dashed line (one standard deviation above the mimimum error) is at CP = .019 (8 splits). Use the \texttt{prune()} function to prune the tree by specifying the associated cost-complexity \texttt{cp}.
 
@@ -2832,7 +2031,7 @@ The dashed line is set at the minimum \texttt{xerror} + \texttt{xstd}. The top a
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-92-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-70-1.pdf}
 
 The most ``important'' indicator of \texttt{Sales} is \texttt{ShelveLoc}. Here are the importance values from the model.
 
@@ -2850,7 +2049,7 @@ The most ``important'' indicator of \texttt{Sales} is \texttt{ShelveLoc}. Here a
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-93-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-71-1.pdf}
 
 The most important indicator of \texttt{Sales} is \texttt{ShelveLoc}, then \texttt{Price}, then \texttt{Age}, all of which appear in the final model. \texttt{CompPrice} was also important.
 
@@ -2888,7 +2087,7 @@ The pruning process leads to an average prediction error of 2.388 in the test da
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-95-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-73-1.pdf}
 
 The 6 possible predicted values do a decent job of binning the observations.
 
@@ -3011,7 +2210,7 @@ It looks like the best performing tree is the unpruned one.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-99-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-77-1.pdf}
 
 Lets's see the final model.
 
@@ -3021,7 +2220,7 @@ Lets's see the final model.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-100-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-78-1.pdf}
 
 What were the most important variables?
 
@@ -3031,7 +2230,7 @@ What were the most important variables?
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-101-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-79-1.pdf}
 
 Evaluate the model by making predictions with the test data set.
 
@@ -3052,7 +2251,7 @@ Evaluate the model by making predictions with the test data set.
 ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-102-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-80-1.pdf}
 
 Looks like the model over-estimates at the low end and undestimates at the high end. Calculate the test data set RMSE.
 
@@ -3155,7 +2354,7 @@ Again using the \texttt{OJ} data set to predict \texttt{Purchase}, this time I'l
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-105-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-83-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3204,7 +2403,7 @@ Again using the \texttt{OJ} data set to predict \texttt{Purchase}, this time I'l
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-105-2.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-83-2.pdf}
 
 \hypertarget{random-forest-classification-example}{%
 \subsubsection{Random Forest Classification Example}\label{random-forest-classification-example}}
@@ -3276,7 +2475,7 @@ Now I'll try it with the random forest method by specifying \texttt{method\ =\ "
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-106-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-84-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3288,7 +2487,7 @@ Now I'll try it with the random forest method by specifying \texttt{method\ =\ "
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-106-2.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-84-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3408,7 +2607,7 @@ Again using the \texttt{Carseats} data set to predict \texttt{Sales}, this time 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-108-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-86-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3428,7 +2627,7 @@ Again using the \texttt{Carseats} data set to predict \texttt{Sales}, this time 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-108-2.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-86-2.pdf}
 
 \hypertarget{random-forest-regression-example}{%
 \subsubsection{Random Forest Regression Example}\label{random-forest-regression-example}}
@@ -3497,7 +2696,7 @@ Now I'll try it with the random forest method by specifying \texttt{method\ =\ "
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-109-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-87-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3510,7 +2709,7 @@ Now I'll try it with the random forest method by specifying \texttt{method\ =\ "
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-109-2.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-87-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4928,7 +4127,7 @@ Again using the \texttt{OJ} data set to predict \texttt{Purchase}, this time I'l
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-111-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-89-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4940,7 +4139,7 @@ Again using the \texttt{OJ} data set to predict \texttt{Purchase}, this time I'l
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-111-2.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-89-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6356,7 +5555,7 @@ Again using the \texttt{Carseats} data set to predict \texttt{Sales}, this time 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-112-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-90-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6369,7 +5568,7 @@ Again using the \texttt{Carseats} data set to predict \texttt{Sales}, this time 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-112-2.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-90-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6467,7 +5666,7 @@ The more ``up and to the left'' the ROC curve of a model is, the better the mode
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-115-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-93-1.pdf}
 
 \hypertarget{reference}{%
 \section{Reference}\label{reference}}
@@ -6495,6 +5694,126 @@ Brownlee, Jason. ``A Gentle Introduction to the Gradient Boosting Algorithm for 
 \href{https://www.datatechnotes.com/2018/03/classification-with-gradient-boosting.html}{Gradient Boosting Classification with GBM in R} in DataTechNotes
 
 Molnar, Christoph. ``Interpretable machine learning. A Guide for Making Black Box Models Explainable'', 2019. \url{https://christophm.github.io/interpretable-ml-book/}.
+
+\hypertarget{regularization}{%
+\chapter{Regularization}\label{regularization}}
+
+\hypertarget{non-linear-models}{%
+\chapter{Non-linear Models}\label{non-linear-models}}
+
+Linear methods can model nonlinear relationships by including polynomial terms, interaction effects, and variable transformations. However, it is often difficult to identify how to formulate the model. Nonlinear models may be preferable because you do not need to know the the exact form of the nonlinearity prior to model training.
+
+\hypertarget{splines}{%
+\section{Splines}\label{splines}}
+
+A regression spline fits a piecewise polynomial to the range of \emph{X} partitioned by \emph{knots} (\emph{K} knots produce \emph{K + 1} piecewise polynomials) \textbf{James et al} \citep{James2013}. The polynomials can be of any degree \emph{d}, but are usually in the range {[}0, 3{]}, most commonly 3 (a cubic spline). To avoid discontinuities in the fit, a degree-\emph{d} spline is constrained to have continuity in derivatives up to degree \emph{d}−1 at each knot.
+
+A cubic spline fit to a data set with \emph{K} knots, performs least squares regression with an intercept and 3 + \emph{K} predictors, of the form
+
+\[y_i = \beta_0 + \beta_1X + \beta_2X^2 + \beta_3X^3 + \beta_4h(X, \xi_1) + \beta_5h(X, \xi_2) + \dots + \beta_{K+3}h(X, \xi_K)\]
+
+where \(\xi_1, \dots, \xi_K\) are the knots are truncated power basis functions \(h(X, \xi) = (X - \xi)^3\) if \(X > \xi\), else 0.
+
+Splines can have high variance at the outer range of the predictors. A \textbf{natural spline} is a regression spline additionally constrained to be linear at the boundaries.
+
+How many knots should there be, and Where should the knots be placed? It is common to place knots in a uniform fashion, with equal numbers of points between each knot. The number of knots is typically chosen by trial and error using cross-validation to minimize the RSS. The number of knots is usually expressed in terms of degrees of freedom. A cubic spline will have \emph{K} + 3 + 1 degrees of freedom. A natural spline has \emph{K} + 3 + 1 - 5 degrees of freedom due to the constraints at the endpoints.
+
+A further constraint can be added to reduce overfitting by enforcing smoothness in the spline. Instead of minimizing the loss function \(\sum{(y - g(x))^2}\) where \(g(x)\) is a natural spline, minimize a loss function with an additional penalty for variability:
+
+\[L = \sum{(y_i - g(x_i))^2 + \lambda \int g''(t)^2dt}.\]
+
+The function \(g(x)\) that minimizes the loss function is a \emph{natural cubic spline} with knots at each \(x_1, \dots, x_n\). This is called a \textbf{smoothing spline}. The larger g is, the greater the penalty on variation in the spline. In a smoothing spline, you do not optimize the number or location of the knots -- there is a knot at each training observation. Instead, you optimize \(\lambda\). One way to optimze \(\lambda\) is cross-validation to minimize RSS. Leave-one-out cross-validation (LOOCV) can be computed efficiently for smoothing splines.
+
+\hypertarget{mars}{%
+\section{MARS}\label{mars}}
+
+Multivariate adaptive regression splines (MARS) is a non-parametric algorithm that creates a piecewise linear model to capture nonlinearities and interactions effects. The resulting model is a weighted sum of \emph{basis} functions \(B_i(X)\):
+
+\[\hat{y} = \sum_{i=1}^{k}{w_iB_i(x)}\]
+
+The basis functions are either a constant (for the intercept), a \emph{hinge} function of the form \(\max(0, x - x_0)\) or \(\max(0, x_0 - x)\) (a more concise representation is \([\pm(x - x_0)]_+\)), or products of two or more hinge functions (for interactions). MARS automatically selects which predictors to use and what predictor values to serve as the \emph{knots} of the hinge functions.
+
+MARS builds a model in two phases: the forward pass and the backward pass, similar to growing and pruning of tree models. MARS starts with a model consisting of just the intercept term equaling the mean of the response values. It then asseses every predictor to find a basis function pair consisting of opposing sides of a mirrored hinge function which produces the maximum improvement in the model error. MARS repeats the process until either it reaches a predefined limit of terms or the error improvement reaches a predefined limit. MARS generalizes the model by removing terms according to the generalized cross validation (GCV) criterion. GCV is a form of regularization: it trades off goodness-of-fit against model complexity.
+
+The \texttt{earth::earth()} function (\href{https://www.rdocumentation.org/packages/earth/versions/5.1.2/topics/earth}{documentation}) performs the MARS algorithm (\emph{the term ``MARS'' is trademarked, so open-source implementations use ``Earth'' instead}). The caret implementation tunes two parameters: \texttt{nprune} and \texttt{degree}. \texttt{nprune} is the maximum number of terms in the pruned model. \texttt{degree} is the maximum degree of interaction (default is 1 (no interactions)). However, there are other hyperparameters in the model that may improve performance, including \texttt{minspan} which regulates the number of knots in the predictors.
+
+Here is an example using the Ames housing data set (following \href{http://uc-r.github.io/mars}{this} tutorial.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(earth)}
+\KeywordTok{library}\NormalTok{(caret)}
+
+\CommentTok{# set up}
+\NormalTok{ames <-}\StringTok{ }\NormalTok{AmesHousing}\OperatorTok{::}\KeywordTok{make_ames}\NormalTok{()}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{12345}\NormalTok{)}
+\NormalTok{idx <-}\StringTok{ }\KeywordTok{createDataPartition}\NormalTok{(ames}\OperatorTok{$}\NormalTok{Sale_Price, }\DataTypeTok{p =} \FloatTok{0.80}\NormalTok{, }\DataTypeTok{list =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{ames_train <-}\StringTok{ }\NormalTok{ames[idx, ] }\OperatorTok{%>%}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{()}
+\NormalTok{ames_test  <-}\StringTok{ }\NormalTok{ames[}\OperatorTok{-}\NormalTok{idx, ]}
+
+\NormalTok{m <-}\StringTok{ }\KeywordTok{train}\NormalTok{(}
+  \DataTypeTok{x =} \KeywordTok{subset}\NormalTok{(ames_train, }\DataTypeTok{select =} \OperatorTok{-}\NormalTok{Sale_Price),}
+  \DataTypeTok{y =}\NormalTok{ ames_train}\OperatorTok{$}\NormalTok{Sale_Price,}
+  \DataTypeTok{method =} \StringTok{"earth"}\NormalTok{,}
+  \DataTypeTok{metric =} \StringTok{"RMSE"}\NormalTok{,}
+  \DataTypeTok{minspan =} \DecValTok{-15}\NormalTok{,}
+  \DataTypeTok{trControl =} \KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method =} \StringTok{"cv"}\NormalTok{, }\DataTypeTok{number =} \DecValTok{10}\NormalTok{),}
+  \DataTypeTok{tuneGrid =} \KeywordTok{expand.grid}\NormalTok{(}
+    \DataTypeTok{degree =} \DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{, }
+    \DataTypeTok{nprune =} \KeywordTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DataTypeTok{length.out =} \DecValTok{10}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{floor}\NormalTok{()}
+\NormalTok{  )}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The model plot shows the best tuning parameter combination.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(m, }\DataTypeTok{main =} \StringTok{"MARS Parameter Tuning"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-94-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m}\OperatorTok{$}\NormalTok{bestTune}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    nprune degree
+## 25     45      3
+\end{verbatim}
+
+How does this model perform against the holdout data?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{caret}\OperatorTok{::}\KeywordTok{postResample}\NormalTok{(}
+  \DataTypeTok{pred =} \KeywordTok{log}\NormalTok{(}\KeywordTok{predict}\NormalTok{(m, }\DataTypeTok{newdata =}\NormalTok{ ames_test)),}
+  \DataTypeTok{obs =} \KeywordTok{log}\NormalTok{(ames_test}\OperatorTok{$}\NormalTok{Sale_Price)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       RMSE   Rsquared        MAE 
+## 0.16515620 0.85470300 0.09319503
+\end{verbatim}
+
+\hypertarget{gam}{%
+\section{GAM}\label{gam}}
+
+Generalized additive models (GAM) allow for non-linear relationships between each feature and the response by replacing each linear component \(\beta_j x_{ij}\) with a nonlinear function \(f_j(x_{ij})\). The GAM model is of the form
+
+\[y_i = \beta_0 + \sum{f_j(x_{ij})} + \epsilon_i.\]
+
+It is called an additive model because we calculate a separate \(f_j\) for each \(X_j\), and then add together all of their contributions.
+
+The advantage of GAMs is that they automatically model non-linear relationships so you do not need to manually try out many diﬀerent transformations on each variable individually. And because the model is additive, you can still examine the eﬀect of each \(X_j\) on \(Y\) individually while holding all of the other variables ﬁxed. The main limitation of GAMs is that the model is restricted to be additive, so important interactions can be missed unless you explicitly add them.
 
 \hypertarget{support-vector-machines}{%
 \chapter{Support Vector Machines}\label{support-vector-machines}}
@@ -6573,8 +5892,8 @@ or radial
 
 \[K(x, x') = \exp\{-\gamma ||x - x'||^2\}.\]
 
-\hypertarget{example-8}{%
-\section{Example}\label{example-8}}
+\hypertarget{example-2}{%
+\section{Example}\label{example-2}}
 
 Here is a data set of two classes \(y \in [-1, 1]\) described by two features \(X1\) and \(X2\).
 
@@ -6601,7 +5920,7 @@ A scatter plot reveals whether the classes are linearly separable.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-117-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-97-1.pdf}
 
 No, they are not linearly separable. Now fit a support vector machine. The \textbf{e1071} library implements the SVM algorithm. \texttt{svm(...,\ kernel="linear")} fits a support vector classifier. Change the kernal to \texttt{c("polynomial",\ "radial")} for SVM. Try a cost of 10.
 
@@ -6620,7 +5939,7 @@ No, they are not linearly separable. Now fit a support vector machine. The \text
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-118-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-98-1.pdf}
 
 The support vectors are plotted as ``x's''. There are seven of them.
 
@@ -6681,7 +6000,7 @@ The seven support vectors are comprised of four in one class, three in the other
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-121-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-101-1.pdf}
 
 There are many more support vectors now. \emph{(In case you hoped to see the linear decision boundary formulation, or at least a graphical representation of the margins, keep hoping. The model is generalized beyond two features, so it evidently does not worry too much about supporting sanitized two-feature demos.)}
 
@@ -6764,7 +6083,7 @@ There are 16 support vectors, 8 in each class. This is a pretty wide margin.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-124-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-104-1.pdf}
 
 What if the classes had been linearly separable? Then we could create a maximal margin classifier.
 
@@ -6781,7 +6100,7 @@ What if the classes had been linearly separable? Then we could create a maximal 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-125-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-105-1.pdf}
 
 Specify a huge cost = 1e5 so that no support vectors violate the margin.
 
@@ -6798,7 +6117,7 @@ Specify a huge cost = 1e5 so that no support vectors violate the margin.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-126-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-106-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6927,7 +6246,7 @@ There are 12 support vectors, 6 in each class. This is a pretty wide margin.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-129-1.pdf}
+\includegraphics{data-sci_files/figure-latex/unnamed-chunk-109-1.pdf}
 
 \hypertarget{using-caret}{%
 \section{Using Caret}\label{using-caret}}
@@ -6966,11 +6285,9 @@ The model can also be fit using \textbf{caret}. I'll used LOOCV since the data s
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(m4)}
+\CommentTok{#plot(m4)}
 \end{Highlighting}
 \end{Shaded}
-
-\includegraphics{data-sci_files/figure-latex/unnamed-chunk-131-1.pdf}
 
 \hypertarget{principal-components-analysis}{%
 \chapter{Principal Components Analysis}\label{principal-components-analysis}}

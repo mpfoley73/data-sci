@@ -252,7 +252,7 @@ m4 <- train(
 m4$bestTune
 ```
 
-```{r}
-plot(m4)
+```{r svm_plot_m4}
+#plot(m4)
 ```
 
