@@ -29,7 +29,122 @@ $$f(x;\pi) = \frac{n!}{x!(n-x)!} \pi^x (1-\pi)^{n-x} \hspace{1cm} x \in (0, 1, .
 
 with $E(X)=n\pi$ and $V(X) = n\pi(1-\pi)$.  
 
-The Bernoulli distribution is a special case of the binomial with $n = 1$. As n increases for fixed $\pi$, the binomial distribution approaches normal distribution $N(n\pi, n\pi(1−\pi))$.  The binomial distribution assumes independent trials - if sampling *without replacement from a finite population*, then the hypergeometric distribution is appropriate.
+Binomial sampling is used to model counts of one level of a categorical variable over a *fixed sample size*.  Here is a simple analysis of data from a Binomial process.  Data set `dat` contains frequencies of high-risk drinkers vs non-high-risk drinkers in a college survey.
+
+```{r echo=FALSE}
+dat <- data.frame(
+  subject = 1:1315,
+  high_risk = factor(c(rep("Yes", 630), rep("No", 685)))
+)
+table(dat$high_risk)
+```
+
+The MLE of $\pi$ from the Binomial distribution is the sample mean.
+
+```{r}
+x <- sum(dat$high_risk == "Yes")
+n <- nrow(dat)
+p <- x / n
+print(p)
+```
+
+There are several ways to calculate a confidence interval for $\pi$.  One method is the **normal approximation** (Wald) interval.
+
+$$\pi = p \pm z_{\alpha /2} \sqrt{\frac{p (1 - p)}{n}}$$
+
+```{r}
+alpha <- .05
+z <- qnorm(1 - alpha / 2)
+se <- sqrt(p * (1 - p) / n)
+p + c(-z*se, z*se)
+```
+
+This method is easy to understand and calculate by hand, but its accuracy suffers when $np<5$ or $n(1-p)<5$ and it does not work at all when $p = 0$ or $p = 1$.  Option two is the **Wilson** method.
+
+$$\frac{p + \frac{z^2}{2n}}{1 + \frac{z^2}{n}} \pm \frac{z}{1 + \frac{z^2}{n}} \sqrt{\frac{p(1 - p)}{n} + \frac{z^2}{4n^2}}$$
+
+```{r}
+est <- (p + (z^2)/(2*n)) / (1 + (z^2) / n)
+pm <- z / (1 + (z^2)/n) * sqrt(p*(1-p)/n + (z^2) / (4*(n^2)))
+est + c(-pm, pm)
+```
+
+This is what `prop.test()` does when you set `correct = FALSE`.
+
+```{r}
+prop.test(x = x, n = n, correct = FALSE)
+```
+
+There is a second version of the Wilson interval that applies a "continuity correction" that aligns the "minimum coverage probability", rather than the "average probability", with the nominal value.  *I'll need to learn what's inside those quotations at some point.*
+
+```{r}
+prop.test(x = x, n = n)
+```
+
+Finally, there is the Clopper-Pearson **exact confidence interval**.  Clopper-Pearson inverts two single-tailed binomial tests at the desired alpha.  This is a non-trivial calculation, so there is no easy formula to crank through.  Just use the `binom.test()` function and pray no one asks for an explanation.
+
+```{r}
+binom.test(x = x, n = n)
+```
+
+The expected probability of no one being a high-risk drinker is $f(0;0.479) = \frac{1315!}{0!(1315-0)!} 0.479^0 (1-0.479)^{1315-0} = 0$.
+
+```{r}
+dbinom(x = 0, size = n, p = p)
+```
+
+The expected probability of half the population being a high-risk drinker, $f(658, 0.479)$ is impossible to write out, and slow to calculate.
+
+```{r}
+pbinom(q = .5*n, size = n, prob = p, lower.tail = FALSE)
+```
+
+Fortunately, the normal distribution is a good approximation when $n$ is large.
+
+```{r}
+pnorm(q = 0.5, mean = p, sd = se, lower.tail = FALSE)
+```
+
+```{r fig.height=3.5}
+events <- round(seq(from = 550, to = 700, length = 20), 0)
+density <- dbinom(x = events, prob = p, size = n)
+prob <- pbinom(q = events, prob = p, size = n, lower.tail = TRUE)
+df <- data.frame(events, density, prob)
+ggplot(df, aes(x = factor(events))) +
+  geom_col(aes(y = density)) +
+#  geom_col(fill = mf_pal()(6)[5]) +
+  geom_text(
+    aes(label = round(density, 3), y = density + 0.001),
+    position = position_dodge(0.9),
+    size = 3,
+    vjust = 0
+  ) +
+  geom_line(
+    data = df, 
+    aes(x = as.numeric(factor(events)), y = prob/40), 
+#    color = mf_pal()(6)[1], 
+    size = 1) +
+  scale_y_continuous(sec.axis = sec_axis(~.*40, name = "Cum Prob")) +
+#  theme_mf() +
+#  scale_fill_mf() +
+  labs(title = "PMF and CDF of Binomial Distribution",
+       subtitle = "Bin(1315, 0.479).",
+       x = "Events (x)",
+       y = "Density")
+```
+
+The expected probability of scoring 2 to 4 goals in a match is
+
+```{r}
+sum(dpois(x = c(2:4), lambda = lambda))
+```
+
+Or, using the cumulative probability distribution,
+
+```{r}
+ppois(q = 4, lambda = lambda) - ppois(q = 1, lambda = lambda)
+```
+
 
 #### Examples {-}
 
@@ -107,6 +222,9 @@ df <- data.frame(
 mean(if_else(df$x <= 4 | df$y <= 4, 1, 0))
 ```
 
+The Bernoulli distribution is a special case of the binomial with $n = 1$. As n increases for fixed $\pi$, the binomial distribution approaches normal distribution $N(n\pi, n\pi(1−\pi))$.  The binomial distribution assumes independent trials - if sampling *without replacement from a finite population*, then the hypergeometric distribution is appropriate.
+
+
 
 ## Poission
 
@@ -130,7 +248,7 @@ $$\hat{\lambda} = \sum_{i=1}^N x_i / n.$$
 
 Thus, for a Poisson sample, the MLE for $\lambda$ is just the sample mean.
 
-Here is a simple analysis of data from a Poisson process.  Data set `dat` contains frequencies of goal counts during the first round matches of the 2002 World Cup.
+Poisson sampling is used to model counts of events that occur randomly over a *fixed period of time*. Here is a simple analysis of data from a Poisson process.  Data set `dat` contains frequencies of goal counts during the first round matches of the 2002 World Cup.
 
 ```{r echo=FALSE}
 dat <- data.frame(
