@@ -218,6 +218,8 @@ colAUC(m1$fitted.values, m1$data$REMISS, plotROC = TRUE)
 
 ## Ordinal Logistic Regression
 
+The following notes rely heavily upon [this UVA web page](https://data.library.virginia.edu/fitting-and-interpreting-a-proportional-odds-model/).
+
 The ordinal logistic regression model is
 
 $$logit(P(Y \le j)) = \beta_{j0} + \beta_{j1}x_1 + \cdots + \beta_{jp}x_p $$
@@ -234,17 +236,47 @@ In R, the `polr()` function parameterizes the model with $\eta_i = -\beta_i$, so
 
 $$logit(P(Y \le j)) = \beta_{j0} - \eta_{1}x_1 - \cdots - \eta_{p}x_p.$$
 
-#### Example {-}
-
-Suppose we want to test whether the binary predictor parental education (`pared`) predicts the ordinal outcome of a student's intention to apply to a college (`apply`) [*unlikely*, *somewhat likely*, *very likely*].
+Suppose we want to model the probability a respondent holds a political ideology ["Very Liberal", "Slightly Liberal", "Moderate", "Slightly Conservative", "Very Conservative"] given their party affiliation ["Republican", "Democrat"].
 
 ```{r}
-dat <- foreign::read.dta("https://stats.idre.ucla.edu/stat/data/ologit.dta")
-m <- MASS::polr(apply ~ pared, data = dat)
-summary(m)
+ideo <- c(
+  "Very Liberal",
+  "Slightly Liberal",
+  "Moderate",
+  "Slightly Conservative",
+  "Very Conservative"
+)
+ideo_cnt_rep <- c(30, 46, 148, 84, 99)
+ideo_cnt_dem <- c(80, 81, 171, 41, 55)
+dat <- data.frame(
+  party = factor(rep(c("Rep", "Dem"), c(407, 428)), levels = c("Rep", "Dem")),
+  ideo = factor(
+    c(rep(ideo, ideo_cnt_rep), rep(ideo, ideo_cnt_dem)), 
+    levels = ideo
+  )
+)
+table(dat)
 ```
 
-For students whose parents attend college, the log odds of belonging to the base level *unlikely* versus the other levels (*somewhat likely* or *very likely*) is $-\hat{\eta}_1 = -1.127$.
+Fit a proportional odds model with the `MASS::polr()` function (polr stands for proportional odds linear regression).
+
+```{r}
+pom <- MASS::polr(ideo ~ party, data = dat)
+
+summary(pom)
+broom::tidy(pom)
+```
+
+You can use the model to predict probabilities for holding each ideology.
+
+```{r}
+predict(pom, newdata = data.frame(party = "Dem"), type = "probs")
+```
+
+```{r}
+predict(pom, newdata = data.frame(party = "Rep"), type = "probs")
+```
+
 
 ## Poisson Regression
 
