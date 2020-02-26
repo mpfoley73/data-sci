@@ -239,9 +239,8 @@ $$logit(P(Y \le j)) = \beta_{j0} - \eta_{1}x_1 - \cdots - \eta_{p}x_p.$$
 Suppose we want to test whether the binary predictor parental education (`pared`) predicts the ordinal outcome of a student's intention to apply to a college (`apply`) [*unlikely*, *somewhat likely*, *very likely*].
 
 ```{r}
-library(MASS)
 dat <- foreign::read.dta("https://stats.idre.ucla.edu/stat/data/ologit.dta")
-m <- polr(apply ~ pared, data = dat)
+m <- MASS::polr(apply ~ pared, data = dat)
 summary(m)
 ```
 

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5.1 Normal | My Data Science Notes</title>
+  <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5.1 Normal | My Data Science Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5.1 Normal | My Data Science Notes" />
+  
+  <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+<meta name="author" content="Michael Foley" />
+
+
+<meta name="date" content="2020-02-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="cont-dist.html"/>
+<link rel="next" href="join-distributions.html"/>
+<script src="assets/jquery-2.2.3/jquery.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">My Data Science Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Intro</a></li>
+<li class="chapter" data-level="1" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>1</b> Probability</a><ul>
+<li class="chapter" data-level="1.1" data-path="principles.html"><a href="principles.html"><i class="fa fa-check"></i><b>1.1</b> Principles</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>2</b> Inference</a></li>
+<li class="chapter" data-level="3" data-path="disc-dist.html"><a href="disc-dist.html"><i class="fa fa-check"></i><b>3</b> Discrete Distributions</a><ul>
+<li class="chapter" data-level="3.1" data-path="bernoulli.html"><a href="bernoulli.html"><i class="fa fa-check"></i><b>3.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="3.2" data-path="binomial.html"><a href="binomial.html"><i class="fa fa-check"></i><b>3.2</b> Binomial</a></li>
+<li class="chapter" data-level="3.3" data-path="poission.html"><a href="poission.html"><i class="fa fa-check"></i><b>3.3</b> Poission</a></li>
+<li class="chapter" data-level="3.4" data-path="multinomial.html"><a href="multinomial.html"><i class="fa fa-check"></i><b>3.4</b> Multinomial</a></li>
+<li class="chapter" data-level="3.5" data-path="negative-binomial.html"><a href="negative-binomial.html"><i class="fa fa-check"></i><b>3.5</b> Negative-Binomial</a></li>
+<li class="chapter" data-level="3.6" data-path="geometric.html"><a href="geometric.html"><i class="fa fa-check"></i><b>3.6</b> Geometric</a></li>
+<li class="chapter" data-level="3.7" data-path="hypergeometric.html"><a href="hypergeometric.html"><i class="fa fa-check"></i><b>3.7</b> Hypergeometric</a></li>
+<li class="chapter" data-level="3.8" data-path="gamma.html"><a href="gamma.html"><i class="fa fa-check"></i><b>3.8</b> Gamma</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="discrete-anal.html"><a href="discrete-anal.html"><i class="fa fa-check"></i><b>4</b> Discrete Analysis</a></li>
+<li class="chapter" data-level="5" data-path="cont-dist.html"><a href="cont-dist.html"><i class="fa fa-check"></i><b>5</b> Continuous Distributions</a><ul>
+<li class="chapter" data-level="5.1" data-path="normal.html"><a href="normal.html"><i class="fa fa-check"></i><b>5.1</b> Normal</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="normal.html"><a href="normal.html#example-2"><i class="fa fa-check"></i><b>5.1.1</b> Example</a></li>
+<li class="chapter" data-level="5.1.2" data-path="normal.html"><a href="normal.html#example-3"><i class="fa fa-check"></i><b>5.1.2</b> Example</a></li>
+<li class="chapter" data-level="5.1.3" data-path="normal.html"><a href="normal.html#example-4"><i class="fa fa-check"></i><b>5.1.3</b> Example</a></li>
+<li class="chapter" data-level="5.1.4" data-path="normal.html"><a href="normal.html#normal-approximation-to-binomial"><i class="fa fa-check"></i><b>5.1.4</b> Normal Approximation to Binomial</a></li>
+<li class="chapter" data-level="5.1.5" data-path="normal.html"><a href="normal.html#example-5"><i class="fa fa-check"></i><b>5.1.5</b> Example</a></li>
+<li class="chapter" data-level="5.1.6" data-path="normal.html"><a href="normal.html#example-6"><i class="fa fa-check"></i><b>5.1.6</b> Example</a></li>
+<li class="chapter" data-level="5.1.7" data-path="normal.html"><a href="normal.html#from-sample-to-population"><i class="fa fa-check"></i><b>5.1.7</b> From Sample to Population</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>5.2</b> Join Distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>5.3</b> Likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
+<li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#example-7"><i class="fa fa-check"></i>Example</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Ordinal Logistic Regression</a></li>
+<li class="chapter" data-level="7.3" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.3</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-9"><i class="fa fa-check"></i>Example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
+<li class="chapter" data-level="9" data-path="classification-1.html"><a href="classification-1.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
+<li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
+<li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
+<li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
+<li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
+<li class="chapter" data-level="10.7" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>11</b> Regularization</a></li>
+<li class="chapter" data-level="12" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>12</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="12.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>12.1</b> Splines</a></li>
+<li class="chapter" data-level="12.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>12.2</b> MARS</a></li>
+<li class="chapter" data-level="12.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>12.3</b> GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>13</b> Support Vector Machines</a><ul>
+<li class="chapter" data-level="13.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>13.1</b> Maximal Margin Classifier</a></li>
+<li class="chapter" data-level="13.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>13.2</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="13.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>13.3</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="13.4" data-path="example-10.html"><a href="example-10.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
+<li class="chapter" data-level="13.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>13.5</b> Using Caret</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>14</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a></li>
+<li class="chapter" data-level="16" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>16</b> Text Mining</a></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
+<li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
+<li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
+<li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
+<li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
+<li class="chapter" data-level="16.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>16.0.1</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
+<li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">My Data Science Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="normal" class="section level2">
+<h2><span class="header-section-number">5.1</span> Normal</h2>
+<p>Random variable <span class="math inline">\(X\)</span> is distributed <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span> if</p>
+<p><span class="math display">\[f(X)=\frac{{1}}{{\sigma \sqrt{{2\pi}}}}e^{-.5(\frac{{x-\mu}}{{\sigma}})^2}\]</span>.</p>
+<div id="example-1" class="section level4 unnumbered">
+<h4>Example</h4>
+<p><em>IQ scores are distributed <span class="math inline">\(X \sim N(100, 16^2\)</span>. What is the probability a randomly selected person’s IQ is &lt;90?</em></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="normal.html#cb66-1"></a>my_mean =<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb66-2"><a href="normal.html#cb66-2"></a>my_sd =<span class="st"> </span><span class="dv">16</span></span>
+<span id="cb66-3"><a href="normal.html#cb66-3"></a>my_x =<span class="st"> </span><span class="dv">90</span></span>
+<span id="cb66-4"><a href="normal.html#cb66-4"></a><span class="co"># exact</span></span>
+<span id="cb66-5"><a href="normal.html#cb66-5"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.27</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="normal.html#cb68-1"></a><span class="co"># simulated</span></span>
+<span id="cb68-2"><a href="normal.html#cb68-2"></a><span class="kw">mean</span>(<span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd) <span class="op">&lt;=</span><span class="st"> </span>my_x)</span></code></pre></div>
+<pre><code>## [1] 0.27</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="normal.html#cb70-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb70-2"><a href="normal.html#cb70-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb70-3"><a href="normal.html#cb70-3"></a></span>
+<span id="cb70-4"><a href="normal.html#cb70-4"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1500</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb70-5"><a href="normal.html#cb70-5"></a>           <span class="dt">prob =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1500</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb70-6"><a href="normal.html#cb70-6"></a>                        <span class="dt">mean =</span> my_mean, </span>
+<span id="cb70-7"><a href="normal.html#cb70-7"></a>                        <span class="dt">sd =</span> my_sd, </span>
+<span id="cb70-8"><a href="normal.html#cb70-8"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb70-9"><a href="normal.html#cb70-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cdf =</span> <span class="kw">ifelse</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;=</span><span class="st"> </span>my_x, prob, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb70-10"><a href="normal.html#cb70-10"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb70-11"><a href="normal.html#cb70-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> prob)) <span class="op">+</span></span>
+<span id="cb70-12"><a href="normal.html#cb70-12"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb70-13"><a href="normal.html#cb70-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_mean)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb70-14"><a href="normal.html#cb70-14"></a>       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&#39;P(X&lt;=&#39;</span><span class="op">~</span>.(my_x)<span class="op">~</span><span class="st">&#39;) when mean is&#39;</span><span class="op">~</span>.(my_mean)<span class="op">~</span><span class="st">&#39; and variance is&#39;</span><span class="op">~</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;.&#39;</span>),</span>
+<span id="cb70-15"><a href="normal.html#cb70-15"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb70-16"><a href="normal.html#cb70-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+</div>
+<div id="example-2" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Example</h3>
+<p><em>IQ scores are distributed </em><span class="math inline">\(X \sim N(100, 16^2\)</span><em>. What is the probability a randomly selected person’s IQ is &gt;140?</em></p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="normal.html#cb71-1"></a>my_mean =<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb71-2"><a href="normal.html#cb71-2"></a>my_sd =<span class="st"> </span><span class="dv">16</span></span>
+<span id="cb71-3"><a href="normal.html#cb71-3"></a>my_x =<span class="st"> </span><span class="dv">140</span></span>
+<span id="cb71-4"><a href="normal.html#cb71-4"></a><span class="co"># exact</span></span>
+<span id="cb71-5"><a href="normal.html#cb71-5"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0062</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="normal.html#cb73-1"></a><span class="co"># simulated</span></span>
+<span id="cb73-2"><a href="normal.html#cb73-2"></a><span class="kw">mean</span>(<span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd) <span class="op">&gt;</span><span class="st"> </span>my_x)</span></code></pre></div>
+<pre><code>## [1] 0.0071</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="normal.html#cb75-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb75-2"><a href="normal.html#cb75-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb75-3"><a href="normal.html#cb75-3"></a></span>
+<span id="cb75-4"><a href="normal.html#cb75-4"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1500</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb75-5"><a href="normal.html#cb75-5"></a>           <span class="dt">prob =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1500</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb75-6"><a href="normal.html#cb75-6"></a>                        <span class="dt">mean =</span> my_mean, </span>
+<span id="cb75-7"><a href="normal.html#cb75-7"></a>                        <span class="dt">sd =</span> my_sd, </span>
+<span id="cb75-8"><a href="normal.html#cb75-8"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb75-9"><a href="normal.html#cb75-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cdf =</span> <span class="kw">ifelse</span>(x <span class="op">&gt;</span><span class="st"> </span>my_x <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;</span><span class="st"> </span><span class="dv">1000</span>, prob, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb75-10"><a href="normal.html#cb75-10"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb75-11"><a href="normal.html#cb75-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> prob)) <span class="op">+</span></span>
+<span id="cb75-12"><a href="normal.html#cb75-12"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb75-13"><a href="normal.html#cb75-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_mean)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb75-14"><a href="normal.html#cb75-14"></a>       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&#39;P(X&lt;=&#39;</span><span class="op">~</span>.(my_x)<span class="op">~</span><span class="st">&#39;) when mean is&#39;</span><span class="op">~</span>.(my_mean)<span class="op">~</span><span class="st">&#39; and variance is&#39;</span><span class="op">~</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;.&#39;</span>),</span>
+<span id="cb75-15"><a href="normal.html#cb75-15"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb75-16"><a href="normal.html#cb75-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+</div>
+<div id="example-3" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Example</h3>
+<p><em>IQ scores are distributed </em><span class="math inline">\(X \sim N(100, 16^2\)</span><em>. What is the probability a randomly selected person’s IQ is between 92 and 114?</em></p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="normal.html#cb76-1"></a>my_mean =<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb76-2"><a href="normal.html#cb76-2"></a>my_sd =<span class="st"> </span><span class="dv">16</span></span>
+<span id="cb76-3"><a href="normal.html#cb76-3"></a>my_x_l =<span class="st"> </span><span class="dv">92</span></span>
+<span id="cb76-4"><a href="normal.html#cb76-4"></a>my_x_h =<span class="st"> </span><span class="dv">114</span></span>
+<span id="cb76-5"><a href="normal.html#cb76-5"></a><span class="co"># exact</span></span>
+<span id="cb76-6"><a href="normal.html#cb76-6"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x_h, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>) <span class="op">-</span></span>
+<span id="cb76-7"><a href="normal.html#cb76-7"></a><span class="st">  </span><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x_l, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.5</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="normal.html#cb78-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb78-2"><a href="normal.html#cb78-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb78-3"><a href="normal.html#cb78-3"></a></span>
+<span id="cb78-4"><a href="normal.html#cb78-4"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1500</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb78-5"><a href="normal.html#cb78-5"></a>           <span class="dt">prob =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1500</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb78-6"><a href="normal.html#cb78-6"></a>                        <span class="dt">mean =</span> my_mean, </span>
+<span id="cb78-7"><a href="normal.html#cb78-7"></a>                        <span class="dt">sd =</span> my_sd, </span>
+<span id="cb78-8"><a href="normal.html#cb78-8"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb78-9"><a href="normal.html#cb78-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cdf =</span> <span class="kw">ifelse</span>(x <span class="op">&gt;</span><span class="st"> </span>my_x_l <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;=</span><span class="st"> </span>my_x_h, prob, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb78-10"><a href="normal.html#cb78-10"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb78-11"><a href="normal.html#cb78-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> prob)) <span class="op">+</span></span>
+<span id="cb78-12"><a href="normal.html#cb78-12"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb78-13"><a href="normal.html#cb78-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_mean)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb78-14"><a href="normal.html#cb78-14"></a>       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&#39;P(X&lt;=&#39;</span><span class="op">~</span>.(my_x)<span class="op">~</span><span class="st">&#39;) when mean is&#39;</span><span class="op">~</span>.(my_mean)<span class="op">~</span><span class="st">&#39; and variance is&#39;</span><span class="op">~</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;.&#39;</span>),</span>
+<span id="cb78-15"><a href="normal.html#cb78-15"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb78-16"><a href="normal.html#cb78-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+</div>
+<div id="example-4" class="section level3">
+<h3><span class="header-section-number">5.1.3</span> Example</h3>
+<p><em>Class scores are distributed </em><span class="math inline">\(X \sim N(70, 10^2\)</span><em>. If the instructor wants to give A’s to &gt;=85th percentile and B’s to 75th-85th percentile, what are the cutoffs?</em></p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="normal.html#cb79-1"></a>my_mean =<span class="st"> </span><span class="dv">70</span></span>
+<span id="cb79-2"><a href="normal.html#cb79-2"></a>my_sd =<span class="st"> </span><span class="dv">10</span></span>
+<span id="cb79-3"><a href="normal.html#cb79-3"></a>my_pct_l =<span class="st"> </span><span class="fl">.75</span></span>
+<span id="cb79-4"><a href="normal.html#cb79-4"></a>my_pct_h =<span class="st"> </span><span class="fl">.85</span></span>
+<span id="cb79-5"><a href="normal.html#cb79-5"></a></span>
+<span id="cb79-6"><a href="normal.html#cb79-6"></a><span class="kw">qnorm</span>(<span class="dt">p =</span> my_pct_l, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 77</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="normal.html#cb81-1"></a><span class="kw">qnorm</span>(<span class="dt">p =</span> my_pct_h, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 80</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="normal.html#cb83-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb83-2"><a href="normal.html#cb83-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb83-3"><a href="normal.html#cb83-3"></a></span>
+<span id="cb83-4"><a href="normal.html#cb83-4"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1000</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb83-5"><a href="normal.html#cb83-5"></a>           <span class="dt">prob =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1000</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb83-6"><a href="normal.html#cb83-6"></a>                        <span class="dt">mean =</span> my_mean, </span>
+<span id="cb83-7"><a href="normal.html#cb83-7"></a>                        <span class="dt">sd =</span> my_sd, </span>
+<span id="cb83-8"><a href="normal.html#cb83-8"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb83-9"><a href="normal.html#cb83-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cdf =</span> <span class="kw">ifelse</span>(prob <span class="op">&gt;</span><span class="st"> </span>my_pct_l <span class="op">&amp;</span><span class="st"> </span>prob <span class="op">&lt;=</span><span class="st"> </span>my_pct_h, prob, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb83-10"><a href="normal.html#cb83-10"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb83-11"><a href="normal.html#cb83-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> prob)) <span class="op">+</span></span>
+<span id="cb83-12"><a href="normal.html#cb83-12"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb83-13"><a href="normal.html#cb83-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_mean)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb83-14"><a href="normal.html#cb83-14"></a>       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&#39;P(X&lt;=x) = [&#39;</span><span class="op">~</span>.(my_pct_l)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>.(my_pct_h)<span class="op">~</span><span class="st">&#39;] when mean is&#39;</span><span class="op">~</span>.(my_mean)<span class="op">~</span><span class="st">&#39; and variance is&#39;</span><span class="op">~</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;.&#39;</span>),</span>
+<span id="cb83-15"><a href="normal.html#cb83-15"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb83-16"><a href="normal.html#cb83-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+</div>
+<div id="normal-approximation-to-binomial" class="section level3">
+<h3><span class="header-section-number">5.1.4</span> Normal Approximation to Binomial</h3>
+<p>The CLT implies that certain distributions can be approximated by the normal distribution.</p>
+<p>The binomial distribution <span class="math inline">\(X \sim B(n,p)\)</span> is approximately normal with mean <span class="math inline">\(\mu = n p\)</span> and variance <span class="math inline">\(\sigma^2=np(1-p)\)</span>. The approximation is useful when the expected number of successes and failures is at least 5: <span class="math inline">\(np&gt;=5\)</span> and <span class="math inline">\(n(1-p)&gt;=5\)</span>.</p>
+</div>
+<div id="example-5" class="section level3">
+<h3><span class="header-section-number">5.1.5</span> Example</h3>
+<p><em>A measure requires p&gt;=50% popular to pass. A sample of n=1,000 yields x=460 approvals. What is the probability that the overall population approves, P(X)&gt;0.5?</em></p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="normal.html#cb84-1"></a>my_x =<span class="st"> </span><span class="dv">460</span></span>
+<span id="cb84-2"><a href="normal.html#cb84-2"></a>my_p =<span class="st"> </span><span class="fl">0.50</span></span>
+<span id="cb84-3"><a href="normal.html#cb84-3"></a>my_n =<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb84-4"><a href="normal.html#cb84-4"></a></span>
+<span id="cb84-5"><a href="normal.html#cb84-5"></a>my_mean =<span class="st"> </span>my_p <span class="op">*</span><span class="st"> </span>my_n</span>
+<span id="cb84-6"><a href="normal.html#cb84-6"></a>my_sd =<span class="st"> </span><span class="kw">round</span>(<span class="kw">sqrt</span>(my_n <span class="op">*</span><span class="st"> </span>my_p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>my_p)), <span class="dv">1</span>)</span>
+<span id="cb84-7"><a href="normal.html#cb84-7"></a></span>
+<span id="cb84-8"><a href="normal.html#cb84-8"></a><span class="co"># Exact binomial</span></span>
+<span id="cb84-9"><a href="normal.html#cb84-9"></a><span class="kw">pbinom</span>(<span class="dt">q =</span> my_x, <span class="dt">size =</span> my_n, <span class="dt">prob =</span> my_p, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0062</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="normal.html#cb86-1"></a><span class="co"># Normal approximation</span></span>
+<span id="cb86-2"><a href="normal.html#cb86-2"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x, <span class="dt">mean =</span> my_p <span class="op">*</span><span class="st"> </span>my_n, <span class="dt">sd =</span> <span class="kw">sqrt</span>(my_n <span class="op">*</span><span class="st"> </span>my_p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>my_p)), <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0057</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="normal.html#cb88-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb88-2"><a href="normal.html#cb88-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb88-3"><a href="normal.html#cb88-3"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb88-4"><a href="normal.html#cb88-4"></a></span>
+<span id="cb88-5"><a href="normal.html#cb88-5"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">400</span><span class="op">:</span><span class="dv">600</span>, </span>
+<span id="cb88-6"><a href="normal.html#cb88-6"></a>           <span class="dt">Normal =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">400</span><span class="op">:</span><span class="dv">600</span>, </span>
+<span id="cb88-7"><a href="normal.html#cb88-7"></a>                        <span class="dt">mean =</span> my_p <span class="op">*</span><span class="st"> </span>my_n, </span>
+<span id="cb88-8"><a href="normal.html#cb88-8"></a>                        <span class="dt">sd =</span> <span class="kw">sqrt</span>(my_n <span class="op">*</span><span class="st"> </span>my_p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>my_p)), </span>
+<span id="cb88-9"><a href="normal.html#cb88-9"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb88-10"><a href="normal.html#cb88-10"></a>           <span class="dt">Binomial =</span> <span class="kw">pbinom</span>(<span class="dt">q =</span> <span class="dv">400</span><span class="op">:</span><span class="dv">600</span>, </span>
+<span id="cb88-11"><a href="normal.html#cb88-11"></a>                        <span class="dt">size =</span> my_n, </span>
+<span id="cb88-12"><a href="normal.html#cb88-12"></a>                        <span class="dt">prob =</span> my_p, </span>
+<span id="cb88-13"><a href="normal.html#cb88-13"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb88-14"><a href="normal.html#cb88-14"></a><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;Distribution&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;cdf&quot;</span>, <span class="kw">c</span>(<span class="op">-</span>x)) <span class="op">%&gt;%</span></span>
+<span id="cb88-15"><a href="normal.html#cb88-15"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf, <span class="dt">color =</span> Distribution)) <span class="op">+</span></span>
+<span id="cb88-16"><a href="normal.html#cb88-16"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb88-17"><a href="normal.html#cb88-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~B(n=&#39;</span><span class="op">~</span>.(my_n)<span class="op">~</span><span class="st">&#39;, p=&#39;</span><span class="op">~</span>.(my_p)<span class="op">~</span><span class="st">&#39;),  &#39;</span><span class="op">~</span><span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_mean)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb88-18"><a href="normal.html#cb88-18"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Normal approximation to the binomial&quot;</span>,</span>
+<span id="cb88-19"><a href="normal.html#cb88-19"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb88-20"><a href="normal.html#cb88-20"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p>The Poisson distribution <span class="math inline">\(x~P(\lambda)\)</span> is approximately normal with mean <span class="math inline">\(\mu = \lambda\)</span> and variance <span class="math inline">\(\sigma^2 = \lambda\)</span>, for large values of <span class="math inline">\(\lambda\)</span>.</p>
+</div>
+<div id="example-6" class="section level3">
+<h3><span class="header-section-number">5.1.6</span> Example</h3>
+<p><em>The annual number of earthquakes registering at least 2.5 on the Richter Scale and having an epicenter within 40 miles of downtown Memphis follows a Poisson distribution with mean </em><span class="math inline">\(\lambda=6.5\)</span><em>. What is the probability that at least </em><span class="math inline">\(x&gt;=9\)</span>* such earthquakes will strike next year?*</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="normal.html#cb89-1"></a>my_x =<span class="st"> </span><span class="dv">9</span></span>
+<span id="cb89-2"><a href="normal.html#cb89-2"></a>my_lambda =<span class="st"> </span><span class="fl">6.5</span></span>
+<span id="cb89-3"><a href="normal.html#cb89-3"></a>my_sd =<span class="st"> </span><span class="kw">round</span>(<span class="kw">sqrt</span>(my_lambda), <span class="dv">2</span>)</span>
+<span id="cb89-4"><a href="normal.html#cb89-4"></a></span>
+<span id="cb89-5"><a href="normal.html#cb89-5"></a><span class="co"># Exact Poisson</span></span>
+<span id="cb89-6"><a href="normal.html#cb89-6"></a><span class="kw">ppois</span>(<span class="dt">q =</span> my_x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lambda =</span> my_lambda, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.21</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="normal.html#cb91-1"></a><span class="co"># Normal approximation</span></span>
+<span id="cb91-2"><a href="normal.html#cb91-2"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dt">mean =</span> my_lambda, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.22</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="normal.html#cb93-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb93-2"><a href="normal.html#cb93-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb93-3"><a href="normal.html#cb93-3"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb93-4"><a href="normal.html#cb93-4"></a></span>
+<span id="cb93-5"><a href="normal.html#cb93-5"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">200</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb93-6"><a href="normal.html#cb93-6"></a>           <span class="dt">Normal =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">200</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb93-7"><a href="normal.html#cb93-7"></a>                        <span class="dt">mean =</span> my_lambda, </span>
+<span id="cb93-8"><a href="normal.html#cb93-8"></a>                        <span class="dt">sd =</span> my_sd, </span>
+<span id="cb93-9"><a href="normal.html#cb93-9"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb93-10"><a href="normal.html#cb93-10"></a>           <span class="dt">Poisson =</span> <span class="kw">ppois</span>(<span class="dt">q =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">200</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb93-11"><a href="normal.html#cb93-11"></a>                        <span class="dt">lambda =</span> my_lambda, </span>
+<span id="cb93-12"><a href="normal.html#cb93-12"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb93-13"><a href="normal.html#cb93-13"></a><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;Distribution&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;cdf&quot;</span>, <span class="kw">c</span>(<span class="op">-</span>x)) <span class="op">%&gt;%</span></span>
+<span id="cb93-14"><a href="normal.html#cb93-14"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf, <span class="dt">color =</span> Distribution)) <span class="op">+</span></span>
+<span id="cb93-15"><a href="normal.html#cb93-15"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb93-16"><a href="normal.html#cb93-16"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~P(&#39;</span><span class="op">~</span>lambda<span class="op">~</span><span class="st">&#39;=&#39;</span><span class="op">~</span>.(my_lambda)<span class="op">~</span><span class="st">&#39;),  &#39;</span><span class="op">~</span><span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_lambda)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_lambda)<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb93-17"><a href="normal.html#cb93-17"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Normal approximation to the Poisson&quot;</span>,</span>
+<span id="cb93-18"><a href="normal.html#cb93-18"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb93-19"><a href="normal.html#cb93-19"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+</div>
+<div id="from-sample-to-population" class="section level3">
+<h3><span class="header-section-number">5.1.7</span> From Sample to Population</h3>
+<p><em>Suppose a person’s blood pressure typically measures 160?20 mm. If one takes n=5 blood pressure readings, what is the probability the average will be &lt;=150?</em></p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="normal.html#cb94-1"></a>my_mu =<span class="st"> </span><span class="dv">160</span></span>
+<span id="cb94-2"><a href="normal.html#cb94-2"></a>my_sigma =<span class="st"> </span><span class="dv">20</span></span>
+<span id="cb94-3"><a href="normal.html#cb94-3"></a>my_n =<span class="st"> </span><span class="dv">5</span></span>
+<span id="cb94-4"><a href="normal.html#cb94-4"></a>my_x =<span class="st"> </span><span class="dv">150</span></span>
+<span id="cb94-5"><a href="normal.html#cb94-5"></a></span>
+<span id="cb94-6"><a href="normal.html#cb94-6"></a>my_se =<span class="st"> </span><span class="kw">round</span>(my_sigma <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(my_n), <span class="dv">1</span>)</span>
+<span id="cb94-7"><a href="normal.html#cb94-7"></a></span>
+<span id="cb94-8"><a href="normal.html#cb94-8"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x, <span class="dt">mean =</span> my_mu, <span class="dt">sd =</span> my_sigma <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(my_n), <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.13</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="normal.html#cb96-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb96-2"><a href="normal.html#cb96-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb96-3"><a href="normal.html#cb96-3"></a></span>
+<span id="cb96-4"><a href="normal.html#cb96-4"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1000</span><span class="op">:</span><span class="dv">2000</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb96-5"><a href="normal.html#cb96-5"></a>           <span class="dt">prob =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">1000</span><span class="op">:</span><span class="dv">2000</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb96-6"><a href="normal.html#cb96-6"></a>                        <span class="dt">mean =</span> my_mu, </span>
+<span id="cb96-7"><a href="normal.html#cb96-7"></a>                        <span class="dt">sd =</span> my_sigma <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(my_n), </span>
+<span id="cb96-8"><a href="normal.html#cb96-8"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb96-9"><a href="normal.html#cb96-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cdf =</span> <span class="kw">ifelse</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;=</span><span class="st"> </span>my_x, prob, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb96-10"><a href="normal.html#cb96-10"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb96-11"><a href="normal.html#cb96-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> prob)) <span class="op">+</span></span>
+<span id="cb96-12"><a href="normal.html#cb96-12"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb96-13"><a href="normal.html#cb96-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_mu)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_se)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb96-14"><a href="normal.html#cb96-14"></a>       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&#39;P(X&lt;=&#39;</span><span class="op">~</span>.(my_x)<span class="op">~</span><span class="st">&#39;) when mean is&#39;</span><span class="op">~</span>.(my_mu)<span class="op">~</span><span class="st">&#39; and variance is&#39;</span><span class="op">~</span>sigma<span class="op">~</span><span class="st">&#39;/sqrt(n)&#39;</span><span class="op">~</span>.(my_se)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;.&#39;</span>),</span>
+<span id="cb96-15"><a href="normal.html#cb96-15"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb96-16"><a href="normal.html#cb96-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="normal.html#cb97-1"></a>knitr<span class="op">::</span><span class="kw">include_app</span>(<span class="st">&quot;https://mpfoley73.shinyapps.io/shiny_dist/&quot;</span>, </span>
+<span id="cb97-2"><a href="normal.html#cb97-2"></a>  <span class="dt">height =</span> <span class="st">&quot;600px&quot;</span>)</span></code></pre></div>
+<iframe src="https://mpfoley73.shinyapps.io/shiny_dist/?showcase=0" width="672" height="600px">
+</iframe>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="cont-dist.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="join-distributions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["data-sci.pdf", "data-sci.epub"],
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

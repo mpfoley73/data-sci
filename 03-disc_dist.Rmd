@@ -1,0 +1,629 @@
+```{r include=FALSE}
+library(tidyverse)
+library(mfstylr)
+```
+
+# Discrete Distributions {#disc_dist}
+
+These notes rely heavily on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/209/).
+
+The most important discrete distributions are the Binomial, Poisson, and Multinomial.  Sometimes useful are the related Bernoulli, negative binomial, geometric, and hypergeometric distributions.
+
+A discrete random variable $X$ is described by its probability mass function $f(x) = P(X = x)$.  The set of $x$ values for which $f(x) > 0$ is called the *support*. If the distribution depends on unknown parameter(s) $\theta$ we write it as $f(x; \theta)$ (frequentist) or $f(x | \theta)$ (Bayesian). 
+
+
+## Bernoulli
+
+If $X$ is the result of a trial with two outcomes of probability $P(X = 1) = \pi$ and $P(X = 0) = 1 - \pi$, then $X$ is a random variable with a Bernoulli distribution 
+
+$$f(x) = \pi^x (1 - \pi)^{1 - x}, \hspace{1cm} x \in (0, 1)$$
+
+with $E(X) = \pi$ and $V(X) = \pi(1 - \pi)$.
+
+
+## Binomial
+
+If $X$ is the count of successful events in $n$ identical and independent Bernoulli trials of success probability $\pi$, then $X$ is a random variable with a binomial distribution $X \sim  Bin(n,\pi)$ 
+
+$$f(x;\pi) = \frac{n!}{x!(n-x)!} \pi^x (1-\pi)^{n-x} \hspace{1cm} x \in (0, 1, ..., n), \hspace{2mm} \pi \in [0, 1]$$
+
+with $E(X)=n\pi$ and $V(X) = n\pi(1-\pi)$.  
+
+The Bernoulli distribution is a special case of the binomial with $n = 1$. As n increases for fixed $\pi$, the binomial distribution approaches normal distribution $N(n\pi, n\pi(1−\pi))$.  The binomial distribution assumes independent trials - if sampling *without replacement from a finite population*, then the hypergeometric distribution is appropriate.
+
+#### Examples {-}
+
+What is the probability 2 out of 10 coin flips are heads if the probability of heads is 0.3?
+
+Function `dbinom()` calculates the binomial probability.
+
+```{r}
+dbinom(x = 2, size = 10, prob = 0.3)
+```
+
+A simulation of n = 10,000 random samples of size 10 gives a similar result.  `rbinom()` generates a random sample of numbers from the binomial distribution.
+
+```{r message=FALSE, warning=FALSE, fig.height=3, fig.width=5}
+data.frame(cnt = rbinom(n = 10000, size = 10, prob = 0.3)) %>%
+  count(cnt) %>%
+  ungroup() %>%
+  mutate(pct = n / sum(n),
+         X_eq_x = cnt == 2) %>%
+  ggplot(aes(x = as.factor(cnt), y = n, fill = X_eq_x, label = pct)) +
+  geom_col(alpha = 0.8) +
+  scale_fill_mf() +
+  geom_label(aes(label = round(pct, 2)), size = 3, alpha = .6) +
+  theme_mf() +
+  theme(legend.position = "none") +
+  labs(title = "Binomial Distribution", 
+       subtitle = paste0(
+         "P(X=2) successes in 10 trials when p = 0.3 is ", 
+         round(dbinom(2, 10, 0.3), 4), "."
+       ),
+       x = "Successes",
+       y = "Count",
+       caption = "Simulation from n = 10,000 binomial random samples.") 
+```
+
+What is the probability of <=2 heads in 10 coin flips where probability of heads is 0.3?
+
+The cumulative probability is the sum of the first three bars in the simulation above.  Function `pbinom()` calculates the *cumulative* binomial probability.
+
+```{r}
+pbinom(q = 2, size = 10, prob = 0.3, lower.tail = TRUE)
+```
+
+What is the expected number of heads in 25 coin flips if the probability of heads is 0.3?
+
+The expected value, $\mu = np$, is `r 25 * .3`.  Here's an empirical test from 10,000 samples.
+
+```{r}
+mean(rbinom(n = 10000, size = 25, prob = .3))
+```
+
+The variance, $\sigma^2 = np (1 - p)$, is `r 25 * .3 * (1 - .3)`.  Here's an empirical test.
+
+```{r}
+var(rbinom(n = 10000, size = 25, prob = .3))
+```
+
+Suppose X and Y are independent random variables distributed $X \sim Bin(10, .6)$ and $Y \sim Bin(10, .7)$.  What is the probability that either variable is <=4?
+
+Let $P(A) = P(X<=4)$ and $P(B) = P(Y<=4)$.  Then $P(A|B) = P(A) + P(B) - P(AB)$, and because the events are independent, $P(AB) = P(A)P(B)$.
+
+```{r}
+p_a <- pbinom(q = 4, size = 10, prob = 0.6, lower.tail = TRUE)
+p_b <- pbinom(q = 4, size = 10, prob = 0.7, lower.tail = TRUE)
+p_a + p_b - (p_a * p_b)
+```
+
+Here's an empirical test.
+
+```{r}
+df <- data.frame(
+  x = rbinom(10000, 10, 0.6),
+  y = rbinom(10000, 10, 0.7)
+  )
+mean(if_else(df$x <= 4 | df$y <= 4, 1, 0))
+```
+
+
+## Poission
+
+If $X$ is the number of successes in $n$ (many) trials when the probability of success $\lambda / n$ is small, then $X$ is a random variable with a Poisson distribution $X \sim  Poisson(\lambda)$ 
+
+$$f(x;\lambda) = \frac{e^{-\lambda} \lambda^x}{x!} \hspace{1cm} x \in (0, 1, ...), \hspace{2mm} \lambda > 0$$
+
+with $E(X)=\lambda$ and $V(X) = \lambda$.  
+
+The Poisson likelihood function is
+
+$$L(\lambda; x) = \prod_{i=1}^N f(x_i; \lambda) = \prod_{i=1}^N \frac{e^{-\lambda} \lambda^x_i}{x_i !} = \frac{e^{-n \lambda} \lambda^{\sum x_i}}{\prod x_i}.$$
+
+The Poisson loglikelihood function is
+
+$$l(\lambda; x) = \sum_{i=1}^N x_i \log \lambda - n \lambda.$$
+
+One can show that the loglikelihood function is maximized at 
+
+$$\hat{\lambda} = \sum_{i=1}^N x_i / n.$$
+
+Thus, for a Poisson sample, the MLE for $\lambda$ is just the sample mean.
+
+Here is a simple analysis of data from a Poisson process.  Data set `dat` contains frequencies of goal counts during the first round matches of the 2002 World Cup.
+
+```{r echo=FALSE}
+dat <- data.frame(
+  goals = c(0, 1, 2, 3, 4, 5, 6, 7, 8),
+  freq = c(23, 37, 20, 11, 2, 1, 0, 0, 1)
+)
+print(dat)
+```
+
+The MLE of $\lambda$ from the Poisson distribution is the sample mean.
+
+```{r}
+lambda <- weighted.mean(dat$goals, dat$freq)
+print(lambda)
+```
+
+The 0.95 CI is $\lambda \pm z_{.05/2} \sqrt{\lambda / n}$
+
+```{r}
+n <- sum(dat$freq)
+z <- qnorm(0.975)
+se <- sqrt(lambda / n)
+paste0("[", round(lambda - z*se, 2), ", ", round(lambda + z*se, 2),"]")
+```
+
+The expected probability of scoring 2 goals in a match is $\frac{e^{-1.38} 1.38^2}{2!} = 0.239$.
+
+```{r}
+dpois(x = 2, lambda = lambda)
+```
+
+```{r fig.height=3.5}
+events <- 0:10
+density <- dpois(x = events, lambda = 3)
+prob <- ppois(q = events, lambda = 3, lower.tail = TRUE)
+df <- data.frame(events, density, prob)
+ggplot(df, aes(x = factor(events), y = density)) +
+  geom_col(fill = mf_pal()(6)[5]) +
+  geom_text(
+    aes(label = round(density, 3), y = density + 0.01),
+    position = position_dodge(0.9),
+    size = 3,
+    vjust = 0
+  ) +
+  geom_line(
+    data = df, 
+    aes(x = events, y = prob/4), 
+    color = mf_pal()(6)[1], 
+    size = 1) +
+  scale_y_continuous(sec.axis = sec_axis(~.*4, name = "Cum Prob")) +
+  theme_mf() +
+  scale_fill_mf() +
+  labs(title = "PMF and CDF of Poisson Distribution",
+       subtitle = "Poisson(3).",
+       x = "Events (x)",
+       y = "Density")
+```
+
+The expected probability of scoring 2 to 4 goals in a match is
+
+```{r}
+sum(dpois(x = c(2:4), lambda = lambda))
+```
+
+Or, using the cumulative probability distribution,
+
+```{r}
+ppois(q = 4, lambda = lambda) - ppois(q = 1, lambda = lambda)
+```
+
+How well does the Poisson distribution fit the 2002 World Cup data?
+
+```{r fig.height=3, message=FALSE}
+dat %>%
+  mutate(pred = n * dpois(x = goals, lambda = lambda)) %>%
+  rename(obs = freq) %>%
+  pivot_longer(cols = -goals) %>%
+  ggplot(aes(x = goals, y = value, color = name)) +
+  geom_point() +
+  theme_mf() +
+  scale_color_mf() +
+  geom_smooth(se = FALSE) +
+  labs(
+    title = "Poisson Dist: Observed vs Expected",
+    color = "",
+    y = "frequencey"
+  )
+```
+
+It fits the data pretty good!
+
+$Poison(\lambda) \rightarrow Bin(n, \pi)$ when $n\pi = \lambda$ and $n \rightarrow \infty$ and $\pi \rightarrow 0$. Because the Poisson is limit of the $Bin(n, \pi)$, it is useful as an approximation to the binomial when $n$ is large ($n>=20$) and $\pi$ small ($p<=0.05$).
+
+For example, suppose a baseball player has a p=.03 chance of hitting a homerun.  What is the probability of X>=20 homeruns in 500 at-bats?  This is a binomial process because the sample size is fixed.
+
+```{r}
+pbinom(q = 20, size = 500, prob = 0.03, lower.tail = FALSE)
+```
+
+But $n$ is large and $\pi$ is small, so the Poission distribution will work well too.
+
+```{r}
+ppois(q = 20, lambda = 0.03 * 500, lower.tail = FALSE)
+```
+
+What is the distribution of successes from a sample of n = 50 when the probability of success is p = .03?
+```{r fig.height=3, fig.width=5}
+n = 500
+p = 0.03
+x = 0:30
+data.frame(
+  events = x, 
+  Poisson = dpois(x = x, lambda = p * n),
+  Binomial = dbinom(x = x, size = n, p = p)
+) %>%
+  pivot_longer(cols = -events) %>%
+  ggplot(aes(x = events, y = value, color = name)) +
+  geom_point() +
+  theme_mf() +
+  scale_color_mf() +
+  labs(title = "Poisson(15) vs. Bin(500, .03)",
+       subtitle = "Poisson approximation to binomial.",
+       x = "Events",
+       y = "Density",
+       color = "")
+
+```
+
+When the observed variance is greater than $\lambda$ (overdispersion), the Negative Binomial distribution can be used instead of Poisson.
+
+
+Suppose the probability that a drug produces a certain side effect is p =  = 0.1% and n = 1,000 patients in a clinical trial receive the drug. What is the probability 0 people experience the side effect?
+
+The expected value is np, `r 1000 * .001`.  The probability of measuring 0 when the expected value is 1 is `dpois(x = 0, lambda = 1000 * .001) = ` `r dpois(x = 0, lambda = 1000 * .001)`.
+
+```{r echo=FALSE, fig.height=3, fig.width=5}
+options(scipen = 999, digits = 2) # sig digits
+
+x <- 0:10
+density <- dpois(x = x, lambda = 1000 * .001)
+prob <- ppois(q = x, lambda = 1000 * .001, lower.tail = TRUE)
+df <- data.frame(x, density, prob)
+ggplot(df, aes(x = x, y = density)) +
+  geom_col() +
+  geom_text(
+    aes(label = round(density,2), y = density + 0.01),
+    position = position_dodge(0.9),
+    size = 3,
+    vjust = 0
+  ) +
+  theme_mf() +
+  scale_fill_mf() +
+  labs(title = "Poisson(1)",
+       subtitle = "PMF and CDF of Poisson(1) distribution.",
+       x = "Events (x)",
+       y = "Density") +
+  geom_line(data = df, aes(x = x, y = prob))
+```
+
+
+## Multinomial
+
+If $X = (X_1, X_2, \cdots, X_k)$ are the counts of successful events in $n$ identical and independent trials of success probabilities $\pi = (\pi_1, \pi_2, \cdots, \pi_k)$, then $X$ is a random variable with a multinomial distribution $X \sim  Mult(n,\pi)$ 
+
+$$f(x;\pi) = \frac{n!}{x_{1}! x_{2}! \cdots x_{k}!} \pi^{x_1} \pi^{x_2} \cdots \pi^{x_k} \hspace{1cm} x \in \{0, 1, ..., n \}, \hspace{2mm} \pi \in [0, 1]$$
+
+with $E(X)=n\pi = (n \pi_1 + n \pi_2 + \cdots + n \pi_k)$ and covariance matrix
+
+$$V(X) = \begin{bmatrix}n\pi_{1}(1-\pi_{1}) & -n\pi_{1}\pi_{2} & \cdots & -n\pi_{1}\pi_{k}\\
+-n\pi_{1}\pi_{2} & n\pi_{2}(1-\pi_{2}) & \cdots & -n\pi_{2}\pi_{k}\\
+\vdots & \vdots & \ddots & \vdots\\
+-n\pi_{1}\pi_{k} & -n\pi_{2}\pi_{k} & \cdots & n\pi_{k}(1-\pi_{k})
+\end{bmatrix}$$
+
+The individual components of a multinomial random vector are binomial and have a binomial distribution, $X_i = Bin(n, \pi_i)$. 
+
+#### Examples {-}
+
+Suppose a city population is 20% black, 15% Hispanic, and 65% other.  From a random sample of $n = 12$ persons, what is the probability of 4 black and 8 other?
+
+$$f(x;\pi) = \frac{12!}{4! 0! 8!} (0.20)^4 (0.15)^0 (0.65)^8 = 0.0252$$
+
+Function `dmultinom()` calculates the multinomial probability.
+
+```{r}
+dmultinom(x = c(4, 0, 8), prob = c(0.20, 0.15, 0.65))
+```
+
+To calculate the probability of *<= 1* black, combine Hispanic and other, then sum the probability of black = 1 and black = 2. 
+
+$$f(x;\pi) = \frac{12!}{0! 12!} (0.20)^0 (0.80)^{12} + \frac{12!}{1! 11!} (0.20)^1 (0.80)^{11} = 0.2748$$
+
+```{r}
+dmultinom(x = c(0, 12), prob = c(0.20, 0.80)) + 
+  dmultinom(x = c(1, 11), prob = c(0.20, 0.80))
+```
+
+
+## Negative-Binomial
+
+If $X$ is the count of failure events ocurring prior to reaching $r$ successful events in a sequence of Bernouli trias of success probability $p$, then $X$ is a random variable with a negative-binomial distribution $X \sim NB(r, p)$. The probability of $X = x$ failures prior to $r$ successes is
+
+$$f(x;r, p) = {{x + r - 1} \choose {r - 1}} p^r (1-p)^{x}.$$
+
+with $E(X) = r (1 - p) / p$ and $V(X) = r (1-p) / p^2$.
+
+When the data has overdispersion, model the data with the negative-binomial distribution instead of Poission.
+
+#### Examples {-}
+
+An oil company has a $p = 0.20$ chance of striking oil when drilling a well.  What is the probability the company drills $x + r = 7$ wells to strike oil $r = 3$ times?  Note that the question is formulated as counting total events, $x + r = 7$, so translate it to total *failed* events, $x = 4$.
+
+$$f(x;r, p) = {{4 + 3 - 1} \choose {3 - 1}} (0.20)^3 (1 - 0.20)^4 = 0.049.$$
+
+Function `dnbinom()` calculates the negative-binomial probability.  Parameter `x` equals the number of failures, $x - r$.
+
+```{r}
+dnbinom(x = 4, size = 3, prob = 0.2)
+```
+
+The expected number of failures prior to 3 successes is $E(X) = 3 (1 - 0.20) / 0.20 = 12$ with variance $V(X) = 3 (1 - 0.20) / 0.20^2 = 60$. Confirm this with a simulation from n = 10,000 random samples using `rnbinom()`.
+
+```{r}
+my_dat <- rnbinom(n = 10000, size = 3, prob = 0.20)
+mean(my_dat)
+var(my_dat)
+```
+
+
+```{r message=FALSE, warning=FALSE, fig.height=3, fig.width=6, echo=FALSE}
+data.frame(x = 0:40, d = dnbinom(x = 0:40, size = 3, prob = 0.20)) %>%
+  ggplot(aes(x = x, y = d, fill = x == 12)) +
+  geom_col() + 
+  theme_mf() +
+  scale_fill_mf() +
+  theme(legend.position = "none") +
+  labs(title = "NB(x; r = 3, p = 0.20)", 
+       subtitle = "Expected number of failures is 12.",
+       y = "dnbinom") 
+```
+
+
+## Geometric
+
+If $X$ is the count of Bernoulli trials of success probability $p$ required to achieve the first successful event, then $X$ is a random variable with a geometric distribution $X \sim G(p)$. The probability of $X = x$ trials is
+
+$$f(x; p) = p(1-p)^{x-1}.$$
+
+with $E(X)=\frac{{n}}{{p}}$ and $V(X) = \frac{(1-p)}{p^2}$.  The probability of $X<=n$ trials is 
+
+$$F(X=n) = 1 - (1-p)^n.$$ 
+
+#### Examples {-}
+
+What is the probability a marketer encounters x = 3 people on the street who did not attend a sporting event before the first success if the population probability is p = 0.20?
+
+$$f(4; 0.20) = 0.20(1-0.20)^{4-1} = 0.102.$$
+
+Function `dgeom()` calculates the geometric distribution probability.  Parameter `x` is the number of *failures*, not the number of trials. 
+
+```{r}
+dgeom(x = 3, prob = 0.20)
+```
+
+```{r message=FALSE, warning=FALSE, fig.height=3, fig.width=5}
+data.frame(cnt = rgeom(n = 10000, prob = 0.20)) %>%
+  count(cnt) %>%
+  top_n(n = 15, wt = n) %>%
+  ungroup() %>%
+  mutate(pct = round(n / sum(n), 3),
+         X_eq_x = cnt == 3) %>%
+  ggplot(aes(x = as.factor(cnt), y = n, fill = X_eq_x, label = pct)) +
+  geom_col(alpha = 0.8) +
+  scale_fill_mf() +
+  geom_text(size = 3) +
+  theme_mf() +
+  theme(legend.position = "none") +
+  labs(title = "Distribution of trials prior to first success",
+       subtitle = paste("P(X = 3) | X ~ G(.2) = ", round(dgeom(2, .2), 3)),
+       x = "Unsuccessful trials",
+       y = "Count",
+       caption = "simulation of n = 10,000 samples from geometric dist.") 
+```
+
+What is the probability the marketer fails to find someone who attended a game in x <= 5 trials before finding someone who attended a game on the sixth trial when the population probability is p = 0.20?
+
+```{r}
+p = 0.20
+n = 5
+# exact
+pgeom(q = n, prob = p, lower.tail = TRUE)
+# simulated
+mean(rgeom(n = 10000, prob = p) <= n)
+```
+
+
+```{r fig.width=5, echo=FALSE}
+data.frame(
+  x = 0:10, 
+  pmf = dgeom(x = 0:10, prob = p),
+  cdf = pgeom(q = 0:10, prob = p, lower.tail = TRUE)
+) %>%
+  mutate(Failures = ifelse(x <= n, n, "other")) %>%
+  ggplot(aes(x = factor(x), y = cdf, fill = Failures)) +
+  geom_col() +
+  geom_text(
+    aes(label = round(cdf,2), y = cdf + 0.01),
+    position = position_dodge(0.9),
+    size = 3,
+    vjust = 0
+  ) +
+  theme_mf() +
+  scale_fill_mf() +
+  labs(
+    title = "Cumulative Probability of X = 5 Failures.",
+    subtitle = "G(.3)",
+    x = "Failures prior to first success (x)",
+    y = "probability"
+  ) 
+```
+
+What is the probability the marketer fails to find someone who attended a game on x >= 5 trials before finding someone who attended a game on the next trial?
+
+```{r}
+p = 0.20
+n = 5
+# exact
+pgeom(q = n, prob = p, lower.tail = FALSE)
+# simulated
+mean(rgeom(n = 10000, prob = p) > n)
+```
+
+
+```{r fig.width=5, echo=FALSE}
+data.frame(x = 0:10, 
+           pmf = dgeom(x = -1:9, prob = p),
+           cdf = pgeom(q = -1:9, prob = p, lower.tail = FALSE)) %>%
+  mutate(Failures = ifelse(x >= n + 1, n + 1, "other")) %>%
+ggplot(aes(x = factor(x), y = cdf, fill = Failures)) +
+  geom_col() +
+  theme_mf() +
+  scale_fill_mf() +
+  geom_text(
+    aes(label = round(cdf,2), y = cdf + 0.01),
+    position = position_dodge(0.9),
+    size = 3,
+    vjust = 0
+  ) +
+  labs(title = "Cumulative Probability of X = 6 Failures (Right Tail).",
+       subtitle = "G(.3)",
+       x = "Failures prior to first success (x)",
+       y = "probability") 
+```
+
+The expected number of trials to achieve the first success is `1 / 0.20 = ` `r 1 / 0.20`, `V(X) = (1 - 0.20) / 0.20^2 = ` `r (1 - 0.20) / 0.20^2`? 
+
+```{r}
+p = 0.20
+# mean
+# exact
+1 / p
+# simulated
+mean(rgeom(n = 10000, prob = p)) + 1
+
+# Variance
+# exact
+(1 - p) / p^2
+# simulated
+var(rgeom(n = 100000, prob = p))
+```
+
+
+## Hypergeometric
+
+If $X$ is the count of successful events in a sample sof size $k$ *without replacement* from a population containing $M$ successes and $N$ non-successes, then $X$ is a random variable with a hypergeometric distribution
+
+$$f(x|m,n,k) = \frac{{{m}\choose{x}}{{n}\choose{k-x}}}{{m+n}\choose{k}}.$$
+
+with $E(X)=k\frac{m}{m+n}$ and $V(X) = k\frac{m}{m+n}\cdot\frac{m+n-k}{m+n}\cdot\frac{n}{m+n-1}$.  
+
+`phyper` returns the cumulative probability (percentile) `p` at the specified value (quantile) `q`.  `qhyper` returns the value (quantile) `q` at the specified cumulative probability (percentile) `p`.
+
+
+#### Example {-}
+
+What is the probability of selecting $X = 14$ red marbles from a sample of $k = 20$ taken from an urn containing $m = 70$ red marbles and $n = 30$ green marbles?
+
+Function `dhyper()` calculates the hypergeometric probability.
+
+```{r}
+x = 14
+m = 70
+n = 30
+k = 20
+
+dhyper(x = x, m = m, n = n, k = k)
+```
+
+The expected value is `r k * m / (m + n)` and variance is `r k * m / (m + n) * (m + n - k) / (m + n) * n / (m + n - 1)`. 
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, fig.height=3, fig.width=5}
+options(scipen = 999, digits = 2) # sig digits
+
+density = dhyper(x = 1:20, m = m, n = n, k = k)
+data.frame(red = 1:20, density) %>%
+  mutate(red14 = ifelse(red == 14, "x = 14", "other")) %>%
+ggplot(aes(x = factor(red), y = density, fill = red14)) +
+  geom_col() +
+  geom_text(
+    aes(label = round(density,2), y = density + 0.01),
+    position = position_dodge(0.9),
+    size = 3,
+    vjust = 0
+  ) +
+  theme_mf() +
+  scale_fill_mf() +
+  labs(title = "PMF of X = x Red Balls",
+       subtitle = "Hypergeometric(k = 20, M = 70, N = 30)",
+       x = "Number of red balls (x)",
+       y = "Density",
+       fill = "")
+```
+
+The hypergeometric random variable is similar to the binomial random variable except that it applies to situations of sampling *without* replacement from a small population.  As the population size increases, sampling without replacement converges to sampling *with* replacement, and the hypergeometric distribution converges to the binomial. What if the total population size is 250? 500? 1000?
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, fig.height=3, fig.width=5}
+library(tidyr)
+library(ggplot2)
+library(dplyr)
+options(scipen = 999, digits = 2) # sig digits
+
+x = 14
+m = 7000
+n = 3000
+k = 20
+
+d_binom <- dbinom(x = 1:20, size = k, prob = m / (m + n))
+df_binom <- data.frame(x = 1:20, Binomial = d_binom)
+p <- ggplot(df_binom, aes(x = x, y = Binomial)) +
+  geom_col()
+
+d_hyper_100 <- dhyper(x = 1:20, m = 70, n = 30, k = k)
+d_hyper_250 <- dhyper(x = 1:20, m = 175, n = 75, k = k)
+d_hyper_500 <- dhyper(x = 1:20, m = 350, n = 150, k = k)
+d_hyper_1000 <- dhyper(x = 1:20, m = 700, n = 300, k = k)
+df_hyper = data.frame(x = 1:20, 
+                Hyper_0100 = d_hyper_100, 
+                Hyper_0250 = d_hyper_250, 
+                Hyper_0500 = d_hyper_500, 
+                Hyper_1000 = d_hyper_1000)
+df_hyper_tidy <- gather(df_hyper, key = "dist", value = "density", -c(x))
+p + 
+  geom_line(data = df_hyper_tidy, aes(x = x, y = density, color = dist)) +
+  theme_mf() +
+  scale_color_mf() +
+  labs(title = "Hypergeometric Appox. to Binomial",
+       subtitle = "Hypergeometric approaches Binomial as population size increases.",
+       x = "Number of successful observations (x)",
+       y = "Density",
+       color = "")
+```
+
+
+## Gamma
+
+If $X$ is the interval until the $\alpha^{th}$ successful event when the average interval is $\theta$, then $X$ is a random variable with a gamma distribution $X \sim \Gamma(\alpha, \theta)$. The probability of an interval of $X = x$ is
+
+$$f(x; \alpha, \theta) = \frac{1}{\Gamma(\alpha)\theta^\alpha}x^{\alpha-1}e^{-x/\theta}.$$
+
+where $\Gamma(\alpha) = (1 - \alpha)!$ with $E(X) = \alpha \theta$ and $V(X) = \alpha \theta^2$.  
+
+#### Examples {-}
+
+On average, someone sends a money order once per 15 minutes ($\theta = .25$).  What is the probability someone sends $\alpha = 10$ money orders in less than $x = 3$ hours?*
+
+```{r}
+theta = 0.25
+alpha = 10
+pgamma(q = 3, shape = alpha, scale = 0.25)
+```
+
+
+```{r message=FALSE, warning=FALSE}
+data.frame(x = 0:1000 / 100, prob = pgamma(q = 0:1000 / 100, shape = alpha, scale = theta, lower.tail = TRUE)) %>%
+  mutate(Interval = ifelse(x >= 0 & x <= 3, "0 to 3", "other")) %>%
+ggplot(aes(x = x, y = prob, fill = Interval)) +
+  geom_area(alpha = 0.9) +
+  theme_mf() +
+  scale_fill_mf() +
+  labs(title = "X ~ Gam(alpha = 10, theta = .25)",
+       subtitle = "Probability of 10 events in X hours when the mean time to an event is .25 hours.",
+       x = "Interval (x)",
+       y = "pgamma") 
+
+```
+
