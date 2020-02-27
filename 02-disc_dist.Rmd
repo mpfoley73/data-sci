@@ -25,7 +25,7 @@ with $E(X) = \pi$ and $V(X) = \pi(1 - \pi)$.
 
 If $X$ is the count of successful events in $n$ identical and independent Bernoulli trials of success probability $\pi$, then $X$ is a random variable with a binomial distribution $X \sim  Bin(n,\pi)$ 
 
-$$f(x;\pi) = \frac{n!}{x!(n-x)!} \pi^x (1-\pi)^{n-x} \hspace{1cm} x \in (0, 1, ..., n), \hspace{2mm} \pi \in [0, 1]$$
+$$f(x;n, \pi) = \frac{n!}{x!(n-x)!} \pi^x (1-\pi)^{n-x} \hspace{1cm} x \in (0, 1, ..., n), \hspace{2mm} \pi \in [0, 1]$$
 
 with $E(X)=n\pi$ and $V(X) = n\pi(1-\pi)$.  
 
@@ -46,6 +46,35 @@ x <- sum(dat$high_risk == "Yes")
 n <- nrow(dat)
 p <- x / n
 print(p)
+```
+
+Here is the binomial distribution $f(x; \pi), \hspace{5mm} x \in [550, 700]$.
+
+```{r fig.height=3.5}
+events <- round(seq(from = 550, to = 700, length = 20), 0)
+density <- dbinom(x = events, prob = p, size = n)
+prob <- pbinom(q = events, prob = p, size = n, lower.tail = TRUE)
+df <- data.frame(events, density, prob)
+ggplot(df, aes(x = factor(events))) +
+#  geom_col(aes(y = density)) +
+  geom_col(aes(y = density), fill = mf_pal()(1), alpha = 0.8) +
+  geom_text(
+    aes(label = round(density, 3), y = density + 0.001),
+    position = position_dodge(0.9),
+    size = 3,
+    vjust = 0
+  ) +
+  geom_line(
+    data = df, 
+    aes(x = as.numeric(factor(events)), y = prob/40), 
+    color = mf_pal()(1), 
+    size = 1) +
+  scale_y_continuous(sec.axis = sec_axis(~.*40, name = "Cum Prob")) +
+  theme_mf() +
+  labs(title = "PMF and CDF of Binomial Distribution",
+       subtitle = "Bin(1315, 0.479).",
+       x = "Events (x)",
+       y = "Density")
 ```
 
 There are several ways to calculate a confidence interval for $\pi$.  One method is the **normal approximation** (Wald) interval.
@@ -93,72 +122,27 @@ The expected probability of no one being a high-risk drinker is $f(0;0.479) = \f
 dbinom(x = 0, size = n, p = p)
 ```
 
-The expected probability of half the population being a high-risk drinker, $f(658, 0.479)$ is impossible to write out, and slow to calculate.
+The expected probability of half the population being a high-risk drinker, $f(658, 0.479)$, is impossible to write out, and slow to calculate.
 
 ```{r}
 pbinom(q = .5*n, size = n, prob = p, lower.tail = FALSE)
 ```
 
-Fortunately, the normal distribution is a good approximation when $n$ is large.
+As n increases for fixed $\pi$, the binomial distribution approaches normal distribution $N(n\pi, n\pi(1−\pi))$.   The normal distribution is a good approximation when $n$ is large.
 
 ```{r}
 pnorm(q = 0.5, mean = p, sd = se, lower.tail = FALSE)
 ```
 
-```{r fig.height=3.5}
-events <- round(seq(from = 550, to = 700, length = 20), 0)
-density <- dbinom(x = events, prob = p, size = n)
-prob <- pbinom(q = events, prob = p, size = n, lower.tail = TRUE)
-df <- data.frame(events, density, prob)
-ggplot(df, aes(x = factor(events))) +
-  geom_col(aes(y = density)) +
-#  geom_col(fill = mf_pal()(6)[5]) +
-  geom_text(
-    aes(label = round(density, 3), y = density + 0.001),
-    position = position_dodge(0.9),
-    size = 3,
-    vjust = 0
-  ) +
-  geom_line(
-    data = df, 
-    aes(x = as.numeric(factor(events)), y = prob/40), 
-#    color = mf_pal()(6)[1], 
-    size = 1) +
-  scale_y_continuous(sec.axis = sec_axis(~.*40, name = "Cum Prob")) +
-#  theme_mf() +
-#  scale_fill_mf() +
-  labs(title = "PMF and CDF of Binomial Distribution",
-       subtitle = "Bin(1315, 0.479).",
-       x = "Events (x)",
-       y = "Density")
-```
-
-The expected probability of scoring 2 to 4 goals in a match is
-
-```{r}
-sum(dpois(x = c(2:4), lambda = lambda))
-```
-
-Or, using the cumulative probability distribution,
-
-```{r}
-ppois(q = 4, lambda = lambda) - ppois(q = 1, lambda = lambda)
-```
-
-
-#### Examples {-}
-
-What is the probability 2 out of 10 coin flips are heads if the probability of heads is 0.3?
-
-Function `dbinom()` calculates the binomial probability.
+Here are some more examples using smaller sample sizes.  The probability 2 out of 10 coin flips are heads if the probability of heads is 0.3: 
 
 ```{r}
 dbinom(x = 2, size = 10, prob = 0.3)
 ```
 
-A simulation of n = 10,000 random samples of size 10 gives a similar result.  `rbinom()` generates a random sample of numbers from the binomial distribution.
+Here is a simulation from n = 10,000 random samples of size 10.  `rbinom()` generates a random sample of numbers from the binomial distribution.
 
-```{r message=FALSE, warning=FALSE, fig.height=3, fig.width=5}
+```{r message=FALSE, warning=FALSE, fig.height=3.5, fig.width=5}
 data.frame(cnt = rbinom(n = 10000, size = 10, prob = 0.3)) %>%
   count(cnt) %>%
   ungroup() %>%
@@ -180,9 +164,7 @@ data.frame(cnt = rbinom(n = 10000, size = 10, prob = 0.3)) %>%
        caption = "Simulation from n = 10,000 binomial random samples.") 
 ```
 
-What is the probability of <=2 heads in 10 coin flips where probability of heads is 0.3?
-
-The cumulative probability is the sum of the first three bars in the simulation above.  Function `pbinom()` calculates the *cumulative* binomial probability.
+What is the probability of <=2 heads in 10 coin flips where probability of heads is 0.3?  The cumulative probability is the sum of the first three bars in the simulation above.  Function `pbinom()` calculates the *cumulative* binomial probability.
 
 ```{r}
 pbinom(q = 2, size = 10, prob = 0.3, lower.tail = TRUE)
@@ -222,8 +204,10 @@ df <- data.frame(
 mean(if_else(df$x <= 4 | df$y <= 4, 1, 0))
 ```
 
-The Bernoulli distribution is a special case of the binomial with $n = 1$. As n increases for fixed $\pi$, the binomial distribution approaches normal distribution $N(n\pi, n\pi(1−\pi))$.  The binomial distribution assumes independent trials - if sampling *without replacement from a finite population*, then the hypergeometric distribution is appropriate.
+A couple other points to remember:
 
+* The Bernoulli distribution is a special case of the binomial with $n = 1$. 
+* The binomial distribution assumes independent trials. If you sample *without replacement from a finite population*, use the hypergeometric distribution.
 
 
 ## Poission
@@ -286,7 +270,7 @@ density <- dpois(x = events, lambda = 3)
 prob <- ppois(q = events, lambda = 3, lower.tail = TRUE)
 df <- data.frame(events, density, prob)
 ggplot(df, aes(x = factor(events), y = density)) +
-  geom_col(fill = mf_pal()(6)[5]) +
+  geom_col() +
   geom_text(
     aes(label = round(density, 3), y = density + 0.01),
     position = position_dodge(0.9),
@@ -296,7 +280,6 @@ ggplot(df, aes(x = factor(events), y = density)) +
   geom_line(
     data = df, 
     aes(x = events, y = prob/4), 
-    color = mf_pal()(6)[1], 
     size = 1) +
   scale_y_continuous(sec.axis = sec_axis(~.*4, name = "Cum Prob")) +
   theme_mf() +
@@ -413,9 +396,9 @@ ggplot(df, aes(x = x, y = density)) +
 
 If $X = (X_1, X_2, \cdots, X_k)$ are the counts of successful events in $n$ identical and independent trials of success probabilities $\pi = (\pi_1, \pi_2, \cdots, \pi_k)$, then $X$ is a random variable with a multinomial distribution $X \sim  Mult(n,\pi)$ 
 
-$$f(x;\pi) = \frac{n!}{x_{1}! x_{2}! \cdots x_{k}!} \pi^{x_1} \pi^{x_2} \cdots \pi^{x_k} \hspace{1cm} x \in \{0, 1, ..., n \}, \hspace{2mm} \pi \in [0, 1]$$
+$$f(x; n, \pi) = \frac{n!}{x_{1}! x_{2}! \cdots x_{k}!} \pi^{x_1} \pi^{x_2} \cdots \pi^{x_k} \hspace{1cm} x \in \{0, 1, ..., n \}, \hspace{2mm} \pi \in [0, 1]$$
 
-with $E(X)=n\pi = (n \pi_1 + n \pi_2 + \cdots + n \pi_k)$ and covariance matrix
+with expected values vector $E(X_j) = n\pi_j$ and covariance matrix
 
 $$V(X) = \begin{bmatrix}n\pi_{1}(1-\pi_{1}) & -n\pi_{1}\pi_{2} & \cdots & -n\pi_{1}\pi_{k}\\
 -n\pi_{1}\pi_{2} & n\pi_{2}(1-\pi_{2}) & \cdots & -n\pi_{2}\pi_{k}\\
@@ -423,9 +406,9 @@ $$V(X) = \begin{bmatrix}n\pi_{1}(1-\pi_{1}) & -n\pi_{1}\pi_{2} & \cdots & -n\pi_
 -n\pi_{1}\pi_{k} & -n\pi_{2}\pi_{k} & \cdots & n\pi_{k}(1-\pi_{k})
 \end{bmatrix}$$
 
-The individual components of a multinomial random vector are binomial and have a binomial distribution, $X_i = Bin(n, \pi_i)$. 
+so $Var(X_j) = n \pi_j (1 - \pi_j)$ and $cov(X_j, X_k) = -n \pi_j \pi_k$.
 
-#### Examples {-}
+The individual components of a multinomial random vector are binomial and have a binomial distribution, $X_i = Bin(n, \pi_i)$. Binomial is a special case of multinomial for k = 2. 
 
 Suppose a city population is 20% black, 15% Hispanic, and 65% other.  From a random sample of $n = 12$ persons, what is the probability of 4 black and 8 other?
 
@@ -481,7 +464,7 @@ var(my_dat)
 ```{r message=FALSE, warning=FALSE, fig.height=3, fig.width=6, echo=FALSE}
 data.frame(x = 0:40, d = dnbinom(x = 0:40, size = 3, prob = 0.20)) %>%
   ggplot(aes(x = x, y = d, fill = x == 12)) +
-  geom_col() + 
+  geom_col(alpha = 0.8) + 
   theme_mf() +
   scale_fill_mf() +
   theme(legend.position = "none") +
@@ -553,7 +536,7 @@ data.frame(
 ) %>%
   mutate(Failures = ifelse(x <= n, n, "other")) %>%
   ggplot(aes(x = factor(x), y = cdf, fill = Failures)) +
-  geom_col() +
+  geom_col(alpha = 0.8) +
   geom_text(
     aes(label = round(cdf,2), y = cdf + 0.01),
     position = position_dodge(0.9),

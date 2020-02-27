@@ -5,3 +5,21 @@ library(mfstylr)
 
 # Discrete Analysis {#discrete_anal}
 
+
+## Goodness-of-Fit Test
+
+These notes rely heavily upon PSU STAT 504 [online notes](https://online.stat.psu.edu/stat504/node/60/).
+
+The **chi-square goodness-of-fit test**, tests whether observed frequency counts $O_j$ of the $j \in k$ levels of a categorical variable differ from expected frequency counts $E_j$ ($H_0$ is $O_j = E_j, \hspace{5mm} \forall j \in k$.
+
+There are two test statistics for this test, $X^2$ and $G^2$.  The sampling distribution of each test statistic approach the chi-squared distribution as $n$ becomes large.  Calculate both test statistic.  If the resulting p-values are close, then you can be confident that the large-sample approximation is working well.
+
+The Pearson goodness-of-fit statistic is
+
+$$X^2 = \sum \frac{(O_j - E_j)^2}{E_j}$$
+
+where $O_j = p_j n$ and $E_j = \pi_j n$.  The deviance statistic is 
+
+$$G^2 = 2 \sum O_j \log \left( \frac{O_j}{E_j} \right)$$
+
+If the saturated model (the observed data represent the fit of the saturated model, the most complex model possible with the given data) proportions $p_j$ equal equal the expected proportions $\pi_j$, 

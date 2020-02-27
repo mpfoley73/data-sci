@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.3 Likelihood | My Data Science Notes</title>
+  <title>3.3 Likelihood | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.3 Likelihood | My Data Science Notes" />
+  <meta property="og:title" content="3.3 Likelihood | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.3 Likelihood | My Data Science Notes" />
+  <meta name="twitter:title" content="3.3 Likelihood | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-02-26" />
+<meta name="date" content="2020-02-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="join-distributions.html"/>
-<link rel="next" href="regression.html"/>
+<link rel="next" href="discrete-anal.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -137,31 +137,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>1</b> Probability</a><ul>
 <li class="chapter" data-level="1.1" data-path="principles.html"><a href="principles.html"><i class="fa fa-check"></i><b>1.1</b> Principles</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>2</b> Inference</a></li>
-<li class="chapter" data-level="3" data-path="disc-dist.html"><a href="disc-dist.html"><i class="fa fa-check"></i><b>3</b> Discrete Distributions</a><ul>
-<li class="chapter" data-level="3.1" data-path="bernoulli.html"><a href="bernoulli.html"><i class="fa fa-check"></i><b>3.1</b> Bernoulli</a></li>
-<li class="chapter" data-level="3.2" data-path="binomial.html"><a href="binomial.html"><i class="fa fa-check"></i><b>3.2</b> Binomial</a></li>
-<li class="chapter" data-level="3.3" data-path="poission.html"><a href="poission.html"><i class="fa fa-check"></i><b>3.3</b> Poission</a></li>
-<li class="chapter" data-level="3.4" data-path="multinomial.html"><a href="multinomial.html"><i class="fa fa-check"></i><b>3.4</b> Multinomial</a></li>
-<li class="chapter" data-level="3.5" data-path="negative-binomial.html"><a href="negative-binomial.html"><i class="fa fa-check"></i><b>3.5</b> Negative-Binomial</a></li>
-<li class="chapter" data-level="3.6" data-path="geometric.html"><a href="geometric.html"><i class="fa fa-check"></i><b>3.6</b> Geometric</a></li>
-<li class="chapter" data-level="3.7" data-path="hypergeometric.html"><a href="hypergeometric.html"><i class="fa fa-check"></i><b>3.7</b> Hypergeometric</a></li>
-<li class="chapter" data-level="3.8" data-path="gamma.html"><a href="gamma.html"><i class="fa fa-check"></i><b>3.8</b> Gamma</a></li>
+<li class="chapter" data-level="2" data-path="disc-dist.html"><a href="disc-dist.html"><i class="fa fa-check"></i><b>2</b> Discrete Distributions</a><ul>
+<li class="chapter" data-level="2.1" data-path="bernoulli.html"><a href="bernoulli.html"><i class="fa fa-check"></i><b>2.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="2.2" data-path="binomial.html"><a href="binomial.html"><i class="fa fa-check"></i><b>2.2</b> Binomial</a></li>
+<li class="chapter" data-level="2.3" data-path="poission.html"><a href="poission.html"><i class="fa fa-check"></i><b>2.3</b> Poission</a></li>
+<li class="chapter" data-level="2.4" data-path="multinomial.html"><a href="multinomial.html"><i class="fa fa-check"></i><b>2.4</b> Multinomial</a></li>
+<li class="chapter" data-level="2.5" data-path="negative-binomial.html"><a href="negative-binomial.html"><i class="fa fa-check"></i><b>2.5</b> Negative-Binomial</a></li>
+<li class="chapter" data-level="2.6" data-path="geometric.html"><a href="geometric.html"><i class="fa fa-check"></i><b>2.6</b> Geometric</a></li>
+<li class="chapter" data-level="2.7" data-path="hypergeometric.html"><a href="hypergeometric.html"><i class="fa fa-check"></i><b>2.7</b> Hypergeometric</a></li>
+<li class="chapter" data-level="2.8" data-path="gamma.html"><a href="gamma.html"><i class="fa fa-check"></i><b>2.8</b> Gamma</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="cont-dist.html"><a href="cont-dist.html"><i class="fa fa-check"></i><b>3</b> Continuous Distributions</a><ul>
+<li class="chapter" data-level="3.1" data-path="normal.html"><a href="normal.html"><i class="fa fa-check"></i><b>3.1</b> Normal</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="normal.html"><a href="normal.html#example-2"><i class="fa fa-check"></i><b>3.1.1</b> Example</a></li>
+<li class="chapter" data-level="3.1.2" data-path="normal.html"><a href="normal.html#example-3"><i class="fa fa-check"></i><b>3.1.2</b> Example</a></li>
+<li class="chapter" data-level="3.1.3" data-path="normal.html"><a href="normal.html#example-4"><i class="fa fa-check"></i><b>3.1.3</b> Example</a></li>
+<li class="chapter" data-level="3.1.4" data-path="normal.html"><a href="normal.html#normal-approximation-to-binomial"><i class="fa fa-check"></i><b>3.1.4</b> Normal Approximation to Binomial</a></li>
+<li class="chapter" data-level="3.1.5" data-path="normal.html"><a href="normal.html#example-5"><i class="fa fa-check"></i><b>3.1.5</b> Example</a></li>
+<li class="chapter" data-level="3.1.6" data-path="normal.html"><a href="normal.html#example-6"><i class="fa fa-check"></i><b>3.1.6</b> Example</a></li>
+<li class="chapter" data-level="3.1.7" data-path="normal.html"><a href="normal.html#from-sample-to-population"><i class="fa fa-check"></i><b>3.1.7</b> From Sample to Population</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
+<li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="discrete-anal.html"><a href="discrete-anal.html"><i class="fa fa-check"></i><b>4</b> Discrete Analysis</a></li>
-<li class="chapter" data-level="5" data-path="cont-dist.html"><a href="cont-dist.html"><i class="fa fa-check"></i><b>5</b> Continuous Distributions</a><ul>
-<li class="chapter" data-level="5.1" data-path="normal.html"><a href="normal.html"><i class="fa fa-check"></i><b>5.1</b> Normal</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="normal.html"><a href="normal.html#example-2"><i class="fa fa-check"></i><b>5.1.1</b> Example</a></li>
-<li class="chapter" data-level="5.1.2" data-path="normal.html"><a href="normal.html#example-3"><i class="fa fa-check"></i><b>5.1.2</b> Example</a></li>
-<li class="chapter" data-level="5.1.3" data-path="normal.html"><a href="normal.html#example-4"><i class="fa fa-check"></i><b>5.1.3</b> Example</a></li>
-<li class="chapter" data-level="5.1.4" data-path="normal.html"><a href="normal.html#normal-approximation-to-binomial"><i class="fa fa-check"></i><b>5.1.4</b> Normal Approximation to Binomial</a></li>
-<li class="chapter" data-level="5.1.5" data-path="normal.html"><a href="normal.html#example-5"><i class="fa fa-check"></i><b>5.1.5</b> Example</a></li>
-<li class="chapter" data-level="5.1.6" data-path="normal.html"><a href="normal.html#example-6"><i class="fa fa-check"></i><b>5.1.6</b> Example</a></li>
-<li class="chapter" data-level="5.1.7" data-path="normal.html"><a href="normal.html#from-sample-to-population"><i class="fa fa-check"></i><b>5.1.7</b> From Sample to Population</a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>5.2</b> Join Distributions</a></li>
-<li class="chapter" data-level="5.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>5.3</b> Likelihood</a></li>
-</ul></li>
+<li class="chapter" data-level="5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5</b> Inference</a></li>
 <li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
 <li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
 <li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a><ul>
@@ -169,7 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Ordinal Logistic Regression</a></li>
 <li class="chapter" data-level="7.3" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.3</b> Poisson Regression</a><ul>
-<li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-9"><i class="fa fa-check"></i>Example</a></li>
+<li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-8"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
@@ -199,7 +199,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>13.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="13.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>13.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="13.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>13.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="13.4" data-path="example-10.html"><a href="example-10.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
+<li class="chapter" data-level="13.4" data-path="example-9.html"><a href="example-9.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
 <li class="chapter" data-level="13.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>13.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>14</b> Principal Components Analysis</a></li>
@@ -237,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="likelihood" class="section level2">
-<h2><span class="header-section-number">5.3</span> Likelihood</h2>
+<h2><span class="header-section-number">3.3</span> Likelihood</h2>
 <p>The <em>likelihood function</em> is the likelihood of a parameter <span class="math inline">\(\theta\)</span> given an observed value of the random variable <span class="math inline">\(X\)</span>. The likelihood function is identical to the probability distribution function, except that it reverses which variable is considered fixed. E.g., the binomial <em>probability</em> distribution expresses the probability that <span class="math inline">\(X = x\)</span> given the success probability <span class="math inline">\(\theta = \pi\)</span>.</p>
 <p><span class="math display">\[f(x|\pi) = \frac{n!}{x!(n-x)!} \pi^x (1-\pi)^{n-x}.\]</span></p>
 <p>The corresponding <em>likelihood</em> function expresses the probability that <span class="math inline">\(\pi = p\)</span> given the observed value <span class="math inline">\(x\)</span>.</p>
@@ -247,11 +247,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Calculating the maximum is usually simplified using the <em>log-likelihood</em>, <span class="math inline">\(l(\theta|x) = \log L(\theta|x)\)</span>. For the binomial distribution, <span class="math inline">\(l(p|x) = x \log p + (n - x) \log (1 - p)\)</span>. Frequently you derive loglikelihood from a sample. The overall likelihood is the product of the individual likelihoods, and the overall loglikelihood is the log of the overall likelihood.</p>
 <p><span class="math display">\[l(\theta|x) = \log \prod_{i=1}^n f(x_i|\theta)\]</span></p>
 <p>Here are plots of the binomial log-likelihood of <span class="math inline">\(pi\)</span> for several values of <span class="math inline">\(X\)</span> from a sample of size <span class="math inline">\(n = 5\)</span>.</p>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-49-1.png" width="480" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-59-1.png" width="480" /></p>
 <p>As the total sample size <span class="math inline">\(n\)</span> grows, the loglikelihood function becomes more sharply peaked around its maximum, and becomes nearly quadratic (i.e. a parabola, if there is a single parameter). Here is the same plot with <span class="math inline">\(n = 500\)</span>.</p>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-50-1.png" width="480" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-60-1.png" width="480" /></p>
 <p>The value of <span class="math inline">\(\theta\)</span> that maximizes <span class="math inline">\(l\)</span> (and <span class="math inline">\(L\)</span>) is the <em>maximum-likelihood estimator</em> (MLE) of <span class="math inline">\(\theta\)</span>, <span class="math inline">\(\hat{\theta}\)</span>. E.g., suppose you have an experiment of <span class="math inline">\(n = 5\)</span> Bernoulli trials <span class="math inline">\(\left(X \sim Bin(5, \pi) \right)\)</span> with and <span class="math inline">\(X = 3\)</span> successful events. A plot of <span class="math inline">\(L(p|x) = p^3(1 - p)^2\)</span> shows the MLE is at <span class="math inline">\(p = 0.6\)</span>.</p>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-51-1.png" width="480" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-61-1.png" width="480" /></p>
 <p>This approach is called <em>maximum-likelihood</em> estimation. MLE usually involves setting the derivatives to zero and solving for <span class="math inline">\(theta\)</span>.</p>
 
 </div>
@@ -262,7 +262,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="join-distributions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="discrete-anal.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>
