@@ -222,19 +222,8 @@ The following notes rely heavily upon [this UVA web page](https://data.library.v
 
 The ordinal logistic regression model is
 
-$$logit(P(Y \le j)) = \beta_{j0} + \beta_{j1}x_1 + \cdots + \beta_{jp}x_p $$
-
-where 
-
-$$logit(P(Y \le j)) = log \frac{P(Y \le j)}{P(Y > j)}$$
-
-for each of the $j \in [1, J-1]$ levels of the ordinal outcome variable $Y$ and $p$ predictors. From the **parallel lines assumption**, the intercepts are different for each category but the slopes are constant across categories, and this simplifies the equation above to
-
-$$logit(P(Y \le j)) = \beta_{j0} + \beta_{1}x_1 + \cdots + \beta_{p}x_p.$$
-
-In R, the `polr()` function parameterizes the model with $\eta_i = -\beta_i$, so 
-
-$$logit(P(Y \le j)) = \beta_{j0} - \eta_{1}x_1 - \cdots - \eta_{p}x_p.$$
+$$logit[P(Y \le j)] = \alpha_j - \beta X, \hspace{5mm} j \in [1, J-1]$$
+where $j \in [1, J-1]$ are the levels of the ordinal outcome variable $Y$.  The proportional odds model assumes there is a common set of slope parameters $\beta$ for the predictors.  The ordinal outcomes are distinguished by the $J-1$ intercepts $\alpha_j$.  The benchmark level is $J$.  "Logit" means log-odds, so $logit[P(Y \le j)] = \log[P(Y \le j) / P(Y \gt j)]$.
 
 Suppose we want to model the probability a respondent holds a political ideology ["Very Liberal", "Slightly Liberal", "Moderate", "Slightly Conservative", "Very Conservative"] given their party affiliation ["Republican", "Democrat"].
 
@@ -264,18 +253,80 @@ Fit a proportional odds model with the `MASS::polr()` function (polr stands for 
 pom <- MASS::polr(ideo ~ party, data = dat)
 
 summary(pom)
-broom::tidy(pom)
 ```
 
-You can use the model to predict probabilities for holding each ideology.
+The log-odds a Democrat identifies as “Very Liberal” or lower is 
+$$logit[P(Y \lt 1)] = -2.4690 - (-0.9745)(1) = -1.4945.$$
+Solve $logit[P(Y \le 1)] = \log[P(Y \le 1) / P(Y \gt 1)]$ for $P(Y \le 1)$ to get the probability a Democrat identifies as “Very Liberal” or lower as $P(Y \le 1) = exp(-1.4945) / (1 + exp(-1.4945)) = 0.183$. 
+
+
+The log odds a Democrat identifies as “Slightly Liberal” or lower is
+$$logit[P(Y \lt 2)] = -1.4745 - (-0.9745)(1) = -0.5.$$
+The corresponding probability is $P(Y \le 2) = exp(-0.5) / (1 + exp(-0.5)) = 0.378$. 
+
+To get the probability a Democrat identifies as "Slightly Liberal", just subtract the adjacent cumulative probabilities, $P(Y \le 2) - P(Y \le 1) = 0.378 = 0.183 = 0.194$.  That's what's happening when you use the model to predict the level probabilities.
 
 ```{r}
 predict(pom, newdata = data.frame(party = "Dem"), type = "probs")
 ```
 
+The baseline for the model was "Republican", so the log-odds a Republicn identifies as "Very Liberal" or lower is 
+$$logit[P(Y \lt 1)] = -2.4690 - (-0.9745)(0) = -2.4690$$
+with corresponding probability $P(Y \le 1) = exp(-2.4690) / (1 + exp(-2.4690)) = 0.078$.  And so on.
+
 ```{r}
 predict(pom, newdata = data.frame(party = "Rep"), type = "probs")
 ```
+
+Here is a manual calculation of the probabilities.  Note the `zeta` variable instead of `beta` because the model fits $\alpha_j - \beta X$ instead of $\alpha_j + \beta X$, and so it uses a new variable $\zeta = -\beta$.  Technically, the model could be expressed $logit[P(Y \le j)] = \alpha_j + \zeta X$.
+
+```{r}
+library(stringr)
+# cum log odds, dems an reps
+dclo <- c(pom$zeta - pom$coefficients)
+rclo <- c(pom$zeta - 0)
+# cum probs, dems and reps
+dcp <- exp(dclo) / (1 + exp(dclo))
+rcp <- exp(rclo) / (1 + exp(rclo))
+# fix the names and add 1 for "Very..."
+names(dcp) <- str_sub(names(dcp), start = 1, end = str_locate(names(dcp), "\\|")[, 1] - 1)
+names(rcp) <- str_sub(names(rcp), start = 1, end = str_locate(names(rcp), "\\|")[, 1] - 1)
+dcp <- c(dcp, 1)
+rcp <- c(rcp, 1)
+names(dcp) <- c(names(dcp)[1:4], "Very Conservative")
+names(rcp) <- c(names(rcp)[1:4], "Very Conservative")
+# Democrat probs
+(dp <- dcp - lag(dcp, 1, 0))
+(rp <- rcp - lag(rcp, 1, 0))
+```
+
+The "proportional odds" part of the proportional odds model is that the ratios of the $J - 1$ odds-ratios are identical for the different levels of the predictors.  Here we have a single predictor, `party`.  The odds ratios for `party = Dem` are
+
+```{r}
+(dcp / (1 - dcp)) / (rcp / (1 - rcp))
+```
+
+Which is to say, any level of ideology $j$, the estimated odds that a Democrat’s ideology is more liberal $(\lt j)$ rather than more conservative $(\ge j)$ is about 2.65 times a Republicans odds.
+
+The log of these odds ratios is the coefficient estimator for `party`.
+```{r}
+log((dcp / (1 - dcp)) / (rcp / (1 - rcp)))
+```
+
+Always check the assumption of proportional odds. One way to do this is by comparing the proportional odds model with a multinomial logit model, also called an unconstrained baseline logit model. The multinomial logit model models *unordered* responses and fits a slope to each level of the $J – 1$ responses. The proportional odds model is nested in the multinomial model, so can use a likelihood ratio test to see if the models are statistically different.
+
+```{r}
+mlm <- nnet::multinom(ideo ~ party, data = dat)
+```
+
+Calculate the deviance test statistic $D = -2 loglik(\beta)$.
+
+```{r}
+G <- -2 * (logLik(pom)[1] - logLik(mlm)[1])
+pchisq(G, df = length(pom$zeta) - 1, lower.tail = FALSE)
+```
+
+The p-value is high, so the proportional odds model fits as well as the more complex multinomial logit model.
 
 
 ## Poisson Regression
