@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-02-27" />
+<meta name="date" content="2020-02-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,70 @@
 
 
 
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -97,7 +161,9 @@
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="discrete-anal.html"><a href="discrete-anal.html"><i class="fa fa-check"></i><b>4</b> Discrete Analysis</a><ul>
-<li class="chapter" data-level="4.1" data-path="goodness-of-fit-test.html"><a href="goodness-of-fit-test.html"><i class="fa fa-check"></i><b>4.1</b> Goodness-of-Fit Test</a></li>
+<li class="chapter" data-level="4.1" data-path="goodness-of-fit-test.html"><a href="goodness-of-fit-test.html"><i class="fa fa-check"></i><b>4.1</b> Goodness-of-Fit Test</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="goodness-of-fit-test.html"><a href="goodness-of-fit-test.html#one-way-tables"><i class="fa fa-check"></i><b>4.1.1</b> One-Way Tables</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5</b> Inference</a></li>
 <li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
@@ -176,15 +242,83 @@
             <section class="normal" id="section-">
 <div id="goodness-of-fit-test" class="section level2">
 <h2><span class="header-section-number">4.1</span> Goodness-of-Fit Test</h2>
-<p>These notes rely heavily upon PSU STAT 504 <a href="https://online.stat.psu.edu/stat504/node/60/">online notes</a>.</p>
+<p>These notes rely heavily upon PSU STATS 504 <a href="https://online.stat.psu.edu/stat504/node/60/">course notes</a>.</p>
 <p>The <strong>chi-square goodness-of-fit test</strong>, tests whether observed frequency counts <span class="math inline">\(O_j\)</span> of the <span class="math inline">\(j \in k\)</span> levels of a categorical variable differ from expected frequency counts <span class="math inline">\(E_j\)</span> (<span class="math inline">\(H_0\)</span> is <span class="math inline">\(O_j = E_j, \hspace{5mm} \forall j \in k\)</span>.</p>
-<p>There are two test statistics for this test, <span class="math inline">\(X^2\)</span> and <span class="math inline">\(G^2\)</span>. The sampling distribution of each test statistic approach the chi-squared distribution as <span class="math inline">\(n\)</span> becomes large. Calculate both test statistic. If the resulting p-values are close, then you can be confident that the large-sample approximation is working well.</p>
+<p>There are two test statistics for this test, Pearson <span class="math inline">\(X^2\)</span> and deviance <span class="math inline">\(G^2\)</span>. The sampling distribution of each test statistic approach the chi-squared distribution as <span class="math inline">\(n\)</span> becomes large. Calculate both test statistic. If the resulting p-values are close, then you can be confident that the large-sample approximation is working well.</p>
 <p>The Pearson goodness-of-fit statistic is</p>
 <p><span class="math display">\[X^2 = \sum \frac{(O_j - E_j)^2}{E_j}\]</span></p>
 <p>where <span class="math inline">\(O_j = p_j n\)</span> and <span class="math inline">\(E_j = \pi_j n\)</span>. The deviance statistic is</p>
 <p><span class="math display">\[G^2 = 2 \sum O_j \log \left( \frac{O_j}{E_j} \right)\]</span></p>
-<p>If the saturated model (the observed data represent the fit of the saturated model, the most complex model possible with the given data) proportions <span class="math inline">\(p_j\)</span> equal equal the expected proportions <span class="math inline">\(\pi_j\)</span>,</p>
+<p>If the saturated model (the observed data represent the fit of the saturated model, the most complex model possible with the data) proportions <span class="math inline">\(p_j\)</span> equal equal the expected proportions <span class="math inline">\(\pi_j\)</span>, <span class="math inline">\(X^2\)</span> and <span class="math inline">\(G^2\)</span> are zero. Large values indicate the data do not agree well with the proposed model.</p>
+<p>As <span class="math inline">\(n \rightarrow \infty\)</span>, <span class="math inline">\(G^2\)</span> and <span class="math inline">\(X^2\)</span> approach <span class="math inline">\(\chi_{k-1}^2\)</span> where <span class="math inline">\(k\)</span> is the number of categorical variable levels. You can therefore run a chi-square test of significance using the <span class="math inline">\(G^2\)</span> and <span class="math inline">\(X^2\)</span> test statistics. The chi-square test provides reliable results when at least 80% of <span class="math inline">\(E_j &gt;= 5\)</span>.</p>
+<div id="one-way-tables" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> One-Way Tables</h3>
+<p>A one-way frequency table is a frequency table for a single categorical table.</p>
+<p>Here is a simple chi-square test. A researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the (<span class="math inline">\(n = 1611\)</span>) offspring phenotypes.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="goodness-of-fit-test.html#cb1-1"></a>o &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">926</span>, <span class="dv">288</span>, <span class="dv">293</span>, <span class="dv">104</span>)</span>
+<span id="cb1-2"><a href="goodness-of-fit-test.html#cb1-2"></a>cell_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tall cut-leaf&quot;</span>, <span class="st">&quot;tall potato-leaf&quot;</span>, <span class="st">&quot;dwarf cut-leaf&quot;</span>, <span class="st">&quot;dwarf potato-leaf&quot;</span>)</span>
+<span id="cb1-3"><a href="goodness-of-fit-test.html#cb1-3"></a><span class="kw">names</span>(o) &lt;-<span class="st"> </span>cell_names</span>
+<span id="cb1-4"><a href="goodness-of-fit-test.html#cb1-4"></a><span class="kw">print</span>(o)</span></code></pre></div>
+<pre><code>##     tall cut-leaf  tall potato-leaf    dwarf cut-leaf dwarf potato-leaf 
+##               926               288               293               104</code></pre>
+<p>The genetic theory is the four phenotypes should occur with relative frequencies 9 : 3 : 3 : 1.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="goodness-of-fit-test.html#cb3-1"></a>pi &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(<span class="dv">9</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb3-2"><a href="goodness-of-fit-test.html#cb3-2"></a>e &lt;-<span class="st"> </span><span class="dv">1611</span> <span class="op">*</span><span class="st"> </span>pi</span>
+<span id="cb3-3"><a href="goodness-of-fit-test.html#cb3-3"></a><span class="kw">names</span>(e) &lt;-<span class="st"> </span>cell_names</span>
+<span id="cb3-4"><a href="goodness-of-fit-test.html#cb3-4"></a><span class="kw">print</span>(e)</span></code></pre></div>
+<pre><code>##     tall cut-leaf  tall potato-leaf    dwarf cut-leaf dwarf potato-leaf 
+##          906.1875          302.0625          302.0625          100.6875</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="goodness-of-fit-test.html#cb5-1"></a><span class="kw">data.frame</span>(o, e) <span class="op">%&gt;%</span></span>
+<span id="cb5-2"><a href="goodness-of-fit-test.html#cb5-2"></a><span class="st">  </span><span class="kw">rownames_to_column</span>() <span class="op">%&gt;%</span></span>
+<span id="cb5-3"><a href="goodness-of-fit-test.html#cb5-3"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="op">-</span>rowname) <span class="op">%&gt;%</span></span>
+<span id="cb5-4"><a href="goodness-of-fit-test.html#cb5-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">as.factor</span>(rowname), <span class="dt">y =</span> value, <span class="dt">fill =</span> name)) <span class="op">+</span></span>
+<span id="cb5-5"><a href="goodness-of-fit-test.html#cb5-5"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>()) <span class="op">+</span></span>
+<span id="cb5-6"><a href="goodness-of-fit-test.html#cb5-6"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">round</span>(value, <span class="dv">0</span>)), <span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.9</span>)) <span class="op">+</span></span>
+<span id="cb5-7"><a href="goodness-of-fit-test.html#cb5-7"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb5-8"><a href="goodness-of-fit-test.html#cb5-8"></a><span class="st">  </span><span class="kw">scale_fill_mf</span>() <span class="op">+</span></span>
+<span id="cb5-9"><a href="goodness-of-fit-test.html#cb5-9"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Observed vs Expected&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-4-1.png" width="576" /></p>
+<p>The <span class="math inline">\(X^2\)</span> statistic is <code>x2 &lt;- sum((o - e)^2 / e) =</code> 1.468722 and the <span class="math inline">\(G^2\)</span> statistic is <code>g2 &lt;- 2 * sum(o * log(o / e)) =</code> 1.4775868, so nearly identical. The chi-sq test p-values are also nearly identical.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="goodness-of-fit-test.html#cb6-1"></a><span class="kw">pchisq</span>(<span class="dt">q =</span> x2, <span class="dt">df =</span> <span class="kw">length</span>(o) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.6895079</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="goodness-of-fit-test.html#cb8-1"></a><span class="kw">pchisq</span>(<span class="dt">q =</span> g2, <span class="dt">df =</span> <span class="kw">length</span>(o) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.6874529</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="goodness-of-fit-test.html#cb10-1"></a>alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></span>
+<span id="cb10-2"><a href="goodness-of-fit-test.html#cb10-2"></a>df &lt;-<span class="st"> </span><span class="kw">length</span>(e) <span class="op">-</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb10-3"><a href="goodness-of-fit-test.html#cb10-3"></a>lrr =<span class="st"> </span><span class="op">-</span><span class="ot">Inf</span></span>
+<span id="cb10-4"><a href="goodness-of-fit-test.html#cb10-4"></a>urr =<span class="st"> </span><span class="kw">qchisq</span>(<span class="dt">p =</span> alpha, <span class="dt">df =</span> df, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb10-5"><a href="goodness-of-fit-test.html#cb10-5"></a><span class="co"># data.frame(chi2 = 0:2500 / 100) %&gt;%</span></span>
+<span id="cb10-6"><a href="goodness-of-fit-test.html#cb10-6"></a><span class="co">#   mutate(density = dchisq(x = chi2, df = df)) %&gt;%</span></span>
+<span id="cb10-7"><a href="goodness-of-fit-test.html#cb10-7"></a><span class="co">#   mutate(rr = ifelse(chi2 &lt; lrr | chi2 &gt; urr, density, 0)) %&gt;%</span></span>
+<span id="cb10-8"><a href="goodness-of-fit-test.html#cb10-8"></a><span class="co"># ggplot() +</span></span>
+<span id="cb10-9"><a href="goodness-of-fit-test.html#cb10-9"></a><span class="co">#   geom_line(aes(x = chi2, y = density)) +</span></span>
+<span id="cb10-10"><a href="goodness-of-fit-test.html#cb10-10"></a><span class="co">#   geom_area(aes(x = chi2, y = rr), fill = &quot;red&quot;, alpha = 0.3) +</span></span>
+<span id="cb10-11"><a href="goodness-of-fit-test.html#cb10-11"></a><span class="co"># #  geom_vline(aes(xintercept = pi_0), color = &quot;black&quot;) +</span></span>
+<span id="cb10-12"><a href="goodness-of-fit-test.html#cb10-12"></a><span class="co">#   geom_vline(aes(xintercept = chisq), color = &quot;red&quot;) +</span></span>
+<span id="cb10-13"><a href="goodness-of-fit-test.html#cb10-13"></a><span class="co">#   labs(title = bquote(&quot;Chi-Squared Goodness-of-Fit Test&quot;),</span></span>
+<span id="cb10-14"><a href="goodness-of-fit-test.html#cb10-14"></a><span class="co">#        subtitle = bquote(&quot;Chisq =&quot;~.(round(chisq,2))~&quot;, n =&quot;~.(n)~&quot;, alpha =&quot;~.(alpha)~&quot;, chisq_crit =&quot;~.(round(urr,2))~&quot;, p-value =&quot;~.(round(p_value,3))),</span></span>
+<span id="cb10-15"><a href="goodness-of-fit-test.html#cb10-15"></a><span class="co">#        x = &quot;chisq&quot;,</span></span>
+<span id="cb10-16"><a href="goodness-of-fit-test.html#cb10-16"></a><span class="co">#        y = &quot;Density&quot;) +</span></span>
+<span id="cb10-17"><a href="goodness-of-fit-test.html#cb10-17"></a><span class="co">#   theme(legend.position=&quot;none&quot;)</span></span></code></pre></div>
+<p>Replace the summation with a square root in the test statistic formulas to get the Pearson and deviance residuals.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="goodness-of-fit-test.html#cb11-1"></a>e2_res &lt;-<span class="st"> </span><span class="kw">sqrt</span>((o <span class="op">-</span><span class="st"> </span>e)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>e)</span>
+<span id="cb11-2"><a href="goodness-of-fit-test.html#cb11-2"></a>g2_res &lt;-<span class="st"> </span><span class="kw">sign</span>(o <span class="op">-</span><span class="st"> </span>e) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">abs</span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>o <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(o <span class="op">/</span><span class="st"> </span>e)))</span></code></pre></div>
+<p>Here is a summary of the analysis.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="goodness-of-fit-test.html#cb12-1"></a><span class="kw">data.frame</span>(o, e, e2_res, g2_res)</span></code></pre></div>
+<pre><code>##                     o        e    e2_res    g2_res
+## tall cut-leaf     926 906.1875 0.6581581  6.328906
+## tall potato-leaf  288 302.0625 0.8091222 -5.240221
+## dwarf cut-leaf    293 302.0625 0.5214343 -4.224967
+## dwarf potato-leaf 104 100.6875 0.3301172  2.594764</code></pre>
+<p>You can perform the chi-square test of the Pearson test statistic with <code>chisq.test()</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="goodness-of-fit-test.html#cb14-1"></a><span class="kw">chisq.test</span>(o, <span class="dt">p =</span> pi)</span></code></pre></div>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  o
+## X-squared = 1.4687, df = 3, p-value = 0.6895</code></pre>
 
+</div>
 </div>
 <!-- </div> -->
             </section>

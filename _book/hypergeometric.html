@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-02-27" />
+<meta name="date" content="2020-02-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -160,7 +160,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="discrete-anal.html"><a href="discrete-anal.html"><i class="fa fa-check"></i><b>4</b> Discrete Analysis</a></li>
+<li class="chapter" data-level="4" data-path="discrete-anal.html"><a href="discrete-anal.html"><i class="fa fa-check"></i><b>4</b> Discrete Analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="goodness-of-fit-test.html"><a href="goodness-of-fit-test.html"><i class="fa fa-check"></i><b>4.1</b> Goodness-of-Fit Test</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="goodness-of-fit-test.html"><a href="goodness-of-fit-test.html#one-way-tables"><i class="fa fa-check"></i><b>4.1.1</b> One-Way Tables</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5</b> Inference</a></li>
 <li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
 <li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
@@ -254,9 +258,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb81-6"><a href="hypergeometric.html#cb81-6"></a><span class="kw">dhyper</span>(<span class="dt">x =</span> x, <span class="dt">m =</span> m, <span class="dt">n =</span> n, <span class="dt">k =</span> k)</span></code></pre></div>
 <pre><code>## [1] 0.21</code></pre>
 <p>The expected value is 14 and variance is 3.39.</p>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-46-1.png" width="480" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-45-1.png" width="480" /></p>
 <p>The hypergeometric random variable is similar to the binomial random variable except that it applies to situations of sampling <em>without</em> replacement from a small population. As the population size increases, sampling without replacement converges to sampling <em>with</em> replacement, and the hypergeometric distribution converges to the binomial. What if the total population size is 250? 500? 1000?</p>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-47-1.png" width="480" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-46-1.png" width="480" /></p>
 </div>
 </div>
             </section>
