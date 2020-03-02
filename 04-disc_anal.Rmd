@@ -10,9 +10,9 @@ library(mfstylr)
 
 These notes rely heavily upon PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/60/).
 
-The **chi-square goodness-of-fit test**, tests whether observed frequency counts $O_j$ of the $j \in k$ levels of a categorical variable differ from expected frequency counts $E_j$ ($H_0$ is $O_j = E_j, \hspace{5mm} \forall j \in k$.
+The **chi-square goodness-of-fit test**, tests whether observed frequency counts $O_j$ of the $j \in (0, 1, \cdots k)$ levels of a categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.
 
-There are two test statistics for this test, Pearson $X^2$ and deviance $G^2$.  The sampling distribution of each test statistic approach the chi-squared distribution as $n$ becomes large.  Calculate both test statistic.  If the resulting p-values are close, then you can be confident that the large-sample approximation is working well.
+There are two test statistics for this test, Pearson $X^2$ and deviance $G^2$.  The sampling distribution of each test statistic approach the chi-squared distribution as $n$ becomes large.  It's a good idea to calculate both test statistics.
 
 The Pearson goodness-of-fit statistic is
 
@@ -22,16 +22,16 @@ where $O_j = p_j n$ and $E_j = \pi_j n$.  The deviance statistic is
 
 $$G^2 = 2 \sum O_j \log \left( \frac{O_j}{E_j} \right)$$
 
-If the saturated model (the observed data represent the fit of the saturated model, the most complex model possible with the data) proportions $p_j$ equal equal the expected proportions $\pi_j$, $X^2$ and $G^2$ are zero.  Large values indicate the data do not agree well with the proposed model.
+If the saturated model (the observed data represent the fit of the saturated model, the most complex model possible with the data) proportions $p_j$ equal equal the expected proportions $\pi_j$, $X^2$ and $G^2$ will equal zero.  Large values indicate the data do not agree well with the proposed model.
 
-As $n \rightarrow \infty$, $G^2$ and $X^2$ approach $\chi_{k-1}^2$ where $k$ is the number of categorical variable levels.  You can therefore run a chi-square test of significance using the $G^2$ and $X^2$ test statistics.  The chi-square test provides reliable results when at least 80% of $E_j >= 5$.  
+As $n \rightarrow \infty$, $G^2$ and $X^2$ approach $\chi_{k-1}^2$ where $k$ is the number of n-way table cells.  You can therefore run a chi-square test of significance using the $G^2$ and $X^2$ test statistics.  The chi-square test provides reliable results when at least 80% of $E_j >= 5$.  
 
 
 ### One-Way Tables
 
 A one-way frequency table is a frequency table for a single categorical table.
 
-Here is a simple chi-square test.  A researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the ($n = 1611$) offspring phenotypes.
+Here is a simple chi-square test example.  A researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the ($n = 1,611$) offspring phenotypes.
 
 ```{r}
 o <- c(926, 288, 293, 104)
@@ -40,11 +40,11 @@ names(o) <- cell_names
 print(o)
 ```
 
-The genetic theory is the four phenotypes should occur with relative frequencies 9 : 3 : 3 : 1.
+The four phenotypes are expected to occur with relative frequencies 9:3:3:1.
 
 ```{r}
 pi <- c(9, 3, 3, 1) / (9 + 3 + 3 + 1)
-e <- 1611 * pi
+e <- sum(o) * pi
 names(e) <- cell_names
 print(e)
 ```
@@ -73,32 +73,54 @@ pchisq(q = x2, df = length(o) - 1, lower.tail = FALSE)
 pchisq(q = g2, df = length(o) - 1, lower.tail = FALSE)
 ```
 
-```{r warning=FALSE, message=FALSE}
-alpha <- 0.05
-df <- length(e) - 1
-lrr = -Inf
-urr = qchisq(p = alpha, df = df, lower.tail = FALSE)
-# data.frame(chi2 = 0:2500 / 100) %>%
-#   mutate(density = dchisq(x = chi2, df = df)) %>%
-#   mutate(rr = ifelse(chi2 < lrr | chi2 > urr, density, 0)) %>%
-# ggplot() +
-#   geom_line(aes(x = chi2, y = density)) +
-#   geom_area(aes(x = chi2, y = rr), fill = "red", alpha = 0.3) +
-# #  geom_vline(aes(xintercept = pi_0), color = "black") +
-#   geom_vline(aes(xintercept = chisq), color = "red") +
-#   labs(title = bquote("Chi-Squared Goodness-of-Fit Test"),
-#        subtitle = bquote("Chisq ="~.(round(chisq,2))~", n ="~.(n)~", alpha ="~.(alpha)~", chisq_crit ="~.(round(urr,2))~", p-value ="~.(round(p_value,3))),
-#        x = "chisq",
-#        y = "Density") +
-#   theme(legend.position="none")
+You can also perform the chi-square test of the Pearson test statistic with `chisq.test()`.
+
+```{r}
+chisq.test(o, p = pi)
 ```
 
-Replace the summation with a square root in the test statistic formulas to get the Pearson and deviance residuals.
+The p-values based on the $\chi^2$ distribution with 3 d.f. are about 0.69, so we fail to reject the null hypothesis - the data are consistent with the genetic theory. The $\chi^2$ value is well outside the $\alpha = 0.05$ level range of regression.
+
+```{r warning=FALSE, message=FALSE, fig.height=4}
+alpha <- 0.05
+dof <- length(e) - 1
+lrr = -Inf
+p_val <- pchisq(q = x2, df = length(o) - 1, lower.tail = FALSE)
+urr = qchisq(p = alpha, df = dof, lower.tail = FALSE)
+ data.frame(chi2 = seq(from = 0, to = 20, by = .1)) %>%
+   mutate(density = dchisq(x = chi2, df = dof)) %>%
+   mutate(rr = ifelse(chi2 < lrr | chi2 > urr, density, 0)) %>%
+ ggplot() +
+   geom_line(aes(x = chi2, y = density), color = mf_pal(12)(12)[12], size = 0.8) +
+   geom_area(aes(x = chi2, y = rr), fill = mf_pal(12)(12)[2], alpha = 0.8) +
+   geom_vline(aes(xintercept = x2), color = mf_pal(12)(12)[11], size = 0.8) +
+   labs(title = bquote("Chi-Squared Goodness-of-Fit Test"),
+        subtitle = paste0("Chisq=", round(x2,2), ", ",
+                          "Critical value=", round(urr,2), ", ",
+                          "p-value=", round(p_val,3), "."
+                          ),
+        x = "chisq",
+        y = "Density") +
+   theme(legend.position="none") +
+   theme_mf()
+```
+
+Inspect the residuals to learn which differences may lead to rejecting the null hypothesis.  The Pearson and deviance statistics are sums of individual cell comparisons which can be termed the squared "residuals", $X^2 = \sum r_j^2$ and $G^2 = \sum G_j^2$.  The expected value of a $\chi^2$ random variable is its d.f., $k-1$, and the typical size of any $\chi^2$ value is be $(k - 1) / k$, so for the typical residual should be within 2 $\sqrt{(k - 1) / k}$.
 
 ```{r}
 e2_res <- sqrt((o - e)^2 / e)
 g2_res <- sign(o - e) * sqrt(abs(2 * o * log(o / e)))
 ```
+
+```{r}
+data.frame(e2_res, g2_res, obs = 1:length(e2_res)) %>%
+  rownames_to_column() %>%
+  pivot_longer(cols = e2_res:g2_res) %>%
+  ggplot(aes(x = obs, y = value, color = name)) +
+  geom_point() +
+  scale_color_mf()
+```
+
 
 Here is a summary of the analysis.
 
@@ -106,9 +128,31 @@ Here is a summary of the analysis.
 data.frame(o, e, e2_res, g2_res)
 ```
 
-You can perform the chi-square test of the Pearson test statistic with `chisq.test()`.
+If you do not have a theoretical value, but instead want to test whether the data conform to a distribution, the test is nearly the same.  Your first step is the estimate the distribution parameter(s).  Then you can perform the goodness of fit test, but with degrees of freedom reduced for each estimated parameter.
+
+For example, suppose sample $n = 100$ families and count the number of children, and you want to test whether the counts follow a Poisson distribution, $X \sim  Pois(\lambda)$.  
 
 ```{r}
-chisq.test(o, p = pi)
+dat <- data.frame(children = 0:5, cnt = c(19, 26, 29, 13, 10, 3))
+print(dat)
 ```
 
+The ML estimate for $\lambda$ is
+
+$$\hat{\lambda} = \frac{children_0 cnt_0 + childred_1 cnt_1, + \cdots children_5 n_5}{cnt}$$
+
+```{r}
+lambda_hat <- sum(dat$children * dat$cnt) / sum(dat$cnt)
+```
+
+
+Then the expected values are 
+
+$$f(x; \lambda) = \frac{e^{-\hat{\lambda}} \hat{\lambda}^x}{x!}.$$
+
+```{r}
+e = e^(-lambda_hat) * lambda_hat^o / factorial(o)
+```
+
+
+$\chi^2$ test
