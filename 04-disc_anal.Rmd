@@ -6,9 +6,24 @@ library(mfstylr)
 # Discrete Analysis {#discrete_anal}
 
 
-## Goodness-of-Fit Test
+## One-Way Tables
 
-These notes rely heavily upon PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/60/).
+These notes rely heavily on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/60/).
+
+A one-way frequency table is a frequency table for a single categorical table.
+
+Here is a simple chi-square test example.  A researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the ($n = 1,611$) offspring phenotypes.
+
+```{r}
+o <- c(926, 288, 293, 104)
+cell_names <- c("tall cut-leaf", "tall potato-leaf", "dwarf cut-leaf", "dwarf potato-leaf")
+names(o) <- cell_names
+print(o)
+```
+
+The four phenotypes are expected to occur with relative frequencies 9:3:3:1.
+
+### Goodness-of-Fit Test
 
 The **chi-square goodness-of-fit test**, tests whether observed frequency counts $O_j$ of the $j \in (0, 1, \cdots k)$ levels of a categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.
 
@@ -26,21 +41,6 @@ If the saturated model (the observed data represent the fit of the saturated mod
 
 As $n \rightarrow \infty$, $G^2$ and $X^2$ approach $\chi_{k-1}^2$ where $k$ is the number of n-way table cells.  You can therefore run a chi-square test of significance using the $G^2$ and $X^2$ test statistics.  The chi-square test provides reliable results when at least 80% of $E_j >= 5$.  
 
-
-### One-Way Tables
-
-A one-way frequency table is a frequency table for a single categorical table.
-
-Here is a simple chi-square test example.  A researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the ($n = 1,611$) offspring phenotypes.
-
-```{r}
-o <- c(926, 288, 293, 104)
-cell_names <- c("tall cut-leaf", "tall potato-leaf", "dwarf cut-leaf", "dwarf potato-leaf")
-names(o) <- cell_names
-print(o)
-```
-
-The four phenotypes are expected to occur with relative frequencies 9:3:3:1.
 
 ```{r}
 pi <- c(9, 3, 3, 1) / (9 + 3 + 3 + 1)
@@ -130,29 +130,43 @@ data.frame(o, e, e2_res, g2_res)
 
 If you do not have a theoretical value, but instead want to test whether the data conform to a distribution, the test is nearly the same.  Your first step is the estimate the distribution parameter(s).  Then you can perform the goodness of fit test, but with degrees of freedom reduced for each estimated parameter.
 
-For example, suppose sample $n = 100$ families and count the number of children, and you want to test whether the counts follow a Poisson distribution, $X \sim  Pois(\lambda)$.  
+For example, suppose sample $n = 100$ families and count the number of children $J$, and you want to test whether the counts $O$ follow a Poisson distribution, $X \sim  Pois(\lambda)$.  
 
 ```{r}
-dat <- data.frame(children = 0:5, cnt = c(19, 26, 29, 13, 10, 3))
+dat <- data.frame(j = 0:5, o = c(19, 26, 29, 13, 10, 3))
 print(dat)
 ```
 
 The ML estimate for $\lambda$ is
 
-$$\hat{\lambda} = \frac{children_0 cnt_0 + childred_1 cnt_1, + \cdots children_5 n_5}{cnt}$$
+$$\hat{\lambda} = \frac{j_0 O_0 + j_1 O_1, + \cdots j_k O_k}{O}$$
 
 ```{r}
-lambda_hat <- sum(dat$children * dat$cnt) / sum(dat$cnt)
+lambda_hat <- sum(dat$j * dat$o) / sum(dat$o)
+print(lambda_hat)
 ```
 
 
 Then the expected values are 
 
-$$f(x; \lambda) = \frac{e^{-\hat{\lambda}} \hat{\lambda}^x}{x!}.$$
+$$f(j; \lambda) = \frac{e^{-\hat{\lambda}} \hat{\lambda}^j}{j!}.$$
 
 ```{r}
-e = e^(-lambda_hat) * lambda_hat^o / factorial(o)
+E <- exp(-lambda_hat) * lambda_hat^dat$j / factorial(dat$j) * sum(dat$o)
+dat <- cbind(dat, e = E)
+print(dat)
+```
+
+Compare the expected values to the observed values with the $\chi^2$ goodness of fit test.
+
+```{r}
+X2 <- sum((dat$o - dat$e)^2 / dat$e)
+pchisq(q = X2, df = nrow(dat) - 1 - 1)
+chisq.test(dat$o, p = dat$e / sum(dat$e))
 ```
 
 
-$\chi^2$ test
+## Two-Way Tables
+
+These notes rely heavily on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/69/).
+
