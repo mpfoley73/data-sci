@@ -3,16 +3,16 @@ library(tidyverse)
 library(mfstylr)
 ```
 
-# Discrete Analysis {#discrete_anal}
+# Discrete Variables {#discrete_variables}
 
 
 ## One-Way Tables
 
-These notes rely heavily on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/60/).
+These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/60/).
 
-A one-way frequency table is a frequency table for a single categorical table.
+A one-way frequency table is a frequency table for a single categorical table.  You usually construct a one-way table to test whether the frequency counts conform to a hypothesized distribution using the chi-squared goodness-of-fit test.
 
-Here is a simple chi-square test example.  A researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the ($n = 1,611$) offspring phenotypes.
+Here is an example.  A researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the ($n = 1,611$) offspring phenotypes.
 
 ```{r}
 o <- c(926, 288, 293, 104)
@@ -23,9 +23,15 @@ print(o)
 
 The four phenotypes are expected to occur with relative frequencies 9:3:3:1.
 
-### Goodness-of-Fit Test
+```{r}
+pi <- c(9, 3, 3, 1) / (9 + 3 + 3 + 1)
+print(pi)
+```
 
-The **chi-square goodness-of-fit test**, tests whether observed frequency counts $O_j$ of the $j \in (0, 1, \cdots k)$ levels of a categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.
+
+### Chi-Squared Goodness-of-Fit Test
+
+The **chi-squared goodness-of-fit test**, tests whether observed frequency counts $O_j$ of the $j \in (0, 1, \cdots k)$ levels of a categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.
 
 There are two test statistics for this test, Pearson $X^2$ and deviance $G^2$.  The sampling distribution of each test statistic approach the chi-squared distribution as $n$ becomes large.  It's a good idea to calculate both test statistics.
 
@@ -43,7 +49,6 @@ As $n \rightarrow \infty$, $G^2$ and $X^2$ approach $\chi_{k-1}^2$ where $k$ is 
 
 
 ```{r}
-pi <- c(9, 3, 3, 1) / (9 + 3 + 3 + 1)
 e <- sum(o) * pi
 names(e) <- cell_names
 print(e)
@@ -168,5 +173,14 @@ chisq.test(dat$o, p = dat$e / sum(dat$e))
 
 ## Two-Way Tables
 
-These notes rely heavily on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/69/).
+These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/69/).
 
+### Chi-Squared Test of Independence
+
+### Difference in Proportions
+
+
+### Relative Risk
+
+
+### Odds Ratio
