@@ -10,7 +10,7 @@ library(mfstylr)
 
 These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/60/).
 
-A one-way frequency table is a frequency table for a single categorical table.  You usually construct a one-way table to test whether the frequency counts conform to a hypothesized distribution using the chi-squared goodness-of-fit test.
+A one-way frequency table is a frequency table for a single categorical variable.  You usually construct a one-way table to test whether the frequency counts differ from a hypothesized distribution using the chi-squared goodness-of-fit test.
 
 Here is an example.  A researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the ($n = 1,611$) offspring phenotypes.
 
@@ -27,6 +27,8 @@ The four phenotypes are expected to occur with relative frequencies 9:3:3:1.
 pi <- c(9, 3, 3, 1) / (9 + 3 + 3 + 1)
 print(pi)
 ```
+
+Do the observed phonotype counts conform to the expected proportions?
 
 
 ### Chi-Squared Goodness-of-Fit Test
@@ -175,7 +177,77 @@ chisq.test(dat$o, p = dat$e / sum(dat$e))
 
 These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/69/).
 
+A two-way frequency table is a frequency table for *two* categorical variables.  You usually construct a two-way table to test whether the frequency counts in one categorical variable differ from the other categorical variable using the chi-squared test of independence.  If there is a significant difference, then you characterize the effect sizes with measures of association (difference in proportions, relative risk, or odds ratio). 
+
+Here is an example.  A double blind study investigated the therapeutic value of ascorbic acid $(trt \in [Placebo, Ascorbic Acid])$ for treating common colds $(result \in [Cold, No Cold])$ on a sample of $n = 279$ persons. There are two discrete variables each with two levels, hence a two way table.
+
+```{r}
+vitc_dat <- matrix(
+  c(31, 17, 109, 122), 
+  ncol = 2, 
+  dimnames = list(
+    treat = c("Placebo", "VitaminC"), 
+    resp = c("Cold", "NoCold")
+  )
+)
+print(vitc_dat)
+prop.table(vitc_dat)
+prop.table(vitc_dat, margin = 1)  # row pct
+prop.table(vitc_dat, margin = 2)  # col pct
+```
+
+Do the observed frequency counts differ from the expected frequency counts under the independence model?  (The *independence model* is a subset of the *saturated model* where the two explanatory variables are independent.)
+
+
 ### Chi-Squared Test of Independence
+
+The Pearson goodness-of-fit statistic is
+
+$$X^2 = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$
+
+where for independent variables $E_{ij}$ equals the marginal probability of row $i$ multiplied by the marginal probability of column $j$.
+```{r}
+E <- sum(vitc_dat) * prop.table(vitc_dat, 1) * prop.table(vitc_dat, 2)
+X2 <- sum((vitc_dat - E)^2 / E)
+print(X2)
+```
+
+The deviance statistic is 
+
+$$G^2 = 2 \sum_{ij} O_{ij} \log \left( \frac{O_{ij}}{E_{ij}} \right)$$
+
+```{r}
+G2 <- - 2 * sum(vitc_dat * log(vitc_dat / E))
+print(G2)
+```
+
+The degrees of freedom for $E^2$ and $G^2$ equals the degrees of freedom for the saturated model, $I \times J - 1$, minus the degrees of freedom from the independence model, $(I - 1) + (J - 1)$, which you can solve for $(I - 1)(J - 1)$.
+
+```{r}
+dof <- (nrow(vitc_dat) - 1) * (ncol(vitc_dat) - 1)
+print(dof)
+```
+
+The associated p-values are
+```{r}
+pchisq(q = G2, df = dof, lower.tail = FALSE)
+pchisq(q = X2, df = dof, lower.tail = FALSE)
+```
+
+The `chisq.test()` function applies the Yates's continuity correcton by default to correct for situations with small cell counts by subtracting 0.5 from the observed - expected differences.
+
+```{r}
+chisq.test(vitc_dat, correct = FALSE)
+```
+
+The correction yields more conservative p-values.
+
+```{r}
+chisq.test(vitc_dat)
+```
+
+The p-values indicate strong evidence for rejecting the independence model.
+
 
 ### Difference in Proportions
 
