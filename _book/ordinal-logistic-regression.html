@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7.2 Ordinal Logistic Regression | My Data Science Notes</title>
+  <title>7.3 Ordinal Logistic Regression | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7.2 Ordinal Logistic Regression | My Data Science Notes" />
+  <meta property="og:title" content="7.3 Ordinal Logistic Regression | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7.2 Ordinal Logistic Regression | My Data Science Notes" />
+  <meta name="twitter:title" content="7.3 Ordinal Logistic Regression | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,14 +24,14 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-02-27" />
+<meta name="date" content="2020-03-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="logistic-regression.html"/>
+<link rel="prev" href="multinomial-logistic-regression.html"/>
 <link rel="next" href="poisson-regression.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -160,15 +160,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="discrete-anal.html"><a href="discrete-anal.html"><i class="fa fa-check"></i><b>4</b> Discrete Analysis</a></li>
+<li class="chapter" data-level="4" data-path="discrete-variables.html"><a href="discrete-variables.html"><i class="fa fa-check"></i><b>4</b> Discrete Variables</a><ul>
+<li class="chapter" data-level="4.1" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.1</b> One-Way Tables</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-squared-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.1.1</b> Chi-Squared Goodness-of-Fit Test</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> Two-Way Tables</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-squared-test-of-independence"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Squared Test of Independence</a></li>
+<li class="chapter" data-level="4.2.2" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.2.2</b> Difference in Proportions</a></li>
+<li class="chapter" data-level="4.2.3" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.2.3</b> Relative Risk</a></li>
+<li class="chapter" data-level="4.2.4" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.2.4</b> Odds Ratio</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5</b> Inference</a></li>
 <li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
 <li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
 <li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a><ul>
 <li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#example-7"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Ordinal Logistic Regression</a></li>
-<li class="chapter" data-level="7.3" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.3</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
+<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a></li>
+<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a><ul>
 <li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-8"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
 </ul></li>
@@ -237,34 +248,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="ordinal-logistic-regression" class="section level2">
-<h2><span class="header-section-number">7.2</span> Ordinal Logistic Regression</h2>
-<p>The following notes rely heavily upon <a href="https://data.library.virginia.edu/fitting-and-interpreting-a-proportional-odds-model/">this UVA web page</a>.</p>
+<h2><span class="header-section-number">7.3</span> Ordinal Logistic Regression</h2>
+<p>The following notes rely heavily on <a href="https://data.library.virginia.edu/fitting-and-interpreting-a-proportional-odds-model/">this UVA web page</a> and [PSU STAT 504 class notes](<a href="https://online.stat.psu.edu/stat504/node/171/" class="uri">https://online.stat.psu.edu/stat504/node/171/</a>.</p>
 <p>The ordinal logistic regression model is</p>
-<p><span class="math display">\[logit(P(Y \le j)) = \beta_{j0} + \beta_{j1}x_1 + \cdots + \beta_{jp}x_p \]</span></p>
-<p>where</p>
-<p><span class="math display">\[logit(P(Y \le j)) = log \frac{P(Y \le j)}{P(Y &gt; j)}\]</span></p>
-<p>for each of the <span class="math inline">\(j \in [1, J-1]\)</span> levels of the ordinal outcome variable <span class="math inline">\(Y\)</span> and <span class="math inline">\(p\)</span> predictors. From the <strong>parallel lines assumption</strong>, the intercepts are different for each category but the slopes are constant across categories, and this simplifies the equation above to</p>
-<p><span class="math display">\[logit(P(Y \le j)) = \beta_{j0} + \beta_{1}x_1 + \cdots + \beta_{p}x_p.\]</span></p>
-<p>In R, the <code>polr()</code> function parameterizes the model with <span class="math inline">\(\eta_i = -\beta_i\)</span>, so</p>
-<p><span class="math display">\[logit(P(Y \le j)) = \beta_{j0} - \eta_{1}x_1 - \cdots - \eta_{p}x_p.\]</span></p>
+<p><span class="math display">\[logit[P(Y \le j)] = \alpha_j - \beta X, \hspace{5mm} j \in [1, J-1]\]</span>
+where <span class="math inline">\(j \in [1, J-1]\)</span> are the levels of the ordinal outcome variable <span class="math inline">\(Y\)</span>. The proportional odds model assumes there is a common set of slope parameters <span class="math inline">\(\beta\)</span> for the predictors. The ordinal outcomes are distinguished by the <span class="math inline">\(J-1\)</span> intercepts <span class="math inline">\(\alpha_j\)</span>. The benchmark level is <span class="math inline">\(J\)</span>. “Logit” means log-odds, so <span class="math inline">\(logit[P(Y \le j)] = \log[P(Y \le j) / P(Y \gt j)]\)</span>.</p>
 <p>Suppose we want to model the probability a respondent holds a political ideology [“Very Liberal”, “Slightly Liberal”, “Moderate”, “Slightly Conservative”, “Very Conservative”] given their party affiliation [“Republican”, “Democrat”].</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="ordinal-logistic-regression.html#cb158-1"></a>ideo &lt;-<span class="st"> </span><span class="kw">c</span>(</span>
-<span id="cb158-2"><a href="ordinal-logistic-regression.html#cb158-2"></a>  <span class="st">&quot;Very Liberal&quot;</span>,</span>
-<span id="cb158-3"><a href="ordinal-logistic-regression.html#cb158-3"></a>  <span class="st">&quot;Slightly Liberal&quot;</span>,</span>
-<span id="cb158-4"><a href="ordinal-logistic-regression.html#cb158-4"></a>  <span class="st">&quot;Moderate&quot;</span>,</span>
-<span id="cb158-5"><a href="ordinal-logistic-regression.html#cb158-5"></a>  <span class="st">&quot;Slightly Conservative&quot;</span>,</span>
-<span id="cb158-6"><a href="ordinal-logistic-regression.html#cb158-6"></a>  <span class="st">&quot;Very Conservative&quot;</span></span>
-<span id="cb158-7"><a href="ordinal-logistic-regression.html#cb158-7"></a>)</span>
-<span id="cb158-8"><a href="ordinal-logistic-regression.html#cb158-8"></a>ideo_cnt_rep &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">30</span>, <span class="dv">46</span>, <span class="dv">148</span>, <span class="dv">84</span>, <span class="dv">99</span>)</span>
-<span id="cb158-9"><a href="ordinal-logistic-regression.html#cb158-9"></a>ideo_cnt_dem &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">80</span>, <span class="dv">81</span>, <span class="dv">171</span>, <span class="dv">41</span>, <span class="dv">55</span>)</span>
-<span id="cb158-10"><a href="ordinal-logistic-regression.html#cb158-10"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</span>
-<span id="cb158-11"><a href="ordinal-logistic-regression.html#cb158-11"></a>  <span class="dt">party =</span> <span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Rep&quot;</span>, <span class="st">&quot;Dem&quot;</span>), <span class="kw">c</span>(<span class="dv">407</span>, <span class="dv">428</span>)), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Rep&quot;</span>, <span class="st">&quot;Dem&quot;</span>)),</span>
-<span id="cb158-12"><a href="ordinal-logistic-regression.html#cb158-12"></a>  <span class="dt">ideo =</span> <span class="kw">factor</span>(</span>
-<span id="cb158-13"><a href="ordinal-logistic-regression.html#cb158-13"></a>    <span class="kw">c</span>(<span class="kw">rep</span>(ideo, ideo_cnt_rep), <span class="kw">rep</span>(ideo, ideo_cnt_dem)), </span>
-<span id="cb158-14"><a href="ordinal-logistic-regression.html#cb158-14"></a>    <span class="dt">levels =</span> ideo</span>
-<span id="cb158-15"><a href="ordinal-logistic-regression.html#cb158-15"></a>  )</span>
-<span id="cb158-16"><a href="ordinal-logistic-regression.html#cb158-16"></a>)</span>
-<span id="cb158-17"><a href="ordinal-logistic-regression.html#cb158-17"></a><span class="kw">table</span>(dat)</span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="ordinal-logistic-regression.html#cb229-1"></a>ideo &lt;-<span class="st"> </span><span class="kw">c</span>(</span>
+<span id="cb229-2"><a href="ordinal-logistic-regression.html#cb229-2"></a>  <span class="st">&quot;Very Liberal&quot;</span>,</span>
+<span id="cb229-3"><a href="ordinal-logistic-regression.html#cb229-3"></a>  <span class="st">&quot;Slightly Liberal&quot;</span>,</span>
+<span id="cb229-4"><a href="ordinal-logistic-regression.html#cb229-4"></a>  <span class="st">&quot;Moderate&quot;</span>,</span>
+<span id="cb229-5"><a href="ordinal-logistic-regression.html#cb229-5"></a>  <span class="st">&quot;Slightly Conservative&quot;</span>,</span>
+<span id="cb229-6"><a href="ordinal-logistic-regression.html#cb229-6"></a>  <span class="st">&quot;Very Conservative&quot;</span></span>
+<span id="cb229-7"><a href="ordinal-logistic-regression.html#cb229-7"></a>)</span>
+<span id="cb229-8"><a href="ordinal-logistic-regression.html#cb229-8"></a>ideo_cnt_rep &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">30</span>, <span class="dv">46</span>, <span class="dv">148</span>, <span class="dv">84</span>, <span class="dv">99</span>)</span>
+<span id="cb229-9"><a href="ordinal-logistic-regression.html#cb229-9"></a>ideo_cnt_dem &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">80</span>, <span class="dv">81</span>, <span class="dv">171</span>, <span class="dv">41</span>, <span class="dv">55</span>)</span>
+<span id="cb229-10"><a href="ordinal-logistic-regression.html#cb229-10"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb229-11"><a href="ordinal-logistic-regression.html#cb229-11"></a>  <span class="dt">party =</span> <span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Rep&quot;</span>, <span class="st">&quot;Dem&quot;</span>), <span class="kw">c</span>(<span class="dv">407</span>, <span class="dv">428</span>)), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Rep&quot;</span>, <span class="st">&quot;Dem&quot;</span>)),</span>
+<span id="cb229-12"><a href="ordinal-logistic-regression.html#cb229-12"></a>  <span class="dt">ideo =</span> <span class="kw">factor</span>(</span>
+<span id="cb229-13"><a href="ordinal-logistic-regression.html#cb229-13"></a>    <span class="kw">c</span>(<span class="kw">rep</span>(ideo, ideo_cnt_rep), <span class="kw">rep</span>(ideo, ideo_cnt_dem)), </span>
+<span id="cb229-14"><a href="ordinal-logistic-regression.html#cb229-14"></a>    <span class="dt">levels =</span> ideo</span>
+<span id="cb229-15"><a href="ordinal-logistic-regression.html#cb229-15"></a>  )</span>
+<span id="cb229-16"><a href="ordinal-logistic-regression.html#cb229-16"></a>)</span>
+<span id="cb229-17"><a href="ordinal-logistic-regression.html#cb229-17"></a><span class="kw">table</span>(dat)</span></code></pre></div>
 <pre><code>##      ideo
 ## party Very Liberal Slightly Liberal Moderate Slightly Conservative
 ##   Rep           30               46      148                    84
@@ -274,9 +280,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Rep                99
 ##   Dem                55</code></pre>
 <p>Fit a proportional odds model with the <code>MASS::polr()</code> function (polr stands for proportional odds linear regression).</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="ordinal-logistic-regression.html#cb160-1"></a>pom &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">polr</span>(ideo <span class="op">~</span><span class="st"> </span>party, <span class="dt">data =</span> dat)</span>
-<span id="cb160-2"><a href="ordinal-logistic-regression.html#cb160-2"></a></span>
-<span id="cb160-3"><a href="ordinal-logistic-regression.html#cb160-3"></a><span class="kw">summary</span>(pom)</span></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="ordinal-logistic-regression.html#cb231-1"></a>pom &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">polr</span>(ideo <span class="op">~</span><span class="st"> </span>party, <span class="dt">data =</span> dat)</span>
+<span id="cb231-2"><a href="ordinal-logistic-regression.html#cb231-2"></a></span>
+<span id="cb231-3"><a href="ordinal-logistic-regression.html#cb231-3"></a><span class="kw">summary</span>(pom)</span></code></pre></div>
 <pre><code>## 
 ## Re-fitting to get Hessian</code></pre>
 <pre><code>## Call:
@@ -295,33 +301,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Residual Deviance: 2474.98 
 ## AIC: 2484.98</code></pre>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="ordinal-logistic-regression.html#cb163-1"></a>broom<span class="op">::</span><span class="kw">tidy</span>(pom)</span></code></pre></div>
-<pre><code>## # A tibble: 5 x 5
-##   term                             estimate std.error statistic coefficient_type
-##   &lt;chr&gt;                               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;           
-## 1 partyDem                           -0.975    0.129      -7.54 coefficient     
-## 2 Very Liberal|Slightly Liberal      -2.47     0.132     -18.7  zeta            
-## 3 Slightly Liberal|Moderate          -1.47     0.109     -13.5  zeta            
-## 4 Moderate|Slightly Conservative      0.237    0.0942      2.52 zeta            
-## 5 Slightly Conservative|Very Cons~    1.07     0.104      10.3  zeta</code></pre>
-<p>You can use the model to predict probabilities for holding each ideology.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="ordinal-logistic-regression.html#cb165-1"></a><span class="kw">predict</span>(pom, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">party =</span> <span class="st">&quot;Dem&quot;</span>), <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>)</span></code></pre></div>
+<p>The log-odds a Democrat identifies as “Very Liberal” or lower is
+<span class="math display">\[logit[P(Y \lt 1)] = -2.4690 - (-0.9745)(1) = -1.4945.\]</span>
+Solve <span class="math inline">\(logit[P(Y \le 1)] = \log[P(Y \le 1) / P(Y \gt 1)]\)</span> for <span class="math inline">\(P(Y \le 1)\)</span> to get the probability a Democrat identifies as “Very Liberal” or lower as <span class="math inline">\(P(Y \le 1) = exp(-1.4945) / (1 + exp(-1.4945)) = 0.183\)</span>.</p>
+<p>The log odds a Democrat identifies as “Slightly Liberal” or lower is
+<span class="math display">\[logit[P(Y \lt 2)] = -1.4745 - (-0.9745)(1) = -0.5.\]</span>
+The corresponding probability is <span class="math inline">\(P(Y \le 2) = exp(-0.5) / (1 + exp(-0.5)) = 0.378\)</span>.</p>
+<p>To get the probability a Democrat identifies as “Slightly Liberal”, just subtract the adjacent cumulative probabilities, <span class="math inline">\(P(Y \le 2) - P(Y \le 1) = 0.378 = 0.183 = 0.194\)</span>. That’s what’s happening when you use the model to predict the level probabilities.</p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="ordinal-logistic-regression.html#cb234-1"></a><span class="kw">predict</span>(pom, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">party =</span> <span class="st">&quot;Dem&quot;</span>), <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>)</span></code></pre></div>
 <pre><code>##          Very Liberal      Slightly Liberal              Moderate 
 ##                  0.18                  0.19                  0.39 
 ## Slightly Conservative     Very Conservative 
 ##                  0.11                  0.11</code></pre>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="ordinal-logistic-regression.html#cb167-1"></a><span class="kw">predict</span>(pom, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">party =</span> <span class="st">&quot;Rep&quot;</span>), <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>)</span></code></pre></div>
+<p>The baseline for the model was “Republican”, so the log-odds a Republicn identifies as “Very Liberal” or lower is
+<span class="math display">\[logit[P(Y \lt 1)] = -2.4690 - (-0.9745)(0) = -2.4690\]</span>
+with corresponding probability <span class="math inline">\(P(Y \le 1) = exp(-2.4690) / (1 + exp(-2.4690)) = 0.078\)</span>. And so on.</p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="ordinal-logistic-regression.html#cb236-1"></a><span class="kw">predict</span>(pom, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">party =</span> <span class="st">&quot;Rep&quot;</span>), <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>)</span></code></pre></div>
 <pre><code>##          Very Liberal      Slightly Liberal              Moderate 
 ##                 0.078                 0.108                 0.373 
 ## Slightly Conservative     Very Conservative 
 ##                 0.186                 0.255</code></pre>
+<p>Here is a manual calculation of the probabilities. Note the <code>zeta</code> variable instead of <code>beta</code> because the model fits <span class="math inline">\(\alpha_j - \beta X\)</span> instead of <span class="math inline">\(\alpha_j + \beta X\)</span>, and so it uses a new variable <span class="math inline">\(\zeta = -\beta\)</span>. Technically, the model could be expressed <span class="math inline">\(logit[P(Y \le j)] = \alpha_j + \zeta X\)</span>.</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="ordinal-logistic-regression.html#cb238-1"></a><span class="kw">library</span>(stringr)</span>
+<span id="cb238-2"><a href="ordinal-logistic-regression.html#cb238-2"></a><span class="co"># cum log odds, dems an reps</span></span>
+<span id="cb238-3"><a href="ordinal-logistic-regression.html#cb238-3"></a>dclo &lt;-<span class="st"> </span><span class="kw">c</span>(pom<span class="op">$</span>zeta <span class="op">-</span><span class="st"> </span>pom<span class="op">$</span>coefficients)</span>
+<span id="cb238-4"><a href="ordinal-logistic-regression.html#cb238-4"></a>rclo &lt;-<span class="st"> </span><span class="kw">c</span>(pom<span class="op">$</span>zeta <span class="op">-</span><span class="st"> </span><span class="dv">0</span>)</span>
+<span id="cb238-5"><a href="ordinal-logistic-regression.html#cb238-5"></a><span class="co"># cum probs, dems and reps</span></span>
+<span id="cb238-6"><a href="ordinal-logistic-regression.html#cb238-6"></a>dcp &lt;-<span class="st"> </span><span class="kw">exp</span>(dclo) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(dclo))</span>
+<span id="cb238-7"><a href="ordinal-logistic-regression.html#cb238-7"></a>rcp &lt;-<span class="st"> </span><span class="kw">exp</span>(rclo) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(rclo))</span>
+<span id="cb238-8"><a href="ordinal-logistic-regression.html#cb238-8"></a><span class="co"># fix the names and add 1 for &quot;Very...&quot;</span></span>
+<span id="cb238-9"><a href="ordinal-logistic-regression.html#cb238-9"></a><span class="kw">names</span>(dcp) &lt;-<span class="st"> </span><span class="kw">str_sub</span>(<span class="kw">names</span>(dcp), <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="kw">str_locate</span>(<span class="kw">names</span>(dcp), <span class="st">&quot;</span><span class="ch">\\</span><span class="st">|&quot;</span>)[, <span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb238-10"><a href="ordinal-logistic-regression.html#cb238-10"></a><span class="kw">names</span>(rcp) &lt;-<span class="st"> </span><span class="kw">str_sub</span>(<span class="kw">names</span>(rcp), <span class="dt">start =</span> <span class="dv">1</span>, <span class="dt">end =</span> <span class="kw">str_locate</span>(<span class="kw">names</span>(rcp), <span class="st">&quot;</span><span class="ch">\\</span><span class="st">|&quot;</span>)[, <span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb238-11"><a href="ordinal-logistic-regression.html#cb238-11"></a>dcp &lt;-<span class="st"> </span><span class="kw">c</span>(dcp, <span class="dv">1</span>)</span>
+<span id="cb238-12"><a href="ordinal-logistic-regression.html#cb238-12"></a>rcp &lt;-<span class="st"> </span><span class="kw">c</span>(rcp, <span class="dv">1</span>)</span>
+<span id="cb238-13"><a href="ordinal-logistic-regression.html#cb238-13"></a><span class="kw">names</span>(dcp) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">names</span>(dcp)[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="st">&quot;Very Conservative&quot;</span>)</span>
+<span id="cb238-14"><a href="ordinal-logistic-regression.html#cb238-14"></a><span class="kw">names</span>(rcp) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">names</span>(rcp)[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="st">&quot;Very Conservative&quot;</span>)</span>
+<span id="cb238-15"><a href="ordinal-logistic-regression.html#cb238-15"></a><span class="co"># Democrat probs</span></span>
+<span id="cb238-16"><a href="ordinal-logistic-regression.html#cb238-16"></a>(dp &lt;-<span class="st"> </span>dcp <span class="op">-</span><span class="st"> </span><span class="kw">lag</span>(dcp, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
+<pre><code>##          Very Liberal      Slightly Liberal              Moderate 
+##                  0.18                  0.19                  0.39 
+## Slightly Conservative     Very Conservative 
+##                  0.11                  0.11</code></pre>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="ordinal-logistic-regression.html#cb240-1"></a>(rp &lt;-<span class="st"> </span>rcp <span class="op">-</span><span class="st"> </span><span class="kw">lag</span>(rcp, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
+<pre><code>##          Very Liberal      Slightly Liberal              Moderate 
+##                 0.078                 0.108                 0.373 
+## Slightly Conservative     Very Conservative 
+##                 0.186                 0.255</code></pre>
+<p>The “proportional odds” part of the proportional odds model is that the ratios of the <span class="math inline">\(J - 1\)</span> odds-ratios are identical for the different levels of the predictors. Here we have a single predictor, <code>party</code>. The odds ratios for <code>party = Dem</code> are</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="ordinal-logistic-regression.html#cb242-1"></a>(dcp <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>dcp)) <span class="op">/</span><span class="st"> </span>(rcp <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rcp))</span></code></pre></div>
+<pre><code>##          Very Liberal      Slightly Liberal              Moderate 
+##                   2.6                   2.6                   2.6 
+## Slightly Conservative     Very Conservative 
+##                   2.6                   NaN</code></pre>
+<p>Which is to say, any level of ideology <span class="math inline">\(j\)</span>, the estimated odds that a Democrat’s ideology is more liberal <span class="math inline">\((\lt j)\)</span> rather than more conservative <span class="math inline">\((\ge j)\)</span> is about 2.65 times a Republicans odds.</p>
+<p>The log of these odds ratios is the coefficient estimator for <code>party</code>.</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="ordinal-logistic-regression.html#cb244-1"></a><span class="kw">log</span>((dcp <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>dcp)) <span class="op">/</span><span class="st"> </span>(rcp <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rcp)))</span></code></pre></div>
+<pre><code>##          Very Liberal      Slightly Liberal              Moderate 
+##                  0.97                  0.97                  0.97 
+## Slightly Conservative     Very Conservative 
+##                  0.97                   NaN</code></pre>
+<p>Always check the assumption of proportional odds. One way to do this is by comparing the proportional odds model with a multinomial logit model, also called an unconstrained baseline logit model. The multinomial logit model models <em>unordered</em> responses and fits a slope to each level of the <span class="math inline">\(J – 1\)</span> responses. The proportional odds model is nested in the multinomial model, so can use a likelihood ratio test to see if the models are statistically different.</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="ordinal-logistic-regression.html#cb246-1"></a>mlm &lt;-<span class="st"> </span>nnet<span class="op">::</span><span class="kw">multinom</span>(ideo <span class="op">~</span><span class="st"> </span>party, <span class="dt">data =</span> dat)</span></code></pre></div>
+<pre><code>## # weights:  15 (8 variable)
+## initial  value 1343.880657 
+## iter  10 value 1239.866743
+## final  value 1235.648615 
+## converged</code></pre>
+<p>Calculate the deviance test statistic <span class="math inline">\(D = -2 loglik(\beta)\)</span>.</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="ordinal-logistic-regression.html#cb248-1"></a>G &lt;-<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span>(<span class="kw">logLik</span>(pom)[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="kw">logLik</span>(mlm)[<span class="dv">1</span>])</span>
+<span id="cb248-2"><a href="ordinal-logistic-regression.html#cb248-2"></a><span class="kw">pchisq</span>(G, <span class="dt">df =</span> <span class="kw">length</span>(pom<span class="op">$</span>zeta) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.3</code></pre>
+<p>The p-value is high, so the proportional odds model fits as well as the more complex multinomial logit model.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="logistic-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multinomial-logistic-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="poisson-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
