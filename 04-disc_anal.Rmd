@@ -179,7 +179,7 @@ These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/sta
 
 A two-way frequency table is a frequency table for *two* categorical variables.  You usually construct a two-way table to test whether the frequency counts in one categorical variable differ from the other categorical variable using the chi-squared test of independence.  If there is a significant difference, then you characterize the effect sizes with measures of association (difference in proportions, relative risk, or odds ratio). 
 
-Here is an example.  A double blind study investigated the therapeutic value of ascorbic acid $(trt \in [Placebo, Ascorbic Acid])$ for treating common colds $(result \in [Cold, No Cold])$ on a sample of $n = 279$ persons. There are two discrete variables each with two levels, hence a two way table.
+Here is an example.  A double blind study investigated the therapeutic value of vitamin C $(trt \in [Placebo, VitaminC])$ for treating common colds $(result \in [Cold, No Cold])$ on a sample of $n = 279$ persons. There are two discrete variables each with two levels, hence a two way table.
 
 ```{r}
 vitc_dat <- matrix(
@@ -250,6 +250,124 @@ The p-values indicate strong evidence for rejecting the independence model.
 
 
 ### Difference in Proportions
+
+The difference in proportions measure is the difference in the relative frequency of a characteristic $Z$ between two groups $Y = 1$ and $Y = 2$: $\delta = \pi_{1|1} - \pi_{1|2}$.  In social sciences and epidemiology $\pi_{1|1}$ and $\pi_{1|2}$ are sometimes referred to as "risk" values. The point estimate for $\delta$ is $d = p_{1|1} - p_{1|2}$.  
+
+Under the normal approximation method, the sampling distribution of the difference in population proportions has a normal distribution centered at $d$ with variance $Var(\delta)$. The point estimate for $Var(\delta)$ is $Var(d)$.
+
+$$Var(d) = \frac{p_{1|1} (1 - p_{1|1})}{n_{1+}} + \frac{p_{1|2} (1 - p_{1|2})}{n_{2+}}$$
+
+In the vitamin C acid example, $\delta$ is the difference in the row conditional frequencies.
+
+```{r}
+p <- prop.table(vitc_dat, margin = 1)
+d <- p[2, 1] - p[1, 1]
+print(d)
+```
+
+The variance is
+
+```{r}
+var_d <- (p[2, 1])*(1 - p[2, 1]) / sum(vitc_dat[2, ]) +
+  (p[1, 1])*(1 - p[1, 1]) / sum(vitc_dat[1, ])
+```
+
+The 95% CI is
+
+```{r}
+d + c(-1, 1) * qnorm(.975) * sqrt(var_d)
+```
+
+This is how `prop.test()` without the continuity correction calculates the confidence interval.
+
+```{r}
+(prop.test.result <- prop.test(vitc_dat, correct = FALSE))
+```
+
+```{r fig.height=3.5}
+lcl <- -round(prop.test.result$conf.int[2], 3)
+ucl <- -round(prop.test.result$conf.int[1], 3)
+data.frame(d_i = -300:300 / 1000) %>%
+  mutate(density = dnorm(x = d_i, mean = d, sd = sqrt(var_d))) %>%
+  mutate(rr = ifelse(d_i < lcl | d_i > ucl, density, 0)) %>%
+ggplot() +
+  geom_line(aes(x = d_i, y = density)) +
+  geom_area(aes(x = d_i, y = rr, fill = mf_pal(12)(12)[2]), alpha = 0.8) +
+  geom_vline(aes(xintercept = d), color = "blue") +
+  theme_mf() +
+  labs(title = bquote("Difference in Proportions Confidence Interval"),
+       subtitle = paste0(
+         "d = ", round(d, 3) 
+        ),
+       x = "d",
+       y = "Density") +
+  theme(legend.position="none")
+
+```
+
+
+The normal approximation method applies when the central limit theorem conditions hold:
+
+* the sample is independently drawn (random sampling without replacement from $n < 10\%$ of the population in observational studies, or random assignment in experiments), 
+* there are at least $n_i p_i >= 5$ successes and $n_i (1 - p_i) >= 5$ failures for each group, 
+* the sample sizes are both $>=30$, and 
+* the probability of success for each group is not extreme, $(0.2, 0.8)$.   
+
+Test $H_0: d = \delta_0$ for some hypothesized population $\delta$ (usually 0) with test statistic 
+
+$$Z = \frac{d - \delta_0}{se_{d}}$$ 
+
+where 
+
+$$se_{d} = \sqrt{p (1 - p) \left( \frac{1}{n_{1+}} + \frac{1}{n_{2+}} \right)}$$ 
+
+approximates $se_{\delta_0}$ where $p$ is the pooled proportion 
+
+$$p = \frac{n_{11} + n_{21}}{n_{1+} + n_{2+}}.$$
+
+```{r}
+p_pool <- (vitc_dat[1, 1] + vitc_dat[2, 1]) / sum(vitc_dat)
+se_d <- sqrt(p_pool * (1 - p_pool) * (1 / sum(vitc_dat[1, ]) + 1 / sum(vitc_dat[2, ])))
+z <- (d - 0) / se_d
+pnorm(z) * 2
+```
+
+```{r message=FALSE, warning=FALSE, fig.height=3.5}
+lrr = qnorm(p = .05/2, mean = 0, sd = se_d, lower.tail = TRUE)
+urr = qnorm(p = .05/2, mean = 0, sd = se_d, lower.tail = FALSE)
+data.frame(d_i = -300:300 / 1000) %>%
+  mutate(density = dnorm(x = d_i, mean = 0, sd = se_d)) %>%
+  mutate(rr = ifelse(d_i < lrr | d_i > urr, density, 0)) %>%
+ggplot() +
+  geom_line(aes(x = d_i, y = density)) +
+  geom_area(aes(x = d_i, y = rr, fill = mf_pal(12)(12)[2]), alpha = 0.8) +
+  geom_vline(aes(xintercept = d), color = "blue") +
+  geom_vline(aes(xintercept = 0), color = "black") +
+  theme_mf() +
+  labs(title = "Hypothesis Test of Difference in Proportions",
+       subtitle = paste0(
+         "d = ", round(d, 3), 
+         " (Z = ", round(z, 2), 
+         ", p = ", round(pnorm(z) * 2, 4), ")."
+        ),
+       x = "d",
+       y = "Density") +
+  theme(legend.position="none") 
+```
+
+
+The null hypothesis $H_0: \delta_0 = 0$ is equivalent to saying that two variables are independent, $\pi_{1|1} = \pi_{1|2}$, so you can also use the $\chi^2$ or $G^2$ test for independence in a 2 × 2.  That's what `prop.test()` is doing.  The square of the z-statistic is algebraically equal to $\chi^2$.  The two-sided test comparing $Z$ to a $N(0, 1)$ is identical to comparing $\chi^2$ to a chi-squared distribution with df =1.  Compare the $Z^2$ to the output from `prop.test()`.
+
+```{r}
+z^2
+```
+
+Even though difference of two proportions is very easy to interpret, one problem with using δ is that when Z = 1 is a rare event, the individual probabilities P(Z = 1 | Y = 1) and P(Z = 1 | Y = 2) are both small, i.e., close to zero. Absolute value of δ will be close to zero even when the effect is strong. In the following sections we study two other  common measures of association which compare the relative value of the proportions, rather than the absolute values.
+
+
+One problem with evaluating $\delta$ is that when $Z = 1$ is a rare event, the individual probabilities $\pi_{1|1}$ and $\pi_{1|2}$ are both close to zero, and so $\delta$ is also close to zero even when the effect is strong.
+
+More notes online at [PSU STAT 500](https://newonlinecourses.science.psu.edu/stat500/node/55/), [PSU STAT 504](https://online.stat.psu.edu/stat504/node/77/), and [Stat Trek](https://www.stattrek.com/estimation/difference-in-proportions.aspx?Tutorial=AP).]
 
 
 ### Relative Risk
