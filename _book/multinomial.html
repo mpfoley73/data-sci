@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-02-28" />
+<meta name="date" content="2020-03-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -245,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If <span class="math inline">\(X = (X_1, X_2, \cdots, X_k)\)</span> are the counts of successful events in <span class="math inline">\(n\)</span> identical and independent trials of success probabilities <span class="math inline">\(\pi = (\pi_1, \pi_2, \cdots, \pi_k)\)</span>, then <span class="math inline">\(X\)</span> is a random variable with a multinomial distribution <span class="math inline">\(X \sim Mult(n,\pi)\)</span></p>
 <p><span class="math display">\[f(x; n, \pi) = \frac{n!}{x_{1}! x_{2}! \cdots x_{k}!} \pi^{x_1} \pi^{x_2} \cdots \pi^{x_k} \hspace{1cm} x \in \{0, 1, ..., n \}, \hspace{2mm} \pi \in [0, 1]\]</span></p>
 <p>with expected values vector <span class="math inline">\(E(X_j) = n\pi_j\)</span> and covariance matrix</p>
-<p><span class="math display">\[V(X) = \begin{bmatrix}n\pi_{1}(1-\pi_{1}) &amp; -n\pi_{1}\pi_{2} &amp; \cdots &amp; -n\pi_{1}\pi_{k}\\
+<p><span class="math display">\[Var(X) = \begin{bmatrix}n\pi_{1}(1-\pi_{1}) &amp; -n\pi_{1}\pi_{2} &amp; \cdots &amp; -n\pi_{1}\pi_{k}\\
 -n\pi_{1}\pi_{2} &amp; n\pi_{2}(1-\pi_{2}) &amp; \cdots &amp; -n\pi_{2}\pi_{k}\\
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
 -n\pi_{1}\pi_{k} &amp; -n\pi_{2}\pi_{k} &amp; \cdots &amp; n\pi_{k}(1-\pi_{k})

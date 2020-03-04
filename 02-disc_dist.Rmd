@@ -18,7 +18,7 @@ If $X$ is the result of a trial with two outcomes of probability $P(X = 1) = \pi
 
 $$f(x) = \pi^x (1 - \pi)^{1 - x}, \hspace{1cm} x \in (0, 1)$$
 
-with $E(X) = \pi$ and $V(X) = \pi(1 - \pi)$.
+with $E(X) = \pi$ and $Var(X) = \pi(1 - \pi)$.
 
 
 ## Binomial
@@ -27,7 +27,7 @@ If $X$ is the count of successful events in $n$ identical and independent Bernou
 
 $$f(x;n, \pi) = \frac{n!}{x!(n-x)!} \pi^x (1-\pi)^{n-x} \hspace{1cm} x \in (0, 1, ..., n), \hspace{2mm} \pi \in [0, 1]$$
 
-with $E(X)=n\pi$ and $V(X) = n\pi(1-\pi)$.  
+with $E(X)=n\pi$ and $Var(X) = n\pi(1-\pi)$.  
 
 Binomial sampling is used to model counts of one level of a categorical variable over a *fixed sample size*.  Here is a simple analysis of data from a Binomial process.  Data set `dat` contains frequencies of high-risk drinkers vs non-high-risk drinkers in a college survey.
 
@@ -216,7 +216,7 @@ If $X$ is the number of successes in $n$ (many) trials when the probability of s
 
 $$f(x;\lambda) = \frac{e^{-\lambda} \lambda^x}{x!} \hspace{1cm} x \in (0, 1, ...), \hspace{2mm} \lambda > 0$$
 
-with $E(X)=\lambda$ and $V(X) = \lambda$.  
+with $E(X)=\lambda$ and $Var(X) = \lambda$.  
 
 The Poisson likelihood function is
 
@@ -400,7 +400,7 @@ $$f(x; n, \pi) = \frac{n!}{x_{1}! x_{2}! \cdots x_{k}!} \pi^{x_1} \pi^{x_2} \cdo
 
 with expected values vector $E(X_j) = n\pi_j$ and covariance matrix
 
-$$V(X) = \begin{bmatrix}n\pi_{1}(1-\pi_{1}) & -n\pi_{1}\pi_{2} & \cdots & -n\pi_{1}\pi_{k}\\
+$$Var(X) = \begin{bmatrix}n\pi_{1}(1-\pi_{1}) & -n\pi_{1}\pi_{2} & \cdots & -n\pi_{1}\pi_{k}\\
 -n\pi_{1}\pi_{2} & n\pi_{2}(1-\pi_{2}) & \cdots & -n\pi_{2}\pi_{k}\\
 \vdots & \vdots & \ddots & \vdots\\
 -n\pi_{1}\pi_{k} & -n\pi_{2}\pi_{k} & \cdots & n\pi_{k}(1-\pi_{k})
@@ -436,7 +436,7 @@ If $X$ is the count of failure events ocurring prior to reaching $r$ successful 
 
 $$f(x;r, p) = {{x + r - 1} \choose {r - 1}} p^r (1-p)^{x}.$$
 
-with $E(X) = r (1 - p) / p$ and $V(X) = r (1-p) / p^2$.
+with $E(X) = r (1 - p) / p$ and $Var(X) = r (1-p) / p^2$.
 
 When the data has overdispersion, model the data with the negative-binomial distribution instead of Poission.
 
@@ -452,7 +452,7 @@ Function `dnbinom()` calculates the negative-binomial probability.  Parameter `x
 dnbinom(x = 4, size = 3, prob = 0.2)
 ```
 
-The expected number of failures prior to 3 successes is $E(X) = 3 (1 - 0.20) / 0.20 = 12$ with variance $V(X) = 3 (1 - 0.20) / 0.20^2 = 60$. Confirm this with a simulation from n = 10,000 random samples using `rnbinom()`.
+The expected number of failures prior to 3 successes is $E(X) = 3 (1 - 0.20) / 0.20 = 12$ with variance $Var(X) = 3 (1 - 0.20) / 0.20^2 = 60$. Confirm this with a simulation from n = 10,000 random samples using `rnbinom()`.
 
 ```{r}
 my_dat <- rnbinom(n = 10000, size = 3, prob = 0.20)
@@ -480,7 +480,7 @@ If $X$ is the count of Bernoulli trials of success probability $p$ required to a
 
 $$f(x; p) = p(1-p)^{x-1}.$$
 
-with $E(X)=\frac{{n}}{{p}}$ and $V(X) = \frac{(1-p)}{p^2}$.  The probability of $X<=n$ trials is 
+with $E(X)=\frac{{n}}{{p}}$ and $Var(X) = \frac{(1-p)}{p^2}$.  The probability of $X<=n$ trials is 
 
 $$F(X=n) = 1 - (1-p)^n.$$ 
 
@@ -586,7 +586,7 @@ ggplot(aes(x = factor(x), y = cdf, fill = Failures)) +
        y = "probability") 
 ```
 
-The expected number of trials to achieve the first success is `1 / 0.20 = ` `r 1 / 0.20`, `V(X) = (1 - 0.20) / 0.20^2 = ` `r (1 - 0.20) / 0.20^2`? 
+The expected number of trials to achieve the first success is `1 / 0.20 = ` `r 1 / 0.20`, `Var(X) = (1 - 0.20) / 0.20^2 = ` `r (1 - 0.20) / 0.20^2`? 
 
 ```{r}
 p = 0.20
@@ -606,11 +606,26 @@ var(rgeom(n = 100000, prob = p))
 
 ## Hypergeometric
 
-If $X$ is the count of successful events in a sample sof size $k$ *without replacement* from a population containing $M$ successes and $N$ non-successes, then $X$ is a random variable with a hypergeometric distribution
+If $X$ is the count of successful events in a sample of size $n$ *without replacement* from a population of size $N$ containing $K$ successes and $N-K$ non-successes, then $X$ is a random variable with a hypergeometric distribution
+
+$$f(x|N,K,n) = \frac{{{K}\choose{k}}{{N-K}\choose{n-k}}}{{N}\choose{n}}.$$
+
+with $E(X) = n\frac{K}{N}$ and $Var(X) = n \frac{K}{N} \cdot \frac{N-n}{N} \cdot \frac{N-K}{N-1}$.  
+
+The formula follows from the frequency table of the possible outcomes.
+
+| |Sampled |Not Sampled |Total |
+|---|---|---|---|
+|success|k|K-k|K|
+|non-success|n-k|(N-K)-(n-k)|N-K|
+|Total|n|N-n|N|
+
+
+If $X$ is the count of successful events in a sample of size $k$ *without replacement* from a population containing $M$ successes and $N$ non-successes, then $X$ is a random variable with a hypergeometric distribution
 
 $$f(x|m,n,k) = \frac{{{m}\choose{x}}{{n}\choose{k-x}}}{{m+n}\choose{k}}.$$
 
-with $E(X)=k\frac{m}{m+n}$ and $V(X) = k\frac{m}{m+n}\cdot\frac{m+n-k}{m+n}\cdot\frac{n}{m+n-1}$.  
+with $E(X)=k\frac{m}{m+n}$ and $Var(X) = k\frac{m}{m+n}\cdot\frac{m+n-k}{m+n}\cdot\frac{n}{m+n-1}$.  
 
 `phyper` returns the cumulative probability (percentile) `p` at the specified value (quantile) `q`.  `qhyper` returns the value (quantile) `q` at the specified cumulative probability (percentile) `p`.
 
@@ -701,7 +716,7 @@ If $X$ is the interval until the $\alpha^{th}$ successful event when the average
 
 $$f(x; \alpha, \theta) = \frac{1}{\Gamma(\alpha)\theta^\alpha}x^{\alpha-1}e^{-x/\theta}.$$
 
-where $\Gamma(\alpha) = (1 - \alpha)!$ with $E(X) = \alpha \theta$ and $V(X) = \alpha \theta^2$.  
+where $\Gamma(\alpha) = (1 - \alpha)!$ with $E(X) = \alpha \theta$ and $Var(X) = \alpha \theta^2$.  
 
 #### Examples {-}
 
