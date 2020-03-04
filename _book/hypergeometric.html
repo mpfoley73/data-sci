@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-02-28" />
+<meta name="date" content="2020-03-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -242,9 +242,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="hypergeometric" class="section level2">
 <h2><span class="header-section-number">2.7</span> Hypergeometric</h2>
-<p>If <span class="math inline">\(X\)</span> is the count of successful events in a sample sof size <span class="math inline">\(k\)</span> <em>without replacement</em> from a population containing <span class="math inline">\(M\)</span> successes and <span class="math inline">\(N\)</span> non-successes, then <span class="math inline">\(X\)</span> is a random variable with a hypergeometric distribution</p>
+<p>If <span class="math inline">\(X\)</span> is the count of successful events in a sample of size <span class="math inline">\(n\)</span> <em>without replacement</em> from a population of size <span class="math inline">\(N\)</span> containing <span class="math inline">\(K\)</span> successes and <span class="math inline">\(N-K\)</span> non-successes, then <span class="math inline">\(X\)</span> is a random variable with a hypergeometric distribution</p>
+<p><span class="math display">\[f(x|N,K,n) = \frac{{{K}\choose{k}}{{N-K}\choose{n-k}}}{{N}\choose{n}}.\]</span></p>
+<p>with <span class="math inline">\(E(X) = n\frac{K}{N}\)</span> and <span class="math inline">\(Var(X) = n \frac{K}{N} \cdot \frac{N-n}{N} \cdot \frac{N-K}{N-1}\)</span>.</p>
+<p>The formula follows from the frequency table of the possible outcomes.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Sampled</th>
+<th>Not Sampled</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>success</td>
+<td>k</td>
+<td>K-k</td>
+<td>K</td>
+</tr>
+<tr class="even">
+<td>non-success</td>
+<td>n-k</td>
+<td>(N-K)-(n-k)</td>
+<td>N-K</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>n</td>
+<td>N-n</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<p>If <span class="math inline">\(X\)</span> is the count of successful events in a sample of size <span class="math inline">\(k\)</span> <em>without replacement</em> from a population containing <span class="math inline">\(M\)</span> successes and <span class="math inline">\(N\)</span> non-successes, then <span class="math inline">\(X\)</span> is a random variable with a hypergeometric distribution</p>
 <p><span class="math display">\[f(x|m,n,k) = \frac{{{m}\choose{x}}{{n}\choose{k-x}}}{{m+n}\choose{k}}.\]</span></p>
-<p>with <span class="math inline">\(E(X)=k\frac{m}{m+n}\)</span> and <span class="math inline">\(V(X) = k\frac{m}{m+n}\cdot\frac{m+n-k}{m+n}\cdot\frac{n}{m+n-1}\)</span>.</p>
+<p>with <span class="math inline">\(E(X)=k\frac{m}{m+n}\)</span> and <span class="math inline">\(Var(X) = k\frac{m}{m+n}\cdot\frac{m+n-k}{m+n}\cdot\frac{n}{m+n-1}\)</span>.</p>
 <p><code>phyper</code> returns the cumulative probability (percentile) <code>p</code> at the specified value (quantile) <code>q</code>. <code>qhyper</code> returns the value (quantile) <code>q</code> at the specified cumulative probability (percentile) <code>p</code>.</p>
 <div id="example" class="section level4 unnumbered">
 <h4>Example</h4>

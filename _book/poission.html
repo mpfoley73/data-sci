@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-02-28" />
+<meta name="date" content="2020-03-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -244,7 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">2.3</span> Poission</h2>
 <p>If <span class="math inline">\(X\)</span> is the number of successes in <span class="math inline">\(n\)</span> (many) trials when the probability of success <span class="math inline">\(\lambda / n\)</span> is small, then <span class="math inline">\(X\)</span> is a random variable with a Poisson distribution <span class="math inline">\(X \sim Poisson(\lambda)\)</span></p>
 <p><span class="math display">\[f(x;\lambda) = \frac{e^{-\lambda} \lambda^x}{x!} \hspace{1cm} x \in (0, 1, ...), \hspace{2mm} \lambda &gt; 0\]</span></p>
-<p>with <span class="math inline">\(E(X)=\lambda\)</span> and <span class="math inline">\(V(X) = \lambda\)</span>.</p>
+<p>with <span class="math inline">\(E(X)=\lambda\)</span> and <span class="math inline">\(Var(X) = \lambda\)</span>.</p>
 <p>The Poisson likelihood function is</p>
 <p><span class="math display">\[L(\lambda; x) = \prod_{i=1}^N f(x_i; \lambda) = \prod_{i=1}^N \frac{e^{-\lambda} \lambda^x_i}{x_i !} = \frac{e^{-n \lambda} \lambda^{\sum x_i}}{\prod x_i}.\]</span></p>
 <p>The Poisson loglikelihood function is</p>
