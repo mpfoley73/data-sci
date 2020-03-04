@@ -216,9 +216,88 @@ colAUC(m1$fitted.values, m1$data$REMISS, plotROC = TRUE)
 ```
 
 
+## Multinomial Logistic Regression
+
+The following notes rely heavily on the [PSU STAT 504 course notes](https://online.stat.psu.edu/stat504/node/171/.
+
+Multinomial logistic regression models the odds the multinomial response variable $Y \sim Mult(n, \pi)$ is in level $j$ relative to baseline category $j^*$ for all pairs of categories as a function of $k$ explanatory variables, $X = (X_1, X_2, ... X_k)$. 
+
+$$\log \left( \frac{\pi_{ij}}{\pi_{ij^*}} \right) = x_i^T \beta_j, \hspace{5mm} j \ne j^2$$
+
+Interpet the $k^{th}$ element of $\beta_j$ as the increase in log-odds of falling a response in category $j$ relative to category $j^*$ resulting from a one-unit increase in the $k^{th}$ predictor term, holding the other terms constant.
+
+Multinomial model is a type of GLM.
+
+Here is an example using multinomial logistic regression.  A researcher classified the stomach contents of $n = 219$ alligators according to $r = 5$ categories (*fish, Inv., Rept, Bird, Other*) as a function of covariates *Lake*, *Sex*, and *Size*..
+
+```{r}
+gator_dat <- tribble(
+  ~profile, ~Gender, ~Size, ~Lake, ~Fish, ~Invertebrate, ~Reptile, ~Bird, ~Other,
+  "1", "f", "<2.3", "george",  3, 9, 1, 0, 1,
+  "2", "m", "<2.3", "george", 13, 10, 0, 2, 2,
+  "3", "f", ">2.3", "george", 8, 1, 0, 0, 1,
+  "4", "m", ">2.3", "george", 9, 0, 0, 1, 2,
+  "5", "f", "<2.3", "hancock", 16, 3, 2, 2, 3,
+  "6", "m", "<2.3", "hancock", 7, 1, 0, 0, 5,
+  "7", "f", ">2.3", "hancock", 3, 0, 1, 2, 3,
+  "8", "m", ">2.3", "hancock", 4, 0, 0, 1, 2,
+  "9", "f", "<2.3", "oklawaha", 3, 9, 1, 0, 2,
+  "10", "m", "<2.3", "oklawaha", 2, 2, 0, 0, 1,
+  "11", "f", ">2.3", "oklawaha", 0, 1, 0, 1, 0,
+  "12", "m", ">2.3", "oklawaha", 13, 7, 6, 0, 0,
+  "13", "f", "<2.3", "trafford", 2, 4, 1, 1, 4,
+  "14", "m", "<2.3", "trafford", 3, 7, 1, 0, 1,
+  "15", "f", ">2.3", "trafford", 0, 1, 0, 0, 0,
+  "16", "m", ">2.3", "trafford", 8, 6, 6, 3, 5
+)
+gator_dat <- gator_dat %>%
+  mutate(
+    Gender = as_factor(Gender),
+    Lake = fct_relevel(Lake, "hancock"),
+    Size = as_factor(Size)
+  )
+```
+
+There are 4 equations to estimate:
+
+$$\log \left( \frac{\pi_j} {\pi_{j^*}} \right) = \beta X$$
+
+where $\pi_{j^*}$ is the probability of fish, the baseline category.  
+
+
+Run a multivariate logistic regression model with `VGAM::vglm()`.
+
+```{r message=FALSE}
+library(VGAM)
+```
+
+`vglm()` fits 4 logit models.
+
+```{r}
+gator_vglm <- vglm(
+  cbind(Bird,Invertebrate,Reptile,Other,Fish) ~ Lake + Size + Gender, 
+  data = gator_dat, 
+  family = multinomial
+)
+summary(gator_vglm)
+```
+
+The **residual deviance** is 50.2637 on 40 degrees of freedom.  Residual deviance tests the current model fit versus the saturated model. The saturated model, which fits a separate multinomial distribution to each of the 16 profiles (unique combinations of lake, sex and size), has 16 × 4 = 64 parameters. The current model has an intercept, three lake coefficients, one sex coefficient and one size coefficient for each of the four logit equations, for a total of 24 parameters. Therefore, the overall fit statistics have 64 − 24 = 40 degrees of freedom.
+
+```{r}
+E <- data.frame(fitted(gator_vglm) * rowSums(gator_dat[, 5:9]))
+O <- gator_dat %>% select(Bird, Invertebrate, Reptile, Other, Fish) + .000001
+(g2 <- 2 * sum(O * log(O / E)))
+```
+
+
+indicates the model fits okay, but not great. The Residual Deviance of 50.26 with 40 df from the table above output is reasonable, with p-value of 0.1282 and the statistics/df is close to 1 that is 1.256.
+
+
+
 ## Ordinal Logistic Regression
 
-The following notes rely heavily upon [this UVA web page](https://data.library.virginia.edu/fitting-and-interpreting-a-proportional-odds-model/).
+The following notes rely heavily on [this UVA web page](https://data.library.virginia.edu/fitting-and-interpreting-a-proportional-odds-model/) and [PSU STAT 504 class notes](https://online.stat.psu.edu/stat504/node/171/.
 
 The ordinal logistic regression model is
 
