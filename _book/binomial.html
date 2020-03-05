@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-04" />
+<meta name="date" content="2020-03-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -251,7 +251,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">2.2</span> Binomial</h2>
 <p>If <span class="math inline">\(X\)</span> is the count of successful events in <span class="math inline">\(n\)</span> identical and independent Bernoulli trials of success probability <span class="math inline">\(\pi\)</span>, then <span class="math inline">\(X\)</span> is a random variable with a binomial distribution <span class="math inline">\(X \sim Bin(n,\pi)\)</span></p>
 <p><span class="math display">\[f(x;n, \pi) = \frac{n!}{x!(n-x)!} \pi^x (1-\pi)^{n-x} \hspace{1cm} x \in (0, 1, ..., n), \hspace{2mm} \pi \in [0, 1]\]</span></p>
-<p>with <span class="math inline">\(E(X)=n\pi\)</span> and <span class="math inline">\(V(X) = n\pi(1-\pi)\)</span>.</p>
+<p>with <span class="math inline">\(E(X)=n\pi\)</span> and <span class="math inline">\(Var(X) = n\pi(1-\pi)\)</span>.</p>
 <p>Binomial sampling is used to model counts of one level of a categorical variable over a <em>fixed sample size</em>. Here is a simple analysis of data from a Binomial process. Data set <code>dat</code> contains frequencies of high-risk drinkers vs non-high-risk drinkers in a college survey.</p>
 <pre><code>## 
 ##  No Yes 
@@ -383,6 +383,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The variance, <span class="math inline">\(\sigma^2 = np (1 - p)\)</span>, is 5.25. Here’s an empirical test.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="binomial.html#cb28-1"></a><span class="kw">var</span>(<span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">prob =</span> <span class="fl">.3</span>))</span></code></pre></div>
 <pre><code>## [1] 5.417469</code></pre>
+
 <p>Suppose X and Y are independent random variables distributed <span class="math inline">\(X \sim Bin(10, .6)\)</span> and <span class="math inline">\(Y \sim Bin(10, .7)\)</span>. What is the probability that either variable is &lt;=4?</p>
 <p>Let <span class="math inline">\(P(A) = P(X&lt;=4)\)</span> and <span class="math inline">\(P(B) = P(Y&lt;=4)\)</span>. Then <span class="math inline">\(P(A|B) = P(A) + P(B) - P(AB)\)</span>, and because the events are independent, <span class="math inline">\(P(AB) = P(A)P(B)\)</span>.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="binomial.html#cb30-1"></a>p_a &lt;-<span class="st"> </span><span class="kw">pbinom</span>(<span class="dt">q =</span> <span class="dv">4</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="fl">0.6</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span>
