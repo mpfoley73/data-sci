@@ -10,7 +10,7 @@ library(mfstylr)
 
 These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/60/).
 
-A one-way frequency table is a frequency table for a single categorical variable.  You usually construct a one-way table to test whether the frequency counts differ from a hypothesized distribution using the chi-squared goodness-of-fit test.
+A one-way frequency table is a frequency table for a single categorical variable.  You usually construct a one-way table to test whether the frequency counts differ from a hypothesized distribution using the chi-square goodness-of-fit test.
 
 Here is an example.  A researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the ($n = 1,611$) offspring phenotypes.
 
@@ -31,23 +31,23 @@ print(pi)
 Do the observed phonotype counts conform to the expected proportions?
 
 
-### Chi-Squared Goodness-of-Fit Test
+### Chi-Square Goodness-of-Fit Test
 
-The **chi-squared goodness-of-fit test**, tests whether observed frequency counts $O_j$ of the $j \in (0, 1, \cdots k)$ levels of a categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.
+The **chi-square goodness-of-fit test** tests whether observed frequency counts $O_j$ of the $j \in (0, 1, \cdots k)$ levels of a categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.
 
-There are two test statistics for this test, Pearson $X^2$ and deviance $G^2$.  The sampling distribution of each test statistic approach the chi-squared distribution as $n$ becomes large.  It's a good idea to calculate both test statistics.
+There are two test statistics for this test, Pearson $\chi^2$ and deviance $G^2$.  The sampling distribution of each test statistic approach the chi-square distribution as $n$ becomes large.  It's a good idea to calculate both test statistics.
 
 The Pearson goodness-of-fit statistic is
 
-$$X^2 = \sum \frac{(O_j - E_j)^2}{E_j}$$
+$$\chi^2 = \sum \frac{(O_j - E_j)^2}{E_j}$$
 
 where $O_j = p_j n$ and $E_j = \pi_j n$.  The deviance statistic is 
 
 $$G^2 = 2 \sum O_j \log \left( \frac{O_j}{E_j} \right)$$
 
-If the saturated model (the observed data represent the fit of the saturated model, the most complex model possible with the data) proportions $p_j$ equal equal the expected proportions $\pi_j$, $X^2$ and $G^2$ will equal zero.  Large values indicate the data do not agree well with the proposed model.
+If the saturated model (the observed data represent the fit of the saturated model, the most complex model possible with the data) proportions $p_j$ equal equal the expected proportions $\pi_j$, $\chi^2$ and $G^2$ will equal zero.  Large values indicate the data do not agree well with the proposed model.
 
-As $n \rightarrow \infty$, $G^2$ and $X^2$ approach $\chi_{k-1}^2$ where $k$ is the number of n-way table cells.  You can therefore run a chi-square test of significance using the $G^2$ and $X^2$ test statistics.  The chi-square test provides reliable results when at least 80% of $E_j >= 5$.  
+As $n \rightarrow \infty$, $G^2$ and $\chi^2$ approach $\chi_{k-1}^2$ where $k$ is the number of n-way table cells.  You can therefore run a chi-square test of significance using the $G^2$ and $\chi^2$ test statistics.  The chi-square test provides reliable results when at least 80% of $E_j >= 5$.  
 
 
 ```{r}
@@ -73,7 +73,7 @@ x2 <- sum((o - e)^2 / e)
 g2 <- 2 * sum(o * log(o / e))
 ```
 
-The $X^2$ statistic is `x2 <- sum((o - e)^2 / e) = ` `r  x2` and the $G^2$ statistic is `g2 <- 2 * sum(o * log(o / e)) = ` `r g2`, so nearly identical. The chi-sq test p-values are also nearly identical.
+The $\chi^2$ statistic is `x2 <- sum((o - e)^2 / e) = ` `r  x2` and the $G^2$ statistic is `g2 <- 2 * sum(o * log(o / e)) = ` `r g2`, so nearly identical. The chi-sq test p-values are also nearly identical.
 
 ```{r}
 pchisq(q = x2, df = length(o) - 1, lower.tail = FALSE)
@@ -101,7 +101,7 @@ urr = qchisq(p = alpha, df = dof, lower.tail = FALSE)
    geom_line(aes(x = chi2, y = density), color = mf_pal(12)(12)[12], size = 0.8) +
    geom_area(aes(x = chi2, y = rr), fill = mf_pal(12)(12)[2], alpha = 0.8) +
    geom_vline(aes(xintercept = x2), color = mf_pal(12)(12)[11], size = 0.8) +
-   labs(title = bquote("Chi-Squared Goodness-of-Fit Test"),
+   labs(title = bquote("Chi-Square Goodness-of-Fit Test"),
         subtitle = paste0("Chisq=", round(x2,2), ", ",
                           "Critical value=", round(urr,2), ", ",
                           "p-value=", round(p_val,3), "."
@@ -112,7 +112,7 @@ urr = qchisq(p = alpha, df = dof, lower.tail = FALSE)
    theme_mf()
 ```
 
-Inspect the residuals to learn which differences may lead to rejecting the null hypothesis.  The Pearson and deviance statistics are sums of individual cell comparisons which can be termed the squared "residuals", $X^2 = \sum r_j^2$ and $G^2 = \sum G_j^2$.  The expected value of a $\chi^2$ random variable is its d.f., $k-1$, and the typical size of any $\chi^2$ value is be $(k - 1) / k$, so for the typical residual should be within 2 $\sqrt{(k - 1) / k}$.
+Inspect the residuals to learn which differences may lead to rejecting the null hypothesis.  The Pearson and deviance statistics are sums of individual cell comparisons which can be termed the squared "residuals", $\chi^2 = \sum r_j^2$ and $G^2 = \sum G_j^2$.  The expected value of a $\chi^2$ random variable is its d.f., $k-1$, and the typical size of any $\chi^2$ value is be $(k - 1) / k$, so for the typical residual should be within 2 $\sqrt{(k - 1) / k}$.
 
 ```{r}
 e2_res <- sqrt((o - e)^2 / e)
@@ -177,7 +177,7 @@ chisq.test(dat$o, p = dat$e / sum(dat$e))
 
 These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/69/).
 
-A two-way frequency table is a frequency table for *two* categorical variables.  You usually construct a two-way table to test whether the frequency counts in one categorical variable differ from the other categorical variable using the chi-squared test of independence.  If there is a significant difference, then you characterize the effect sizes with measures of association (difference in proportions, relative risk, or odds ratio). 
+A two-way frequency table is a frequency table for *two* categorical variables.  You usually construct a two-way table to test whether the frequency counts in one categorical variable differ from the other categorical variable using the chi-square independence test.  If there is a significant difference, then you characterize the effect sizes with measures of association (difference in proportions, relative risk, or odds ratio). 
 
 Here is an example.  A double blind study investigated the therapeutic value of vitamin C $(trt \in [Placebo, VitaminC])$ for treating common colds $(result \in [Cold, No Cold])$ on a sample of $n = 279$ persons. There are two discrete variables each with two levels, hence a two way table.
 
@@ -199,15 +199,18 @@ prop.table(vitc_dat, margin = 2)  # col pct
 Do the observed frequency counts differ from the expected frequency counts under the independence model?  (The *independence model* is a subset of the *saturated model* where the two explanatory variables are independent.)
 
 
-### Chi-Squared Test of Independence
+### Chi-Square Independence Test
 
-The chi-squared test for independence tests whether there is a significant relationship between two categorical variables.  The null hypothesis is no relationship.
+The **chi-square independence test** tests whether observed joint frequency counts $O_{ij}$ of the $i \in (0, 1, \cdots I)$ levels of categorical variable $Y$ and the $j \in (0, 1, \cdots J)$ levels of categorical variable $Z$ differ from expected frequency counts $E_{ij}$ under the *independence model* where $\pi_{ij} = \pi_{i+} \pi_{+j}$. $H_0$ is $O_{ij} = E_{ij}$.
+
+There are two test statistics for this test, Pearson $\chi^2$ and deviance $G^2$.  The sampling distribution of each test statistic approach the chi-square distribution as $n$ becomes large.  It's a good idea to calculate both test statistics.
 
 The Pearson goodness-of-fit statistic is
 
-$$X^2 = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$
+$$\chi^2 = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$
 
-where for independent variables $E_{ij}$ equals the marginal probability of row $i$ multiplied by the marginal probability of column $j$.
+where $O_{ij}$ is the observed count, and $E_{ij}$ equals the marginal probability of row $i$ multiplied by the marginal probability of column $j$.  
+
 ```{r}
 E <- sum(vitc_dat) * prop.table(vitc_dat, 1) * prop.table(vitc_dat, 2)
 X2 <- sum((vitc_dat - E)^2 / E)
@@ -223,7 +226,9 @@ G2 <- - 2 * sum(vitc_dat * log(vitc_dat / E))
 print(G2)
 ```
 
-The degrees of freedom for $E^2$ and $G^2$ equals the degrees of freedom for the saturated model, $I \times J - 1$, minus the degrees of freedom from the independence model, $(I - 1) + (J - 1)$, which you can solve for $(I - 1)(J - 1)$.
+If the saturated model proportions $p_{ij}$ equal equal the independence model proportions $\pi_{ij}$, $\chi^2$ and $G^2$ will equal zero.  Large values indicate the data do not agree well with the proposed model.
+
+As $n \rightarrow \infty$, $G^2$ and $\chi^2$ approach $\chi_{k-1}^2$ where $k$ is the number of n-way table cells.  You can therefore run a chi-square test of significance using the $G^2$ and $\chi^2$ test statistics.  The degrees of freedom for $E^2$ and $G^2$ equals the degrees of freedom for the saturated model, $I \times J - 1$, minus the degrees of freedom from the independence model, $(I - 1) + (J - 1)$, which you can algebraically solve for $(I - 1)(J - 1)$.
 
 ```{r}
 dof <- (nrow(vitc_dat) - 1) * (ncol(vitc_dat) - 1)
@@ -358,14 +363,13 @@ ggplot() +
 ```
 
 
-The null hypothesis $H_0: \delta_0 = 0$ is equivalent to saying that two variables are independent, $\pi_{1|1} = \pi_{1|2}$, so you can also use the $\chi^2$ or $G^2$ test for independence in a 2 × 2.  That's what `prop.test()` is doing.  The square of the z-statistic is algebraically equal to $\chi^2$.  The two-sided test comparing $Z$ to a $N(0, 1)$ is identical to comparing $\chi^2$ to a chi-squared distribution with df =1.  Compare the $Z^2$ to the output from `prop.test()`.
+The null hypothesis $H_0: \delta_0 = 0$ is equivalent to saying that two variables are independent, $\pi_{1|1} = \pi_{1|2}$, so you can also use the $\chi^2$ or $G^2$ test for independence in a 2 × 2.  That's what `prop.test()` is doing.  The square of the z-statistic is algebraically equal to $\chi^2$.  The two-sided test comparing $Z$ to a $N(0, 1)$ is identical to comparing $\chi^2$ to a chi-square distribution with df =1.  Compare the $Z^2$ to the output from `prop.test()`.
 
 ```{r}
 z^2
 ```
 
 Even though difference of two proportions is very easy to interpret, one problem with using δ is that when Z = 1 is a rare event, the individual probabilities P(Z = 1 | Y = 1) and P(Z = 1 | Y = 2) are both small, i.e., close to zero. Absolute value of δ will be close to zero even when the effect is strong. In the following sections we study two other  common measures of association which compare the relative value of the proportions, rather than the absolute values.
-
 
 One problem with evaluating $\delta$ is that when $Z = 1$ is a rare event, the individual probabilities $\pi_{1|1}$ and $\pi_{1|2}$ are both close to zero, and so $\delta$ is also close to zero even when the effect is strong.
 
@@ -374,5 +378,45 @@ More notes online at [PSU STAT 500](https://newonlinecourses.science.psu.edu/sta
 
 ### Relative Risk
 
+The difference in proportions measure is the ratio of the probabilities of characteristic $Z$ conditioned on two groups $Y = 1$ and $Y = 2$: $\rho = \pi_{1|1} / \pi_{1|2}$.  In social sciences and epidemiology $\rho$ is sometimes referred to as the "relative risk". The point estimate for $\rho$ is $r = p_{1|1} / p_{1|2}$.  
+
+Because $\rho$ is non-negative, a normal approximation for $\log \rho$ has a less skewed distribution than $\rho$. The approximate variance of $\log \rho$ is
+
+$$Var(\log \rho) = \frac{1 - \pi_{11}/\pi_{1+}}{n_{1+}\pi_{11}/\pi_{1+}} + \frac{1 - \pi_{21}/\pi_{2+}}{n_{2+}\pi_{21}/\pi_{2+}}$$
+
+which is estimated by 
+
+$$Var(\log r) = \left( \frac{1}{n_{11}} - \frac{1}{n_{1+}} \right) + \left( \frac{1}{n_{21}} - \frac{1}{n_{2+}} \right)$$
+
+In the vitamin C acid example, $r$ is the ratio of the row conditional frequencies.
+
+```{r}
+p <- prop.table(vitc_dat, margin = 1)
+r <- p[2, 1] / p[1, 1]
+print(r)
+```
+
+The variance is
+
+```{r}
+var_r <- 1 / vitc_dat[1, 1] - 1 / sum(vitc_dat[1, ]) + 
+  1 / vitc_dat[2, 1] - 1 / sum(vitc_dat[2, ])
+```
+
+The 95% CI is
+
+```{r}
+r + c(-1, 1) * qnorm(.975) * sqrt(var_r)
+```
+
+
+The relative risk of catching a cold while taking vitamin c compared to not taking vitamin c is
+
+```{r}
+
+```
+
 
 ### Odds Ratio
+
+
