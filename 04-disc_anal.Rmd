@@ -201,6 +201,8 @@ Do the observed frequency counts differ from the expected frequency counts under
 
 ### Chi-Squared Test of Independence
 
+The chi-squared test for independence tests whether there is a significant relationship between two categorical variables.  The null hypothesis is no relationship.
+
 The Pearson goodness-of-fit statistic is
 
 $$X^2 = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$
