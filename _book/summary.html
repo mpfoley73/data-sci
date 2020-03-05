@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-02-27" />
+<meta name="date" content="2020-03-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -160,15 +160,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="discrete-anal.html"><a href="discrete-anal.html"><i class="fa fa-check"></i><b>4</b> Discrete Analysis</a></li>
+<li class="chapter" data-level="4" data-path="discrete-variables.html"><a href="discrete-variables.html"><i class="fa fa-check"></i><b>4</b> Discrete Variables</a><ul>
+<li class="chapter" data-level="4.1" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.1</b> One-Way Tables</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-squared-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.1.1</b> Chi-Squared Goodness-of-Fit Test</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> Two-Way Tables</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-squared-test-of-independence"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Squared Test of Independence</a></li>
+<li class="chapter" data-level="4.2.2" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.2.2</b> Difference in Proportions</a></li>
+<li class="chapter" data-level="4.2.3" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.2.3</b> Relative Risk</a></li>
+<li class="chapter" data-level="4.2.4" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.2.4</b> Odds Ratio</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5</b> Inference</a></li>
 <li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
 <li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
 <li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a><ul>
 <li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#example-7"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Ordinal Logistic Regression</a></li>
-<li class="chapter" data-level="7.3" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.3</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
+<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a></li>
+<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a><ul>
 <li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-8"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
 </ul></li>
@@ -239,12 +250,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="summary" class="section level2">
 <h2><span class="header-section-number">10.6</span> Summary</h2>
 <p>Okay, I’m going to tally up the results! For the classification division, the winner is the manual classification tree! Gradient boosting made a valiant run at it, but came up just a little short.</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="summary.html#cb328-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual Class&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_1b_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)), </span>
-<span id="cb328-2"><a href="summary.html#cb328-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Class w.tuneGrid&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_<span class="dv">3</span>_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)),</span>
-<span id="cb328-3"><a href="summary.html#cb328-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.bag.acc, <span class="dv">5</span>)),</span>
-<span id="cb328-4"><a href="summary.html#cb328-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.frst.acc, <span class="dv">5</span>)),</span>
-<span id="cb328-5"><a href="summary.html#cb328-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.gbm.acc, <span class="dv">5</span>))</span>
-<span id="cb328-6"><a href="summary.html#cb328-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Acc))</span></code></pre></div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="summary.html#cb409-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual Class&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_1b_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)), </span>
+<span id="cb409-2"><a href="summary.html#cb409-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Class w.tuneGrid&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_<span class="dv">3</span>_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)),</span>
+<span id="cb409-3"><a href="summary.html#cb409-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.bag.acc, <span class="dv">5</span>)),</span>
+<span id="cb409-4"><a href="summary.html#cb409-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.frst.acc, <span class="dv">5</span>)),</span>
+<span id="cb409-5"><a href="summary.html#cb409-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.gbm.acc, <span class="dv">5</span>))</span>
+<span id="cb409-6"><a href="summary.html#cb409-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Acc))</span></code></pre></div>
 <pre><code>##               model  Acc
 ## 1      Manual Class 0.86
 ## 2 Gradient Boosting 0.85
@@ -252,12 +263,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4           Bagging 0.83
 ## 5     Random Forest 0.83</code></pre>
 <p>And now for the regression division, the winnner is… gradient boosting!</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="summary.html#cb330-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual ANOVA&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">1</span>_pruned_rmse, <span class="dv">5</span>)), </span>
-<span id="cb330-2"><a href="summary.html#cb330-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;ANOVA w.tuneGrid&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">3</span>_pruned_rmse, <span class="dv">5</span>)),</span>
-<span id="cb330-3"><a href="summary.html#cb330-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.bag.rmse, <span class="dv">5</span>)),</span>
-<span id="cb330-4"><a href="summary.html#cb330-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.frst.rmse, <span class="dv">5</span>)),</span>
-<span id="cb330-5"><a href="summary.html#cb330-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.gbm.rmse, <span class="dv">5</span>))</span>
-<span id="cb330-6"><a href="summary.html#cb330-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(RMSE)</span></code></pre></div>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="summary.html#cb411-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual ANOVA&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">1</span>_pruned_rmse, <span class="dv">5</span>)), </span>
+<span id="cb411-2"><a href="summary.html#cb411-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;ANOVA w.tuneGrid&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">3</span>_pruned_rmse, <span class="dv">5</span>)),</span>
+<span id="cb411-3"><a href="summary.html#cb411-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.bag.rmse, <span class="dv">5</span>)),</span>
+<span id="cb411-4"><a href="summary.html#cb411-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.frst.rmse, <span class="dv">5</span>)),</span>
+<span id="cb411-5"><a href="summary.html#cb411-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.gbm.rmse, <span class="dv">5</span>))</span>
+<span id="cb411-6"><a href="summary.html#cb411-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(RMSE)</span></code></pre></div>
 <pre><code>##               model RMSE
 ## 1 Gradient Boosting  1.4
 ## 2     Random Forest  1.8
@@ -266,29 +277,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5      Manual ANOVA  2.4</code></pre>
 <p>Here are plots of the ROC curves for all the models (one from each chapter) on the same graph. The ROCR package provides the prediction() and performance() functions which generate the data required for plotting the ROC curve, given a set of predictions and actual (true) values.
 The more “up and to the left” the ROC curve of a model is, the better the model. The AUC performance metric is literally the “Area Under the ROC Curve”, so the greater the area under this curve, the higher the AUC, and the better-performing the model is.</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="summary.html#cb332-1"></a><span class="kw">library</span>(ROCR)</span>
-<span id="cb332-2"><a href="summary.html#cb332-2"></a><span class="co"># List of predictions</span></span>
-<span id="cb332-3"><a href="summary.html#cb332-3"></a>oj.class.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_<span class="dv">3</span>, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb332-4"><a href="summary.html#cb332-4"></a>oj.bag.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.bag, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb332-5"><a href="summary.html#cb332-5"></a>oj.frst.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.frst, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb332-6"><a href="summary.html#cb332-6"></a>oj.gbm.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.gbm, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb332-7"><a href="summary.html#cb332-7"></a></span>
-<span id="cb332-8"><a href="summary.html#cb332-8"></a>preds_list &lt;-<span class="st"> </span><span class="kw">list</span>(oj.class.pred, oj.bag.pred, oj.frst.pred, oj.gbm.pred)</span>
-<span id="cb332-9"><a href="summary.html#cb332-9"></a><span class="co">#preds_list &lt;- list(oj.class.pred)</span></span>
-<span id="cb332-10"><a href="summary.html#cb332-10"></a></span>
-<span id="cb332-11"><a href="summary.html#cb332-11"></a><span class="co"># List of actual values (same for all)</span></span>
-<span id="cb332-12"><a href="summary.html#cb332-12"></a>m &lt;-<span class="st"> </span><span class="kw">length</span>(preds_list)</span>
-<span id="cb332-13"><a href="summary.html#cb332-13"></a>actuals_list &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">list</span>(oj_test<span class="op">$</span>Purchase), m)</span>
-<span id="cb332-14"><a href="summary.html#cb332-14"></a></span>
-<span id="cb332-15"><a href="summary.html#cb332-15"></a><span class="co"># Plot the ROC curves</span></span>
-<span id="cb332-16"><a href="summary.html#cb332-16"></a>pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(preds_list, actuals_list)</span>
-<span id="cb332-17"><a href="summary.html#cb332-17"></a><span class="co">#pred &lt;- prediction(oj.class.pred[,2], oj_test$Purchase)</span></span>
-<span id="cb332-18"><a href="summary.html#cb332-18"></a>rocs &lt;-<span class="st"> </span><span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb332-19"><a href="summary.html#cb332-19"></a><span class="kw">plot</span>(rocs, <span class="dt">col =</span> <span class="kw">as.list</span>(<span class="dv">1</span><span class="op">:</span>m), <span class="dt">main =</span> <span class="st">&quot;Test Set ROC Curves&quot;</span>)</span>
-<span id="cb332-20"><a href="summary.html#cb332-20"></a><span class="kw">legend</span>(<span class="dt">x =</span> <span class="st">&quot;bottomright&quot;</span>, </span>
-<span id="cb332-21"><a href="summary.html#cb332-21"></a>       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Decision Tree&quot;</span>, <span class="st">&quot;Bagged Trees&quot;</span>, <span class="st">&quot;Random Forest&quot;</span>, <span class="st">&quot;GBM&quot;</span>),</span>
-<span id="cb332-22"><a href="summary.html#cb332-22"></a>       <span class="dt">fill =</span> <span class="dv">1</span><span class="op">:</span>m)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-159-1.png" width="672" /></p>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="summary.html#cb413-1"></a><span class="kw">library</span>(ROCR)</span>
+<span id="cb413-2"><a href="summary.html#cb413-2"></a><span class="co"># List of predictions</span></span>
+<span id="cb413-3"><a href="summary.html#cb413-3"></a>oj.class.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_<span class="dv">3</span>, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb413-4"><a href="summary.html#cb413-4"></a>oj.bag.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.bag, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb413-5"><a href="summary.html#cb413-5"></a>oj.frst.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.frst, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb413-6"><a href="summary.html#cb413-6"></a>oj.gbm.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.gbm, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb413-7"><a href="summary.html#cb413-7"></a></span>
+<span id="cb413-8"><a href="summary.html#cb413-8"></a>preds_list &lt;-<span class="st"> </span><span class="kw">list</span>(oj.class.pred, oj.bag.pred, oj.frst.pred, oj.gbm.pred)</span>
+<span id="cb413-9"><a href="summary.html#cb413-9"></a><span class="co">#preds_list &lt;- list(oj.class.pred)</span></span>
+<span id="cb413-10"><a href="summary.html#cb413-10"></a></span>
+<span id="cb413-11"><a href="summary.html#cb413-11"></a><span class="co"># List of actual values (same for all)</span></span>
+<span id="cb413-12"><a href="summary.html#cb413-12"></a>m &lt;-<span class="st"> </span><span class="kw">length</span>(preds_list)</span>
+<span id="cb413-13"><a href="summary.html#cb413-13"></a>actuals_list &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">list</span>(oj_test<span class="op">$</span>Purchase), m)</span>
+<span id="cb413-14"><a href="summary.html#cb413-14"></a></span>
+<span id="cb413-15"><a href="summary.html#cb413-15"></a><span class="co"># Plot the ROC curves</span></span>
+<span id="cb413-16"><a href="summary.html#cb413-16"></a>pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(preds_list, actuals_list)</span>
+<span id="cb413-17"><a href="summary.html#cb413-17"></a><span class="co">#pred &lt;- prediction(oj.class.pred[,2], oj_test$Purchase)</span></span>
+<span id="cb413-18"><a href="summary.html#cb413-18"></a>rocs &lt;-<span class="st"> </span><span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb413-19"><a href="summary.html#cb413-19"></a><span class="kw">plot</span>(rocs, <span class="dt">col =</span> <span class="kw">as.list</span>(<span class="dv">1</span><span class="op">:</span>m), <span class="dt">main =</span> <span class="st">&quot;Test Set ROC Curves&quot;</span>)</span>
+<span id="cb413-20"><a href="summary.html#cb413-20"></a><span class="kw">legend</span>(<span class="dt">x =</span> <span class="st">&quot;bottomright&quot;</span>, </span>
+<span id="cb413-21"><a href="summary.html#cb413-21"></a>       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Decision Tree&quot;</span>, <span class="st">&quot;Bagged Trees&quot;</span>, <span class="st">&quot;Random Forest&quot;</span>, <span class="st">&quot;GBM&quot;</span>),</span>
+<span id="cb413-22"><a href="summary.html#cb413-22"></a>       <span class="dt">fill =</span> <span class="dv">1</span><span class="op">:</span>m)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
 </div>
             </section>
 

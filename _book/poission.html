@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-03" />
+<meta name="date" content="2020-03-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -160,9 +160,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="discrete-anal.html"><a href="discrete-anal.html"><i class="fa fa-check"></i><b>4</b> Discrete Analysis</a><ul>
-<li class="chapter" data-level="4.1" data-path="goodness-of-fit-test.html"><a href="goodness-of-fit-test.html"><i class="fa fa-check"></i><b>4.1</b> Goodness-of-Fit Test</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="goodness-of-fit-test.html"><a href="goodness-of-fit-test.html#one-way-tables"><i class="fa fa-check"></i><b>4.1.1</b> One-Way Tables</a></li>
+<li class="chapter" data-level="4" data-path="discrete-variables.html"><a href="discrete-variables.html"><i class="fa fa-check"></i><b>4</b> Discrete Variables</a><ul>
+<li class="chapter" data-level="4.1" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.1</b> One-Way Tables</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-squared-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.1.1</b> Chi-Squared Goodness-of-Fit Test</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> Two-Way Tables</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-squared-test-of-independence"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Squared Test of Independence</a></li>
+<li class="chapter" data-level="4.2.2" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.2.2</b> Difference in Proportions</a></li>
+<li class="chapter" data-level="4.2.3" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.2.3</b> Relative Risk</a></li>
+<li class="chapter" data-level="4.2.4" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.2.4</b> Odds Ratio</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5</b> Inference</a></li>
@@ -171,8 +177,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a><ul>
 <li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#example-7"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Ordinal Logistic Regression</a></li>
-<li class="chapter" data-level="7.3" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.3</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
+<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a></li>
+<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a><ul>
 <li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-8"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
 </ul></li>
@@ -299,7 +306,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb41-21"><a href="poission.html#cb41-21"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Poisson(3).&quot;</span>,</span>
 <span id="cb41-22"><a href="poission.html#cb41-22"></a>       <span class="dt">x =</span> <span class="st">&quot;Events (x)&quot;</span>,</span>
 <span id="cb41-23"><a href="poission.html#cb41-23"></a>       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <p>The expected probability of scoring 2 to 4 goals in a match is</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="poission.html#cb42-1"></a><span class="kw">sum</span>(<span class="kw">dpois</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>), <span class="dt">lambda =</span> lambda))</span></code></pre></div>
 <pre><code>## [1] 0.3874391</code></pre>
@@ -321,7 +328,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb46-12"><a href="poission.html#cb46-12"></a>    <span class="dt">color =</span> <span class="st">&quot;&quot;</span>,</span>
 <span id="cb46-13"><a href="poission.html#cb46-13"></a>    <span class="dt">y =</span> <span class="st">&quot;frequencey&quot;</span></span>
 <span id="cb46-14"><a href="poission.html#cb46-14"></a>  )</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p>It fits the data pretty good!</p>
 <p><span class="math inline">\(Poison(\lambda) \rightarrow Bin(n, \pi)\)</span> when <span class="math inline">\(n\pi = \lambda\)</span> and <span class="math inline">\(n \rightarrow \infty\)</span> and <span class="math inline">\(\pi \rightarrow 0\)</span>. Because the Poisson is limit of the <span class="math inline">\(Bin(n, \pi)\)</span>, it is useful as an approximation to the binomial when <span class="math inline">\(n\)</span> is large (<span class="math inline">\(n&gt;=20\)</span>) and <span class="math inline">\(\pi\)</span> small (<span class="math inline">\(p&lt;=0.05\)</span>).</p>
 <p>For example, suppose a baseball player has a p=.03 chance of hitting a homerun. What is the probability of X&gt;=20 homeruns in 500 at-bats? This is a binomial process because the sample size is fixed.</p>
@@ -349,11 +356,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb51-16"><a href="poission.html#cb51-16"></a>       <span class="dt">x =</span> <span class="st">&quot;Events&quot;</span>,</span>
 <span id="cb51-17"><a href="poission.html#cb51-17"></a>       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>,</span>
 <span id="cb51-18"><a href="poission.html#cb51-18"></a>       <span class="dt">color =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-30-1.png" width="480" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-31-1.png" width="480" /></p>
 <p>When the observed variance is greater than <span class="math inline">\(\lambda\)</span> (overdispersion), the Negative Binomial distribution can be used instead of Poisson.</p>
 <p>Suppose the probability that a drug produces a certain side effect is p = = 0.1% and n = 1,000 patients in a clinical trial receive the drug. What is the probability 0 people experience the side effect?</p>
 <p>The expected value is np, 1. The probability of measuring 0 when the expected value is 1 is <code>dpois(x = 0, lambda = 1000 * .001) =</code> 0.3678794.</p>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-31-1.png" width="480" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-32-1.png" width="480" /></p>
 </div>
             </section>
 

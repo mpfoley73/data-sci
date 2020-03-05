@@ -160,9 +160,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="discrete-anal.html"><a href="discrete-anal.html"><i class="fa fa-check"></i><b>4</b> Discrete Analysis</a><ul>
-<li class="chapter" data-level="4.1" data-path="goodness-of-fit-test.html"><a href="goodness-of-fit-test.html"><i class="fa fa-check"></i><b>4.1</b> Goodness-of-Fit Test</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="goodness-of-fit-test.html"><a href="goodness-of-fit-test.html#one-way-tables"><i class="fa fa-check"></i><b>4.1.1</b> One-Way Tables</a></li>
+<li class="chapter" data-level="4" data-path="discrete-variables.html"><a href="discrete-variables.html"><i class="fa fa-check"></i><b>4</b> Discrete Variables</a><ul>
+<li class="chapter" data-level="4.1" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.1</b> One-Way Tables</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-squared-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.1.1</b> Chi-Squared Goodness-of-Fit Test</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> Two-Way Tables</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-squared-test-of-independence"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Squared Test of Independence</a></li>
+<li class="chapter" data-level="4.2.2" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.2.2</b> Difference in Proportions</a></li>
+<li class="chapter" data-level="4.2.3" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.2.3</b> Relative Risk</a></li>
+<li class="chapter" data-level="4.2.4" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.2.4</b> Odds Ratio</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5</b> Inference</a></li>
@@ -171,8 +177,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a><ul>
 <li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#example-7"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Ordinal Logistic Regression</a></li>
-<li class="chapter" data-level="7.3" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.3</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
+<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a></li>
+<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a><ul>
 <li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-8"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
 </ul></li>
@@ -280,7 +287,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-22"><a href="binomial.html#cb4-22"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Bin(1315, 0.479).&quot;</span>,</span>
 <span id="cb4-23"><a href="binomial.html#cb4-23"></a>       <span class="dt">x =</span> <span class="st">&quot;Events (x)&quot;</span>,</span>
 <span id="cb4-24"><a href="binomial.html#cb4-24"></a>       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>There are several ways to calculate a confidence interval for <span class="math inline">\(\pi\)</span>. One method is the <strong>normal approximation</strong> (Wald) interval.</p>
 <p><span class="math display">\[\pi = p \pm z_{\alpha /2} \sqrt{\frac{p (1 - p)}{n}}\]</span></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="binomial.html#cb5-1"></a>alpha &lt;-<span class="st"> </span><span class="fl">.05</span></span>
@@ -365,17 +372,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb23-17"><a href="binomial.html#cb23-17"></a>       <span class="dt">x =</span> <span class="st">&quot;Successes&quot;</span>,</span>
 <span id="cb23-18"><a href="binomial.html#cb23-18"></a>       <span class="dt">y =</span> <span class="st">&quot;Count&quot;</span>,</span>
 <span id="cb23-19"><a href="binomial.html#cb23-19"></a>       <span class="dt">caption =</span> <span class="st">&quot;Simulation from n = 10,000 binomial random samples.&quot;</span>) </span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-14-1.png" width="480" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-15-1.png" width="480" /></p>
 <p>What is the probability of &lt;=2 heads in 10 coin flips where probability of heads is 0.3? The cumulative probability is the sum of the first three bars in the simulation above. Function <code>pbinom()</code> calculates the <em>cumulative</em> binomial probability.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="binomial.html#cb24-1"></a><span class="kw">pbinom</span>(<span class="dt">q =</span> <span class="dv">2</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="fl">0.3</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 0.3827828</code></pre>
 <p>What is the expected number of heads in 25 coin flips if the probability of heads is 0.3?</p>
 <p>The expected value, <span class="math inline">\(\mu = np\)</span>, is 7.5. Here’s an empirical test from 10,000 samples.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="binomial.html#cb26-1"></a><span class="kw">mean</span>(<span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">prob =</span> <span class="fl">.3</span>))</span></code></pre></div>
-<pre><code>## [1] 7.5264</code></pre>
+<pre><code>## [1] 7.5033</code></pre>
 <p>The variance, <span class="math inline">\(\sigma^2 = np (1 - p)\)</span>, is 5.25. Here’s an empirical test.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="binomial.html#cb28-1"></a><span class="kw">var</span>(<span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">prob =</span> <span class="fl">.3</span>))</span></code></pre></div>
-<pre><code>## [1] 5.219132</code></pre>
+<pre><code>## [1] 5.417469</code></pre>
+
 <p>Suppose X and Y are independent random variables distributed <span class="math inline">\(X \sim Bin(10, .6)\)</span> and <span class="math inline">\(Y \sim Bin(10, .7)\)</span>. What is the probability that either variable is &lt;=4?</p>
 <p>Let <span class="math inline">\(P(A) = P(X&lt;=4)\)</span> and <span class="math inline">\(P(B) = P(Y&lt;=4)\)</span>. Then <span class="math inline">\(P(A|B) = P(A) + P(B) - P(AB)\)</span>, and because the events are independent, <span class="math inline">\(P(AB) = P(A)P(B)\)</span>.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="binomial.html#cb30-1"></a>p_a &lt;-<span class="st"> </span><span class="kw">pbinom</span>(<span class="dt">q =</span> <span class="dv">4</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="fl">0.6</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span>
@@ -388,7 +396,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb32-3"><a href="binomial.html#cb32-3"></a>  <span class="dt">y =</span> <span class="kw">rbinom</span>(<span class="dv">10000</span>, <span class="dv">10</span>, <span class="fl">0.7</span>)</span>
 <span id="cb32-4"><a href="binomial.html#cb32-4"></a>  )</span>
 <span id="cb32-5"><a href="binomial.html#cb32-5"></a><span class="kw">mean</span>(<span class="kw">if_else</span>(df<span class="op">$</span>x <span class="op">&lt;=</span><span class="st"> </span><span class="dv">4</span> <span class="op">|</span><span class="st"> </span>df<span class="op">$</span>y <span class="op">&lt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
-<pre><code>## [1] 0.2024</code></pre>
+<pre><code>## [1] 0.2013</code></pre>
 <p>A couple other points to remember:</p>
 <ul>
 <li>The Bernoulli distribution is a special case of the binomial with <span class="math inline">\(n = 1\)</span>.</li>
