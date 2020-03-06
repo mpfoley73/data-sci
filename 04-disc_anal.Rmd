@@ -18,172 +18,6 @@ The chi-square test compares observed categorical variable frequency counts $O$ 
 
 * The **chi-square homogeneity test** tests whether frequency counts of the $R$ levels of a categorical variable are distributed identically across $C$ different populations.
 
-## Example of Chi-Square Goodness-of-Fit Test with R = 2
-*A student population is hypothesized to be 60 percent female* $\pi_F=0.60$*.  A random sample of* $n=100$ *students yields 53 percent females* $p_F=0.53$*.  Is the sample representative of the population at an* $\alpha=0.05$ *level of significance?*
-```{r}
-observed <- c(53, 47)
-n <- 100  
-expected <- c(.60, .40) * n
-alpha <- .05
-```
-
-In this instance, $r = 2$, so we can also use the one-sample proportion test with test statistic $Z = \frac{p_F - \pi_F}{se} = \frac{53 - 60}{\sqrt{.6 (1 - .6) / 100}} = -1.423$. $P(Z>|-1.43|) = 0.153$.  The advantage of the one-sample proportion test is that it also calculates a $1 - \alpha)\%$ CI.
-```{r}
-alpha <- .05
-prop.test(x = observed[1], 
-          n = n, 
-          p = expected[1] / n, 
-          alternative = "two.sided", 
-          conf.level = 1 - alpha, 
-          correct = FALSE)
-
-```
-
-When $R = 2$, especially when entries are "small", the $\chi^2$ distribution is not continuous.  Adjust for this by applying the Yates continuity correction.  The Yates continuity correction adds/subtracts 0.5 to the observed counts to bring their fractional limit closer to the expected values.  
-```{r}
-observed2 <- c(53+.5, 47-.5)
-(chisq <- sum((observed2 - expected)^2 / expected))
-(p.value <- pchisq(q = chisq, df = r - 1, lower.tail = FALSE))
-```
-
-In `prop.test` and `chisq.test`, specify `correct = TRUE` to apply the Yates continuity correction.
-```{r}
-prop.test(x = observed[1], 
-          n = n, 
-          p = expected[1] / n, 
-          alternative = "two.sided", 
-          conf.level = 1 - alpha, 
-          correct = TRUE)
-
-chisq.test(x = observed, 
-           p = expected / n,
-           correct = TRUE)
-```
-
-```{r warning=FALSE, message=FALSE}
-library(ggplot2)
-library(dplyr)
-
-lrr = -Inf
-urr = qchisq(p = alpha, df = r - 1, lower.tail = FALSE)
-p_value <- chisq.test.result$p.value
-data.frame(chi2 = 100:1000 / 100) %>%
-  mutate(density = dchisq(x = chi2, df = r - 1)) %>%
-  mutate(rr = ifelse(chi2 < lrr | chi2 > urr, density, 0)) %>%
-ggplot() +
-  geom_line(aes(x = chi2, y = density)) +
-  geom_area(aes(x = chi2, y = rr, fill = "red"), alpha = 0.3) +
-#  geom_vline(aes(xintercept = pi_0), color = "black") +
-  geom_vline(aes(xintercept = chisq), color = "red") +
-  labs(title = bquote("Chi-Squared Goodness-of-Fit Test"),
-       subtitle = bquote("Chisq ="~.(round(chisq,2))~", n ="~.(n)~", alpha ="~.(alpha)~", chisq_crit ="~.(round(urr,2))~", p-value ="~.(round(p_value,3))),
-       x = "chisq",
-       y = "Density") +
-  theme(legend.position="none")
-```
-
-
-## Example of Chi-Square Goodness-of-Fit with Unspecified Probability
-A sample has the following frequency counts.  Is the random from a $Poisson(\lambda)$  distribution?
-
-```{r}
-x <- c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
-obs <- c(0, 1, 4, 13, 19, 16, 15, 9, 12, 7, 2, 1, 1)
-knitr::kable(data.frame(x, obs), caption = "Sample Frequence Counts")
-```
-
-We have the observed values, but need to calculate the expected values.  The expected value in a Poisson distribution is $E(r) = e^{-\lambda} \frac{\lambda^r}{r!}$.  The parameter $\lambda$ (the expected value) is not specified, but we can estimate it with the maximum likelihood estimator, the sample mean weighted average, $\lambda \sim \bar{x} = 5.6$.
-```{r}
-(x_bar <- sum(x * obs) / sum(obs))
-den <- dpois(x = x, lambda = x_bar)  # expected densities
-```
-
-The counts for $X<=2$ and $X>=10$ are small $(<5)$, so collapse them to save degrees of freedom, $df = 9-1$.
-```{r}
-x2 <- c("0-2", 3, 4, 5, 6, 7, 8, 9, "10-12")
-obs2 <- c(sum(obs[1:3]), obs[4:10], sum(obs[11:13]))
-den2 <- c(sum(den[1:3]), den[4:10], sum(den[11:13]))
-exp2 <- den2 * sum(obs2)
-knitr::kable(data.frame(x2, obs2, den2, exp2), caption = "Sample Frequence Counts")
-```
-
-There are $R = 9$ levels, so the degrees of freedom is $df = 9 - 1 - 1 = 7$.  $H_0: \sum_{r = 1}^R{O_r - E_r} = 0$.  The test statistic is 
-$\chi^2 = \sum_{i=1}^k{\frac{(O_r - E_r)^2)}{E_r}} = 5.7157$.  The p-value is $P(\chi_7^2 > 5.7157) = 0.5432$, so do not reject $H_0$.^[`chisq.test` uses df = R - 1 instead of (R - 1) - 1 adjusted for the estimated population parameter.  Need to learn how to override df or work around.]
-
-```{r}
-(chisq <- sum((obs2 - exp2)^2 / exp2))
-(p_value <- pchisq(q = chisq, df = length(obs2) - 1 , lower.tail = FALSE))
-
-chisq.test(x = obs2, p = den2, rescale.p = TRUE)
-```
-
-```{r message=FALSE, warning=FALSE}
-library(ggplot2)
-library(dplyr)
-
-# Graph of Hypothesis Test
-lrr = -Inf
-urr = qchisq(p = alpha, df = (length(obs2) - 1) - 1, lower.tail = FALSE)
-data.frame(chi2 = 0:2000 / 100) %>%
-  mutate(density = dchisq(x = chi2, df = (length(obs2) - 1) - 1)) %>%
-  mutate(rr = ifelse(chi2 < lrr | chi2 > urr, density, 0)) %>%
-ggplot() +
-  geom_line(aes(x = chi2, y = density)) +
-  geom_area(aes(x = chi2, y = rr, fill = "red"), alpha = 0.3) +
-#  geom_vline(aes(xintercept = pi_0), color = "black") +
-  geom_vline(aes(xintercept = chisq), color = "red") +
-  labs(title = bquote("One-Sample Chi-Squared Goodness-of-Fit Test"),
-       subtitle = bquote("n ="~.(sum(obs2))~", r ="~.(length(obs2))~", alpha ="~.(alpha)~", Chisq_crit ="~.(round(urr,2))~", Chisq ="~.(round(chisq,2))~", p-value ="~.(round(p_value,4))),
-       x = "chisq",
-       y = "Density") +
-  theme(legend.position="none")
-```
-
-## Example of Chi-Square Test of Independence.
-*A project studied whether age is related to desire to ride a bicycle.  The categorical variable age group has 4 levels: 18-24, 25-34, 35-49, and 50-64.  The levels of categorical variable desire are yes and no.*
-```{r}
-age <- NULL
-age[c(1:60, 202:241)] <- 1
-age[c(61:114, 242:285)] <- 2
-age[c(115:160, 286:338)] <- 3
-age[c(161:201, 339:395)] <- 4
-bike <- NULL
-bike[1:201] <- 1
-bike[202:395] <- 2
-dat <- data.frame(age, bike)
-dat$age <- factor(dat$age, levels = c(1, 2, 3, 4), 
-                  labels = c("18-24", "25-34", "35-49", "50-64"))
-dat$bike <- factor(dat$bike, levels = c(1, 2), 
-                  labels = c("yes", "no"))
-```
-
-This is a test for independence because we have a single population from which we are comparing the levels of a factor variable .  
-```{r}
-
-df <- (4-1)*(2-1)
-alpha <- 0.05
-
-
-(test <- chisq.test(dat$age, dat$bike))
-
-# Graph of hypothesis test
-lrr = -Inf
-urr = qchisq(p = alpha, df = df, lower.tail = FALSE)
-data.frame(xi = 0:2000 / 100) %>%
-  mutate(density = dchisq(x = xi, df = df)) %>%
-  mutate(rr = ifelse(xi < lrr | xi > urr, density, 0)) %>%
-ggplot() +
-  geom_line(aes(x = xi, y = density), color = "black") +
-  geom_area(aes(x = xi, y = rr), fill = "red", alpha = 0.3) +
-  geom_vline(aes(xintercept = test$statistic), color = "blue") +
-  labs(title = bquote("Chi-Square Test for Homogeneity"),
-       subtitle = bquote("P-value ="~.(test$p.value)),
-       x = "xi^2",
-       y = "Density") +
-  theme(legend.position="none")
-```
-
-
 ## Example of Chi-Square Test of Homogeneity
 A project studied whether attending physicians order more unnecessary blood transfusions than residents.  The categorical variable frequency of orders has 4 levels: frequently, occasionally, rarely, and never. 
 ```{r warning=FALSE, message=FALSE}
@@ -420,82 +254,91 @@ chisq.test(dat$o, p = dat$e / sum(dat$e))
 ```
 
 
-### Porportion Difference Test
+### One-Sample Proportion Test
 
-The **proportion difference test** tests whether observed frequency counts $O_j$ of the $j \in (0, 1, \cdots k)$ levels of a categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.
+Suppose a student population is hypothesized to be 60 percent female $\pi_F=0.60$.  A random sample of $n=100$ students yields 53 percent females $p_F=0.53$.  Is the sample representative of the population at an $\alpha=0.05$ level of significance?
 
-The proportion difference test uses the difference in sample proportions $\hat{d} = p_X - p_Y$Y as an estimate of the difference in population proportions $d = \pi_X - \pi_Y$ to evaluate an hypothesized difference in population proportions $d_0 = \pi_{X_0} - \pi_{Y_0}$.  The null hypothesis is $H_0: d = d_0$ and the alternative hypothesis is $H_a: d \ne d_0$, $H_a: d < d_0$, or $H_a: d > d_0$.  One can also construct a $(1 - \alpha)\%$ confidence interval around $\hat{d}$ to estimate $d$ within a margin of error $\epsilon$.^[See [PSU STAT 500](https://newonlinecourses.science.psu.edu/stat500/node/55/) online material, and [Stat Trek](https://www.stattrek.com/estimation/difference-in-proportions.aspx?Tutorial=AP).]
-
-The normal approximation method applies when the central limit theorem conditions hold:
-
-* the sample is independently drawn (random sampling without replacement from $n < 10\%$ of the population in observational studies, or random assignment in experiments), 
-* there are at least $n_i p_i >= 5$ successes and $n_i (1 - p_i) >= 5$ failures for each group $i \in (X,Y)$, 
-* the sample sizes are both $>=30$, and 
-* the probability of success for each group is not extreme, $(0.2, 0.8)$.   
-
-Under the normal approximation method, the sampling distribution of the difference in population proportions has a normal distribution centered at the measured difference in proportions $\hat{d} = p_X - p_Y$Y with standard error $se = \sqrt{\frac{p_X (1 - p_X)}{n_X} + \frac{p_Y (1 - p_Y)}{n_Y}}$.  The measured difference in proportions $\hat{d}$ and standard deviation $s$ approximate the population difference in proportions  $d = \pi_X - \pi_Y$ and standard deviation $\sigma$.  Test $H_0: d = d_0$ with test statistic $Z = \frac{\hat{d} - d_0}{se_{d_0}}$ where $se_{d_0} = \sqrt{p (1 - p) \frac{1}{n_X} + \frac{1}{n_Y}}$ is the standard error of the hypothesized population proportion sampling distribution and $p$ is the pooled proportion $p = \frac{x+y}{n_X + n_Y}$.[Why do we pool the proporitions for the hypothesis test, but not for the CI?]  Define a $(1 - \alpha)\%$ confidence interval as $\hat{d} \pm z_{\alpha {/} 2} se$  where $z_{\alpha {/} 2} se = \epsilon$ is the margin of error.  
-
-*In an experiment on the effectiveness of computer training,* $n_X = 125$ *students were assigned to computer training and* $n_Y = 175$ *were assigned to traditional training.*  $x = 94 (75.2 \%)$ *of the computer training students passed the certification exam and* $y = 113 (64.6 \%)$ *of the tradition training students passed the certification exam, a difference of $\hat{d} = .752 - .646 = .1063.  At an* $\alpha = 0.05$ *level of significance, does computer training produce higher success rates than traditional training?  What is the* $(1 - \alpha) = 95%$ *confidence interval of the difference in success rates?*
 ```{r}
-x <- 94
-n_x <- 125
-y <- 113
-n_y <- 175
-(p_x <- x / n_x)
-(p_y <- y / n_y)
-(d <- (p_x - p_y))
-(d_hat <- p_x - p_y)
-alpha <- 0.05
+O <- c(53, 47)
+E <- c(.60, .40) * sum(O)
+n <- sum(O)
+
+p <- O[1] / sum(O)
+v <- p * (1 - p) / n
 ```
 
-The samples are independently drawn because the experiment is random assignment.  There are $>= 5$ success, $>= 5$ failures, $>= 30$ observations, and $.2 < p <.8$ probability of success for both $X$ and $Y$, so we can use the difference in proportions test.
+The one-sample proportion test statistic is 
 
-The null hypothesis is $H_0: d = d_0 = (\pi_x - \pi_y) = 0$ with alternative hypothesis $H_a: d > 0$.  This is a right-tail test. The test statistic is $Z = \frac{d - d_0}{se_{d_0}}$ where $se_{d_0} = \sqrt{p (1 - p) \frac{{1}}{{n_X}} + \frac{{1}}{{n_Y}}}$ with $p = \frac{{x+y}}{{n_X + n_Y}} = \frac{94 + 113}{125 + 175} = 0.69$.  $se_{d_0} = \sqrt{.69 (1 - .69) \frac{{1}}{{125}} + \frac{{1}}{{175}}} = .0542$.  $Z = \frac{.1063 - 0}{.0542} = 1.96$.  $P(z > 1.96) = .0249$, so reject $H_0$ at the $\alpha = 0.05$ level of significance.
+$$Z = \frac{p_F - \pi_F}{se} = -1.423$$
 
-```{r message=FALSE, warning=FALSE}
-d_0 <- 0
-
-(p <- (x + y) / (n_x + n_y))
-(se_d0 <- sqrt(p * (1 - p) * (1 / n_x + 1 / n_y)))
-(z = (d_hat - d_0) / se_d0)
-pnorm(q = d, 
-      mean = d_0, 
-      sd = se_d0, 
-      lower.tail = FALSE)
-```
-
-R package `stats` function `prop.test` does this same calculation.
 ```{r}
-(prop.test.result <- prop.test(x = c(x, y), 
-                               n = c(n_x, n_y), 
-                               alternative = "greater", 
-                               conf.level = 1 - alpha, 
-                               correct = FALSE))
+Z <- (p - 0.60) / sqrt(v)
 ```
 
+```{r}
+pnorm(Z)
+```
 
-Graph the hypothesis test with rejection range in red.
-```{r message=FALSE, warning=FALSE}
+. $P(Z>|-1.43|) = 0.153$.  The advantage of the one-sample proportion test is that it also calculates a $1 - \alpha)\%$ CI.
+```{r}
+alpha <- .05
+prop.test(x = observed[1], 
+          n = n, 
+          p = expected[1] / n, 
+          alternative = "two.sided", 
+          conf.level = 1 - alpha, 
+          correct = FALSE)
+
+```
+
+When $R = 2$, especially when entries are "small", the $\chi^2$ distribution is not continuous.  Adjust for this by applying the Yates continuity correction.  The Yates continuity correction adds/subtracts 0.5 to the observed counts to bring their fractional limit closer to the expected values.  
+```{r}
+observed2 <- c(53+.5, 47-.5)
+(chisq <- sum((observed2 - expected)^2 / expected))
+(p.value <- pchisq(q = chisq, df = r - 1, lower.tail = FALSE))
+```
+
+In `prop.test` and `chisq.test`, specify `correct = TRUE` to apply the Yates continuity correction.
+```{r}
+prop.test(x = observed[1], 
+          n = n, 
+          p = expected[1] / n, 
+          alternative = "two.sided", 
+          conf.level = 1 - alpha, 
+          correct = TRUE)
+
+chisq.test(x = observed, 
+           p = expected / n,
+           correct = TRUE)
+```
+
+```{r warning=FALSE, message=FALSE}
 library(ggplot2)
-library(dplyr)  # for %>%
+library(dplyr)
 
 lrr = -Inf
-urr = qnorm(p = alpha, mean = d_0, sd = se_d0, lower.tail = FALSE)
-data.frame(d = -300:300 / 1000) %>%
-  mutate(density = dnorm(x = d, mean = d_0, sd = se_d0)) %>%
-  mutate(rr = ifelse(d < lrr | d > urr, density, 0)) %>%
+urr = qchisq(p = alpha, df = r - 1, lower.tail = FALSE)
+p_value <- chisq.test.result$p.value
+data.frame(chi2 = 100:1000 / 100) %>%
+  mutate(density = dchisq(x = chi2, df = r - 1)) %>%
+  mutate(rr = ifelse(chi2 < lrr | chi2 > urr, density, 0)) %>%
 ggplot() +
-  geom_line(aes(x = d, y = density)) +
-  geom_area(aes(x = d, y = rr, fill = "red"), alpha = 0.3) +
-  geom_vline(aes(xintercept = d_hat), color = "blue") +
-  geom_vline(aes(xintercept = d_0), color = "black") +
-  labs(title = bquote("Hypothesis Test of Difference in Proportions"),
-       subtitle = bquote('p_X ='~.(round(p_x,3))~'p_Y ='~.(round(p_y,3))),
-       x = "d",
+  geom_line(aes(x = chi2, y = density)) +
+  geom_area(aes(x = chi2, y = rr, fill = "red"), alpha = 0.3) +
+#  geom_vline(aes(xintercept = pi_0), color = "black") +
+  geom_vline(aes(xintercept = chisq), color = "red") +
+  labs(title = bquote("Chi-Squared Goodness-of-Fit Test"),
+       subtitle = bquote("Chisq ="~.(round(chisq,2))~", n ="~.(n)~", alpha ="~.(alpha)~", chisq_crit ="~.(round(urr,2))~", p-value ="~.(round(p_value,3))),
+       x = "chisq",
        y = "Density") +
-  theme(legend.position="none") 
-
+  theme(legend.position="none")
 ```
+
+
+
+
+The **one-sample proportion test** tests whether observed frequency counts $O_j$ of the $j \in (0, 1)$ levels of a categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.  
+
 
 
 Define a $(1 - \alpha)\%$ confidence interval as $\hat{d} \pm z_{\alpha {/} 2} se$  where $z_{\alpha {/} 2} se = \epsilon$ is the margin of error. $se = \sqrt{\frac{p_X (1 - p_X)}{n_X} + \frac{p_Y (1 - p_Y)}{n_Y}} =  \sqrt{\frac{.752 (1 - .752)}{125} + \frac{.646 (1 - .646)}{175}} = .0529$ and $z_{\alpha {/} 2} = 1.96$.  
@@ -728,7 +571,7 @@ ggplot() +
 ```
 
 
-The null hypothesis $H_0: \delta_0 = 0$ is equivalent to saying that two variables are independent, $\pi_{1|1} = \pi_{1|2}$, so you can also use the $\chi^2$ or $G^2$ test for independence in a 2 × 2.  That's what `prop.test()` is doing.  The square of the z-statistic is algebraically equal to $\chi^2$.  The two-sided test comparing $Z$ to a $N(0, 1)$ is identical to comparing $\chi^2$ to a chi-square distribution with df =1.  Compare the $Z^2$ to the output from `prop.test()`.
+The null hypothesis $H_0: \delta_0 = 0$ is equivalent to saying that two variables are independent, $\pi_{1|1} = \pi_{1|2}$, so you can also use the $\chi^2$ or $G^2$ test for independence in a 2 × 2.  That's what `prop.test()` is doing.  The square of the z-statistic is algebraically equal to $\chi^2$.  The two-sided test comparing $Z$ to a $N(0, 1)$ is identical to comparing $\chi^2$ to a chi-square distribution with df = 1.  Compare the $Z^2$ to the output from `prop.test()`.
 
 ```{r}
 z^2
