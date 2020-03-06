@@ -1,3 +1,97 @@
+--- 
+title: "My Data Science Notes"
+author: "Michael Foley"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output:
+  bookdown::gitbook:
+    lib_dir: assets
+    split_by: section
+    config:
+      toolbar:
+        position: static
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is a compendium of notes from classes, tutorials, etc. that I reference from time to time."
+---
+--- 
+title: "My Data Science Notes"
+author: "Michael Foley"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output:
+  bookdown::gitbook:
+    lib_dir: assets
+    split_by: section
+    config:
+      toolbar:
+        position: static
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is a compendium of notes from classes, tutorials, etc. that I reference from time to time."
+---
+
+# Intro {-}
+
+These notes are pulled from various classes, tutorials, books, etc. and are intended for my own consumption.  If you are finding this on the internet, I hope it is useful to you, but you should know that I am just a student and there's a good chance whatever you're reading here is mistaken.  In fact, that should probably be your null hypothesis... or your prior.  Whatever.
+
+<!--chapter:end:index.Rmd-->
+
+
+# Probability {#probability}
+
+Placeholder
+
+
+## Principles
+
+<!--chapter:end:01-probability.Rmd-->
+
+
+# Discrete Distributions {#disc_dist}
+
+Placeholder
+
+
+## Bernoulli
+## Binomial
+## Poission
+## Multinomial
+## Negative-Binomial
+#### Examples {-}
+## Geometric
+#### Examples {-}
+## Hypergeometric
+#### Example {-}
+## Gamma
+#### Examples {-}
+
+<!--chapter:end:02-disc_dist.Rmd-->
+
+
+# Continuous Distributions {#cont_dist}
+
+Placeholder
+
+
+## Normal
+#### Example {-}
+### Example
+### Example
+### Example
+### Normal Approximation to Binomial
+### Example
+### Example
+### From Sample to Population
+## Join Distributions
+## Likelihood
+
+<!--chapter:end:03-cont_dist.Rmd-->
+
 ```{r include=FALSE}
 library(tidyverse)
 library(mfstylr)
@@ -784,4 +878,133 @@ The relative risk of catching a cold while taking vitamin c compared to not taki
 
 ### Odds Ratio
 
+
+
+<!--chapter:end:04-disc_anal.Rmd-->
+
+# Inference
+
+Categorical data is usually generated from unrestricted sampling (Poisson), fixed sample size sampling (binomial or multinomial)
+
+Poisson sampling assumes the random data generating mechanism can be described by a Poisson distribution. It is useful for modeling events occuring over a fixed period of time or space. It is useful when the event probability is very small and the event count is very large.
+
+<!--chapter:end:05-cont_anal.Rmd-->
+
+# Regression
+
+<!--chapter:end:06-ols.Rmd-->
+
+
+# Generalized Linear Models
+
+Placeholder
+
+
+## Logistic Regression
+### Example {-}
+## Multinomial Logistic Regression
+## Ordinal Logistic Regression
+## Poisson Regression
+### Example {-}
+
+<!--chapter:end:07-glm.Rmd-->
+
+# Classification
+
+<!--chapter:end:08-chisq.Rmd-->
+
+# Classification
+
+<!--chapter:end:09-class.Rmd-->
+
+
+# Decision Trees
+
+Placeholder
+
+
+## Classification Tree
+### Confusion Matrix
+### ROC Curve
+### Caret Approach
+## Regression Trees
+### Caret Approach
+## Bagging
+## Random Forests
+#### Bagging Classification Example
+#### Random Forest Classification Example
+#### Bagging Regression Example
+#### Random Forest Regression Example
+## Gradient Boosting
+#### Gradient Boosting Classification Example
+#### Gradient Boosting Regression Example
+## Summary
+## Reference
+
+<!--chapter:end:10-cart.Rmd-->
+
+# Regularization
+
+<!--chapter:end:11-regularization.Rmd-->
+
+
+# Non-linear Models
+
+Placeholder
+
+
+## Splines
+## MARS
+## GAM
+
+<!--chapter:end:12-nonlin.Rmd-->
+
+
+# Support Vector Machines
+
+Placeholder
+
+
+## Maximal Margin Classifier
+## Support Vector Classifier
+## Support Vector Machines
+## Example
+## Using Caret
+
+<!--chapter:end:13-svm.Rmd-->
+
+# Principal Components Analysis
+
+<!--chapter:end:14-pca.Rmd-->
+
+# Clustering
+
+<!--chapter:end:15-cluster.Rmd-->
+
+# Text Mining
+
+<!--chapter:end:16-text-mining.Rmd-->
+
+
+# Appendix {-}
+
+Placeholder
+
+
+## Publishing to BookDown {-}
+## Shiny Apps {-}
+## Packages {-}
+### Create a package {-}
+### Document Functions with roxygen
+### Create Data {-}
+### Create Vignette {-}
+#### Step 2: Create an R Markdown template {-}
+
+<!--chapter:end:17-appendix.Rmd-->
+
+`r if (knitr::is_html_output()) '
+# References {-}
+'`
+
+<!--chapter:end:18-references.Rmd-->
 
