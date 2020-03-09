@@ -372,9 +372,9 @@ It alco includes `stdres` that match the manual standardized calculation.
 ```{r}
 p <- prop.table(vitc_dat, margin = 1)
 (r_std <- (vitc_dat - E) / 
-    sqrt(E * 
-           (1 - prop.table(vitc_dat, margin = 1)[, 1]) * 
-           (1 - prop.table(vitc_dat, margin = 2)[1, ])))
+    sqrt( E* t(
+           matrix(1 - prop.table(vitc_dat, margin = 1)[, 1]) * 
+           (matrix(1 - prop.table(vitc_dat, margin = 2)[1, ])))))
 vitc_chisq_test$stdres
 ```
 
