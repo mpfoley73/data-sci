@@ -270,7 +270,7 @@ c(0, p + z_alpha * se)
 
 These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/69/).
 
-A two-way frequency table is a frequency table for *two* categorical variables.  You usually construct a two-way table to test whether the frequency counts in one categorical variable differ from the other categorical variable using the chi-square independence test.  If there is a significant difference, then you characterize the effect sizes with measures of association (difference in proportions, relative risk, or odds ratio). 
+A two-way frequency table is a frequency table for *two* categorical variables.  You usually construct a two-way table to test whether the frequency counts in one categorical variable differ from the other categorical variable using the chi-square independence test.  If there is a significant difference (i.e., the variables are related), then describe the relationship with an analysis of the residuals, calculations of measures of association (difference in proportions, relative risk, or odds ratio), and partition tests. 
 
 Here is an example.  A double blind study investigated the therapeutic value of vitamin C $(trt \in [Placebo, VitaminC])$ for treating common colds $(result \in [Cold, No Cold])$ on a sample of $n = 279$ persons. There are two discrete variables each with two levels, hence a two way table.
 
@@ -343,10 +343,41 @@ chisq.test(vitc_dat, correct = FALSE)
 The correction yields more conservative p-values.
 
 ```{r}
-chisq.test(vitc_dat)
+vitc_chisq_test <- chisq.test(vitc_dat)
+print(vitc_chisq_test)
 ```
 
 The p-values indicate strong evidence for rejecting the independence model.
+
+
+### Residuals Analysis
+
+The residuals in a Chi-squared test indicate *which* cells drive the lack of fit.  The Pearson residuals in a two-way table are 
+
+$$r_{ij} = \frac{O_{ij} - E_{ij}}{\sqrt{E_{ij}}}$$
+
+and the $r_{ij}$ values have a normal distribution with mean 0, but with *unequal* variances.  The *standardized* Pearson residual for a two-way table is 
+
+$$r_{ij} = \frac{O_{ij} - E_{ij}}{\sqrt{E_{ij}(1 - p_{i+})(1 - p_{+j})}}$$
+
+and the $r_{ij}$ values *do* have a $\sim N(0, 1)$ distribution.  The `chissq.test()` object includes `residuals` that match the manual calculation.
+
+```{r}
+(r <- (vitc_dat - E) / sqrt(E))
+vitc_chisq_test$residuals
+```
+
+It alco includes `stdres` that match the manual standardized calculation.
+
+```{r}
+p <- prop.table(vitc_dat, margin = 1)
+(r_std <- (vitc_dat - E) / 
+    sqrt(E * 
+           (1 - prop.table(vitc_dat, margin = 1)[, 1]) * 
+           (1 - prop.table(vitc_dat, margin = 2)[1, ])))
+vitc_chisq_test$stdres
+```
+
 
 
 ### Difference in Proportions
