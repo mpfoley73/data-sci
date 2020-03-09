@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Discrete Variables | My Data Science Notes</title>
+  <title>4.1 Chi-Square Test | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Discrete Variables | My Data Science Notes" />
+  <meta property="og:title" content="4.1 Chi-Square Test | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Discrete Variables | My Data Science Notes" />
+  <meta name="twitter:title" content="4.1 Chi-Square Test | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="likelihood.html"/>
-<link rel="next" href="chi-square-test.html"/>
+<link rel="prev" href="discrete-variables.html"/>
+<link rel="next" href="example-of-chi-square-test-of-homogeneity.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -250,16 +250,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="discrete_variables" class="section level1">
-<h1><span class="header-section-number">Chapter 4</span> Discrete Variables</h1> 
+<div id="chi-square-test" class="section level2">
+<h2><span class="header-section-number">4.1</span> Chi-Square Test</h2>
+<p>These notes rely on <a href="https://newonlinecourses.science.psu.edu/stat500/node/56/">PSU STAT 500</a>, <a href="https://en.wikipedia.org/wiki/Chi-squared_test">Wikipedia</a>, and <a href="http://www.yourarticlelibrary.com/project-reports/chi-square-test/chi-square-test-meaning-applications-and-uses-statistics/92394">Disha M</a>].</p>
+<p>The chi-square test compares observed categorical variable frequency counts <span class="math inline">\(O\)</span> with their expected values <span class="math inline">\(E\)</span>. The test statistic <span class="math inline">\(\chi^2 = \sum (O - E)^2 / E\)</span> is distributed <span class="math inline">\(\chi^2\)</span>. <span class="math inline">\(H_0: O = E\)</span> and <span class="math inline">\(H_a\)</span> is at least one pair of frequency counts differ. The chi-square test relies on the central limit theorem, so it is valid for independent, normally distributed samples, typically affirmed with at least 5 successes and failures in each cell. There a small variations in the chi-square for its various applications.</p>
+<ul>
+<li><p>The <strong>chi-square goodness-of-fit test</strong> tests whether observed frequency counts <span class="math inline">\(O_j\)</span> of the <span class="math inline">\(j \in (0, 1, \cdots k)\)</span> levels of a single categorical variable differ from expected frequency counts <span class="math inline">\(E_j\)</span>. <span class="math inline">\(H_0\)</span> is <span class="math inline">\(O_j = E_j\)</span>.</p></li>
+<li><p>The <strong>chi-square independence test</strong> tests whether observed joint frequency counts <span class="math inline">\(O_{ij}\)</span> of the <span class="math inline">\(i \in (0, 1, \cdots I)\)</span> levels of categorical variable <span class="math inline">\(Y\)</span> and the <span class="math inline">\(j \in (0, 1, \cdots J)\)</span> levels of categorical variable <span class="math inline">\(Z\)</span> differ from expected frequency counts <span class="math inline">\(E_{ij}\)</span> under the <em>independence model</em> where <span class="math inline">\(\pi_{ij} = \pi_{i+} \pi_{+j}\)</span>, the joint densities. <span class="math inline">\(H_0\)</span> is <span class="math inline">\(O_{ij} = E_{ij}\)</span>.</p></li>
+<li><p>The <strong>chi-square homogeneity test</strong> tests whether frequency counts of the <span class="math inline">\(R\)</span> levels of a categorical variable are distributed identically across <span class="math inline">\(C\)</span> different populations.</p></li>
+</ul>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="likelihood.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="chi-square-test.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="discrete-variables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="example-of-chi-square-test-of-homogeneity.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

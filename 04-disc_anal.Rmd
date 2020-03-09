@@ -116,26 +116,26 @@ Do the observed phenotype counts conform to the expected proportions?  This is a
 
 ### Chi-Square Goodness-of-Fit Test
 
-The **chi-square goodness-of-fit test** tests whether observed frequency counts $O_j$ of the $j \in (0, 1, \cdots k)$ levels of a categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.
+The **chi-square goodness-of-fit test** tests whether observed frequency counts $O_j$ of the levels of a categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.
 
 There are two test statistics for this test, Pearson $\chi^2$ and deviance $G^2$.  The sampling distribution of each test statistic approach the chi-square distribution as $n$ becomes large with degrees of freedom $df = k - 1$.  It's a good idea to calculate both test statistics.
 
 The Pearson goodness-of-fit statistic is
 
-$$\chi^2 = \sum \frac{(O_j - E_j)^2}{E_j}$$
+$$X^2 = \sum \frac{(O_j - E_j)^2}{E_j}$$
 
 where $O_j = p_j n$ and $E_j = \pi_j n$.  The deviance statistic is 
 
 $$G^2 = 2 \sum O_j \log \left( \frac{O_j}{E_j} \right)$$
 
-If the saturated model (the observed data represent the fit of the saturated model, the most complex model possible with the data) proportions $p_j$ equal equal the expected proportions $\pi_j$, $\chi^2$ and $G^2$ will equal zero.  Large values indicate the data do not agree well with the proposed model.
+If the saturated model (the observed data represent the fit of the saturated model, the most complex model possible with the data) proportions $p_j$ equal equal the expected proportions $\pi_j$, $X^2$ and $G^2$ will equal zero.  Large values indicate the data do not agree well with the proposed model.
 
-As $n \rightarrow \infty$, $G^2$ and $\chi^2$ approach $\chi_{k-1}^2$ where $k$ is the number of n-way table cells.  You can therefore run a chi-square test of significance using the $G^2$ and $\chi^2$ test statistics.  The chi-square test provides reliable results when at least 80% of $E_j >= 5$.  
+As $n \rightarrow \infty$, $G^2$ and $X^2$ approach $\chi_{k-1}^2$ where $k$ is the number of n-way table cells.  You can therefore run a chi-square test of significance using the $G^2$ and $\chi^2$ test statistics.  The chi-square test provides reliable results when at least 80% of $E_j >= 5$.  
 
 ```{r echo=FALSE}
-x2 <- sum((o - e)^2 / e)
-g2 <- 2 * sum(o * log(o / e))
-dof <- length(o) - 1
+(x2 <- sum((o - e)^2 / e))
+(g2 <- 2 * sum(o * log(o / e)))
+(dof <- length(o) - 1)
 ```
 
 The $\chi^2$ statistic is `x2 <- sum((o - e)^2 / e) = ` `r  x2` and the $G^2$ statistic is `g2 <- 2 * sum(o * log(o / e)) = ` `r g2`, so nearly identical. The chi-sq test p-values are also nearly identical.
@@ -254,130 +254,61 @@ chisq.test(dat$o, p = dat$e / sum(dat$e))
 ```
 
 
-### One-Sample Proportion Test
+### Proportion Test
 
-Suppose a student population is hypothesized to be 60 percent female $\pi_F=0.60$.  A random sample of $n=100$ students yields 53 percent females $p_F=0.53$.  Is the sample representative of the population at an $\alpha=0.05$ level of significance?
+A special case of the one-way table is the $2 \times 1$ table for a binomial random variable.  Here you can hypothesize whether $\pi$ is <, =, or > $\pi_0$, or you can create a confidence interval around the estimate.
 
-```{r}
-O <- c(53, 47)
-E <- c(.60, .40) * sum(O)
-n <- sum(O)
-
-p <- O[1] / sum(O)
-v <- p * (1 - p) / n
-```
-
-The one-sample proportion test statistic is 
-
-$$Z = \frac{p_F - \pi_F}{se} = -1.423$$
+Suppose a maintenance company claims to resolve at least 70% of maintenance requests within 24 hours. In a random sample of $n = 50$ repair requests, the company resolves $O_1 = 33$, $p_1 = 66\%)$ within 24 hours. At a 5% level of significance, is the maintenance company’s claim valid?
 
 ```{r}
-Z <- (p - 0.60) / sqrt(v)
+o <- c(33, 17)
+n <- sum(o)
+cell_names <- c("resolved", "not resolved")
+names(o) <- cell_names
+print(o)
 ```
+
+The null hypothesis is that the maintenance company resolves $\pi_0 = 0.70$ of requests within 24 hours, $H_0: \pi_0 = \pi_0$ with alternative hypothesis $H_a: \pi < \pi_0$. This is a left-tailed test with an $\alpha = 0.05$ level of significance.
 
 ```{r}
-pnorm(Z)
+pi_0 <- 0.70
+alpha <- 0.05
 ```
 
-. $P(Z>|-1.43|) = 0.153$.  The advantage of the one-sample proportion test is that it also calculates a $1 - \alpha)\%$ CI.
-```{r}
-alpha <- .05
-prop.test(x = observed[1], 
-          n = n, 
-          p = expected[1] / n, 
-          alternative = "two.sided", 
-          conf.level = 1 - alpha, 
-          correct = FALSE)
-
-```
-
-When $R = 2$, especially when entries are "small", the $\chi^2$ distribution is not continuous.  Adjust for this by applying the Yates continuity correction.  The Yates continuity correction adds/subtracts 0.5 to the observed counts to bring their fractional limit closer to the expected values.  
-```{r}
-observed2 <- c(53+.5, 47-.5)
-(chisq <- sum((observed2 - expected)^2 / expected))
-(p.value <- pchisq(q = chisq, df = r - 1, lower.tail = FALSE))
-```
-
-In `prop.test` and `chisq.test`, specify `correct = TRUE` to apply the Yates continuity correction.
-```{r}
-prop.test(x = observed[1], 
-          n = n, 
-          p = expected[1] / n, 
-          alternative = "two.sided", 
-          conf.level = 1 - alpha, 
-          correct = TRUE)
-
-chisq.test(x = observed, 
-           p = expected / n,
-           correct = TRUE)
-```
-
-```{r warning=FALSE, message=FALSE}
-library(ggplot2)
-library(dplyr)
-
-lrr = -Inf
-urr = qchisq(p = alpha, df = r - 1, lower.tail = FALSE)
-p_value <- chisq.test.result$p.value
-data.frame(chi2 = 100:1000 / 100) %>%
-  mutate(density = dchisq(x = chi2, df = r - 1)) %>%
-  mutate(rr = ifelse(chi2 < lrr | chi2 > urr, density, 0)) %>%
-ggplot() +
-  geom_line(aes(x = chi2, y = density)) +
-  geom_area(aes(x = chi2, y = rr, fill = "red"), alpha = 0.3) +
-#  geom_vline(aes(xintercept = pi_0), color = "black") +
-  geom_vline(aes(xintercept = chisq), color = "red") +
-  labs(title = bquote("Chi-Squared Goodness-of-Fit Test"),
-       subtitle = bquote("Chisq ="~.(round(chisq,2))~", n ="~.(n)~", alpha ="~.(alpha)~", chisq_crit ="~.(round(urr,2))~", p-value ="~.(round(p_value,3))),
-       x = "chisq",
-       y = "Density") +
-  theme(legend.position="none")
-```
-
-
-
-
-The **one-sample proportion test** tests whether observed frequency counts $O_j$ of the $j \in (0, 1)$ levels of a categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.  
-
-
-
-Define a $(1 - \alpha)\%$ confidence interval as $\hat{d} \pm z_{\alpha {/} 2} se$  where $z_{\alpha {/} 2} se = \epsilon$ is the margin of error. $se = \sqrt{\frac{p_X (1 - p_X)}{n_X} + \frac{p_Y (1 - p_Y)}{n_Y}} =  \sqrt{\frac{.752 (1 - .752)}{125} + \frac{.646 (1 - .646)}{175}} = .0529$ and $z_{\alpha {/} 2} = 1.96$.  
+The sample is independently drawn without replacement from <10% of the population (by assumption) and there were >=5 successes, so you can use the Clopper-Pearson exact binomial test. *Clopper-Pearson inverts two single-tailed binomial tests at the desired alpha*.
 
 ```{r}
-(se <- sqrt(p_x * (1 - p_x) / n_x + p_y * (1 - p_y) / n_y))
-(z_crit <- qnorm(p = alpha / 2, mean = 0, sd = 1, lower.tail = FALSE))
-
-lcl <- d_hat - z_crit * se
-ucl <- d_hat + z_crit * se
-cat("95% CI: ", round(d_hat, 4), "+/-", round(se * z_crit, 4), "= (", round(lcl, 4), ", ", round(ucl, 4), ")")
-
+binom.test(x = o, p = pi_0, alternative = "less", conf.level = 1 - alpha)
 ```
 
-R function `prop.test` can calculate a confidence interval around a proportion.  In this case, use a two-tail distribution.
-```{r}
-(prop.test.result <- prop.test(x = c(x, y), 
-                               n = c(n_x, n_y), 
-                               conf.level = 1 - alpha, 
-                               correct = FALSE))
+There is insufficient evidence (p = 0.3161) to reject $H_0$ that true probability of success is less than 0.7.
+
+```{r fig.height=3.5}
+x <- c(0:50)
+p_x <- dbinom(x = x, size = n, prob = pi_0)
+observed <- factor(if_else(x == o[1], 1, 0))
+data.frame(x, p_x, observed) %>%
+  ggplot(aes(x = x, y = p_x, fill = observed)) +
+  geom_col() +
+  theme_mf() +
+  scale_fill_mf() +
+  labs(title = "Exact Binomial")
 ```
 
-Graph the 95% CI.
-```{r}
-lcl <- round(prop.test.result$conf.int[1], 3)
-ucl <- round(prop.test.result$conf.int[2], 3)
-data.frame(d = -300:300 / 1000) %>%
-  mutate(density = dnorm(x = d, mean = d_hat, sd = se)) %>%
-  mutate(rr = ifelse(d < lcl | d > ucl, density, 0)) %>%
-ggplot() +
-  geom_line(aes(x = d, y = density)) +
-  geom_area(aes(x = d, y = rr), fill = "red", alpha = 0.3) +
-  geom_vline(aes(xintercept = d_hat), color = "blue") +
-  labs(title = bquote("Difference in Proportions Confidence Interval"),
-       subtitle = bquote('p_X ='~.(round(p_x,3))~'p_Y ='~.(round(p_y,3))),
-       x = "d",
-       y = "Density") +
-  theme(legend.position="none")
+There were >=5 failures, >=30 observations, and the measured probability of success was within (.2,.80), so you can also use the Wald normal approximation method where $\pi = p \pm z_{\alpha/2} SE$ and $Z = (p - \pi_0) / SE$ where $SE = \sqrt{\pi_0 (1 - \pi_0) / n}$.
 
+```{r}
+p <- o[1] / sum(o)
+se <- sqrt(pi_0 * (1 - pi_0) / sum(o))
+z <- (p - pi_0) / se
+pnorm(q = p, mean = pi_0, sd = se, lower.tail = TRUE)
+```
+
+Again, there is insufficient evidence (p = 0.2685) to reject $H_0$ that true probability of success is less than 0.7.  The 95% CI around the measured p = 0.66 is
+
+```{r}
+z_alpha <- qnorm(0.95, mean = p, sd = se, lower.tail = FALSE)
+c(0, p + z_alpha * se)
 ```
 
 
@@ -586,7 +517,7 @@ More notes online at [PSU STAT 500](https://newonlinecourses.science.psu.edu/sta
 
 ### Relative Risk
 
-The difference in proportions measure is the ratio of the probabilities of characteristic $Z$ conditioned on two groups $Y = 1$ and $Y = 2$: $\rho = \pi_{1|1} / \pi_{1|2}$.  In social sciences and epidemiology $\rho$ is sometimes referred to as the "relative risk". The point estimate for $\rho$ is $r = p_{1|1} / p_{1|2}$.  
+The relative risk measure is the ratio of the probabilities of characteristic $Z$ conditioned on two groups $Y = 1$ and $Y = 2$: $\rho = \pi_{1|1} / \pi_{1|2}$.  In social sciences and epidemiology $\rho$ is sometimes referred to as the "relative risk". The point estimate for $\rho$ is $r = p_{1|1} / p_{1|2}$.  
 
 Because $\rho$ is non-negative, a normal approximation for $\log \rho$ has a less skewed distribution than $\rho$. The approximate variance of $\log \rho$ is
 
@@ -614,17 +545,34 @@ var_r <- 1 / vitc_dat[1, 1] - 1 / sum(vitc_dat[1, ]) +
 The 95% CI is
 
 ```{r}
-r + c(-1, 1) * qnorm(.975) * sqrt(var_r)
+exp(log(r) + c(-1, 1) * qnorm(.975) * sqrt(var_r))
 ```
 
-
-The relative risk of catching a cold while taking vitamin c compared to not taking vitamin c is
-
-```{r}
-
-```
+Thus, at 0.05 level, you can reject the independence model. People taking vitamin C are half as likely to catch a cold.
 
 
 ### Odds Ratio
+
+The odds ratio is the most commonly used measure of association.  It is also a natural parameter for many of the log-linear and logistic models. The odds is the ratio of probabilities of "success" and "failure".  When conditioned on a variable, the odds ratio is 
+
+$$\theta = \frac{\pi_{1|1} / \pi_{2|1}} {\pi_{1|2} / \pi_{2|2}}$$
+
+and is estimated by the sample frequencies
+
+ $$\hat{\theta} = \frac{n_{11} n_{22}} {n_{12} n_{21}}$$
+ 
+The log-odds ratio has a better normal approximation than the odds ratio, so define a confidence interval on the log scale.
+
+$$Var(\log \hat{\theta}) = \frac{1}{n_{11}} + \frac{1}{n_{12}} + \frac{1}{n_{21}} + \frac{1}{n_{22}}$$
+
+For the Vitamin C example, the odds of getting a cold given a skier took vitamin C, are 
+
+```{r}
+p
+```
+
+0.12/0.88 = 0.14
+odds of "success" (i.e., getting a cold) given that a skier took a placebo pill, 0.22/0.78 = 0.28.
+The odds ratio is 0.14/0.28 = 0.49.
 
 
