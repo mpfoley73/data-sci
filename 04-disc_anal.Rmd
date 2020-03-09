@@ -10,7 +10,7 @@ library(mfstylr)
 
 These notes rely on [PSU STAT 500](https://newonlinecourses.science.psu.edu/stat500/node/56/),  [Wikipedia](https://en.wikipedia.org/wiki/Chi-squared_test), and [Disha M](http://www.yourarticlelibrary.com/project-reports/chi-square-test/chi-square-test-meaning-applications-and-uses-statistics/92394)].
 
-The chi-square test compares observed categorical variable frequency counts $O$ with their expected values $E$.  The test statistic $\chi^2 = \sum (O - E)^2 / E$ is distributed $\chi^2$.  $H_0: O = E$ and $H_a$ is at least one pair of frequency counts differ. The chi-square test relies on the central limit theorem, so it is valid for independent, normally distributed samples, typically affirmed with at least 5 successes and failures in each cell.  There a small variations in the chi-square for its various applications.
+The chi-square test compares observed categorical variable frequency counts $O$ with their expected values $E$.  The test statistic $X^2 = \sum (O - E)^2 / E$ is distributed $\chi^2$.  $H_0: O = E$ and $H_a$ is at least one pair of frequency counts differ. The chi-square test relies on the central limit theorem, so it is valid for independent, normally distributed samples, typically affirmed with at least 5 successes and failures in each cell.  There a small variations in the chi-square for its various applications.
 
 * The **chi-square goodness-of-fit test** tests whether observed frequency counts $O_j$ of the $j \in (0, 1, \cdots k)$ levels of a single categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.
 
@@ -18,57 +18,11 @@ The chi-square test compares observed categorical variable frequency counts $O$ 
 
 * The **chi-square homogeneity test** tests whether frequency counts of the $R$ levels of a categorical variable are distributed identically across $C$ different populations.
 
-## Example of Chi-Square Test of Homogeneity
-A project studied whether attending physicians order more unnecessary blood transfusions than residents.  The categorical variable frequency of orders has 4 levels: frequently, occasionally, rarely, and never. 
-```{r warning=FALSE, message=FALSE}
-library(dplyr)
-library(ggplot2)
-library(stats)
-
-pop <- NULL
-pop[1:49] <- 1
-pop[50:120] <- 2
-lev <- NULL
-lev[c(1:2, 50:64)] <- 1
-lev[c(3:5, 65:92)] <- 2
-lev[c(6:36, 93:115)] <- 3
-lev[c(37:49, 116:120)] <- 4
-dat <- data.frame(pop, lev)
-dat$pop <- factor(dat$pop, levels = c(1, 2), 
-                  labels = c("attending", "resident"))
-dat$lev <- factor(dat$lev, levels = c(1, 2, 3, 4), 
-                  labels = c("frequently", "occasionally", "rarely", "never"))
-
-df <- (2-1)*(4-1)
-alpha <- 0.05
-
-
-(test <- chisq.test(dat$lev, dat$pop))
-
-# Graph of hypothesis test
-lrr = -Inf
-urr = qchisq(p = alpha, df = df, lower.tail = FALSE)
-data.frame(xi = 0:400 / 10) %>%
-  mutate(density = dchisq(x = xi, df = df)) %>%
-  mutate(rr = ifelse(xi < lrr | xi > urr, density, 0)) %>%
-ggplot() +
-  geom_line(aes(x = xi, y = density), color = "black") +
-  geom_area(aes(x = xi, y = rr), fill = "red", alpha = 0.3) +
-  geom_vline(aes(xintercept = test$statistic), color = "blue") +
-  labs(title = bquote("Chi-Square Test for Homogeneity"),
-       subtitle = bquote("P-value ="~.(test$p.value)),
-       x = "xi^2",
-       y = "Density") +
-  theme(legend.position="none")
-
-```
-
-
 ## One-Way Tables
 
 These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/60/).
 
-A one-way frequency table is a frequency table for a single categorical variable.  You usually construct a one-way table to test whether the frequency counts differ from a hypothesized distribution using the chi-square goodness-of-fit test.
+A one-way table is a frequency table for a single categorical variable.  You usually construct a one-way table to test whether the frequency counts differ from a hypothesized distribution using the chi-square goodness-of-fit test.  You may also simply want to construct a confidence interval around a proportion.
 
 Here is an example.  A researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the ($n = 1,611$) offspring phenotypes.
 
@@ -116,9 +70,9 @@ Do the observed phenotype counts conform to the expected proportions?  This is a
 
 ### Chi-Square Goodness-of-Fit Test
 
-The **chi-square goodness-of-fit test** tests whether observed frequency counts $O_j$ of the levels of a categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.
+The **chi-square goodness-of-fit test** tests whether observed frequency counts $O_j$ of the $J$ levels of a categorical variable differ from expected frequency counts $E_j$ in a sample. $H_0$ is $O_j = E_j$.
 
-There are two test statistics for this test, Pearson $\chi^2$ and deviance $G^2$.  The sampling distribution of each test statistic approach the chi-square distribution as $n$ becomes large with degrees of freedom $df = k - 1$.  It's a good idea to calculate both test statistics.
+There are two possible test statistics for this test, Pearson $X^2$ and deviance $G^2$.  The sampling distributions of $X^2$ and $G^2$ approach the $\chi_{J-1}^2$ as the sample size $n \rightarrow \infty$.  It's a good idea to calculate both test statistics.
 
 The Pearson goodness-of-fit statistic is
 
@@ -126,32 +80,32 @@ $$X^2 = \sum \frac{(O_j - E_j)^2}{E_j}$$
 
 where $O_j = p_j n$ and $E_j = \pi_j n$.  The deviance statistic is 
 
-$$G^2 = 2 \sum O_j \log \left( \frac{O_j}{E_j} \right)$$
+$$G^2 = 2 \sum O_j \log \left[ \frac{O_j}{E_j} \right]$$
 
 If the saturated model (the observed data represent the fit of the saturated model, the most complex model possible with the data) proportions $p_j$ equal equal the expected proportions $\pi_j$, $X^2$ and $G^2$ will equal zero.  Large values indicate the data do not agree well with the proposed model.
 
-As $n \rightarrow \infty$, $G^2$ and $X^2$ approach $\chi_{k-1}^2$ where $k$ is the number of n-way table cells.  You can therefore run a chi-square test of significance using the $G^2$ and $\chi^2$ test statistics.  The chi-square test provides reliable results when at least 80% of $E_j >= 5$.  
+You can perform a chi-square test of significance with the $G^2$ and $X^2$ test statistics with $dof$ degrees of freedom (d.f.).  The chi-square test is reliable when at least 80% of $E_j >= 5$.  
 
 ```{r echo=FALSE}
-(x2 <- sum((o - e)^2 / e))
-(g2 <- 2 * sum(o * log(o / e)))
-(dof <- length(o) - 1)
+x2 <- sum((o - e)^2 / e)
+g2 <- 2 * sum(o * log(o / e))
+dof <- length(o) - 1
 ```
 
-The $\chi^2$ statistic is `x2 <- sum((o - e)^2 / e) = ` `r  x2` and the $G^2$ statistic is `g2 <- 2 * sum(o * log(o / e)) = ` `r g2`, so nearly identical. The chi-sq test p-values are also nearly identical.
+Calculate $X^2$ as `x2 <- sum((o - e)^2 / e) = ` `r  x2` and the $G^2$ as `g2 <- 2 * sum(o * log(o / e)) = ` `r g2`. The degrees of freedom are `length(o) - 1 = ` `r dof`.  The chi-sq test p-values are nearly identical.
 
 ```{r}
 pchisq(q = x2, df = dof, lower.tail = FALSE)
 pchisq(q = g2, df = dof, lower.tail = FALSE)
 ```
 
-You can also perform the chi-square test of the Pearson test statistic with `chisq.test()`.
+`chisq.test()` performs the chi-square test of the Pearson test statistic.
 
 ```{r}
 chisq.test(o, p = pi)
 ```
 
-The p-values based on the $\chi^2$ distribution with 3 d.f. are about 0.69, so we fail to reject the null hypothesis - the data are consistent with the genetic theory. The $\chi^2$ value is well outside the $\alpha = 0.05$ level range of regression.
+The p-values based on the $\chi^2$ distribution with 3 d.f. are about 0.69, so the test fails to reject the null hypothesis that the observed frequencies are consistent with the theory. The plot of the chi-squared distribution shows $X^2$  well outside the $\alpha = 0.05$ range of rejection.
 
 ```{r warning=FALSE, message=FALSE, fig.height=4}
 alpha <- 0.05
@@ -167,7 +121,7 @@ urr = qchisq(p = alpha, df = dof, lower.tail = FALSE)
    geom_area(aes(x = chi2, y = rr), fill = mf_pal(12)(12)[2], alpha = 0.8) +
    geom_vline(aes(xintercept = x2), color = mf_pal(12)(12)[11], size = 0.8) +
    labs(title = bquote("Chi-Square Goodness-of-Fit Test"),
-        subtitle = paste0("Chisq=", round(x2,2), ", ",
+        subtitle = paste0("X^2=", round(x2,2), ", ",
                           "Critical value=", round(urr,2), ", ",
                           "p-value=", round(p_val,3), "."
                           ),
@@ -177,7 +131,7 @@ urr = qchisq(p = alpha, df = dof, lower.tail = FALSE)
    theme_mf()
 ```
 
-Inspect the residuals to learn which differences may lead to rejecting the null hypothesis.  The Pearson and deviance statistics are sums of individual cell comparisons which can be termed the squared "residuals", $\chi^2 = \sum r_j^2$ and $G^2 = \sum G_j^2$.  The expected value of a $\chi^2$ random variable is its d.f., $k-1$, and the typical size of any $\chi^2$ value is be $(k - 1) / k$, so for the typical residual should be within 2 $\sqrt{(k - 1) / k}$.
+If you reject $H_0$, you can inspect the residuals to learn which differences may have lead to rejecting the rejection.  $X^2$ and $G^2$ are sums of squared cell comparisons, or "residuals".  The expected value of a $\chi^2$ random variable is its d.f., $k - 1$, so the average residual size is $(k - 1) / k$. The typical residual should be within 2 $\sqrt{(k - 1) / k}$.
 
 ```{r}
 e2_res <- sqrt((o - e)^2 / e)
@@ -194,13 +148,12 @@ data.frame(e2_res) %>%
   labs(title = "X^2 Residuals by Cell", color = "", x = "", y = "")
 ```
 
-If you do not have a theoretical value, but instead want to test whether the data conform to a distribution, the test is nearly the same.  Your first step is the estimate the distribution parameter(s).  Then you can perform the goodness of fit test, but with degrees of freedom reduced for each estimated parameter.
+If you want to test whether the data conform to a particular distribution instead of some set of theoretical values, the test is nearly the same except for an adjustment to the d.f.  Your first step is the estimate the distribution's parameter(s).  Then you perform the goodness of fit test, but with degrees of freedom reduced for each estimated parameter.
 
-For example, suppose sample $n = 100$ families and count the number of children $J$, and you want to test whether the counts $O$ follow a Poisson distribution, $X \sim  Pois(\lambda)$.  
+For example, suppose you sample $n = 100$ families and count the number of children.  The count of children should be a Poisson random variable, $J \sim  Pois(\lambda)$.  
 
 ```{r}
 dat <- data.frame(j = 0:5, o = c(19, 26, 29, 13, 10, 3))
-print(dat)
 ```
 
 The ML estimate for $\lambda$ is
@@ -212,12 +165,13 @@ lambda_hat <- sum(dat$j * dat$o) / sum(dat$o)
 print(lambda_hat)
 ```
 
-Then the expected values are 
+The probabilities for each possible count are 
 
 $$f(j; \lambda) = \frac{e^{-\hat{\lambda}} \hat{\lambda}^j}{j!}.$$
 
 ```{r}
-E <- exp(-lambda_hat) * lambda_hat^dat$j / factorial(dat$j) * sum(dat$o)
+f <- exp(-lambda_hat) * lambda_hat^dat$j / factorial(dat$j)
+E <- f * sum(dat$o)
 dat <- cbind(dat, e = E)
 ```
 
@@ -239,7 +193,7 @@ dat %>%
   labs(title = "Observed vs Expected", fill = "", x = "children in family")
 ```
 
-Compare the expected values to the observed values with the $\chi^2$ goodness of fit test.  In this case, $k = 6 - 1 - 1$, reducing the degrees of freedom by $1$ for the estimated paramater $\lambda$.
+Compare the expected values to the observed values with the $\chi^2$ goodness of fit test.  In this case, $df = 6 - 1 - 1$ because the estimated paramater $\lambda$ reduces d.f. by 1.
 
 ```{r}
 (X2 <- sum((dat$o - dat$e)^2 / dat$e))
@@ -247,7 +201,7 @@ Compare the expected values to the observed values with the $\chi^2$ goodness of
 pchisq(q = X2, df = dof)
 ```
 
-Be careful of this consideration, because `chisq.test()` does not take this into account, and you cannot override the degrees of freedom.
+Be careful of this adjustment to the d.f. because `chisq.test()` does not take this into account, and you cannot override the d.f..
 
 ```{r}
 chisq.test(dat$o, p = dat$e / sum(dat$e))
@@ -256,9 +210,9 @@ chisq.test(dat$o, p = dat$e / sum(dat$e))
 
 ### Proportion Test
 
-A special case of the one-way table is the $2 \times 1$ table for a binomial random variable.  Here you can hypothesize whether $\pi$ is <, =, or > $\pi_0$, or you can create a confidence interval around the estimate.
+A special case of the one-way table is the $2 \times 1$ table for a binomial random variable.  When you calculate a single proportion $p$, you can compare it to a hypothesized $\pi_0$, or create a confidence interval around the estimate.
 
-Suppose a maintenance company claims to resolve at least 70% of maintenance requests within 24 hours. In a random sample of $n = 50$ repair requests, the company resolves $O_1 = 33$, $p_1 = 66\%)$ within 24 hours. At a 5% level of significance, is the maintenance company’s claim valid?
+Suppose a company claims to resolve at least 70% of maintenance requests within 24 hours. In a random sample of $n = 50$ repair requests, the company resolves $O_1 = 33$ ($p_1 = 66\%)$ within 24 hours. At a 5% level of significance, is the maintenance company’s claim valid?
 
 ```{r}
 o <- c(33, 17)
@@ -268,7 +222,7 @@ names(o) <- cell_names
 print(o)
 ```
 
-The null hypothesis is that the maintenance company resolves $\pi_0 = 0.70$ of requests within 24 hours, $H_0: \pi_0 = \pi_0$ with alternative hypothesis $H_a: \pi < \pi_0$. This is a left-tailed test with an $\alpha = 0.05$ level of significance.
+The null hypothesis is that the maintenance company resolves $\pi_0 = 0.70$ of requests within 24 hours, $H_0: \pi = \pi_0$ with alternative hypothesis $H_a: \pi < \pi_0$. This is a left-tailed test with an $\alpha = 0.05$ level of significance.
 
 ```{r}
 pi_0 <- 0.70
@@ -567,12 +521,89 @@ $$Var(\log \hat{\theta}) = \frac{1}{n_{11}} + \frac{1}{n_{12}} + \frac{1}{n_{21}
 
 For the Vitamin C example, the odds of getting a cold given a skier took vitamin C, are 
 
+The odds of getting a cold after taking a placebo pill are $0.22 / 0.78 = 0.28$ and the odds of getting a cold after taking Vitamin C are $0.12 / 0.88 = 0.14$.
+
 ```{r}
-p
+odds <- p[, 1] / p[, 2]
 ```
 
-0.12/0.88 = 0.14
-odds of "success" (i.e., getting a cold) given that a skier took a placebo pill, 0.22/0.78 = 0.28.
-The odds ratio is 0.14/0.28 = 0.49.
+The odds of getting a cold given vitamin C are $0.14 / 0.28 = 0.49$ times the odds of getting cold given a placebo.  
+
+```{r}
+theta_hat <- odds[2] / odds[1]
+print(theta_hat)
+```
+
+with variance 
+
+```{r}
+var_theta_hat <- sum(1 / vitc_dat)
+```
+
+The 95% CI is
+
+```{r}
+z_alpha <- qnorm(p = 0.975)
+exp(log(theta_hat) + c(-1, 1) * z_alpha * sqrt(var_theta_hat))
+```
+
+Keep in mind the following properties of odds ratios.
+
+* You can convert an odds pack to probabilities by solving $\pi / (1 - \pi)$ for $\pi = odds / (1 + odds)$. 
+
+* If two variables are independent, then the conditional probabilities $\pi_{1|1}$ and $\pi_{1|2}$ will be equal and therefore the odds ratio will equal 1.
+
+* If $\pi_{1|1} > \pi_{1|2}$ then the odds ratio will be $1 < \theta < \infty$.
+
+* If $\pi_{1|1} < \pi_{1|2}$ then the odds ratio will be $0 < \theta < 1$.
+
+* the sample odds ratio will equal $0$ or $\infty$ if any $n_{ij} = 0$. If you have any empty cells add 1/2 to each cell count.
+
+
+## Example of Chi-Square Test of Homogeneity
+A project studied whether attending physicians order more unnecessary blood transfusions than residents.  The categorical variable frequency of orders has 4 levels: frequently, occasionally, rarely, and never. 
+```{r warning=FALSE, message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(stats)
+
+pop <- NULL
+pop[1:49] <- 1
+pop[50:120] <- 2
+lev <- NULL
+lev[c(1:2, 50:64)] <- 1
+lev[c(3:5, 65:92)] <- 2
+lev[c(6:36, 93:115)] <- 3
+lev[c(37:49, 116:120)] <- 4
+dat <- data.frame(pop, lev)
+dat$pop <- factor(dat$pop, levels = c(1, 2), 
+                  labels = c("attending", "resident"))
+dat$lev <- factor(dat$lev, levels = c(1, 2, 3, 4), 
+                  labels = c("frequently", "occasionally", "rarely", "never"))
+
+df <- (2-1)*(4-1)
+alpha <- 0.05
+
+
+(test <- chisq.test(dat$lev, dat$pop))
+
+# Graph of hypothesis test
+lrr = -Inf
+urr = qchisq(p = alpha, df = df, lower.tail = FALSE)
+data.frame(xi = 0:400 / 10) %>%
+  mutate(density = dchisq(x = xi, df = df)) %>%
+  mutate(rr = ifelse(xi < lrr | xi > urr, density, 0)) %>%
+ggplot() +
+  geom_line(aes(x = xi, y = density), color = "black") +
+  geom_area(aes(x = xi, y = rr), fill = "red", alpha = 0.3) +
+  geom_vline(aes(xintercept = test$statistic), color = "blue") +
+  labs(title = bquote("Chi-Square Test for Homogeneity"),
+       subtitle = bquote("P-value ="~.(test$p.value)),
+       x = "xi^2",
+       y = "Density") +
+  theme(legend.position="none")
+
+```
+
 
 
