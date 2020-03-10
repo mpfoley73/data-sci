@@ -320,9 +320,9 @@ janitor::adorn_totals(where = c("row", "col"))
 
 ### Chi-Square Independence Test
 
-The **chi-square independence test** tests whether observed joint frequency counts $O_{ij}$ differ from expected frequency counts $E_{ij}$ under the *independence model* (the model of independent explanatory variables, $\pi_{ij} = \pi_{i+} \pi_{+j}$. $H_0$ is $O_{ij} = E_{ij}$.  (The *independence model* is a subset of the *saturated model*).
+The **chi-square independence test** tests whether observed joint frequency counts $O_{ij}$ differ from expected frequency counts $E_{ij}$ under the *independence model* (the model of independent explanatory variables, $\pi_{ij} = \pi_{i+} \pi_{+j}$. $H_0$ is $O_{ij} = E_{ij}$.
 
-There are two possible test statistics for this test, Pearson $X^2$, and deviance $G^2$.  The sampling distribution of each test statistic approach $\chi^2$ as $n \rightarrow \infty$.
+There are two possible test statistics for this test, Pearson $X^2$, and deviance $G^2$.  As $n \rightarrow \infty$ their sampling distributions approach $\chi_{df}^2$ with degrees of freedom (df) equal to the saturated model df $I \times J - 1$ minus the independence model df $(I - 1) + (J - 1)$, which you can algebraically solve for $df = (I - 1)(J - 1)$.
 
 The Pearson goodness-of-fit statistic is
 
@@ -345,9 +345,9 @@ G2 <- - 2 * sum(vitc_dat * log(vitc_dat / E))
 print(G2)
 ```
 
-$\chi^2$ and $G^2$ increase with the disagreement between the saturated model proportions $p_{ij}$ and the independence model proportions $\pi_{ij}$.
+$X^2$ and $G^2$ increase with the disagreement between the saturated model proportions $p_{ij}$ and the independence model proportions $\pi_{ij}$.
 
-As $n \rightarrow \infty$, $G^2$ and $\chi^2$ approach $\chi_{k-1}^2$ where $k$ is the number of n-way table cells.  You can therefore run a chi-square test of significance using the $G^2$ and $\chi^2$ test statistics.  The degrees of freedom for $E^2$ and $G^2$ equals the degrees of freedom for the saturated model, $I \times J - 1$, minus the degrees of freedom from the independence model, $(I - 1) + (J - 1)$, which you can algebraically solve for $(I - 1)(J - 1)$.
+The degrees of freedom is
 
 ```{r}
 dof <- (nrow(vitc_dat) - 1) * (ncol(vitc_dat) - 1)
@@ -360,25 +360,25 @@ pchisq(q = G2, df = dof, lower.tail = FALSE)
 pchisq(q = X2, df = dof, lower.tail = FALSE)
 ```
 
-The `chisq.test()` function applies the Yates's continuity correcton by default to correct for situations with small cell counts by subtracting 0.5 from the observed - expected differences.
+The `chisq.test()` function applies the Yates continuity correcton by default to correct for situations with small cell counts.  The Yates continuity correction  subtracts 0.5 from the $O_{ij} - E_{ij}$ differences.  Set `correct = FALSE` to suppress Yates.
 
 ```{r}
-chisq.test(vitc_dat, correct = FALSE)
-```
-
-The correction yields more conservative p-values.
-
-```{r}
-vitc_chisq_test <- chisq.test(vitc_dat)
+vitc_chisq_test <- chisq.test(vitc_dat, correct = FALSE)
 print(vitc_chisq_test)
 ```
 
-The p-values indicate strong evidence for rejecting the independence model.
+The Yates correction yields more conservative p-values.
+
+```{r}
+chisq.test(vitc_dat)
+```
+
+These p-values are evidence for rejecting the independence model.
 
 
 ### Residuals Analysis
 
-The residuals in a Chi-squared test indicate *which* cells drive the lack of fit.  The Pearson residuals in a two-way table are 
+If the chi-squared independence test rejects $H_0$ of identical frequency distributions, the next step is to identify *which* cells may be driving the lack of fit.  The Pearson residuals in the two-way table are 
 
 $$r_{ij} = \frac{O_{ij} - E_{ij}}{\sqrt{E_{ij}}}$$
 
