@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-04" />
+<meta name="date" content="2020-03-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -161,15 +161,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="discrete-variables.html"><a href="discrete-variables.html"><i class="fa fa-check"></i><b>4</b> Discrete Variables</a><ul>
-<li class="chapter" data-level="4.1" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.1</b> One-Way Tables</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-squared-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.1.1</b> Chi-Squared Goodness-of-Fit Test</a></li>
+<li class="chapter" data-level="4.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>4.1</b> Chi-Square Test</a></li>
+<li class="chapter" data-level="4.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> One-Way Tables</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
+<li class="chapter" data-level="4.2.2" data-path="one-way-tables.html"><a href="one-way-tables.html#proportion-test"><i class="fa fa-check"></i><b>4.2.2</b> Proportion Test</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> Two-Way Tables</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-squared-test-of-independence"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Squared Test of Independence</a></li>
-<li class="chapter" data-level="4.2.2" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.2.2</b> Difference in Proportions</a></li>
-<li class="chapter" data-level="4.2.3" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.2.3</b> Relative Risk</a></li>
-<li class="chapter" data-level="4.2.4" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.2.4</b> Odds Ratio</a></li>
+<li class="chapter" data-level="4.3" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.3</b> Two-Way Tables</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-square-independence-test"><i class="fa fa-check"></i><b>4.3.1</b> Chi-Square Independence Test</a></li>
+<li class="chapter" data-level="4.3.2" data-path="two-way-tables.html"><a href="two-way-tables.html#residuals-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Residuals Analysis</a></li>
+<li class="chapter" data-level="4.3.3" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.3.3</b> Difference in Proportions</a></li>
+<li class="chapter" data-level="4.3.4" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.3.4</b> Relative Risk</a></li>
+<li class="chapter" data-level="4.3.5" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.3.5</b> Odds Ratio</a></li>
 </ul></li>
+<li class="chapter" data-level="4.4" data-path="example-of-chi-square-test-of-homogeneity.html"><a href="example-of-chi-square-test-of-homogeneity.html"><i class="fa fa-check"></i><b>4.4</b> Example of Chi-Square Test of Homogeneity</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5</b> Inference</a></li>
 <li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
@@ -265,37 +269,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="example-8" class="section level3 unnumbered">
 <h3>Example</h3>
 <p>Dataset <code>fire</code> contains response variable <code>injuries</code> counting the number of injuries during the month and one explanatory variable, the month <code>mo</code>.</p>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="poisson-regression.html#cb250-1"></a>fire &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;C:/Users/mpfol/OneDrive/Documents/Data Science/Data/CivilInjury_0.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="poisson-regression.html#cb281-1"></a>fire &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;C:/Users/mpfol/OneDrive/Documents/Data Science/Data/CivilInjury_0.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   ID = col_double(),
 ##   `Injury Date` = col_datetime(format = &quot;&quot;),
 ##   `Total Injuries` = col_double()
 ## )</code></pre>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="poisson-regression.html#cb252-1"></a>fire &lt;-<span class="st"> </span>fire <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb252-2"><a href="poisson-regression.html#cb252-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mo =</span> <span class="kw">as.POSIXlt</span>(<span class="st">`</span><span class="dt">Injury Date</span><span class="st">`</span>)<span class="op">$</span>mon <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb252-3"><a href="poisson-regression.html#cb252-3"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">dt =</span> <span class="st">`</span><span class="dt">Injury Date</span><span class="st">`</span>,</span>
-<span id="cb252-4"><a href="poisson-regression.html#cb252-4"></a>         <span class="dt">injuries =</span> <span class="st">`</span><span class="dt">Total Injuries</span><span class="st">`</span>)</span>
-<span id="cb252-5"><a href="poisson-regression.html#cb252-5"></a><span class="kw">str</span>(fire)</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="poisson-regression.html#cb283-1"></a>fire &lt;-<span class="st"> </span>fire <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb283-2"><a href="poisson-regression.html#cb283-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mo =</span> <span class="kw">as.POSIXlt</span>(<span class="st">`</span><span class="dt">Injury Date</span><span class="st">`</span>)<span class="op">$</span>mon <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb283-3"><a href="poisson-regression.html#cb283-3"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">dt =</span> <span class="st">`</span><span class="dt">Injury Date</span><span class="st">`</span>,</span>
+<span id="cb283-4"><a href="poisson-regression.html#cb283-4"></a>         <span class="dt">injuries =</span> <span class="st">`</span><span class="dt">Total Injuries</span><span class="st">`</span>)</span>
+<span id="cb283-5"><a href="poisson-regression.html#cb283-5"></a><span class="kw">str</span>(fire)</span></code></pre></div>
 <pre><code>## Classes &#39;spec_tbl_df&#39;, &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 300 obs. of  4 variables:
 ##  $ ID      : num  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ dt      : POSIXct, format: &quot;2005-01-10&quot; &quot;2005-01-11&quot; ...
 ##  $ injuries: num  1 1 1 5 2 1 1 1 1 1 ...
 ##  $ mo      : num  1 1 1 1 1 1 2 2 2 4 ...</code></pre>
 <p>In a situation like this where there the relationship is bivariate, start with a visualization.</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="poisson-regression.html#cb254-1"></a><span class="kw">ggplot</span>(fire, <span class="kw">aes</span>(<span class="dt">x =</span> mo, <span class="dt">y =</span> injuries)) <span class="op">+</span></span>
-<span id="cb254-2"><a href="poisson-regression.html#cb254-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="op">+</span></span>
-<span id="cb254-3"><a href="poisson-regression.html#cb254-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="dt">method.args =</span> <span class="kw">list</span>(<span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>)) <span class="op">+</span></span>
-<span id="cb254-4"><a href="poisson-regression.html#cb254-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Injuries by Month&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="poisson-regression.html#cb285-1"></a><span class="kw">ggplot</span>(fire, <span class="kw">aes</span>(<span class="dt">x =</span> mo, <span class="dt">y =</span> injuries)) <span class="op">+</span></span>
+<span id="cb285-2"><a href="poisson-regression.html#cb285-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="op">+</span></span>
+<span id="cb285-3"><a href="poisson-regression.html#cb285-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="dt">method.args =</span> <span class="kw">list</span>(<span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>)) <span class="op">+</span></span>
+<span id="cb285-4"><a href="poisson-regression.html#cb285-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Injuries by Month&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
 <p>Fit a poisson regression in R using <code>glm(formula, data, family = poisson)</code>. But first, check whether the mean and variance of <code>injuries</code> are the same magnitude? If not, then use <code>family = quasipoisson</code>.</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="poisson-regression.html#cb255-1"></a><span class="kw">mean</span>(fire<span class="op">$</span>injuries)</span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="poisson-regression.html#cb286-1"></a><span class="kw">mean</span>(fire<span class="op">$</span>injuries)</span></code></pre></div>
 <pre><code>## [1] 1.4</code></pre>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="poisson-regression.html#cb257-1"></a><span class="kw">var</span>(fire<span class="op">$</span>injuries)</span></code></pre></div>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="poisson-regression.html#cb288-1"></a><span class="kw">var</span>(fire<span class="op">$</span>injuries)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>They are of the same magnitude, so fit the regression with <code>family = poisson</code>.</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="poisson-regression.html#cb259-1"></a>m2 &lt;-<span class="st"> </span><span class="kw">glm</span>(injuries <span class="op">~</span><span class="st"> </span>mo, <span class="dt">family =</span> poisson, <span class="dt">data =</span> fire)</span>
-<span id="cb259-2"><a href="poisson-regression.html#cb259-2"></a><span class="kw">summary</span>(m2)</span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="poisson-regression.html#cb290-1"></a>m2 &lt;-<span class="st"> </span><span class="kw">glm</span>(injuries <span class="op">~</span><span class="st"> </span>mo, <span class="dt">family =</span> poisson, <span class="dt">data =</span> fire)</span>
+<span id="cb290-2"><a href="poisson-regression.html#cb290-2"></a><span class="kw">summary</span>(m2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = injuries ~ mo, family = poisson, data = fire)
@@ -321,45 +325,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <em>predicted</em> value <span class="math inline">\(\hat{y}\)</span> is the estimated <strong>log</strong> of the response variable,</p>
 <p><span class="math display">\[\hat{y} = X \hat{\beta} = \ln (\lambda).\]</span></p>
 <p>Suppose <code>mo</code> is January (mo = <code>), then the log of</code>injuries` is <span class="math inline">\(\hat{y} = 0.323787\)</span>. Or, more intuitively, the expected count of injuries is <span class="math inline">\(\exp(0.323787) = 1.38\)</span></p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="poisson-regression.html#cb261-1"></a><span class="kw">predict</span>(m2, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">mo=</span><span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="poisson-regression.html#cb292-1"></a><span class="kw">predict</span>(m2, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">mo=</span><span class="dv">1</span>))</span></code></pre></div>
 <pre><code>##    1 
 ## 0.24</code></pre>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="poisson-regression.html#cb263-1"></a><span class="kw">predict</span>(m2, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">mo=</span><span class="dv">1</span>), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="poisson-regression.html#cb294-1"></a><span class="kw">predict</span>(m2, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">mo=</span><span class="dv">1</span>), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
 <pre><code>##   1 
 ## 1.3</code></pre>
 <p>Here is a plot of the predicted counts in red.</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="poisson-regression.html#cb265-1"></a><span class="kw">augment</span>(m2, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb265-2"><a href="poisson-regression.html#cb265-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mo, <span class="dt">y =</span> injuries)) <span class="op">+</span></span>
-<span id="cb265-3"><a href="poisson-regression.html#cb265-3"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb265-4"><a href="poisson-regression.html#cb265-4"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .fitted), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb265-5"><a href="poisson-regression.html#cb265-5"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="ot">NA</span>)) <span class="op">+</span></span>
-<span id="cb265-6"><a href="poisson-regression.html#cb265-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Month&quot;</span>,</span>
-<span id="cb265-7"><a href="poisson-regression.html#cb265-7"></a>       <span class="dt">y =</span> <span class="st">&quot;Injuries&quot;</span>,</span>
-<span id="cb265-8"><a href="poisson-regression.html#cb265-8"></a>       <span class="dt">title =</span> <span class="st">&quot;Poisson Fitted Line Plot&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="poisson-regression.html#cb296-1"></a><span class="kw">augment</span>(m2, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb296-2"><a href="poisson-regression.html#cb296-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mo, <span class="dt">y =</span> injuries)) <span class="op">+</span></span>
+<span id="cb296-3"><a href="poisson-regression.html#cb296-3"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb296-4"><a href="poisson-regression.html#cb296-4"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .fitted), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb296-5"><a href="poisson-regression.html#cb296-5"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="ot">NA</span>)) <span class="op">+</span></span>
+<span id="cb296-6"><a href="poisson-regression.html#cb296-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Month&quot;</span>,</span>
+<span id="cb296-7"><a href="poisson-regression.html#cb296-7"></a>       <span class="dt">y =</span> <span class="st">&quot;Injuries&quot;</span>,</span>
+<span id="cb296-8"><a href="poisson-regression.html#cb296-8"></a>       <span class="dt">title =</span> <span class="st">&quot;Poisson Fitted Line Plot&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-145-1.png" width="672" /></p>
 <p>Evaluate a logistic model fit with an analysis of deviance.</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="poisson-regression.html#cb266-1"></a>(perf &lt;-<span class="st"> </span><span class="kw">glance</span>(m2))</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="poisson-regression.html#cb297-1"></a>(perf &lt;-<span class="st"> </span><span class="kw">glance</span>(m2))</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 7
 ##   null.deviance df.null logLik   AIC   BIC deviance df.residual
 ##           &lt;dbl&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;
 ## 1          140.     299  -394.  792.  799.     139.         298</code></pre>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="poisson-regression.html#cb268-1"></a>(pseudoR2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>perf<span class="op">$</span>deviance <span class="op">/</span><span class="st"> </span>perf<span class="op">$</span>null.deviance)</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="poisson-regression.html#cb299-1"></a>(pseudoR2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>perf<span class="op">$</span>deviance <span class="op">/</span><span class="st"> </span>perf<span class="op">$</span>null.deviance)</span></code></pre></div>
 <pre><code>## [1] 0.0054</code></pre>
 <p>The deviance of the null model (no regressors) is 139.9. The deviance of the full model is 132.2. The psuedo-R2 is very low at .05. How about the RMSE?</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="poisson-regression.html#cb270-1"></a><span class="kw">RMSE</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m2, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), <span class="dt">obs =</span> fire<span class="op">$</span>injuries)</span></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="poisson-regression.html#cb301-1"></a><span class="kw">RMSE</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m2, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), <span class="dt">obs =</span> fire<span class="op">$</span>injuries)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>The average prediction error is about 0.99. That’s almost as much as the variance of <code>injuries</code> - i.e., just predicting the mean of <code>injuries</code> would be almost as good! Use the <code>GainCurvePlot()</code> function to plot the gain curve.</p>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="poisson-regression.html#cb272-1"></a><span class="kw">augment</span>(m2, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb272-2"><a href="poisson-regression.html#cb272-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> injuries, <span class="dt">y =</span> .fitted)) <span class="op">+</span></span>
-<span id="cb272-3"><a href="poisson-regression.html#cb272-3"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb272-4"><a href="poisson-regression.html#cb272-4"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span><span class="st">&quot;lm&quot;</span>) <span class="op">+</span></span>
-<span id="cb272-5"><a href="poisson-regression.html#cb272-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Actual&quot;</span>,</span>
-<span id="cb272-6"><a href="poisson-regression.html#cb272-6"></a>       <span class="dt">y =</span> <span class="st">&quot;Predicted&quot;</span>,</span>
-<span id="cb272-7"><a href="poisson-regression.html#cb272-7"></a>       <span class="dt">title =</span> <span class="st">&quot;Poisson Fitted vs Actual&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-129-1.png" width="672" /></p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="poisson-regression.html#cb273-1"></a><span class="kw">augment</span>(m2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb273-2"><a href="poisson-regression.html#cb273-2"></a><span class="st">  </span><span class="kw">GainCurvePlot</span>(<span class="dt">xvar =</span> <span class="st">&quot;.fitted&quot;</span>, <span class="dt">truthVar =</span> <span class="st">&quot;injuries&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Poisson Model&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="poisson-regression.html#cb303-1"></a><span class="kw">augment</span>(m2, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb303-2"><a href="poisson-regression.html#cb303-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> injuries, <span class="dt">y =</span> .fitted)) <span class="op">+</span></span>
+<span id="cb303-3"><a href="poisson-regression.html#cb303-3"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb303-4"><a href="poisson-regression.html#cb303-4"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span><span class="st">&quot;lm&quot;</span>) <span class="op">+</span></span>
+<span id="cb303-5"><a href="poisson-regression.html#cb303-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Actual&quot;</span>,</span>
+<span id="cb303-6"><a href="poisson-regression.html#cb303-6"></a>       <span class="dt">y =</span> <span class="st">&quot;Predicted&quot;</span>,</span>
+<span id="cb303-7"><a href="poisson-regression.html#cb303-7"></a>       <span class="dt">title =</span> <span class="st">&quot;Poisson Fitted vs Actual&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-148-1.png" width="672" /></p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="poisson-regression.html#cb304-1"></a><span class="kw">augment</span>(m2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb304-2"><a href="poisson-regression.html#cb304-2"></a><span class="st">  </span><span class="kw">GainCurvePlot</span>(<span class="dt">xvar =</span> <span class="st">&quot;.fitted&quot;</span>, <span class="dt">truthVar =</span> <span class="st">&quot;injuries&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Poisson Model&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-149-1.png" width="672" /></p>
 <p>It seems that <code>mo</code> was a poor predictor of <code>injuries</code>.</p>
 
 </div>

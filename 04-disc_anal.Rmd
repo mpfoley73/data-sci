@@ -272,7 +272,9 @@ These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/sta
 
 A two-way frequency table is a frequency table for *two* categorical variables.  You usually construct a two-way table to test whether the frequency counts in one categorical variable differ from the other categorical variable using the chi-square independence test.  If there is a significant difference (i.e., the variables are related), then describe the relationship with an analysis of the residuals, calculations of measures of association (difference in proportions, relative risk, or odds ratio), and partition tests. 
 
-Here is an example.  A double blind study investigated the therapeutic value of vitamin C $(trt \in [Placebo, VitaminC])$ for treating common colds $(result \in [Cold, No Cold])$ on a sample of $n = 279$ persons. There are two discrete variables each with two levels, hence a two way table.
+Here are three case studies that illustrate the concepts.  The first is a simple 2x2 table.  The second is a 3x2 table that extends some of the concepts.  The third is a 2x4 table where one factor is *ordinal*.
+
+**Study 1: "Vitamin C" 2x2 Table**.  A double blind study investigated whether vitamin C prevents common colds on a sample of *n* = 279 persons. This study has two categorical variables each with two levels, a 2x2 two way table.
 
 ```{r}
 vitc_dat <- matrix(
@@ -283,26 +285,50 @@ vitc_dat <- matrix(
     resp = c("Cold", "NoCold")
   )
 )
-print(vitc_dat)
-prop.table(vitc_dat)
-prop.table(vitc_dat, margin = 1)  # row pct
-prop.table(vitc_dat, margin = 2)  # col pct
+vitc_dat %>% data.frame() %>% rownames_to_column(var = " ") %>%
+janitor::adorn_totals(where = c("row", "col"))
 ```
 
-Do the observed frequency counts differ from the expected frequency counts under the independence model?  (The *independence model* is a subset of the *saturated model* where the two explanatory variables are independent.)
+**Study 2: "Smoking" 3x2 Table**.  An analysis classifies *n* = 5375 high school students by their smoking behavior and the smoking behavior of their parents.
+
+```{r}
+smoke_dat <- matrix(
+  c(400, 416, 188, 1380, 1823, 1168), 
+  ncol = 2,
+  dimnames = list(
+    parents = c("Both", "One", "Neither"),
+    student = c("Smoker", "Non-smoker"))
+)
+smoke_dat %>% data.frame() %>% rownames_to_column(var = " ") %>%
+janitor::adorn_totals(where = c("row", "col"))
+```
+
+**Study 3: "Coronary Heart Disease" Ordinal Table**.  A study of classified *n* = 1329 patients by cholesterol level and whether they had been diagnosed with coronary heart disease (CHD).
+
+```{r}
+# tribble() is a little easier.
+chd_dat <- tribble(
+  ~L_0_199, ~L_200_219, ~L_220_259, ~L_260p,
+  12, 8, 31, 41,
+  307, 246, 439, 245
+) %>% as.matrix()
+rownames(chd_dat) <- c("CHD", "No CHD")
+chd_dat %>% data.frame() %>% rownames_to_column(var = " ") %>%
+janitor::adorn_totals(where = c("row", "col"))
+```
 
 
 ### Chi-Square Independence Test
 
-The **chi-square independence test** tests whether observed joint frequency counts $O_{ij}$ of the $i \in (0, 1, \cdots I)$ levels of categorical variable $Y$ and the $j \in (0, 1, \cdots J)$ levels of categorical variable $Z$ differ from expected frequency counts $E_{ij}$ under the *independence model* where $\pi_{ij} = \pi_{i+} \pi_{+j}$. $H_0$ is $O_{ij} = E_{ij}$.
+The **chi-square independence test** tests whether observed joint frequency counts $O_{ij}$ differ from expected frequency counts $E_{ij}$ under the *independence model* (the model of independent explanatory variables, $\pi_{ij} = \pi_{i+} \pi_{+j}$. $H_0$ is $O_{ij} = E_{ij}$.  (The *independence model* is a subset of the *saturated model*).
 
-There are two test statistics for this test, Pearson $\chi^2$ and deviance $G^2$.  The sampling distribution of each test statistic approach the chi-square distribution as $n$ becomes large.  It's a good idea to calculate both test statistics.
+There are two possible test statistics for this test, Pearson $X^2$, and deviance $G^2$.  The sampling distribution of each test statistic approach $\chi^2$ as $n \rightarrow \infty$.
 
 The Pearson goodness-of-fit statistic is
 
-$$\chi^2 = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$
+$$X^2 = \sum \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$
 
-where $O_{ij}$ is the observed count, and $E_{ij}$ equals the marginal probability of row $i$ multiplied by the marginal probability of column $j$.  
+where $O_{ij}$ is the observed count, and $E_{ij}$ is the product of the row and column marginal probabilities.  For the Vitamin C study, $X^2$ is 
 
 ```{r}
 E <- sum(vitc_dat) * prop.table(vitc_dat, 1) * prop.table(vitc_dat, 2)
@@ -310,7 +336,7 @@ X2 <- sum((vitc_dat - E)^2 / E)
 print(X2)
 ```
 
-The deviance statistic is 
+and the deviance statistic is 
 
 $$G^2 = 2 \sum_{ij} O_{ij} \log \left( \frac{O_{ij}}{E_{ij}} \right)$$
 
@@ -319,7 +345,7 @@ G2 <- - 2 * sum(vitc_dat * log(vitc_dat / E))
 print(G2)
 ```
 
-If the saturated model proportions $p_{ij}$ equal equal the independence model proportions $\pi_{ij}$, $\chi^2$ and $G^2$ will equal zero.  Large values indicate the data do not agree well with the proposed model.
+$\chi^2$ and $G^2$ increase with the disagreement between the saturated model proportions $p_{ij}$ and the independence model proportions $\pi_{ij}$.
 
 As $n \rightarrow \infty$, $G^2$ and $\chi^2$ approach $\chi_{k-1}^2$ where $k$ is the number of n-way table cells.  You can therefore run a chi-square test of significance using the $G^2$ and $\chi^2$ test statistics.  The degrees of freedom for $E^2$ and $G^2$ equals the degrees of freedom for the saturated model, $I \times J - 1$, minus the degrees of freedom from the independence model, $(I - 1) + (J - 1)$, which you can algebraically solve for $(I - 1)(J - 1)$.
 
@@ -367,14 +393,15 @@ and the $r_{ij}$ values *do* have a $\sim N(0, 1)$ distribution.  The `chissq.te
 vitc_chisq_test$residuals
 ```
 
-It alco includes `stdres` that match the manual standardized calculation.
+It also includes `stdres` that match the manual standardized calculation.  (*well, no it doesn't, but I don't know what my mistake is.*)
 
 ```{r}
 p <- prop.table(vitc_dat, margin = 1)
-(r_std <- (vitc_dat - E) / 
-    sqrt( E* t(
-           matrix(1 - prop.table(vitc_dat, margin = 1)[, 1]) * 
-           (matrix(1 - prop.table(vitc_dat, margin = 2)[1, ])))))
+(r_std <- (
+  E - vitc_dat) / sqrt(E 
+  * (1 - prop.table(vitc_dat, margin = 1)) 
+  * (1 - prop.table(vitc_dat, margin = 2))
+))
 vitc_chisq_test$stdres
 ```
 

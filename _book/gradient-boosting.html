@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-04" />
+<meta name="date" content="2020-03-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -161,15 +161,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="discrete-variables.html"><a href="discrete-variables.html"><i class="fa fa-check"></i><b>4</b> Discrete Variables</a><ul>
-<li class="chapter" data-level="4.1" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.1</b> One-Way Tables</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-squared-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.1.1</b> Chi-Squared Goodness-of-Fit Test</a></li>
+<li class="chapter" data-level="4.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>4.1</b> Chi-Square Test</a></li>
+<li class="chapter" data-level="4.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> One-Way Tables</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
+<li class="chapter" data-level="4.2.2" data-path="one-way-tables.html"><a href="one-way-tables.html#proportion-test"><i class="fa fa-check"></i><b>4.2.2</b> Proportion Test</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> Two-Way Tables</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-squared-test-of-independence"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Squared Test of Independence</a></li>
-<li class="chapter" data-level="4.2.2" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.2.2</b> Difference in Proportions</a></li>
-<li class="chapter" data-level="4.2.3" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.2.3</b> Relative Risk</a></li>
-<li class="chapter" data-level="4.2.4" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.2.4</b> Odds Ratio</a></li>
+<li class="chapter" data-level="4.3" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.3</b> Two-Way Tables</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-square-independence-test"><i class="fa fa-check"></i><b>4.3.1</b> Chi-Square Independence Test</a></li>
+<li class="chapter" data-level="4.3.2" data-path="two-way-tables.html"><a href="two-way-tables.html#residuals-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Residuals Analysis</a></li>
+<li class="chapter" data-level="4.3.3" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.3.3</b> Difference in Proportions</a></li>
+<li class="chapter" data-level="4.3.4" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.3.4</b> Relative Risk</a></li>
+<li class="chapter" data-level="4.3.5" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.3.5</b> Odds Ratio</a></li>
 </ul></li>
+<li class="chapter" data-level="4.4" data-path="example-of-chi-square-test-of-homogeneity.html"><a href="example-of-chi-square-test-of-homogeneity.html"><i class="fa fa-check"></i><b>4.4</b> Example of Chi-Square Test of Homogeneity</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5</b> Inference</a></li>
 <li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
@@ -264,19 +268,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>shrinkage</code>: shrinkage</li>
 <li><code>n.minobsinnode</code>: mimimum terminal node size</li>
 </ul>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="gradient-boosting.html#cb391-1"></a>oj.gbm &lt;-<span class="st"> </span><span class="kw">train</span>(Purchase <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb391-2"><a href="gradient-boosting.html#cb391-2"></a>               <span class="dt">data =</span> oj_train, </span>
-<span id="cb391-3"><a href="gradient-boosting.html#cb391-3"></a>               <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>,  <span class="co"># for bagged tree</span></span>
-<span id="cb391-4"><a href="gradient-boosting.html#cb391-4"></a>               <span class="dt">tuneLength =</span> <span class="dv">5</span>,  <span class="co"># choose up to 5 combinations of tuning parameters</span></span>
-<span id="cb391-5"><a href="gradient-boosting.html#cb391-5"></a>               <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,  <span class="co"># evaluate hyperparamter combinations with ROC</span></span>
-<span id="cb391-6"><a href="gradient-boosting.html#cb391-6"></a>               <span class="dt">trControl =</span> <span class="kw">trainControl</span>(</span>
-<span id="cb391-7"><a href="gradient-boosting.html#cb391-7"></a>                 <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="co"># k-fold cross validation</span></span>
-<span id="cb391-8"><a href="gradient-boosting.html#cb391-8"></a>                 <span class="dt">number =</span> <span class="dv">10</span>,  <span class="co"># 10 folds</span></span>
-<span id="cb391-9"><a href="gradient-boosting.html#cb391-9"></a>                 <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save predictions for the optimal tuning parameter1</span></span>
-<span id="cb391-10"><a href="gradient-boosting.html#cb391-10"></a>                      <span class="dt">classProbs =</span> <span class="ot">TRUE</span>,  <span class="co"># return class probabilities in addition to predicted values</span></span>
-<span id="cb391-11"><a href="gradient-boosting.html#cb391-11"></a>                      <span class="dt">summaryFunction =</span> twoClassSummary  <span class="co"># for binary response variable</span></span>
-<span id="cb391-12"><a href="gradient-boosting.html#cb391-12"></a>                      )</span>
-<span id="cb391-13"><a href="gradient-boosting.html#cb391-13"></a>                    )</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="gradient-boosting.html#cb422-1"></a>oj.gbm &lt;-<span class="st"> </span><span class="kw">train</span>(Purchase <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb422-2"><a href="gradient-boosting.html#cb422-2"></a>               <span class="dt">data =</span> oj_train, </span>
+<span id="cb422-3"><a href="gradient-boosting.html#cb422-3"></a>               <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>,  <span class="co"># for bagged tree</span></span>
+<span id="cb422-4"><a href="gradient-boosting.html#cb422-4"></a>               <span class="dt">tuneLength =</span> <span class="dv">5</span>,  <span class="co"># choose up to 5 combinations of tuning parameters</span></span>
+<span id="cb422-5"><a href="gradient-boosting.html#cb422-5"></a>               <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,  <span class="co"># evaluate hyperparamter combinations with ROC</span></span>
+<span id="cb422-6"><a href="gradient-boosting.html#cb422-6"></a>               <span class="dt">trControl =</span> <span class="kw">trainControl</span>(</span>
+<span id="cb422-7"><a href="gradient-boosting.html#cb422-7"></a>                 <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="co"># k-fold cross validation</span></span>
+<span id="cb422-8"><a href="gradient-boosting.html#cb422-8"></a>                 <span class="dt">number =</span> <span class="dv">10</span>,  <span class="co"># 10 folds</span></span>
+<span id="cb422-9"><a href="gradient-boosting.html#cb422-9"></a>                 <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save predictions for the optimal tuning parameter1</span></span>
+<span id="cb422-10"><a href="gradient-boosting.html#cb422-10"></a>                      <span class="dt">classProbs =</span> <span class="ot">TRUE</span>,  <span class="co"># return class probabilities in addition to predicted values</span></span>
+<span id="cb422-11"><a href="gradient-boosting.html#cb422-11"></a>                      <span class="dt">summaryFunction =</span> twoClassSummary  <span class="co"># for binary response variable</span></span>
+<span id="cb422-12"><a href="gradient-boosting.html#cb422-12"></a>                      )</span>
+<span id="cb422-13"><a href="gradient-boosting.html#cb422-13"></a>                    )</span></code></pre></div>
 <pre><code>## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
 ##      1        1.2789             nan     0.1000    0.0273
 ##      2        1.2286             nan     0.1000    0.0245
@@ -1541,7 +1545,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     20        0.8389             nan     0.1000    0.0025
 ##     40        0.7624             nan     0.1000   -0.0009
 ##     50        0.7453             nan     0.1000   -0.0006</code></pre>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="gradient-boosting.html#cb393-1"></a>oj.gbm</span></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="gradient-boosting.html#cb424-1"></a>oj.gbm</span></code></pre></div>
 <pre><code>## Stochastic Gradient Boosting 
 ## 
 ## 857 samples
@@ -1586,16 +1590,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ROC was used to select the optimal model using the largest value.
 ## The final values used for the model were n.trees = 50, interaction.depth =
 ##  2, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="gradient-boosting.html#cb395-1"></a><span class="kw">plot</span>(oj.gbm)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-194-1.png" width="672" /></p>
-<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="gradient-boosting.html#cb396-1"></a>oj.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.gbm, oj_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span>
-<span id="cb396-2"><a href="gradient-boosting.html#cb396-2"></a><span class="kw">plot</span>(oj_test<span class="op">$</span>Purchase, oj.pred, </span>
-<span id="cb396-3"><a href="gradient-boosting.html#cb396-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Gradient Boosing Classification: Predicted vs. Actual&quot;</span>,</span>
-<span id="cb396-4"><a href="gradient-boosting.html#cb396-4"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
-<span id="cb396-5"><a href="gradient-boosting.html#cb396-5"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-194-2.png" width="672" /></p>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="gradient-boosting.html#cb397-1"></a>(oj.conf &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> oj.pred, </span>
-<span id="cb397-2"><a href="gradient-boosting.html#cb397-2"></a>                            <span class="dt">reference =</span> oj_test<span class="op">$</span>Purchase))</span></code></pre></div>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="gradient-boosting.html#cb426-1"></a><span class="kw">plot</span>(oj.gbm)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-213-1.png" width="672" /></p>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="gradient-boosting.html#cb427-1"></a>oj.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.gbm, oj_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span>
+<span id="cb427-2"><a href="gradient-boosting.html#cb427-2"></a><span class="kw">plot</span>(oj_test<span class="op">$</span>Purchase, oj.pred, </span>
+<span id="cb427-3"><a href="gradient-boosting.html#cb427-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Gradient Boosing Classification: Predicted vs. Actual&quot;</span>,</span>
+<span id="cb427-4"><a href="gradient-boosting.html#cb427-4"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
+<span id="cb427-5"><a href="gradient-boosting.html#cb427-5"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-213-2.png" width="672" /></p>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="gradient-boosting.html#cb428-1"></a>(oj.conf &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> oj.pred, </span>
+<span id="cb428-2"><a href="gradient-boosting.html#cb428-2"></a>                            <span class="dt">reference =</span> oj_test<span class="op">$</span>Purchase))</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -1623,11 +1627,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##                                              
 ##        &#39;Positive&#39; Class : CH                 
 ## </code></pre>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="gradient-boosting.html#cb399-1"></a>oj.gbm.acc &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(oj.conf<span class="op">$</span>overall[<span class="dv">1</span>])</span>
-<span id="cb399-2"><a href="gradient-boosting.html#cb399-2"></a><span class="kw">rm</span>(oj.pred)</span>
-<span id="cb399-3"><a href="gradient-boosting.html#cb399-3"></a><span class="kw">rm</span>(oj.conf)</span>
-<span id="cb399-4"><a href="gradient-boosting.html#cb399-4"></a><span class="co">#plot(oj.bag$, oj.bag$finalModel$y)</span></span>
-<span id="cb399-5"><a href="gradient-boosting.html#cb399-5"></a><span class="co">#plot(varImp(oj.gbm), main=&quot;Variable Importance with Gradient Boosting&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="gradient-boosting.html#cb430-1"></a>oj.gbm.acc &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(oj.conf<span class="op">$</span>overall[<span class="dv">1</span>])</span>
+<span id="cb430-2"><a href="gradient-boosting.html#cb430-2"></a><span class="kw">rm</span>(oj.pred)</span>
+<span id="cb430-3"><a href="gradient-boosting.html#cb430-3"></a><span class="kw">rm</span>(oj.conf)</span>
+<span id="cb430-4"><a href="gradient-boosting.html#cb430-4"></a><span class="co">#plot(oj.bag$, oj.bag$finalModel$y)</span></span>
+<span id="cb430-5"><a href="gradient-boosting.html#cb430-5"></a><span class="co">#plot(varImp(oj.gbm), main=&quot;Variable Importance with Gradient Boosting&quot;)</span></span></code></pre></div>
 </div>
 <div id="gradient-boosting-regression-example" class="section level4">
 <h4><span class="header-section-number">10.5.0.2</span> Gradient Boosting Regression Example</h4>
@@ -1638,19 +1642,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>shrinkage</code>: learning rate (reduces the impact of each additional fitted base-learner (tree) by reducing the size of incremental steps and thus penalizes the importance of each consecutive iteration. The intuition is that it is better to improve a model by taking many small steps than by taking fewer large steps. If one of the boosting iterations turns out to be erroneous, its negative impact can be easily corrected in subsequent steps.)</li>
 <li><code>n.minobsinnode</code>: mimimum terminal node size</li>
 </ul>
-<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="gradient-boosting.html#cb400-1"></a>carseats.gbm &lt;-<span class="st"> </span><span class="kw">train</span>(Sales <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb400-2"><a href="gradient-boosting.html#cb400-2"></a>                      <span class="dt">data =</span> carseats_train, </span>
-<span id="cb400-3"><a href="gradient-boosting.html#cb400-3"></a>                      <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>,  <span class="co"># for bagged tree</span></span>
-<span id="cb400-4"><a href="gradient-boosting.html#cb400-4"></a>                      <span class="dt">tuneLength =</span> <span class="dv">5</span>,  <span class="co"># choose up to 5 combinations of tuning parameters</span></span>
-<span id="cb400-5"><a href="gradient-boosting.html#cb400-5"></a>                      <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>,  <span class="co"># evaluate hyperparamter combinations with ROC</span></span>
-<span id="cb400-6"><a href="gradient-boosting.html#cb400-6"></a>                      <span class="dt">trControl =</span> <span class="kw">trainControl</span>(</span>
-<span id="cb400-7"><a href="gradient-boosting.html#cb400-7"></a>                        <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="co"># k-fold cross validation</span></span>
-<span id="cb400-8"><a href="gradient-boosting.html#cb400-8"></a>                        <span class="dt">number =</span> <span class="dv">10</span>,  <span class="co"># 10 folds</span></span>
-<span id="cb400-9"><a href="gradient-boosting.html#cb400-9"></a>                        <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save predictions for the optimal tuning parameter1</span></span>
-<span id="cb400-10"><a href="gradient-boosting.html#cb400-10"></a>                        <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb400-11"><a href="gradient-boosting.html#cb400-11"></a>                        <span class="dt">returnData =</span> <span class="ot">FALSE</span></span>
-<span id="cb400-12"><a href="gradient-boosting.html#cb400-12"></a>                        )</span>
-<span id="cb400-13"><a href="gradient-boosting.html#cb400-13"></a>                      )</span></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="gradient-boosting.html#cb431-1"></a>carseats.gbm &lt;-<span class="st"> </span><span class="kw">train</span>(Sales <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb431-2"><a href="gradient-boosting.html#cb431-2"></a>                      <span class="dt">data =</span> carseats_train, </span>
+<span id="cb431-3"><a href="gradient-boosting.html#cb431-3"></a>                      <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>,  <span class="co"># for bagged tree</span></span>
+<span id="cb431-4"><a href="gradient-boosting.html#cb431-4"></a>                      <span class="dt">tuneLength =</span> <span class="dv">5</span>,  <span class="co"># choose up to 5 combinations of tuning parameters</span></span>
+<span id="cb431-5"><a href="gradient-boosting.html#cb431-5"></a>                      <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>,  <span class="co"># evaluate hyperparamter combinations with ROC</span></span>
+<span id="cb431-6"><a href="gradient-boosting.html#cb431-6"></a>                      <span class="dt">trControl =</span> <span class="kw">trainControl</span>(</span>
+<span id="cb431-7"><a href="gradient-boosting.html#cb431-7"></a>                        <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="co"># k-fold cross validation</span></span>
+<span id="cb431-8"><a href="gradient-boosting.html#cb431-8"></a>                        <span class="dt">number =</span> <span class="dv">10</span>,  <span class="co"># 10 folds</span></span>
+<span id="cb431-9"><a href="gradient-boosting.html#cb431-9"></a>                        <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save predictions for the optimal tuning parameter1</span></span>
+<span id="cb431-10"><a href="gradient-boosting.html#cb431-10"></a>                        <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb431-11"><a href="gradient-boosting.html#cb431-11"></a>                        <span class="dt">returnData =</span> <span class="ot">FALSE</span></span>
+<span id="cb431-12"><a href="gradient-boosting.html#cb431-12"></a>                        )</span>
+<span id="cb431-13"><a href="gradient-boosting.html#cb431-13"></a>                      )</span></code></pre></div>
 <pre><code>## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
 ##      1        7.6155             nan     0.1000    0.3126
 ##      2        7.3677             nan     0.1000    0.2471
@@ -2925,7 +2929,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    220        0.9510             nan     0.1000   -0.0040
 ##    240        0.9159             nan     0.1000   -0.0058
 ##    250        0.8952             nan     0.1000   -0.0036</code></pre>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="gradient-boosting.html#cb402-1"></a>carseats.gbm</span></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="gradient-boosting.html#cb433-1"></a>carseats.gbm</span></code></pre></div>
 <pre><code>## Stochastic Gradient Boosting 
 ## 
 ## No pre-processing
@@ -2966,21 +2970,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final values used for the model were n.trees = 250, interaction.depth =
 ##  1, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="gradient-boosting.html#cb404-1"></a><span class="kw">plot</span>(carseats.gbm)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="gradient-boosting.html#cb405-1"></a>carseats.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(carseats.gbm, carseats_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span>
-<span id="cb405-2"><a href="gradient-boosting.html#cb405-2"></a><span class="kw">plot</span>(carseats_test<span class="op">$</span>Sales, carseats.pred, </span>
-<span id="cb405-3"><a href="gradient-boosting.html#cb405-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Gradient Boosing Regression: Predicted vs. Actual&quot;</span>,</span>
-<span id="cb405-4"><a href="gradient-boosting.html#cb405-4"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
-<span id="cb405-5"><a href="gradient-boosting.html#cb405-5"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span>
-<span id="cb405-6"><a href="gradient-boosting.html#cb405-6"></a><span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-195-2.png" width="672" /></p>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="gradient-boosting.html#cb406-1"></a>(carseats.gbm.rmse &lt;-<span class="st"> </span><span class="kw">RMSE</span>(<span class="dt">pred =</span> carseats.pred,</span>
-<span id="cb406-2"><a href="gradient-boosting.html#cb406-2"></a>                           <span class="dt">obs =</span> carseats_test<span class="op">$</span>Sales))</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="gradient-boosting.html#cb435-1"></a><span class="kw">plot</span>(carseats.gbm)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-214-1.png" width="672" /></p>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="gradient-boosting.html#cb436-1"></a>carseats.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(carseats.gbm, carseats_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span>
+<span id="cb436-2"><a href="gradient-boosting.html#cb436-2"></a><span class="kw">plot</span>(carseats_test<span class="op">$</span>Sales, carseats.pred, </span>
+<span id="cb436-3"><a href="gradient-boosting.html#cb436-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Gradient Boosing Regression: Predicted vs. Actual&quot;</span>,</span>
+<span id="cb436-4"><a href="gradient-boosting.html#cb436-4"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
+<span id="cb436-5"><a href="gradient-boosting.html#cb436-5"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span>
+<span id="cb436-6"><a href="gradient-boosting.html#cb436-6"></a><span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-214-2.png" width="672" /></p>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="gradient-boosting.html#cb437-1"></a>(carseats.gbm.rmse &lt;-<span class="st"> </span><span class="kw">RMSE</span>(<span class="dt">pred =</span> carseats.pred,</span>
+<span id="cb437-2"><a href="gradient-boosting.html#cb437-2"></a>                           <span class="dt">obs =</span> carseats_test<span class="op">$</span>Sales))</span></code></pre></div>
 <pre><code>## [1] 1.4</code></pre>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="gradient-boosting.html#cb408-1"></a><span class="kw">rm</span>(carseats.pred)</span>
-<span id="cb408-2"><a href="gradient-boosting.html#cb408-2"></a></span>
-<span id="cb408-3"><a href="gradient-boosting.html#cb408-3"></a><span class="co">#plot(varImp(carseats.gbm), main=&quot;Variable Importance with Gradient Boosting&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="gradient-boosting.html#cb439-1"></a><span class="kw">rm</span>(carseats.pred)</span>
+<span id="cb439-2"><a href="gradient-boosting.html#cb439-2"></a></span>
+<span id="cb439-3"><a href="gradient-boosting.html#cb439-3"></a><span class="co">#plot(varImp(carseats.gbm), main=&quot;Variable Importance with Gradient Boosting&quot;)</span></span></code></pre></div>
 </div>
 </div>
             </section>

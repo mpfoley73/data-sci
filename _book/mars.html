@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-04" />
+<meta name="date" content="2020-03-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -161,15 +161,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="discrete-variables.html"><a href="discrete-variables.html"><i class="fa fa-check"></i><b>4</b> Discrete Variables</a><ul>
-<li class="chapter" data-level="4.1" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.1</b> One-Way Tables</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-squared-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.1.1</b> Chi-Squared Goodness-of-Fit Test</a></li>
+<li class="chapter" data-level="4.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>4.1</b> Chi-Square Test</a></li>
+<li class="chapter" data-level="4.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> One-Way Tables</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
+<li class="chapter" data-level="4.2.2" data-path="one-way-tables.html"><a href="one-way-tables.html#proportion-test"><i class="fa fa-check"></i><b>4.2.2</b> Proportion Test</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> Two-Way Tables</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-squared-test-of-independence"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Squared Test of Independence</a></li>
-<li class="chapter" data-level="4.2.2" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.2.2</b> Difference in Proportions</a></li>
-<li class="chapter" data-level="4.2.3" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.2.3</b> Relative Risk</a></li>
-<li class="chapter" data-level="4.2.4" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.2.4</b> Odds Ratio</a></li>
+<li class="chapter" data-level="4.3" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.3</b> Two-Way Tables</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-square-independence-test"><i class="fa fa-check"></i><b>4.3.1</b> Chi-Square Independence Test</a></li>
+<li class="chapter" data-level="4.3.2" data-path="two-way-tables.html"><a href="two-way-tables.html#residuals-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Residuals Analysis</a></li>
+<li class="chapter" data-level="4.3.3" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.3.3</b> Difference in Proportions</a></li>
+<li class="chapter" data-level="4.3.4" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.3.4</b> Relative Risk</a></li>
+<li class="chapter" data-level="4.3.5" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.3.5</b> Odds Ratio</a></li>
 </ul></li>
+<li class="chapter" data-level="4.4" data-path="example-of-chi-square-test-of-homogeneity.html"><a href="example-of-chi-square-test-of-homogeneity.html"><i class="fa fa-check"></i><b>4.4</b> Example of Chi-Square Test of Homogeneity</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5</b> Inference</a></li>
 <li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
@@ -255,40 +259,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>MARS builds a model in two phases: the forward pass and the backward pass, similar to growing and pruning of tree models. MARS starts with a model consisting of just the intercept term equaling the mean of the response values. It then asseses every predictor to find a basis function pair consisting of opposing sides of a mirrored hinge function which produces the maximum improvement in the model error. MARS repeats the process until either it reaches a predefined limit of terms or the error improvement reaches a predefined limit. MARS generalizes the model by removing terms according to the generalized cross validation (GCV) criterion. GCV is a form of regularization: it trades off goodness-of-fit against model complexity.</p>
 <p>The <code>earth::earth()</code> function (<a href="https://www.rdocumentation.org/packages/earth/versions/5.1.2/topics/earth">documentation</a>) performs the MARS algorithm (<em>the term “MARS” is trademarked, so open-source implementations use “Earth” instead</em>). The caret implementation tunes two parameters: <code>nprune</code> and <code>degree</code>. <code>nprune</code> is the maximum number of terms in the pruned model. <code>degree</code> is the maximum degree of interaction (default is 1 (no interactions)). However, there are other hyperparameters in the model that may improve performance, including <code>minspan</code> which regulates the number of knots in the predictors.</p>
 <p>Here is an example using the Ames housing data set (following <a href="http://uc-r.github.io/mars">this</a> tutorial.</p>
-<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="mars.html#cb414-1"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb414-2"><a href="mars.html#cb414-2"></a><span class="kw">library</span>(earth)</span>
-<span id="cb414-3"><a href="mars.html#cb414-3"></a><span class="kw">library</span>(caret)</span>
-<span id="cb414-4"><a href="mars.html#cb414-4"></a></span>
-<span id="cb414-5"><a href="mars.html#cb414-5"></a><span class="co"># set up</span></span>
-<span id="cb414-6"><a href="mars.html#cb414-6"></a>ames &lt;-<span class="st"> </span>AmesHousing<span class="op">::</span><span class="kw">make_ames</span>()</span>
-<span id="cb414-7"><a href="mars.html#cb414-7"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb414-8"><a href="mars.html#cb414-8"></a>idx &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(ames<span class="op">$</span>Sale_Price, <span class="dt">p =</span> <span class="fl">0.80</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb414-9"><a href="mars.html#cb414-9"></a>ames_train &lt;-<span class="st"> </span>ames[idx, ] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()</span>
-<span id="cb414-10"><a href="mars.html#cb414-10"></a>ames_test  &lt;-<span class="st"> </span>ames[<span class="op">-</span>idx, ]</span>
-<span id="cb414-11"><a href="mars.html#cb414-11"></a></span>
-<span id="cb414-12"><a href="mars.html#cb414-12"></a>m &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
-<span id="cb414-13"><a href="mars.html#cb414-13"></a>  <span class="dt">x =</span> <span class="kw">subset</span>(ames_train, <span class="dt">select =</span> <span class="op">-</span>Sale_Price),</span>
-<span id="cb414-14"><a href="mars.html#cb414-14"></a>  <span class="dt">y =</span> ames_train<span class="op">$</span>Sale_Price,</span>
-<span id="cb414-15"><a href="mars.html#cb414-15"></a>  <span class="dt">method =</span> <span class="st">&quot;earth&quot;</span>,</span>
-<span id="cb414-16"><a href="mars.html#cb414-16"></a>  <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>,</span>
-<span id="cb414-17"><a href="mars.html#cb414-17"></a>  <span class="dt">minspan =</span> <span class="dv">-15</span>,</span>
-<span id="cb414-18"><a href="mars.html#cb414-18"></a>  <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>),</span>
-<span id="cb414-19"><a href="mars.html#cb414-19"></a>  <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(</span>
-<span id="cb414-20"><a href="mars.html#cb414-20"></a>    <span class="dt">degree =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, </span>
-<span id="cb414-21"><a href="mars.html#cb414-21"></a>    <span class="dt">nprune =</span> <span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">100</span>, <span class="dt">length.out =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">floor</span>()</span>
-<span id="cb414-22"><a href="mars.html#cb414-22"></a>  )</span>
-<span id="cb414-23"><a href="mars.html#cb414-23"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="mars.html#cb445-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb445-2"><a href="mars.html#cb445-2"></a><span class="kw">library</span>(earth)</span>
+<span id="cb445-3"><a href="mars.html#cb445-3"></a><span class="kw">library</span>(caret)</span>
+<span id="cb445-4"><a href="mars.html#cb445-4"></a></span>
+<span id="cb445-5"><a href="mars.html#cb445-5"></a><span class="co"># set up</span></span>
+<span id="cb445-6"><a href="mars.html#cb445-6"></a>ames &lt;-<span class="st"> </span>AmesHousing<span class="op">::</span><span class="kw">make_ames</span>()</span>
+<span id="cb445-7"><a href="mars.html#cb445-7"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb445-8"><a href="mars.html#cb445-8"></a>idx &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(ames<span class="op">$</span>Sale_Price, <span class="dt">p =</span> <span class="fl">0.80</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb445-9"><a href="mars.html#cb445-9"></a>ames_train &lt;-<span class="st"> </span>ames[idx, ] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()</span>
+<span id="cb445-10"><a href="mars.html#cb445-10"></a>ames_test  &lt;-<span class="st"> </span>ames[<span class="op">-</span>idx, ]</span>
+<span id="cb445-11"><a href="mars.html#cb445-11"></a></span>
+<span id="cb445-12"><a href="mars.html#cb445-12"></a>m &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
+<span id="cb445-13"><a href="mars.html#cb445-13"></a>  <span class="dt">x =</span> <span class="kw">subset</span>(ames_train, <span class="dt">select =</span> <span class="op">-</span>Sale_Price),</span>
+<span id="cb445-14"><a href="mars.html#cb445-14"></a>  <span class="dt">y =</span> ames_train<span class="op">$</span>Sale_Price,</span>
+<span id="cb445-15"><a href="mars.html#cb445-15"></a>  <span class="dt">method =</span> <span class="st">&quot;earth&quot;</span>,</span>
+<span id="cb445-16"><a href="mars.html#cb445-16"></a>  <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>,</span>
+<span id="cb445-17"><a href="mars.html#cb445-17"></a>  <span class="dt">minspan =</span> <span class="dv">-15</span>,</span>
+<span id="cb445-18"><a href="mars.html#cb445-18"></a>  <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>),</span>
+<span id="cb445-19"><a href="mars.html#cb445-19"></a>  <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(</span>
+<span id="cb445-20"><a href="mars.html#cb445-20"></a>    <span class="dt">degree =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, </span>
+<span id="cb445-21"><a href="mars.html#cb445-21"></a>    <span class="dt">nprune =</span> <span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">100</span>, <span class="dt">length.out =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">floor</span>()</span>
+<span id="cb445-22"><a href="mars.html#cb445-22"></a>  )</span>
+<span id="cb445-23"><a href="mars.html#cb445-23"></a>)</span></code></pre></div>
 <p>The model plot shows the best tuning parameter combination.</p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="mars.html#cb415-1"></a><span class="kw">plot</span>(m, <span class="dt">main =</span> <span class="st">&quot;MARS Parameter Tuning&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="mars.html#cb416-1"></a>m<span class="op">$</span>bestTune</span></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="mars.html#cb446-1"></a><span class="kw">plot</span>(m, <span class="dt">main =</span> <span class="st">&quot;MARS Parameter Tuning&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-218-1.png" width="672" /></p>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="mars.html#cb447-1"></a>m<span class="op">$</span>bestTune</span></code></pre></div>
 <pre><code>##    nprune degree
 ## 25     45      3</code></pre>
 <p>How does this model perform against the holdout data?</p>
-<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="mars.html#cb418-1"></a>caret<span class="op">::</span><span class="kw">postResample</span>(</span>
-<span id="cb418-2"><a href="mars.html#cb418-2"></a>  <span class="dt">pred =</span> <span class="kw">log</span>(<span class="kw">predict</span>(m, <span class="dt">newdata =</span> ames_test)),</span>
-<span id="cb418-3"><a href="mars.html#cb418-3"></a>  <span class="dt">obs =</span> <span class="kw">log</span>(ames_test<span class="op">$</span>Sale_Price)</span>
-<span id="cb418-4"><a href="mars.html#cb418-4"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="mars.html#cb449-1"></a>caret<span class="op">::</span><span class="kw">postResample</span>(</span>
+<span id="cb449-2"><a href="mars.html#cb449-2"></a>  <span class="dt">pred =</span> <span class="kw">log</span>(<span class="kw">predict</span>(m, <span class="dt">newdata =</span> ames_test)),</span>
+<span id="cb449-3"><a href="mars.html#cb449-3"></a>  <span class="dt">obs =</span> <span class="kw">log</span>(ames_test<span class="op">$</span>Sale_Price)</span>
+<span id="cb449-4"><a href="mars.html#cb449-4"></a>)</span></code></pre></div>
 <pre><code>##     RMSE Rsquared      MAE 
 ##    0.165    0.855    0.093</code></pre>
 </div>
