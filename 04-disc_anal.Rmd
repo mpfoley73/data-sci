@@ -569,10 +569,9 @@ $$Var(\log r) = \left( \frac{1}{n_{11}} - \frac{1}{n_{1+}} \right) + \left( \fra
 In the vitamin C acid example, $r$ is the ratio of the row conditional frequencies.
 
 ```{r}
-p <- prop.table(vitc_o, margin = 1)
-vitc_risk <- p[2, 1] / p[1, 1]
+vitc_prop <- prop.table(vitc_o, margin = 1)
+vitc_risk <- vitc_prop[2, 1] / vitc_prop[1, 1]
 print(vitc_risk)
-rm(p)
 ```
 
 The variance is
@@ -598,9 +597,8 @@ In the CHD study, you could summarize the relationship between CHD and cholester
 * 260+ versus 0–199. 
 
 ```{r}
-(p <- prop.table(chd_o, margin = 2))
-(chd_risk <- p[1, ] / p[1, 1])
-rm(p)
+(chd_prop <- prop.table(chd_o, margin = 2))
+(chd_risk <- chd_prop[1, ] / chd_prop[1, 1])
 ```
 
 
@@ -623,27 +621,28 @@ For the Vitamin C example, the odds of getting a cold given a skier took vitamin
 The odds of getting a cold after taking a placebo pill are $0.22 / 0.78 = 0.28$ and the odds of getting a cold after taking Vitamin C are $0.12 / 0.88 = 0.14$.
 
 ```{r}
-odds <- p[, 1] / p[, 2]
+vitc_odds <- vitc_prop[, 1] / vitc_prop[, 2]
+print(vitc_odds)
 ```
 
 The odds of getting a cold given vitamin C are $0.14 / 0.28 = 0.49$ times the odds of getting cold given a placebo.  
 
 ```{r}
-theta_hat <- odds[2] / odds[1]
-print(theta_hat)
+vitc_theta_hat <- vitc_odds[2] / vitc_odds[1]
+print(vitc_theta_hat)
 ```
 
 with variance 
 
 ```{r}
-var_theta_hat <- sum(1 / vitc_o)
+var_vitc_theta_hat <- sum(1 / vitc_o)
 ```
 
 The 95% CI is
 
 ```{r}
 z_alpha <- qnorm(p = 0.975)
-exp(log(theta_hat) + c(-1, 1) * z_alpha * sqrt(var_theta_hat))
+exp(log(vitc_theta_hat) + c(-1, 1) * z_alpha * sqrt(var_vitc_theta_hat))
 ```
 
 Keep in mind the following properties of odds ratios.
@@ -657,6 +656,18 @@ Keep in mind the following properties of odds ratios.
 * If $\pi_{1|1} < \pi_{1|2}$ then the odds ratio will be $0 < \theta < 1$.
 
 * the sample odds ratio will equal $0$ or $\infty$ if any $n_{ij} = 0$. If you have any empty cells add 1/2 to each cell count.
+
+
+### Partitioning Chi-Square
+
+Besides looking at the residuals or the measures of association, another way to describe the effects is to form a sequence of smaller tables by combining or collapsing rows and/or columns in a meaningful way. 
+
+For the smoking study, you might ask whether a person is more likely to smoke if *either* parent smokes.  Collapse the first two rows (1 parent smokes, both parents smoke) and run the chi-squared test.
+
+```{r}
+smoke_clps_1 <- matrix(smoke_o[1, ] + smoke_o[2, ])
+```
+
 
 
 ## Example of Chi-Square Test of Homogeneity
