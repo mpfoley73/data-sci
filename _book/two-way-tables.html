@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-12" />
+<meta name="date" content="2020-03-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -172,6 +172,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.3" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.3.3</b> Difference in Proportions</a></li>
 <li class="chapter" data-level="4.3.4" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.3.4</b> Relative Risk</a></li>
 <li class="chapter" data-level="4.3.5" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.3.5</b> Odds Ratio</a></li>
+<li class="chapter" data-level="4.3.6" data-path="two-way-tables.html"><a href="two-way-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>4.3.6</b> Partitioning Chi-Square</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="example-of-chi-square-test-of-homogeneity.html"><a href="example-of-chi-square-test-of-homogeneity.html"><i class="fa fa-check"></i><b>4.4</b> Example of Chi-Square Test of Homogeneity</a></li>
 </ul></li>
@@ -578,6 +579,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>If <span class="math inline">\(\pi_{1|1} &lt; \pi_{1|2}\)</span> then the odds ratio will be <span class="math inline">\(0 &lt; \theta &lt; 1\)</span>.</p></li>
 <li><p>the sample odds ratio will equal <span class="math inline">\(0\)</span> or <span class="math inline">\(\infty\)</span> if any <span class="math inline">\(n_{ij} = 0\)</span>. If you have any empty cells add 1/2 to each cell count.</p></li>
 </ul>
+</div>
+<div id="partitioning-chi-square" class="section level3">
+<h3><span class="header-section-number">4.3.6</span> Partitioning Chi-Square</h3>
+<p>Besides looking at the residuals or the measures of association, another way to describe the effects is to form a sequence of smaller tables by combining or collapsing rows and/or columns in a meaningful way.</p>
+<p>For the smoking study, you might ask whether a student is more likely to smoke if <em>either</em> parent smokes. Collapse the first two rows (1 parent smokes, both parents smoke) and run the chi-squared test.</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="two-way-tables.html#cb112-1"></a>smoke_clps_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rbind</span>(smoke_o[<span class="dv">1</span>, ] <span class="op">+</span><span class="st"> </span>smoke_o[<span class="dv">2</span>, ], smoke_o[<span class="dv">3</span>, ])</span>
+<span id="cb112-2"><a href="two-way-tables.html#cb112-2"></a>smoke_clps_<span class="dv">1</span>_theta &lt;-<span class="st"> </span>(smoke_clps_<span class="dv">1</span>[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>smoke_clps_<span class="dv">1</span>[<span class="dv">1</span>, <span class="dv">2</span>]) <span class="op">/</span></span>
+<span id="cb112-3"><a href="two-way-tables.html#cb112-3"></a><span class="st">  </span>(smoke_clps_<span class="dv">1</span>[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>smoke_clps_<span class="dv">1</span>[<span class="dv">2</span>, <span class="dv">2</span>])</span>
+<span id="cb112-4"><a href="two-way-tables.html#cb112-4"></a>(smoke_clps_<span class="dv">1</span>_chisq &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(smoke_clps_<span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+## 
+## data:  smoke_clps_1
+## X-squared = 27.254, df = 1, p-value = 1.784e-07</code></pre>
+<p>The estimated odds a student smokes if at least one parent smokes is 1.58 (X^2 = 27.3, p = 1.783791410^{-7}.</p>
+<p>Or you may ask, whether among students with at least one smoking parent, there is a difference between those with one smoking parent and those with two smoking parents. Answer this by running a chi-square test on the first two rows of the data table, discarding the row where neither parent smokes.</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="two-way-tables.html#cb114-1"></a>smoke_clps_<span class="dv">2</span>_theta &lt;-<span class="st"> </span>(smoke_o[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>smoke_o[<span class="dv">1</span>, <span class="dv">2</span>]) <span class="op">/</span></span>
+<span id="cb114-2"><a href="two-way-tables.html#cb114-2"></a><span class="st">  </span>(smoke_o[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>smoke_o[<span class="dv">2</span>, <span class="dv">2</span>])</span>
+<span id="cb114-3"><a href="two-way-tables.html#cb114-3"></a>(smoke_clps_<span class="dv">2</span>_chisq &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(smoke_o[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), ]))</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+## 
+## data:  smoke_o[c(1:2), ]
+## X-squared = 9.045, df = 1, p-value = 0.002634</code></pre>
+<p>The estimated odds a student smokes if both parents smoke compared to one parent is 1.27 (X^2 = 9, p = 0.0026342.</p>
 </div>
 </div>
             </section>
