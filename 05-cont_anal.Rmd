@@ -235,79 +235,64 @@ Here is a fun way to tie Pearson, Spearman, and Kendal together: Calculate Spear
 
 ```{r message=FALSE, warning=FALSE}
 nascard_smry <- nest(nascard, -c(series_race, year)) %>%
-  mutate(spearman = map(~ cor.test(.x$start_pos, .x$finish_pos,
-                                  alternative = "two.sided", 
-                                  method = "spearman")))
-series_race <- nascard %>% distinct(nascard$series_race, nascard$year)
-spearman <- sapply(series_race[,1], function(series_race) {
-  cor.test(x = nascard[nascard$series_race == series_race, 'start_pos'],
-         y = nascard[nascard$series_race == series_race, 'finish_pos'],
-         alternative = "two.sided",
-         method = "spearman")$estimate
-})
-spearman.p <- sapply(series_race[,1], function(series_race) {
-  cor.test(x = nascard[nascard$series_race == series_race, 'start_pos'],
-         y = nascard[nascard$series_race == series_race, 'finish_pos'],
-         alternative = "two.sided",
-         method = "spearman")$p.value
-})
-kendall <- sapply(series_race[,1], function(series_race) {
-  cor.test(x = nascard[nascard$series_race == series_race, 'start_pos'],
-         y = nascard[nascard$series_race == series_race, 'finish_pos'],
-         alternative = "two.sided",
-         method = "kendall")$estimate
-})
-kendall.p <- sapply(series_race[,1], function(series_race) {
-  cor.test(x = nascard[nascard$series_race == series_race, 'start_pos'],
-         y = nascard[nascard$series_race == series_race, 'finish_pos'],
-         alternative = "two.sided",
-         method = "kendall")$p.value
-})
-nascard_smry <- data.frame(series_race = series_race$`nascard$series_race`, 
-                           year = series_race$`nascard$year`,
-                           spearman, spearman.p,
-                           kendall, kendall.p)
+  mutate(
+    spearman = map(data, ~ cor.test(.$start_pos, .$finish_pos, 
+                                    alternative = "two.sided", 
+                                    method = "spearman")),
+    spearman_est = unlist(map(spearman, ~ .$estimate)),
+    spearman_p = unlist(map(spearman, ~ .$p.value)),
+    kendall = map(data, ~ cor.test(.$start_pos, .$finish_pos,
+                                    alternative = "two.sided",
+                                    method = "kendall")),
+    kendall_est = unlist(map(kendall, ~ .$estimate)),
+    kendall_p = unlist(map(kendall, ~ .$p.value))
+  )
 ```
 
-```{r message=FALSE, warning=FALSE}
-library(tidyr)
+```{r message=FALSE, warning=FALSE, fig.height=3.5}
 nascard_smry2 <- nascard_smry %>% 
   group_by(year) %>%
-  summarize(spearman_avg = mean(spearman),
-            kendall_avg = mean(kendall)) %>%
-  gather(key = method, value = estimate, c(spearman_avg, kendall_avg))
-ggplot(data = nascard_smry2, aes(x = year, color = method)) +
+  summarize(
+    spearman_r = mean(spearman_est),
+    kendall_tau = mean(kendall_est)
+  ) %>%
+  pivot_longer(cols = c(spearman_r, kendall_tau), 
+               names_to = "method", values_to = "estimate") 
+ggplot(nascard_smry2, aes(x = year, color = method)) +
   geom_line(aes(y = estimate)) +
-  geom_line(aes(y = estimate)) +
-  expand_limits(y = 0) +
-  labs(title = "Average Rank Correlations vs Year")
+  theme_mf() +
+  scale_color_mf() +
+  labs(title = "Average Rank Correlations vs Year", color = "")
 ```
 
-Summarize the results in a contingency table.  The two tests usually return the same results in terms of significance.  
+In terms of significance, the two tests usually return the same results.  
+
 ```{r}
-nascard_smry$spearman_assoc <- 
-  ifelse(nascard_smry$spearman.p < .05, "sig", "insig")
-nascard_smry$kendall_assoc <- 
-  ifelse(nascard_smry$kendall.p < .05, "sig", "insig")
-table(nascard_smry$spearman_assoc, nascard_smry$kendall_assoc)
+table(
+  ifelse(nascard_smry$spearman_p < .05, "sig", "insig"),
+  ifelse(nascard_smry$kendall_p < .05, "sig", "insig")
+)
 ```
 
-We can calculate the Pearson coefficient to measure the relationship between Spearman's rho and Kendall's tau.  
-```{r}
-ggplot(data = nascard_smry, aes(x = kendall, y = spearman)) +
+Calculate the Pearson coefficient of the relationship between Spearman's rho and Kendall's tau.  
+```{r fig.height=3.5}
+ggplot(data = nascard_smry, aes(x = kendall_est, y = spearman_est)) +
   geom_point() +
   geom_smooth(method = lm, se = FALSE) +
-  labs(title = "Spearman's rho vs Kendall's tau")
+  theme_mf() +
+  labs(title = "Pearson's r of Spearman's rho vs Kendall's tau")
 ```
 
 The scatterplot with fitted line has r-squared equal to the Pearson coefficient squared.
 
 ```{r}
-cor.test(x = nascard_smry$spearman,
-         y = nascard_smry$kendall,
-         alternative = "two.sided",
-         method = "pearson")
+cor.test(
+  x = nascard_smry$spearman_est,
+  y = nascard_smry$kendall_est,
+  alternative = "two.sided",
+  method = "pearson"
+)$estimate^2
 
-summary(lm(kendall~spearman, data = nascard_smry))
+summary(lm(kendall_est ~ spearman_est, data = nascard_smry))$r.squared
 ```
 
