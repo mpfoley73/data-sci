@@ -92,769 +92,129 @@ Placeholder
 
 <!--chapter:end:03-cont_dist.Rmd-->
 
+
+# Discrete Analysis {#discrete_analysis}
+
+Placeholder
+
+
+## Chi-Square Test
+## One-Way Tables
+### Chi-Square Goodness-of-Fit Test
+### Proportion Test
+## Two-Way Tables
+### Chi-Square Independence Test
+### Residuals Analysis
+### Difference in Proportions
+### Relative Risk
+### Odds Ratio
+### Partitioning Chi-Square
+### Correlation
+## Example of Chi-Square Test of Homogeneity
+
+<!--chapter:end:04-disc_anal.Rmd-->
+
 ```{r include=FALSE}
 library(tidyverse)
 library(mfstylr)
 ```
 
-# Discrete Variables {#discrete_variables}
+# Continuous Variable Analysis {#continuous_analysis}
 
 
-## Chi-Square Test
+### Correlation
 
-These notes rely on [PSU STAT 500](https://newonlinecourses.science.psu.edu/stat500/node/56/),  [Wikipedia](https://en.wikipedia.org/wiki/Chi-squared_test), and [Disha M](http://www.yourarticlelibrary.com/project-reports/chi-square-test/chi-square-test-meaning-applications-and-uses-statistics/92394)].
+Correlation measures the strength and direction of association between two variables.  There are three common correlation tests: the Pearson product moment (Pearson's r), Spearman's rank-order (Spearman's rho), and Kendall's tau (Kendall's tau). 
 
-The chi-square test compares observed categorical variable frequency counts $O$ with their expected values $E$.  The test statistic $X^2 = \sum (O - E)^2 / E$ is distributed $\chi^2$.  $H_0: O = E$ and $H_a$ is at least one pair of frequency counts differ. The chi-square test relies on the central limit theorem, so it is valid for independent, normally distributed samples, typically affirmed with at least 5 successes and failures in each cell.  There a small variations in the chi-square for its various applications.
+Use the **Pearson's r** if both variables are quantitative (interval or ratio), normally distributed, and the relationship is linear with homoscedastic residuals.
 
-* The **chi-square goodness-of-fit test** tests whether observed frequency counts $O_j$ of the $j \in (0, 1, \cdots k)$ levels of a single categorical variable differ from expected frequency counts $E_j$. $H_0$ is $O_j = E_j$.
+The **Spearman's rho** and **Kendal's tao** correlations are [non-parametric](https://www.statisticshowto.datasciencecentral.com/parametric-and-non-parametric-data/) measures, so they are valid for both quantitative and ordinal variables and do not carry the normality and homoscedasticity conditions.  However, non-parametric tests have less statistical power than parametric tests, so only use these correlations if Pearson does not apply.
 
-* The **chi-square independence test** tests whether observed joint frequency counts $O_{ij}$ of the $i \in (0, 1, \cdots I)$ levels of categorical variable $Y$ and the $j \in (0, 1, \cdots J)$ levels of categorical variable $Z$ differ from expected frequency counts $E_{ij}$ under the *independence model* where $\pi_{ij} = \pi_{i+} \pi_{+j}$, the joint densities. $H_0$ is $O_{ij} = E_{ij}$.
 
-* The **chi-square homogeneity test** tests whether frequency counts of the $R$ levels of a categorical variable are distributed identically across $C$ different populations.
+#### Pearson's r
 
-## One-Way Tables
+Pearson's $r$ 
 
-These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/60/).
+$$r = \frac{\sum{(X_i - \bar{X})(Y_i - \bar{Y})}}{\sqrt{\sum{(X_i - \bar{X})^2 \sum{(Y_i - \bar{Y})^2}}}} = \frac{cov(X,Y)}{s_X s_Y}$$
 
-A one-way table is a frequency table for a single categorical variable.  You usually construct a one-way table to test whether the frequency counts differ from a hypothesized distribution using the chi-square goodness-of-fit test.  You may also simply want to construct a confidence interval around a proportion.
+estimates the population correlation $\rho$.  Pearson's $r$ ranges from $-1$ (perfect negative linear relationship) to $+1$ (perfect positive linear relationship, and $r = 0$ when there is no linear relationship.  A correlation in the range $(.1, .3)$ is condidered small, $(.3, .5)$ medium, and $(.5, 1.0)$ large.
 
-Here is an example.  A researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the ($n = 1,611$) offspring phenotypes.
+Pearson's $r$ only applies if the variables are interval or ratio, normally distributed, linearly related, there are minimal outliers, and the residuals are homoscedastic.
 
-```{r}
-o <- c(926, 288, 293, 104)
-cell_names <- c("tall cut-leaf", "tall potato-leaf", "dwarf cut-leaf", "dwarf potato-leaf")
-names(o) <- cell_names
-print(o)
-```
+Test $H_0: \rho = 0$ with test statistic 
 
-The four phenotypes are expected to occur with relative frequencies 9:3:3:1.
+$$T = r \sqrt{\frac{n-2}{1-r^2}}.$$
 
-```{r}
-pi <- c(9, 3, 3, 1) / (9 + 3 + 3 + 1)
-print(pi)
-```
 
-```{r}
-e <- sum(o) * pi
-names(e) <- cell_names
-print(e)
-```
+The `nascard` data set consists of $n = 898$ races from 1975 - 2003.  
 
-
-```{r fig.height=4}
-data.frame(O = o, E = e) %>%
-  rownames_to_column(var = "i") %>%
-  pivot_longer(cols = -i, values_to = "freq") %>%
-  group_by(name) %>%
-  mutate(pct = freq / sum(freq)) %>%
-  ungroup() %>%
-  ggplot(aes(x = i, y = freq, fill = name, 
-             label = paste0(round(freq, 0), "\n", 
-                            scales::percent(pct, accuracy = 0.1)))
-         ) +
-  geom_col(position = position_dodge()) +
-  geom_text(position = position_dodge(width = 0.9), size = 2.8) +
-  theme_mf() +
-  scale_fill_mf() +
-  labs(title = "Observed vs Expected", fill = "")
-```
-
-Do the observed phenotype counts conform to the expected proportions?  This is a goodness-of-fit question because you are comparing frequencies from a single categorical variable to a set of hypothesized frequencies.
-
-
-### Chi-Square Goodness-of-Fit Test
-
-The **chi-square goodness-of-fit test** tests whether observed frequency counts $O_j$ of the $J$ levels of a categorical variable differ from expected frequency counts $E_j$ in a sample. $H_0$ is $O_j = E_j$.
-
-There are two possible test statistics for this test, Pearson $X^2$ and deviance $G^2$.  The sampling distributions of $X^2$ and $G^2$ approach the $\chi_{J-1}^2$ as the sample size $n \rightarrow \infty$.  It's a good idea to calculate both test statistics.
-
-The Pearson goodness-of-fit statistic is
-
-$$X^2 = \sum \frac{(O_j - E_j)^2}{E_j}$$
-
-where $O_j = p_j n$ and $E_j = \pi_j n$.  There is a variation of the $X^2$ statistic that corrects for small cell counts by subtracting 0.5 from each cell, the Yates Continuity Correction.  
-
-$$X^2 = \sum \frac{(O_j - E_j - 0.5)^2}{E_j}$$
-
-The deviance statistic, aka likelihood-ratio chi-square test statistic, is 
-
-$$G^2 = 2 \sum O_j \log \left[ \frac{O_j}{E_j} \right]$$
-
-If the saturated model (the observed data represent the fit of the saturated model, the most complex model possible with the data) proportions $p_j$ equal equal the expected proportions $\pi_j$, $X^2$ and $G^2$ will equal zero.  Large values indicate the data do not agree well with the proposed model.
-
-You can perform a chi-square test of significance with the $G^2$ and $X^2$ test statistics with $dof$ degrees of freedom (d.f.).  The chi-square test is reliable when at least 80% of $E_j >= 5$.  
-
-```{r echo=FALSE}
-x2 <- sum((o - e)^2 / e)
-g2 <- 2 * sum(o * log(o / e))
-dof <- length(o) - 1
-```
-
-Calculate $X^2$ as `x2 <- sum((o - e)^2 / e) = ` `r  x2` and the $G^2$ as `g2 <- 2 * sum(o * log(o / e)) = ` `r g2`. The degrees of freedom are `length(o) - 1 = ` `r dof`.  The chi-sq test p-values are nearly identical.
-
-```{r}
-pchisq(q = x2, df = dof, lower.tail = FALSE)
-pchisq(q = g2, df = dof, lower.tail = FALSE)
-```
-
-`chisq.test()` performs the chi-square test of the Pearson test statistic.
-
-```{r}
-chisq.test(o, p = pi)
-```
-
-The p-values based on the $\chi^2$ distribution with 3 d.f. are about 0.69, so the test fails to reject the null hypothesis that the observed frequencies are consistent with the theory. The plot of the chi-squared distribution shows $X^2$  well outside the $\alpha = 0.05$ range of rejection.
-
-```{r warning=FALSE, message=FALSE, fig.height=4}
-alpha <- 0.05
-dof <- length(e) - 1
-lrr = -Inf
-p_val <- pchisq(q = x2, df = length(o) - 1, lower.tail = FALSE)
-urr = qchisq(p = alpha, df = dof, lower.tail = FALSE)
- data.frame(chi2 = seq(from = 0, to = 20, by = .1)) %>%
-   mutate(density = dchisq(x = chi2, df = dof)) %>%
-   mutate(rr = ifelse(chi2 < lrr | chi2 > urr, density, 0)) %>%
- ggplot() +
-   geom_line(aes(x = chi2, y = density), color = mf_pal(12)(12)[12], size = 0.8) +
-   geom_area(aes(x = chi2, y = rr), fill = mf_pal(12)(12)[2], alpha = 0.8) +
-   geom_vline(aes(xintercept = x2), color = mf_pal(12)(12)[11], size = 0.8) +
-   labs(title = bquote("Chi-Square Goodness-of-Fit Test"),
-        subtitle = paste0("X^2=", round(x2,2), ", ",
-                          "Critical value=", round(urr,2), ", ",
-                          "p-value=", round(p_val,3), "."
-                          ),
-        x = "chisq",
-        y = "Density") +
-   theme(legend.position="none") +
-   theme_mf()
-```
-
-If you reject $H_0$, you can inspect the residuals to learn which differences may have lead to rejecting the rejection.  $X^2$ and $G^2$ are sums of squared cell comparisons, or "residuals".  The expected value of a $\chi^2$ random variable is its d.f., $k - 1$, so the average residual size is $(k - 1) / k$. The typical residual should be within 2 $\sqrt{(k - 1) / k}$.
-
-```{r}
-e2_res <- sqrt((o - e)^2 / e)
-g2_res <- sign(o - e) * sqrt(abs(2 * o * log(o / e)))
-```
-
-```{r fig.height=4}
-data.frame(e2_res) %>%
-  rownames_to_column() %>%
-  # pivot_longer(cols = e2_res:g2_res) %>%
-  ggplot(aes(x = rowname, y = e2_res)) +
-  geom_point(size = 3, color = mf_pal(12)(12)[2], alpha = 0.8) +
-  theme_mf() +
-  labs(title = "X^2 Residuals by Cell", color = "", x = "", y = "")
-```
-
-If you want to test whether the data conform to a particular distribution instead of some set of theoretical values, the test is nearly the same except for an adjustment to the d.f.  Your first step is the estimate the distribution's parameter(s).  Then you perform the goodness of fit test, but with degrees of freedom reduced for each estimated parameter.
-
-For example, suppose you sample $n = 100$ families and count the number of children.  The count of children should be a Poisson random variable, $J \sim  Pois(\lambda)$.  
-
-```{r}
-dat <- data.frame(j = 0:5, o = c(19, 26, 29, 13, 10, 3))
-```
-
-The ML estimate for $\lambda$ is
-
-$$\hat{\lambda} = \frac{j_0 O_0 + j_1 O_1, + \cdots j_k O_k}{O}$$
-
-```{r}
-lambda_hat <- sum(dat$j * dat$o) / sum(dat$o)
-print(lambda_hat)
-```
-
-The probabilities for each possible count are 
-
-$$f(j; \lambda) = \frac{e^{-\hat{\lambda}} \hat{\lambda}^j}{j!}.$$
-
-```{r}
-f <- exp(-lambda_hat) * lambda_hat^dat$j / factorial(dat$j)
-E <- f * sum(dat$o)
-dat <- cbind(dat, e = E)
-```
-
-```{r fig.height=4}
-dat %>%
-  rename(pois = e) %>%
-  pivot_longer(cols = -j, values_to = "freq") %>%
-  group_by(name) %>%
-  mutate(pct = freq / sum(freq)) %>%
-  ungroup() %>%
-  ggplot(aes(x = fct_inseq(as.factor(j)), y = freq, fill = name, 
-             label = paste0(round(freq, 0), "\n", 
-                            scales::percent(pct, accuracy = 0.1)))
-         ) +
-  geom_col(position = position_dodge()) +
-  geom_text(position = position_dodge(width = 0.9), size = 2.8) +
-  theme_mf() +
-  scale_fill_mf() +
-  labs(title = "Observed vs Expected", fill = "", x = "children in family")
-```
-
-Compare the expected values to the observed values with the $\chi^2$ goodness of fit test.  In this case, $df = 6 - 1 - 1$ because the estimated paramater $\lambda$ reduces d.f. by 1.
-
-```{r}
-(X2 <- sum((dat$o - dat$e)^2 / dat$e))
-(dof <- nrow(dat) - 1 - 1)
-pchisq(q = X2, df = dof)
-```
-
-Be careful of this adjustment to the d.f. because `chisq.test()` does not take this into account, and you cannot override the d.f..
-
-```{r}
-chisq.test(dat$o, p = dat$e / sum(dat$e))
-```
-
-
-### Proportion Test
-
-A special case of the one-way table is the $2 \times 1$ table for a binomial random variable.  When you calculate a single proportion $p$, you can compare it to a hypothesized $\pi_0$, or create a confidence interval around the estimate.
-
-Suppose a company claims to resolve at least 70% of maintenance requests within 24 hours. In a random sample of $n = 50$ repair requests, the company resolves $O_1 = 33$ ($p_1 = 66\%)$ within 24 hours. At a 5% level of significance, is the maintenance company’s claim valid?
-
-```{r}
-o <- c(33, 17)
-n <- sum(o)
-cell_names <- c("resolved", "not resolved")
-names(o) <- cell_names
-print(o)
-```
-
-The null hypothesis is that the maintenance company resolves $\pi_0 = 0.70$ of requests within 24 hours, $H_0: \pi = \pi_0$ with alternative hypothesis $H_a: \pi < \pi_0$. This is a left-tailed test with an $\alpha = 0.05$ level of significance.
-
-```{r}
-pi_0 <- 0.70
-alpha <- 0.05
-```
-
-The sample is independently drawn without replacement from <10% of the population (by assumption) and there were >=5 successes, so you can use the Clopper-Pearson exact binomial test. *Clopper-Pearson inverts two single-tailed binomial tests at the desired alpha*.
-
-```{r}
-binom.test(x = o, p = pi_0, alternative = "less", conf.level = 1 - alpha)
-```
-
-There is insufficient evidence (p = 0.3161) to reject $H_0$ that true probability of success is less than 0.7.
-
-```{r fig.height=3.5}
-x <- c(0:50)
-p_x <- dbinom(x = x, size = n, prob = pi_0)
-observed <- factor(if_else(x == o[1], 1, 0))
-data.frame(x, p_x, observed) %>%
-  ggplot(aes(x = x, y = p_x, fill = observed)) +
-  geom_col() +
-  theme_mf() +
-  scale_fill_mf() +
-  labs(title = "Exact Binomial")
-```
-
-There were >=5 failures, >=30 observations, and the measured probability of success was within (.2,.80), so you can also use the Wald normal approximation method where $\pi = p \pm z_{\alpha/2} SE$ and $Z = (p - \pi_0) / SE$ where $SE = \sqrt{\pi_0 (1 - \pi_0) / n}$.
-
-```{r}
-p <- o[1] / sum(o)
-se <- sqrt(pi_0 * (1 - pi_0) / sum(o))
-z <- (p - pi_0) / se
-pnorm(q = p, mean = pi_0, sd = se, lower.tail = TRUE)
-```
-
-Again, there is insufficient evidence (p = 0.2685) to reject $H_0$ that true probability of success is less than 0.7.  The 95% CI around the measured p = 0.66 is
-
-```{r}
-z_alpha <- qnorm(0.95, mean = p, sd = se, lower.tail = FALSE)
-c(0, p + z_alpha * se)
-```
-
-
-## Two-Way Tables
-
-These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/69/).
-
-A two-way frequency table is a frequency table for *two* categorical variables.  You usually construct a two-way table to test whether the frequency counts in one categorical variable differ from the other categorical variable using the chi-square independence test.  If there is a significant difference (i.e., the variables are related), then describe the relationship with an analysis of the residuals, calculations of measures of association (difference in proportions, relative risk, or odds ratio), and partition tests. 
-
-Here are three case studies that illustrate the concepts.  The first is a simple 2x2 table.  The second is a 3x2 table that extends some of the concepts.  The third is a 2x4 table where one factor is *ordinal*.
-
-**Study 1: "Vitamin C" 2x2 Table**.  A double blind study investigated whether vitamin C prevents common colds on a sample of *n* = 279 persons. This study has two categorical variables each with two levels, a 2x2 two way table.
-
-```{r}
-vitc_o <- matrix(
-  c(31, 17, 109, 122), 
-  ncol = 2, 
-  dimnames = list(
-    treat = c("Placebo", "VitaminC"), 
-    resp = c("Cold", "NoCold")
-  )
+```{r message=FALSE, warning=FALSE, cache=TRUE}
+nascard <- read.fwf(
+  file = url("http://jse.amstat.org/datasets/nascard.dat.txt"),
+  widths = c(5, 6, 4, 4, 4, 5, 9, 4, 11, 30),
+  col.names = c('series_race', 'year', 'race_year', 'finish_pos', 'start_pos',
+                'laps_comp', 'winnings', 'num_cars','car_make', 'driver')
 )
-vitc_o %>% data.frame() %>% rownames_to_column(var = " ") %>%
-janitor::adorn_totals(where = c("row", "col"))
-```
-
-**Study 2: "Smoking" 3x2 Table**.  An analysis classifies *n* = 5375 high school students by their smoking behavior and the smoking behavior of their parents.
-
-```{r}
-smoke_o <- matrix(
-  c(400, 416, 188, 1380, 1823, 1168), 
-  ncol = 2,
-  dimnames = list(
-    parents = c("Both", "One", "Neither"),
-    student = c("Smoker", "Non-smoker"))
-)
-smoke_o %>% data.frame() %>% rownames_to_column(var = " ") %>%
-janitor::adorn_totals(where = c("row", "col"))
-```
-
-**Study 3: "Coronary Heart Disease" Ordinal Table**.  A study of classified *n* = 1329 patients by cholesterol level and whether they had been diagnosed with coronary heart disease (CHD).
-
-```{r}
-# tribble() is a little easier.
-chd_o <- tribble(
-  ~L_0_199, ~L_200_219, ~L_220_259, ~L_260p,
-  12, 8, 31, 41,
-  307, 246, 439, 245
-) %>% as.matrix()
-rownames(chd_o) <- c("CHD", "No CHD")
-chd_o %>% data.frame() %>% rownames_to_column(var = " ") %>%
-janitor::adorn_totals(where = c("row", "col"))
-```
-
-
-### Chi-Square Independence Test
-
-The **chi-square independence test** tests whether observed joint frequency counts $O_{ij}$ differ from expected frequency counts $E_{ij}$ under the *independence model* (the model of independent explanatory variables, $\pi_{ij} = \pi_{i+} \pi_{+j}$. $H_0$ is $O_{ij} = E_{ij}$.
-
-There are two possible test statistics for this test, Pearson $X^2$ (and the continuity adjusted $X^2$), and deviance $G^2$.  As $n \rightarrow \infty$ their sampling distributions approach $\chi_{df}^2$ with degrees of freedom (df) equal to the saturated model df $I \times J - 1$ minus the independence model df $(I - 1) + (J - 1)$, which you can algebraically solve for $df = (I - 1)(J - 1)$.
-
-The Pearson goodness-of-fit statistic is
-
-$$X^2 = \sum \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$
-
-where $O_{ij}$ is the observed count, and $E_{ij}$ is the product of the row and column marginal probabilities.  For the Vitamin C study, $X^2$ is 
-
-```{r}
-vitc_e <- sum(vitc_o) * prop.table(vitc_o, 1) * prop.table(vitc_o, 2)
-X2 <- sum((vitc_o - vitc_e)^2 / vitc_e)
-print(X2)
-```
-
-and the deviance statistic is 
-
-$$G^2 = 2 \sum_{ij} O_{ij} \log \left( \frac{O_{ij}}{E_{ij}} \right)$$
-
-```{r}
-G2 <- - 2 * sum(vitc_o * log(vitc_o / vitc_e))
-print(G2)
-```
-
-$X^2$ and $G^2$ increase with the disagreement between the saturated model proportions $p_{ij}$ and the independence model proportions $\pi_{ij}$.
-
-The degrees of freedom is
-
-```{r}
-vitc_dof <- (nrow(vitc_o) - 1) * (ncol(vitc_o) - 1)
-print(vitc_dof)
-```
-
-The associated p-values are
-```{r}
-pchisq(q = G2, df = vitc_dof, lower.tail = FALSE)
-pchisq(q = X2, df = vitc_dof, lower.tail = FALSE)
-```
-
-The `chisq.test()` function applies the Yates continuity correcton by default to correct for situations with small cell counts.  The Yates continuity correction  subtracts 0.5 from the $O_{ij} - E_{ij}$ differences.  Set `correct = FALSE` to suppress Yates.
-
-```{r}
-vitc_chisq_test <- chisq.test(vitc_o, correct = FALSE)
-print(vitc_chisq_test)
-```
-
-The Yates correction yields more conservative p-values.
-
-```{r}
-chisq.test(vitc_o)
-```
-
-These p-values are evidence for rejecting the independence model.
-
-Here is the chi-square test applied to the CHD data.  Recall this data set is 4x2, so the degrees of freedom are $(4-1)(2-1) = 3$.  The Yates continuity correction does not apply to data other than 2x2, so the `correct = c(TRUE, FALSE)` has no effect in `chisq.test()`.
-
-```{r}
-(chd_chisq_test <- chisq.test(chd_o))
-```
-
-The p-value is very low, so reject the null hypothesis of independence. This demonstrates that a relationship exists between cholesterol and CHD.  Now you should describe that relationship by evaluating the (i) residuals, (ii) measures of association, and (iii) partitioning chi-square.
-
-
-### Residuals Analysis
-
-If the chi-squared independence test rejects $H_0$ of identical frequency distributions, the next step is to identify *which* cells may be driving the lack of fit.  The Pearson residuals in the two-way table are 
-
-$$r_{ij} = \frac{O_{ij} - E_{ij}}{\sqrt{E_{ij}}}$$
-
-where $X^2 = \sum{r_{ij}}$.  The $r_{ij}$ values have a normal distribution with mean 0, but with *unequal* variances.  The *standardized* Pearson residual for a two-way table is 
-
-$$r_{ij} = \frac{O_{ij} - E_{ij}}{\sqrt{E_{ij}(1 - p_{i+})(1 - p_{+j})}}$$
-
-and the $r_{ij}$ values *do* have a $\sim N(0, 1)$ distribution.  $r_{ij}^2 > 4$ is a sign of lack of fit. The `chissq.test()` object includes `residuals` that match the manual calculation.
-
-```{r}
-(vitc_o - vitc_e) / sqrt(vitc_e)
-vitc_chisq_test$residuals
-```
-
-It also includes `stdres` that match the manual standardized calculation.  (*well, no it doesn't, but I don't know what my mistake is.*)
-
-```{r}
-(vitc_e - vitc_o) / 
-  sqrt(vitc_e * (1 - prop.table(vitc_o, margin = 1)) 
-              * (1 - prop.table(vitc_o, margin = 2))
-  )
-vitc_chisq_test$stdres
-```
-
-Here are the squared Pearson residuals for the CHD data.  The squared Pearson residuals for CHD 0-199, 200-219, and 260+ are greater than 4, and seem to be driving the lack of independence.
-
-```{r}
-chd_chisq_test$residuals^2
-```
-
-
-### Difference in Proportions
-
-The difference in proportions measure is the difference in the probabilities of characteristic $Z$ conditioned on two groups $Y = 1$ and $Y = 2$: $\delta = \pi_{1|1} - \pi_{1|2}$.  In social sciences and epidemiology $\pi_{1|1}$ and $\pi_{1|2}$ are sometimes referred to as "risk" values. The point estimate for $\delta$ is $r = p_{1|1} - p_{1|2}$.  
-
-Under the normal approximation method, the sampling distribution of the difference in population proportions has a normal distribution centered at $d$ with variance $Var(\delta)$. The point estimate for $Var(\delta)$ is $Var(d)$.
-
-$$Var(d) = \frac{p_{1|1} (1 - p_{1|1})}{n_{1+}} + \frac{p_{1|2} (1 - p_{1|2})}{n_{2+}}$$
-
-In the vitamin C acid example, $\delta$ is the difference in the row conditional frequencies.
-
-```{r}
-p <- prop.table(vitc_o, margin = 1)
-d <- p[2, 1] - p[1, 1]
-print(d)
-```
-
-The variance is
-
-```{r}
-var_d <- (p[2, 1])*(1 - p[2, 1]) / sum(vitc_o[2, ]) +
-  (p[1, 1])*(1 - p[1, 1]) / sum(vitc_o[1, ])
-print(var_d)
-```
-
-The 95% CI is
-
-```{r}
-d + c(-1, 1) * qnorm(.975) * sqrt(var_d)
-```
-
-This is how `prop.test()` without the continuity correction calculates the confidence interval.
-
-```{r}
-(prop.test.result <- prop.test(vitc_o, correct = FALSE))
-```
-
-```{r fig.height=3.5}
-lcl <- -round(prop.test.result$conf.int[2], 3)
-ucl <- -round(prop.test.result$conf.int[1], 3)
-data.frame(d_i = -300:300 / 1000) %>%
-  mutate(density = dnorm(x = d_i, mean = d, sd = sqrt(var_d))) %>%
-  mutate(rr = ifelse(d_i < lcl | d_i > ucl, density, 0)) %>%
-ggplot() +
-  geom_line(aes(x = d_i, y = density)) +
-  geom_area(aes(x = d_i, y = rr, fill = mf_pal(12)(12)[2]), alpha = 0.8) +
-  geom_vline(aes(xintercept = d), color = "blue") +
-  theme_mf() +
-  labs(title = bquote("Difference in Proportions Confidence Interval"),
-       subtitle = paste0(
-         "d = ", round(d, 3) 
-        ),
-       x = "d",
-       y = "Density") +
-  theme(legend.position="none")
-
-```
-
-
-The normal approximation method applies when the central limit theorem conditions hold:
-
-* the sample is independently drawn (random sampling without replacement from $n < 10\%$ of the population in observational studies, or random assignment in experiments), 
-* there are at least $n_i p_i >= 5$ successes and $n_i (1 - p_i) >= 5$ failures for each group, 
-* the sample sizes are both $>=30$, and 
-* the probability of success for each group is not extreme, $(0.2, 0.8)$.   
-
-Test $H_0: d = \delta_0$ for some hypothesized population $\delta$ (usually 0) with test statistic 
-
-$$Z = \frac{d - \delta_0}{se_{d}}$$ 
-
-where 
-
-$$se_{d} = \sqrt{p (1 - p) \left( \frac{1}{n_{1+}} + \frac{1}{n_{2+}} \right)}$$ 
-
-approximates $se_{\delta_0}$ where $p$ is the pooled proportion 
-
-$$p = \frac{n_{11} + n_{21}}{n_{1+} + n_{2+}}.$$
-
-```{r}
-p_pool <- (vitc_o[1, 1] + vitc_o[2, 1]) / sum(vitc_o)
-se_d <- sqrt(p_pool * (1 - p_pool) * (1 / sum(vitc_o[1, ]) + 1 / sum(vitc_o[2, ])))
-z <- (d - 0) / se_d
-pnorm(z) * 2
-```
-
-```{r message=FALSE, warning=FALSE, fig.height=3.5}
-lrr = qnorm(p = .05/2, mean = 0, sd = se_d, lower.tail = TRUE)
-urr = qnorm(p = .05/2, mean = 0, sd = se_d, lower.tail = FALSE)
-data.frame(d_i = -300:300 / 1000) %>%
-  mutate(density = dnorm(x = d_i, mean = 0, sd = se_d)) %>%
-  mutate(rr = ifelse(d_i < lrr | d_i > urr, density, 0)) %>%
-ggplot() +
-  geom_line(aes(x = d_i, y = density)) +
-  geom_area(aes(x = d_i, y = rr, fill = mf_pal(12)(12)[2]), alpha = 0.8) +
-  geom_vline(aes(xintercept = d), color = "blue") +
-  geom_vline(aes(xintercept = 0), color = "black") +
-  theme_mf() +
-  labs(title = "Hypothesis Test of Difference in Proportions",
-       subtitle = paste0(
-         "d = ", round(d, 3), 
-         " (Z = ", round(z, 2), 
-         ", p = ", round(pnorm(z) * 2, 4), ")."
-        ),
-       x = "d",
-       y = "Density") +
-  theme(legend.position="none") 
-```
-
-The null hypothesis $H_0: \delta_0 = 0$ is equivalent to saying that two variables are independent, $\pi_{1|1} = \pi_{1|2}$, so you can also use the $\chi^2$ or $G^2$ test for independence in a 2 × 2.  That's what `prop.test()` is doing.  The square of the z-statistic is algebraically equal to $\chi^2$.  The two-sided test comparing $Z$ to a $N(0, 1)$ is identical to comparing $\chi^2$ to a chi-square distribution with df = 1.  Compare the $Z^2$ to the output from `prop.test()`.
-
-```{r}
-z^2
-prop.test.result$statistic
-```
-
-The difference in proportions is easy to interpret, but when $Z = 1$ is a rare event, the individual probabilities $\pi_{1|1}$ and $\pi_{1|2}$ are both small and $\delta$ is nearly zero even when the effect is strong.
-
-In the CHD study, two of the conditional probabilities of CHD within the four cholesterol groups are similar, 0-199 (0.038) and 200-219 (.031).
-
-```{r}
-round(prop.table(chd_o, margin = 2), 3)
-```
-
-Is the difference in these proportions statistically signficant?  You can test this with the difference in proportions test or a chisq test.
-
-```{r}
-prop.test(t(chd_o[, c(1:2)]))
-chisq.test(t(chd_o[, c(1:2)]))
-```
-
-You could go on to try other pairwise tests to establish which levels differ from the others.
-
-
-### Relative Risk
-
-The relative risk measure is the ratio of the probabilities of characteristic $Z$ conditioned on two groups $Y = 1$ and $Y = 2$: $\rho = \pi_{1|1} / \pi_{1|2}$.  In social sciences and epidemiology $\rho$ is sometimes referred to as the "relative risk". The point estimate for $\rho$ is $r = p_{1|1} / p_{1|2}$.  
-
-Because $\rho$ is non-negative, a normal approximation for $\log \rho$ has a less skewed distribution than $\rho$. The approximate variance of $\log \rho$ is
-
-$$Var(\log \rho) = \frac{1 - \pi_{11}/\pi_{1+}}{n_{1+}\pi_{11}/\pi_{1+}} + \frac{1 - \pi_{21}/\pi_{2+}}{n_{2+}\pi_{21}/\pi_{2+}}$$
-
-and is estimated by 
-
-$$Var(\log r) = \left( \frac{1}{n_{11}} - \frac{1}{n_{1+}} \right) + \left( \frac{1}{n_{21}} - \frac{1}{n_{2+}} \right)$$
-
-In the vitamin C acid example, $r$ is the ratio of the row conditional frequencies.
-
-```{r}
-vitc_prop <- prop.table(vitc_o, margin = 1)
-vitc_risk <- vitc_prop[2, 1] / vitc_prop[1, 1]
-print(vitc_risk)
-```
-
-The variance is
-
-```{r}
-vitc_risk_var <- 1 / vitc_o[1, 1] - 1 / sum(vitc_o[1, ]) + 
-  1 / vitc_o[2, 1] - 1 / sum(vitc_o[2, ])
-print(vitc_risk_var)
-```
-
-The 95% CI is
-
-```{r}
-exp(log(vitc_risk) + c(-1, 1) * qnorm(.975) * sqrt(vitc_risk_var))
-```
-
-Thus, at 0.05 level, you can reject the independence model. People taking vitamin C are half as likely to catch a cold.
-
-In the CHD study, you could summarize the relationship between CHD and cholesterol level by a set of three relative risks using 0-199 as the baseline:
-
-* 200–219 versus 0–199, 
-* 220–259 versus 0–199, and 
-* 260+ versus 0–199. 
-
-```{r}
-(chd_prop <- prop.table(chd_o, margin = 2))
-(chd_risk <- chd_prop[1, ] / chd_prop[1, 1])
-```
-
-
-### Odds Ratio
-
-The odds ratio is the most commonly used measure of association.  It is also a natural parameter for many of the log-linear and logistic models. The odds is the ratio of probabilities of "success" and "failure".  When conditioned on a variable, the odds ratio is 
-
-$$\theta = \frac{\pi_{1|1} / \pi_{2|1}} {\pi_{1|2} / \pi_{2|2}}$$
-
-and is estimated by the sample frequencies
-
- $$\hat{\theta} = \frac{n_{11} n_{22}} {n_{12} n_{21}}$$
- 
-The log-odds ratio has a better normal approximation than the odds ratio, so define the confidence interval on the log scale.
-
-$$Var(\log \hat{\theta}) = \frac{1}{n_{11}} + \frac{1}{n_{12}} + \frac{1}{n_{21}} + \frac{1}{n_{22}}$$
-
-For the Vitamin C example, the odds of getting a cold given a skier took vitamin C, are 
-
-The odds of getting a cold after taking a placebo pill are $0.22 / 0.78 = 0.28$ and the odds of getting a cold after taking Vitamin C are $0.12 / 0.88 = 0.14$.
-
-```{r}
-vitc_odds <- vitc_prop[, 1] / vitc_prop[, 2]
-print(vitc_odds)
-```
-
-The odds of getting a cold given vitamin C are $0.14 / 0.28 = 0.49$ times the odds of getting cold given a placebo.  
-
-```{r}
-vitc_theta_hat <- vitc_odds[2] / vitc_odds[1]
-print(vitc_theta_hat)
-```
-
-with variance 
-
-```{r}
-var_vitc_theta_hat <- sum(1 / vitc_o)
-```
-
-The 95% CI is
-
-```{r}
-z_alpha <- qnorm(p = 0.975)
-exp(log(vitc_theta_hat) + c(-1, 1) * z_alpha * sqrt(var_vitc_theta_hat))
-```
-
-Keep in mind the following properties of odds ratios.
-
-* You can convert an odds pack to probabilities by solving $\pi / (1 - \pi)$ for $\pi = odds / (1 + odds)$. 
-
-* If two variables are independent, then the conditional probabilities $\pi_{1|1}$ and $\pi_{1|2}$ will be equal and therefore the odds ratio will equal 1.
-
-* If $\pi_{1|1} > \pi_{1|2}$ then the odds ratio will be $1 < \theta < \infty$.
-
-* If $\pi_{1|1} < \pi_{1|2}$ then the odds ratio will be $0 < \theta < 1$.
-
-* the sample odds ratio will equal $0$ or $\infty$ if any $n_{ij} = 0$. If you have any empty cells add 1/2 to each cell count.
-
-
-### Partitioning Chi-Square
-
-Besides looking at the residuals or the measures of association, another way to describe the effects is to form a sequence of smaller tables by combining or collapsing rows and/or columns in a meaningful way. 
-
-For the smoking study, you might ask whether a student is more likely to smoke if *either* parent smokes.  Collapse the first two rows (1 parent smokes, both parents smoke) and run the chi-squared test.
-
-```{r}
-smoke_clps_1 <- rbind(smoke_o[1, ] + smoke_o[2, ], smoke_o[3, ])
-smoke_clps_1_theta <- (smoke_clps_1[1, 1] / smoke_clps_1[1, 2]) /
-  (smoke_clps_1[2, 1] / smoke_clps_1[2, 2])
-(smoke_clps_1_chisq <- chisq.test(smoke_clps_1))
-```
-
-The estimated odds a student smokes if at least one parent smokes is `r round(smoke_clps_1_theta, 2)` (X^2 = `r round(smoke_clps_1_chisq$statistic, 1)`, p = `r smoke_clps_1_chisq$p.value`.
-
-Or you may ask, whether among students with at least one smoking parent, there is a difference between those with one smoking parent and those with two smoking parents. Answer this by running a chi-square test on the first two rows of the data table, discarding the row where neither parent smokes.
-
-```{r}
-smoke_clps_2_theta <- (smoke_o[1, 1] / smoke_o[1, 2]) /
-  (smoke_o[2, 1] / smoke_o[2, 2])
-(smoke_clps_2_chisq <- chisq.test(smoke_o[c(1:2), ]))
-```
-
-The estimated odds a student smokes if both parents smoke compared to one parent is `r round(smoke_clps_2_theta, 2)` (X^2 = `r round(smoke_clps_2_chisq$statistic, 1)`, p = `r smoke_clps_2_chisq$p.value`.
-
-### correlation.
-
-Correlation measures the strength and direction of association between two variables.^[See explanations at [Statistics Solutions](https://www.statisticssolutions.com/correlation-pearson-kendall-spearman/), [PSU STAT 500](https://newonlinecourses.science.psu.edu/stat500/node/214/), and [NASCAR Winston Cup Race Results for 1975-2003 by Larry Winner in Journal of Statistics Education](http://jse.amstat.org/v14n3/datasets.winner.html).]   There are three common correlation tests: the Pearson product moment correlation (Pearson), Kendall's tau correlation (Kendall's tau), and Spearman's rank-order correlation (Spearman rho). 
-
-The **Pearson correlation** is valid if both variables are quantitative (interval or ratio), normally distributed, and the relationship is linear with homoscedastic residuals.
-
-The **Spearman** and the **Kendal** correlations are non-parametric measures.^[See discussion of parametric vs nonparametric at [Statistics How To](https://www.statisticshowto.datasciencecentral.com/parametric-and-non-parametric-data/).]  They are valid for both quantitative and ordinal variables and do not carry the normality and homoscedasticity conditions.  However, non-parametric tests have less statistical power than parametric tests, so only these correlations if Pearson does not apply.
-
-# Pearson's Product Moment Correlation
-
-The Pearson product moment correlation coefficient r estimates population correlation $\rho$.  The test evaluates $H_0: \rho = 0$ and constructs a $(1 - \alpha)\%$ confidence interval around $r$:
-
-$r = \frac{\sum_{i=1}^n{(X_i - \bar{X})(Y_i - \bar{Y})}}{\sqrt{\sum_{i=1}^n{(X_i - \bar{X})^2 \sum_{i=1}^n{(Y_i - \bar{Y})^2}}}}$
-
-$r$ ranges from $-1$ (perfect negative linear relationship) to $+1$ (perfect positive linear relationship, and $r = 0$ when there is no linear relationship.  A correlation in the range $(.1, .3)$ is small, $(.3, .5)$ is medium, and $(.5, 1.0)$ is large.
-
-Only use the Pearson correlation when
-
-*	the variables are interval or ratio,
-*	the variables are normally distributed,
-*	the variables are linearly related,
-*	there are minimal outliers (or they are removed entirely), and
-*	the residuals are homoscedastic.
-
-Test $H_0: \rho = 0$ with test statistic $T = r \sqrt{\frac{n-2}{1-r^2}}$.  The test also defines a $(1 - \alpha)\%$ confidence interval.^[I found an explanation of the confidence interval [here](https://www.ncss.com/wp-content/themes/ncss/pdf/Procedures/PASS/Confidence_Interval_for_Pearsons_Correlation.pdf).]   
-
-
-## Pearson's Product Moment Correlation Example
-The `nascard` data set consists of 898 races from 1975 - 2003.  In race 1 of 1975, what was the correlation between the driver's finishing position and prize?
-```{r message=FALSE, warning=FALSE}
-library(dplyr)  # for glimpse()
-nascard <- read.fwf(file = url("http://jse.amstat.org/datasets/nascard.dat.txt"),
-                    widths = c(5, 6, 4, 4, 4, 5, 9, 4, 11, 30),
-                    col.names = c('series_race', 'year', 'race_year',
-                                  'finish_pos', 'start_pos',
-                                  'laps_comp', 'winnings', 'num_cars',
-                                  'car_make', 'driver'))
 nascard_sr1 <- nascard[nascard$series_race == 1,]
 glimpse(nascard_sr1)
 ```
 
-Explore the relationship with a scatterplot.  As one would expect, there is a negative relationship between finish position and winnings, but it is not linear.
-```{r message=FALSE, warning=FALSE}
-library(ggplot2)
-ggplot(data = nascard_sr1, aes(x = finish_pos, y = winnings)) +
+In race 1 of 1975 $(n = 35)$, what was the correlation between the driver's finishing position and prize?
+
+Explore the relationship with a scatterplot.  As expected, there is a negative relationship between finish position and winnings, but it is non-linear.  However, 1/winnings may be linearly related to finish position. 
+
+```{r message=FALSE, warning=FALSE, fig.height=3.5, fig.width=6.5}
+p1 <- ggplot(data = nascard_sr1, aes(x = finish_pos, y = winnings)) +
   geom_point() + 
-  geom_smooth(method = "lm", se = FALSE)
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_mf() +
+  labs(title = "Pearson's Rho", subtitle = "")
+p2 <- ggplot(data = nascard_sr1, aes(x = finish_pos, y = 1/winnings)) +
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_mf() +
+  labs(title = "Pearson's Rho", subtitle = "y = 1 / winnings")
+gridExtra::grid.arrange(p1, p2, nrow = 1)
 ```
 
-However, 1/winnings may be linearly related to finish position.^[I tried several variable tranformations from [Stat Trek](https://stattrek.com/regression/linear-transformation.aspx), and chose the tranformation with the highest $R^2$ that also had a normal distribution in each variable.]
-```{r}
-ggplot(data = nascard_sr1, aes(x = finish_pos, y = 1/winnings)) +
-  geom_point() + 
-  geom_smooth(method = "lm", se = FALSE)
+(*I tried several [variable tranformations](https://stattrek.com/regression/linear-transformation.aspx) and chose the one producing the highest $R^2$ that also had a normal distribution in each variable.)
 
+```{r}
 #summary(lm(winnings ~ finish_pos, data = nascard_sr1)) # r2 = .5474
 #summary(lm(log(winnings) ~ finish_pos, data = nascard_sr1)) # r2 = .9015
-summary(lm(1/winnings ~ finish_pos, data = nascard_sr1)) # r2 = .9509
+nascard_lm <- lm(1/winnings ~ finish_pos, data = nascard_sr1) # r2 = .9509
 #summary(lm(winnings ~ log(finish_pos), data = nascard_sr1)) # r2 = .883
 #summary(lm(log(winnings) ~ log(finish_pos), data = nascard_sr1)) # r2 = .9766
 #summary(lm(winnings ~ log(finish_pos), data = nascard_sr1)) # r2 = .883
-
+coef(nascard_lm)
 ```
 
-The finish position and prize are quantitative ratio variables, so the Pearson's product moment correlation should apply.  First check whether each variable is normally distributed.  The normal distribution plots look good and the Anderson-Darling tests both fail to reject the normality null hypothesis.
-```{r warning=FALSE, message=FALSE}
-qqnorm(nascard_sr1$finish_pos)
-qqline(nascard_sr1$finish_pos)
-qqnorm(1/(nascard_sr1$winnings))
-qqline(1/(nascard_sr1$winnings))
+Finish position and prize are ratio variables, so the Pearson's r applies.  Check whether each variable is normally distributed.  
 
-library(nortest)  # for Anderson-Darling 
-ad.test(nascard_sr1$finish_pos)
-ad.test(1/nascard_sr1$winnings)
-
+```{r warning=FALSE, message=FALSE, fig.height=3.5, fig.width=6.5}
+p1 <- ggplot(nascard_sr1, aes(sample = finish_pos)) +
+  stat_qq() +
+  stat_qq_line() +
+  theme_mf() +
+  labs(title = "Q-Q Plots", subtitle = "Finish Position")
+p2 <- ggplot(nascard_sr1, aes(sample = winnings)) +
+  stat_qq() +
+  stat_qq_line() +
+  theme_mf() +
+  labs(title = "", subtitle = "Winnings")
+gridExtra::grid.arrange(p1, p2, nrow = 1)
 ```
 
-The Pearson product moment correlation is $r = \frac{\sum_{i=1}^n{(X_i - \bar{X})(Y_i - \bar{Y})}}{\sqrt{\sum_{i=1}^n{(X_i - \bar{X})^2 \sum_{i=1}^n{(Y_i - \bar{Y})^2}}}} = .9752$
+The normal distribution plots look good.  You can also use the Anderson-Darling statistical test.
+```{r}
+nortest::ad.test(nascard_sr1$finish_pos)
+nortest::ad.test(1/nascard_sr1$winnings)
+```
+
+Both fail to reject the normality null hypothesis.
+
+Pearson's $r$ is 
+
 ```{r}
 x <- nascard_sr1$finish_pos
 y <- 1/nascard_sr1$winnings
@@ -862,49 +222,50 @@ y <- 1/nascard_sr1$winnings
    sqrt(sum((x - mean(x))^2) * sum((y - mean(y))^2)))
 ```
 
-The test statistic is $T = r \sqrt{\frac{n-2}{1-r^2}} = .9752 \sqrt{\frac{35-2}{1-.9752^2}} = 25.292$. $P(T>.9752) < .0001$, so reject $H_0$ that the correlation is zero.
+Test $H_0: \rho = 0$ with test statistic $T$.
+
 ```{r}
 n <- nrow(nascard_sr1)
-(t = r * sqrt((n-2) / (1 - r^2)))
-pt(q = t, df = n-2, lower.tail = FALSE) * 2
+(t = r * sqrt((n - 2) / (1 - r^2)))
 ```
 
-R function `cor.test` performs these calculations.  Specify `method = "pearson"`.  
+```{r}
+pt(q = t, df = n - 2, lower.tail = FALSE) * 2
+```
+
+$P(T>.9752) < .0001$, so reject $H_0$ that the correlation is zero.  `cor.test()` performs these calculations.  Specify `method = "pearson"`.
 
 ```{r}
-cor.test(x = nascard_sr1$finish_pos,
-         y = 1/nascard_sr1$winnings,
-         alternative = "two.sided",
-         method = "pearson")
+cor.test(
+  x = nascard_sr1$finish_pos,
+  y = 1/nascard_sr1$winnings,
+  alternative = "two.sided",
+  method = "pearson"
+)
 ```
 
 
+#### Spearman's Rho
 
-# Spearman's Rank-Order Correlation
-Spearman's $\rho$ is the Pearson's product moment correlation coefficient applied to the rank of each variable in the sample observations.  Let $(X_i, Y_i)$ be the ranks of the $n$ sample pairs.  The mean rank for each is $\bar{X} = \bar{Y} = (n+1)/2$.  Calculate Pearson's product moment correlation coefficient with these ranks.  
+Spearman's $\rho$ is the Pearson's r applied to the sample variable *ranks*.  Let $(X_i, Y_i)$ be the ranks of the $n$ sample pairs with mean ranks $\bar{X} = \bar{Y} = (n+1)/2$.  Spearman's rho is   
 
-$\hat{\rho} = \frac{\sum_{i=1}^n{(X_i - \bar{X})(Y_i - \bar{Y})}}{\sqrt{\sum_{i=1}^n{(X_i - \bar{X})^2 \sum_{i=1}^n{(Y_i - \bar{Y})^2}}}}$
+$$\hat{\rho} = \frac{\sum{(X_i - \bar{X})(Y_i - \bar{Y})}}{\sqrt{\sum{(X_i - \bar{X})^2 \sum{(Y_i - \bar{Y})^2}}}}$$
 
-Test $H_0: \rho = 0$ with test statistic $Z = \hat{\rho} \sqrt{\frac{n-2}{1 - \hat{\rho}^2}}$.  As a non-parametric test, Spearman's $\rho$ does not produce a confidence interval.
+Spearman's rho is a non-parametric test, so there is no associated confidence interval.
 
-## Example Using Spearman's Rho
-From the `nascard` data set above, in race 1 of 1975, what was the correlation between the driver's starting position `start_pos` and finishing position `finish_pos`?
+From the `nascard` study, what was the correlation between the driver's starting position `start_pos` and finishing position `finish_pos`?  From the scatterplot, there does not appear to be much of a relationship.
 
-Start with a visual exploration of the relationship with a scatterplot.  There does not appear to be much of a relationship.
-
-```{r}
-library(dplyr)
-library(ggplot2)
-
+```{r fig.height=3.5, fig.width=3.75}
 nascard_sr1 %>%
   ggplot(aes(x = start_pos, y = finish_pos)) +
   geom_point() + 
-  geom_smooth(method = "lm", se = FALSE)
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_mf() +
+  labs(title = "Spearman's Rho")
 ```
 
-Both `star_pos` and `finish_pos` are ordinal variables, so use Spearman's rho instead of Pearson.
+Both `star_pos` and `finish_pos` are ordinal variables, so use Spearman's rho instead of Pearson. Normally, you replace the variable values with their ranks, but in this case, the values *are* their ranks.  After that, Spearman's $\rho$ is the same as Pearson's r.
 
-Replace the variable values with their ranks.  In this case, the value and their ranks are the same because the values *are* their ranks.  Then calculate Spearman's $\rho$ the same as Pearson.  $\hat{\rho} = \frac{\sum_{i=1}^n{(X_i - \bar{X})(Y_i - \bar{Y})}}{\sqrt{\sum_{i=1}^n{(X_i - \bar{X})^2 \sum_{i=1}^n{(Y_i - \bar{Y})^2}}}} = -.0384$.
 ```{r}
 x <- rank(nascard_sr1$start_pos)
 y <- rank(nascard_sr1$finish_pos)
@@ -913,24 +274,30 @@ y <- rank(nascard_sr1$finish_pos)
    sqrt(sum((x - mean(x))^2) * sum((y - mean(y))^2)))
 ```
 
-The test statistic is $Z = \hat{\rho} \sqrt{\frac{n-2}{1 - \hat{\rho}^2}} = -.2206$. $P(Z < -.2206) = .8268$, so do *not* reject $H_0$ that the correlation is zero.
+Test $H_0: \rho = 0$ with test statistic $T$.
+
 ```{r}
 n <- nrow(nascard_sr1)
-(z = rho * sqrt(n-2) / sqrt(1 - rho^2))
-pt(q = abs(z), df = n-2, lower.tail = FALSE) * 2
+(t = rho * sqrt((n - 2) / (1 - rho^2)))
 ```
-
-R function `cor.test` performs these calculations.  Specify `method = "spearman"`.  
 
 ```{r}
-cor.test(x = nascard_sr1$start_pos,
-         y = nascard_sr1$finish_pos,
-         alternative = "two.sided",
-         method = "spearman")
+pt(q = abs(t), df = n - 2, lower.tail = FALSE) * 2
+```
+
+$P(T>.2206) = .8268$, so *do not* reject $H_0$ that the correlation is zero.  `cor.test()` performs these calculations.  Specify `method = "spearman"`.
+
+```{r}
+cor.test(
+  x = nascard_sr1$start_pos,
+  y = nascard_sr1$finish_pos,
+  alternative = "two.sided",
+  method = "spearman"
+)
 ```
 
 
-# Kendall's Tau
+#### Kendall's Tau
 
 The Kendall Rank correlation coefficient (Kendall's Tau) measures the relationship between ranked variables.^[See article at [Statistics How To](https://www.statisticshowto.datasciencecentral.com/kendalls-tau/)]   Let $(X_i, Y_i)$ be the ranks of the $n$ sample pairs.  For each $X_i$, count $Y > X_i$. The total count is $k$.   Kendall's tau is
 
@@ -1077,63 +444,6 @@ pears.cor = function(table, rscore, cscore) {
   result=c(pcor, M2) result
 } 
 ```
-
-
-## Example of Chi-Square Test of Homogeneity
-A project studied whether attending physicians order more unnecessary blood transfusions than residents.  The categorical variable frequency of orders has 4 levels: frequently, occasionally, rarely, and never. 
-```{r warning=FALSE, message=FALSE}
-library(dplyr)
-library(ggplot2)
-library(stats)
-
-pop <- NULL
-pop[1:49] <- 1
-pop[50:120] <- 2
-lev <- NULL
-lev[c(1:2, 50:64)] <- 1
-lev[c(3:5, 65:92)] <- 2
-lev[c(6:36, 93:115)] <- 3
-lev[c(37:49, 116:120)] <- 4
-dat <- data.frame(pop, lev)
-dat$pop <- factor(dat$pop, levels = c(1, 2), 
-                  labels = c("attending", "resident"))
-dat$lev <- factor(dat$lev, levels = c(1, 2, 3, 4), 
-                  labels = c("frequently", "occasionally", "rarely", "never"))
-
-df <- (2-1)*(4-1)
-alpha <- 0.05
-
-
-(test <- chisq.test(dat$lev, dat$pop))
-
-# Graph of hypothesis test
-lrr = -Inf
-urr = qchisq(p = alpha, df = df, lower.tail = FALSE)
-data.frame(xi = 0:400 / 10) %>%
-  mutate(density = dchisq(x = xi, df = df)) %>%
-  mutate(rr = ifelse(xi < lrr | xi > urr, density, 0)) %>%
-ggplot() +
-  geom_line(aes(x = xi, y = density), color = "black") +
-  geom_area(aes(x = xi, y = rr), fill = "red", alpha = 0.3) +
-  geom_vline(aes(xintercept = test$statistic), color = "blue") +
-  labs(title = bquote("Chi-Square Test for Homogeneity"),
-       subtitle = bquote("P-value ="~.(test$p.value)),
-       x = "xi^2",
-       y = "Density") +
-  theme(legend.position="none")
-
-```
-
-
-
-
-<!--chapter:end:04-disc_anal.Rmd-->
-
-# Inference
-
-Categorical data is usually generated from unrestricted sampling (Poisson), fixed sample size sampling (binomial or multinomial)
-
-Poisson sampling assumes the random data generating mechanism can be described by a Poisson distribution. It is useful for modeling events occuring over a fixed period of time or space. It is useful when the event probability is very small and the event count is very large.
 
 <!--chapter:end:05-cont_anal.Rmd-->
 
