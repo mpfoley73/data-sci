@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.1 Chi-Square Test | My Data Science Notes</title>
+  <title>4.4 K-Way Tables | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.1 Chi-Square Test | My Data Science Notes" />
+  <meta property="og:title" content="4.4 K-Way Tables | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.1 Chi-Square Test | My Data Science Notes" />
+  <meta name="twitter:title" content="4.4 K-Way Tables | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="discrete-analysis.html"/>
-<link rel="next" href="one-way-tables.html"/>
+<link rel="prev" href="two-way-tables.html"/>
+<link rel="next" href="continuous-analysis.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -253,23 +253,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="chi-square-test" class="section level2">
-<h2><span class="header-section-number">4.1</span> Chi-Square Test</h2>
-<p>These notes rely on <a href="https://newonlinecourses.science.psu.edu/stat500/node/56/">PSU STAT 500</a>, <a href="https://en.wikipedia.org/wiki/Chi-squared_test">Wikipedia</a>, and <a href="http://www.yourarticlelibrary.com/project-reports/chi-square-test/chi-square-test-meaning-applications-and-uses-statistics/92394">Disha M</a>.</p>
-<p>The chi-square test compares observed categorical variable frequency counts <span class="math inline">\(O\)</span> with their expected values <span class="math inline">\(E\)</span>. The test statistic <span class="math inline">\(X^2 = \sum (O - E)^2 / E\)</span> is distributed <span class="math inline">\(\chi^2\)</span>. <span class="math inline">\(H_0: O = E\)</span> and <span class="math inline">\(H_a\)</span> is at least one pair of frequency counts differ. The chi-square test relies on the central limit theorem, so it is valid for independent, normally distributed samples, typically affirmed with at least 5 successes and failures in each cell. There a small variations in the chi-square for its various applications.</p>
-<ul>
-<li><p>The <strong>chi-square goodness-of-fit test</strong> tests whether observed frequency counts <span class="math inline">\(O_j\)</span> of the <span class="math inline">\(j \in (0, 1, \cdots k)\)</span> levels of a single categorical variable differ from expected frequency counts <span class="math inline">\(E_j\)</span>. <span class="math inline">\(H_0\)</span> is <span class="math inline">\(O_j = E_j\)</span>.</p></li>
-<li><p>The <strong>chi-square independence test</strong> tests whether observed joint frequency counts <span class="math inline">\(O_{ij}\)</span> of the <span class="math inline">\(i \in (0, 1, \cdots I)\)</span> levels of categorical variable <span class="math inline">\(Y\)</span> and the <span class="math inline">\(j \in (0, 1, \cdots J)\)</span> levels of categorical variable <span class="math inline">\(Z\)</span> differ from expected frequency counts <span class="math inline">\(E_{ij}\)</span> under the <em>independence model</em> where <span class="math inline">\(\pi_{ij} = \pi_{i+} \pi_{+j}\)</span>, the joint densities. <span class="math inline">\(H_0\)</span> is <span class="math inline">\(O_{ij} = E_{ij}\)</span>.</p></li>
-<li><p>The <strong>chi-square homogeneity test</strong> tests whether frequency counts of the <span class="math inline">\(R\)</span> levels of a categorical variable are distributed identically across <span class="math inline">\(C\)</span> different populations.</p></li>
-</ul>
+<div id="k-way-tables" class="section level2">
+<h2><span class="header-section-number">4.4</span> K-Way Tables</h2>
+<p>Example of Chi-Square Test of Homogeneity
+A project studied whether attending physicians order more unnecessary blood transfusions than residents. The categorical variable frequency of orders has 4 levels: frequently, occasionally, rarely, and never.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" title="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb120-2" title="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb120-3" title="3"><span class="kw">library</span>(stats)</a>
+<a class="sourceLine" id="cb120-4" title="4"></a>
+<a class="sourceLine" id="cb120-5" title="5">pop &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb120-6" title="6">pop[<span class="dv">1</span><span class="op">:</span><span class="dv">49</span>] &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb120-7" title="7">pop[<span class="dv">50</span><span class="op">:</span><span class="dv">120</span>] &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb120-8" title="8">lev &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb120-9" title="9">lev[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">50</span><span class="op">:</span><span class="dv">64</span>)] &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb120-10" title="10">lev[<span class="kw">c</span>(<span class="dv">3</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">65</span><span class="op">:</span><span class="dv">92</span>)] &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb120-11" title="11">lev[<span class="kw">c</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">36</span>, <span class="dv">93</span><span class="op">:</span><span class="dv">115</span>)] &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb120-12" title="12">lev[<span class="kw">c</span>(<span class="dv">37</span><span class="op">:</span><span class="dv">49</span>, <span class="dv">116</span><span class="op">:</span><span class="dv">120</span>)] &lt;-<span class="st"> </span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb120-13" title="13">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(pop, lev)</a>
+<a class="sourceLine" id="cb120-14" title="14">dat<span class="op">$</span>pop &lt;-<span class="st"> </span><span class="kw">factor</span>(dat<span class="op">$</span>pop, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), </a>
+<a class="sourceLine" id="cb120-15" title="15">                  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;attending&quot;</span>, <span class="st">&quot;resident&quot;</span>))</a>
+<a class="sourceLine" id="cb120-16" title="16">dat<span class="op">$</span>lev &lt;-<span class="st"> </span><span class="kw">factor</span>(dat<span class="op">$</span>lev, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), </a>
+<a class="sourceLine" id="cb120-17" title="17">                  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;frequently&quot;</span>, <span class="st">&quot;occasionally&quot;</span>, <span class="st">&quot;rarely&quot;</span>, <span class="st">&quot;never&quot;</span>))</a>
+<a class="sourceLine" id="cb120-18" title="18"></a>
+<a class="sourceLine" id="cb120-19" title="19">df &lt;-<span class="st"> </span>(<span class="dv">2-1</span>)<span class="op">*</span>(<span class="dv">4-1</span>)</a>
+<a class="sourceLine" id="cb120-20" title="20">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></a>
+<a class="sourceLine" id="cb120-21" title="21"></a>
+<a class="sourceLine" id="cb120-22" title="22"></a>
+<a class="sourceLine" id="cb120-23" title="23">(test &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(dat<span class="op">$</span>lev, dat<span class="op">$</span>pop))</a></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  dat$lev and dat$pop
+## X-squared = 31.881, df = 3, p-value = 5.543e-07</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" title="1"><span class="co"># Graph of hypothesis test</span></a>
+<a class="sourceLine" id="cb122-2" title="2">lrr =<span class="st"> </span><span class="op">-</span><span class="ot">Inf</span></a>
+<a class="sourceLine" id="cb122-3" title="3">urr =<span class="st"> </span><span class="kw">qchisq</span>(<span class="dt">p =</span> alpha, <span class="dt">df =</span> df, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb122-4" title="4"><span class="kw">data.frame</span>(<span class="dt">xi =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">400</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb122-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">dchisq</span>(<span class="dt">x =</span> xi, <span class="dt">df =</span> df)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb122-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rr =</span> <span class="kw">ifelse</span>(xi <span class="op">&lt;</span><span class="st"> </span>lrr <span class="op">|</span><span class="st"> </span>xi <span class="op">&gt;</span><span class="st"> </span>urr, density, <span class="dv">0</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb122-7" title="7"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb122-8" title="8"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> xi, <span class="dt">y =</span> density), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb122-9" title="9"><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> xi, <span class="dt">y =</span> rr), <span class="dt">fill =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb122-10" title="10"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> test<span class="op">$</span>statistic), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb122-11" title="11"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&quot;Chi-Square Test for Homogeneity&quot;</span>),</a>
+<a class="sourceLine" id="cb122-12" title="12">       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&quot;P-value =&quot;</span><span class="op">~</span>.(test<span class="op">$</span>p.value)),</a>
+<a class="sourceLine" id="cb122-13" title="13">       <span class="dt">x =</span> <span class="st">&quot;xi^2&quot;</span>,</a>
+<a class="sourceLine" id="cb122-14" title="14">       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb122-15" title="15"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>)</a></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="discrete-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="one-way-tables.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="two-way-tables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="continuous-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

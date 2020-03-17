@@ -687,26 +687,274 @@ The estimated odds a student smokes if both parents smoke compared to one parent
 
 When classification is ordinal, there may exist a linear trend among the levels of the characteristics.  Measure the linear relationship with Pearson's correlation coefficient, or its nonparametric alternatives, Spearman's correlation coefficient and Kendall's tau.
 
-The CHD case, the four levels of cholesterol (0-199, 200-219, 220-259, and 260+) may be treated as ordinal data.  You can also treat the presence of heart disease as ordinal. The Pearson correlation, 
+In the CHD study, the four levels of cholesterol (0-199, 200-219, 220-259, and 260+) may be treated as ordinal data.  You can also treat the presence of heart disease as ordinal. The Pearson correlation, 
 
 $$r = \frac{cov(X, Y)}{s_X s_Y}$$
 
 is 
 
 ```{r}
-p <- prop.table(chd_o)
-x <- c(1:2)
-y <- c(1:4)
-cov(x,y)
-cov_xy <- sum((x - sum(x*p)) * (y - sum(y*p)) * chd_o)
-s_x <- sum((x - sum(x*p))^2 * chd_o)
-s_y <- sum((y - sum(y*p))^2 * chd_o)
-r = cov_xy / sqrt(s_x * s_y)
-x <- idx
-cor(chd_o[1, ])
+#dim=dim(table) 
+rbar <- sum(margin.table(chd_o, 1) * c(1, 2)) / sum(chd_o) 
+rdif <- c(1, 2) - rbar 
+cbar <- sum(margin.table(chd_o, 2) * c(1, 2, 3, 4)) / sum(chd_o) 
+cdif <- c(1, 2, 3, 4) - cbar 
+ssr <- sum(margin.table(chd_o, 1) * (rdif^2)) 
+ssc <- sum(margin.table(chd_o, 2) * (cdif^2)) 
+ssrc <- sum(t(chd_o * rdif) * cdif) 
+pcor <- ssrc / (sqrt(ssr * ssc)) 
+pcor 
+M2 <- (sum(chd_o) - 1) * pcor^2
+M2
 ```
 
-## Example of Chi-Square Test of Homogeneity
+## K-Way Tables
+
+A *k*-way table has *k* independent variables.  Each cell in the *k*-way table has joint probability $\pi_{ij..k}$.  You can collapse a *k*-way table along a dimension to create a *marginal* table and the resulting joint probabilities in the marginal table are referred to as *marginal distributions*.  Alternatively, you can consider a single level of a dimension, creating a conditional distribution.
+
+Here are two case studies to illustrate the concepts.  
+
+**Study 1: DeathP**.  Data is collected for *n = 326* murder cases along three dimensions: defendant's color, victim's color, and whether or not the defendant received the death penalty. 
+
+```{r}
+deathp <- array(c(19, 132, 11, 52, 0, 9, 6, 97), dim=c(2,2,2))
+dimnames(deathp) <- list(
+  DeathPen = c("yes","no"),
+  Defendant=c("white","black"),
+  Victim=c("white","black")
+)
+ftable(deathp, row.vars = c("Defendant", "Victim"), col.vars = "DeathPen")
+```
+
+**Study 2: BoyS**.  Data is collected for *n = 800* boyscouts along three dimensions: socioeconomic status, scout status, and delinquency status.
+
+```{r}
+boys <- expand.grid(
+  delinquent = c("no","yes"),
+  scout = c("no", "yes"),
+  SES = c("low", "med","high")
+)
+boys <- cbind(boys, count = c(169,42,43,11,132,20,104,14,59,2,196,8))
+
+boys_ct <- xtabs(count ~ ., boys)
+
+ftable(boys_ct, row.vars = c("SES", "scout"), col.vars = "delinquent")
+```
+
+
+### Odds Ratio
+
+In the *DeathP* study, the *marginal odds ratio* is 1.18, meaning the odds of death penalty for a white defendant are 1.18 times as high as they are for a black defendant.
+
+```{r}
+deathp_m <- margin.table(deathp, margin = c(1, 2))
+deathp_p <- prop.table(deathp_m, margin = 2)
+deathp_odds <- deathp_p[1, ] / deathp_p[2, ]
+deathp_or <- deathp_odds[1] / deathp_odds[2]
+print(deathp_or)
+```
+
+The *conditional odds ratio* given the victim is white is 0.68, and 0.79 given the victim is black, meaning the odds of death penalty for a white defendant are 0.68 times as high as they are for a black defendent if the victim is white, and 0.79 times as high as they are for a black defendent if the victim is black.
+
+```{r}
+deathp_m <- margin.table(deathp[, , 1], margin = c(2, 1))
+deathp_p <- prop.table(deathp_m, margin = 2)
+deathp_odds <- deathp_p[1, ] / deathp_p[2, ]
+deathp_or <- deathp_odds[1] / deathp_odds[2]
+print(deathp_or)
+
+deathp_m <- margin.table(deathp[, , 2], margin = c(2, 1)) + 0.5
+deathp_p <- prop.table(deathp_m, margin = 2)
+deathp_odds <- deathp_p[1, ] / deathp_p[2, ]
+deathp_or <- deathp_odds[1] / deathp_odds[2]
+print(deathp_or)
+```
+
+Notice above that the second margin table had a zero in one cell.  To get an odds ratio in this case, the convention is to add 0.5 to all cells.
+
+Interesting that the marginal odds of a white defendent receiving the death penalty are >1, but the conditional odds of a white defendent receiving the death penalty given the race of the victim are <1.  *Simpson's paradox* is the phenomenon that a pair of variables can have marginal association  and partial (conditional) associations in opposite direction. Another way to think about this is that the nature and direction of association changes due to presence or absence of a third (possibly confounding) variable.
+
+
+### Chi-Square Independence Test
+
+There are several ways to think about "independence" when dealing with a *k*-way table.
+
+* **Mutual independence**.  All variables are independent from each other.
+* **Joint independence**.  Two variables are jointly independent of the third.
+* **Marginal independence**. Two variables are independent if you ignore the third.
+* **Conditional independence** Two variables are independent given the third.
+* **Homogeneous associations** Conditional (partial) odds-ratios are not related on the value of the third.
+
+
+Under the assumption that the model of independence is true, once you know the marginal probability values, we have enough information to estimate all unknown cell probabilities. Because each of the marginal probability vectors must add up to one, the number of free parameters in the model is (I − 1) + (J − 1) + (K −I ). This is exactly like the two-way table
+
+
+The **chi-square independence test** tests whether observed joint frequency counts $O_{ijk}$ differ from expected frequency counts $E_{ijk}$ under the *independence model* $\pi_{ijk} = \pi_{i+} \pi_{+j} \pi_{k+}$. $H_0$ is $O_{ijk} = E_{ijk}$.  This is completely analagous to the two-way table chi-square independence test.
+
+For the *BoyS* study, $X^2$ and its associated p-value is 
+
+```{r}
+boys_e <- array(NA, dim(boys_ct))
+for (i in 1:dim(boys_ct)[1]) {
+  for (j in 1:dim(boys_ct)[2]) {
+    for (k in 1:dim(boys_ct)[3]) {
+      boys_e[i,j,k] <- (
+        margin.table(boys_ct, 3)[k] *
+        margin.table(boys_ct, 2)[j] * 
+        margin.table(boys_ct, 1)[i]) /
+        (sum(boys_ct))^2
+    }
+  }
+}
+boys_df <- (prod(dim(boys_ct)) - 1) - sum(dim(boys_ct) - 1)
+boys_x2 <- sum((boys_ct - boys_e)^2 / boys_e)
+print(boys_x2)
+pchisq(boys_x2, df = boys_df, lower.tail = FALSE)
+```
+
+and the deviance statistic is 
+
+```{r}
+boys_g2 <- 2 * sum(boys_ct * log(boys_ct / boys_e))
+pchisq(boys_g2, df = boys_df, lower.tail = FALSE)
+```
+
+
+
+```{r}
+
+
+
+#### Test for Mutual indpendence (and other models) by considering analysis of all two-way tables
+#### Two-way Table SES*scout
+#### This is a test of Marginal Independence for SES and Scout
+
+SES_Scout=margin.table(temp,c(3,2))
+result=chisq.test(SES_Scout)
+result
+result$expected
+result=chisq.test(SES_Scout,correct = FALSE)
+result
+SES_Scout=list(Frequency=SES_Scout,RowPercentage=prop.table(SES_Scout,2))
+
+
+#### Two-way Table SES*deliquent
+#### temp=xtabs(count~scout+SES+deliquent,table)
+#### SES_deliquent=addmargins(temp)[1:2,1:3,3]
+#### This is a test of Marginal Independence for SES and deliquent status
+
+SES_deliquent=margin.table(temp,c(3,1))
+result=chisq.test(SES_deliquent)
+result
+result$expected
+result=chisq.test(SES_deliquent,correct = FALSE)
+result
+SES_deliquent=list(Frequency=SES_deliquent,RowPercentage=prop.table(SES_deliquent,2))
+
+#### Two-way Table deliquent*scout
+#### This is a test of Marginal Independence for Deliquent status and the Scout status
+
+deliquent_scout=margin.table(temp,c(1,2))
+result=chisq.test(deliquent_scout)
+result$expected
+result=chisq.test(deliquent_scout,correct = FALSE)
+result
+deliquent_scout1=list(Frequency=deliquent_scout,RowPercentage=prop.table(deliquent_scout,1))
+
+#### compute the log(oddsraio), oddsratio and its 95% CI using {vcd} package
+
+lor=oddsratio(deliquent_scout)
+lor
+OR=exp(lor)
+OR
+OR=oddsratio(deliquent_scout, log=FALSE)
+OR
+CI=exp(confint(lor))
+CI
+CI=confint(OR)
+CI
+
+
+#### Table of deliquent*scout at different level of SES
+
+temp
+
+#### Test for Joint Independence of (D,BS)
+#### creating 6x2 table, BS x D
+
+SESscout_deliquent=ftable(temp, row.vars=c(3,2))
+result=chisq.test(SESscout_deliquent)
+result
+
+#### Test for Marginal Independence (see above analysis of two-way tables)
+
+#### Test for conditional independence
+#### To get partial tables of DB for each level of S
+
+temp[,,1]
+chisq.test(temp[,,1], correct=FALSE)
+temp[,,2]
+chisq.test(temp[,,2], correct=FALSE)
+temp[,,3]
+chisq.test(temp[,,3], correct=FALSE)
+X2=sum(chisq.test(temp[,,1], correct=FALSE)$statistic+chisq.test(temp[,,2], correct=FALSE)$statistic+chisq.test(temp[,,3], correct=FALSE)$statistic)
+1-pchisq(X2,df=3)
+
+#### Cochran-Mantel-Haenszel test
+
+mantelhaen.test(temp)
+mantelhaen.test(temp,correct=FALSE) 
+
+#### Breslow-Day test
+#### make sure to first source/run breslowday.test_.R
+
+breslowday.test(temp)
+
+################################################################
+#### Log-linear Models
+#### Let's see how we would do this via Log_linear models 
+#### We will look at the details later in the course
+#### test of conditional independence
+#### via loglinear model, but the object has to be a table!
+
+is.table(temp)  #### to check if table
+temp<-as.table(temp) #### to save as table
+temp.condind<-loglin(temp, list(c(1,3), c(2,3)), fit=TRUE, param=TRUE) #### fit the cond.indep. model
+temp.condind
+1-pchisq(temp.condind$lrt, temp.condind$df)
+
+#### There is no way to do Breslow-Day stats in R; 
+#### you need to write your own function or fit the homogeneous association model
+#### to test for identity of odds-ratios
+
+#### test of homogenous association model
+
+temp.hom<-loglin(temp, list(c(1,3), c(2,3), c(1,2)), fit=TRUE, param=TRUE)
+temp.hom
+1-pchisq(temp.hom$lrt, temp.hom$df)
+
+
+#### Here is how to do the same but with the glm() function in R
+#### test of conditional independence
+#### via loglinear mode, but using glm() funcion
+#### the object now needs to be dataframe
+
+temp.data<-as.data.frame(temp)
+temp.data
+temp.condind<-glm(temp.data$Freq~temp.data$scout*temp.data$SES+temp.data$deliquent*temp.data$SES, family=poisson())
+summary(temp.condind)
+fitted(temp.condind)
+
+#### test of homogenous association model
+
+temp.hom<-glm(temp.data$Freq~temp.data$scout*temp.data$SES+temp.data$deliquent*temp.data$SES+temp.data$scout*temp.data$deliquent, family=poisson())
+summary(temp.hom)
+fitted(temp.hom)
+```
+
+
+
+Example of Chi-Square Test of Homogeneity
 A project studied whether attending physicians order more unnecessary blood transfusions than residents.  The categorical variable frequency of orders has 4 levels: frequently, occasionally, rarely, and never. 
 ```{r warning=FALSE, message=FALSE}
 library(dplyr)
