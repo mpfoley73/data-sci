@@ -616,9 +616,7 @@ The log-odds ratio has a better normal approximation than the odds ratio, so def
 
 $$Var(\log \hat{\theta}) = \frac{1}{n_{11}} + \frac{1}{n_{12}} + \frac{1}{n_{21}} + \frac{1}{n_{22}}$$
 
-For the Vitamin C example, the odds of getting a cold given a skier took vitamin C, are 
-
-The odds of getting a cold after taking a placebo pill are $0.22 / 0.78 = 0.28$ and the odds of getting a cold after taking Vitamin C are $0.12 / 0.88 = 0.14$.
+For the Vitamin C example, the odds of getting a cold after taking a placebo pill are $0.22 / 0.78 = 0.28$ and the odds of getting a cold after taking Vitamin C are $0.12 / 0.88 = 0.14$.
 
 ```{r}
 vitc_odds <- vitc_prop[, 1] / vitc_prop[, 2]
@@ -635,7 +633,7 @@ print(vitc_theta_hat)
 with variance 
 
 ```{r}
-var_vitc_theta_hat <- sum(1 / vitc_o)
+(var_vitc_theta_hat <- sum(1 / vitc_o))
 ```
 
 The 95% CI is
@@ -789,6 +787,10 @@ There are several ways to think about "independence" when dealing with a *k*-way
 Under the assumption that the model of independence is true, once you know the marginal probability values, we have enough information to estimate all unknown cell probabilities. Because each of the marginal probability vectors must add up to one, the number of free parameters in the model is (I − 1) + (J − 1) + (K −I ). This is exactly like the two-way table
 
 
+#### Mutual Independence
+
+The simplest model is that ALL variables are independent of one another (A, B, C). The joint probabilities are equal to the product of the marginal probabilities, $\pi_{ijk} = \pi_i \pi_j \pi_k$. In terms of odds ratios, the model (A, B, C) implies that the odds ratios in the marginal tables A × B, B × C, and A × C are equal to 1.
+
 The **chi-square independence test** tests whether observed joint frequency counts $O_{ijk}$ differ from expected frequency counts $E_{ijk}$ under the *independence model* $\pi_{ijk} = \pi_{i+} \pi_{+j} \pi_{k+}$. $H_0$ is $O_{ijk} = E_{ijk}$.  This is completely analagous to the two-way table chi-square independence test.
 
 For the *BoyS* study, $X^2$ and its associated p-value is 
@@ -816,65 +818,49 @@ and the deviance statistic is
 
 ```{r}
 boys_g2 <- 2 * sum(boys_ct * log(boys_ct / boys_e))
+print(boys_g2)
 pchisq(boys_g2, df = boys_df, lower.tail = FALSE)
 ```
 
+`chisq.test()` does not provide a test of the complete independence model for *k*-way tables.  Instead, you can conduct tests on all the embedded 2-way tables.  For the *BoyS* study, you can conduct a series of 2-way chi-sq tests.
 
+SES*scout:
 
 ```{r}
+boys_ses_scout <- margin.table(boys_ct, c(3, 2))
+chisq.test(boys_ses_scout)
+```
 
+SES*delinquent
 
+```{r}
+boys_ses_delinquent <- margin.table(boys_ct, c(3, 1))
+chisq.test(boys_ses_delinquent)
+```
 
-#### Test for Mutual indpendence (and other models) by considering analysis of all two-way tables
-#### Two-way Table SES*scout
-#### This is a test of Marginal Independence for SES and Scout
+delinquent*scout
 
-SES_Scout=margin.table(temp,c(3,2))
-result=chisq.test(SES_Scout)
-result
-result$expected
-result=chisq.test(SES_Scout,correct = FALSE)
-result
-SES_Scout=list(Frequency=SES_Scout,RowPercentage=prop.table(SES_Scout,2))
+```{r}
+boys_delinquent_scout <- margin.table(boys_ct, c(1, 2))
+chisq.test(boys_delinquent_scout)
+```
 
+The odds ratio for scout delinquency vs non-scout delinquency is 0.54 with 95% CI (0.347, 0.845), so reject the null hypothesis that boy scout status and delinquent status are independent of one another (OR = 1), and thus that boy scout status, delinquent status, and socioeconomic status are not mutually independent.
 
-#### Two-way Table SES*deliquent
-#### temp=xtabs(count~scout+SES+deliquent,table)
-#### SES_deliquent=addmargins(temp)[1:2,1:3,3]
-#### This is a test of Marginal Independence for SES and deliquent status
+```{r}
+(boys_or <- vcd::oddsratio(boys_delinquent_scout, log = FALSE))
+confint(boys_or)
+```
 
-SES_deliquent=margin.table(temp,c(3,1))
-result=chisq.test(SES_deliquent)
-result
-result$expected
-result=chisq.test(SES_deliquent,correct = FALSE)
-result
-SES_deliquent=list(Frequency=SES_deliquent,RowPercentage=prop.table(SES_deliquent,2))
+#### Joint Independence
 
-#### Two-way Table deliquent*scout
-#### This is a test of Marginal Independence for Deliquent status and the Scout status
+The joint independence model is that two variables are jointly independent of a third (AB, C). The joint probabilities are equal to the product of the AB marginal probability and the C marginal probability, $\pi_{ijk} = \pi_{ij} \pi_k$. 
 
-deliquent_scout=margin.table(temp,c(1,2))
-result=chisq.test(deliquent_scout)
-result$expected
-result=chisq.test(deliquent_scout,correct = FALSE)
-result
-deliquent_scout1=list(Frequency=deliquent_scout,RowPercentage=prop.table(deliquent_scout,1))
+The degrees of freedom in the associated chi-sq test are the number of free parameters in the saturated model minus the number of free parameters in the joint independence model. $df = (IJK-1) - ((IJ-1) + (K-1)) = (IJ-1)(K-1)$.
 
-#### compute the log(oddsraio), oddsratio and its 95% CI using {vcd} package
+From the *BoyS* study, suppose juvenile delinquency D as a response variable, and the other two —  boy scout status B and socioeconomic status S—as explanatory variables or predictors. Therefore, it would be useful to test the null hypothesis that D is independent of B and S, or (D, BS).
 
-lor=oddsratio(deliquent_scout)
-lor
-OR=exp(lor)
-OR
-OR=oddsratio(deliquent_scout, log=FALSE)
-OR
-CI=exp(confint(lor))
-CI
-CI=confint(OR)
-CI
-
-
+```{r}
 #### Table of deliquent*scout at different level of SES
 
 temp
