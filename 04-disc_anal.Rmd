@@ -3,8 +3,9 @@ library(tidyverse)
 library(mfstylr)
 ```
 
-# Discrete Analysis {#discrete_analysis}
+# Categorical Analysis - Nonmodel {#discrete_analysis}
 
+This section describes interactions or associations between two or three categorical variables mostly via single summary statistics and with significance testing. This non-model based analysis does not handle more complicated situations such as simultaneous effects of multiple variables, or mixtures of categorical and continuous variables. 
 
 ## Chi-Square Test
 
@@ -959,120 +960,40 @@ print(ct)
 chisq.test(ct, correct = FALSE)
 ```
 
+You can add up the three $X^2$ values and run a chi-sq test with $df = 3$.  p = 0.984 indicating that the conditional independence model fits extremely well.
 
-
-
-Notice how the contingency table is constructed to not indicate whether *SES* and *scout* are related.
 ```{r}
-#### Test for conditional independence
-#### To get partial tables of DB for each level of S
+pchisq(0.0058145 + 0.10098 + 0.053447, df = 3, lower.tail = FALSE)
+```
 
-temp[,,1]
-chisq.test(temp[,,1], correct=FALSE)
-temp[,,2]
-chisq.test(temp[,,2], correct=FALSE)
-temp[,,3]
-chisq.test(temp[,,3], correct=FALSE)
-X2=sum(chisq.test(temp[,,1], correct=FALSE)$statistic+chisq.test(temp[,,2], correct=FALSE)$statistic+chisq.test(temp[,,3], correct=FALSE)$statistic)
-1-pchisq(X2,df=3)
+The other way of testing for independence is the Cochran-Mantel-Haenszel test. 
 
-#### Cochran-Mantel-Haenszel test
+The Cochran-Mantel-Haenszel (CMH) test statistic 
 
-mantelhaen.test(temp)
-mantelhaen.test(temp,correct=FALSE) 
+$$M^2 = \frac{\left[ \sum_k{(n_{11k} - \mu_{11k})}\right]^2}{\sum_k{Var(n_{11k})}}$$
 
-#### Breslow-Day test
-#### make sure to first source/run breslowday.test_.R
+For the *Boy Scouts* study, the test is
 
-breslowday.test(temp)
+```{r}
+mantelhaen.test(scout_ct)
+```
 
-################################################################
-#### Log-linear Models
-#### Let's see how we would do this via Log_linear models 
-#### We will look at the details later in the course
-#### test of conditional independence
-#### via loglinear model, but the object has to be a table!
-
-is.table(temp)  #### to check if table
-temp<-as.table(temp) #### to save as table
-temp.condind<-loglin(temp, list(c(1,3), c(2,3)), fit=TRUE, param=TRUE) #### fit the cond.indep. model
-temp.condind
-1-pchisq(temp.condind$lrt, temp.condind$df)
-
-#### There is no way to do Breslow-Day stats in R; 
-#### you need to write your own function or fit the homogeneous association model
-#### to test for identity of odds-ratios
-
-#### test of homogenous association model
-
-temp.hom<-loglin(temp, list(c(1,3), c(2,3), c(1,2)), fit=TRUE, param=TRUE)
-temp.hom
-1-pchisq(temp.hom$lrt, temp.hom$df)
+X2= 0.008 (df = 1, p-value = 0.9287) indicating the conditional independence model is a good fit for this data, so do not reject the null hypothesis.
 
 
-#### Here is how to do the same but with the glm() function in R
-#### test of conditional independence
-#### via loglinear mode, but using glm() funcion
-#### the object now needs to be dataframe
+#### Homogenous Associations
 
-temp.data<-as.data.frame(temp)
-temp.data
-temp.condind<-glm(temp.data$Freq~temp.data$scout*temp.data$SES+temp.data$deliquent*temp.data$SES, family=poisson())
-summary(temp.condind)
-fitted(temp.condind)
+Whereas the conditional independence model, (AB, AC) requires the BC odds ratios at each level of A to equal 1, the homogeneous association model, (AB, AC, BC), requires the BC odds ratios at each level of A to be identical, but not necessarily equal to 1.
 
-#### test of homogenous association model
+The Breslow-Day statistic is
 
-temp.hom<-glm(temp.data$Freq~temp.data$scout*temp.data$SES+temp.data$deliquent*temp.data$SES+temp.data$scout*temp.data$deliquent, family=poisson())
-summary(temp.hom)
-fitted(temp.hom)
+$$X^2 = \sum_{ijk}{\frac{\left(O_{ijk} - E_{ijk}\right)^2}{E_{ijk}}}$$
+
+```{r}
+DescTools::BreslowDayTest(scout_ct)
 ```
 
 
-Example of Chi-Square Test of Homogeneity
-A project studied whether attending physicians order more unnecessary blood transfusions than residents.  The categorical variable frequency of orders has 4 levels: frequently, occasionally, rarely, and never. 
-```{r warning=FALSE, message=FALSE}
-library(dplyr)
-library(ggplot2)
-library(stats)
-
-pop <- NULL
-pop[1:49] <- 1
-pop[50:120] <- 2
-lev <- NULL
-lev[c(1:2, 50:64)] <- 1
-lev[c(3:5, 65:92)] <- 2
-lev[c(6:36, 93:115)] <- 3
-lev[c(37:49, 116:120)] <- 4
-dat <- data.frame(pop, lev)
-dat$pop <- factor(dat$pop, levels = c(1, 2), 
-                  labels = c("attending", "resident"))
-dat$lev <- factor(dat$lev, levels = c(1, 2, 3, 4), 
-                  labels = c("frequently", "occasionally", "rarely", "never"))
-
-df <- (2-1)*(4-1)
-alpha <- 0.05
-
-
-(test <- chisq.test(dat$lev, dat$pop))
-
-# Graph of hypothesis test
-lrr = -Inf
-urr = qchisq(p = alpha, df = df, lower.tail = FALSE)
-data.frame(xi = 0:400 / 10) %>%
-  mutate(density = dchisq(x = xi, df = df)) %>%
-  mutate(rr = ifelse(xi < lrr | xi > urr, density, 0)) %>%
-ggplot() +
-  geom_line(aes(x = xi, y = density), color = "black") +
-  geom_area(aes(x = xi, y = rr), fill = "red", alpha = 0.3) +
-  geom_vline(aes(xintercept = test$statistic), color = "blue") +
-  labs(title = bquote("Chi-Square Test for Homogeneity"),
-       subtitle = bquote("P-value ="~.(test$p.value)),
-       x = "xi^2",
-       y = "Density") +
-  theme(legend.position="none")
-
-```
 
 
 
