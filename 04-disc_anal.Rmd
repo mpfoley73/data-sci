@@ -708,11 +708,13 @@ M2
 
 ## K-Way Tables
 
+These notes rely on PSU STATS 504 [course notes](https://online.stat.psu.edu/stat504/node/102/).
+
 A *k*-way table has *k* independent variables.  Each cell in the *k*-way table has joint probability $\pi_{ij..k}$.  You can collapse a *k*-way table along a dimension to create a *marginal* table and the resulting joint probabilities in the marginal table are referred to as *marginal distributions*.  Alternatively, you can consider a single level of a dimension, creating a conditional distribution.
 
 Here are two case studies to illustrate the concepts.  
 
-**Study 1: DeathP**.  Data is collected for *n = 326* murder cases along three dimensions: defendant's color, victim's color, and whether or not the defendant received the death penalty. 
+**Study 1: Death Penalty**.  Data is collected for *n = 326* murder cases along three dimensions: defendant's color, victim's color, and whether or not the defendant received the death penalty. 
 
 ```{r}
 deathp <- array(c(19, 132, 11, 52, 0, 9, 6, 97), dim=c(2,2,2))
@@ -724,19 +726,19 @@ dimnames(deathp) <- list(
 ftable(deathp, row.vars = c("Defendant", "Victim"), col.vars = "DeathPen")
 ```
 
-**Study 2: BoyS**.  Data is collected for *n = 800* boyscouts along three dimensions: socioeconomic status, scout status, and delinquency status.
+**Study 2: Boy Scouts**.  Data is collected for *n = 800* Boy Scouts along three dimensions: socioeconomic status, scout status, and delinquency status.
 
 ```{r}
-boys <- expand.grid(
+scout <- expand.grid(
   delinquent = c("no","yes"),
   scout = c("no", "yes"),
   SES = c("low", "med","high")
 )
-boys <- cbind(boys, count = c(169,42,43,11,132,20,104,14,59,2,196,8))
+scout <- cbind(scout, count = c(169,42,43,11,132,20,104,14,59,2,196,8))
 
-boys_ct <- xtabs(count ~ ., boys)
+scout_ct <- xtabs(count ~ ., scout)
 
-ftable(boys_ct, row.vars = c("SES", "scout"), col.vars = "delinquent")
+ftable(scout_ct, row.vars = c("SES", "scout"), col.vars = "delinquent")
 ```
 
 
@@ -777,11 +779,11 @@ Interesting that the marginal odds of a white defendent receiving the death pena
 
 There are several ways to think about "independence" when dealing with a *k*-way table.
 
-* **Mutual independence**.  All variables are independent from each other.
-* **Joint independence**.  Two variables are jointly independent of the third.
-* **Marginal independence**. Two variables are independent if you ignore the third.
-* **Conditional independence** Two variables are independent given the third.
-* **Homogeneous associations** Conditional (partial) odds-ratios are not related on the value of the third.
+* **Mutual independence**.  All variables are independent from each other, (A, B, C).
+* **Joint independence**.  Two variables are jointly independent of the third, (AB, C).
+* **Marginal independence**. Two variables are independent if you ignore the third, (A, B).
+* **Conditional independence** Two variables are independent given the third, (AC, BC).
+* **Homogeneous associations** Conditional (partial) odds-ratios are not related on the value of the third, (AB, AC, BC).
 
 
 Under the assumption that the model of independence is true, once you know the marginal probability values, we have enough information to estimate all unknown cell probabilities. Because each of the marginal probability vectors must add up to one, the number of free parameters in the model is (I − 1) + (J − 1) + (K −I ). This is exactly like the two-way table
@@ -791,65 +793,92 @@ Under the assumption that the model of independence is true, once you know the m
 
 The simplest model is that ALL variables are independent of one another (A, B, C). The joint probabilities are equal to the product of the marginal probabilities, $\pi_{ijk} = \pi_i \pi_j \pi_k$. In terms of odds ratios, the model (A, B, C) implies that the odds ratios in the marginal tables A × B, B × C, and A × C are equal to 1.
 
-The **chi-square independence test** tests whether observed joint frequency counts $O_{ijk}$ differ from expected frequency counts $E_{ijk}$ under the *independence model* $\pi_{ijk} = \pi_{i+} \pi_{+j} \pi_{k+}$. $H_0$ is $O_{ijk} = E_{ijk}$.  This is completely analagous to the two-way table chi-square independence test.
+The **chi-square independence test** tests whether observed joint frequency counts $O_{ijk}$ differ from expected frequency counts $E_{ijk}$ under the *independence model* $\pi_{ijk} = \pi_{i+} \pi_{+j} \pi_{k+}$. $H_0$ is $O_{ijk} = E_{ijk}$.  This is essentially a one-way table chi-squre goodness-of-fit test.
 
-For the *BoyS* study, $X^2$ and its associated p-value is 
+For the *Boy Scouts* study, $X^2$ and its associated p-value is 
 
 ```{r}
-boys_e <- array(NA, dim(boys_ct))
-for (i in 1:dim(boys_ct)[1]) {
-  for (j in 1:dim(boys_ct)[2]) {
-    for (k in 1:dim(boys_ct)[3]) {
-      boys_e[i,j,k] <- (
-        margin.table(boys_ct, 3)[k] *
-        margin.table(boys_ct, 2)[j] * 
-        margin.table(boys_ct, 1)[i]) /
-        (sum(boys_ct))^2
+scout_e <- array(NA, dim(scout_ct))
+for (i in 1:dim(scout_ct)[1]) {
+  for (j in 1:dim(scout_ct)[2]) {
+    for (k in 1:dim(scout_ct)[3]) {
+      scout_e[i,j,k] <- (
+        margin.table(scout_ct, 3)[k] *
+        margin.table(scout_ct, 2)[j] * 
+        margin.table(scout_ct, 1)[i]) /
+        (sum(scout_ct))^2
     }
   }
 }
-boys_df <- (prod(dim(boys_ct)) - 1) - sum(dim(boys_ct) - 1)
-boys_x2 <- sum((boys_ct - boys_e)^2 / boys_e)
-print(boys_x2)
-pchisq(boys_x2, df = boys_df, lower.tail = FALSE)
+scout_df <- (prod(dim(scout_ct)) - 1) - sum(dim(scout_ct) - 1)
+scout_x2 <- sum((scout_ct - scout_e)^2 / scout_e)
+print(scout_x2)
+pchisq(scout_x2, df = scout_df, lower.tail = FALSE)
 ```
 
-and the deviance statistic is 
+You can also get X^2 this way, although longer code.
 
 ```{r}
-boys_g2 <- 2 * sum(boys_ct * log(boys_ct / boys_e))
-print(boys_g2)
-pchisq(boys_g2, df = boys_df, lower.tail = FALSE)
+x <- scout %>% group_by(delinquent) %>% 
+  summarize(n = sum(count)) %>% ungroup() %>% mutate(p = n / sum(n))
+p_d <- x$p
+names(p_d) <- x$delinquent
+
+x <- scout %>% group_by(scout) %>% 
+  summarize(n = sum(count)) %>% ungroup() %>% mutate(p = n / sum(n))
+p_b <- x$p
+names(p_b) <- x$scout
+
+x <- scout %>% group_by(SES) %>% 
+  summarize(n = sum(count)) %>% ungroup() %>% mutate(p = n / sum(n))
+p_s <- x$p
+names(p_s) <- x$SES
+
+scout_e <- scout %>% 
+  mutate(e = as.numeric(p_d[delinquent] * p_b[scout] * p_s[SES] * sum(count)))
+
+x2 <- sum((scout_e$count - scout_e$e)^2 / scout_e$e)
+print(x2)
 ```
 
-`chisq.test()` does not provide a test of the complete independence model for *k*-way tables.  Instead, you can conduct tests on all the embedded 2-way tables.  For the *BoyS* study, you can conduct a series of 2-way chi-sq tests.
+The deviance statistic is 
+
+```{r}
+scout_g2 <- 2 * sum(scout_ct * log(scout_ct / scout_e))
+print(scout_g2)
+pchisq(scout_g2, df = scout_df, lower.tail = FALSE)
+```
+
+Safe to say the mutual independence model does not fit.
+
+`chisq.test()` does not test the complete independence model for *k*-way tables.  Instead, conduct tests on all ${3 \choose 2} = 3$ embedded 2-way tables.  For the *Boy Scouts* study, you can conduct a series of 2-way chi-sq tests.
 
 SES*scout:
 
 ```{r}
-boys_ses_scout <- margin.table(boys_ct, c(3, 2))
-chisq.test(boys_ses_scout)
+(scout_ses_scout <- margin.table(scout_ct, c(3, 2)))
+chisq.test(scout_ses_scout)
 ```
 
 SES*delinquent
 
 ```{r}
-boys_ses_delinquent <- margin.table(boys_ct, c(3, 1))
-chisq.test(boys_ses_delinquent)
+(scout_ses_delinquent <- margin.table(scout_ct, c(3, 1)))
+chisq.test(scout_ses_delinquent)
 ```
 
 delinquent*scout
 
 ```{r}
-boys_delinquent_scout <- margin.table(boys_ct, c(1, 2))
-chisq.test(boys_delinquent_scout)
+(scout_delinquent_scout <- margin.table(scout_ct, c(1, 2)))
+chisq.test(scout_delinquent_scout)
 ```
 
 The odds ratio for scout delinquency vs non-scout delinquency is 0.54 with 95% CI (0.347, 0.845), so reject the null hypothesis that boy scout status and delinquent status are independent of one another (OR = 1), and thus that boy scout status, delinquent status, and socioeconomic status are not mutually independent.
 
 ```{r}
-(boys_or <- vcd::oddsratio(boys_delinquent_scout, log = FALSE))
-confint(boys_or)
+(scout_or <- vcd::oddsratio(scout_delinquent_scout, log = FALSE))
+confint(scout_or)
 ```
 
 #### Joint Independence
@@ -858,22 +887,83 @@ The joint independence model is that two variables are jointly independent of a 
 
 The degrees of freedom in the associated chi-sq test are the number of free parameters in the saturated model minus the number of free parameters in the joint independence model. $df = (IJK-1) - ((IJ-1) + (K-1)) = (IJ-1)(K-1)$.
 
-From the *BoyS* study, suppose juvenile delinquency D as a response variable, and the other two —  boy scout status B and socioeconomic status S—as explanatory variables or predictors. Therefore, it would be useful to test the null hypothesis that D is independent of B and S, or (D, BS).
+From the *Boy Scouts* study, suppose juvenile delinquency is the response variable. Test the null hypothesis that juvenile delinquency is independent of boy scout status and socioeconomic status.
 
 ```{r}
-#### Table of deliquent*scout at different level of SES
+scout_d_bs <- ftable(
+  scout_ct, 
+  row.vars = c("SES", "scout"), 
+  col.vars = "delinquent"
+)
+print(scout_d_bs)
+chisq.test(scout_d_bs)
+```
 
-temp
+Notice how the contingency table is constructed to not indicate whether *SES* and *scout* are related.
 
-#### Test for Joint Independence of (D,BS)
-#### creating 6x2 table, BS x D
+#### Marginal Independence
 
-SESscout_deliquent=ftable(temp, row.vars=c(3,2))
-result=chisq.test(SESscout_deliquent)
-result
+The marginal independence model is that two variables are independent while *ignoring* the third (A, B). The joint probabilities are equal to the product of the two marginal probabilities, $\pi_{ij} = \pi_{i} \pi_j$, just like a 2-way table. 
 
-#### Test for Marginal Independence (see above analysis of two-way tables)
+The degrees of freedom in the associated chi-sq test are the number of free parameters in the saturated model minus the number of free parameters in the marginal independence model. $df = (I - 1) + (J - 1) = (I-1)(J-1)$.
 
+From the *Boy Scouts* study, suppose juvenile delinquency is the response variable. Test the null hypothesis that juvenile delinquency is independent of boy scout status and socioeconomic status.
+
+```{r}
+ct <- xtabs(count ~ scout + SES, scout)
+print(ct)
+chisq.test(ct)
+```
+
+#### Conditional Independence
+
+The conditional independence model is that two variables are independent given a third (AB, AC). The joint probabilities are equal to the product of the conditional probabilities (B|A and C|A) and the marginal probability of A, $\pi_{ijk} = \pi_{j|i}\pi_{k|i}\pi_{i++}$. 
+
+You can test for conditional independence (AB, AC) by individually testing the independence (B, C) for each level of A.  $X^2$ and $G^2$ are the sum of the individual values and the degrees of freedom are $I(J-1)(K-1)$.  A better way to do it is with the Cochran-Mantel-Haenszel Test.
+
+The degrees of freedom in the associated chi-sq test are the number of free parameters in the saturated model minus the number of free parameters in the joint independence model. $df = (IJK-1) - ((IJ-1) + (K-1)) = (IJ-1)(K-1)$.
+
+From the *Boy Scouts* study, the section on joint independence found that scouting and SES were jointly independent of delinquency, so it must be that either scouting is independent of delinquency, or SES is independent of delinquency, or *both* are independent of delinquency.  The marginal test below establishes the independance of (scout, delinquent).  
+
+```{r}
+ct <- xtabs(count ~ scout + delinquent, scout)
+print(ct)
+chisq.test(ct, correct = FALSE)
+```
+
+The odds ratio 0.54 is a strong negative relationship between boy scout status and delinquency - boy scouts are 46% less likely (on the odds scale) to be delinquent than non-boy scouts. 
+
+```{r}
+ct <- xtabs(count ~ scout + delinquent, scout)
+p <- prop.table(ct, margin = 1)
+(or <- (p[2, 2] / p[2, 1]) / (p[1, 2] / p[1, 1]))
+```
+
+However, one may ask *is scouting and delinquency conditionally independent given SES?*  You can answer this question with three chi-square tests, one for each level of SES.
+
+```{r}
+ct <- xtabs(count ~ scout + delinquent, scout[scout$SES == "low", ])
+print(ct)
+chisq.test(ct, correct = FALSE)
+```
+
+```{r}
+ct <- xtabs(count ~ scout + delinquent, scout[scout$SES == "med", ])
+print(ct)
+chisq.test(ct, correct = FALSE)
+```
+
+```{r}
+ct <- xtabs(count ~ scout + delinquent, scout[scout$SES == "high", ])
+print(ct)
+chisq.test(ct, correct = FALSE)
+```
+
+
+
+
+Notice how the contingency table is constructed to not indicate whether *SES* and *scout* are related.
+```{r}
 #### Test for conditional independence
 #### To get partial tables of DB for each level of S
 
@@ -937,7 +1027,6 @@ temp.hom<-glm(temp.data$Freq~temp.data$scout*temp.data$SES+temp.data$deliquent*t
 summary(temp.hom)
 fitted(temp.hom)
 ```
-
 
 
 Example of Chi-Square Test of Homogeneity
