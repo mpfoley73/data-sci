@@ -9,34 +9,19 @@ library(readr)
 ```
 
 
-These notes are primarily from PSU Online course [Analysis of Discrete Data](https://online.stat.psu.edu/stat504) which uses Alan Agresti's **Categorical Data Analysis** (which I have not yet purchased) [@Agresti2013].  I also reviewed:
+These notes are primarily from PSU STAT 504 [Analysis of Discrete Data](https://online.stat.psu.edu/stat504) which uses Alan Agresti's **Categorical Data Analysis** [@Agresti2013].  I also reviewed [PSU STAT 501](https://newonlinecourses.science.psu.edu/stat501/lesson/15), [DataCamp's Generalized Linar Models in R](https://www.datacamp.com/courses/generalized-linear-models-in-r), [DataCamp's Multiple and Logistic Regression](https://www.datacamp.com/courses/multiple-and-logistic-regression), and "Interpretable machine learning" [@Molner2020].
 
-Penn State University, STAT 501, "Lesson 15: Logistic, Poisson & Nonlinear Regression".  [https://newonlinecourses.science.psu.edu/stat501/lesson/15](https://newonlinecourses.science.psu.edu/stat501/lesson/15)
+The linear regression model, $E(Y|X) = X \beta$, or equivalently, $y_i = X_i \beta + \epsilon_i$ where $X_i \beta = \mu_i$, assumes the response is a linear function of the predictors and the residuals are independent random variables normally distributed with mean zero and constant variance, $\epsilon \sim N \left(0, \sigma^2 \right)$.  This means that given some set of predictors, the response is normally distributed about its expected value, $y_i \sim N \left(\mu_i, \sigma^2 \right)$.  However, there are many situations where this assumption of normality fails.  Generalized linear models (GLMs) are a generalization of the linear regression model that addresses non-normal response distributions.
 
-"Generalized Linar Models in R".  DataCamp.  [https://www.datacamp.com/courses/generalized-linear-models-in-r](https://www.datacamp.com/courses/generalized-linear-models-in-r).
+The response given a set of predictors will not have a normal distribution if its underlying data-generating process is binomial or multinomial (proportions), Poisson (counts), or exponential (time-to-event).  In these situations a regular linear regression can predict negative counts, or proportions >100%.  GLMs solve this problem by modeling *a function* of the expected value of $y$, $f(E(Y|X)) = X \beta$.  There are three components to a GLM: the *random component* is the probability distribution of the response variable (normal, binomial, Poisson, [etc](https://en.wikipedia.org/wiki/Exponential_family#Table_of_distributions).); the *systematic component* is the explanatory variables $X\beta$; and the *link function* $\eta$ specifies the link between random and systematic components, converting the response range to $[-\infty, +\infty]$.  
 
-"Multiple and Logistic Regression".  DataCamp. [https://www.datacamp.com/courses/multiple-and-logistic-regression](https://www.datacamp.com/courses/multiple-and-logistic-regression).
+Linear regression is thus a special case of GLM where link function is the identity function, $f(E(Y|X)) = E(Y|X)$.  For a logistic regression, where the data generating process is binomial, the link function is 
 
-Molnar, Christoph. "Interpretable machine learning. A Guide for Making Black Box Models Explainable", 2019. [https://christophm.github.io/interpretable-ml-book/](https://christophm.github.io/interpretable-ml-book/).
+$$f(E(Y|X)) = \ln \left( \frac{E(Y|X)}{1 - E(Y|X)} \right) = \ln \left( \frac{\pi}{1 - \pi} \right)$$
 
+where $\pi$ is the event probability.  (The probit regression link function is $f(E(Y|X)) = \Phi^{-1}(E(Y|X)) = \Phi^{-1}(\pi)$. The difference between the logistic and probit link function is theoretical, and [the practical significance is slight](https://www.theanalysisfactor.com/the-difference-between-logistic-and-probit-regression/)).  For a Poisson regression, the link function is
 
-In generalized linear models (GLMs), the modeled response is *a function* of the mean of $y$.  There are three components to a GLM.  The *random component* is the probability distribution of the response variable (normal, binomial, Poisson, etc.). The *systematic component* is the explanatory variables $X\beta$.  The *link function* $\eta$ specifies the link between random and systematic components. The link function converts the response value from a range $[0,1]$ in logistic and probit and $[0,+\infty]$ for Poisson to a value ranging from $[-\infty, +\infty]$, and creates a linear relationship with the predictor variables.  
-
-For a standard linear regression, the link function is the identity function,
-
-$$f(\mu_Y) = \mu_Y.$$
-
-The standard linear regression is thus a special case of the GLM.  For a logistic regression, the link function is 
-
-$$f(\mu_Y) = \ln(\frac{\pi}{1-\pi})$$
-
-where $\pi$ is the event probability.  For a probit regression, the link function is 
-
-$$f(\mu_Y) = \Phi^{-1}(\pi).$$
-
-The difference between logistic and probit link function is theoretical - [the practical significance is slight](https://www.theanalysisfactor.com/the-difference-between-logistic-and-probit-regression/).  Logistic regression has the advantage that it can be back-transformed from log odds to odds ratios.  For a Poisson regression, the link function is
-
-$$f(\mu_Y) = \ln(\lambda)$$
+$$f(E(Y|X)) = \ln (E(Y|X)) = \ln(\lambda)$$
 
 where $\lambda$ is the expected event rate.  
 

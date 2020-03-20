@@ -845,7 +845,7 @@ print(x2)
 The deviance statistic is 
 
 ```{r}
-scout_g2 <- 2 * sum(scout_ct * log(scout_ct / scout_e))
+scout_g2 <- 2 * sum(scout_ct * log(scout_ct / scout_e$e))
 print(scout_g2)
 pchisq(scout_g2, df = scout_df, lower.tail = FALSE)
 ```

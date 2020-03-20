@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-17" />
+<meta name="date" content="2020-03-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,9 +53,9 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -64,14 +64,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -80,9 +82,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -158,7 +160,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>4</b> Discrete Analysis</a><ul>
+<li class="chapter" data-level="4" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>4</b> Categorical Analysis - Nonmodel</a><ul>
 <li class="chapter" data-level="4.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>4.1</b> Chi-Square Test</a></li>
 <li class="chapter" data-level="4.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> One-Way Tables</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
@@ -173,7 +175,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.6" data-path="two-way-tables.html"><a href="two-way-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>4.3.6</b> Partitioning Chi-Square</a></li>
 <li class="chapter" data-level="4.3.7" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>4.3.7</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>4.4</b> K-Way Tables</a></li>
+<li class="chapter" data-level="4.4" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>4.4</b> K-Way Tables</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>4.4.1</b> Odds Ratio</a></li>
+<li class="chapter" data-level="4.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>4.4.2</b> Chi-Square Independence Test</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>5</b> Continuous Variable Analysis</a><ul>
 <li class="chapter" data-level="5.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>5.0.1</b> Correlation</a></li>
@@ -258,36 +263,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>These notes rely on PSU STATS 504 <a href="https://online.stat.psu.edu/stat504/node/60/">course notes</a>.</p>
 <p>A one-way table is a frequency table for a single categorical variable. You usually construct a one-way table to test whether the frequency counts differ from a hypothesized distribution using the chi-square goodness-of-fit test. You may also simply want to construct a confidence interval around a proportion.</p>
 <p>Here is an example. A researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the (<span class="math inline">\(n = 1,611\)</span>) offspring phenotypes.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">o &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">926</span>, <span class="dv">288</span>, <span class="dv">293</span>, <span class="dv">104</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">cell_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tall cut-leaf&quot;</span>, <span class="st">&quot;tall potato-leaf&quot;</span>, <span class="st">&quot;dwarf cut-leaf&quot;</span>, <span class="st">&quot;dwarf potato-leaf&quot;</span>)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw">names</span>(o) &lt;-<span class="st"> </span>cell_names</a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="kw">print</span>(o)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="one-way-tables.html#cb1-1"></a>o &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">926</span>, <span class="dv">288</span>, <span class="dv">293</span>, <span class="dv">104</span>)</span>
+<span id="cb1-2"><a href="one-way-tables.html#cb1-2"></a>cell_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;tall cut-leaf&quot;</span>, <span class="st">&quot;tall potato-leaf&quot;</span>, <span class="st">&quot;dwarf cut-leaf&quot;</span>, <span class="st">&quot;dwarf potato-leaf&quot;</span>)</span>
+<span id="cb1-3"><a href="one-way-tables.html#cb1-3"></a><span class="kw">names</span>(o) &lt;-<span class="st"> </span>cell_names</span>
+<span id="cb1-4"><a href="one-way-tables.html#cb1-4"></a><span class="kw">print</span>(o)</span></code></pre></div>
 <pre><code>##     tall cut-leaf  tall potato-leaf    dwarf cut-leaf dwarf potato-leaf 
 ##               926               288               293               104</code></pre>
 <p>The four phenotypes are expected to occur with relative frequencies 9:3:3:1.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">pi &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(<span class="dv">9</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw">print</span>(pi)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="one-way-tables.html#cb3-1"></a>pi &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(<span class="dv">9</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb3-2"><a href="one-way-tables.html#cb3-2"></a><span class="kw">print</span>(pi)</span></code></pre></div>
 <pre><code>## [1] 0.5625 0.1875 0.1875 0.0625</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">e &lt;-<span class="st"> </span><span class="kw">sum</span>(o) <span class="op">*</span><span class="st"> </span>pi</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw">names</span>(e) &lt;-<span class="st"> </span>cell_names</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="kw">print</span>(e)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="one-way-tables.html#cb5-1"></a>e &lt;-<span class="st"> </span><span class="kw">sum</span>(o) <span class="op">*</span><span class="st"> </span>pi</span>
+<span id="cb5-2"><a href="one-way-tables.html#cb5-2"></a><span class="kw">names</span>(e) &lt;-<span class="st"> </span>cell_names</span>
+<span id="cb5-3"><a href="one-way-tables.html#cb5-3"></a><span class="kw">print</span>(e)</span></code></pre></div>
 <pre><code>##     tall cut-leaf  tall potato-leaf    dwarf cut-leaf dwarf potato-leaf 
 ##          906.1875          302.0625          302.0625          100.6875</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">data.frame</span>(<span class="dt">O =</span> o, <span class="dt">E =</span> e) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;i&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="op">-</span>i, <span class="dt">values_to =</span> <span class="st">&quot;freq&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pct =</span> freq <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(freq)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> i, <span class="dt">y =</span> freq, <span class="dt">fill =</span> name, </a>
-<a class="sourceLine" id="cb7-8" title="8">             <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(freq, <span class="dv">0</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, </a>
-<a class="sourceLine" id="cb7-9" title="9">                            scales<span class="op">::</span><span class="kw">percent</span>(pct, <span class="dt">accuracy =</span> <span class="fl">0.1</span>)))</a>
-<a class="sourceLine" id="cb7-10" title="10">         ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>()) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.9</span>), <span class="dt">size =</span> <span class="fl">2.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="st">  </span><span class="kw">scale_fill_mf</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-15" title="15"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Observed vs Expected&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="one-way-tables.html#cb7-1"></a><span class="kw">data.frame</span>(<span class="dt">O =</span> o, <span class="dt">E =</span> e) <span class="op">%&gt;%</span></span>
+<span id="cb7-2"><a href="one-way-tables.html#cb7-2"></a><span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;i&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb7-3"><a href="one-way-tables.html#cb7-3"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="op">-</span>i, <span class="dt">values_to =</span> <span class="st">&quot;freq&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb7-4"><a href="one-way-tables.html#cb7-4"></a><span class="st">  </span><span class="kw">group_by</span>(name) <span class="op">%&gt;%</span></span>
+<span id="cb7-5"><a href="one-way-tables.html#cb7-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pct =</span> freq <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(freq)) <span class="op">%&gt;%</span></span>
+<span id="cb7-6"><a href="one-way-tables.html#cb7-6"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
+<span id="cb7-7"><a href="one-way-tables.html#cb7-7"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> i, <span class="dt">y =</span> freq, <span class="dt">fill =</span> name, </span>
+<span id="cb7-8"><a href="one-way-tables.html#cb7-8"></a>             <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(freq, <span class="dv">0</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, </span>
+<span id="cb7-9"><a href="one-way-tables.html#cb7-9"></a>                            scales<span class="op">::</span><span class="kw">percent</span>(pct, <span class="dt">accuracy =</span> <span class="fl">0.1</span>)))</span>
+<span id="cb7-10"><a href="one-way-tables.html#cb7-10"></a>         ) <span class="op">+</span></span>
+<span id="cb7-11"><a href="one-way-tables.html#cb7-11"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>()) <span class="op">+</span></span>
+<span id="cb7-12"><a href="one-way-tables.html#cb7-12"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.9</span>), <span class="dt">size =</span> <span class="fl">2.8</span>) <span class="op">+</span></span>
+<span id="cb7-13"><a href="one-way-tables.html#cb7-13"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb7-14"><a href="one-way-tables.html#cb7-14"></a><span class="st">  </span><span class="kw">scale_fill_mf</span>() <span class="op">+</span></span>
+<span id="cb7-15"><a href="one-way-tables.html#cb7-15"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Observed vs Expected&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Do the observed phenotype counts conform to the expected proportions? This is a goodness-of-fit question because you are comparing frequencies from a single categorical variable to a set of hypothesized frequencies.</p>
 <div id="chi-square-goodness-of-fit-test" class="section level3">
@@ -303,89 +308,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If the saturated model (the observed data represent the fit of the saturated model, the most complex model possible with the data) proportions <span class="math inline">\(p_j\)</span> equal equal the expected proportions <span class="math inline">\(\pi_j\)</span>, <span class="math inline">\(X^2\)</span> and <span class="math inline">\(G^2\)</span> will equal zero. Large values indicate the data do not agree well with the proposed model.</p>
 <p>You can perform a chi-square test of significance with the <span class="math inline">\(G^2\)</span> and <span class="math inline">\(X^2\)</span> test statistics with <span class="math inline">\(dof\)</span> degrees of freedom (d.f.). The chi-square test is reliable when at least 80% of <span class="math inline">\(E_j &gt;= 5\)</span>.</p>
 <p>Calculate <span class="math inline">\(X^2\)</span> as <code>x2 &lt;- sum((o - e)^2 / e) =</code> 1.468722 and the <span class="math inline">\(G^2\)</span> as <code>g2 &lt;- 2 * sum(o * log(o / e)) =</code> 1.4775868. The degrees of freedom are <code>length(o) - 1 =</code> 3. The chi-sq test p-values are nearly identical.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">pchisq</span>(<span class="dt">q =</span> x2, <span class="dt">df =</span> dof, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="one-way-tables.html#cb8-1"></a><span class="kw">pchisq</span>(<span class="dt">q =</span> x2, <span class="dt">df =</span> dof, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1] 0.6895079</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">pchisq</span>(<span class="dt">q =</span> g2, <span class="dt">df =</span> dof, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="one-way-tables.html#cb10-1"></a><span class="kw">pchisq</span>(<span class="dt">q =</span> g2, <span class="dt">df =</span> dof, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1] 0.6874529</code></pre>
 <p><code>chisq.test()</code> performs the chi-square test of the Pearson test statistic.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">chisq.test</span>(o, <span class="dt">p =</span> pi)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="one-way-tables.html#cb12-1"></a><span class="kw">chisq.test</span>(o, <span class="dt">p =</span> pi)</span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
 ## 
 ## data:  o
 ## X-squared = 1.4687, df = 3, p-value = 0.6895</code></pre>
 <p>The p-values based on the <span class="math inline">\(\chi^2\)</span> distribution with 3 d.f. are about 0.69, so the test fails to reject the null hypothesis that the observed frequencies are consistent with the theory. The plot of the chi-squared distribution shows <span class="math inline">\(X^2\)</span> well outside the <span class="math inline">\(\alpha = 0.05\)</span> range of rejection.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></a>
-<a class="sourceLine" id="cb14-2" title="2">dof &lt;-<span class="st"> </span><span class="kw">length</span>(e) <span class="op">-</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb14-3" title="3">lrr =<span class="st"> </span><span class="op">-</span><span class="ot">Inf</span></a>
-<a class="sourceLine" id="cb14-4" title="4">p_val &lt;-<span class="st"> </span><span class="kw">pchisq</span>(<span class="dt">q =</span> x2, <span class="dt">df =</span> <span class="kw">length</span>(o) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb14-5" title="5">urr =<span class="st"> </span><span class="kw">qchisq</span>(<span class="dt">p =</span> alpha, <span class="dt">df =</span> dof, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb14-6" title="6"> <span class="kw">data.frame</span>(<span class="dt">chi2 =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">20</span>, <span class="dt">by =</span> <span class="fl">.1</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-7" title="7"><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">dchisq</span>(<span class="dt">x =</span> chi2, <span class="dt">df =</span> dof)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-8" title="8"><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">rr =</span> <span class="kw">ifelse</span>(chi2 <span class="op">&lt;</span><span class="st"> </span>lrr <span class="op">|</span><span class="st"> </span>chi2 <span class="op">&gt;</span><span class="st"> </span>urr, density, <span class="dv">0</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-9" title="9"><span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-10" title="10"><span class="st">   </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> chi2, <span class="dt">y =</span> density), <span class="dt">color =</span> <span class="kw">mf_pal</span>(<span class="dv">12</span>)(<span class="dv">12</span>)[<span class="dv">12</span>], <span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-11" title="11"><span class="st">   </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> chi2, <span class="dt">y =</span> rr), <span class="dt">fill =</span> <span class="kw">mf_pal</span>(<span class="dv">12</span>)(<span class="dv">12</span>)[<span class="dv">2</span>], <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-12" title="12"><span class="st">   </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> x2), <span class="dt">color =</span> <span class="kw">mf_pal</span>(<span class="dv">12</span>)(<span class="dv">12</span>)[<span class="dv">11</span>], <span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-13" title="13"><span class="st">   </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&quot;Chi-Square Goodness-of-Fit Test&quot;</span>),</a>
-<a class="sourceLine" id="cb14-14" title="14">        <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;X^2=&quot;</span>, <span class="kw">round</span>(x2,<span class="dv">2</span>), <span class="st">&quot;, &quot;</span>,</a>
-<a class="sourceLine" id="cb14-15" title="15">                          <span class="st">&quot;Critical value=&quot;</span>, <span class="kw">round</span>(urr,<span class="dv">2</span>), <span class="st">&quot;, &quot;</span>,</a>
-<a class="sourceLine" id="cb14-16" title="16">                          <span class="st">&quot;p-value=&quot;</span>, <span class="kw">round</span>(p_val,<span class="dv">3</span>), <span class="st">&quot;.&quot;</span></a>
-<a class="sourceLine" id="cb14-17" title="17">                          ),</a>
-<a class="sourceLine" id="cb14-18" title="18">        <span class="dt">x =</span> <span class="st">&quot;chisq&quot;</span>,</a>
-<a class="sourceLine" id="cb14-19" title="19">        <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-20" title="20"><span class="st">   </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-21" title="21"><span class="st">   </span><span class="kw">theme_mf</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="one-way-tables.html#cb14-1"></a>alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></span>
+<span id="cb14-2"><a href="one-way-tables.html#cb14-2"></a>dof &lt;-<span class="st"> </span><span class="kw">length</span>(e) <span class="op">-</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb14-3"><a href="one-way-tables.html#cb14-3"></a>lrr =<span class="st"> </span><span class="op">-</span><span class="ot">Inf</span></span>
+<span id="cb14-4"><a href="one-way-tables.html#cb14-4"></a>p_val &lt;-<span class="st"> </span><span class="kw">pchisq</span>(<span class="dt">q =</span> x2, <span class="dt">df =</span> <span class="kw">length</span>(o) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb14-5"><a href="one-way-tables.html#cb14-5"></a>urr =<span class="st"> </span><span class="kw">qchisq</span>(<span class="dt">p =</span> alpha, <span class="dt">df =</span> dof, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb14-6"><a href="one-way-tables.html#cb14-6"></a> <span class="kw">data.frame</span>(<span class="dt">chi2 =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">20</span>, <span class="dt">by =</span> <span class="fl">.1</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb14-7"><a href="one-way-tables.html#cb14-7"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">dchisq</span>(<span class="dt">x =</span> chi2, <span class="dt">df =</span> dof)) <span class="op">%&gt;%</span></span>
+<span id="cb14-8"><a href="one-way-tables.html#cb14-8"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">rr =</span> <span class="kw">ifelse</span>(chi2 <span class="op">&lt;</span><span class="st"> </span>lrr <span class="op">|</span><span class="st"> </span>chi2 <span class="op">&gt;</span><span class="st"> </span>urr, density, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb14-9"><a href="one-way-tables.html#cb14-9"></a><span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb14-10"><a href="one-way-tables.html#cb14-10"></a><span class="st">   </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> chi2, <span class="dt">y =</span> density), <span class="dt">color =</span> <span class="kw">mf_pal</span>(<span class="dv">12</span>)(<span class="dv">12</span>)[<span class="dv">12</span>], <span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
+<span id="cb14-11"><a href="one-way-tables.html#cb14-11"></a><span class="st">   </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> chi2, <span class="dt">y =</span> rr), <span class="dt">fill =</span> <span class="kw">mf_pal</span>(<span class="dv">12</span>)(<span class="dv">12</span>)[<span class="dv">2</span>], <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
+<span id="cb14-12"><a href="one-way-tables.html#cb14-12"></a><span class="st">   </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> x2), <span class="dt">color =</span> <span class="kw">mf_pal</span>(<span class="dv">12</span>)(<span class="dv">12</span>)[<span class="dv">11</span>], <span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
+<span id="cb14-13"><a href="one-way-tables.html#cb14-13"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&quot;Chi-Square Goodness-of-Fit Test&quot;</span>),</span>
+<span id="cb14-14"><a href="one-way-tables.html#cb14-14"></a>        <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;X^2=&quot;</span>, <span class="kw">round</span>(x2,<span class="dv">2</span>), <span class="st">&quot;, &quot;</span>,</span>
+<span id="cb14-15"><a href="one-way-tables.html#cb14-15"></a>                          <span class="st">&quot;Critical value=&quot;</span>, <span class="kw">round</span>(urr,<span class="dv">2</span>), <span class="st">&quot;, &quot;</span>,</span>
+<span id="cb14-16"><a href="one-way-tables.html#cb14-16"></a>                          <span class="st">&quot;p-value=&quot;</span>, <span class="kw">round</span>(p_val,<span class="dv">3</span>), <span class="st">&quot;.&quot;</span></span>
+<span id="cb14-17"><a href="one-way-tables.html#cb14-17"></a>                          ),</span>
+<span id="cb14-18"><a href="one-way-tables.html#cb14-18"></a>        <span class="dt">x =</span> <span class="st">&quot;chisq&quot;</span>,</span>
+<span id="cb14-19"><a href="one-way-tables.html#cb14-19"></a>        <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span></span>
+<span id="cb14-20"><a href="one-way-tables.html#cb14-20"></a><span class="st">   </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) <span class="op">+</span></span>
+<span id="cb14-21"><a href="one-way-tables.html#cb14-21"></a><span class="st">   </span><span class="kw">theme_mf</span>()</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>If you reject <span class="math inline">\(H_0\)</span>, you can inspect the residuals to learn which differences may have lead to rejecting the rejection. <span class="math inline">\(X^2\)</span> and <span class="math inline">\(G^2\)</span> are sums of squared cell comparisons, or “residuals”. The expected value of a <span class="math inline">\(\chi^2\)</span> random variable is its d.f., <span class="math inline">\(k - 1\)</span>, so the average residual size is <span class="math inline">\((k - 1) / k\)</span>. The typical residual should be within 2 <span class="math inline">\(\sqrt{(k - 1) / k}\)</span>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">e2_res &lt;-<span class="st"> </span><span class="kw">sqrt</span>((o <span class="op">-</span><span class="st"> </span>e)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>e)</a>
-<a class="sourceLine" id="cb15-2" title="2">g2_res &lt;-<span class="st"> </span><span class="kw">sign</span>(o <span class="op">-</span><span class="st"> </span>e) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">abs</span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>o <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(o <span class="op">/</span><span class="st"> </span>e)))</a></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">data.frame</span>(e2_res) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span><span class="kw">rownames_to_column</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-3" title="3"><span class="st">  </span><span class="co"># pivot_longer(cols = e2_res:g2_res) %&gt;%</span></a>
-<a class="sourceLine" id="cb16-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rowname, <span class="dt">y =</span> e2_res)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-5" title="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">color =</span> <span class="kw">mf_pal</span>(<span class="dv">12</span>)(<span class="dv">12</span>)[<span class="dv">2</span>], <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-6" title="6"><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-7" title="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;X^2 Residuals by Cell&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="one-way-tables.html#cb15-1"></a>e2_res &lt;-<span class="st"> </span><span class="kw">sqrt</span>((o <span class="op">-</span><span class="st"> </span>e)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>e)</span>
+<span id="cb15-2"><a href="one-way-tables.html#cb15-2"></a>g2_res &lt;-<span class="st"> </span><span class="kw">sign</span>(o <span class="op">-</span><span class="st"> </span>e) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">abs</span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>o <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(o <span class="op">/</span><span class="st"> </span>e)))</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="one-way-tables.html#cb16-1"></a><span class="kw">data.frame</span>(e2_res) <span class="op">%&gt;%</span></span>
+<span id="cb16-2"><a href="one-way-tables.html#cb16-2"></a><span class="st">  </span><span class="kw">rownames_to_column</span>() <span class="op">%&gt;%</span></span>
+<span id="cb16-3"><a href="one-way-tables.html#cb16-3"></a><span class="st">  </span><span class="co"># pivot_longer(cols = e2_res:g2_res) %&gt;%</span></span>
+<span id="cb16-4"><a href="one-way-tables.html#cb16-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rowname, <span class="dt">y =</span> e2_res)) <span class="op">+</span></span>
+<span id="cb16-5"><a href="one-way-tables.html#cb16-5"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">color =</span> <span class="kw">mf_pal</span>(<span class="dv">12</span>)(<span class="dv">12</span>)[<span class="dv">2</span>], <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
+<span id="cb16-6"><a href="one-way-tables.html#cb16-6"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb16-7"><a href="one-way-tables.html#cb16-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;X^2 Residuals by Cell&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>If you want to test whether the data conform to a particular distribution instead of some set of theoretical values, the test is nearly the same except for an adjustment to the d.f. Your first step is the estimate the distribution’s parameter(s). Then you perform the goodness of fit test, but with degrees of freedom reduced for each estimated parameter.</p>
 <p>For example, suppose you sample <span class="math inline">\(n = 100\)</span> families and count the number of children. The count of children should be a Poisson random variable, <span class="math inline">\(J \sim Pois(\lambda)\)</span>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">j =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">o =</span> <span class="kw">c</span>(<span class="dv">19</span>, <span class="dv">26</span>, <span class="dv">29</span>, <span class="dv">13</span>, <span class="dv">10</span>, <span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="one-way-tables.html#cb17-1"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">j =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">o =</span> <span class="kw">c</span>(<span class="dv">19</span>, <span class="dv">26</span>, <span class="dv">29</span>, <span class="dv">13</span>, <span class="dv">10</span>, <span class="dv">3</span>))</span></code></pre></div>
 <p>The ML estimate for <span class="math inline">\(\lambda\)</span> is</p>
 <p><span class="math display">\[\hat{\lambda} = \frac{j_0 O_0 + j_1 O_1, + \cdots j_k O_k}{O}\]</span></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">lambda_hat &lt;-<span class="st"> </span><span class="kw">sum</span>(dat<span class="op">$</span>j <span class="op">*</span><span class="st"> </span>dat<span class="op">$</span>o) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(dat<span class="op">$</span>o)</a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="kw">print</span>(lambda_hat)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="one-way-tables.html#cb18-1"></a>lambda_hat &lt;-<span class="st"> </span><span class="kw">sum</span>(dat<span class="op">$</span>j <span class="op">*</span><span class="st"> </span>dat<span class="op">$</span>o) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(dat<span class="op">$</span>o)</span>
+<span id="cb18-2"><a href="one-way-tables.html#cb18-2"></a><span class="kw">print</span>(lambda_hat)</span></code></pre></div>
 <pre><code>## [1] 1.78</code></pre>
 <p>The probabilities for each possible count are</p>
 <p><span class="math display">\[f(j; \lambda) = \frac{e^{-\hat{\lambda}} \hat{\lambda}^j}{j!}.\]</span></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">f &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>lambda_hat) <span class="op">*</span><span class="st"> </span>lambda_hat<span class="op">^</span>dat<span class="op">$</span>j <span class="op">/</span><span class="st"> </span><span class="kw">factorial</span>(dat<span class="op">$</span>j)</a>
-<a class="sourceLine" id="cb20-2" title="2">E &lt;-<span class="st"> </span>f <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(dat<span class="op">$</span>o)</a>
-<a class="sourceLine" id="cb20-3" title="3">dat &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat, <span class="dt">e =</span> E)</a></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">dat <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">pois =</span> e) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-3" title="3"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="op">-</span>j, <span class="dt">values_to =</span> <span class="st">&quot;freq&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pct =</span> freq <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(freq)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-6" title="6"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_inseq</span>(<span class="kw">as.factor</span>(j)), <span class="dt">y =</span> freq, <span class="dt">fill =</span> name, </a>
-<a class="sourceLine" id="cb21-8" title="8">             <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(freq, <span class="dv">0</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, </a>
-<a class="sourceLine" id="cb21-9" title="9">                            scales<span class="op">::</span><span class="kw">percent</span>(pct, <span class="dt">accuracy =</span> <span class="fl">0.1</span>)))</a>
-<a class="sourceLine" id="cb21-10" title="10">         ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb21-11" title="11"><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>()) <span class="op">+</span></a>
-<a class="sourceLine" id="cb21-12" title="12"><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.9</span>), <span class="dt">size =</span> <span class="fl">2.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb21-13" title="13"><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb21-14" title="14"><span class="st">  </span><span class="kw">scale_fill_mf</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb21-15" title="15"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Observed vs Expected&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;children in family&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="one-way-tables.html#cb20-1"></a>f &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>lambda_hat) <span class="op">*</span><span class="st"> </span>lambda_hat<span class="op">^</span>dat<span class="op">$</span>j <span class="op">/</span><span class="st"> </span><span class="kw">factorial</span>(dat<span class="op">$</span>j)</span>
+<span id="cb20-2"><a href="one-way-tables.html#cb20-2"></a>E &lt;-<span class="st"> </span>f <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(dat<span class="op">$</span>o)</span>
+<span id="cb20-3"><a href="one-way-tables.html#cb20-3"></a>dat &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat, <span class="dt">e =</span> E)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="one-way-tables.html#cb21-1"></a>dat <span class="op">%&gt;%</span></span>
+<span id="cb21-2"><a href="one-way-tables.html#cb21-2"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">pois =</span> e) <span class="op">%&gt;%</span></span>
+<span id="cb21-3"><a href="one-way-tables.html#cb21-3"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="op">-</span>j, <span class="dt">values_to =</span> <span class="st">&quot;freq&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb21-4"><a href="one-way-tables.html#cb21-4"></a><span class="st">  </span><span class="kw">group_by</span>(name) <span class="op">%&gt;%</span></span>
+<span id="cb21-5"><a href="one-way-tables.html#cb21-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pct =</span> freq <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(freq)) <span class="op">%&gt;%</span></span>
+<span id="cb21-6"><a href="one-way-tables.html#cb21-6"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
+<span id="cb21-7"><a href="one-way-tables.html#cb21-7"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_inseq</span>(<span class="kw">as.factor</span>(j)), <span class="dt">y =</span> freq, <span class="dt">fill =</span> name, </span>
+<span id="cb21-8"><a href="one-way-tables.html#cb21-8"></a>             <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(freq, <span class="dv">0</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, </span>
+<span id="cb21-9"><a href="one-way-tables.html#cb21-9"></a>                            scales<span class="op">::</span><span class="kw">percent</span>(pct, <span class="dt">accuracy =</span> <span class="fl">0.1</span>)))</span>
+<span id="cb21-10"><a href="one-way-tables.html#cb21-10"></a>         ) <span class="op">+</span></span>
+<span id="cb21-11"><a href="one-way-tables.html#cb21-11"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>()) <span class="op">+</span></span>
+<span id="cb21-12"><a href="one-way-tables.html#cb21-12"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.9</span>), <span class="dt">size =</span> <span class="fl">2.8</span>) <span class="op">+</span></span>
+<span id="cb21-13"><a href="one-way-tables.html#cb21-13"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb21-14"><a href="one-way-tables.html#cb21-14"></a><span class="st">  </span><span class="kw">scale_fill_mf</span>() <span class="op">+</span></span>
+<span id="cb21-15"><a href="one-way-tables.html#cb21-15"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Observed vs Expected&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;children in family&quot;</span>)</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>Compare the expected values to the observed values with the <span class="math inline">\(\chi^2\)</span> goodness of fit test. In this case, <span class="math inline">\(df = 6 - 1 - 1\)</span> because the estimated paramater <span class="math inline">\(\lambda\)</span> reduces d.f. by 1.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">(X2 &lt;-<span class="st"> </span><span class="kw">sum</span>((dat<span class="op">$</span>o <span class="op">-</span><span class="st"> </span>dat<span class="op">$</span>e)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>dat<span class="op">$</span>e))</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="one-way-tables.html#cb22-1"></a>(X2 &lt;-<span class="st"> </span><span class="kw">sum</span>((dat<span class="op">$</span>o <span class="op">-</span><span class="st"> </span>dat<span class="op">$</span>e)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>dat<span class="op">$</span>e))</span></code></pre></div>
 <pre><code>## [1] 2.842215</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">(dof &lt;-<span class="st"> </span><span class="kw">nrow</span>(dat) <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="one-way-tables.html#cb24-1"></a>(dof &lt;-<span class="st"> </span><span class="kw">nrow</span>(dat) <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">pchisq</span>(<span class="dt">q =</span> X2, <span class="dt">df =</span> dof)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="one-way-tables.html#cb26-1"></a><span class="kw">pchisq</span>(<span class="dt">q =</span> X2, <span class="dt">df =</span> dof)</span></code></pre></div>
 <pre><code>## [1] 0.4154322</code></pre>
 <p>Be careful of this adjustment to the d.f. because <code>chisq.test()</code> does not take this into account, and you cannot override the d.f..</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw">chisq.test</span>(dat<span class="op">$</span>o, <span class="dt">p =</span> dat<span class="op">$</span>e <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(dat<span class="op">$</span>e))</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="one-way-tables.html#cb28-1"></a><span class="kw">chisq.test</span>(dat<span class="op">$</span>o, <span class="dt">p =</span> dat<span class="op">$</span>e <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(dat<span class="op">$</span>e))</span></code></pre></div>
 <pre><code>## Warning in chisq.test(dat$o, p = dat$e/sum(dat$e)): Chi-squared approximation
 ## may be incorrect</code></pre>
 <pre><code>## 
@@ -398,18 +403,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">4.2.2</span> Proportion Test</h3>
 <p>A special case of the one-way table is the <span class="math inline">\(2 \times 1\)</span> table for a binomial random variable. When you calculate a single proportion <span class="math inline">\(p\)</span>, you can compare it to a hypothesized <span class="math inline">\(\pi_0\)</span>, or create a confidence interval around the estimate.</p>
 <p>Suppose a company claims to resolve at least 70% of maintenance requests within 24 hours. In a random sample of <span class="math inline">\(n = 50\)</span> repair requests, the company resolves <span class="math inline">\(O_1 = 33\)</span> (<span class="math inline">\(p_1 = 66\%)\)</span> within 24 hours. At a 5% level of significance, is the maintenance company’s claim valid?</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">o &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">33</span>, <span class="dv">17</span>)</a>
-<a class="sourceLine" id="cb31-2" title="2">n &lt;-<span class="st"> </span><span class="kw">sum</span>(o)</a>
-<a class="sourceLine" id="cb31-3" title="3">cell_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;resolved&quot;</span>, <span class="st">&quot;not resolved&quot;</span>)</a>
-<a class="sourceLine" id="cb31-4" title="4"><span class="kw">names</span>(o) &lt;-<span class="st"> </span>cell_names</a>
-<a class="sourceLine" id="cb31-5" title="5"><span class="kw">print</span>(o)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="one-way-tables.html#cb31-1"></a>o &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">33</span>, <span class="dv">17</span>)</span>
+<span id="cb31-2"><a href="one-way-tables.html#cb31-2"></a>n &lt;-<span class="st"> </span><span class="kw">sum</span>(o)</span>
+<span id="cb31-3"><a href="one-way-tables.html#cb31-3"></a>cell_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;resolved&quot;</span>, <span class="st">&quot;not resolved&quot;</span>)</span>
+<span id="cb31-4"><a href="one-way-tables.html#cb31-4"></a><span class="kw">names</span>(o) &lt;-<span class="st"> </span>cell_names</span>
+<span id="cb31-5"><a href="one-way-tables.html#cb31-5"></a><span class="kw">print</span>(o)</span></code></pre></div>
 <pre><code>##     resolved not resolved 
 ##           33           17</code></pre>
 <p>The null hypothesis is that the maintenance company resolves <span class="math inline">\(\pi_0 = 0.70\)</span> of requests within 24 hours, <span class="math inline">\(H_0: \pi = \pi_0\)</span> with alternative hypothesis <span class="math inline">\(H_a: \pi &lt; \pi_0\)</span>. This is a left-tailed test with an <span class="math inline">\(\alpha = 0.05\)</span> level of significance.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">pi_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="fl">0.70</span></a>
-<a class="sourceLine" id="cb33-2" title="2">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="one-way-tables.html#cb33-1"></a>pi_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="fl">0.70</span></span>
+<span id="cb33-2"><a href="one-way-tables.html#cb33-2"></a>alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></span></code></pre></div>
 <p>The sample is independently drawn without replacement from &lt;10% of the population (by assumption) and there were &gt;=5 successes, so you can use the Clopper-Pearson exact binomial test. <em>Clopper-Pearson inverts two single-tailed binomial tests at the desired alpha</em>.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">binom.test</span>(<span class="dt">x =</span> o, <span class="dt">p =</span> pi_<span class="dv">0</span>, <span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>, <span class="dt">conf.level =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="one-way-tables.html#cb34-1"></a><span class="kw">binom.test</span>(<span class="dt">x =</span> o, <span class="dt">p =</span> pi_<span class="dv">0</span>, <span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>, <span class="dt">conf.level =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha)</span></code></pre></div>
 <pre><code>## 
 ##  Exact binomial test
 ## 
@@ -422,26 +427,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## probability of success 
 ##                   0.66</code></pre>
 <p>There is insufficient evidence (p = 0.3161) to reject <span class="math inline">\(H_0\)</span> that true probability of success is less than 0.7.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">50</span>)</a>
-<a class="sourceLine" id="cb36-2" title="2">p_x &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span class="dt">x =</span> x, <span class="dt">size =</span> n, <span class="dt">prob =</span> pi_<span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb36-3" title="3">observed &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">if_else</span>(x <span class="op">==</span><span class="st"> </span>o[<span class="dv">1</span>], <span class="dv">1</span>, <span class="dv">0</span>))</a>
-<a class="sourceLine" id="cb36-4" title="4"><span class="kw">data.frame</span>(x, p_x, observed) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb36-5" title="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> p_x, <span class="dt">fill =</span> observed)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb36-6" title="6"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb36-7" title="7"><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb36-8" title="8"><span class="st">  </span><span class="kw">scale_fill_mf</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb36-9" title="9"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Exact Binomial&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="one-way-tables.html#cb36-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">50</span>)</span>
+<span id="cb36-2"><a href="one-way-tables.html#cb36-2"></a>p_x &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span class="dt">x =</span> x, <span class="dt">size =</span> n, <span class="dt">prob =</span> pi_<span class="dv">0</span>)</span>
+<span id="cb36-3"><a href="one-way-tables.html#cb36-3"></a>observed &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">if_else</span>(x <span class="op">==</span><span class="st"> </span>o[<span class="dv">1</span>], <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb36-4"><a href="one-way-tables.html#cb36-4"></a><span class="kw">data.frame</span>(x, p_x, observed) <span class="op">%&gt;%</span></span>
+<span id="cb36-5"><a href="one-way-tables.html#cb36-5"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> p_x, <span class="dt">fill =</span> observed)) <span class="op">+</span></span>
+<span id="cb36-6"><a href="one-way-tables.html#cb36-6"></a><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></span>
+<span id="cb36-7"><a href="one-way-tables.html#cb36-7"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb36-8"><a href="one-way-tables.html#cb36-8"></a><span class="st">  </span><span class="kw">scale_fill_mf</span>() <span class="op">+</span></span>
+<span id="cb36-9"><a href="one-way-tables.html#cb36-9"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Exact Binomial&quot;</span>)</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>There were &gt;=5 failures, &gt;=30 observations, and the measured probability of success was within (.2,.80), so you can also use the Wald normal approximation method where <span class="math inline">\(\pi = p \pm z_{\alpha/2} SE\)</span> and <span class="math inline">\(Z = (p - \pi_0) / SE\)</span> where <span class="math inline">\(SE = \sqrt{\pi_0 (1 - \pi_0) / n}\)</span>.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">p &lt;-<span class="st"> </span>o[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(o)</a>
-<a class="sourceLine" id="cb37-2" title="2">se &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pi_<span class="dv">0</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>pi_<span class="dv">0</span>) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(o))</a>
-<a class="sourceLine" id="cb37-3" title="3">z &lt;-<span class="st"> </span>(p <span class="op">-</span><span class="st"> </span>pi_<span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>se</a>
-<a class="sourceLine" id="cb37-4" title="4"><span class="kw">pnorm</span>(<span class="dt">q =</span> p, <span class="dt">mean =</span> pi_<span class="dv">0</span>, <span class="dt">sd =</span> se, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="one-way-tables.html#cb37-1"></a>p &lt;-<span class="st"> </span>o[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(o)</span>
+<span id="cb37-2"><a href="one-way-tables.html#cb37-2"></a>se &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pi_<span class="dv">0</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>pi_<span class="dv">0</span>) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(o))</span>
+<span id="cb37-3"><a href="one-way-tables.html#cb37-3"></a>z &lt;-<span class="st"> </span>(p <span class="op">-</span><span class="st"> </span>pi_<span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>se</span>
+<span id="cb37-4"><a href="one-way-tables.html#cb37-4"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> p, <span class="dt">mean =</span> pi_<span class="dv">0</span>, <span class="dt">sd =</span> se, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## resolved 
 ## 0.268547</code></pre>
 <p>Again, there is insufficient evidence (p = 0.2685) to reject <span class="math inline">\(H_0\)</span> that true probability of success is less than 0.7. The 95% CI around the measured p = 0.66 is</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">z_alpha &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.95</span>, <span class="dt">mean =</span> p, <span class="dt">sd =</span> se, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb39-2" title="2"><span class="kw">c</span>(<span class="dv">0</span>, p <span class="op">+</span><span class="st"> </span>z_alpha <span class="op">*</span><span class="st"> </span>se)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="one-way-tables.html#cb39-1"></a>z_alpha &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.95</span>, <span class="dt">mean =</span> p, <span class="dt">sd =</span> se, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb39-2"><a href="one-way-tables.html#cb39-2"></a><span class="kw">c</span>(<span class="dv">0</span>, p <span class="op">+</span><span class="st"> </span>z_alpha <span class="op">*</span><span class="st"> </span>se)</span></code></pre></div>
 <pre><code>##            resolved 
 ## 0.0000000 0.6958645</code></pre>
 </div>

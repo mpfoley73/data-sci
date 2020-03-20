@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-17" />
+<meta name="date" content="2020-03-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,9 +53,9 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -64,14 +64,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -80,9 +82,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -158,7 +160,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>4</b> Discrete Analysis</a><ul>
+<li class="chapter" data-level="4" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>4</b> Categorical Analysis - Nonmodel</a><ul>
 <li class="chapter" data-level="4.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>4.1</b> Chi-Square Test</a></li>
 <li class="chapter" data-level="4.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> One-Way Tables</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
@@ -173,7 +175,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.6" data-path="two-way-tables.html"><a href="two-way-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>4.3.6</b> Partitioning Chi-Square</a></li>
 <li class="chapter" data-level="4.3.7" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>4.3.7</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>4.4</b> K-Way Tables</a></li>
+<li class="chapter" data-level="4.4" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>4.4</b> K-Way Tables</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>4.4.1</b> Odds Ratio</a></li>
+<li class="chapter" data-level="4.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>4.4.2</b> Chi-Square Independence Test</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>5</b> Continuous Variable Analysis</a><ul>
 <li class="chapter" data-level="5.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>5.0.1</b> Correlation</a></li>
@@ -255,53 +260,323 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="k-way-tables" class="section level2">
 <h2><span class="header-section-number">4.4</span> K-Way Tables</h2>
-<p>Example of Chi-Square Test of Homogeneity
-A project studied whether attending physicians order more unnecessary blood transfusions than residents. The categorical variable frequency of orders has 4 levels: frequently, occasionally, rarely, and never.</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" title="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb120-2" title="2"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb120-3" title="3"><span class="kw">library</span>(stats)</a>
-<a class="sourceLine" id="cb120-4" title="4"></a>
-<a class="sourceLine" id="cb120-5" title="5">pop &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb120-6" title="6">pop[<span class="dv">1</span><span class="op">:</span><span class="dv">49</span>] &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb120-7" title="7">pop[<span class="dv">50</span><span class="op">:</span><span class="dv">120</span>] &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb120-8" title="8">lev &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb120-9" title="9">lev[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">50</span><span class="op">:</span><span class="dv">64</span>)] &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb120-10" title="10">lev[<span class="kw">c</span>(<span class="dv">3</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">65</span><span class="op">:</span><span class="dv">92</span>)] &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb120-11" title="11">lev[<span class="kw">c</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">36</span>, <span class="dv">93</span><span class="op">:</span><span class="dv">115</span>)] &lt;-<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb120-12" title="12">lev[<span class="kw">c</span>(<span class="dv">37</span><span class="op">:</span><span class="dv">49</span>, <span class="dv">116</span><span class="op">:</span><span class="dv">120</span>)] &lt;-<span class="st"> </span><span class="dv">4</span></a>
-<a class="sourceLine" id="cb120-13" title="13">dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(pop, lev)</a>
-<a class="sourceLine" id="cb120-14" title="14">dat<span class="op">$</span>pop &lt;-<span class="st"> </span><span class="kw">factor</span>(dat<span class="op">$</span>pop, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), </a>
-<a class="sourceLine" id="cb120-15" title="15">                  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;attending&quot;</span>, <span class="st">&quot;resident&quot;</span>))</a>
-<a class="sourceLine" id="cb120-16" title="16">dat<span class="op">$</span>lev &lt;-<span class="st"> </span><span class="kw">factor</span>(dat<span class="op">$</span>lev, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), </a>
-<a class="sourceLine" id="cb120-17" title="17">                  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;frequently&quot;</span>, <span class="st">&quot;occasionally&quot;</span>, <span class="st">&quot;rarely&quot;</span>, <span class="st">&quot;never&quot;</span>))</a>
-<a class="sourceLine" id="cb120-18" title="18"></a>
-<a class="sourceLine" id="cb120-19" title="19">df &lt;-<span class="st"> </span>(<span class="dv">2-1</span>)<span class="op">*</span>(<span class="dv">4-1</span>)</a>
-<a class="sourceLine" id="cb120-20" title="20">alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></a>
-<a class="sourceLine" id="cb120-21" title="21"></a>
-<a class="sourceLine" id="cb120-22" title="22"></a>
-<a class="sourceLine" id="cb120-23" title="23">(test &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(dat<span class="op">$</span>lev, dat<span class="op">$</span>pop))</a></code></pre></div>
+<p>These notes rely on PSU STATS 504 <a href="https://online.stat.psu.edu/stat504/node/102/">course notes</a>.</p>
+<p>A <em>k</em>-way table has <em>k</em> independent variables. Each cell in the <em>k</em>-way table has joint probability <span class="math inline">\(\pi_{ij..k}\)</span>. You can collapse a <em>k</em>-way table along a dimension to create a <em>marginal</em> table and the resulting joint probabilities in the marginal table are referred to as <em>marginal distributions</em>. Alternatively, you can consider a single level of a dimension, creating a conditional distribution.</p>
+<p>Here are two case studies to illustrate the concepts.</p>
+<p><strong>Study 1: Death Penalty</strong>. Data is collected for <em>n = 326</em> murder cases along three dimensions: defendant’s color, victim’s color, and whether or not the defendant received the death penalty.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="k-way-tables.html#cb121-1"></a>deathp &lt;-<span class="st"> </span><span class="kw">array</span>(<span class="kw">c</span>(<span class="dv">19</span>, <span class="dv">132</span>, <span class="dv">11</span>, <span class="dv">52</span>, <span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">6</span>, <span class="dv">97</span>), <span class="dt">dim=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb121-2"><a href="k-way-tables.html#cb121-2"></a><span class="kw">dimnames</span>(deathp) &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb121-3"><a href="k-way-tables.html#cb121-3"></a>  <span class="dt">DeathPen =</span> <span class="kw">c</span>(<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;no&quot;</span>),</span>
+<span id="cb121-4"><a href="k-way-tables.html#cb121-4"></a>  <span class="dt">Defendant=</span><span class="kw">c</span>(<span class="st">&quot;white&quot;</span>,<span class="st">&quot;black&quot;</span>),</span>
+<span id="cb121-5"><a href="k-way-tables.html#cb121-5"></a>  <span class="dt">Victim=</span><span class="kw">c</span>(<span class="st">&quot;white&quot;</span>,<span class="st">&quot;black&quot;</span>)</span>
+<span id="cb121-6"><a href="k-way-tables.html#cb121-6"></a>)</span>
+<span id="cb121-7"><a href="k-way-tables.html#cb121-7"></a><span class="kw">ftable</span>(deathp, <span class="dt">row.vars =</span> <span class="kw">c</span>(<span class="st">&quot;Defendant&quot;</span>, <span class="st">&quot;Victim&quot;</span>), <span class="dt">col.vars =</span> <span class="st">&quot;DeathPen&quot;</span>)</span></code></pre></div>
+<pre><code>##                  DeathPen yes  no
+## Defendant Victim                 
+## white     white            19 132
+##           black             0   9
+## black     white            11  52
+##           black             6  97</code></pre>
+<p><strong>Study 2: Boy Scouts</strong>. Data is collected for <em>n = 800</em> Boy Scouts along three dimensions: socioeconomic status, scout status, and delinquency status.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="k-way-tables.html#cb123-1"></a>scout &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(</span>
+<span id="cb123-2"><a href="k-way-tables.html#cb123-2"></a>  <span class="dt">delinquent =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>,<span class="st">&quot;yes&quot;</span>),</span>
+<span id="cb123-3"><a href="k-way-tables.html#cb123-3"></a>  <span class="dt">scout =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>),</span>
+<span id="cb123-4"><a href="k-way-tables.html#cb123-4"></a>  <span class="dt">SES =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;med&quot;</span>,<span class="st">&quot;high&quot;</span>)</span>
+<span id="cb123-5"><a href="k-way-tables.html#cb123-5"></a>)</span>
+<span id="cb123-6"><a href="k-way-tables.html#cb123-6"></a>scout &lt;-<span class="st"> </span><span class="kw">cbind</span>(scout, <span class="dt">count =</span> <span class="kw">c</span>(<span class="dv">169</span>,<span class="dv">42</span>,<span class="dv">43</span>,<span class="dv">11</span>,<span class="dv">132</span>,<span class="dv">20</span>,<span class="dv">104</span>,<span class="dv">14</span>,<span class="dv">59</span>,<span class="dv">2</span>,<span class="dv">196</span>,<span class="dv">8</span>))</span>
+<span id="cb123-7"><a href="k-way-tables.html#cb123-7"></a></span>
+<span id="cb123-8"><a href="k-way-tables.html#cb123-8"></a>scout_ct &lt;-<span class="st"> </span><span class="kw">xtabs</span>(count <span class="op">~</span><span class="st"> </span>., scout)</span>
+<span id="cb123-9"><a href="k-way-tables.html#cb123-9"></a></span>
+<span id="cb123-10"><a href="k-way-tables.html#cb123-10"></a><span class="kw">ftable</span>(scout_ct, <span class="dt">row.vars =</span> <span class="kw">c</span>(<span class="st">&quot;SES&quot;</span>, <span class="st">&quot;scout&quot;</span>), <span class="dt">col.vars =</span> <span class="st">&quot;delinquent&quot;</span>)</span></code></pre></div>
+<pre><code>##            delinquent  no yes
+## SES  scout                   
+## low  no               169  42
+##      yes               43  11
+## med  no               132  20
+##      yes              104  14
+## high no                59   2
+##      yes              196   8</code></pre>
+<div id="odds-ratio-1" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> Odds Ratio</h3>
+<p>In the <em>DeathP</em> study, the <em>marginal odds ratio</em> is 1.18, meaning the odds of death penalty for a white defendant are 1.18 times as high as they are for a black defendant.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="k-way-tables.html#cb125-1"></a>deathp_m &lt;-<span class="st"> </span><span class="kw">margin.table</span>(deathp, <span class="dt">margin =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb125-2"><a href="k-way-tables.html#cb125-2"></a>deathp_p &lt;-<span class="st"> </span><span class="kw">prop.table</span>(deathp_m, <span class="dt">margin =</span> <span class="dv">2</span>)</span>
+<span id="cb125-3"><a href="k-way-tables.html#cb125-3"></a>deathp_odds &lt;-<span class="st"> </span>deathp_p[<span class="dv">1</span>, ] <span class="op">/</span><span class="st"> </span>deathp_p[<span class="dv">2</span>, ]</span>
+<span id="cb125-4"><a href="k-way-tables.html#cb125-4"></a>deathp_or &lt;-<span class="st"> </span>deathp_odds[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>deathp_odds[<span class="dv">2</span>]</span>
+<span id="cb125-5"><a href="k-way-tables.html#cb125-5"></a><span class="kw">print</span>(deathp_or)</span></code></pre></div>
+<pre><code>##   white 
+## 1.18106</code></pre>
+<p>The <em>conditional odds ratio</em> given the victim is white is 0.68, and 0.79 given the victim is black, meaning the odds of death penalty for a white defendant are 0.68 times as high as they are for a black defendent if the victim is white, and 0.79 times as high as they are for a black defendent if the victim is black.</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="k-way-tables.html#cb127-1"></a>deathp_m &lt;-<span class="st"> </span><span class="kw">margin.table</span>(deathp[, , <span class="dv">1</span>], <span class="dt">margin =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb127-2"><a href="k-way-tables.html#cb127-2"></a>deathp_p &lt;-<span class="st"> </span><span class="kw">prop.table</span>(deathp_m, <span class="dt">margin =</span> <span class="dv">2</span>)</span>
+<span id="cb127-3"><a href="k-way-tables.html#cb127-3"></a>deathp_odds &lt;-<span class="st"> </span>deathp_p[<span class="dv">1</span>, ] <span class="op">/</span><span class="st"> </span>deathp_p[<span class="dv">2</span>, ]</span>
+<span id="cb127-4"><a href="k-way-tables.html#cb127-4"></a>deathp_or &lt;-<span class="st"> </span>deathp_odds[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>deathp_odds[<span class="dv">2</span>]</span>
+<span id="cb127-5"><a href="k-way-tables.html#cb127-5"></a><span class="kw">print</span>(deathp_or)</span></code></pre></div>
+<pre><code>##       yes 
+## 0.6804408</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="k-way-tables.html#cb129-1"></a>deathp_m &lt;-<span class="st"> </span><span class="kw">margin.table</span>(deathp[, , <span class="dv">2</span>], <span class="dt">margin =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span></span>
+<span id="cb129-2"><a href="k-way-tables.html#cb129-2"></a>deathp_p &lt;-<span class="st"> </span><span class="kw">prop.table</span>(deathp_m, <span class="dt">margin =</span> <span class="dv">2</span>)</span>
+<span id="cb129-3"><a href="k-way-tables.html#cb129-3"></a>deathp_odds &lt;-<span class="st"> </span>deathp_p[<span class="dv">1</span>, ] <span class="op">/</span><span class="st"> </span>deathp_p[<span class="dv">2</span>, ]</span>
+<span id="cb129-4"><a href="k-way-tables.html#cb129-4"></a>deathp_or &lt;-<span class="st"> </span>deathp_odds[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>deathp_odds[<span class="dv">2</span>]</span>
+<span id="cb129-5"><a href="k-way-tables.html#cb129-5"></a><span class="kw">print</span>(deathp_or)</span></code></pre></div>
+<pre><code>##       yes 
+## 0.7894737</code></pre>
+<p>Notice above that the second margin table had a zero in one cell. To get an odds ratio in this case, the convention is to add 0.5 to all cells.</p>
+<p>Interesting that the marginal odds of a white defendent receiving the death penalty are &gt;1, but the conditional odds of a white defendent receiving the death penalty given the race of the victim are &lt;1. <em>Simpson’s paradox</em> is the phenomenon that a pair of variables can have marginal association and partial (conditional) associations in opposite direction. Another way to think about this is that the nature and direction of association changes due to presence or absence of a third (possibly confounding) variable.</p>
+</div>
+<div id="chi-square-independence-test-1" class="section level3">
+<h3><span class="header-section-number">4.4.2</span> Chi-Square Independence Test</h3>
+<p>There are several ways to think about “independence” when dealing with a <em>k</em>-way table.</p>
+<ul>
+<li><strong>Mutual independence</strong>. All variables are independent from each other, (A, B, C).</li>
+<li><strong>Joint independence</strong>. Two variables are jointly independent of the third, (AB, C).</li>
+<li><strong>Marginal independence</strong>. Two variables are independent if you ignore the third, (A, B).</li>
+<li><strong>Conditional independence</strong> Two variables are independent given the third, (AC, BC).</li>
+<li><strong>Homogeneous associations</strong> Conditional (partial) odds-ratios are not related on the value of the third, (AB, AC, BC).</li>
+</ul>
+<p>Under the assumption that the model of independence is true, once you know the marginal probability values, we have enough information to estimate all unknown cell probabilities. Because each of the marginal probability vectors must add up to one, the number of free parameters in the model is (I − 1) + (J − 1) + (K −I ). This is exactly like the two-way table</p>
+<div id="mutual-independence" class="section level4">
+<h4><span class="header-section-number">4.4.2.1</span> Mutual Independence</h4>
+<p>The simplest model is that ALL variables are independent of one another (A, B, C). The joint probabilities are equal to the product of the marginal probabilities, <span class="math inline">\(\pi_{ijk} = \pi_i \pi_j \pi_k\)</span>. In terms of odds ratios, the model (A, B, C) implies that the odds ratios in the marginal tables A × B, B × C, and A × C are equal to 1.</p>
+<p>The <strong>chi-square independence test</strong> tests whether observed joint frequency counts <span class="math inline">\(O_{ijk}\)</span> differ from expected frequency counts <span class="math inline">\(E_{ijk}\)</span> under the <em>independence model</em> <span class="math inline">\(\pi_{ijk} = \pi_{i+} \pi_{+j} \pi_{k+}\)</span>. <span class="math inline">\(H_0\)</span> is <span class="math inline">\(O_{ijk} = E_{ijk}\)</span>. This is essentially a one-way table chi-squre goodness-of-fit test.</p>
+<p>For the <em>Boy Scouts</em> study, <span class="math inline">\(X^2\)</span> and its associated p-value is</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="k-way-tables.html#cb131-1"></a>scout_e &lt;-<span class="st"> </span><span class="kw">array</span>(<span class="ot">NA</span>, <span class="kw">dim</span>(scout_ct))</span>
+<span id="cb131-2"><a href="k-way-tables.html#cb131-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">dim</span>(scout_ct)[<span class="dv">1</span>]) {</span>
+<span id="cb131-3"><a href="k-way-tables.html#cb131-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">dim</span>(scout_ct)[<span class="dv">2</span>]) {</span>
+<span id="cb131-4"><a href="k-way-tables.html#cb131-4"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">dim</span>(scout_ct)[<span class="dv">3</span>]) {</span>
+<span id="cb131-5"><a href="k-way-tables.html#cb131-5"></a>      scout_e[i,j,k] &lt;-<span class="st"> </span>(</span>
+<span id="cb131-6"><a href="k-way-tables.html#cb131-6"></a>        <span class="kw">margin.table</span>(scout_ct, <span class="dv">3</span>)[k] <span class="op">*</span></span>
+<span id="cb131-7"><a href="k-way-tables.html#cb131-7"></a><span class="st">        </span><span class="kw">margin.table</span>(scout_ct, <span class="dv">2</span>)[j] <span class="op">*</span><span class="st"> </span></span>
+<span id="cb131-8"><a href="k-way-tables.html#cb131-8"></a><span class="st">        </span><span class="kw">margin.table</span>(scout_ct, <span class="dv">1</span>)[i]) <span class="op">/</span></span>
+<span id="cb131-9"><a href="k-way-tables.html#cb131-9"></a><span class="st">        </span>(<span class="kw">sum</span>(scout_ct))<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb131-10"><a href="k-way-tables.html#cb131-10"></a>    }</span>
+<span id="cb131-11"><a href="k-way-tables.html#cb131-11"></a>  }</span>
+<span id="cb131-12"><a href="k-way-tables.html#cb131-12"></a>}</span>
+<span id="cb131-13"><a href="k-way-tables.html#cb131-13"></a>scout_df &lt;-<span class="st"> </span>(<span class="kw">prod</span>(<span class="kw">dim</span>(scout_ct)) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">dim</span>(scout_ct) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb131-14"><a href="k-way-tables.html#cb131-14"></a>scout_x2 &lt;-<span class="st"> </span><span class="kw">sum</span>((scout_ct <span class="op">-</span><span class="st"> </span>scout_e)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>scout_e)</span>
+<span id="cb131-15"><a href="k-way-tables.html#cb131-15"></a><span class="kw">print</span>(scout_x2)</span></code></pre></div>
+<pre><code>## [1] 214.9233</code></pre>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="k-way-tables.html#cb133-1"></a><span class="kw">pchisq</span>(scout_x2, <span class="dt">df =</span> scout_df, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 7.882742e-43</code></pre>
+<p>You can also get X^2 this way, although longer code.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="k-way-tables.html#cb135-1"></a>x &lt;-<span class="st"> </span>scout <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(delinquent) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb135-2"><a href="k-way-tables.html#cb135-2"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n =</span> <span class="kw">sum</span>(count)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n))</span>
+<span id="cb135-3"><a href="k-way-tables.html#cb135-3"></a>p_d &lt;-<span class="st"> </span>x<span class="op">$</span>p</span>
+<span id="cb135-4"><a href="k-way-tables.html#cb135-4"></a><span class="kw">names</span>(p_d) &lt;-<span class="st"> </span>x<span class="op">$</span>delinquent</span>
+<span id="cb135-5"><a href="k-way-tables.html#cb135-5"></a></span>
+<span id="cb135-6"><a href="k-way-tables.html#cb135-6"></a>x &lt;-<span class="st"> </span>scout <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(scout) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb135-7"><a href="k-way-tables.html#cb135-7"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n =</span> <span class="kw">sum</span>(count)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n))</span>
+<span id="cb135-8"><a href="k-way-tables.html#cb135-8"></a>p_b &lt;-<span class="st"> </span>x<span class="op">$</span>p</span>
+<span id="cb135-9"><a href="k-way-tables.html#cb135-9"></a><span class="kw">names</span>(p_b) &lt;-<span class="st"> </span>x<span class="op">$</span>scout</span>
+<span id="cb135-10"><a href="k-way-tables.html#cb135-10"></a></span>
+<span id="cb135-11"><a href="k-way-tables.html#cb135-11"></a>x &lt;-<span class="st"> </span>scout <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(SES) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb135-12"><a href="k-way-tables.html#cb135-12"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n =</span> <span class="kw">sum</span>(count)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n))</span>
+<span id="cb135-13"><a href="k-way-tables.html#cb135-13"></a>p_s &lt;-<span class="st"> </span>x<span class="op">$</span>p</span>
+<span id="cb135-14"><a href="k-way-tables.html#cb135-14"></a><span class="kw">names</span>(p_s) &lt;-<span class="st"> </span>x<span class="op">$</span>SES</span>
+<span id="cb135-15"><a href="k-way-tables.html#cb135-15"></a></span>
+<span id="cb135-16"><a href="k-way-tables.html#cb135-16"></a>scout_e &lt;-<span class="st"> </span>scout <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb135-17"><a href="k-way-tables.html#cb135-17"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">e =</span> <span class="kw">as.numeric</span>(p_d[delinquent] <span class="op">*</span><span class="st"> </span>p_b[scout] <span class="op">*</span><span class="st"> </span>p_s[SES] <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(count)))</span>
+<span id="cb135-18"><a href="k-way-tables.html#cb135-18"></a></span>
+<span id="cb135-19"><a href="k-way-tables.html#cb135-19"></a>x2 &lt;-<span class="st"> </span><span class="kw">sum</span>((scout_e<span class="op">$</span>count <span class="op">-</span><span class="st"> </span>scout_e<span class="op">$</span>e)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>scout_e<span class="op">$</span>e)</span>
+<span id="cb135-20"><a href="k-way-tables.html#cb135-20"></a><span class="kw">print</span>(x2)</span></code></pre></div>
+<pre><code>## [1] 214.9233</code></pre>
+<p>The deviance statistic is</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="k-way-tables.html#cb137-1"></a>scout_g2 &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(scout_ct <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(scout_ct <span class="op">/</span><span class="st"> </span>scout_e<span class="op">$</span>e))</span>
+<span id="cb137-2"><a href="k-way-tables.html#cb137-2"></a><span class="kw">print</span>(scout_g2)</span></code></pre></div>
+<pre><code>## [1] 218.6622</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="k-way-tables.html#cb139-1"></a><span class="kw">pchisq</span>(scout_g2, <span class="dt">df =</span> scout_df, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 1.268665e-43</code></pre>
+<p>Safe to say the mutual independence model does not fit.</p>
+<p><code>chisq.test()</code> does not test the complete independence model for <em>k</em>-way tables. Instead, conduct tests on all <span class="math inline">\({3 \choose 2} = 3\)</span> embedded 2-way tables. For the <em>Boy Scouts</em> study, you can conduct a series of 2-way chi-sq tests.</p>
+<p>SES*scout:</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="k-way-tables.html#cb141-1"></a>(scout_ses_scout &lt;-<span class="st"> </span><span class="kw">margin.table</span>(scout_ct, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>)))</span></code></pre></div>
+<pre><code>##       scout
+## SES     no yes
+##   low  211  54
+##   med  152 118
+##   high  61 204</code></pre>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="k-way-tables.html#cb143-1"></a><span class="kw">chisq.test</span>(scout_ses_scout)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
 ## 
-## data:  dat$lev and dat$pop
-## X-squared = 31.881, df = 3, p-value = 5.543e-07</code></pre>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" title="1"><span class="co"># Graph of hypothesis test</span></a>
-<a class="sourceLine" id="cb122-2" title="2">lrr =<span class="st"> </span><span class="op">-</span><span class="ot">Inf</span></a>
-<a class="sourceLine" id="cb122-3" title="3">urr =<span class="st"> </span><span class="kw">qchisq</span>(<span class="dt">p =</span> alpha, <span class="dt">df =</span> df, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb122-4" title="4"><span class="kw">data.frame</span>(<span class="dt">xi =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">400</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb122-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">dchisq</span>(<span class="dt">x =</span> xi, <span class="dt">df =</span> df)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb122-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rr =</span> <span class="kw">ifelse</span>(xi <span class="op">&lt;</span><span class="st"> </span>lrr <span class="op">|</span><span class="st"> </span>xi <span class="op">&gt;</span><span class="st"> </span>urr, density, <span class="dv">0</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb122-7" title="7"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb122-8" title="8"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> xi, <span class="dt">y =</span> density), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb122-9" title="9"><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> xi, <span class="dt">y =</span> rr), <span class="dt">fill =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb122-10" title="10"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> test<span class="op">$</span>statistic), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb122-11" title="11"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&quot;Chi-Square Test for Homogeneity&quot;</span>),</a>
-<a class="sourceLine" id="cb122-12" title="12">       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&quot;P-value =&quot;</span><span class="op">~</span>.(test<span class="op">$</span>p.value)),</a>
-<a class="sourceLine" id="cb122-13" title="13">       <span class="dt">x =</span> <span class="st">&quot;xi^2&quot;</span>,</a>
-<a class="sourceLine" id="cb122-14" title="14">       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb122-15" title="15"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>)</a></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+## data:  scout_ses_scout
+## X-squared = 172.2, df = 2, p-value &lt; 2.2e-16</code></pre>
+<p>SES*delinquent</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="k-way-tables.html#cb145-1"></a>(scout_ses_delinquent &lt;-<span class="st"> </span><span class="kw">margin.table</span>(scout_ct, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>)))</span></code></pre></div>
+<pre><code>##       delinquent
+## SES     no yes
+##   low  212  53
+##   med  236  34
+##   high 255  10</code></pre>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="k-way-tables.html#cb147-1"></a><span class="kw">chisq.test</span>(scout_ses_delinquent)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  scout_ses_delinquent
+## X-squared = 32.826, df = 2, p-value = 7.445e-08</code></pre>
+<p>delinquent*scout</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="k-way-tables.html#cb149-1"></a>(scout_delinquent_scout &lt;-<span class="st"> </span><span class="kw">margin.table</span>(scout_ct, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)))</span></code></pre></div>
+<pre><code>##           scout
+## delinquent  no yes
+##        no  360 343
+##        yes  64  33</code></pre>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="k-way-tables.html#cb151-1"></a><span class="kw">chisq.test</span>(scout_delinquent_scout)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+## 
+## data:  scout_delinquent_scout
+## X-squared = 6.884, df = 1, p-value = 0.008697</code></pre>
+<p>The odds ratio for scout delinquency vs non-scout delinquency is 0.54 with 95% CI (0.347, 0.845), so reject the null hypothesis that boy scout status and delinquent status are independent of one another (OR = 1), and thus that boy scout status, delinquent status, and socioeconomic status are not mutually independent.</p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="k-way-tables.html#cb153-1"></a>(scout_or &lt;-<span class="st"> </span>vcd<span class="op">::</span><span class="kw">oddsratio</span>(scout_delinquent_scout, <span class="dt">log =</span> <span class="ot">FALSE</span>))</span></code></pre></div>
+<pre><code>##  odds ratios for delinquent and scout 
+## 
+## [1] 0.5411808</code></pre>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="k-way-tables.html#cb155-1"></a><span class="kw">confint</span>(scout_or)</span></code></pre></div>
+<pre><code>##                   2.5 %    97.5 %
+## no:yes/no:yes 0.3466943 0.8447691</code></pre>
+</div>
+<div id="joint-independence" class="section level4">
+<h4><span class="header-section-number">4.4.2.2</span> Joint Independence</h4>
+<p>The joint independence model is that two variables are jointly independent of a third (AB, C). The joint probabilities are equal to the product of the AB marginal probability and the C marginal probability, <span class="math inline">\(\pi_{ijk} = \pi_{ij} \pi_k\)</span>.</p>
+<p>The degrees of freedom in the associated chi-sq test are the number of free parameters in the saturated model minus the number of free parameters in the joint independence model. <span class="math inline">\(df = (IJK-1) - ((IJ-1) + (K-1)) = (IJ-1)(K-1)\)</span>.</p>
+<p>From the <em>Boy Scouts</em> study, suppose juvenile delinquency is the response variable. Test the null hypothesis that juvenile delinquency is independent of boy scout status and socioeconomic status.</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="k-way-tables.html#cb157-1"></a>scout_d_bs &lt;-<span class="st"> </span><span class="kw">ftable</span>(</span>
+<span id="cb157-2"><a href="k-way-tables.html#cb157-2"></a>  scout_ct, </span>
+<span id="cb157-3"><a href="k-way-tables.html#cb157-3"></a>  <span class="dt">row.vars =</span> <span class="kw">c</span>(<span class="st">&quot;SES&quot;</span>, <span class="st">&quot;scout&quot;</span>), </span>
+<span id="cb157-4"><a href="k-way-tables.html#cb157-4"></a>  <span class="dt">col.vars =</span> <span class="st">&quot;delinquent&quot;</span></span>
+<span id="cb157-5"><a href="k-way-tables.html#cb157-5"></a>)</span>
+<span id="cb157-6"><a href="k-way-tables.html#cb157-6"></a><span class="kw">print</span>(scout_d_bs)</span></code></pre></div>
+<pre><code>##            delinquent  no yes
+## SES  scout                   
+## low  no               169  42
+##      yes               43  11
+## med  no               132  20
+##      yes              104  14
+## high no                59   2
+##      yes              196   8</code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="k-way-tables.html#cb159-1"></a><span class="kw">chisq.test</span>(scout_d_bs)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  scout_d_bs
+## X-squared = 32.958, df = 5, p-value = 3.837e-06</code></pre>
+<p>Notice how the contingency table is constructed to not indicate whether <em>SES</em> and <em>scout</em> are related.</p>
+</div>
+<div id="marginal-independence" class="section level4">
+<h4><span class="header-section-number">4.4.2.3</span> Marginal Independence</h4>
+<p>The marginal independence model is that two variables are independent while <em>ignoring</em> the third (A, B). The joint probabilities are equal to the product of the two marginal probabilities, <span class="math inline">\(\pi_{ij} = \pi_{i} \pi_j\)</span>, just like a 2-way table.</p>
+<p>The degrees of freedom in the associated chi-sq test are the number of free parameters in the saturated model minus the number of free parameters in the marginal independence model. <span class="math inline">\(df = (I - 1) + (J - 1) = (I-1)(J-1)\)</span>.</p>
+<p>From the <em>Boy Scouts</em> study, suppose juvenile delinquency is the response variable. Test the null hypothesis that juvenile delinquency is independent of boy scout status and socioeconomic status.</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="k-way-tables.html#cb161-1"></a>ct &lt;-<span class="st"> </span><span class="kw">xtabs</span>(count <span class="op">~</span><span class="st"> </span>scout <span class="op">+</span><span class="st"> </span>SES, scout)</span>
+<span id="cb161-2"><a href="k-way-tables.html#cb161-2"></a><span class="kw">print</span>(ct)</span></code></pre></div>
+<pre><code>##      SES
+## scout low med high
+##   no  211 152   61
+##   yes  54 118  204</code></pre>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="k-way-tables.html#cb163-1"></a><span class="kw">chisq.test</span>(ct)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  ct
+## X-squared = 172.2, df = 2, p-value &lt; 2.2e-16</code></pre>
+</div>
+<div id="conditional-independence" class="section level4">
+<h4><span class="header-section-number">4.4.2.4</span> Conditional Independence</h4>
+<p>The conditional independence model is that two variables are independent given a third (AB, AC). The joint probabilities are equal to the product of the conditional probabilities (B|A and C|A) and the marginal probability of A, <span class="math inline">\(\pi_{ijk} = \pi_{j|i}\pi_{k|i}\pi_{i++}\)</span>.</p>
+<p>You can test for conditional independence (AB, AC) by individually testing the independence (B, C) for each level of A. <span class="math inline">\(X^2\)</span> and <span class="math inline">\(G^2\)</span> are the sum of the individual values and the degrees of freedom are <span class="math inline">\(I(J-1)(K-1)\)</span>. A better way to do it is with the Cochran-Mantel-Haenszel Test.</p>
+<p>The degrees of freedom in the associated chi-sq test are the number of free parameters in the saturated model minus the number of free parameters in the joint independence model. <span class="math inline">\(df = (IJK-1) - ((IJ-1) + (K-1)) = (IJ-1)(K-1)\)</span>.</p>
+<p>From the <em>Boy Scouts</em> study, the section on joint independence found that scouting and SES were jointly independent of delinquency, so it must be that either scouting is independent of delinquency, or SES is independent of delinquency, or <em>both</em> are independent of delinquency. The marginal test below establishes the independance of (scout, delinquent).</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="k-way-tables.html#cb165-1"></a>ct &lt;-<span class="st"> </span><span class="kw">xtabs</span>(count <span class="op">~</span><span class="st"> </span>scout <span class="op">+</span><span class="st"> </span>delinquent, scout)</span>
+<span id="cb165-2"><a href="k-way-tables.html#cb165-2"></a><span class="kw">print</span>(ct)</span></code></pre></div>
+<pre><code>##      delinquent
+## scout  no yes
+##   no  360  64
+##   yes 343  33</code></pre>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="k-way-tables.html#cb167-1"></a><span class="kw">chisq.test</span>(ct, <span class="dt">correct =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  ct
+## X-squared = 7.4652, df = 1, p-value = 0.00629</code></pre>
+<p>The odds ratio 0.54 is a strong negative relationship between boy scout status and delinquency - boy scouts are 46% less likely (on the odds scale) to be delinquent than non-boy scouts.</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="k-way-tables.html#cb169-1"></a>ct &lt;-<span class="st"> </span><span class="kw">xtabs</span>(count <span class="op">~</span><span class="st"> </span>scout <span class="op">+</span><span class="st"> </span>delinquent, scout)</span>
+<span id="cb169-2"><a href="k-way-tables.html#cb169-2"></a>p &lt;-<span class="st"> </span><span class="kw">prop.table</span>(ct, <span class="dt">margin =</span> <span class="dv">1</span>)</span>
+<span id="cb169-3"><a href="k-way-tables.html#cb169-3"></a>(or &lt;-<span class="st"> </span>(p[<span class="dv">2</span>, <span class="dv">2</span>] <span class="op">/</span><span class="st"> </span>p[<span class="dv">2</span>, <span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span>(p[<span class="dv">1</span>, <span class="dv">2</span>] <span class="op">/</span><span class="st"> </span>p[<span class="dv">1</span>, <span class="dv">1</span>]))</span></code></pre></div>
+<pre><code>## [1] 0.5411808</code></pre>
+<p>However, one may ask <em>is scouting and delinquency conditionally independent given SES?</em> You can answer this question with three chi-square tests, one for each level of SES.</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="k-way-tables.html#cb171-1"></a>ct &lt;-<span class="st"> </span><span class="kw">xtabs</span>(count <span class="op">~</span><span class="st"> </span>scout <span class="op">+</span><span class="st"> </span>delinquent, scout[scout<span class="op">$</span>SES <span class="op">==</span><span class="st"> &quot;low&quot;</span>, ])</span>
+<span id="cb171-2"><a href="k-way-tables.html#cb171-2"></a><span class="kw">print</span>(ct)</span></code></pre></div>
+<pre><code>##      delinquent
+## scout  no yes
+##   no  169  42
+##   yes  43  11</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="k-way-tables.html#cb173-1"></a><span class="kw">chisq.test</span>(ct, <span class="dt">correct =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  ct
+## X-squared = 0.0058145, df = 1, p-value = 0.9392</code></pre>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="k-way-tables.html#cb175-1"></a>ct &lt;-<span class="st"> </span><span class="kw">xtabs</span>(count <span class="op">~</span><span class="st"> </span>scout <span class="op">+</span><span class="st"> </span>delinquent, scout[scout<span class="op">$</span>SES <span class="op">==</span><span class="st"> &quot;med&quot;</span>, ])</span>
+<span id="cb175-2"><a href="k-way-tables.html#cb175-2"></a><span class="kw">print</span>(ct)</span></code></pre></div>
+<pre><code>##      delinquent
+## scout  no yes
+##   no  132  20
+##   yes 104  14</code></pre>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="k-way-tables.html#cb177-1"></a><span class="kw">chisq.test</span>(ct, <span class="dt">correct =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  ct
+## X-squared = 0.10098, df = 1, p-value = 0.7507</code></pre>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="k-way-tables.html#cb179-1"></a>ct &lt;-<span class="st"> </span><span class="kw">xtabs</span>(count <span class="op">~</span><span class="st"> </span>scout <span class="op">+</span><span class="st"> </span>delinquent, scout[scout<span class="op">$</span>SES <span class="op">==</span><span class="st"> &quot;high&quot;</span>, ])</span>
+<span id="cb179-2"><a href="k-way-tables.html#cb179-2"></a><span class="kw">print</span>(ct)</span></code></pre></div>
+<pre><code>##      delinquent
+## scout  no yes
+##   no   59   2
+##   yes 196   8</code></pre>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="k-way-tables.html#cb181-1"></a><span class="kw">chisq.test</span>(ct, <span class="dt">correct =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## Warning in chisq.test(ct, correct = FALSE): Chi-squared approximation may be
+## incorrect</code></pre>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  ct
+## X-squared = 0.053447, df = 1, p-value = 0.8172</code></pre>
+<p>You can add up the three <span class="math inline">\(X^2\)</span> values and run a chi-sq test with <span class="math inline">\(df = 3\)</span>. p = 0.984 indicating that the conditional independence model fits extremely well.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="k-way-tables.html#cb184-1"></a><span class="kw">pchisq</span>(<span class="fl">0.0058145</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.10098</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.053447</span>, <span class="dt">df =</span> <span class="dv">3</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.983737</code></pre>
+<p>The other way of testing for independence is the Cochran-Mantel-Haenszel test.</p>
+<p>The Cochran-Mantel-Haenszel (CMH) test statistic</p>
+<p><span class="math display">\[M^2 = \frac{\left[ \sum_k{(n_{11k} - \mu_{11k})}\right]^2}{\sum_k{Var(n_{11k})}}\]</span></p>
+<p>For the <em>Boy Scouts</em> study, the test is</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="k-way-tables.html#cb186-1"></a><span class="kw">mantelhaen.test</span>(scout_ct)</span></code></pre></div>
+<pre><code>## 
+##  Mantel-Haenszel chi-squared test without continuity correction
+## 
+## data:  scout_ct
+## Mantel-Haenszel X-squared = 0.0080042, df = 1, p-value = 0.9287
+## alternative hypothesis: true common odds ratio is not equal to 1
+## 95 percent confidence interval:
+##  0.5970214 1.6009845
+## sample estimates:
+## common odds ratio 
+##         0.9776615</code></pre>
+<p>X2= 0.008 (df = 1, p-value = 0.9287) indicating the conditional independence model is a good fit for this data, so do not reject the null hypothesis.</p>
+</div>
+<div id="homogenous-associations" class="section level4">
+<h4><span class="header-section-number">4.4.2.5</span> Homogenous Associations</h4>
+<p>Whereas the conditional independence model, (AB, AC) requires the BC odds ratios at each level of A to equal 1, the homogeneous association model, (AB, AC, BC), requires the BC odds ratios at each level of A to be identical, but not necessarily equal to 1.</p>
+<p>The Breslow-Day statistic is</p>
+<p><span class="math display">\[X^2 = \sum_{ijk}{\frac{\left(O_{ijk} - E_{ijk}\right)^2}{E_{ijk}}}\]</span></p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="k-way-tables.html#cb188-1"></a>DescTools<span class="op">::</span><span class="kw">BreslowDayTest</span>(scout_ct)</span></code></pre></div>
+<pre><code>## 
+##  Breslow-Day test on Homogeneity of Odds Ratios
+## 
+## data:  scout_ct
+## X-squared = 0.1518, df = 2, p-value = 0.9269</code></pre>
 
+</div>
+</div>
 </div>
 <!-- </div> -->
             </section>

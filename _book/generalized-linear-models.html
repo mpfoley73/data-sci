@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-10" />
+<meta name="date" content="2020-03-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -160,7 +160,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="discrete-variables.html"><a href="discrete-variables.html"><i class="fa fa-check"></i><b>4</b> Discrete Variables</a><ul>
+<li class="chapter" data-level="4" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>4</b> Categorical Analysis - Nonmodel</a><ul>
 <li class="chapter" data-level="4.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>4.1</b> Chi-Square Test</a></li>
 <li class="chapter" data-level="4.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> One-Way Tables</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
@@ -172,10 +172,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.3" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.3.3</b> Difference in Proportions</a></li>
 <li class="chapter" data-level="4.3.4" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.3.4</b> Relative Risk</a></li>
 <li class="chapter" data-level="4.3.5" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.3.5</b> Odds Ratio</a></li>
+<li class="chapter" data-level="4.3.6" data-path="two-way-tables.html"><a href="two-way-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>4.3.6</b> Partitioning Chi-Square</a></li>
+<li class="chapter" data-level="4.3.7" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>4.3.7</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="example-of-chi-square-test-of-homogeneity.html"><a href="example-of-chi-square-test-of-homogeneity.html"><i class="fa fa-check"></i><b>4.4</b> Example of Chi-Square Test of Homogeneity</a></li>
+<li class="chapter" data-level="4.4" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>4.4</b> K-Way Tables</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>4.4.1</b> Odds Ratio</a></li>
+<li class="chapter" data-level="4.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>4.4.2</b> Chi-Square Independence Test</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5</b> Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>5</b> Continuous Variable Analysis</a><ul>
+<li class="chapter" data-level="5.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>5.0.1</b> Correlation</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
 <li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
 <li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a><ul>
@@ -253,20 +260,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="generalized-linear-models" class="section level1">
 <h1><span class="header-section-number">Chapter 7</span> Generalized Linear Models</h1>
-<p>These notes are primarily from PSU Online course <a href="https://online.stat.psu.edu/stat504">Analysis of Discrete Data</a> which uses Alan Agresti’s <strong>Categorical Data Analysis</strong> (which I have not yet purchased) <span class="citation">(Agresti <a href="#ref-Agresti2013" role="doc-biblioref">2013</a>)</span>. I also reviewed:</p>
-<p>Penn State University, STAT 501, “Lesson 15: Logistic, Poisson &amp; Nonlinear Regression”. <a href="https://newonlinecourses.science.psu.edu/stat501/lesson/15">https://newonlinecourses.science.psu.edu/stat501/lesson/15</a></p>
-<p>“Generalized Linar Models in R”. DataCamp. <a href="https://www.datacamp.com/courses/generalized-linear-models-in-r">https://www.datacamp.com/courses/generalized-linear-models-in-r</a>.</p>
-<p>“Multiple and Logistic Regression”. DataCamp. <a href="https://www.datacamp.com/courses/multiple-and-logistic-regression">https://www.datacamp.com/courses/multiple-and-logistic-regression</a>.</p>
-<p>Molnar, Christoph. “Interpretable machine learning. A Guide for Making Black Box Models Explainable”, 2019. <a href="https://christophm.github.io/interpretable-ml-book/">https://christophm.github.io/interpretable-ml-book/</a>.</p>
-<p>In generalized linear models (GLMs), the modeled response is <em>a function</em> of the mean of <span class="math inline">\(y\)</span>. There are three components to a GLM. The <em>random component</em> is the probability distribution of the response variable (normal, binomial, Poisson, etc.). The <em>systematic component</em> is the explanatory variables <span class="math inline">\(X\beta\)</span>. The <em>link function</em> <span class="math inline">\(\eta\)</span> specifies the link between random and systematic components. The link function converts the response value from a range <span class="math inline">\([0,1]\)</span> in logistic and probit and <span class="math inline">\([0,+\infty]\)</span> for Poisson to a value ranging from <span class="math inline">\([-\infty, +\infty]\)</span>, and creates a linear relationship with the predictor variables.</p>
-<p>For a standard linear regression, the link function is the identity function,</p>
-<p><span class="math display">\[f(\mu_Y) = \mu_Y.\]</span></p>
-<p>The standard linear regression is thus a special case of the GLM. For a logistic regression, the link function is</p>
-<p><span class="math display">\[f(\mu_Y) = \ln(\frac{\pi}{1-\pi})\]</span></p>
-<p>where <span class="math inline">\(\pi\)</span> is the event probability. For a probit regression, the link function is</p>
-<p><span class="math display">\[f(\mu_Y) = \Phi^{-1}(\pi).\]</span></p>
-<p>The difference between logistic and probit link function is theoretical - <a href="https://www.theanalysisfactor.com/the-difference-between-logistic-and-probit-regression/">the practical significance is slight</a>. Logistic regression has the advantage that it can be back-transformed from log odds to odds ratios. For a Poisson regression, the link function is</p>
-<p><span class="math display">\[f(\mu_Y) = \ln(\lambda)\]</span></p>
+<p>These notes are primarily from PSU STAT 504 <a href="https://online.stat.psu.edu/stat504">Analysis of Discrete Data</a> which uses Alan Agresti’s <strong>Categorical Data Analysis</strong> <span class="citation">(Agresti <a href="#ref-Agresti2013" role="doc-biblioref">2013</a>)</span>. I also reviewed <a href="https://newonlinecourses.science.psu.edu/stat501/lesson/15">PSU STAT 501</a>, <a href="https://www.datacamp.com/courses/generalized-linear-models-in-r">DataCamp’s Generalized Linar Models in R</a>, <a href="https://www.datacamp.com/courses/multiple-and-logistic-regression">DataCamp’s Multiple and Logistic Regression</a>, and “Interpretable machine learning” <span class="citation">(Molnar <a href="#ref-Molner2020" role="doc-biblioref">2020</a>)</span>.</p>
+<p>The linear regression model, <span class="math inline">\(E(Y|X) = X \beta\)</span>, or equivalently, <span class="math inline">\(y_i = X_i \beta + \epsilon_i\)</span> where <span class="math inline">\(X_i \beta = \mu_i\)</span>, assumes the response is a linear function of the predictors and the residuals are independent random variables normally distributed with mean zero and constant variance, <span class="math inline">\(\epsilon \sim N \left(0, \sigma^2 \right)\)</span>. This means that given some set of predictors, the response is normally distributed about its expected value, <span class="math inline">\(y_i \sim N \left(\mu_i, \sigma^2 \right)\)</span>. However, there are many situations where this assumption of normality fails. Generalized linear models (GLMs) are a generalization of the linear regression model that addresses non-normal response distributions.</p>
+<p>The response given a set of predictors will not have a normal distribution if its underlying data-generating process is binomial or multinomial (proportions), Poisson (counts), or exponential (time-to-event). In these situations a regular linear regression can predict negative counts, or proportions &gt;100%. GLMs solve this problem by modeling <em>a function</em> of the expected value of <span class="math inline">\(y\)</span>, <span class="math inline">\(f(E(Y|X)) = X \beta\)</span>. There are three components to a GLM: the <em>random component</em> is the probability distribution of the response variable (normal, binomial, Poisson, <a href="https://en.wikipedia.org/wiki/Exponential_family#Table_of_distributions">etc</a>.); the <em>systematic component</em> is the explanatory variables <span class="math inline">\(X\beta\)</span>; and the <em>link function</em> <span class="math inline">\(\eta\)</span> specifies the link between random and systematic components, converting the response range to <span class="math inline">\([-\infty, +\infty]\)</span>.</p>
+<p>Linear regression is thus a special case of GLM where link function is the identity function, <span class="math inline">\(f(E(Y|X)) = E(Y|X)\)</span>. For a logistic regression, where the data generating process is binomial, the link function is</p>
+<p><span class="math display">\[f(E(Y|X)) = \ln \left( \frac{E(Y|X)}{1 - E(Y|X)} \right) = \ln \left( \frac{\pi}{1 - \pi} \right)\]</span></p>
+<p>where <span class="math inline">\(\pi\)</span> is the event probability. (The probit regression link function is <span class="math inline">\(f(E(Y|X)) = \Phi^{-1}(E(Y|X)) = \Phi^{-1}(\pi)\)</span>. The difference between the logistic and probit link function is theoretical, and <a href="https://www.theanalysisfactor.com/the-difference-between-logistic-and-probit-regression/">the practical significance is slight</a>). For a Poisson regression, the link function is</p>
+<p><span class="math display">\[f(E(Y|X)) = \ln (E(Y|X)) = \ln(\lambda)\]</span></p>
 <p>where <span class="math inline">\(\lambda\)</span> is the expected event rate.</p>
 <p>GLM uses maximum likelihood estimation (MLE) rather than ordinary least squares (OLS) to estimate the parameters, and thus relies on large-sample approximations.</p>
 <p>In R, specify a GLM just like an linear model, but with the <code>glm()</code> function, specifying the distribution with the <code>family</code> parameter.</p>
@@ -281,6 +281,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="refs" class="references">
 <div id="ref-Agresti2013">
 <p>Agresti, Alan. 2013. <em>Categorical Data Analysis</em>. 3rd ed. Wiley. <a href="https://www.amazon.com/Categorical-Analysis-Wiley-Probability-Statistics-ebook-dp-B00CAYUFM2/dp/B00CAYUFM2/ref=mt_kindle?_encoding=UTF8&amp;me=&amp;qid=">https://www.amazon.com/Categorical-Analysis-Wiley-Probability-Statistics-ebook-dp-B00CAYUFM2/dp/B00CAYUFM2/ref=mt_kindle?_encoding=UTF8&amp;me=&amp;qid=</a>.</p>
+</div>
+<div id="ref-Molner2020">
+<p>Molnar, Christoph. 2020. <em>Interpretable Machine Learning</em>. <a href="https://christophm.github.io/interpretable-ml-book/">https://christophm.github.io/interpretable-ml-book/</a>.</p>
 </div>
 </div>
             </section>
