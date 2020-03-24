@@ -9,21 +9,29 @@ library(readr)
 ```
 
 
-These notes are primarily from PSU STAT 504 [Analysis of Discrete Data](https://online.stat.psu.edu/stat504) which uses Alan Agresti's **Categorical Data Analysis** [@Agresti2013].  I also reviewed [PSU STAT 501](https://newonlinecourses.science.psu.edu/stat501/lesson/15), [DataCamp's Generalized Linar Models in R](https://www.datacamp.com/courses/generalized-linear-models-in-r), [DataCamp's Multiple and Logistic Regression](https://www.datacamp.com/courses/multiple-and-logistic-regression), and "Interpretable machine learning" [@Molner2020].
+These notes are primarily from [PSU STAT 504](https://online.stat.psu.edu/stat504) which uses Alan Agresti's **Categorical Data Analysis** [@Agresti2013].  I also reviewed [PSU STAT 501](https://newonlinecourses.science.psu.edu/stat501/lesson/15), [DataCamp's Generalized Linar Models in R](https://www.datacamp.com/courses/generalized-linear-models-in-r), [DataCamp's Multiple and Logistic Regression](https://www.datacamp.com/courses/multiple-and-logistic-regression), and **Interpretable machine learning*"** [@Molner2020].
 
-The linear regression model, $E(Y|X) = X \beta$, or equivalently, $y_i = X_i \beta + \epsilon_i$ where $X_i \beta = \mu_i$, assumes the response is a linear function of the predictors and the residuals are independent random variables normally distributed with mean zero and constant variance, $\epsilon \sim N \left(0, \sigma^2 \right)$.  This means that given some set of predictors, the response is normally distributed about its expected value, $y_i \sim N \left(\mu_i, \sigma^2 \right)$.  However, there are many situations where this assumption of normality fails.  Generalized linear models (GLMs) are a generalization of the linear regression model that addresses non-normal response distributions.
+The linear regression model, $E(Y|X) = X \beta$, structured as $y_i = X_i \beta + \epsilon_i$ where $X_i \beta = \mu_i$, assumes the response is a linear function of the predictors and the residuals are independent random variables normally distributed with mean zero and constant variance, $\epsilon \sim N \left(0, \sigma^2 \right)$.  This implies that given some set of predictors, the response is normally distributed about its expected value, $y_i \sim N \left(\mu_i, \sigma^2 \right)$.  However, there are many situations where this assumption of normality fails.  Generalized linear models (GLMs) are a generalization of the linear regression model that addresses non-normal response distributions.
 
-The response given a set of predictors will not have a normal distribution if its underlying data-generating process is binomial or multinomial (proportions), Poisson (counts), or exponential (time-to-event).  In these situations a regular linear regression can predict negative counts, or proportions >100%.  GLMs solve this problem by modeling *a function* of the expected value of $y$, $f(E(Y|X)) = X \beta$.  There are three components to a GLM: the *random component* is the probability distribution of the response variable (normal, binomial, Poisson, [etc](https://en.wikipedia.org/wiki/Exponential_family#Table_of_distributions).); the *systematic component* is the explanatory variables $X\beta$; and the *link function* $\eta$ specifies the link between random and systematic components, converting the response range to $[-\infty, +\infty]$.  
+The response given a set of predictors will not have a normal distribution if its underlying data-generating process is binomial or multinomial (proportions), Poisson (counts), or exponential (time-to-event).  In these situations a regular linear regression can predict proportions outside [0, 100] or counts or times that are negative.  GLMs solve this problem by modeling *a function* of the expected value of $y$, $f(E(Y|X)) = X \beta$.  There are three components to a GLM: the *random component* is the probability distribution of the response variable (normal, binomial, Poisson, [etc](https://en.wikipedia.org/wiki/Exponential_family#Table_of_distributions).); the *systematic component* is the explanatory variables $X\beta$; and the *link function* $\eta$ specifies the link between random and systematic components, converting the response range to $[-\infty, +\infty]$.  
 
 Linear regression is thus a special case of GLM where link function is the identity function, $f(E(Y|X)) = E(Y|X)$.  For a logistic regression, where the data generating process is binomial, the link function is 
 
-$$f(E(Y|X)) = \ln \left( \frac{E(Y|X)}{1 - E(Y|X)} \right) = \ln \left( \frac{\pi}{1 - \pi} \right)$$
+$$f(E(Y|X)) = \ln \left( \frac{E(Y|X)}{1 - E(Y|X)} \right) = \ln \left( \frac{\pi}{1 - \pi} \right) = logit(\pi)$$
 
-where $\pi$ is the event probability.  (The probit regression link function is $f(E(Y|X)) = \Phi^{-1}(E(Y|X)) = \Phi^{-1}(\pi)$. The difference between the logistic and probit link function is theoretical, and [the practical significance is slight](https://www.theanalysisfactor.com/the-difference-between-logistic-and-probit-regression/)).  For a Poisson regression, the link function is
+where $\pi$ is the event probability.  (As an aside, you have probably heard of the related "probit" regression. The probit regression link function is $f(E(Y|X)) = \Phi^{-1}(E(Y|X)) = \Phi^{-1}(\pi)$. The difference between the logistic and probit link function is theoretical, and [the practical significance is slight](https://www.theanalysisfactor.com/the-difference-between-logistic-and-probit-regression/).  You can probably safely ignore probit).  
+
+For a Poisson regression, the link function is
 
 $$f(E(Y|X)) = \ln (E(Y|X)) = \ln(\lambda)$$
 
 where $\lambda$ is the expected event rate.  
+
+For an exponential regression, the link function is 
+
+$$f(E(Y|X) = -E(Y|X) = -\lambda$$
+
+where $\lambda$ is the expected time to event.
 
 GLM uses maximum likelihood estimation (MLE) rather than ordinary least squares (OLS) to estimate the parameters, and thus relies on large-sample approximations. 
 
@@ -41,9 +49,9 @@ Logistic regression estimates the probability of a particular level of a categor
 
 The **binary** logistic regression model is
 
-$$y_i = logit(\pi_i) = \log\left(\frac{\pi_i}{1-\pi_i}\right) = X_i\beta$$
+$$y = logit(\pi) = \ln \left( \frac{\pi}{1 - \pi} \right) = X \beta$$
 
-where $\pi_i$ is the "success probability" that observation $i$ is in a specified category of the binary *y* variable.  You can solve for $\pi$ to get
+where $\pi$ is the event probability. You can solve the model for $\pi$ to get the event probability:
 
 $$\pi = \frac{\exp(X \beta)}{1 + \exp(X \beta)}.$$ 
  
@@ -53,24 +61,68 @@ $$L(\beta; y, X) = \prod_{i=1}^n \pi_i^{y_i}(1 - \pi_i)^{(1-y_i)} = \prod_{i=1}^
 
 There is no closed-form solution, so GLM estimates coefficients with interatively reweighted least squares.  
 
+Here is a case study to illustrate the points.  Dataset `leuk` contains response variable `REMISS` indicating whether leukemia remission occurred (1|0) and several explanatory variables.
 
-### Example {-}
-
-Dataset `leuk` contains response variable `REMISS` indicating whether leukemia remission occurred (1|0) and several explanatory variables.
-
-```{r}
-data_dir <- "C:/Users/mpfol/OneDrive/Documents/Data Science/Data/"
-leuk <- read_tsv(paste(data_dir, "leukemia_remission.txt", sep = "/"))
-str(leuk)
+```{r include=FALSE}
+leuk <- tribble(
+  ~REMISS, ~CELL, ~SMEAR, ~INFIL, ~LI, ~BLAST, ~TEMP,
+	1,	0.80,	0.83,	0.66,	1.9,	1.10,	1.00,
+	1,	0.90,	0.36,	0.32,	1.4,	0.74,	0.99,
+	0,	0.80,	0.88,	0.70,	0.8,	0.18,	0.98,
+	0,	1.00,	0.87,	0.87,	0.7,	1.05,	0.99,
+	1,	0.90,	0.75,	0.68,	1.3,	0.52,	0.98,
+	0,	1.00,	0.65,	0.65,	0.6,	0.52,	0.98,
+	1,	0.95,	0.97,	0.92,	1.0,	1.23,	0.99,
+	0,	0.95,	0.87,	0.83,	1.9,	1.35,	1.02,
+	0,	1.00,	0.45,	0.45,	0.8,	0.32,	1.00,
+	0,	0.95,	0.36,	0.34,	0.5,	0.00,	1.04,
+	0,	0.85,	0.39,	0.33,	0.7,	0.28,	0.99,
+	0,	0.70,	0.76,	0.53,	1.2,	0.15,	0.98,
+	0,	0.80,	0.46,	0.37,	0.4,	0.38,	1.01,
+	0,	0.20,	0.39,	0.08,	0.8,	0.11,	0.99,
+	0,	1.00,	0.90,	0.90,	1.1,	1.04,	0.99,
+	1,	1.00,	0.84,	0.84,	1.9,	2.06,	1.02,
+	0,	0.65,	0.42,	0.27,	0.5,	0.11,	1.01,
+	0,	1.00,	0.75,	0.75,	1.0,	1.32,	1.00,
+	0,	0.50,	0.44,	0.22,	0.6,	0.11,	0.99,
+	1,	1.00,	0.63,	0.63,	1.1,	1.07,	0.99,
+	0,	1.00,	0.33,	0.33,	0.4,	0.18,	1.01,
+	0,	0.90,	0.93,	0.84,	0.6,	1.59,	1.02,
+	1,	1.00,	0.58,	0.58,	1.0,	0.53,	1.00,
+	0,	0.95,	0.32,	0.30,	1.6,	0.89,	0.99,
+	1,	1.00,	0.60,	0.60,	1.7,	0.96,	0.99,
+	1,	1.00,	0.69,	0.69,	0.9,	0.40,	0.99,
+	0,	1.00,	0.73,	0.73,	0.7,	0.40,	0.99
+)
 ```
 
-Fit a logistic regression in R using `glm(formula, data, family = binomial)` where `family = binomial` specifies a binomial error distribution.
+```{r}
+glimpse(leuk)
+```
+
+You might use a goodness-of-fit framework to analyze this data.  E.g., you could bin CELL into "low" and "high", breaking at CELL = 0.90, then perform a chi-square test.
 
 ```{r}
-m1 <- glm(REMISS ~ ., family = binomial, data = leuk)
-m1
+dat <- leuk %>% mutate(CELL_BIN = if_else(CELL < 0.90, "Low", "High")) 
+dat2 <- table(dat$REMISS, dat$CELL_BIN)
+chisq.test(dat2)
+```
+
+But you might want to model the risk of REMISS given all the predictors, which may be discrete or continuous.  To fit a logistic regression, use `glm(formula, data, family = binomial(link = logit))`.
+
+```{r}
+m1 <- glm(REMISS ~ ., family = binomial(link = logit), data = leuk)
 summary(m1)
 ```
+
+The fitted model is 
+
+$$logit(\hat{\pi_i}) = 64.3 + 30.8 \hspace{1mm} CELL + 24.7SMEAR - 25INFIL + 4LI = 0.01BLAST = 100 TEMP$$
+
+The "dispersion parameter" refers to overdispersion, a common issues with GLM.  For a logistic regression, the response variable should be distributed $y_i \sim Bin(n_i, \pi_i)$ with $\mu_i = n_i \pi_i$ and $\sigma^2 = \pi (1 - \pi)$.  Overdispersion means the data shows evidence of variance greater than $\sigma^2$.
+
+"Fisher scoring" is a method for ML estimation. Logistic regression uses an iterative procedure to fit the model, so this section indicates whether the algorithm converged.
+
 
 The *predicted* value $\hat{y}$ is the estimated **log odds** of the response variable, 
 
