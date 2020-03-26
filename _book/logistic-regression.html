@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-25" />
+<meta name="date" content="2020-03-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -185,7 +185,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
 <li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
-<li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="logistic-regression.html"><a href="logistic-regression.html#case-study"><i class="fa fa-check"></i><b>7.1.1</b> Case Study</a></li>
+</ul></li>
 <li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
 <li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a></li>
 <li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a><ul>
@@ -375,9 +377,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb19-7"><a href="logistic-regression.html#cb19-7"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability of REMISS&quot;</span>,</span>
 <span id="cb19-8"><a href="logistic-regression.html#cb19-8"></a>       <span class="dt">title =</span> <span class="st">&quot;Binary Fitted Line Plot&quot;</span>)</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<p>Evaluate a logistic model fit with an analysis of deviance. Deviance is defined as -2 times the log-likelihood <span class="math inline">\(-2l(\beta)\)</span>. The null deviance is the deviance of the null model and is analagous to SST in ANOVA. The residual deviance is analagous to SSE in ANOVA.</p>
+<p>Evaluate a logistic model fit with an analysis of deviance. Deviance is defined as -2 times the log-likelihood <span class="math inline">\(-2l(\beta)\)</span>. The null deviance is the deviance of the null model and is analagous to SST in ANOVA. The residual deviance is the deviance of the full model and is analagous to SSE in ANOVA.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="logistic-regression.html#cb20-1"></a><span class="kw">logLik</span>(<span class="kw">glm</span>(REMISS <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> leuk, <span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>)) <span class="op">*</span><span class="st"> </span>(<span class="op">-</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## &#39;log Lik.&#39; 21.59385 (df=7)</code></pre>
+<p><code>anova()</code> computes the analysis of deviance table for the model.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="logistic-regression.html#cb22-1"></a><span class="kw">anova</span>(m1)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
@@ -396,55 +399,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## LI     1   6.7818        22     24.199
 ## BLAST  1   0.3271        21     23.871
 ## TEMP   1   2.2775        20     21.594</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="logistic-regression.html#cb24-1"></a>m1</span></code></pre></div>
-<pre><code>## 
-## Call:  glm(formula = REMISS ~ ., family = binomial(link = logit), data = leuk)
-## 
-## Coefficients:
-## (Intercept)         CELL        SMEAR        INFIL           LI        BLAST  
-##    64.25808     30.83006     24.68632    -24.97447      4.36045     -0.01153  
-##        TEMP  
-##  -100.17340  
-## 
-## Degrees of Freedom: 26 Total (i.e. Null);  20 Residual
-## Null Deviance:       34.37 
-## Residual Deviance: 21.59     AIC: 35.59</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="logistic-regression.html#cb26-1"></a><span class="kw">summary</span>(m1)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## glm(formula = REMISS ~ ., family = binomial(link = logit), data = leuk)
-## 
-## Deviance Residuals: 
-##      Min        1Q    Median        3Q       Max  
-## -1.95404  -0.66259  -0.02516   0.78184   1.57465  
-## 
-## Coefficients:
-##               Estimate Std. Error z value Pr(&gt;|z|)
-## (Intercept)   64.25808   74.96480   0.857    0.391
-## CELL          30.83006   52.13520   0.591    0.554
-## SMEAR         24.68632   61.52601   0.401    0.688
-## INFIL        -24.97447   65.28088  -0.383    0.702
-## LI             4.36045    2.65798   1.641    0.101
-## BLAST         -0.01153    2.26634  -0.005    0.996
-## TEMP        -100.17340   77.75289  -1.288    0.198
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 34.372  on 26  degrees of freedom
-## Residual deviance: 21.594  on 20  degrees of freedom
-## AIC: 35.594
-## 
-## Number of Fisher Scoring iterations: 8</code></pre>
-<p>The deviance of the null model (no regressors) is 34.372. The deviance of the full model is 26.073.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="logistic-regression.html#cb28-1"></a><span class="kw">glance</span>(m1)</span></code></pre></div>
+<p>The deviance of the null model (no regressors) is 34.372. The deviance of the full model is 21.594. <code>glance()</code> also returns the null and residual deviances.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="logistic-regression.html#cb24-1"></a><span class="kw">glance</span>(m1)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 7
 ##   null.deviance df.null logLik   AIC   BIC deviance df.residual
 ##           &lt;dbl&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;
 ## 1          34.4      26  -10.8  35.6  44.7     21.6          20</code></pre>
 <p>Use the <code>GainCurvePlot()</code> function to plot the gain curve (background on gain curve at <a href="https://www.datasciencecentral.com/profiles/blogs/understanding-and-interpreting-gain-and-lift-charts">Data Science Central</a> from the model predictions. The x-axis is the fraction of items seen when sorted by the predicted value, and the y-axis is the cumulative summed true outcome. The “wizard” curve is the gain curve when the data is sorted by the true outcome. If the model’s gain curve is close to the wizard gain curve, then the model sorted the response variable well. The grey area is the gain over a random sorting.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="logistic-regression.html#cb30-1"></a><span class="kw">augment</span>(m1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb30-2"><a href="logistic-regression.html#cb30-2"></a><span class="st">  </span><span class="kw">GainCurvePlot</span>(<span class="dt">xvar =</span> <span class="st">&quot;.fitted&quot;</span>, <span class="dt">truthVar =</span> <span class="st">&quot;REMISS&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Logistic Model&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="logistic-regression.html#cb26-1"></a><span class="kw">augment</span>(m1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb26-2"><a href="logistic-regression.html#cb26-2"></a><span class="st">  </span><span class="kw">GainCurvePlot</span>(<span class="dt">xvar =</span> <span class="st">&quot;.fitted&quot;</span>, <span class="dt">truthVar =</span> <span class="st">&quot;REMISS&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Logistic Model&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p><code>REMISS</code> equals 1 in 9 of the 27 responses.</p>
 <ul>
 <li>The wizard curve shows that after sorting the responses it encounters all 9 1s (100%) after looking at 9 of the 27 response (33%).<br />
@@ -454,12 +418,120 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The gain curve encounters 5 1s (55%) after looking at 9 of the 27 responses (33%). It has to look at 14 responses to encounter all 9 1s (100%).</li>
 </ul>
 <p>Another way to evaluate the predictive model is the ROC curve. It evaluates all possible thresholds for splitting predicted probabilities into predicted classes. This is often a much more useful metric than simply ranking models by their accuracy at a set threshold, as different models might require different calibration steps (looking at a confusion matrix at each step) to find the optimal classification threshold for that model.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="logistic-regression.html#cb31-1"></a><span class="kw">library</span>(caTools)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="logistic-regression.html#cb27-1"></a><span class="kw">library</span>(caTools)</span></code></pre></div>
 <pre><code>## Warning: package &#39;caTools&#39; was built under R version 3.6.2</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="logistic-regression.html#cb33-1"></a><span class="kw">colAUC</span>(m1<span class="op">$</span>fitted.values, m1<span class="op">$</span>data<span class="op">$</span>REMISS, <span class="dt">plotROC =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="logistic-regression.html#cb29-1"></a><span class="kw">colAUC</span>(m1<span class="op">$</span>fitted.values, m1<span class="op">$</span>data<span class="op">$</span>REMISS, <span class="dt">plotROC =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <pre><code>##              [,1]
 ## 0 vs. 1 0.8950617</code></pre>
+<div id="case-study" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> Case Study</h3>
+<p>This case study is from <a href="https://online.stat.psu.edu/stat504/node/197/">PSU STAT 504</a>. This study investigated the gender differences in <a href="https://online.stat.psu.edu/stat504/node/197/">Piaget’s water level test</a>. 166 subjects performed the test and other tests of knowledge and spatial ability.</p>
+<p>Here are the pass/fail results of the study by sex.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="logistic-regression.html#cb31-1"></a><span class="kw">prop.table</span>(<span class="kw">table</span>(h2o<span class="op">$</span>sex, h2o<span class="op">$</span>y), <span class="dt">margin =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dt">digits =</span> <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>##    
+##       fail   pass
+##   M 0.3559 0.6441
+##   F 0.7009 0.2991</code></pre>
+<p>The pass rates are very different. The Pearson Chi-squared test of equality of two proportions calculates a Chi-Square value of 18.562, p-value &lt; 0.0001, so reject the hypothesis that the pass rates are the same.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="logistic-regression.html#cb33-1"></a><span class="kw">chisq.test</span>(<span class="kw">table</span>(h2o<span class="op">$</span>sex, h2o<span class="op">$</span>y), <span class="dt">correct =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  table(h2o$sex, h2o$y)
+## X-squared = 18.562, df = 1, p-value = 1.645e-05</code></pre>
+<p>Fit a logistic regression.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="logistic-regression.html#cb35-1"></a>m &lt;-<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>sex, <span class="dt">data =</span> h2o, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> logit))</span>
+<span id="cb35-2"><a href="logistic-regression.html#cb35-2"></a><span class="kw">anova</span>(m)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model: binomial, link: logit
+## 
+## Response: y
+## 
+## Terms added sequentially (first to last)
+## 
+## 
+##      Df Deviance Resid. Df Resid. Dev
+## NULL                   165     226.04
+## sex   1   18.658       164     207.38</code></pre>
+<p>The likelihood ratio is <span class="math inline">\(G^2 = 18.658\)</span>, so reject the null hypothesis of no sex effect - there is statistically significant difference in pass rates. Here are the coefficient estimators.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="logistic-regression.html#cb37-1"></a><span class="kw">tidy</span>(m)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)    0.593     0.272      2.18 0.0292   
+## 2 sexF          -1.44      0.344     -4.20 0.0000271</code></pre>
+<p>The odds ratio (females vs males) is</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="logistic-regression.html#cb39-1"></a><span class="kw">exp</span>(<span class="kw">tidy</span>(m)[<span class="dv">2</span>, ]<span class="op">$</span>estimate)</span></code></pre></div>
+<pre><code>## [1] 0.2357895</code></pre>
+<p>meaning the odds of a female passing are 0.24 times that of a male. Or take the inverse to get the male vs female odds ratio,</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="logistic-regression.html#cb41-1"></a><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">exp</span>(<span class="kw">tidy</span>(m)[<span class="dv">2</span>, ]<span class="op">$</span>estimate)</span></code></pre></div>
+<pre><code>## [1] 4.241071</code></pre>
+<p>meaning the odds of a male passing are 4.24 times that of a female. <code>oddsratio::or_glm()</code> calculates the odds ratio from an increment in the predictor values, in this case, incrementing sex from male to female.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="logistic-regression.html#cb43-1"></a>oddsratio<span class="op">::</span><span class="kw">or_glm</span>(h2o, m, <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 5
+##   predictor oddsratio `CI_low (2.5)` `CI_high (97.5)` increment         
+##   &lt;chr&gt;         &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;             
+## 1 sexF          0.236          0.118            0.458 Indicator variable</code></pre>
+<p>What if we control for the results of the gravity test (gravity = number of correct answers on test)? Here is a logistic regression of pass ~ gravity.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="logistic-regression.html#cb45-1"></a>m &lt;-<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>gravity, <span class="dt">data =</span> h2o, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> logit))</span>
+<span id="cb45-2"><a href="logistic-regression.html#cb45-2"></a><span class="kw">anova</span>(m)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model: binomial, link: logit
+## 
+## Response: y
+## 
+## Terms added sequentially (first to last)
+## 
+## 
+##         Df Deviance Resid. Df Resid. Dev
+## NULL                      165     226.04
+## gravity  1   42.176       164     183.86</code></pre>
+<p>The likelihood ratio is <span class="math inline">\(G^2 = 42.2\)</span>, so reject H0 that there is no gravity effect - there is a statistically significant difference between the gravity score and the pass rate. The odds of passing the water level task increase by 2.225 for each additional right answer on gravity.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="logistic-regression.html#cb47-1"></a>oddsratio<span class="op">::</span><span class="kw">or_glm</span>(h2o, m, <span class="dt">incr =</span> <span class="kw">list</span>(<span class="dt">gravity =</span> <span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 5
+##   predictor oddsratio `CI_low (2.5)` `CI_high (97.5)` increment
+##   &lt;chr&gt;         &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;    
+## 1 gravity        2.22           1.71                3 1</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="logistic-regression.html#cb49-1"></a><span class="kw">augment</span>(m) <span class="op">%&gt;%</span></span>
+<span id="cb49-2"><a href="logistic-regression.html#cb49-2"></a><span class="st">  </span><span class="kw">group_by</span>(gravity) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb49-3"><a href="logistic-regression.html#cb49-3"></a><span class="st">  </span><span class="kw">summarize</span>(</span>
+<span id="cb49-4"><a href="logistic-regression.html#cb49-4"></a>    <span class="dt">observed =</span> <span class="kw">mean</span>(<span class="kw">as.numeric</span>(y) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>),</span>
+<span id="cb49-5"><a href="logistic-regression.html#cb49-5"></a>    <span class="dt">fitted =</span> <span class="kw">mean</span>(<span class="kw">exp</span>(.fitted) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(.fitted)))</span>
+<span id="cb49-6"><a href="logistic-regression.html#cb49-6"></a>  ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb49-7"><a href="logistic-regression.html#cb49-7"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="op">-</span>gravity, <span class="dt">names_to =</span> <span class="st">&quot;model&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;rate&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb49-8"><a href="logistic-regression.html#cb49-8"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> gravity, <span class="dt">y =</span> rate, <span class="dt">color =</span> model)) <span class="op">+</span></span>
+<span id="cb49-9"><a href="logistic-regression.html#cb49-9"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb49-10"><a href="logistic-regression.html#cb49-10"></a><span class="st">  </span><span class="kw">scale_color_mf</span>() <span class="op">+</span></span>
+<span id="cb49-11"><a href="logistic-regression.html#cb49-11"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb49-12"><a href="logistic-regression.html#cb49-12"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Water Test Pass Rate&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-27-1.png" width="480" /></p>
+<p>You can model sex and gravity with and without interaction effects. Here is the model without interaction effects. <span class="math inline">\(G^2 = 32.3\)</span> so</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="logistic-regression.html#cb50-1"></a>m &lt;-<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>gravity, <span class="dt">data =</span> h2o, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>))</span>
+<span id="cb50-2"><a href="logistic-regression.html#cb50-2"></a><span class="kw">anova</span>(m)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model: binomial, link: logit
+## 
+## Response: y
+## 
+## Terms added sequentially (first to last)
+## 
+## 
+##         Df Deviance Resid. Df Resid. Dev
+## NULL                      165     226.04
+## sex      1   18.658       164     207.38
+## gravity  1   32.319       163     175.06</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="logistic-regression.html#cb52-1"></a><span class="kw">tidy</span>(m)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 5
+##   term        estimate std.error statistic     p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+## 1 (Intercept)   -1.92      0.574     -3.35 0.000810   
+## 2 sexF          -1.12      0.382     -2.93 0.00334    
+## 3 gravity        0.740     0.147      5.05 0.000000443</code></pre>
+</div>
 </div>
             </section>
 

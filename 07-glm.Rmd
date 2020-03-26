@@ -424,7 +424,7 @@ m <- glm(y ~ sex, data = h2o, family = binomial(link = logit))
 anova(m)
 ```
 
-The likelihood ratio, $G^2 = 18.658$, so reject the null hypothesis of no sex effect - there is statistically significant difference in pass rates.  Here are the coefficient estimators.
+The likelihood ratio is $G^2 = 18.658$, so reject the null hypothesis of no sex effect - there is statistically significant difference in pass rates.  Here are the coefficient estimators.
 
 ```{r}
 tidy(m)
@@ -448,6 +448,44 @@ meaning the odds of a male passing are 4.24 times that of a female.  `oddsratio:
 oddsratio::or_glm(h2o, m, 1)
 ```
 
+What if we control for the results of the gravity test (gravity = number of correct answers on test)?  Here is a logistic regression of pass ~ gravity.
+
+```{r}
+m <- glm(y ~ gravity, data = h2o, family = binomial(link = logit))
+anova(m)
+```
+
+The likelihood ratio is $G^2 = 42.2$, so reject H0 that there is no gravity effect - there is a statistically significant difference between the gravity score and the pass rate.  The odds of passing the water level task increase by 2.225 for each additional right answer on gravity.
+
+```{r}
+oddsratio::or_glm(h2o, m, incr = list(gravity = 1))
+```
+
+```{r fig.height=3, fig.width=5}
+augment(m) %>%
+  group_by(gravity) %>% 
+  summarize(
+    observed = mean(as.numeric(y) - 1),
+    fitted = mean(exp(.fitted) / (1 + exp(.fitted)))
+  ) %>% 
+  pivot_longer(cols = -gravity, names_to = "model", values_to = "rate") %>%
+  ggplot(aes(x = gravity, y = rate, color = model)) +
+  geom_point() +
+  scale_color_mf() +
+  theme_mf() +
+  labs(title = "Water Test Pass Rate", color = "")
+```
+
+You can model sex and gravity with and without interaction effects. Here is the model without interaction effects.  $G^2 = 32.3$ so 
+
+```{r}
+m <- glm(y ~ sex + gravity, data = h2o, family = binomial(link = "logit"))
+anova(m)
+```
+
+```{r}
+tidy(m)
+```
 
 ## Multinomial Logistic Regression
 
