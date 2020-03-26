@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-24" />
+<meta name="date" content="2020-03-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -261,9 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Logistic regression estimates the probability of a particular level of a categorical response variable given a set of predictors. The response levels can be binary, nominal (multiple categories), or ordinal (multiple levels).</p>
 <p>The <strong>binary</strong> logistic regression model is</p>
 <p><span class="math display">\[y = logit(\pi) = \ln \left( \frac{\pi}{1 - \pi} \right) = X \beta\]</span></p>
-<p>where <span class="math inline">\(\pi\)</span> is the event probability. You can solve the model for <span class="math inline">\(\pi\)</span> to get the event probability:</p>
-<p><span class="math display">\[\pi = \frac{\exp(X \beta)}{1 + \exp(X \beta)}.\]</span></p>
-<p>The model predicts the <em>log odds</em> of the response variable. The maximum likelihood estimator maximizes the the likelihood function</p>
+<p>where <span class="math inline">\(\pi\)</span> is the event probability. The model predicts the <em>log odds</em> of the response variable. The maximum likelihood estimator maximizes the likelihood function</p>
 <p><span class="math display">\[L(\beta; y, X) = \prod_{i=1}^n \pi_i^{y_i}(1 - \pi_i)^{(1-y_i)} = \prod_{i=1}^n\frac{\exp(y_i X_i \beta)}{1 + \exp(X_i \beta)}.\]</span></p>
 <p>There is no closed-form solution, so GLM estimates coefficients with interatively reweighted least squares.</p>
 <p>Here is a case study to illustrate the points. Dataset <code>leuk</code> contains response variable <code>REMISS</code> indicating whether leukemia remission occurred (1|0) and several explanatory variables.</p>
@@ -277,19 +275,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ LI     &lt;dbl&gt; 1.9, 1.4, 0.8, 0.7, 1.3, 0.6, 1.0, 1.9, 0.8, 0.5, 0.7, 1.2, ...
 ## $ BLAST  &lt;dbl&gt; 1.10, 0.74, 0.18, 1.05, 0.52, 0.52, 1.23, 1.35, 0.32, 0.00, ...
 ## $ TEMP   &lt;dbl&gt; 1.00, 0.99, 0.98, 0.99, 0.98, 0.98, 0.99, 1.02, 1.00, 1.04, ...</code></pre>
-<p>You might use a goodness-of-fit framework to analyze this data. E.g., you could bin CELL into “low” and “high”, breaking at CELL = 0.90, then perform a chi-square test.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="logistic-regression.html#cb3-1"></a>dat &lt;-<span class="st"> </span>leuk <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">CELL_BIN =</span> <span class="kw">if_else</span>(CELL <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.90</span>, <span class="st">&quot;Low&quot;</span>, <span class="st">&quot;High&quot;</span>)) </span>
-<span id="cb3-2"><a href="logistic-regression.html#cb3-2"></a>dat2 &lt;-<span class="st"> </span><span class="kw">table</span>(dat<span class="op">$</span>REMISS, dat<span class="op">$</span>CELL_BIN)</span>
-<span id="cb3-3"><a href="logistic-regression.html#cb3-3"></a><span class="kw">chisq.test</span>(dat2)</span></code></pre></div>
-<pre><code>## Warning in chisq.test(dat2): Chi-squared approximation may be incorrect</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  dat2
-## X-squared = 1.088, df = 1, p-value = 0.2969</code></pre>
-<p>But you might want to model the risk of REMISS given all the predictors, which may be discrete or continuous. To fit a logistic regression, use <code>glm(formula, data, family = binomial(link = logit))</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="logistic-regression.html#cb6-1"></a>m1 &lt;-<span class="st"> </span><span class="kw">glm</span>(REMISS <span class="op">~</span><span class="st"> </span>., <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> logit), <span class="dt">data =</span> leuk)</span>
-<span id="cb6-2"><a href="logistic-regression.html#cb6-2"></a><span class="kw">summary</span>(m1)</span></code></pre></div>
+<p>Fit a logistic regression.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="logistic-regression.html#cb3-1"></a>m1 &lt;-<span class="st"> </span><span class="kw">glm</span>(REMISS <span class="op">~</span><span class="st"> </span>., <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> logit), <span class="dt">data =</span> leuk)</span>
+<span id="cb3-2"><a href="logistic-regression.html#cb3-2"></a><span class="kw">summary</span>(m1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = REMISS ~ ., family = binomial(link = logit), data = leuk)
@@ -315,94 +303,82 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## AIC: 35.594
 ## 
 ## Number of Fisher Scoring iterations: 8</code></pre>
-<p>The fitted model is</p>
-<p><span class="math display">\[logit(\hat{\pi_i}) = 64.3 + 30.8 \hspace{1mm} CELL + 24.7SMEAR - 25INFIL + 4LI = 0.01BLAST = 100 TEMP\]</span></p>
+<p>“z value” is the Wald z statistic, <span class="math inline">\(z = \hat{\beta} / SE(\hat{\beta})\)</span>, which if squared is the Wald chi-squared statistic, <span class="math inline">\(z^2 = \left(\hat{\beta} / SE(\hat{\beta}) \right)^2\)</span>. The p.value is the area to the right of <span class="math inline">\(z^2\)</span> in the <span class="math inline">\(\chi_1^2\)</span> density curve.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="logistic-regression.html#cb5-1"></a>m1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-2"><a href="logistic-regression.html#cb5-2"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb5-3"><a href="logistic-regression.html#cb5-3"></a>    <span class="dt">z =</span> estimate <span class="op">/</span><span class="st"> </span>std.error, </span>
+<span id="cb5-4"><a href="logistic-regression.html#cb5-4"></a>    <span class="dt">p_z2 =</span> <span class="kw">pchisq</span>(z<span class="op">^</span><span class="dv">2</span>, <span class="dt">df =</span> <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb5-5"><a href="logistic-regression.html#cb5-5"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb5-6"><a href="logistic-regression.html#cb5-6"></a><span class="st">  </span><span class="kw">select</span>(term, p.value, p_z2)</span></code></pre></div>
+<pre><code>## # A tibble: 7 x 3
+##   term        p.value  p_z2
+##   &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt;
+## 1 (Intercept)   0.391 0.391
+## 2 CELL          0.554 0.554
+## 3 SMEAR         0.688 0.688
+## 4 INFIL         0.702 0.702
+## 5 LI            0.101 0.101
+## 6 BLAST         0.996 0.996
+## 7 TEMP          0.198 0.198</code></pre>
 <p>The “dispersion parameter” refers to overdispersion, a common issues with GLM. For a logistic regression, the response variable should be distributed <span class="math inline">\(y_i \sim Bin(n_i, \pi_i)\)</span> with <span class="math inline">\(\mu_i = n_i \pi_i\)</span> and <span class="math inline">\(\sigma^2 = \pi (1 - \pi)\)</span>. Overdispersion means the data shows evidence of variance greater than <span class="math inline">\(\sigma^2\)</span>.</p>
 <p>“Fisher scoring” is a method for ML estimation. Logistic regression uses an iterative procedure to fit the model, so this section indicates whether the algorithm converged.</p>
-<p>The <em>predicted</em> value <span class="math inline">\(\hat{y}\)</span> is the estimated <strong>log odds</strong> of the response variable,</p>
-<p><span class="math display">\[\hat{y} = X \hat{\beta} = \ln (\frac{\pi}{1 - \pi}).\]</span></p>
-<p>Suppose each predictor equals its mean value, then the log odds of <code>REMISS</code> is <span class="math inline">\(-2.684\)</span>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="logistic-regression.html#cb8-1"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(m1, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">CELL =</span> <span class="kw">mean</span>(leuk<span class="op">$</span>CELL),</span>
-<span id="cb8-2"><a href="logistic-regression.html#cb8-2"></a>                                         <span class="dt">SMEAR =</span> <span class="kw">mean</span>(leuk<span class="op">$</span>SMEAR),</span>
-<span id="cb8-3"><a href="logistic-regression.html#cb8-3"></a>                                         <span class="dt">INFIL =</span> <span class="kw">mean</span>(leuk<span class="op">$</span>INFIL),</span>
-<span id="cb8-4"><a href="logistic-regression.html#cb8-4"></a>                                         <span class="dt">LI =</span> <span class="kw">mean</span>(leuk<span class="op">$</span>LI),</span>
-<span id="cb8-5"><a href="logistic-regression.html#cb8-5"></a>                                         <span class="dt">BLAST =</span> <span class="kw">mean</span>(leuk<span class="op">$</span>BLAST),</span>
-<span id="cb8-6"><a href="logistic-regression.html#cb8-6"></a>                                         <span class="dt">TEMP =</span> <span class="kw">mean</span>(leuk<span class="op">$</span>TEMP)))</span></code></pre></div>
-<p>Log odds are not easy to interpet, but it is convenient for updating prior probabilities in Bayesian analyses. <em>See <a href="https://www.statisticshowto.datasciencecentral.com/log-odds/">this article</a> in Statistics How To.</em> Exponentiate the log odds to get the more intuitive <strong>odds</strong>.</p>
+<p>The log odds of having achieved remission when each predictor equals its mean value is <span class="math inline">\(\hat{y} = -2.68\)</span>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="logistic-regression.html#cb7-1"></a>(pred &lt;-<span class="st"> </span><span class="kw">predict</span>(m1, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">colMeans</span>(leuk)))))</span></code></pre></div>
+<pre><code>##         1 
+## -2.684382</code></pre>
+<p>Log odds are not easy to interpet, but are convenient for <a href="https://www.statisticshowto.datasciencecentral.com/log-odds/">updating prior probabilities in Bayesian analyses</a>. Exponentiate the log odds to get the more intuitive <strong>odds</strong>.</p>
 <p><span class="math display">\[\exp (\hat{y}) = \exp (X \hat{\beta}) = \frac{\pi}{1 - \pi}.\]</span></p>
 <p>The odds of having achieved remission when each predictor equals its mean value is <span class="math inline">\(\exp(\hat{y}) = 0.068\)</span>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="logistic-regression.html#cb9-1"></a><span class="kw">exp</span>(pred)</span></code></pre></div>
 <pre><code>##          1 
 ## 0.06826334</code></pre>
-<p>You might express that more commonly as 1 / 0.068 = 15:1. So a person with average values of the predictors has an odds of “15 to 1” of having achieved remission.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="logistic-regression.html#cb11-1"></a><span class="dv">1</span><span class="op">/</span><span class="kw">exp</span>(pred)</span></code></pre></div>
-<pre><code>##        1 
-## 14.64915</code></pre>
+<p>A common way to express this is with the inverse, 1 / 0.068 = 15:1. The odds of having achieved remission when each predictor equals its mean value is “15 to 1”.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="logistic-regression.html#cb11-1"></a><span class="kw">round</span>(<span class="dv">1</span><span class="op">/</span><span class="kw">exp</span>(pred), <span class="dv">0</span>)</span></code></pre></div>
+<pre><code>##  1 
+## 15</code></pre>
 <p>Or, solve for <span class="math inline">\(\pi\)</span> to get the <strong>probability</strong>.</p>
 <p><span class="math display">\[\pi = \frac{\exp (X \beta)}{1 + \exp (X \beta)}\]</span></p>
 <p>The probability of having achieved remission when each predictor equals its mean value is <span class="math inline">\(\pi = 0.064\)</span>. The <code>predict()</code> function for a logistic model returns log-odds, but can also return <span class="math inline">\(\pi\)</span> by specifying parameter <code>type = "response"</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="logistic-regression.html#cb13-1"></a><span class="kw">exp</span>(pred) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(pred))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="logistic-regression.html#cb13-1"></a><span class="kw">predict</span>(m1, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">colMeans</span>(leuk))), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
 <pre><code>##          1 
 ## 0.06390123</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="logistic-regression.html#cb15-1"></a>prob &lt;-<span class="st"> </span><span class="kw">predict</span>(m1, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">CELL =</span> <span class="kw">mean</span>(leuk<span class="op">$</span>CELL),</span>
-<span id="cb15-2"><a href="logistic-regression.html#cb15-2"></a>                                         <span class="dt">SMEAR =</span> <span class="kw">mean</span>(leuk<span class="op">$</span>SMEAR),</span>
-<span id="cb15-3"><a href="logistic-regression.html#cb15-3"></a>                                         <span class="dt">INFIL =</span> <span class="kw">mean</span>(leuk<span class="op">$</span>INFIL),</span>
-<span id="cb15-4"><a href="logistic-regression.html#cb15-4"></a>                                         <span class="dt">LI =</span> <span class="kw">mean</span>(leuk<span class="op">$</span>LI),</span>
-<span id="cb15-5"><a href="logistic-regression.html#cb15-5"></a>                                         <span class="dt">BLAST =</span> <span class="kw">mean</span>(leuk<span class="op">$</span>BLAST),</span>
-<span id="cb15-6"><a href="logistic-regression.html#cb15-6"></a>                                         <span class="dt">TEMP =</span> <span class="kw">mean</span>(leuk<span class="op">$</span>TEMP)),</span>
-<span id="cb15-7"><a href="logistic-regression.html#cb15-7"></a>                <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
-<p>It is common to express the results in terms of the <strong>odds ratio</strong>. The <em>odds ratio</em> is the ratio of the odds before and after an increment to the predictors. It tells you how much the odds would be multiplied after a <span class="math inline">\(X_1 - X_0\)</span> unit increase in <span class="math inline">\(X\)</span>.</p>
+<p>Interpret the coefficient estimates using the <strong>odds ratio</strong>, the ratio of the odds before and after an increment to the predictors. The odds ratio is how much the odds would be multiplied after a <span class="math inline">\(X_1 - X_0\)</span> unit increase in <span class="math inline">\(X\)</span>.</p>
 <p><span class="math display">\[\theta = \frac{\pi / (1 - \pi) |_{X = X_1}}{\pi / (1 - \pi) |_{X = X_0}} = \frac{\exp (X_1 \hat{\beta})}{\exp (X_0 \hat{\beta})} = \exp ((X_1-X_0) \hat{\beta}) = \exp (\delta \hat{\beta})\]</span></p>
-<p>For example, increasing <code>LI</code> by .01 increases the odds of remission by a factor of <span class="math inline">\(\exp(0.1 \cdot 4.36) = 1.547\)</span> (from 15:1 to 23:1).</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="logistic-regression.html#cb16-1"></a><span class="kw">exp</span>(.<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>m1<span class="op">$</span>coefficients)</span></code></pre></div>
-<pre><code>##  (Intercept)         CELL        SMEAR        INFIL           LI        BLAST 
-## 6.175799e+02 2.182391e+01 1.180628e+01 8.229480e-02 1.546579e+00 9.988476e-01 
-##         TEMP 
-## 4.461948e-05</code></pre>
-<p>You can calculate an odds ratio using <code>oddsratio::or_glm()</code>.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="logistic-regression.html#cb18-1"></a><span class="kw">library</span>(oddsratio)</span>
-<span id="cb18-2"><a href="logistic-regression.html#cb18-2"></a><span class="kw">or_glm</span>(<span class="dt">data =</span> leuk, </span>
-<span id="cb18-3"><a href="logistic-regression.html#cb18-3"></a>       <span class="dt">model =</span> m1, </span>
-<span id="cb18-4"><a href="logistic-regression.html#cb18-4"></a>       <span class="dt">incr =</span> <span class="kw">list</span>(<span class="dt">CELL =</span> <span class="fl">0.01</span>, </span>
-<span id="cb18-5"><a href="logistic-regression.html#cb18-5"></a>                   <span class="dt">SMEAR =</span> <span class="fl">0.01</span>, </span>
-<span id="cb18-6"><a href="logistic-regression.html#cb18-6"></a>                   <span class="dt">INFIL =</span> <span class="dv">5</span>, </span>
-<span id="cb18-7"><a href="logistic-regression.html#cb18-7"></a>                   <span class="dt">LI =</span> <span class="fl">0.1</span>, </span>
-<span id="cb18-8"><a href="logistic-regression.html#cb18-8"></a>                   <span class="dt">BLAST =</span> <span class="fl">1.0</span>, </span>
-<span id="cb18-9"><a href="logistic-regression.html#cb18-9"></a>                   <span class="dt">TEMP =</span> <span class="fl">0.3</span>))</span></code></pre></div>
+<p>Increasing LI by .01 increases the odds of remission by a factor of <span class="math inline">\(\exp(0.1 \cdot 4.36) = 1.547\)</span> (from 15:1 to 23:1).</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="logistic-regression.html#cb15-1"></a><span class="kw">exp</span>(.<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>m1<span class="op">$</span>coefficients) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## (Intercept)        CELL       SMEAR       INFIL          LI       BLAST 
+##     617.580      21.824      11.806       0.082       1.547       0.999 
+##        TEMP 
+##       0.000</code></pre>
+<p>You can calculate an odds ratio with specified increments using <code>oddsratio::or_glm()</code>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="logistic-regression.html#cb17-1"></a>oddsratio<span class="op">::</span><span class="kw">or_glm</span>(<span class="dt">data =</span> leuk, <span class="dt">model =</span> m1, </span>
+<span id="cb17-2"><a href="logistic-regression.html#cb17-2"></a>  <span class="dt">incr =</span> <span class="kw">list</span>(</span>
+<span id="cb17-3"><a href="logistic-regression.html#cb17-3"></a>    <span class="dt">CELL =</span> <span class="fl">0.01</span>, <span class="dt">SMEAR =</span> <span class="fl">0.01</span>, <span class="dt">INFIL =</span> <span class="fl">0.05</span>, <span class="dt">LI =</span> <span class="fl">0.1</span>, <span class="dt">BLAST =</span> <span class="fl">1.0</span>, <span class="dt">TEMP =</span> <span class="fl">0.03</span></span>
+<span id="cb17-4"><a href="logistic-regression.html#cb17-4"></a>  )</span>
+<span id="cb17-5"><a href="logistic-regression.html#cb17-5"></a>)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##   predictor oddsratio `CI_low (2.5)` `CI_high (97.5)` increment
 ##   &lt;chr&gt;         &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;    
-## 1 CELL          1.36           0.747         4.64e  0 0.01     
-## 2 SMEAR         1.28           0.537         5.15e  0 0.01     
-## 3 INFIL         0              0             1.09e152 5        
-## 4 LI            1.55           1.04          2.99e  0 0.1      
-## 5 BLAST         0.989          0.009         9.10e  1 1        
-## 6 TEMP          0              0             1.10e  3 0.3</code></pre>
+## 1 CELL          1.36           0.747             4.64 0.01     
+## 2 SMEAR         1.28           0.537             5.15 0.01     
+## 3 INFIL         0.287          0                33.1  0.05     
+## 4 LI            1.55           1.04              2.99 0.1      
+## 5 BLAST         0.989          0.009            91.0  1        
+## 6 TEMP          0.05           0                 2.02 0.03</code></pre>
 <p>The predicted values can also be expressed as the probabilities <span class="math inline">\(\pi\)</span>. This produces the familiar signmoidal shape of the binary relationship.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="logistic-regression.html#cb20-1"></a><span class="kw">augment</span>(m1, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb20-2"><a href="logistic-regression.html#cb20-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> LI, <span class="dt">y =</span> REMISS)) <span class="op">+</span></span>
-<span id="cb20-3"><a href="logistic-regression.html#cb20-3"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb20-4"><a href="logistic-regression.html#cb20-4"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .fitted), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb20-5"><a href="logistic-regression.html#cb20-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;LI&quot;</span>,</span>
-<span id="cb20-6"><a href="logistic-regression.html#cb20-6"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability of Event&quot;</span>,</span>
-<span id="cb20-7"><a href="logistic-regression.html#cb20-7"></a>       <span class="dt">title =</span> <span class="st">&quot;Binary Fitted Line Plot&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="logistic-regression.html#cb19-1"></a><span class="kw">augment</span>(m1, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb19-2"><a href="logistic-regression.html#cb19-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> LI)) <span class="op">+</span></span>
+<span id="cb19-3"><a href="logistic-regression.html#cb19-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> REMISS)) <span class="op">+</span></span>
+<span id="cb19-4"><a href="logistic-regression.html#cb19-4"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .fitted)) <span class="op">+</span></span>
+<span id="cb19-5"><a href="logistic-regression.html#cb19-5"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb19-6"><a href="logistic-regression.html#cb19-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;LI&quot;</span>,</span>
+<span id="cb19-7"><a href="logistic-regression.html#cb19-7"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability of REMISS&quot;</span>,</span>
+<span id="cb19-8"><a href="logistic-regression.html#cb19-8"></a>       <span class="dt">title =</span> <span class="st">&quot;Binary Fitted Line Plot&quot;</span>)</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<p>Whereas in linear regression the the coefficient p-values use the <em>t</em> test (<em>t</em> statistic), logistic regression coefficient p-values use the <em>Wald test</em> **Z*-statistic).</p>
-<p><span class="math display">\[Z = \frac{\hat{\beta_i}}{SE(\hat{\beta}_i)}\]</span></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="logistic-regression.html#cb21-1"></a><span class="kw">round</span>((z &lt;-<span class="st"> </span>m1<span class="op">$</span>coefficients <span class="op">/</span><span class="st"> </span><span class="kw">summary</span>(m1)<span class="op">$</span>coefficients[,<span class="st">&quot;Std. Error&quot;</span>]), <span class="dv">3</span>)</span></code></pre></div>
-<pre><code>## (Intercept)        CELL       SMEAR       INFIL          LI       BLAST 
-##       0.857       0.591       0.401      -0.383       1.641      -0.005 
-##        TEMP 
-##      -1.288</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="logistic-regression.html#cb23-1"></a><span class="kw">round</span>(<span class="kw">pnorm</span>(<span class="kw">abs</span>(z), <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dv">3</span>)</span></code></pre></div>
-<pre><code>## (Intercept)        CELL       SMEAR       INFIL          LI       BLAST 
-##       0.391       0.554       0.688       0.702       0.101       0.996 
-##        TEMP 
-##       0.198</code></pre>
 <p>Evaluate a logistic model fit with an analysis of deviance. Deviance is defined as -2 times the log-likelihood <span class="math inline">\(-2l(\beta)\)</span>. The null deviance is the deviance of the null model and is analagous to SST in ANOVA. The residual deviance is analagous to SSE in ANOVA.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="logistic-regression.html#cb25-1"></a><span class="kw">logLik</span>(<span class="kw">glm</span>(REMISS <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> leuk, <span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>)) <span class="op">*</span><span class="st"> </span>(<span class="op">-</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="logistic-regression.html#cb20-1"></a><span class="kw">logLik</span>(<span class="kw">glm</span>(REMISS <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> leuk, <span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>)) <span class="op">*</span><span class="st"> </span>(<span class="op">-</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## &#39;log Lik.&#39; 21.59385 (df=7)</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="logistic-regression.html#cb27-1"></a><span class="kw">anova</span>(m1)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="logistic-regression.html#cb22-1"></a><span class="kw">anova</span>(m1)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model: binomial, link: logit
@@ -420,7 +396,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## LI     1   6.7818        22     24.199
 ## BLAST  1   0.3271        21     23.871
 ## TEMP   1   2.2775        20     21.594</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="logistic-regression.html#cb29-1"></a>m1</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="logistic-regression.html#cb24-1"></a>m1</span></code></pre></div>
 <pre><code>## 
 ## Call:  glm(formula = REMISS ~ ., family = binomial(link = logit), data = leuk)
 ## 
@@ -433,7 +409,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Degrees of Freedom: 26 Total (i.e. Null);  20 Residual
 ## Null Deviance:       34.37 
 ## Residual Deviance: 21.59     AIC: 35.59</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="logistic-regression.html#cb31-1"></a><span class="kw">summary</span>(m1)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="logistic-regression.html#cb26-1"></a><span class="kw">summary</span>(m1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = REMISS ~ ., family = binomial(link = logit), data = leuk)
@@ -460,15 +436,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Number of Fisher Scoring iterations: 8</code></pre>
 <p>The deviance of the null model (no regressors) is 34.372. The deviance of the full model is 26.073.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="logistic-regression.html#cb33-1"></a><span class="kw">glance</span>(m1)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="logistic-regression.html#cb28-1"></a><span class="kw">glance</span>(m1)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 7
 ##   null.deviance df.null logLik   AIC   BIC deviance df.residual
 ##           &lt;dbl&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;
 ## 1          34.4      26  -10.8  35.6  44.7     21.6          20</code></pre>
 <p>Use the <code>GainCurvePlot()</code> function to plot the gain curve (background on gain curve at <a href="https://www.datasciencecentral.com/profiles/blogs/understanding-and-interpreting-gain-and-lift-charts">Data Science Central</a> from the model predictions. The x-axis is the fraction of items seen when sorted by the predicted value, and the y-axis is the cumulative summed true outcome. The “wizard” curve is the gain curve when the data is sorted by the true outcome. If the model’s gain curve is close to the wizard gain curve, then the model sorted the response variable well. The grey area is the gain over a random sorting.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="logistic-regression.html#cb35-1"></a><span class="kw">augment</span>(m1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb35-2"><a href="logistic-regression.html#cb35-2"></a><span class="st">  </span><span class="kw">GainCurvePlot</span>(<span class="dt">xvar =</span> <span class="st">&quot;.fitted&quot;</span>, <span class="dt">truthVar =</span> <span class="st">&quot;REMISS&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Logistic Model&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="logistic-regression.html#cb30-1"></a><span class="kw">augment</span>(m1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb30-2"><a href="logistic-regression.html#cb30-2"></a><span class="st">  </span><span class="kw">GainCurvePlot</span>(<span class="dt">xvar =</span> <span class="st">&quot;.fitted&quot;</span>, <span class="dt">truthVar =</span> <span class="st">&quot;REMISS&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Logistic Model&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p><code>REMISS</code> equals 1 in 9 of the 27 responses.</p>
 <ul>
 <li>The wizard curve shows that after sorting the responses it encounters all 9 1s (100%) after looking at 9 of the 27 response (33%).<br />
@@ -478,10 +454,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The gain curve encounters 5 1s (55%) after looking at 9 of the 27 responses (33%). It has to look at 14 responses to encounter all 9 1s (100%).</li>
 </ul>
 <p>Another way to evaluate the predictive model is the ROC curve. It evaluates all possible thresholds for splitting predicted probabilities into predicted classes. This is often a much more useful metric than simply ranking models by their accuracy at a set threshold, as different models might require different calibration steps (looking at a confusion matrix at each step) to find the optimal classification threshold for that model.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="logistic-regression.html#cb36-1"></a><span class="kw">library</span>(caTools)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="logistic-regression.html#cb31-1"></a><span class="kw">library</span>(caTools)</span></code></pre></div>
 <pre><code>## Warning: package &#39;caTools&#39; was built under R version 3.6.2</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="logistic-regression.html#cb38-1"></a><span class="kw">colAUC</span>(m1<span class="op">$</span>fitted.values, m1<span class="op">$</span>data<span class="op">$</span>REMISS, <span class="dt">plotROC =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="logistic-regression.html#cb33-1"></a><span class="kw">colAUC</span>(m1<span class="op">$</span>fitted.values, m1<span class="op">$</span>data<span class="op">$</span>REMISS, <span class="dt">plotROC =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <pre><code>##              [,1]
 ## 0 vs. 1 0.8950617</code></pre>
 </div>
