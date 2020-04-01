@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-10" />
+<meta name="date" content="2020-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="gradient-boosting.html"/>
-<link rel="next" href="reference.html"/>
+<link rel="next" href="reference-1.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -160,7 +160,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
 <li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="discrete-variables.html"><a href="discrete-variables.html"><i class="fa fa-check"></i><b>4</b> Discrete Variables</a><ul>
+<li class="chapter" data-level="4" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>4</b> Categorical Analysis - Nonmodel</a><ul>
 <li class="chapter" data-level="4.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>4.1</b> Chi-Square Test</a></li>
 <li class="chapter" data-level="4.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> One-Way Tables</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
@@ -172,19 +172,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.3" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.3.3</b> Difference in Proportions</a></li>
 <li class="chapter" data-level="4.3.4" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.3.4</b> Relative Risk</a></li>
 <li class="chapter" data-level="4.3.5" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.3.5</b> Odds Ratio</a></li>
+<li class="chapter" data-level="4.3.6" data-path="two-way-tables.html"><a href="two-way-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>4.3.6</b> Partitioning Chi-Square</a></li>
+<li class="chapter" data-level="4.3.7" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>4.3.7</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="example-of-chi-square-test-of-homogeneity.html"><a href="example-of-chi-square-test-of-homogeneity.html"><i class="fa fa-check"></i><b>4.4</b> Example of Chi-Square Test of Homogeneity</a></li>
+<li class="chapter" data-level="4.4" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>4.4</b> K-Way Tables</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>4.4.1</b> Odds Ratio</a></li>
+<li class="chapter" data-level="4.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>4.4.2</b> Chi-Square Independence Test</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5</b> Inference</a></li>
-<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>5</b> Continuous Variable Analysis</a><ul>
+<li class="chapter" data-level="5.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>5.0.1</b> Correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a><ul>
+<li class="chapter" data-level="6.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>6.1</b> Linear Regression Model</a></li>
+<li class="chapter" data-level="6.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>6.2</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="6.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>6.3</b> Model Assumptions</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>6.3.1</b> Linearity</a></li>
+<li class="chapter" data-level="6.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>6.3.2</b> Multicollinearity</a></li>
+<li class="chapter" data-level="6.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>6.3.3</b> Normality</a></li>
+<li class="chapter" data-level="6.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>6.3.4</b> Equal Variances</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>6.4</b> Prediction</a></li>
+<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>6.5</b> Inference</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>6.5.1</b> <em>t</em>-Test</a></li>
+<li class="chapter" data-level="6.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>6.5.2</b> <em>F</em>-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>6.6</b> Interpretation</a></li>
+<li class="chapter" data-level="6.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>6.7</b> Model Validation</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>6.7.1</b> Accuracy Metrics</a></li>
+<li class="chapter" data-level="6.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>6.7.2</b> Cross-Validation</a></li>
+<li class="chapter" data-level="6.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>6.7.3</b> Gain Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>6.8</b> Reference</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
-<li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a><ul>
-<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#example-7"><i class="fa fa-check"></i>Example</a></li>
-</ul></li>
+<li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a></li>
 <li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
 <li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a></li>
 <li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a><ul>
-<li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-8"><i class="fa fa-check"></i>Example</a></li>
+<li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-16"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
@@ -202,7 +228,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
 <li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
 <li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
-<li class="chapter" data-level="10.7" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>11</b> Regularization</a></li>
 <li class="chapter" data-level="12" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>12</b> Non-linear Models</a><ul>
@@ -214,7 +240,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>13.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="13.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>13.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="13.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>13.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="13.4" data-path="example-9.html"><a href="example-9.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
+<li class="chapter" data-level="13.4" data-path="example-17.html"><a href="example-17.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
 <li class="chapter" data-level="13.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>13.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>14</b> Principal Components Analysis</a></li>
@@ -254,12 +280,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="summary" class="section level2">
 <h2><span class="header-section-number">10.6</span> Summary</h2>
 <p>Okay, I’m going to tally up the results! For the classification division, the winner is the manual classification tree! Gradient boosting made a valiant run at it, but came up just a little short.</p>
-<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="summary.html#cb440-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual Class&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_1b_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)), </span>
-<span id="cb440-2"><a href="summary.html#cb440-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Class w.tuneGrid&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_<span class="dv">3</span>_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)),</span>
-<span id="cb440-3"><a href="summary.html#cb440-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.bag.acc, <span class="dv">5</span>)),</span>
-<span id="cb440-4"><a href="summary.html#cb440-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.frst.acc, <span class="dv">5</span>)),</span>
-<span id="cb440-5"><a href="summary.html#cb440-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.gbm.acc, <span class="dv">5</span>))</span>
-<span id="cb440-6"><a href="summary.html#cb440-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Acc))</span></code></pre></div>
+<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="summary.html#cb704-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual Class&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_1b_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)), </span>
+<span id="cb704-2"><a href="summary.html#cb704-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Class w.tuneGrid&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_<span class="dv">3</span>_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)),</span>
+<span id="cb704-3"><a href="summary.html#cb704-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.bag.acc, <span class="dv">5</span>)),</span>
+<span id="cb704-4"><a href="summary.html#cb704-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.frst.acc, <span class="dv">5</span>)),</span>
+<span id="cb704-5"><a href="summary.html#cb704-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.gbm.acc, <span class="dv">5</span>))</span>
+<span id="cb704-6"><a href="summary.html#cb704-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Acc))</span></code></pre></div>
 <pre><code>##               model  Acc
 ## 1      Manual Class 0.86
 ## 2 Gradient Boosting 0.85
@@ -267,12 +293,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4           Bagging 0.83
 ## 5     Random Forest 0.83</code></pre>
 <p>And now for the regression division, the winnner is… gradient boosting!</p>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="summary.html#cb442-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual ANOVA&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">1</span>_pruned_rmse, <span class="dv">5</span>)), </span>
-<span id="cb442-2"><a href="summary.html#cb442-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;ANOVA w.tuneGrid&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">3</span>_pruned_rmse, <span class="dv">5</span>)),</span>
-<span id="cb442-3"><a href="summary.html#cb442-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.bag.rmse, <span class="dv">5</span>)),</span>
-<span id="cb442-4"><a href="summary.html#cb442-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.frst.rmse, <span class="dv">5</span>)),</span>
-<span id="cb442-5"><a href="summary.html#cb442-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.gbm.rmse, <span class="dv">5</span>))</span>
-<span id="cb442-6"><a href="summary.html#cb442-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(RMSE)</span></code></pre></div>
+<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="summary.html#cb706-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual ANOVA&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">1</span>_pruned_rmse, <span class="dv">5</span>)), </span>
+<span id="cb706-2"><a href="summary.html#cb706-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;ANOVA w.tuneGrid&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">3</span>_pruned_rmse, <span class="dv">5</span>)),</span>
+<span id="cb706-3"><a href="summary.html#cb706-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.bag.rmse, <span class="dv">5</span>)),</span>
+<span id="cb706-4"><a href="summary.html#cb706-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.frst.rmse, <span class="dv">5</span>)),</span>
+<span id="cb706-5"><a href="summary.html#cb706-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.gbm.rmse, <span class="dv">5</span>))</span>
+<span id="cb706-6"><a href="summary.html#cb706-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(RMSE)</span></code></pre></div>
 <pre><code>##               model RMSE
 ## 1 Gradient Boosting  1.4
 ## 2     Random Forest  1.8
@@ -281,29 +307,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5      Manual ANOVA  2.4</code></pre>
 <p>Here are plots of the ROC curves for all the models (one from each chapter) on the same graph. The ROCR package provides the prediction() and performance() functions which generate the data required for plotting the ROC curve, given a set of predictions and actual (true) values.
 The more “up and to the left” the ROC curve of a model is, the better the model. The AUC performance metric is literally the “Area Under the ROC Curve”, so the greater the area under this curve, the higher the AUC, and the better-performing the model is.</p>
-<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="summary.html#cb444-1"></a><span class="kw">library</span>(ROCR)</span>
-<span id="cb444-2"><a href="summary.html#cb444-2"></a><span class="co"># List of predictions</span></span>
-<span id="cb444-3"><a href="summary.html#cb444-3"></a>oj.class.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_<span class="dv">3</span>, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb444-4"><a href="summary.html#cb444-4"></a>oj.bag.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.bag, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb444-5"><a href="summary.html#cb444-5"></a>oj.frst.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.frst, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb444-6"><a href="summary.html#cb444-6"></a>oj.gbm.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.gbm, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb444-7"><a href="summary.html#cb444-7"></a></span>
-<span id="cb444-8"><a href="summary.html#cb444-8"></a>preds_list &lt;-<span class="st"> </span><span class="kw">list</span>(oj.class.pred, oj.bag.pred, oj.frst.pred, oj.gbm.pred)</span>
-<span id="cb444-9"><a href="summary.html#cb444-9"></a><span class="co">#preds_list &lt;- list(oj.class.pred)</span></span>
-<span id="cb444-10"><a href="summary.html#cb444-10"></a></span>
-<span id="cb444-11"><a href="summary.html#cb444-11"></a><span class="co"># List of actual values (same for all)</span></span>
-<span id="cb444-12"><a href="summary.html#cb444-12"></a>m &lt;-<span class="st"> </span><span class="kw">length</span>(preds_list)</span>
-<span id="cb444-13"><a href="summary.html#cb444-13"></a>actuals_list &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">list</span>(oj_test<span class="op">$</span>Purchase), m)</span>
-<span id="cb444-14"><a href="summary.html#cb444-14"></a></span>
-<span id="cb444-15"><a href="summary.html#cb444-15"></a><span class="co"># Plot the ROC curves</span></span>
-<span id="cb444-16"><a href="summary.html#cb444-16"></a>pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(preds_list, actuals_list)</span>
-<span id="cb444-17"><a href="summary.html#cb444-17"></a><span class="co">#pred &lt;- prediction(oj.class.pred[,2], oj_test$Purchase)</span></span>
-<span id="cb444-18"><a href="summary.html#cb444-18"></a>rocs &lt;-<span class="st"> </span><span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb444-19"><a href="summary.html#cb444-19"></a><span class="kw">plot</span>(rocs, <span class="dt">col =</span> <span class="kw">as.list</span>(<span class="dv">1</span><span class="op">:</span>m), <span class="dt">main =</span> <span class="st">&quot;Test Set ROC Curves&quot;</span>)</span>
-<span id="cb444-20"><a href="summary.html#cb444-20"></a><span class="kw">legend</span>(<span class="dt">x =</span> <span class="st">&quot;bottomright&quot;</span>, </span>
-<span id="cb444-21"><a href="summary.html#cb444-21"></a>       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Decision Tree&quot;</span>, <span class="st">&quot;Bagged Trees&quot;</span>, <span class="st">&quot;Random Forest&quot;</span>, <span class="st">&quot;GBM&quot;</span>),</span>
-<span id="cb444-22"><a href="summary.html#cb444-22"></a>       <span class="dt">fill =</span> <span class="dv">1</span><span class="op">:</span>m)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-217-1.png" width="672" /></p>
+<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="summary.html#cb708-1"></a><span class="kw">library</span>(ROCR)</span>
+<span id="cb708-2"><a href="summary.html#cb708-2"></a><span class="co"># List of predictions</span></span>
+<span id="cb708-3"><a href="summary.html#cb708-3"></a>oj.class.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_<span class="dv">3</span>, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb708-4"><a href="summary.html#cb708-4"></a>oj.bag.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.bag, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb708-5"><a href="summary.html#cb708-5"></a>oj.frst.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.frst, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb708-6"><a href="summary.html#cb708-6"></a>oj.gbm.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.gbm, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb708-7"><a href="summary.html#cb708-7"></a></span>
+<span id="cb708-8"><a href="summary.html#cb708-8"></a>preds_list &lt;-<span class="st"> </span><span class="kw">list</span>(oj.class.pred, oj.bag.pred, oj.frst.pred, oj.gbm.pred)</span>
+<span id="cb708-9"><a href="summary.html#cb708-9"></a><span class="co">#preds_list &lt;- list(oj.class.pred)</span></span>
+<span id="cb708-10"><a href="summary.html#cb708-10"></a></span>
+<span id="cb708-11"><a href="summary.html#cb708-11"></a><span class="co"># List of actual values (same for all)</span></span>
+<span id="cb708-12"><a href="summary.html#cb708-12"></a>m &lt;-<span class="st"> </span><span class="kw">length</span>(preds_list)</span>
+<span id="cb708-13"><a href="summary.html#cb708-13"></a>actuals_list &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">list</span>(oj_test<span class="op">$</span>Purchase), m)</span>
+<span id="cb708-14"><a href="summary.html#cb708-14"></a></span>
+<span id="cb708-15"><a href="summary.html#cb708-15"></a><span class="co"># Plot the ROC curves</span></span>
+<span id="cb708-16"><a href="summary.html#cb708-16"></a>pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(preds_list, actuals_list)</span>
+<span id="cb708-17"><a href="summary.html#cb708-17"></a><span class="co">#pred &lt;- prediction(oj.class.pred[,2], oj_test$Purchase)</span></span>
+<span id="cb708-18"><a href="summary.html#cb708-18"></a>rocs &lt;-<span class="st"> </span><span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb708-19"><a href="summary.html#cb708-19"></a><span class="kw">plot</span>(rocs, <span class="dt">col =</span> <span class="kw">as.list</span>(<span class="dv">1</span><span class="op">:</span>m), <span class="dt">main =</span> <span class="st">&quot;Test Set ROC Curves&quot;</span>)</span>
+<span id="cb708-20"><a href="summary.html#cb708-20"></a><span class="kw">legend</span>(<span class="dt">x =</span> <span class="st">&quot;bottomright&quot;</span>, </span>
+<span id="cb708-21"><a href="summary.html#cb708-21"></a>       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Decision Tree&quot;</span>, <span class="st">&quot;Bagged Trees&quot;</span>, <span class="st">&quot;Random Forest&quot;</span>, <span class="st">&quot;GBM&quot;</span>),</span>
+<span id="cb708-22"><a href="summary.html#cb708-22"></a>       <span class="dt">fill =</span> <span class="dv">1</span><span class="op">:</span>m)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-320-1.png" width="672" /></p>
 </div>
             </section>
 
@@ -311,7 +337,7 @@ The more “up and to the left” the ROC curve of a model is, the better the mo
         </div>
       </div>
 <a href="gradient-boosting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="reference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="reference-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

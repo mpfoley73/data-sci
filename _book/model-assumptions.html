@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6.3 Model Assumptions | My Data Science Notes</title>
+  <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6.3 Model Assumptions | My Data Science Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6.3 Model Assumptions | My Data Science Notes" />
+  
+  <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+<meta name="author" content="Michael Foley" />
+
+
+<meta name="date" content="2020-03-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="parameter-estimation.html"/>
+<link rel="next" href="prediction.html"/>
+<script src="assets/jquery-2.2.3/jquery.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">My Data Science Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Intro</a></li>
+<li class="chapter" data-level="1" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>1</b> Probability</a><ul>
+<li class="chapter" data-level="1.1" data-path="principles.html"><a href="principles.html"><i class="fa fa-check"></i><b>1.1</b> Principles</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="disc-dist.html"><a href="disc-dist.html"><i class="fa fa-check"></i><b>2</b> Discrete Distributions</a><ul>
+<li class="chapter" data-level="2.1" data-path="bernoulli.html"><a href="bernoulli.html"><i class="fa fa-check"></i><b>2.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="2.2" data-path="binomial.html"><a href="binomial.html"><i class="fa fa-check"></i><b>2.2</b> Binomial</a></li>
+<li class="chapter" data-level="2.3" data-path="poission.html"><a href="poission.html"><i class="fa fa-check"></i><b>2.3</b> Poission</a></li>
+<li class="chapter" data-level="2.4" data-path="multinomial.html"><a href="multinomial.html"><i class="fa fa-check"></i><b>2.4</b> Multinomial</a></li>
+<li class="chapter" data-level="2.5" data-path="negative-binomial.html"><a href="negative-binomial.html"><i class="fa fa-check"></i><b>2.5</b> Negative-Binomial</a></li>
+<li class="chapter" data-level="2.6" data-path="geometric.html"><a href="geometric.html"><i class="fa fa-check"></i><b>2.6</b> Geometric</a></li>
+<li class="chapter" data-level="2.7" data-path="hypergeometric.html"><a href="hypergeometric.html"><i class="fa fa-check"></i><b>2.7</b> Hypergeometric</a></li>
+<li class="chapter" data-level="2.8" data-path="gamma.html"><a href="gamma.html"><i class="fa fa-check"></i><b>2.8</b> Gamma</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="cont-dist.html"><a href="cont-dist.html"><i class="fa fa-check"></i><b>3</b> Continuous Distributions</a><ul>
+<li class="chapter" data-level="3.1" data-path="normal.html"><a href="normal.html"><i class="fa fa-check"></i><b>3.1</b> Normal</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="normal.html"><a href="normal.html#example-2"><i class="fa fa-check"></i><b>3.1.1</b> Example</a></li>
+<li class="chapter" data-level="3.1.2" data-path="normal.html"><a href="normal.html#example-3"><i class="fa fa-check"></i><b>3.1.2</b> Example</a></li>
+<li class="chapter" data-level="3.1.3" data-path="normal.html"><a href="normal.html#example-4"><i class="fa fa-check"></i><b>3.1.3</b> Example</a></li>
+<li class="chapter" data-level="3.1.4" data-path="normal.html"><a href="normal.html#normal-approximation-to-binomial"><i class="fa fa-check"></i><b>3.1.4</b> Normal Approximation to Binomial</a></li>
+<li class="chapter" data-level="3.1.5" data-path="normal.html"><a href="normal.html#example-5"><i class="fa fa-check"></i><b>3.1.5</b> Example</a></li>
+<li class="chapter" data-level="3.1.6" data-path="normal.html"><a href="normal.html#example-6"><i class="fa fa-check"></i><b>3.1.6</b> Example</a></li>
+<li class="chapter" data-level="3.1.7" data-path="normal.html"><a href="normal.html#from-sample-to-population"><i class="fa fa-check"></i><b>3.1.7</b> From Sample to Population</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
+<li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>4</b> Categorical Analysis - Nonmodel</a><ul>
+<li class="chapter" data-level="4.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>4.1</b> Chi-Square Test</a></li>
+<li class="chapter" data-level="4.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> One-Way Tables</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
+<li class="chapter" data-level="4.2.2" data-path="one-way-tables.html"><a href="one-way-tables.html#proportion-test"><i class="fa fa-check"></i><b>4.2.2</b> Proportion Test</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.3</b> Two-Way Tables</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-square-independence-test"><i class="fa fa-check"></i><b>4.3.1</b> Chi-Square Independence Test</a></li>
+<li class="chapter" data-level="4.3.2" data-path="two-way-tables.html"><a href="two-way-tables.html#residuals-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Residuals Analysis</a></li>
+<li class="chapter" data-level="4.3.3" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.3.3</b> Difference in Proportions</a></li>
+<li class="chapter" data-level="4.3.4" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.3.4</b> Relative Risk</a></li>
+<li class="chapter" data-level="4.3.5" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.3.5</b> Odds Ratio</a></li>
+<li class="chapter" data-level="4.3.6" data-path="two-way-tables.html"><a href="two-way-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>4.3.6</b> Partitioning Chi-Square</a></li>
+<li class="chapter" data-level="4.3.7" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>4.3.7</b> Correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>4.4</b> K-Way Tables</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>4.4.1</b> Odds Ratio</a></li>
+<li class="chapter" data-level="4.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>4.4.2</b> Chi-Square Independence Test</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>5</b> Continuous Variable Analysis</a><ul>
+<li class="chapter" data-level="5.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>5.0.1</b> Correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a><ul>
+<li class="chapter" data-level="6.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>6.1</b> Linear Regression Model</a></li>
+<li class="chapter" data-level="6.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>6.2</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="6.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>6.3</b> Model Assumptions</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>6.3.1</b> Linearity</a></li>
+<li class="chapter" data-level="6.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>6.3.2</b> Multicollinearity</a></li>
+<li class="chapter" data-level="6.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>6.3.3</b> Normality</a></li>
+<li class="chapter" data-level="6.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>6.3.4</b> Equal Variances</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>6.4</b> Prediction</a></li>
+<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>6.5</b> Inference</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>6.5.1</b> <em>t</em>-Test</a></li>
+<li class="chapter" data-level="6.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>6.5.2</b> <em>F</em>-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>6.6</b> Interpretation</a></li>
+<li class="chapter" data-level="6.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>6.7</b> Model Validation</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>6.7.1</b> Accuracy Metrics</a></li>
+<li class="chapter" data-level="6.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>6.7.2</b> Cross-Validation</a></li>
+<li class="chapter" data-level="6.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>6.7.3</b> Gain Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>6.8</b> Reference</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
+<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a></li>
+<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-16"><i class="fa fa-check"></i>Example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
+<li class="chapter" data-level="9" data-path="classification-1.html"><a href="classification-1.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
+<li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
+<li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
+<li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
+<li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
+<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>11</b> Regularization</a></li>
+<li class="chapter" data-level="12" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>12</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="12.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>12.1</b> Splines</a></li>
+<li class="chapter" data-level="12.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>12.2</b> MARS</a></li>
+<li class="chapter" data-level="12.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>12.3</b> GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>13</b> Support Vector Machines</a><ul>
+<li class="chapter" data-level="13.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>13.1</b> Maximal Margin Classifier</a></li>
+<li class="chapter" data-level="13.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>13.2</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="13.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>13.3</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="13.4" data-path="example-17.html"><a href="example-17.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
+<li class="chapter" data-level="13.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>13.5</b> Using Caret</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>14</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a></li>
+<li class="chapter" data-level="16" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>16</b> Text Mining</a></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
+<li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
+<li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
+<li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
+<li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
+<li class="chapter" data-level="16.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>16.0.1</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
+<li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">My Data Science Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="model-assumptions" class="section level2">
+<h2><span class="header-section-number">6.3</span> Model Assumptions</h2>
+<p>The linear regression model assumes the relationship between the predictors and the response is linear with the residuals that are independent random variables normally distributed with mean zero and constant variance.</p>
+<p>Additionally, you will want to check for multicollinearity in the predictors because it can produce unreliable coefficient estimates and predicted values.</p>
+<p>Use a residuals vs fits plot <span class="math inline">\(\left( e \sim \hat{Y} \right)\)</span> to detect non-linearity and unequal error variances, including outliers. The polynomial trend line should show that the residuals vary around <span class="math inline">\(e = 0\)</span> in a straight line (linearity). The variance should be of constant width (especially no fan shape at the low or high ends).</p>
+<p>Use a residuals normal probability plot to compares the theoretical percentiles of the normal distribution versus the observed sample percentiles. It should be approximately linear.</p>
+<p>A scale-location plot <span class="math inline">\(\sqrt{e / sd(e)} \sim \hat{y}\)</span> checks the homogeneity of variance of the residuals (homoscedasticity). The square root of the absolute value of the residuals should be spread equally along a horizontal line.</p>
+<p>A residuals vs leverage plot identifies influential observations. A plot of the standardized residuals vs the leverage should fall within the 95% probability band.</p>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="model-assumptions.html#cb371-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb371-2"><a href="model-assumptions.html#cb371-2"></a><span class="kw">plot</span>(m, <span class="dt">labels.id =</span> <span class="ot">NULL</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-173-1.png" width="672" /></p>
+<div id="linearity" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Linearity</h3>
+<p>The explanatory variables should each be linearly related to the response variable: <span class="math inline">\(E(\epsilon | X_j) = 0\)</span>. A good way to test this condition is with a residuals vs fitted values plot. A curved pattern in the residuals indicates a curvature in the relationship between the response and the predictor that is not explained by our model. A linear model does not adequately describe the relationship between the predictor and the response.</p>
+<p>Test for linearity four ways:</p>
+<ul>
+<li>Residuals vs fits plot <span class="math inline">\((e \sim \hat{Y})\)</span> should bounce randomly around 0.</li>
+<li>Observed vs fits plot <span class="math inline">\((Y \sim \hat{Y})\)</span> should be symmetric along the 45-degree line.<br />
+</li>
+<li>Each <span class="math inline">\((Y \sim X_j )\)</span> plot should have correlation <span class="math inline">\(\rho \sim 1\)</span>.<br />
+</li>
+<li>Each <span class="math inline">\((e \sim X_j)\)</span> plot should exhibit no pattern.</li>
+</ul>
+<p>If the linearity condition fails, change the functional form of the model with non-linear transformations of the explanatory variables. A common way to do this is with Box-Cox transformations.</p>
+<p><span class="math display">\[w_t = \begin{cases} \begin{array}{l} log(y_t) \quad \quad \lambda = 0 \\
+(y_t^\lambda - 1) / \lambda \quad \text{otherwise} \end{array} \end{cases}\]</span></p>
+<p><span class="math inline">\(\lambda\)</span> can take any value, but values near the following yield familiar transformations.</p>
+<ul>
+<li><span class="math inline">\(\lambda = 1\)</span> yields no substantive transformation.<br />
+</li>
+<li><span class="math inline">\(\lambda = 0.5\)</span> is a square root plus linear transformation.</li>
+<li><span class="math inline">\(\lambda = 0.333\)</span> is a cube root plus linear transformation.</li>
+<li><span class="math inline">\(\lambda = 0\)</span> is a natural log transformation.</li>
+<li><span class="math inline">\(\lambda = -1\)</span> is an inverse transformation.</li>
+</ul>
+<p>A common source of non-linearity in a model is skewed response or independent variables (see discussion <a href="https://blog.minitab.com/blog/applying-statistics-in-quality-projects/how-could-you-benefit-from-a-box-cox-transformation">here</a>). <code>mtcars</code> has some skewed variables.</p>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="model-assumptions.html#cb372-1"></a>tmp &lt;-<span class="st"> </span><span class="kw">map</span>(mtcars, skewness) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb372-2"><a href="model-assumptions.html#cb372-2"></a><span class="st">  </span><span class="kw">unlist</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb372-3"><a href="model-assumptions.html#cb372-3"></a><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span></span>
+<span id="cb372-4"><a href="model-assumptions.html#cb372-4"></a><span class="st">  </span><span class="kw">rownames_to_column</span>() </span>
+<span id="cb372-5"><a href="model-assumptions.html#cb372-5"></a><span class="kw">colnames</span>(tmp) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;IV&quot;</span>, <span class="st">&quot;skew&quot;</span>)</span>
+<span id="cb372-6"><a href="model-assumptions.html#cb372-6"></a><span class="kw">ggplot</span>(tmp, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">order</span>(IV, skew), <span class="dt">y =</span> skew)) <span class="op">+</span></span>
+<span id="cb372-7"><a href="model-assumptions.html#cb372-7"></a><span class="st">  </span><span class="kw">geom_col</span>()</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-174-1.png" width="672" /></p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="model-assumptions.html#cb373-1"></a>df &lt;-<span class="st"> </span>mtcars</span>
+<span id="cb373-2"><a href="model-assumptions.html#cb373-2"></a>m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> df)</span>
+<span id="cb373-3"><a href="model-assumptions.html#cb373-3"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb373-4"><a href="model-assumptions.html#cb373-4"></a><span class="kw">plot</span>(m)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-174-2.png" width="672" /></p>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="model-assumptions.html#cb374-1"></a><span class="kw">plot</span>(m<span class="op">$</span>model<span class="op">$</span>mpg, m<span class="op">$</span>fitted.values)</span>
+<span id="cb374-2"><a href="model-assumptions.html#cb374-2"></a><span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb374-3"><a href="model-assumptions.html#cb374-3"></a><span class="kw">cor</span>(df<span class="op">$</span>mpg, df<span class="op">$</span>hp)</span></code></pre></div>
+<pre><code>## [1] -0.78</code></pre>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="model-assumptions.html#cb376-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m<span class="op">$</span>fitted.values, <span class="dt">obs =</span> m<span class="op">$</span>model<span class="op">$</span>mpg)</span></code></pre></div>
+<pre><code>##     RMSE Rsquared      MAE 
+##      3.7      0.6      2.9</code></pre>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="model-assumptions.html#cb378-1"></a>bc &lt;-<span class="st"> </span><span class="kw">BoxCoxTrans</span>(mtcars<span class="op">$</span>hp)</span>
+<span id="cb378-2"><a href="model-assumptions.html#cb378-2"></a>df<span class="op">$</span>hp_bc &lt;-<span class="st"> </span><span class="kw">predict</span>(bc, mtcars<span class="op">$</span>hp)</span>
+<span id="cb378-3"><a href="model-assumptions.html#cb378-3"></a>m_bc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp_bc, <span class="dt">data =</span> df)</span>
+<span id="cb378-4"><a href="model-assumptions.html#cb378-4"></a><span class="kw">plot</span>(m_bc)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-174-3.png" width="672" /></p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="model-assumptions.html#cb379-1"></a><span class="kw">plot</span>(m_bc<span class="op">$</span>model<span class="op">$</span>mpg, m_bc<span class="op">$</span>fitted.values)</span>
+<span id="cb379-2"><a href="model-assumptions.html#cb379-2"></a><span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb379-3"><a href="model-assumptions.html#cb379-3"></a><span class="kw">cor</span>(df<span class="op">$</span>mpg, df<span class="op">$</span>hp_bc)</span></code></pre></div>
+<pre><code>## [1] -0.85</code></pre>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="model-assumptions.html#cb381-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m_bc<span class="op">$</span>fitted.values, <span class="dt">obs =</span> m_bc<span class="op">$</span>model<span class="op">$</span>mpg)</span></code></pre></div>
+<pre><code>##     RMSE Rsquared      MAE 
+##     3.14     0.72     2.41</code></pre>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="model-assumptions.html#cb383-1"></a><span class="co"># Which vars are skewed?</span></span>
+<span id="cb383-2"><a href="model-assumptions.html#cb383-2"></a><span class="kw">map</span>(mtcars, skewness)</span></code></pre></div>
+<pre><code>## $mpg
+## [1] 0.61
+## 
+## $cyl
+## [1] -0.17
+## 
+## $disp
+## [1] 0.38
+## 
+## $hp
+## [1] 0.73
+## 
+## $drat
+## [1] 0.27
+## 
+## $wt
+## [1] 0.42
+## 
+## $qsec
+## [1] 0.37
+## 
+## $vs
+## [1] 0.24
+## 
+## $am
+## [1] 0.36
+## 
+## $gear
+## [1] 0.53
+## 
+## $carb
+## [1] 1.1</code></pre>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="model-assumptions.html#cb385-1"></a><span class="co"># Benchmark model: mpg ~ hp</span></span>
+<span id="cb385-2"><a href="model-assumptions.html#cb385-2"></a>d0 &lt;-<span class="st"> </span>mtcars</span>
+<span id="cb385-3"><a href="model-assumptions.html#cb385-3"></a>m0 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> d0)</span>
+<span id="cb385-4"><a href="model-assumptions.html#cb385-4"></a>d0 &lt;-<span class="st"> </span><span class="kw">augment</span>(m0, d0)</span>
+<span id="cb385-5"><a href="model-assumptions.html#cb385-5"></a>d0.cor &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">cor</span>(d0<span class="op">$</span>mpg, d0<span class="op">$</span>hp), <span class="dv">2</span>)</span>
+<span id="cb385-6"><a href="model-assumptions.html#cb385-6"></a></span>
+<span id="cb385-7"><a href="model-assumptions.html#cb385-7"></a><span class="co"># Benchmark diagnostics</span></span>
+<span id="cb385-8"><a href="model-assumptions.html#cb385-8"></a>p0a &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d0, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb385-9"><a href="model-assumptions.html#cb385-9"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Response vs IV&quot;</span>,</span>
+<span id="cb385-10"><a href="model-assumptions.html#cb385-10"></a>       <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;Correlation ~ 1?  (rho = &quot;</span>, d0.cor, <span class="st">&quot;)&quot;</span>))</span>
+<span id="cb385-11"><a href="model-assumptions.html#cb385-11"></a>p0b &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d0, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb385-12"><a href="model-assumptions.html#cb385-12"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs Fits&quot;</span>,</span>
+<span id="cb385-13"><a href="model-assumptions.html#cb385-13"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Random scatter?&quot;</span>)</span>
+<span id="cb385-14"><a href="model-assumptions.html#cb385-14"></a>p0c &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d0, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb385-15"><a href="model-assumptions.html#cb385-15"></a><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>)) <span class="op">+</span></span>
+<span id="cb385-16"><a href="model-assumptions.html#cb385-16"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Observed vs Fits&quot;</span>,</span>
+<span id="cb385-17"><a href="model-assumptions.html#cb385-17"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Symmetric along 45 degree line?&quot;</span>)</span>
+<span id="cb385-18"><a href="model-assumptions.html#cb385-18"></a>p0d &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d0, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb385-19"><a href="model-assumptions.html#cb385-19"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs IV&quot;</span>,</span>
+<span id="cb385-20"><a href="model-assumptions.html#cb385-20"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Random scatter?&quot;</span>)</span>
+<span id="cb385-21"><a href="model-assumptions.html#cb385-21"></a><span class="kw">grid.arrange</span>(p0a, p0b, p0c, p0d, <span class="dt">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb385-22"><a href="model-assumptions.html#cb385-22"></a></span>
+<span id="cb385-23"><a href="model-assumptions.html#cb385-23"></a><span class="co"># Benchmark performance</span></span>
+<span id="cb385-24"><a href="model-assumptions.html#cb385-24"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m0<span class="op">$</span>fitted.values, <span class="dt">obs =</span> m0<span class="op">$</span>model<span class="op">$</span>mpg)</span></code></pre></div>
+<pre><code>##     RMSE Rsquared      MAE 
+##      3.7      0.6      2.9</code></pre>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="model-assumptions.html#cb387-1"></a><span class="co"># Box-Cox transform hp</span></span>
+<span id="cb387-2"><a href="model-assumptions.html#cb387-2"></a>d1 &lt;-<span class="st"> </span>mtcars</span>
+<span id="cb387-3"><a href="model-assumptions.html#cb387-3"></a>bc &lt;-<span class="st"> </span><span class="kw">BoxCoxTrans</span>(d1<span class="op">$</span>hp)</span>
+<span id="cb387-4"><a href="model-assumptions.html#cb387-4"></a>d1<span class="op">$</span>hp_bc &lt;-<span class="st"> </span><span class="kw">predict</span>(bc, d1<span class="op">$</span>hp)</span>
+<span id="cb387-5"><a href="model-assumptions.html#cb387-5"></a>m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp_bc, <span class="dt">data =</span> d1)</span>
+<span id="cb387-6"><a href="model-assumptions.html#cb387-6"></a>d1 &lt;-<span class="st"> </span><span class="kw">augment</span>(m1, d1)</span>
+<span id="cb387-7"><a href="model-assumptions.html#cb387-7"></a>d1.cor &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">cor</span>(d1<span class="op">$</span>mpg, d1<span class="op">$</span>hp_bc), <span class="dv">2</span>)</span>
+<span id="cb387-8"><a href="model-assumptions.html#cb387-8"></a></span>
+<span id="cb387-9"><a href="model-assumptions.html#cb387-9"></a>p1a &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d1, <span class="kw">aes</span>(<span class="dt">x =</span> hp_bc, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb387-10"><a href="model-assumptions.html#cb387-10"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Response vs IV&quot;</span>,</span>
+<span id="cb387-11"><a href="model-assumptions.html#cb387-11"></a>       <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;Correlation ~ 1?  (rho = &quot;</span>, d1.cor, <span class="st">&quot;)&quot;</span>))</span>
+<span id="cb387-12"><a href="model-assumptions.html#cb387-12"></a>p1b &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d1, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb387-13"><a href="model-assumptions.html#cb387-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs Fits&quot;</span>,</span>
+<span id="cb387-14"><a href="model-assumptions.html#cb387-14"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Random scatter?&quot;</span>)</span>
+<span id="cb387-15"><a href="model-assumptions.html#cb387-15"></a>p1c &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d1, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb387-16"><a href="model-assumptions.html#cb387-16"></a><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>)) <span class="op">+</span></span>
+<span id="cb387-17"><a href="model-assumptions.html#cb387-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Observed vs Fits&quot;</span>,</span>
+<span id="cb387-18"><a href="model-assumptions.html#cb387-18"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Symmetric along 45 degree line?&quot;</span>)</span>
+<span id="cb387-19"><a href="model-assumptions.html#cb387-19"></a>p1d &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d1, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb387-20"><a href="model-assumptions.html#cb387-20"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs IV&quot;</span>,</span>
+<span id="cb387-21"><a href="model-assumptions.html#cb387-21"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Random scatter?&quot;</span>)</span>
+<span id="cb387-22"><a href="model-assumptions.html#cb387-22"></a><span class="kw">grid.arrange</span>(p1a, p1b, p1c, p1d, <span class="dt">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb387-23"><a href="model-assumptions.html#cb387-23"></a></span>
+<span id="cb387-24"><a href="model-assumptions.html#cb387-24"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m1<span class="op">$</span>fitted.values, <span class="dt">obs =</span> m1<span class="op">$</span>model<span class="op">$</span>mpg)</span></code></pre></div>
+<pre><code>##     RMSE Rsquared      MAE 
+##     3.14     0.72     2.41</code></pre>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-174-4.png" width="672" /></p>
+</div>
+<div id="multicollinearity" class="section level3">
+<h3><span class="header-section-number">6.3.2</span> Multicollinearity</h3>
+<p>The multicollinearity condition is violated when two or more of the predictors in a regression model are correlated. Muticollinearity can occur for <em>structural</em> reasons, as when one variable is a transformation of another variable, or for <em>data</em> reasons, as occurs in observational studies. Multicollinearity is a problem because it inflates the variances of the estimated coefficients, resulting in larger confidence intervals.</p>
+<p>When predictor variables are correlated, the precision of the estimated regression coefficients decreases with each added correlated predictor variable. The usual interpretation of a slope coefficient as the change in the mean response for each additional unit increase in the predictor when all the other predictors are held constant breaks down because changing one predictor necessarily changes the others.</p>
+<p>A residuals vs fits plot <span class="math inline">\((\epsilon \sim \hat{Y})\)</span> should have correlation <span class="math inline">\(\rho \sim 0\)</span>. A correlation matrix is helpful for picking out the correlation strengths. A good rule of thumb is correlation coefficients should be less than 0.80. However, this test may not work when a variable is correlated with a function of other variables. A model with multicollinearity may have a significant F-test with insignificant individual slope estimator t-tests. Another way to detect multicollinearity is by calculating variance inflation factors. The predictor variance <span class="math inline">\(Var(\hat{\beta_k})\)</span> increases by a factor</p>
+<p><span class="math display">\[VIF_k = \frac{1}{1 - R_k^2}\]</span></p>
+<p>where <span class="math inline">\(R_k^2\)</span> is the <span class="math inline">\(R^2\)</span> of a regression of the <span class="math inline">\(k^{th}\)</span> predictor on the remaining predictors. A <span class="math inline">\(VIF_k\)</span> of <span class="math inline">\(1\)</span> indicates no inflation (no corellation). A <span class="math inline">\(VIF_k &gt;= 4\)</span> warrants investigation. A <span class="math inline">\(VIF_k &gt;= 10\)</span> requires correction.</p>
+<div id="example-8" class="section level4">
+<h4><span class="header-section-number">6.3.2.1</span> Example</h4>
+<p>Does the model <code>mpg ~ .</code> exhibit multicollinearity?</p>
+<p>The correlation matrix above (and presented again below) has several correlated covariates. <code>disp</code> is strongly correlated with <code>wt</code> (r = 0.89) and <code>hp</code> (r = 0.79).</p>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="model-assumptions.html#cb389-1"></a>m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars)</span>
+<span id="cb389-2"><a href="model-assumptions.html#cb389-2"></a><span class="kw">corrplot</span>(<span class="kw">cor</span>(<span class="kw">subset</span>(d, <span class="dt">select =</span> <span class="kw">c</span>(mpg, disp, hp, drat, wt, qsec))), <span class="dt">type =</span> <span class="st">&quot;upper&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;number&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-175-1.png" width="672" /></p>
+<p>Calculate the VIFs.</p>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="model-assumptions.html#cb390-1"></a><span class="kw">round</span>(<span class="kw">vif</span>(m), <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##  cyl disp   hp drat   wt qsec   vs   am gear carb 
+## 15.4 21.6  9.8  3.4 15.2  7.5  5.0  4.6  5.4  7.9</code></pre>
+<p>There are two predictors with VIFs greater than 10, cyl (GVIF = 21.36) and disp (GVIF = 13.76). One way to address multicollinearity is removing one or more of the violating predictors from the regression model. Try removing <code>cyl</code>.</p>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="model-assumptions.html#cb392-1"></a><span class="kw">vif</span>(m &lt;-<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>cyl, <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]))</span></code></pre></div>
+<pre><code>## disp   hp drat   wt qsec   vs   am 
+##  9.9  5.4  2.8  7.6  6.0  4.2  3.5</code></pre>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="model-assumptions.html#cb394-1"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ . - cyl, data = d[, 1:9])
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -3.407 -1.469 -0.282  1.142  4.537 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)  12.4980    12.4804    1.00   0.3266   
+## disp          0.0137     0.0114    1.21   0.2382   
+## hp           -0.0228     0.0153   -1.50   0.1478   
+## drat          0.9553     1.4074    0.68   0.5038   
+## wt           -3.9497     1.2626   -3.13   0.0046 **
+## qsec          0.8715     0.6133    1.42   0.1682   
+## vsS           0.5902     1.8330    0.32   0.7503   
+## ammanual      3.0240     1.6684    1.81   0.0824 . 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.5 on 24 degrees of freedom
+## Multiple R-squared:  0.867,  Adjusted R-squared:  0.829 
+## F-statistic: 22.4 on 7 and 24 DF,  p-value: 0.00000000453</code></pre>
+<p>Removing <code>cyl</code> reduced the VIFs of the other variables below 10. <code>disp</code> is still right up there (VIF = 9.87), so it may be worth dropping it from the model too. The model summary still shows that there is only one significant (at .05 level a significance) variable (<code>wt</code>, p = .00457). What if I drop <code>disp</code> too?</p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="model-assumptions.html#cb396-1"></a><span class="kw">vif</span>(m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>cyl <span class="op">-</span><span class="st"> </span>disp, <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]))</span></code></pre></div>
+<pre><code>##   hp drat   wt qsec   vs   am 
+##  5.1  2.7  5.1  5.8  4.1  3.3</code></pre>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="model-assumptions.html#cb398-1"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ . - cyl - disp, data = d[, 1:9])
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -3.369 -1.721 -0.253  1.099  4.603 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)  16.1410    12.2232    1.32   0.1986   
+## hp           -0.0180     0.0149   -1.21   0.2380   
+## drat          0.6205     1.3926    0.45   0.6597   
+## wt           -3.0751     1.0446   -2.94   0.0069 **
+## qsec          0.7347     0.6084    1.21   0.2385   
+## vsS           0.2045     1.8217    0.11   0.9115   
+## ammanual      2.5653     1.6397    1.56   0.1303   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.5 on 25 degrees of freedom
+## Multiple R-squared:  0.859,  Adjusted R-squared:  0.825 
+## F-statistic: 25.4 on 6 and 25 DF,  p-value: 0.00000000169</code></pre>
+<p>The model is not improved, so keep <code>disp</code>.</p>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="model-assumptions.html#cb400-1"></a>m &lt;-<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>cyl, <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])</span></code></pre></div>
+<p>If the multicollinearity occurs because you are using a polynomial regression model, <em>center</em> the predictor variables (subtract their means).</p>
+</div>
+<div id="example-9" class="section level4">
+<h4><span class="header-section-number">6.3.2.2</span> Example</h4>
+<p>Data set <code>exerimmun</code> (<a href="https://newonlinecourses.science.psu.edu/stat501/sites/onlinecourses.science.psu.edu.stat501/files/data/exerimmun/index.txt">exerimun.txt</a>) contains observations of immunoglobin in blood (a measure of immunity) and maximal oxygen uptake (a measure of exercise level) for <span class="math inline">\(n = 30\)</span> individuals.</p>
+<ul>
+<li><code>igg</code> = amount of immunoglobin in blood (mg)</li>
+<li><code>oxygent</code> = maximal oxygen uptake (ml/kg)</li>
+</ul>
+<p>How does exercise affect the immune system?</p>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="model-assumptions.html#cb401-1"></a><span class="co">#exerimmun &lt;- read_tsv(file = &quot;./Data/exerimmun.txt&quot;)</span></span>
+<span id="cb401-2"><a href="model-assumptions.html#cb401-2"></a>exerimmun &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
+<span id="cb401-3"><a href="model-assumptions.html#cb401-3"></a>  <span class="op">~</span>igg, <span class="op">~</span>oxygen,</span>
+<span id="cb401-4"><a href="model-assumptions.html#cb401-4"></a>  <span class="dv">881</span>,  <span class="fl">34.6</span>,</span>
+<span id="cb401-5"><a href="model-assumptions.html#cb401-5"></a>  <span class="dv">1290</span>, <span class="dv">45</span>,</span>
+<span id="cb401-6"><a href="model-assumptions.html#cb401-6"></a>  <span class="dv">2147</span>, <span class="fl">62.3</span>,</span>
+<span id="cb401-7"><a href="model-assumptions.html#cb401-7"></a>  <span class="dv">1909</span>, <span class="fl">58.9</span>,</span>
+<span id="cb401-8"><a href="model-assumptions.html#cb401-8"></a>  <span class="dv">1282</span>, <span class="fl">42.5</span>,</span>
+<span id="cb401-9"><a href="model-assumptions.html#cb401-9"></a>  <span class="dv">1530</span>, <span class="fl">44.3</span>,</span>
+<span id="cb401-10"><a href="model-assumptions.html#cb401-10"></a>  <span class="dv">2067</span>, <span class="fl">67.9</span>,</span>
+<span id="cb401-11"><a href="model-assumptions.html#cb401-11"></a>  <span class="dv">1982</span>, <span class="fl">58.5</span>,</span>
+<span id="cb401-12"><a href="model-assumptions.html#cb401-12"></a>  <span class="dv">1019</span>, <span class="fl">35.6</span>,</span>
+<span id="cb401-13"><a href="model-assumptions.html#cb401-13"></a>  <span class="dv">1651</span>, <span class="fl">49.6</span>,</span>
+<span id="cb401-14"><a href="model-assumptions.html#cb401-14"></a>  <span class="dv">752</span>,  <span class="dv">33</span>,</span>
+<span id="cb401-15"><a href="model-assumptions.html#cb401-15"></a>  <span class="dv">1687</span>, <span class="dv">52</span>,</span>
+<span id="cb401-16"><a href="model-assumptions.html#cb401-16"></a>  <span class="dv">1782</span>, <span class="fl">61.4</span>,</span>
+<span id="cb401-17"><a href="model-assumptions.html#cb401-17"></a>  <span class="dv">1529</span>, <span class="fl">50.2</span>,</span>
+<span id="cb401-18"><a href="model-assumptions.html#cb401-18"></a>  <span class="dv">969</span>,  <span class="fl">34.1</span>,</span>
+<span id="cb401-19"><a href="model-assumptions.html#cb401-19"></a>  <span class="dv">1660</span>, <span class="fl">52.5</span>,</span>
+<span id="cb401-20"><a href="model-assumptions.html#cb401-20"></a>  <span class="dv">2121</span>, <span class="fl">69.9</span>,</span>
+<span id="cb401-21"><a href="model-assumptions.html#cb401-21"></a>  <span class="dv">1382</span>, <span class="fl">38.8</span>,</span>
+<span id="cb401-22"><a href="model-assumptions.html#cb401-22"></a>  <span class="dv">1714</span>, <span class="fl">50.6</span>,</span>
+<span id="cb401-23"><a href="model-assumptions.html#cb401-23"></a>  <span class="dv">1959</span>, <span class="fl">69.4</span>,</span>
+<span id="cb401-24"><a href="model-assumptions.html#cb401-24"></a>  <span class="dv">1158</span>, <span class="fl">37.4</span>,</span>
+<span id="cb401-25"><a href="model-assumptions.html#cb401-25"></a>  <span class="dv">965</span>,  <span class="fl">35.1</span>,</span>
+<span id="cb401-26"><a href="model-assumptions.html#cb401-26"></a>  <span class="dv">1456</span>, <span class="dv">43</span>,</span>
+<span id="cb401-27"><a href="model-assumptions.html#cb401-27"></a>  <span class="dv">1273</span>, <span class="fl">44.1</span>,</span>
+<span id="cb401-28"><a href="model-assumptions.html#cb401-28"></a>  <span class="dv">1418</span>, <span class="fl">49.8</span>,</span>
+<span id="cb401-29"><a href="model-assumptions.html#cb401-29"></a>  <span class="dv">1743</span>, <span class="fl">54.4</span>,</span>
+<span id="cb401-30"><a href="model-assumptions.html#cb401-30"></a>  <span class="dv">1997</span>, <span class="fl">68.5</span>,</span>
+<span id="cb401-31"><a href="model-assumptions.html#cb401-31"></a>  <span class="dv">2177</span>, <span class="fl">69.5</span>,</span>
+<span id="cb401-32"><a href="model-assumptions.html#cb401-32"></a>  <span class="dv">1965</span>, <span class="dv">63</span>,</span>
+<span id="cb401-33"><a href="model-assumptions.html#cb401-33"></a>  <span class="dv">1264</span>, <span class="fl">43.2</span></span>
+<span id="cb401-34"><a href="model-assumptions.html#cb401-34"></a>)</span>
+<span id="cb401-35"><a href="model-assumptions.html#cb401-35"></a><span class="kw">head</span>(exerimmun)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##     igg oxygen
+##   &lt;dbl&gt;  &lt;dbl&gt;
+## 1   881   34.6
+## 2  1290   45  
+## 3  2147   62.3
+## 4  1909   58.9
+## 5  1282   42.5
+## 6  1530   44.3</code></pre>
+<p>The scatterplot <code>oxygen ~ igg</code> shows some curvature. Formulate a quadratic polynomial regression function, <span class="math inline">\(igg_i = \beta_0 + \beta_1 oxygen_i + \beta_2 oxygen_i^2 + \epsilon_i\)</span> where the error terms are assumed to be independent, and normally distributed with equal variance.</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="model-assumptions.html#cb403-1"></a><span class="kw">ggplot</span>(exerimmun, <span class="kw">aes</span>(<span class="dt">y =</span> igg, <span class="dt">x =</span> oxygen)) <span class="op">+</span></span>
+<span id="cb403-2"><a href="model-assumptions.html#cb403-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb403-3"><a href="model-assumptions.html#cb403-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dv">2</span>), <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb403-4"><a href="model-assumptions.html#cb403-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Immunoglobin in Blood&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-181-1.png" width="672" /></p>
+<p>The formulated regression fits the data well (<span class="math inline">\(adj R^2 = .933\)</span>), but the terms <code>oxygen</code> and <code>oxygen^2</code> are strongly correlated.</p>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="model-assumptions.html#cb404-1"></a>m_blood &lt;-<span class="st"> </span><span class="kw">lm</span>(igg <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(oxygen, <span class="dv">2</span>), <span class="dt">data =</span> exerimmun)</span>
+<span id="cb404-2"><a href="model-assumptions.html#cb404-2"></a><span class="kw">summary</span>(m_blood)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = igg ~ poly(oxygen, 2), data = exerimmun)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -185.37  -82.13    1.05   66.01  227.38 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value            Pr(&gt;|t|)    
+## (Intercept)        1557.6       19.4   80.16 &lt;0.0000000000000002 ***
+## poly(oxygen, 2)1   2114.7      106.4   19.87 &lt;0.0000000000000002 ***
+## poly(oxygen, 2)2   -360.8      106.4   -3.39              0.0022 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 106 on 27 degrees of freedom
+## Multiple R-squared:  0.938,  Adjusted R-squared:  0.933 
+## F-statistic:  203 on 2 and 27 DF,  p-value: &lt;0.0000000000000002</code></pre>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="model-assumptions.html#cb406-1"></a><span class="kw">cor</span>(exerimmun<span class="op">$</span>oxygen, exerimmun<span class="op">$</span>oxygen<span class="op">^</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 0.99</code></pre>
+<p>Remove the structural multicollinearity by centering the predictors. You can scale the predictors with <code>scale()</code>, but be careful to scale new data when predicting new observations with <code>predict(newdata=)</code>! Whenever possible, perform the transformation right in the model.</p>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="model-assumptions.html#cb408-1"></a>m_blood &lt;-<span class="st"> </span><span class="kw">lm</span>(igg <span class="op">~</span><span class="st"> </span><span class="kw">I</span>(oxygen <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(exerimmun<span class="op">$</span>oxygen)) <span class="op">+</span></span>
+<span id="cb408-2"><a href="model-assumptions.html#cb408-2"></a><span class="st">                </span><span class="kw">I</span>((oxygen <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(exerimmun<span class="op">$</span>oxygen))<span class="op">^</span><span class="dv">2</span>), </span>
+<span id="cb408-3"><a href="model-assumptions.html#cb408-3"></a>              <span class="dt">data =</span> exerimmun)</span>
+<span id="cb408-4"><a href="model-assumptions.html#cb408-4"></a><span class="kw">summary</span>(m_blood)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = igg ~ I(oxygen - mean(exerimmun$oxygen)) + I((oxygen - 
+##     mean(exerimmun$oxygen))^2), data = exerimmun)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -185.37  -82.13    1.05   66.01  227.38 
+## 
+## Coefficients:
+##                                        Estimate Std. Error t value
+## (Intercept)                            1632.196     29.349   55.61
+## I(oxygen - mean(exerimmun$oxygen))       34.000      1.689   20.13
+## I((oxygen - mean(exerimmun$oxygen))^2)   -0.536      0.158   -3.39
+##                                                   Pr(&gt;|t|)    
+## (Intercept)                            &lt;0.0000000000000002 ***
+## I(oxygen - mean(exerimmun$oxygen))     &lt;0.0000000000000002 ***
+## I((oxygen - mean(exerimmun$oxygen))^2)              0.0022 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 106 on 27 degrees of freedom
+## Multiple R-squared:  0.938,  Adjusted R-squared:  0.933 
+## F-statistic:  203 on 2 and 27 DF,  p-value: &lt;0.0000000000000002</code></pre>
+<p>The estimated intercept coefficient <span class="math inline">\(\hat{\beta}_0 = 1632\)</span> means a person whose maximal oxygen uptake is <span class="math inline">\(50.64\)</span> ml/kg (the mean value) is predicted to have <span class="math inline">\(1632\)</span> mg of immunoglobin in his blood. The estimated coefficient <span class="math inline">\(\hat{\beta}_1 = 34.0\)</span> means a person whose maximal oxygen uptake is near <span class="math inline">\(50.64\)</span> ml/kg is predicted to increase by 34.0 mg for every 1 ml/kg increase in maximal oxygen uptake.</p>
+<p>By performing all transformations in the model, it is straightforward to perform predictions. Here is the predicted value of immunoglobin when maximal oxygen uptake = 90.00 ml/kg.</p>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="model-assumptions.html#cb410-1"></a><span class="kw">predict</span>(m_blood, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">oxygen =</span> <span class="dv">90</span>), <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>)</span></code></pre></div>
+<pre><code>##    fit  lwr  upr
+## 1 2140 1640 2640</code></pre>
+</div>
+</div>
+<div id="normality" class="section level3">
+<h3><span class="header-section-number">6.3.3</span> Normality</h3>
+<p>A normal probability plot or a normal quantile plot should have values near the line with no bow-shaped deviations. A histogram should be normally distributed. A residuals vs fits plot <span class="math inline">\((\epsilon \sim \hat{Y})\)</span> should be randomly scattered around 0. Sometimes the normality check fails when linearity assumption does not hold, so check for linearity first. Parameter estimation is not sensitive to this condition, but prediction intervals are.</p>
+</div>
+<div id="equal-variances" class="section level3">
+<h3><span class="header-section-number">6.3.4</span> Equal Variances</h3>
+<p>The residuals should be the same size at both low and high values of the response variable. A residuals vs fits plot <span class="math inline">\((\epsilon \sim \hat{Y})\)</span> should have random scatter in a band of constant width around 0, and no fan shape at the low and high ends. All tests and intervals are sensitive to this condition.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="parameter-estimation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="prediction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["data-sci.pdf", "data-sci.epub"],
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

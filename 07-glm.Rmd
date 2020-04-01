@@ -58,7 +58,7 @@ $$L(\beta; y, X) = \prod_{i=1}^n \pi_i^{y_i}(1 - \pi_i)^{(1-y_i)} = \prod_{i=1}^
 
 There is no closed-form solution, so GLM estimates coefficients with interatively reweighted least squares.  
 
-Here is a case study to illustrate the points.  Dataset `donner` contains survivorship statistics of 45 members of the Donner party.
+Here is a case study to illustrate the points.  Dataset `donner` contains observations of 45 members of the Donner party with response variable (`surv`) an explanatory variables `age` and `sex`.
 
 ```{r include=FALSE}
 donner <- tribble(
@@ -110,23 +110,23 @@ donner <- tribble(
   25, 0, 1,
 ) %>%
   mutate(
-    surv = factor(surv, labels = c("Died", "Lived")),
-    sex = factor(sex, labels = c("F", "M"))
-    )
+    surv = factor(surv, levels = c(0:1), labels = c("Died", "Lived")),
+    sex = factor(sex, levels = c(0:1), labels = c("F", "M"))
+  )
 ```
 
 ```{r}
 glimpse(donner)
 ```
 
-Fit a logistic regression.
+Fit a logistic regression $SURV = SEX + AGE + SEX : AGE$.
 
 ```{r}
 m <- glm(surv ~ sex*age, data = donner, family = binomial(link = logit))
 summary(m)
 ```
 
-The coefficients table "z value" is the Wald z statistic,  $z = \hat{\beta} / SE(\hat{\beta})$, which if squared is the Wald chi-squared statistic, $z^2 = \left(\hat{\beta} / SE(\hat{\beta}) \right)^2$.  The p.value is the area to the right of $z^2$ in the $\chi_1^2$ density curve.
+The "z value" in the Coefficients table is the Wald z statistic, $z = \hat{\beta} / SE(\hat{\beta})$, which if squared is the Wald chi-squared statistic, $z^2$.  The p.value is the area to the right of $z^2$ in the $\chi_1^2$ density curve:
 
 ```{r}
 m %>% tidy() %>% 
@@ -137,7 +137,7 @@ m %>% tidy() %>%
   select(term, estimate, z, p_z2) 
 ```
 
-The "dispersion parameter" refers to overdispersion, a common issues with GLM.  For a logistic regression, the response variable should be distributed $y_i \sim Bin(n_i, \pi_i)$ with $\mu_i = n_i \pi_i$ and $\sigma^2 = \pi (1 - \pi)$.  Overdispersion means the data shows evidence of variance greater than $\sigma^2$.
+Below the Coefficients table, the "dispersion parameter" refers to overdispersion, a common issue with GLM.  For a logistic regression, the response variable should be distributed $y_i \sim Bin(n_i, \pi_i)$ with $\mu_i = n_i \pi_i$ and $\sigma^2 = \pi (1 - \pi)$.  Overdispersion means the data shows evidence of variance greater than $\sigma^2$.
 
 "Fisher scoring" is a method for ML estimation. Logistic regression uses an iterative procedure to fit the model, so this section indicates whether the algorithm converged.
 
@@ -147,40 +147,41 @@ The null deviance is the likelihood ratio $G^2 = 61.827$ of the intercept-only m
 anova(m)
 ```
 
-The log odds of a 24 year-old female surviving is $\hat{y} = 2.59$.  
-
 ```{r}
+glance(m)
+```
+
+Plug in values to interpret the model.  The log odds of a 24 year-old female surviving is $\hat{y} = 2.59$.  The log odds of a 24 year-old male surviving is $\hat{y} = -0.46$.
+
+```{r results=FALSE}
 coef(m)["(Intercept)"] + coef(m)["sexM"]*0 + coef(m)["age"]*24 +
   coef(m)["sexM:age"]*0*24
+coef(m)["(Intercept)"] + coef(m)["sexM"]*1 + coef(m)["age"]*24 +
+  coef(m)["sexM:age"]*1*24
 
 # Or use predict()
 (lo_f <- predict(m, newdata = data.frame(sex = "F", age = 24)))
-```
-
-The log odds of a 24 year-old male surviving is
-
-```{r}
 (lo_m <- predict(m, newdata = data.frame(sex = "M", age = 24)))
 ```
 
-Log odds are not easy to interpet, but are convenient for [updating prior probabilities in Bayesian analyses](https://www.statisticshowto.datasciencecentral.com/log-odds/).  Exponentiate the log odds to get the more intuitive **odds**.
+Log odds are not easy to interpet.  Exponentiate the log odds to get the **odds**.
 
-$$\exp (\hat{y}) = \exp (X \hat{\beta}) = \frac{\pi}{1 - \pi}.$$
+$$odds(\hat{y}) = \exp (\hat{y}) = \frac{\pi}{1 - \pi}.$$
 
-The odds of a female of average age surviving is $\exp(\hat{y}) = 2.93$.  The odds of a male of average age surviving is $\exp(\hat{y}) = 0.49$.
+The odds of a 24 year-old female surviving is $\exp(\hat{y}) = 13.31$.  The odds of a 24 year-old male surviving is $\exp(\hat{y}) = 0.63$.
 
-```{r}
+```{r results=FALSE}
 exp(lo_f)
 exp(lo_m)
 ```
 
-Or, solve for $\pi$ to get the **probability**.  
+Solve for $\pi$ to get the **probability**.  
 
-$$\pi = \frac{\exp (X \beta)}{1 + \exp (X \beta)}$$
+$$\pi = \frac{\exp (\hat{y})}{1 + \exp (\hat{y})}$$
 
-The probability of a female of average age surviving is $\pi = 0.75$.  The probability of a female of average age surviving is $\pi = 0.33$.  The `predict()` function for a logistic model returns log-odds, but can also return $\pi$ by specifying parameter `type = "response"`.
+The probability of a 24 year-old female surviving is $\pi = 0.93$.  The probability of a female of average age surviving is $\pi = 0.39$.  The `predict()` function for a logistic model returns log-odds, but can also return $\pi$ by specifying parameter `type = "response"`.
 
-```{r}
+```{r results=FALSE}
 exp(lo_f) / (1 + exp(lo_f))
 exp(lo_m) / (1 + exp(lo_m))
 
@@ -189,372 +190,68 @@ exp(lo_m) / (1 + exp(lo_m))
 (p_m <- predict(m, newdata = data.frame(sex = "M", age =24), type = "response"))
 ```
 
-Interpret the coefficient estimates using the **odds ratio**, the ratio of the odds before and after an increment to the predictors.  The odds ratio is how much the odds would be multiplied after a $X_1 - X_0$ unit increase in $X$.
+Interpret the *coefficient* estimates using the **odds ratio**, the ratio of the odds before and after an increment to the predictors.  The odds ratio is how much the odds would be multiplied after a $\delta = X_1 - X_0$ unit increase in $X$.
 
 $$\theta = \frac{\pi / (1 - \pi) |_{X = X_1}}{\pi / (1 - \pi) |_{X = X_0}} = \frac{\exp (X_1 \hat{\beta})}{\exp (X_0 \hat{\beta})} = \exp ((X_1-X_0) \hat{\beta}) = \exp (\delta \hat{\beta})$$
 
 The odds of a female surviving are multiplied by a factor of $\exp(1 \cdot (-0.19)) = 0.824$ per additional year of age. The odds of a male surviving are multiplied by a factor of $\exp(1 \cdot (-0.161-0.19)) = 0.968$ per additional year of age.   
 
-```{r}
-exp(1 * (coef(m)["age"] + 0*coef(m)["sexM:age"]))
-exp(1 * (coef(m)["age"] + 1*coef(m)["sexM:age"]))
+```{r results=FALSE}
+exp(1 * (coef(m)["age"] + 0*coef(m)["sexM:age"]))  # female
+exp(1 * (coef(m)["age"] + 1*coef(m)["sexM:age"]))  # male
 ```
 
-
-The odds ratio (females vs males) is 
-
-```{r}
-exp(tidy(m)[2, ]$estimate)
-```
-
-meaning the odds of a female passing are 0.24 times that of a male.  Or take the inverse to get the male vs female odds ratio, 
+`oddsratio::or_glm()` calculates the odds ratio from an increment in the predictor values.
 
 ```{r}
-1 / exp(tidy(m)[2, ]$estimate)
-```
-
-meaning the odds of a male passing are 4.24 times that of a female.  `oddsratio::or_glm()` calculates the odds ratio from an increment in the predictor values, in this case, incrementing sex from male to female.
-
-```{r}
-oddsratio::or_glm(h2o, m, 1)
-```
-
-
-
-
-
-
-You can calculate an odds ratio with specified increments using `oddsratio::or_glm()`.
-
-```{r warning=FALSE}
-oddsratio::or_glm(data = leuk, model = m1, 
-  incr = list(
-    CELL = 0.01, SMEAR = 0.01, INFIL = 0.05, LI = 0.1, BLAST = 1.0, TEMP = 0.03
-  )
-)
+oddsratio::or_glm(donner, m, incr = list(age = 1))
 ```
 
 The predicted values can also be expressed as the probabilities $\pi$.  This produces the familiar signmoidal shape of the binary relationship.
 
 ```{r fig.height=3.5}
-augment(m1, type.predict = "response") %>%
-  ggplot(aes(x = LI)) +
-  geom_point(aes(y = REMISS)) +
-  geom_line(aes(y = .fitted)) +
+augment(m, type.predict = "response") %>%
+  ggplot(aes(x = age)) +
+  geom_point(aes(y = surv)) +
+  geom_line(aes(y = .fitted+1)) +
   theme_mf() +
-  labs(x = "LI",
-       y = "Probability of REMISS",
+  labs(x = "AGE",
+       y = "Probability of SURVIVE",
        title = "Binary Fitted Line Plot")
 ```
 
-Evaluate a logistic model fit with an analysis of deviance.  Deviance is defined as -2 times the log-likelihood $-2l(\beta)$.  The null deviance is the deviance of the null model and is analagous to SST in ANOVA.  The residual deviance is the deviance of the full model and is analagous to SSE in ANOVA.
+Evaluate a logistic regression using a [Gain curve or ROC curve](https://community.tibco.com/wiki/gains-vs-roc-curves-do-you-understand-difference). 
 
-```{r}
-logLik(glm(REMISS ~ ., data = leuk, family = "binomial")) * (-2)
+In the **gain curve**, the x-axis is the fraction of items seen when sorted by the predicted value, and the y-axis is the cumulative summed true outcome. The "wizard" curve is the gain curve when the data is sorted by the true outcome.  If the model's gain curve is close to the wizard curve, then the model predicted the response variable well. The grey area is the "gain" over a random prediction.
+
+20 of the 45 members of the Donner party survived. 
+
+* The gain curve encountered 10 survivors (50%) within the first 12 observations (27%).  It encountered all 20 survivors on the 37th observation.
+* The bottom of the grey area is the outcome of a random model.  Only half the survivors would be observed within 50% of the observations.  
+* The top of the grey area is the outcome of the perfect model, the "wizard curve".  Half the survivors would be observed in 10/45=22% of the observations.
+
+```{r, fig.height=3.5}
+options(yardstick.event_first = FALSE)  # set the second level as success
+augment(m, type.predict = "response") %>%
+yardstick::gain_curve(surv, .fitted) %>%
+  autoplot() +
+  labs(title = "Gain Curve")
 ```
 
-`anova()` computes the analysis of deviance table for the model.
+The ROC (Receiver Operating Characteristics) curve plots sensitivity vs specificity at different cut-off values for the probability, ranging cut-off from 0 to 1.
 
-```{r}
-anova(m1)
+```{r, fig.height=3.5}
+options(yardstick.event_first = FALSE)  # set the second level as success
+augment(m, type.predict = "response") %>%
+yardstick::roc_curve(surv, .fitted) %>%
+  autoplot() +
+  labs(title = "ROC Curve")
 ```
 
-The deviance of the null model (no regressors) is 34.372.  The deviance of the full model is 21.594. `glance()` also returns the null and residual deviances.  
-
-```{r}
-glance(m1)
-```
-
-Use the `GainCurvePlot()` function to plot the gain curve (background on gain curve at [Data Science Central](https://www.datasciencecentral.com/profiles/blogs/understanding-and-interpreting-gain-and-lift-charts) from the model predictions. The x-axis is the fraction of items seen when sorted by the predicted value, and the y-axis is the cumulative summed true outcome. The "wizard" curve is the gain curve when the data is sorted by the true outcome.  If the model's gain curve is close to the wizard gain curve, then the model sorted the response variable well. The grey area is the gain over a random sorting.
-
-```{r}
-augment(m1) %>% data.frame() %>% 
-  GainCurvePlot(xvar = ".fitted", truthVar = "REMISS", title = "Logistic Model")
-```
-
-`REMISS` equals 1 in 9 of the 27 responses. 
-
-* The wizard curve shows that after sorting the responses it encounters all 9 1s (100%) after looking at 9 of the 27 response (33%).  
-* The bottom of the grey diagonal shows that after making random predictions and sorting the predictions, it encounters only 3 1s (33%) after looking at 9 of the 27 responses (33%).  It has to look at all 27 responses (100%) to encounter all 9 1s (100%).  
-* The gain curve encounters 5 1s (55%) after looking at 9 of the 27 responses (33%).  It has to look at 14 responses to encounter all 9 1s (100%).
-
-Another way to evaluate the predictive model is the ROC curve.  It evaluates all possible thresholds for splitting predicted probabilities into predicted classes.  This is often a much more useful metric than simply ranking models by their accuracy at a set threshold, as different models might require different calibration steps (looking at a confusion matrix at each step) to find the optimal classification threshold for that model.
-
-```{r}
-library(caTools)
-colAUC(m1$fitted.values, m1$data$REMISS, plotROC = TRUE)
-```
-
-
-### Case Study
-
-This case study is from [PSU STAT 504](https://online.stat.psu.edu/stat504/node/197/).  This study investigated the gender differences in [Piaget's water level test](https://online.stat.psu.edu/stat504/node/197/). 166 subjects performed the test and other tests of knowledge and spatial ability.
-
-```{r h2o_data, include=FALSE}
-h2o <- tribble(
-  ~obs, ~y, ~sex, ~gravity, ~totphys, ~bryant, ~vander, ~triange, ~trailer, ~treee, ~compphys, ~moving, ~total,
-  1,  0,  1,  4,  5,  3,  10,  0,  6,  1,  1,  1,  25,
-  2,  1,  2,  5,  9,  6,  12,  0,  6,  4,  4,  1,  37,
-  3,  0,  1,  3,  3,  5,   4,  2,  5,  0,  0,  1,  19,
-  4,  0,  1,  4,  7,  0,   6,  3,  6,  2,  3,  2,  24,
-  5,  0,  2,  4,  6,  2,  10,  3,  5,  4,  2,  1,  30,
-  6,  1,  2,  4,  8,  6,  12,  1,  5,  2,  4,  1,  34,
-  7,  1,  2,  5,  8,  6,  12,  1,  6,  4,  3,  1,  37,
-  8,  1,  2,  5,  7,  6,   9,  0,  3,  4,  2,  1,  29,
-  9,  0,  1,  5,  6,  3,   8,  0,  6,  4,  1,  1,  27,
-   10,  0,  2,  3,  5,  3,   2,  4,  1,  2,  2,  1,  17,
-   11,  1,  2,  2,  4,  5,  10,  0,  6,  3,  2,  1,  28,
-   12,  0,  1,  1,  3,  2,   9,  3,  0,  3,  2,  1,  20,
-   13,  1,  1,  5,  7,  6,  10,  0,  6,  4,  2,  1,  33,
-   14,  1,  1,  4,  6,  6,  12,  3,  6,  4,  2,  1,  37,
-   15,  0,  1,  2,  5,  4,   5,  0,  5,  0,  3,  1,  19,
-   16,  1,  1,  2,  3,  4,  10,  0,  3,  3,  1,  1,  23,
-   17,  0,  1,  1,  2,  6,   8,  1,  6,  0,  1,  1,  23,
-   18,  1,  2,  4,  6,  5,  12,  0,  6,  4,  2,  1,  33,
-   19,  1,  2,  5,  7,  4,  12,  0,  3,  4,  2,  1,  30,
-   20,  1,  1,  5,  7,  6,  12,  1,  6,  4,  2,  1,  36,
-   21,  0,  1,  3,  4,  4,   0,  0,  6,  4,  1,  2,  18,
-   22,  0,  1,  4,  6,  2,   6,  0,  3,  2,  2,  1,  19,
-   23,  1,  1,  3,  7,  3,  12,  0,  6,  3,  4,  1,  31,
-   24,  1,  2,  2,  6,  6,  11,  2,  6,  4,  4,  1,  35,
-   25,  0,  1,  0,  2,  4,   8,  2,  6,  2,  2,  2,  24,
-   26,  1,  1,  5,  6,  4,  12,  0,  6,  4,  1,  1,  32,
-   27,  0,  1,  3,  5,  4,   2,  0,  6,  3,  2,  1,  20,
-   28,  1,  2,  4,  6,  6,  12,  2,  6,  2,  2,  1,  34,
-   29,  0,  1,  3,  5,  6,   8,  1,  6,  2,  2,  2,  28,
-   30,  1,  2,  5,  6,  3,   6,  2,  6,  4,  1,  1,  27,
-   31,  1,  2,  5,  9,  2,  10,  2,  6,  4,  4,  1,  33,
-   32,  0,  2,  1,  2,  1,   3,  0,  3,  2,  1,  1,  11,
-   33,  0,  1,  3,  5,  2,   4,  0,  4,  0,  2,  2,  15,
-   34,  1,  1,  3,  5,  3,  12,  0,  6,  4,  2,  1,  30,
-   35,  1,  1,  4,  7,  6,  12,  0,  6,  4,  3,  1,  35,
-   36,  1,  2,  5,  8,  5,  10,  2,  6,  0,  3,  1,  31,
-   37,  0,  1,  4,  5,  4,   9,  0,  6,  2,  1,  1,  26,
-   38,  1,  1,  4,  7,  6,   4,  1,  6,  4,  3,  1,  28,
-   39,  0,  1,  3,  4,  4,  12,  3,  4,  1,  1,  1,  28,
-   40,  0,  2,  3,  6,  3,  12,  0,  5,  4,  3,  1,  30,
-   41,  1,  2,  5,  8,  5,   8,  0,  6,  2,  3,  1,  29,
-   42,  0,  1,  2,  4,  6,   2,  0,  0,  1,  2,  2,  13,
-   43,  0,  1,  2,  4,  5,   4,  0,  4,  1,  2,  1,  18,
-   44,  0,  1,  2,  4,  4,   2,  0,  6,  2,  2,  2,  18,
-   45,  0,  1,  2,  3,  5,  10,  1,  3,  0,  1,  1,  22,
-   46,  0,  1,  1,  2,  5,   6,  2,  2,  1,  1,  2,  18,
-   47,  0,  1,  0,  0,  2,  10,  0,  6,  4,  0,  1,  22,
-   48,  0,  1,  2,  4,  6,   8,  0,  6,  4,  2,  1,  28,
-   49,  1,  1,  1,  2,  1,   4,  1,  6,  1,  1,  1,  15,
-   50,  0,  2,  4,  5,  6,   8,  0,  6,  4,  1,  1,  29,
-   51,  0,  2,  4,  7,  5,   6,  1,  5,  4,  3,  1,  28,
-   52,  1,  2,  4,  6,  4,   6,  1,  6,  2,  2,  1,  25,
-   53,  0,  1,  1,  3,  3,   2,  0,  6,  0,  2,  1,  14,
-   54,  1,  2,  4,  7,  6,  12,  1,  6,  4,  3,  1,  36,
-   55,  0,  2,  1,  3,  3,   5,  5,  6,  2,  2,  2,  24,
-   56,  1,  2,  2,  5,  6,   4,  2,  6,  4,  3,  1,  27,
-   57,  1,  2,  3,  3,  3,  10,  0,  6,  0,  0,  1,  22,
-   58,  0,  1,  3,  6,  2,  10,  9,  3,  4,  3,  1,  34,
-   59,  1,  2,  4,  8,  3,  12,  0,  6,  4,  4,  1,  33,
-   60,  0,  1,  4,  5,  5,  10,  0,  6,  4,  1,  2,  30,
-   61,  0,  1,  3,  5,  3,   2,  5,  5,  2,  2,  1,  22,
-   62,  1,  1,  2,  5,  6,   4,  0,  6,  4,  3,  1,  25,
-   63,  0,  1,  0,  2,  5,   4,  0,  6,  3,  2,  2,  20,
-   64,  0,  2,  3,  6,  5,  10,  2,  4,  4,  3,  1,  31,
-   65,  0,  2,  5,  7,  2,  10,  1,  5,  0,  2,  1,  25,
-   66,  0,  1,  1,  4,  2,   8,  2,  4,  4,  3,  1,  24,
-   67,  0,  2,  3,  6,  3,  12,  0,  6,  2,  3,  1,  29,
-   68,  0,  1,  0,  0,  6,   4,  2,  6,  0,  0,  2,  18,
-   69,  1,  1,  5,  7,  4,  12,  0,  6,  2,  2,  1,  31,
-   70,  1,  2,  5,  9,  3,   4,  1,  6,  4,  4,  1,  27,
-   71,  0,  1,  3,  3,  2,   6,  4,  1,  0,  0,  2,  16,
-   72,  1,  1,  3,  7,  6,  10,  0,  5,  4,  4,  1,  32,
-   73,  0,  1,  1,  3,  4,   8,  0,  6,  2,  2,  2,  23,
-   74,  0,  2,  4,  7,  3,   8,  2,  6,  2,  3,  1,  28,
-   75,  1,  2,  4,  6,  4,  10,  2,  6,  0,  4,  1,  28,
-   76,  0,  2,  1,  3,  4,   0,  2,  4,  0,  2,  1,  13,
-   77,  0,  1,  1,  3,  3,   3,  0,  2,  0,  2,  2,  11,
-   78,  0,  1,  4,  4,  4,   6,  0,  5,  2,  0,  1,  21,
-   79,  0,  1,  4,  5,  6,   4,  1,  6,  4,  1,  2,  26,
-   80,  1,  1,  4,  5,  4,   8,  1,  6,  4,  1,  1,  28,
-   81,  0,  1,  0,  3,  3,   2,  1,  6,  1,  3,  1,  16,
-   82,  0,  1,  2,  3,  2,   0,  1,  1,  1,  1,  2,   8,
-   83,  0,  1,  0,  2,  3,   4,  0,  4,  0,  2,  2,  13,
-   84,  0,  2,  1,  4,  4,   2,  4,  5,  0,  3,  1,  19,
-   85,  0,  1,  2,  2,  3,   2,  0,  0,  1,  0,  2,   8,
-   86,  1,  2,  4,  6,  6,  10,  1,  6,  3,  2,  1,  32,
-   87,  1,  2,  3,  5,  6,  10,  0,  6,  4,  2,  1,  31,
-   88,  0,  1,  4,  7,  4,   8,  1,  6,  4,  3,  2,  30,
-   89,  0,  1,  1,  1,  4,   4,  0,  4,  1,  0,  1,  14,
-   90,  0,  1,  2,  4,  3,   4,  3,  6,  2,  2,  1,  22,
-   91,  1,  1,  3,  4,  3,  10,  3,  6,  4,  1,  1,  30,
-   92,  0,  1,  4,  5,  3,   6,  0,  6,  4,  1,  1,  24,
-   93,  1,  2,  4,  7,  6,   8,  0,  6,  4,  3,  1,  31,
-   94,  0,  2,  4,  6,  3,  12,  1,  6,  1,  2,  1,  29,
-   95,  1,  1,  3,  7,  6,   8,  1,  6,  4,  4,  1,  32,
-   96,  1,  2,  4,  8,  3,  12,  0,  6,  3,  4,  1,  32,
-   97,  0,  1,  2,  5,  4,   2,  0,  2,  4,  3,  1,  17,
-   98,  1,  1,  3,  4,  3,   8,  2,  6,  4,  1,  1,  27,
-   99,  0,  2,  1,  2,  3,   6,  0,  4,  1,  1,  1,  16,
-  100,  1,  2,  5,  8,  6,  12,  0,  6,  4,  3,  1,  36,
-  101,  1,  1,  5,  8,  4,   6,  2,  5,  3,  3,  1,  28,
-  102,  1,  1,  5,  8,  2,   6,  2,  6,  4,  3,  1,  28,
-  103,  1,  1,  5,  9,  4,   6,  1,  6,  4,  4,  2,  30,
-  104,  1,  1,  4,  5,  5,  12,  2,  6,  0,  1,  1,  30,
-  105,  1,  1,  3,  7,  5,  12,  2,  6,  4,  4,  1,  36,
-  106,  1,  1,  2,  4,  3,  12,  0,  6,  4,  2,  1,  29,
-  107,  0,  1,  4,  6,  3,   5,  2,  6,  4,  2,  1,  26,
-  108,  0,  1,  1,  2,  4,   4,  0,  6,  2,  1,  1,  18,
-  109,  0,  1,  0,  1,  5,   6,  2,  4,  1,  1,  1,  19,
-  110,  0,  1,  2,  4,  3,   4,  0,  3,  2,  2,  2,  16,
-  111,  0,  1,  1,  3,  5,   4,  0,  6,  4,  2,  2,  22,
-  112,  0,  1,  1,  3,  4,   4,  0,  6,  3,  2,  2,  20,
-  113,  0,  2,  1,  3,  2,  10,  1,  0,  4,  2,  1,  20,
-  114,  1,  2,  4,  6,  2,   8,  3,  6,  4,  2,  1,  29,
-  115,  1,  2,  3,  7,  4,   0,  2,  6,  4,  4,  1,  23,
-  116,  1,  2,  4,  5,  4,   3,  1,  6,  2,  1,  1,  21,
-  117,  1,  2,  5,  9,  2,  12,  0,  6,  4,  4,  1,  33,
-  118,  0,  1,  3,  5,  3,   4,  2,  5,  0,  2,  1,  19,
-  119,  0,  1,  4,  7,  3,  12,  0,  6,  4,  3,  1,  32,
-  120,  0,  1,  0,  1,  5,   4,  0,  6,  1,  1,  1,  17,
-  121,  1,  2,  5,  8,  6,   8,  0,  6,  4,  3,  1,  32,
-  122,  0,  2,  4,  6,  2,   2,  2,  6,  3,  2,  1,  21,
-  123,  1,  1,  2,  3,  5,   8,  0,  6,  4,  1,  1,  26,
-  124,  1,  1,  5,  8,  3,  12,  0,  6,  4,  3,  1,  33,
-  125,  0,  1,  2,  5,  6,   8,  2,  6,  4,  3,  1,  31,
-  126,  1,  2,  4,  5,  2,  10,  2,  6,  4,  3,  1,  29,
-  127,  0,  2,  4,  5,  3,   6,  2,  4,  4,  1,  1,  24,
-  128,  1,  1,  3,  3,  6,   8,  0,  5,  4,  0,  1,  26,
-  129,  0,  1,  1,  3,  4,  10,  1,  6,  2,  2,  1,  26,
-  130,  0,  1,  1,  3,  4,   2,  1,  6,  2,  2,  1,  18,
-  131,  0,  2,  1,  2,  6,   0,  1,  6,  3,  1,  1,  18,
-  132,  0,  1,  1,  3,  2,   0,  0,  3,  1,  2,  1,   9,
-  133,  1,  1,  4,  6,  3,   4,  0,  6,  4,  2,  1,  23,
-  134,  1,  1,  5,  6,  3,  10,  0,  6,  3,  1,  1,  28,
-  135,  1,  1,  5,  8,  4,  10,  0,  6,  4,  3,  2,  32,
-  136,  0,  1,  3,  5,  4,   4,  1,  6,  0,  2,  1,  20,
-  137,  0,  1,  2,  3,  5,   8,  0,  6,  0,  1,  1,  22,
-  138,  0,  1,  2,  3,  5,   0,  4,  4,  2,  3,  2,  18,
-  139,  0,  1,  1,  1,  4,  10,  1,  6,  4,  0,  1,  26,
-  140,  0,  1,  5,  9,  4,   6,  0,  6,  1,  4,  1,  26,
-  141,  0,  1,  1,  2,  3,   2,  2,  6,  3,  1,  1,  18,
-  142,  0,  1,  3,  6,  3,   6,  0,  6,  4,  3,  1,  25,
-  143,  1,  1,  4,  6,  5,  10,  0,  6,  3,  2,  1,  30,
-  144,  1,  2,  2,  5,  3,  12,  1,  6,  4,  3,  1,  31,
-  145,  1,  2,  3,  6,  4,  10,  0,  6,  4,  3,  1,  30,
-  146,  1,  2,  5,  9,  6,  10,  0,  6,  4,  4,  1,  35,
-  147,  1,  2,  2,  5,  5,   8,  2,  5,  4,  3,  1,  29,
-  148,  1,  2,  2,  5,  3,  10,  0,  6,  1,  3,  1,  25,
-  149,  0,  2,  2,  4,  3,   6,  0,  6,  4,  2,  1,  23,
-  150,  0,  1,  4,  5,  3,   4,  6,  5,  1,  1,  1,  24,
-  151,  0,  1,  3,  5,  6,   4,  4,  6,  1,  2,  2,  26,
-  152,  1,  2,  5,  7,  5,  12,  0,  6,  4,  2,  1,  34,
-  153,  0,  1,  2,  4,  2,   6,  3,  5,  4,  2,  1,  24,
-  154,  1,  1,  5,  8,  6,  12,  0,  6,  4,  3,  1,  36,
-  155,  0,  1,  3,  6,  6,   8,  0,  3,  0,  3,  2,  23,
-  156,  0,  1,  0,  2,  5,  12,  6,  4,  0,  2,  2,  29,
-  157,  0,  1,  4,  8,  3,   0,  2,  6,  0,  4,  1,  19,
-  158,  1,  1,  1,  2,  4,   8,  2,  6,  4,  1,  1,  26,
-  159,  0,  1,  2,  3,  5,   8,  0,  6,  3,  1,  1,  25,
-  160,  0,  1,  4,  7,  5,   5,  1,  6,  1,  3,  1,  25,
-  161,  1,  2,  3,  5,  6,   8,  2,  6,  4,  2,  1,  31,
-  162,  0,  1,  0,  0,  5,   8,  2,  6,  1,  0,  1,  22,
-  163,  0,  1,  2,  4,  5,   4,  0,  1,  0,  2,  1,  14,
-  164,  0,  2,  5,  8,  4,  12,  0,  6,  4,  3,  1,  34,
-  165,  0,  1,  4,  4,  5,   2,  0,  5,  3,  0,  1,  19,
-  166,  0,  1,  4,  7,  5,  12,  2,  6,  3,  3,  1,  35
-)
-h2o <- h2o %>%
-  mutate(
-    moving = factor(moving),
-    sex = factor(sex, levels = c(2:1), labels = c("M", "F")),
-    y = factor(y, labels = c("fail", "pass"))
-  )
-```
-
-Here are the pass/fail results of the study by sex.
-
-```{r}
-prop.table(table(h2o$sex, h2o$y), margin = 1) %>% round(digits = 4)
-```
-
-The pass rates are very different. The Pearson Chi-squared test of equality of two proportions calculates a Chi-Square value of 18.562, p-value < 0.0001, so reject the hypothesis that the pass rates are the same.
-
-```{r}
-chisq.test(table(h2o$sex, h2o$y), correct = FALSE)
-```
-
-Fit a logistic regression.
-
-```{r}
-m <- glm(y ~ sex, data = h2o, family = binomial(link = logit))
-anova(m)
-```
-
-The likelihood ratio is $G^2 = 18.658$, so reject the null hypothesis of no sex effect - there is statistically significant difference in pass rates.  Here are the coefficient estimators.
-
-```{r}
-tidy(m)
-```
-
-The odds ratio (females vs males) is 
-
-```{r}
-exp(tidy(m)[2, ]$estimate)
-```
-
-meaning the odds of a female passing are 0.24 times that of a male.  Or take the inverse to get the male vs female odds ratio, 
-
-```{r}
-1 / exp(tidy(m)[2, ]$estimate)
-```
-
-meaning the odds of a male passing are 4.24 times that of a female.  `oddsratio::or_glm()` calculates the odds ratio from an increment in the predictor values, in this case, incrementing sex from male to female.
-
-```{r}
-oddsratio::or_glm(h2o, m, 1)
-```
-
-What if we control for the results of the gravity test (gravity = number of correct answers on test)?  Here is a logistic regression of pass ~ gravity.
-
-```{r}
-m <- glm(y ~ gravity, data = h2o, family = binomial(link = logit))
-anova(m)
-```
-
-The likelihood ratio is $G^2 = 42.2$, so reject H0 that there is no gravity effect - there is a statistically significant difference between the gravity score and the pass rate.  The odds of passing the water level task increase by 2.225 for each additional right answer on gravity.
-
-```{r}
-oddsratio::or_glm(h2o, m, incr = list(gravity = 1))
-```
-
-```{r fig.height=3, fig.width=5}
-augment(m) %>%
-  group_by(gravity) %>% 
-  summarize(
-    observed = mean(as.numeric(y) - 1),
-    fitted = mean(exp(.fitted) / (1 + exp(.fitted)))
-  ) %>% 
-  pivot_longer(cols = -gravity, names_to = "model", values_to = "rate") %>%
-  ggplot(aes(x = gravity, y = rate, color = model)) +
-  geom_point() +
-  scale_color_mf() +
-  theme_mf() +
-  labs(title = "Water Test Pass Rate", color = "")
-```
-
-You can model sex and gravity with and without interaction effects. Here is the model without interaction effects.  $G^2 = 32.3$ so 
-
-```{r}
-m <- glm(y ~ sex + gravity, data = h2o, family = binomial(link = "logit"))
-anova(m)
-```
-
-$G^2 = 32.319$ is the change in $G^2$ when adding GRAVITY to the model.
-
-```{r}
-summary(m)
-```
 
 ## Multinomial Logistic Regression
 
-The following notes rely heavily on the [PSU STAT 504 course notes](https://online.stat.psu.edu/stat504/node/171/.
+The following notes rely on the [PSU STAT 504 course notes](https://online.stat.psu.edu/stat504/node/171/.
 
 Multinomial logistic regression models the odds the multinomial response variable $Y \sim Mult(n, \pi)$ is in level $j$ relative to baseline category $j^*$ for all pairs of categories as a function of $k$ explanatory variables, $X = (X_1, X_2, ... X_k)$. 
 
@@ -633,115 +330,83 @@ indicates the model fits okay, but not great. The Residual Deviance of 50.26 wit
 
 ## Ordinal Logistic Regression
 
-The following notes rely heavily on [this UVA web page](https://data.library.virginia.edu/fitting-and-interpreting-a-proportional-odds-model/) and [PSU STAT 504 class notes](https://online.stat.psu.edu/stat504/node/171/.
+These notes rely on [UVA](https://data.library.virginia.edu/fitting-and-interpreting-a-proportional-odds-model/) and [PSU STAT 504 class notes](https://online.stat.psu.edu/stat504/node/171/).
 
 The ordinal logistic regression model is
 
-$$logit[P(Y \le j)] = \alpha_j - \beta X, \hspace{5mm} j \in [1, J-1]$$
-where $j \in [1, J-1]$ are the levels of the ordinal outcome variable $Y$.  The proportional odds model assumes there is a common set of slope parameters $\beta$ for the predictors.  The ordinal outcomes are distinguished by the $J-1$ intercepts $\alpha_j$.  The benchmark level is $J$.  "Logit" means log-odds, so $logit[P(Y \le j)] = \log[P(Y \le j) / P(Y \gt j)]$.
+$$logit[P(Y \le j)] = \log \left[ \frac{P(Y \le j)}{P(Y \gt j)} \right] = \alpha_j - \beta X, \hspace{5mm} j \in [1, J-1]$$
+where $j \in [1, J-1]$ are the levels of the ordinal outcome variable $Y$.  The proportional odds model assumes there is a common set of slope parameters $\beta$ for the predictors.  The ordinal outcomes are distinguished by the $J-1$ intercepts $\alpha_j$.  The benchmark level is $J$.
 
-Suppose we want to model the probability a respondent holds a political ideology ["Very Liberal", "Slightly Liberal", "Moderate", "Slightly Conservative", "Very Conservative"] given their party affiliation ["Republican", "Democrat"].
+Technically, the model could be written $logit[P(Y \le j)] = \alpha_j + \zeta X$, replacing beta with zeta because the model fits $\alpha_j - \beta X$ instead of $\alpha_j + \beta X$.  
+ 
+Suppose you want to model the probability a respondent holds a political ideology ["Socialist", "Liberal", "Moderate", "Conservative", "Libertarian"] given their party affiliation ["Republican", "Democrat"].
 
-```{r}
-ideo <- c(
-  "Very Liberal",
-  "Slightly Liberal",
-  "Moderate",
-  "Slightly Conservative",
-  "Very Conservative"
-)
+```{r include=FALSE}
+ideo <- c("Socialist", "Liberal", "Moderate", "Conservative", "Libertarian")
 ideo_cnt_rep <- c(30, 46, 148, 84, 99)
 ideo_cnt_dem <- c(80, 81, 171, 41, 55)
-dat <- data.frame(
+ideology <- data.frame(
   party = factor(rep(c("Rep", "Dem"), c(407, 428)), levels = c("Rep", "Dem")),
   ideo = factor(
     c(rep(ideo, ideo_cnt_rep), rep(ideo, ideo_cnt_dem)), 
     levels = ideo
   )
 )
-table(dat)
 ```
 
-Fit a proportional odds model with the `MASS::polr()` function (polr stands for proportional odds linear regression).
-
 ```{r}
-pom <- MASS::polr(ideo ~ party, data = dat)
+table(ideology)
+```
 
+Fit a proportional odds logistic regression.
+
+```{r message=FALSE}
+pom <- MASS::polr(ideo ~ party, data = ideology)
 summary(pom)
 ```
 
-The log-odds a Democrat identifies as “Very Liberal” or lower is 
-$$logit[P(Y \lt 1)] = -2.4690 - (-0.9745)(1) = -1.4945.$$
-Solve $logit[P(Y \le 1)] = \log[P(Y \le 1) / P(Y \gt 1)]$ for $P(Y \le 1)$ to get the probability a Democrat identifies as “Very Liberal” or lower as $P(Y \le 1) = exp(-1.4945) / (1 + exp(-1.4945)) = 0.183$. 
+The log-odds a Democrat identifies as *Socialist* vs *>Socialist*, or equivalently, the log-odds a Democrat identifies as *<=Socialist* vs *>=Liberal* is
 
+$$logit[P(Y \le 1)] = -2.4690 - (-0.9745)(1) = -1.4945$$
 
-The log odds a Democrat identifies as “Slightly Liberal” or lower is
-$$logit[P(Y \lt 2)] = -1.4745 - (-0.9745)(1) = -0.5.$$
-The corresponding probability is $P(Y \le 2) = exp(-0.5) / (1 + exp(-0.5)) = 0.378$. 
+which translates into an odds of 
 
-To get the probability a Democrat identifies as "Slightly Liberal", just subtract the adjacent cumulative probabilities, $P(Y \le 2) - P(Y \le 1) = 0.378 = 0.183 = 0.194$.  That's what's happening when you use the model to predict the level probabilities.
+$$odds(Y<=1) = exp(logit[P(Y \le 1)]) = \frac{exp(-2.469)}{exp(-0.9745)} = 0.2244$$
 
-```{r}
-predict(pom, newdata = data.frame(party = "Dem"), type = "probs")
-```
+It is the same for Republicans, except multiply the slope coefficient by zero.
 
-The baseline for the model was "Republican", so the log-odds a Republicn identifies as "Very Liberal" or lower is 
-$$logit[P(Y \lt 1)] = -2.4690 - (-0.9745)(0) = -2.4690$$
-with corresponding probability $P(Y \le 1) = exp(-2.4690) / (1 + exp(-2.4690)) = 0.078$.  And so on.
+$$logit[P(Y \le 1)] = -2.4690 - (-0.9745)(0) = -2.4690$$
 
-```{r}
-predict(pom, newdata = data.frame(party = "Rep"), type = "probs")
-```
+$$odds(Y<=1) = exp(logit[P(Y \le 1)]) = \frac{exp(-2.469)}{exp(0)} = -2.4690$$
 
-Here is a manual calculation of the probabilities.  Note the `zeta` variable instead of `beta` because the model fits $\alpha_j - \beta X$ instead of $\alpha_j + \beta X$, and so it uses a new variable $\zeta = -\beta$.  Technically, the model could be expressed $logit[P(Y \le j)] = \alpha_j + \zeta X$.
+The "proportional odds" part of the proportional odds model is that the ratios of the $J - 1$ odds are identical for each level of the predictors.  The numerators are always the same, and the denominators differ only by the exponent of the slope coefficient, $-0.9745$.  For all $j \in [1, J-1]$, the odds a Democrat's ideology is $\le j$ vs $>j$ is $exp(-0.9745) = 2.6498$ times that of a Republican's odds. 
+
+You can translate the cumulative odds to cumulative probabilities by taking the ratio $\pi = exp(odds) / (1 + exp(odds))$.  The probability a Democrat identifies as *<=Socialist* vs *>Socialist* is 
+
+$$P(Y \le 1) = \frac{exp(-1.4945)} {(1 + exp(-1.4945))} = 0.183.$$ 
+
+The individual probabilities are just the successive differences in the cumulative probabilities. The log odds a Democrat identifies as *<=Liberal* vs *>Liberal* are $logit[P(Y \lt 2)] = -1.4745 - (-0.9745)(1) = -0.500$, which translates into a probability of $P(Y \le 2) = exp(-0.5) / (1 + exp(-0.5)) = 0.378$. The probability a Democrat identifies as *Liberal* is the difference in adjacent cumulative probabilities, $P(Y \le 2) - P(Y \le 1) = 0.378 = 0.183 = 0.194$.  This is how the model to predicts the level probabilities.
 
 ```{r}
-library(stringr)
-# cum log odds, dems an reps
-dclo <- c(pom$zeta - pom$coefficients)
-rclo <- c(pom$zeta - 0)
-# cum probs, dems and reps
-dcp <- exp(dclo) / (1 + exp(dclo))
-rcp <- exp(rclo) / (1 + exp(rclo))
-# fix the names and add 1 for "Very..."
-names(dcp) <- str_sub(names(dcp), start = 1, end = str_locate(names(dcp), "\\|")[, 1] - 1)
-names(rcp) <- str_sub(names(rcp), start = 1, end = str_locate(names(rcp), "\\|")[, 1] - 1)
-dcp <- c(dcp, 1)
-rcp <- c(rcp, 1)
-names(dcp) <- c(names(dcp)[1:4], "Very Conservative")
-names(rcp) <- c(names(rcp)[1:4], "Very Conservative")
-# Democrat probs
-(dp <- dcp - lag(dcp, 1, 0))
-(rp <- rcp - lag(rcp, 1, 0))
+x <- predict(pom, newdata = data.frame(party = c("Dem", "Rep")), type = "probs")
+rownames(x) <- c("Dem", "Rep")
+print(x)
 ```
 
-The "proportional odds" part of the proportional odds model is that the ratios of the $J - 1$ odds-ratios are identical for the different levels of the predictors.  Here we have a single predictor, `party`.  The odds ratios for `party = Dem` are
+Always check the assumption of proportional odds. One way to do this is by comparing the proportional odds model with a multinomial logit model, also called an unconstrained baseline logit model. The multinomial logit model models *unordered* responses and fits a slope to each level of the $J – 1$ responses. The proportional odds model is nested in the multinomial model, so you can use a likelihood ratio test to see if the models are statistically different.
 
 ```{r}
-(dcp / (1 - dcp)) / (rcp / (1 - rcp))
+mlm <- nnet::multinom(ideo ~ party, data = ideology)
 ```
 
-Which is to say, any level of ideology $j$, the estimated odds that a Democrat’s ideology is more liberal $(\lt j)$ rather than more conservative $(\ge j)$ is about 2.65 times a Republicans odds.
-
-The log of these odds ratios is the coefficient estimator for `party`.
-```{r}
-log((dcp / (1 - dcp)) / (rcp / (1 - rcp)))
-```
-
-Always check the assumption of proportional odds. One way to do this is by comparing the proportional odds model with a multinomial logit model, also called an unconstrained baseline logit model. The multinomial logit model models *unordered* responses and fits a slope to each level of the $J – 1$ responses. The proportional odds model is nested in the multinomial model, so can use a likelihood ratio test to see if the models are statistically different.
-
-```{r}
-mlm <- nnet::multinom(ideo ~ party, data = dat)
-```
-
-Calculate the deviance test statistic $D = -2 loglik(\beta)$.
+Calculate the difference in the deviance test statistics $D = -2 loglik(\beta)$.
 
 ```{r}
 G <- -2 * (logLik(pom)[1] - logLik(mlm)[1])
 pchisq(G, df = length(pom$zeta) - 1, lower.tail = FALSE)
 ```
 
-The p-value is high, so the proportional odds model fits as well as the more complex multinomial logit model.
+The p-value is high, so do not reject the null hypothesis that the proportional odds model fits differently than the more complex multinomial logit model.
 
 
 ## Poisson Regression
@@ -773,8 +438,6 @@ Maximizing the log-likelihood has no closed-form solution, so the coefficient es
 
 Poisson processes assume the variance of the response variable equals its mean.  "Equals" means the mean and variance are of a similar order of magnitude.  If that assumption does not hold, use the quasi-poisson.  Use Poisson regression for large datasets.  If the predicted counts are much greater than zero (>30), the linear regression will work fine.  Whereas RMSE is not useful for logistic models, it is a good metric in Poisson.
 
-
-### Example {-}
 
 Dataset `fire` contains response variable `injuries` counting the number of injuries during the month and one explanatory variable, the month `mo`.
 
