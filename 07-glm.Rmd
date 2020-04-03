@@ -119,6 +119,14 @@ donner <- tribble(
 glimpse(donner)
 ```
 
+```{r, fig.height=3.5}
+donner %>%
+  ggplot(aes(x = age, y = surv, color = sex)) +
+  geom_jitter() +
+  theme_mf() +
+  labs(title = "Donner Party Survivorship", color = "")
+```
+
 Fit a logistic regression $SURV = SEX + AGE + SEX : AGE$.
 
 ```{r}
@@ -410,7 +418,7 @@ The p-value is high, so do not reject the null hypothesis that the proportional 
 
 ### Case Study
 
-The General Social Survey for `year` 1972, 1973, and 1974 surveyed Caucasian Christians about their attitudes `att` toward abortion. Respondents were classified by years of education `edu` and religious group `att`. 
+The General Social Survey for `year` 1972, 1973, and 1974 surveyed caucasian Christians about their attitudes `att` toward abortion. Respondents were classified by years of education `edu` and religious group `att`. 
 
 ```{r include=FALSE}
 abort <- tribble(
@@ -508,17 +516,80 @@ abort <- abort %>%
 ```
 
 ```{r}
-abort %>% pivot_wider(names_from = att, values_from = cnt) %>%
-  flextable::flextable() %>%
-  flextable::add_header_row(values = c("", "Attitude"), colwidths = c(3, 3))
+abort %>% pivot_wider(names_from = att, values_from = cnt) 
 ```
 
-Fit a proportional-odds cumulative logit model with main effects for `year` (2 dummies), `rel` (2 dummies) and `edu` (2 dummies). With three response categories, there are two logit equations. Therefore, the model has 2 intercepts plus 6 slopes for a total of 8 parameters. The saturated model, which fits a separate 3-category multinomial response to each of the 3 × 3 × 3 = 27 response profiles, has 27 × (3 − 1) = 54 parameters that could be estimated.
+Fit a proportional-odds cumulative logit model with just main effects. There are two main effects for `year`, two for `rel`, and two for `edu`, plus two logit equations for the response for a total of eight parameters. 
 
-```{r}
+```{r message=FALSE}
 abort_mdl <- MASS::polr(att ~ year + rel + edu, data = abort, weights = cnt)
 summary(abort_mdl)
 ```
+
+All predictors are significant.  Now fit the saturated model. 
+
+```{r message=FALSE}
+abort_mdl_sat <- MASS::polr(att ~ year*rel*edu, weights = cnt, data = abort)
+summary(abort_mdl_sat)
+```
+
+Compare the two models.  
+
+```{r}
+anova(abort_mdl, abort_mdl_sat)
+```
+
+The likelihood ratio test indicates the main-effects model fits poorly in comparison to the saturated model (*LR* = 41.0, *df* = 20, *p* < 0.01).  From the table of coefficients,the effects of religion and education appear to be much more powerful than the year, so consider modeling an interaction between `rel` and `edu`.  This is also what the stepwise AIC algorithm recommends.
+
+```{r include=FALSE}
+abort_mdl_step <- MASS::stepAIC(abort_mdl_sat)
+```
+
+```{r warning=FALSE, message=FALSE}
+summary(abort_mdl_step)
+```
+
+Compare the model with the `rel:edu` interaction to the saturated model.  
+
+```{r}
+anova(abort_mdl_step, abort_mdl_sat)
+```
+
+Great, this time they are not significantly different (*LR* = 22.2, *df* = 16, *p* = 0.138).  Interpret the results.
+
+Positive coefficients mean attitudes toward legalizing abortion are more positive relative to the reference year, 1972. The odds of supporting legalization in 1973 compared to 1972 were $exp(0.2281) = 1.26$. The odds for 1974 vs 1972 were $exp(0.2410) = 1.27$, so attitudes toward abortion became more positive from 1972 to 1973, but remained nearly unchanged from 1973 to 1974.
+
+Among Protestants (reference religious group), increasing education is associated with more positive attitudes toward abortion legalization. The odds of a Protestant with medium education vs low education supporting legalization are $exp(0.7504) = 2.12$.  Among Southern Protestants, odds are $exp(0.7504 + 0.2526) = 2.73$.  Therefore, the estimated effects of education for Southern Protestants are in the same direction as for Protestants but are somewhat larger. Note, however, that the interaction effect coefficient is not not significantly different from zero, so the effect of education among Protestants and Southern Protestants is not significantly different.
+
+Among Catholics, the medium vs low education odds are $exp(0.7504- 0.3892) = 1.44$.  And the high vs low education odds are $exp(1.3689 - 0.9442) = 1.53$.  Increasing education is still associated with more positive attitudes, but the effects are smaller than they are among Protestants and Southern Protestants.
+
+```{r fig.height=3.5, echo=FALSE}
+dat <- bind_cols(
+  abort_mdl_step$model, 
+  data.frame(abort_mdl_step$fitted.values)
+)
+dat %>%
+  filter(year == 1974) %>%
+  mutate(prob = case_when(att == "Neg" ~ Neg, att == "Mix" ~ Mix, TRUE ~ Pos)) %>%
+  select(-Neg, -Mix, -Pos) %>%
+  filter(att == "Pos") %>%
+  ggplot(aes(x = edu, y = prob, color = rel)) +
+  geom_point() +
+  geom_line(aes(x = as.numeric(factor(edu)), y = prob, col = rel)) +
+  theme_mf() +
+  labs(
+    title = "Interaction of Education and Religion",
+    subtitle = "on Positive Attitudes about Abortion Legalization",
+    color = "",
+    x = "Level of Education",
+    y = "Prob of Positive Att."
+  )
+```
+
+
+**Example Summarization**
+
+We used logistic regression to investigate whether groups with the Christian religion might moderate the effects of education on attitudes toward abortion legalization. For Protestants, higher education education was associated with higher, significant, increase of odds of a more positive attitude toward abortion legalization, *b* = 0.7504, *SE* = 0.1774, *OR* = 2.12, *p* < .01.  There was a significant interaction for Catholics at high levels of education, *b* = -0.9442, *SE* = 0.3066, *p* < .01, relative to the Protestant reference group, but no significant interaction at medium education, and no interaction at all for Southern Protestants relative to the reference group.  The figure above graphs the interaction, showing the change in the expected probability of positive attitude by education level for Protestant, Southern Protestant, and Catholic religious groups. Overall, the significant interaction for Catholics at high levels of education suggests that education has a different relationship to attitudes toward abortion depending on the individual's religious group, but the difference between Protestant and Southern Protestant is minimal.
 
 
 ## Poisson Regression

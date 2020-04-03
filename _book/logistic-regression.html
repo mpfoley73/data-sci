@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-04-01" />
+<meta name="date" content="2020-04-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -208,7 +208,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
 <li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a></li>
 <li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
-<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a></li>
+<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>7.3.1</b> Case Study</a></li>
+</ul></li>
 <li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
@@ -290,9 +292,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ age  &lt;dbl&gt; 23, 40, 40, 30, 28, 40, 45, 62, 65, 45, 25, 28, 28, 23, 22, 23...
 ## $ sex  &lt;fct&gt; M, F, M, M, M, M, F, M, M, F, F, M, M, M, F, F, M, F, F, M, F,...
 ## $ surv &lt;fct&gt; Died, Lived, Lived, Died, Died, Died, Died, Died, Died, Died, ...</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="logistic-regression.html#cb3-1"></a>donner <span class="op">%&gt;%</span></span>
+<span id="cb3-2"><a href="logistic-regression.html#cb3-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> surv, <span class="dt">color =</span> sex)) <span class="op">+</span></span>
+<span id="cb3-3"><a href="logistic-regression.html#cb3-3"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="op">+</span></span>
+<span id="cb3-4"><a href="logistic-regression.html#cb3-4"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb3-5"><a href="logistic-regression.html#cb3-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Donner Party Survivorship&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Fit a logistic regression <span class="math inline">\(SURV = SEX + AGE + SEX : AGE\)</span>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="logistic-regression.html#cb3-1"></a>m &lt;-<span class="st"> </span><span class="kw">glm</span>(surv <span class="op">~</span><span class="st"> </span>sex<span class="op">*</span>age, <span class="dt">data =</span> donner, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> logit))</span>
-<span id="cb3-2"><a href="logistic-regression.html#cb3-2"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="logistic-regression.html#cb4-1"></a>m &lt;-<span class="st"> </span><span class="kw">glm</span>(surv <span class="op">~</span><span class="st"> </span>sex<span class="op">*</span>age, <span class="dt">data =</span> donner, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> logit))</span>
+<span id="cb4-2"><a href="logistic-regression.html#cb4-2"></a><span class="kw">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = surv ~ sex * age, family = binomial(link = logit), 
@@ -319,12 +327,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
 <p>The “z value” in the Coefficients table is the Wald z statistic, <span class="math inline">\(z = \hat{\beta} / SE(\hat{\beta})\)</span>, which if squared is the Wald chi-squared statistic, <span class="math inline">\(z^2\)</span>. The p.value is the area to the right of <span class="math inline">\(z^2\)</span> in the <span class="math inline">\(\chi_1^2\)</span> density curve:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="logistic-regression.html#cb5-1"></a>m <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-2"><a href="logistic-regression.html#cb5-2"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb5-3"><a href="logistic-regression.html#cb5-3"></a>    <span class="dt">z =</span> estimate <span class="op">/</span><span class="st"> </span>std.error, </span>
-<span id="cb5-4"><a href="logistic-regression.html#cb5-4"></a>    <span class="dt">p_z2 =</span> <span class="kw">pchisq</span>(z<span class="op">^</span><span class="dv">2</span>, <span class="dt">df =</span> <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb5-5"><a href="logistic-regression.html#cb5-5"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb5-6"><a href="logistic-regression.html#cb5-6"></a><span class="st">  </span><span class="kw">select</span>(term, estimate, z, p_z2) </span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="logistic-regression.html#cb6-1"></a>m <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-2"><a href="logistic-regression.html#cb6-2"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb6-3"><a href="logistic-regression.html#cb6-3"></a>    <span class="dt">z =</span> estimate <span class="op">/</span><span class="st"> </span>std.error, </span>
+<span id="cb6-4"><a href="logistic-regression.html#cb6-4"></a>    <span class="dt">p_z2 =</span> <span class="kw">pchisq</span>(z<span class="op">^</span><span class="dv">2</span>, <span class="dt">df =</span> <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb6-5"><a href="logistic-regression.html#cb6-5"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb6-6"><a href="logistic-regression.html#cb6-6"></a><span class="st">  </span><span class="kw">select</span>(term, estimate, z, p_z2) </span></code></pre></div>
 <pre><code>## # A tibble: 4 x 4
 ##   term        estimate     z   p_z2
 ##   &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -335,7 +343,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Below the Coefficients table, the “dispersion parameter” refers to overdispersion, a common issue with GLM. For a logistic regression, the response variable should be distributed <span class="math inline">\(y_i \sim Bin(n_i, \pi_i)\)</span> with <span class="math inline">\(\mu_i = n_i \pi_i\)</span> and <span class="math inline">\(\sigma^2 = \pi (1 - \pi)\)</span>. Overdispersion means the data shows evidence of variance greater than <span class="math inline">\(\sigma^2\)</span>.</p>
 <p>“Fisher scoring” is a method for ML estimation. Logistic regression uses an iterative procedure to fit the model, so this section indicates whether the algorithm converged.</p>
 <p>The null deviance is the likelihood ratio <span class="math inline">\(G^2 = 61.827\)</span> of the intercept-only model. The residual deviance is the likelihood ratio <span class="math inline">\(G^2 = 47.346\)</span> after including all model covariates. <span class="math inline">\(G^2\)</span> is large, so reject the null hypothesis of no age and sex effects. The ANOVA table shows the change in deviance from adding each variable successively to the model.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="logistic-regression.html#cb7-1"></a><span class="kw">anova</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="logistic-regression.html#cb8-1"></a><span class="kw">anova</span>(m)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model: binomial, link: logit
@@ -350,41 +358,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## sex      1   4.5403        43     57.286
 ## age      1   6.0300        42     51.256
 ## sex:age  1   3.9099        41     47.346</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="logistic-regression.html#cb9-1"></a><span class="kw">glance</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="logistic-regression.html#cb10-1"></a><span class="kw">glance</span>(m)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 7
 ##   null.deviance df.null logLik   AIC   BIC deviance df.residual
 ##           &lt;dbl&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;
 ## 1          61.8      44  -23.7  55.3  62.6     47.3          41</code></pre>
 <p>Plug in values to interpret the model. The log odds of a 24 year-old female surviving is <span class="math inline">\(\hat{y} = 2.59\)</span>. The log odds of a 24 year-old male surviving is <span class="math inline">\(\hat{y} = -0.46\)</span>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="logistic-regression.html#cb11-1"></a><span class="kw">coef</span>(m)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(m)[<span class="st">&quot;sexM&quot;</span>]<span class="op">*</span><span class="dv">0</span> <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(m)[<span class="st">&quot;age&quot;</span>]<span class="op">*</span><span class="dv">24</span> <span class="op">+</span></span>
-<span id="cb11-2"><a href="logistic-regression.html#cb11-2"></a><span class="st">  </span><span class="kw">coef</span>(m)[<span class="st">&quot;sexM:age&quot;</span>]<span class="op">*</span><span class="dv">0</span><span class="op">*</span><span class="dv">24</span></span>
-<span id="cb11-3"><a href="logistic-regression.html#cb11-3"></a><span class="kw">coef</span>(m)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(m)[<span class="st">&quot;sexM&quot;</span>]<span class="op">*</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(m)[<span class="st">&quot;age&quot;</span>]<span class="op">*</span><span class="dv">24</span> <span class="op">+</span></span>
-<span id="cb11-4"><a href="logistic-regression.html#cb11-4"></a><span class="st">  </span><span class="kw">coef</span>(m)[<span class="st">&quot;sexM:age&quot;</span>]<span class="op">*</span><span class="dv">1</span><span class="op">*</span><span class="dv">24</span></span>
-<span id="cb11-5"><a href="logistic-regression.html#cb11-5"></a></span>
-<span id="cb11-6"><a href="logistic-regression.html#cb11-6"></a><span class="co"># Or use predict()</span></span>
-<span id="cb11-7"><a href="logistic-regression.html#cb11-7"></a>(lo_f &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">sex =</span> <span class="st">&quot;F&quot;</span>, <span class="dt">age =</span> <span class="dv">24</span>)))</span>
-<span id="cb11-8"><a href="logistic-regression.html#cb11-8"></a>(lo_m &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">sex =</span> <span class="st">&quot;M&quot;</span>, <span class="dt">age =</span> <span class="dv">24</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="logistic-regression.html#cb12-1"></a><span class="kw">coef</span>(m)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(m)[<span class="st">&quot;sexM&quot;</span>]<span class="op">*</span><span class="dv">0</span> <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(m)[<span class="st">&quot;age&quot;</span>]<span class="op">*</span><span class="dv">24</span> <span class="op">+</span></span>
+<span id="cb12-2"><a href="logistic-regression.html#cb12-2"></a><span class="st">  </span><span class="kw">coef</span>(m)[<span class="st">&quot;sexM:age&quot;</span>]<span class="op">*</span><span class="dv">0</span><span class="op">*</span><span class="dv">24</span></span>
+<span id="cb12-3"><a href="logistic-regression.html#cb12-3"></a><span class="kw">coef</span>(m)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(m)[<span class="st">&quot;sexM&quot;</span>]<span class="op">*</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(m)[<span class="st">&quot;age&quot;</span>]<span class="op">*</span><span class="dv">24</span> <span class="op">+</span></span>
+<span id="cb12-4"><a href="logistic-regression.html#cb12-4"></a><span class="st">  </span><span class="kw">coef</span>(m)[<span class="st">&quot;sexM:age&quot;</span>]<span class="op">*</span><span class="dv">1</span><span class="op">*</span><span class="dv">24</span></span>
+<span id="cb12-5"><a href="logistic-regression.html#cb12-5"></a></span>
+<span id="cb12-6"><a href="logistic-regression.html#cb12-6"></a><span class="co"># Or use predict()</span></span>
+<span id="cb12-7"><a href="logistic-regression.html#cb12-7"></a>(lo_f &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">sex =</span> <span class="st">&quot;F&quot;</span>, <span class="dt">age =</span> <span class="dv">24</span>)))</span>
+<span id="cb12-8"><a href="logistic-regression.html#cb12-8"></a>(lo_m &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">sex =</span> <span class="st">&quot;M&quot;</span>, <span class="dt">age =</span> <span class="dv">24</span>)))</span></code></pre></div>
 <p>Log odds are not easy to interpet. Exponentiate the log odds to get the <strong>odds</strong>.</p>
 <p><span class="math display">\[odds(\hat{y}) = \exp (\hat{y}) = \frac{\pi}{1 - \pi}.\]</span></p>
 <p>The odds of a 24 year-old female surviving is <span class="math inline">\(\exp(\hat{y}) = 13.31\)</span>. The odds of a 24 year-old male surviving is <span class="math inline">\(\exp(\hat{y}) = 0.63\)</span>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="logistic-regression.html#cb12-1"></a><span class="kw">exp</span>(lo_f)</span>
-<span id="cb12-2"><a href="logistic-regression.html#cb12-2"></a><span class="kw">exp</span>(lo_m)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="logistic-regression.html#cb13-1"></a><span class="kw">exp</span>(lo_f)</span>
+<span id="cb13-2"><a href="logistic-regression.html#cb13-2"></a><span class="kw">exp</span>(lo_m)</span></code></pre></div>
 <p>Solve for <span class="math inline">\(\pi\)</span> to get the <strong>probability</strong>.</p>
 <p><span class="math display">\[\pi = \frac{\exp (\hat{y})}{1 + \exp (\hat{y})}\]</span></p>
 <p>The probability of a 24 year-old female surviving is <span class="math inline">\(\pi = 0.93\)</span>. The probability of a female of average age surviving is <span class="math inline">\(\pi = 0.39\)</span>. The <code>predict()</code> function for a logistic model returns log-odds, but can also return <span class="math inline">\(\pi\)</span> by specifying parameter <code>type = "response"</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="logistic-regression.html#cb13-1"></a><span class="kw">exp</span>(lo_f) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(lo_f))</span>
-<span id="cb13-2"><a href="logistic-regression.html#cb13-2"></a><span class="kw">exp</span>(lo_m) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(lo_m))</span>
-<span id="cb13-3"><a href="logistic-regression.html#cb13-3"></a></span>
-<span id="cb13-4"><a href="logistic-regression.html#cb13-4"></a><span class="co"># Or use predict(..., type = &quot;response&quot;)</span></span>
-<span id="cb13-5"><a href="logistic-regression.html#cb13-5"></a>(p_f &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">sex =</span> <span class="st">&quot;F&quot;</span>, <span class="dt">age =</span><span class="dv">24</span>), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>))</span>
-<span id="cb13-6"><a href="logistic-regression.html#cb13-6"></a>(p_m &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">sex =</span> <span class="st">&quot;M&quot;</span>, <span class="dt">age =</span><span class="dv">24</span>), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="logistic-regression.html#cb14-1"></a><span class="kw">exp</span>(lo_f) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(lo_f))</span>
+<span id="cb14-2"><a href="logistic-regression.html#cb14-2"></a><span class="kw">exp</span>(lo_m) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(lo_m))</span>
+<span id="cb14-3"><a href="logistic-regression.html#cb14-3"></a></span>
+<span id="cb14-4"><a href="logistic-regression.html#cb14-4"></a><span class="co"># Or use predict(..., type = &quot;response&quot;)</span></span>
+<span id="cb14-5"><a href="logistic-regression.html#cb14-5"></a>(p_f &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">sex =</span> <span class="st">&quot;F&quot;</span>, <span class="dt">age =</span><span class="dv">24</span>), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>))</span>
+<span id="cb14-6"><a href="logistic-regression.html#cb14-6"></a>(p_m &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">sex =</span> <span class="st">&quot;M&quot;</span>, <span class="dt">age =</span><span class="dv">24</span>), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
 <p>Interpret the <em>coefficient</em> estimates using the <strong>odds ratio</strong>, the ratio of the odds before and after an increment to the predictors. The odds ratio is how much the odds would be multiplied after a <span class="math inline">\(\delta = X_1 - X_0\)</span> unit increase in <span class="math inline">\(X\)</span>.</p>
 <p><span class="math display">\[\theta = \frac{\pi / (1 - \pi) |_{X = X_1}}{\pi / (1 - \pi) |_{X = X_0}} = \frac{\exp (X_1 \hat{\beta})}{\exp (X_0 \hat{\beta})} = \exp ((X_1-X_0) \hat{\beta}) = \exp (\delta \hat{\beta})\]</span></p>
 <p>The odds of a female surviving are multiplied by a factor of <span class="math inline">\(\exp(1 \cdot (-0.19)) = 0.824\)</span> per additional year of age. The odds of a male surviving are multiplied by a factor of <span class="math inline">\(\exp(1 \cdot (-0.161-0.19)) = 0.968\)</span> per additional year of age.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="logistic-regression.html#cb14-1"></a><span class="kw">exp</span>(<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>(<span class="kw">coef</span>(m)[<span class="st">&quot;age&quot;</span>] <span class="op">+</span><span class="st"> </span><span class="dv">0</span><span class="op">*</span><span class="kw">coef</span>(m)[<span class="st">&quot;sexM:age&quot;</span>]))  <span class="co"># female</span></span>
-<span id="cb14-2"><a href="logistic-regression.html#cb14-2"></a><span class="kw">exp</span>(<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>(<span class="kw">coef</span>(m)[<span class="st">&quot;age&quot;</span>] <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">*</span><span class="kw">coef</span>(m)[<span class="st">&quot;sexM:age&quot;</span>]))  <span class="co"># male</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="logistic-regression.html#cb15-1"></a><span class="kw">exp</span>(<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>(<span class="kw">coef</span>(m)[<span class="st">&quot;age&quot;</span>] <span class="op">+</span><span class="st"> </span><span class="dv">0</span><span class="op">*</span><span class="kw">coef</span>(m)[<span class="st">&quot;sexM:age&quot;</span>]))  <span class="co"># female</span></span>
+<span id="cb15-2"><a href="logistic-regression.html#cb15-2"></a><span class="kw">exp</span>(<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>(<span class="kw">coef</span>(m)[<span class="st">&quot;age&quot;</span>] <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">*</span><span class="kw">coef</span>(m)[<span class="st">&quot;sexM:age&quot;</span>]))  <span class="co"># male</span></span></code></pre></div>
 <p><code>oddsratio::or_glm()</code> calculates the odds ratio from an increment in the predictor values.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="logistic-regression.html#cb15-1"></a>oddsratio<span class="op">::</span><span class="kw">or_glm</span>(donner, m, <span class="dt">incr =</span> <span class="kw">list</span>(<span class="dt">age =</span> <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="logistic-regression.html#cb16-1"></a>oddsratio<span class="op">::</span><span class="kw">or_glm</span>(donner, m, <span class="dt">incr =</span> <span class="kw">list</span>(<span class="dt">age =</span> <span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 5
 ##   predictor oddsratio `CI_low (2.5)` `CI_high (97.5)` increment         
 ##   &lt;chr&gt;         &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;             
@@ -392,15 +400,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2 age           0.824          0.652            0.945 1                 
 ## 3 sexM:age      1.18           1.00             1.50  Indicator variable</code></pre>
 <p>The predicted values can also be expressed as the probabilities <span class="math inline">\(\pi\)</span>. This produces the familiar signmoidal shape of the binary relationship.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="logistic-regression.html#cb17-1"></a><span class="kw">augment</span>(m, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb17-2"><a href="logistic-regression.html#cb17-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> age)) <span class="op">+</span></span>
-<span id="cb17-3"><a href="logistic-regression.html#cb17-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> surv)) <span class="op">+</span></span>
-<span id="cb17-4"><a href="logistic-regression.html#cb17-4"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .fitted<span class="op">+</span><span class="dv">1</span>)) <span class="op">+</span></span>
-<span id="cb17-5"><a href="logistic-regression.html#cb17-5"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
-<span id="cb17-6"><a href="logistic-regression.html#cb17-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;AGE&quot;</span>,</span>
-<span id="cb17-7"><a href="logistic-regression.html#cb17-7"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability of SURVIVE&quot;</span>,</span>
-<span id="cb17-8"><a href="logistic-regression.html#cb17-8"></a>       <span class="dt">title =</span> <span class="st">&quot;Binary Fitted Line Plot&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="logistic-regression.html#cb18-1"></a><span class="kw">augment</span>(m, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb18-2"><a href="logistic-regression.html#cb18-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> age)) <span class="op">+</span></span>
+<span id="cb18-3"><a href="logistic-regression.html#cb18-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> surv)) <span class="op">+</span></span>
+<span id="cb18-4"><a href="logistic-regression.html#cb18-4"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> .fitted<span class="op">+</span><span class="dv">1</span>)) <span class="op">+</span></span>
+<span id="cb18-5"><a href="logistic-regression.html#cb18-5"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb18-6"><a href="logistic-regression.html#cb18-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;AGE&quot;</span>,</span>
+<span id="cb18-7"><a href="logistic-regression.html#cb18-7"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability of SURVIVE&quot;</span>,</span>
+<span id="cb18-8"><a href="logistic-regression.html#cb18-8"></a>       <span class="dt">title =</span> <span class="st">&quot;Binary Fitted Line Plot&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Evaluate a logistic regression using a <a href="https://community.tibco.com/wiki/gains-vs-roc-curves-do-you-understand-difference">Gain curve or ROC curve</a>.</p>
 <p>In the <strong>gain curve</strong>, the x-axis is the fraction of items seen when sorted by the predicted value, and the y-axis is the cumulative summed true outcome. The “wizard” curve is the gain curve when the data is sorted by the true outcome. If the model’s gain curve is close to the wizard curve, then the model predicted the response variable well. The grey area is the “gain” over a random prediction.</p>
 <p>20 of the 45 members of the Donner party survived.</p>
@@ -410,19 +418,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
 <li>The top of the grey area is the outcome of the perfect model, the “wizard curve”. Half the survivors would be observed in 10/45=22% of the observations.</li>
 </ul>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="logistic-regression.html#cb18-1"></a><span class="kw">options</span>(<span class="dt">yardstick.event_first =</span> <span class="ot">FALSE</span>)  <span class="co"># set the second level as success</span></span>
-<span id="cb18-2"><a href="logistic-regression.html#cb18-2"></a><span class="kw">augment</span>(m, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb18-3"><a href="logistic-regression.html#cb18-3"></a>yardstick<span class="op">::</span><span class="kw">gain_curve</span>(surv, .fitted) <span class="op">%&gt;%</span></span>
-<span id="cb18-4"><a href="logistic-regression.html#cb18-4"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
-<span id="cb18-5"><a href="logistic-regression.html#cb18-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Gain Curve&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<p>The ROC (Receiver Operating Characteristics) curve plots sensitivity vs specificity at different cut-off values for the probability, ranging cut-off from 0 to 1.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="logistic-regression.html#cb19-1"></a><span class="kw">options</span>(<span class="dt">yardstick.event_first =</span> <span class="ot">FALSE</span>)  <span class="co"># set the second level as success</span></span>
 <span id="cb19-2"><a href="logistic-regression.html#cb19-2"></a><span class="kw">augment</span>(m, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb19-3"><a href="logistic-regression.html#cb19-3"></a>yardstick<span class="op">::</span><span class="kw">roc_curve</span>(surv, .fitted) <span class="op">%&gt;%</span></span>
+<span id="cb19-3"><a href="logistic-regression.html#cb19-3"></a>yardstick<span class="op">::</span><span class="kw">gain_curve</span>(surv, .fitted) <span class="op">%&gt;%</span></span>
 <span id="cb19-4"><a href="logistic-regression.html#cb19-4"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
-<span id="cb19-5"><a href="logistic-regression.html#cb19-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;ROC Curve&quot;</span>)</span></code></pre></div>
+<span id="cb19-5"><a href="logistic-regression.html#cb19-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Gain Curve&quot;</span>)</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>The ROC (Receiver Operating Characteristics) curve plots sensitivity vs specificity at different cut-off values for the probability, ranging cut-off from 0 to 1.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="logistic-regression.html#cb20-1"></a><span class="kw">options</span>(<span class="dt">yardstick.event_first =</span> <span class="ot">FALSE</span>)  <span class="co"># set the second level as success</span></span>
+<span id="cb20-2"><a href="logistic-regression.html#cb20-2"></a><span class="kw">augment</span>(m, <span class="dt">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb20-3"><a href="logistic-regression.html#cb20-3"></a>yardstick<span class="op">::</span><span class="kw">roc_curve</span>(surv, .fitted) <span class="op">%&gt;%</span></span>
+<span id="cb20-4"><a href="logistic-regression.html#cb20-4"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
+<span id="cb20-5"><a href="logistic-regression.html#cb20-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;ROC Curve&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 </div>
             </section>
 

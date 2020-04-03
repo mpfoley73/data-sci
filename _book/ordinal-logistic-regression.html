@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-04-01" />
+<meta name="date" content="2020-04-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -208,7 +208,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
 <li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a></li>
 <li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
-<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a></li>
+<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>7.3.1</b> Case Study</a></li>
+</ul></li>
 <li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
@@ -283,14 +285,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 where <span class="math inline">\(j \in [1, J-1]\)</span> are the levels of the ordinal outcome variable <span class="math inline">\(Y\)</span>. The proportional odds model assumes there is a common set of slope parameters <span class="math inline">\(\beta\)</span> for the predictors. The ordinal outcomes are distinguished by the <span class="math inline">\(J-1\)</span> intercepts <span class="math inline">\(\alpha_j\)</span>. The benchmark level is <span class="math inline">\(J\)</span>.</p>
 <p>Technically, the model could be written <span class="math inline">\(logit[P(Y \le j)] = \alpha_j + \zeta X\)</span>, replacing beta with zeta because the model fits <span class="math inline">\(\alpha_j - \beta X\)</span> instead of <span class="math inline">\(\alpha_j + \beta X\)</span>.</p>
 <p>Suppose you want to model the probability a respondent holds a political ideology [“Socialist”, “Liberal”, “Moderate”, “Conservative”, “Libertarian”] given their party affiliation [“Republican”, “Democrat”].</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="ordinal-logistic-regression.html#cb27-1"></a><span class="kw">table</span>(ideology)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="ordinal-logistic-regression.html#cb28-1"></a><span class="kw">table</span>(ideology)</span></code></pre></div>
 <pre><code>##      ideo
 ## party Socialist Liberal Moderate Conservative Libertarian
 ##   Rep        30      46      148           84          99
 ##   Dem        80      81      171           41          55</code></pre>
 <p>Fit a proportional odds logistic regression.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="ordinal-logistic-regression.html#cb29-1"></a>pom &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">polr</span>(ideo <span class="op">~</span><span class="st"> </span>party, <span class="dt">data =</span> ideology)</span>
-<span id="cb29-2"><a href="ordinal-logistic-regression.html#cb29-2"></a><span class="kw">summary</span>(pom)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="ordinal-logistic-regression.html#cb30-1"></a>pom &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">polr</span>(ideo <span class="op">~</span><span class="st"> </span>party, <span class="dt">data =</span> ideology)</span>
+<span id="cb30-2"><a href="ordinal-logistic-regression.html#cb30-2"></a><span class="kw">summary</span>(pom)</span></code></pre></div>
 <pre><code>## Call:
 ## MASS::polr(formula = ideo ~ party, data = ideology)
 ## 
@@ -318,24 +320,159 @@ where <span class="math inline">\(j \in [1, J-1]\)</span> are the levels of the 
 <p>You can translate the cumulative odds to cumulative probabilities by taking the ratio <span class="math inline">\(\pi = exp(odds) / (1 + exp(odds))\)</span>. The probability a Democrat identifies as <em>&lt;=Socialist</em> vs <em>&gt;Socialist</em> is</p>
 <p><span class="math display">\[P(Y \le 1) = \frac{exp(-1.4945)} {(1 + exp(-1.4945))} = 0.183.\]</span></p>
 <p>The individual probabilities are just the successive differences in the cumulative probabilities. The log odds a Democrat identifies as <em>&lt;=Liberal</em> vs <em>&gt;Liberal</em> are <span class="math inline">\(logit[P(Y \lt 2)] = -1.4745 - (-0.9745)(1) = -0.500\)</span>, which translates into a probability of <span class="math inline">\(P(Y \le 2) = exp(-0.5) / (1 + exp(-0.5)) = 0.378\)</span>. The probability a Democrat identifies as <em>Liberal</em> is the difference in adjacent cumulative probabilities, <span class="math inline">\(P(Y \le 2) - P(Y \le 1) = 0.378 = 0.183 = 0.194\)</span>. This is how the model to predicts the level probabilities.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="ordinal-logistic-regression.html#cb31-1"></a>x &lt;-<span class="st"> </span><span class="kw">predict</span>(pom, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">party =</span> <span class="kw">c</span>(<span class="st">&quot;Dem&quot;</span>, <span class="st">&quot;Rep&quot;</span>)), <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>)</span>
-<span id="cb31-2"><a href="ordinal-logistic-regression.html#cb31-2"></a><span class="kw">rownames</span>(x) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Dem&quot;</span>, <span class="st">&quot;Rep&quot;</span>)</span>
-<span id="cb31-3"><a href="ordinal-logistic-regression.html#cb31-3"></a><span class="kw">print</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="ordinal-logistic-regression.html#cb32-1"></a>x &lt;-<span class="st"> </span><span class="kw">predict</span>(pom, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">party =</span> <span class="kw">c</span>(<span class="st">&quot;Dem&quot;</span>, <span class="st">&quot;Rep&quot;</span>)), <span class="dt">type =</span> <span class="st">&quot;probs&quot;</span>)</span>
+<span id="cb32-2"><a href="ordinal-logistic-regression.html#cb32-2"></a><span class="kw">rownames</span>(x) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Dem&quot;</span>, <span class="st">&quot;Rep&quot;</span>)</span>
+<span id="cb32-3"><a href="ordinal-logistic-regression.html#cb32-3"></a><span class="kw">print</span>(x)</span></code></pre></div>
 <pre><code>##      Socialist   Liberal  Moderate Conservative Libertarian
 ## Dem 0.18325048 0.1942837 0.3930552    0.1147559   0.1146547
 ## Rep 0.07806044 0.1081923 0.3727521    0.1855036   0.2554916</code></pre>
 <p>Always check the assumption of proportional odds. One way to do this is by comparing the proportional odds model with a multinomial logit model, also called an unconstrained baseline logit model. The multinomial logit model models <em>unordered</em> responses and fits a slope to each level of the <span class="math inline">\(J – 1\)</span> responses. The proportional odds model is nested in the multinomial model, so you can use a likelihood ratio test to see if the models are statistically different.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="ordinal-logistic-regression.html#cb33-1"></a>mlm &lt;-<span class="st"> </span>nnet<span class="op">::</span><span class="kw">multinom</span>(ideo <span class="op">~</span><span class="st"> </span>party, <span class="dt">data =</span> ideology)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="ordinal-logistic-regression.html#cb34-1"></a>mlm &lt;-<span class="st"> </span>nnet<span class="op">::</span><span class="kw">multinom</span>(ideo <span class="op">~</span><span class="st"> </span>party, <span class="dt">data =</span> ideology)</span></code></pre></div>
 <pre><code>## # weights:  15 (8 variable)
 ## initial  value 1343.880657 
 ## iter  10 value 1239.866743
 ## final  value 1235.648615 
 ## converged</code></pre>
 <p>Calculate the difference in the deviance test statistics <span class="math inline">\(D = -2 loglik(\beta)\)</span>.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="ordinal-logistic-regression.html#cb35-1"></a>G &lt;-<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span>(<span class="kw">logLik</span>(pom)[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="kw">logLik</span>(mlm)[<span class="dv">1</span>])</span>
-<span id="cb35-2"><a href="ordinal-logistic-regression.html#cb35-2"></a><span class="kw">pchisq</span>(G, <span class="dt">df =</span> <span class="kw">length</span>(pom<span class="op">$</span>zeta) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="ordinal-logistic-regression.html#cb36-1"></a>G &lt;-<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span>(<span class="kw">logLik</span>(pom)[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="kw">logLik</span>(mlm)[<span class="dv">1</span>])</span>
+<span id="cb36-2"><a href="ordinal-logistic-regression.html#cb36-2"></a><span class="kw">pchisq</span>(G, <span class="dt">df =</span> <span class="kw">length</span>(pom<span class="op">$</span>zeta) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1] 0.2972241</code></pre>
 <p>The p-value is high, so do not reject the null hypothesis that the proportional odds model fits differently than the more complex multinomial logit model.</p>
+<div id="case-study" class="section level3">
+<h3><span class="header-section-number">7.3.1</span> Case Study</h3>
+<p>The General Social Survey for <code>year</code> 1972, 1973, and 1974 surveyed caucasian Christians about their attitudes <code>att</code> toward abortion. Respondents were classified by years of education <code>edu</code> and religious group <code>att</code>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="ordinal-logistic-regression.html#cb38-1"></a>abort <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> att, <span class="dt">values_from =</span> cnt) </span></code></pre></div>
+<pre><code>## # A tibble: 27 x 6
+##    year  rel   edu     Neg   Mix   Pos
+##    &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 1972  Prot  Low       9    12    48
+##  2 1972  Prot  Med      13    43   197
+##  3 1972  Prot  High      4     9   139
+##  4 1972  SProt Low       9    17    30
+##  5 1972  SProt Med       6    10    97
+##  6 1972  SProt High      1     8    68
+##  7 1972  Cath  Low      14    12    32
+##  8 1972  Cath  Med      18    50   131
+##  9 1972  Cath  High      8    13    64
+## 10 1973  Prot  Low       4    16    59
+## # ... with 17 more rows</code></pre>
+<p>Fit a proportional-odds cumulative logit model with just main effects. There are two main effects for <code>year</code>, two for <code>rel</code>, and two for <code>edu</code>, plus two logit equations for the response for a total of eight parameters.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="ordinal-logistic-regression.html#cb40-1"></a>abort_mdl &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">polr</span>(att <span class="op">~</span><span class="st"> </span>year <span class="op">+</span><span class="st"> </span>rel <span class="op">+</span><span class="st"> </span>edu, <span class="dt">data =</span> abort, <span class="dt">weights =</span> cnt)</span>
+<span id="cb40-2"><a href="ordinal-logistic-regression.html#cb40-2"></a><span class="kw">summary</span>(abort_mdl)</span></code></pre></div>
+<pre><code>## Call:
+## MASS::polr(formula = att ~ year + rel + edu, data = abort, weights = cnt)
+## 
+## Coefficients:
+##            Value Std. Error t value
+## year1973  0.2210     0.1048   2.109
+## year1974  0.2331     0.1059   2.203
+## relSProt -0.2489     0.1135  -2.194
+## relCath  -0.7960     0.1003  -7.934
+## eduMed    0.7165     0.1087   6.592
+## eduHigh   1.1267     0.1282   8.790
+## 
+## Intercepts:
+##         Value    Std. Error t value 
+## Neg|Mix  -2.3311   0.1350   -17.2698
+## Mix|Pos  -0.7920   0.1220    -6.4912
+## 
+## Residual Deviance: 4059.316 
+## AIC: 4075.316</code></pre>
+<p>All predictors are significant. Now fit the saturated model.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="ordinal-logistic-regression.html#cb42-1"></a>abort_mdl_sat &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">polr</span>(att <span class="op">~</span><span class="st"> </span>year<span class="op">*</span>rel<span class="op">*</span>edu, <span class="dt">weights =</span> cnt, <span class="dt">data =</span> abort)</span>
+<span id="cb42-2"><a href="ordinal-logistic-regression.html#cb42-2"></a><span class="kw">summary</span>(abort_mdl_sat)</span></code></pre></div>
+<pre><code>## Call:
+## MASS::polr(formula = att ~ year * rel * edu, data = abort, weights = cnt)
+## 
+## Coefficients:
+##                              Value Std. Error  t value
+## year1973                   0.34217     0.3652  0.93695
+## year1974                  -0.01435     0.3605 -0.03981
+## relSProt                  -0.62739     0.3660 -1.71414
+## relCath                   -0.72383     0.3689 -1.96195
+## eduMed                     0.50358     0.3008  1.67428
+## eduHigh                    1.60066     0.3898  4.10681
+## year1973:relSProt          0.10931     0.5236  0.20876
+## year1974:relSProt          0.43874     0.5210  0.84215
+## year1973:relCath           0.38950     0.5389  0.72275
+## year1974:relCath           0.86962     0.5595  1.55434
+## year1973:eduMed            0.28053     0.4407  0.63653
+## year1974:eduMed            0.54865     0.4299  1.27613
+## year1973:eduHigh          -0.59609     0.5404 -1.10311
+## year1974:eduHigh          -0.11750     0.5413 -0.21708
+## relSProt:eduMed            1.14214     0.4789  2.38489
+## relCath:eduMed             0.12751     0.4244  0.30041
+## relSProt:eduHigh           0.30386     0.5859  0.51864
+## relCath:eduHigh           -0.56231     0.5319 -1.05721
+## year1973:relSProt:eduMed  -1.27096     0.6665 -1.90689
+## year1974:relSProt:eduMed  -1.33309     0.6681 -1.99524
+## year1973:relCath:eduMed   -0.83601     0.6290 -1.32912
+## year1974:relCath:eduMed   -0.89732     0.6465 -1.38789
+## year1973:relSProt:eduHigh  0.90470     0.8776  1.03093
+## year1974:relSProt:eduHigh -0.43205     0.8048 -0.53686
+## year1973:relCath:eduHigh  -0.22645     0.7495 -0.30214
+## year1974:relCath:eduHigh  -0.98964     0.7663 -1.29150
+## 
+## Intercepts:
+##         Value   Std. Error t value
+## Neg|Mix -2.3109  0.2672    -8.6473
+## Mix|Pos -0.7613  0.2605    -2.9218
+## 
+## Residual Deviance: 4018.273 
+## AIC: 4074.273</code></pre>
+<p>Compare the two models.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="ordinal-logistic-regression.html#cb44-1"></a><span class="kw">anova</span>(abort_mdl, abort_mdl_sat)</span></code></pre></div>
+<pre><code>## Likelihood ratio tests of ordinal regression models
+## 
+## Response: att
+##              Model Resid. df Resid. Dev   Test    Df LR stat.     Pr(Chi)
+## 1 year + rel + edu      3229   4059.316                                  
+## 2 year * rel * edu      3209   4018.273 1 vs 2    20 41.04359 0.003677518</code></pre>
+<p>The likelihood ratio test indicates the main-effects model fits poorly in comparison to the saturated model (<em>LR</em> = 41.0, <em>df</em> = 20, <em>p</em> &lt; 0.01). From the table of coefficients,the effects of religion and education appear to be much more powerful than the year, so consider modeling an interaction between <code>rel</code> and <code>edu</code>. This is also what the stepwise AIC algorithm recommends.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="ordinal-logistic-regression.html#cb46-1"></a><span class="kw">summary</span>(abort_mdl_step)</span></code></pre></div>
+<pre><code>## Call:
+## MASS::polr(formula = att ~ year + rel + edu + rel:edu, data = abort, 
+##     weights = cnt)
+## 
+## Coefficients:
+##                    Value Std. Error t value
+## year1973          0.2281     0.1051  2.1712
+## year1974          0.2410     0.1061  2.2708
+## relSProt         -0.4499     0.2132 -2.1097
+## relCath          -0.3477     0.2235 -1.5561
+## eduMed            0.7504     0.1774  4.2295
+## eduHigh           1.3689     0.2192  6.2442
+## relSProt:eduMed   0.2526     0.2671  0.9458
+## relCath:eduMed   -0.3892     0.2601 -1.4960
+## relSProt:eduHigh  0.3852     0.3362  1.1457
+## relCath:eduHigh  -0.9442     0.3066 -3.0790
+## 
+## Intercepts:
+##         Value    Std. Error t value 
+## Neg|Mix  -2.2582   0.1701   -13.2781
+## Mix|Pos  -0.7162   0.1596    -4.4884
+## 
+## Residual Deviance: 4040.437 
+## AIC: 4064.437</code></pre>
+<p>Compare the model with the <code>rel:edu</code> interaction to the saturated model.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="ordinal-logistic-regression.html#cb48-1"></a><span class="kw">anova</span>(abort_mdl_step, abort_mdl_sat)</span></code></pre></div>
+<pre><code>## Likelihood ratio tests of ordinal regression models
+## 
+## Response: att
+##                        Model Resid. df Resid. Dev   Test    Df LR stat.
+## 1 year + rel + edu + rel:edu      3225   4040.437                      
+## 2           year * rel * edu      3209   4018.273 1 vs 2    16 22.16419
+##     Pr(Chi)
+## 1          
+## 2 0.1379687</code></pre>
+<p>Great, this time they are not significantly different (<em>LR</em> = 22.2, <em>df</em> = 16, <em>p</em> = 0.138). Interpret the results.</p>
+<p>Positive coefficients mean attitudes toward legalizing abortion are more positive relative to the reference year, 1972. The odds of supporting legalization in 1973 compared to 1972 were <span class="math inline">\(exp(0.2281) = 1.26\)</span>. The odds for 1974 vs 1972 were <span class="math inline">\(exp(0.2410) = 1.27\)</span>, so attitudes toward abortion became more positive from 1972 to 1973, but remained nearly unchanged from 1973 to 1974.</p>
+<p>Among Protestants (reference religious group), increasing education is associated with more positive attitudes toward abortion legalization. The odds of a Protestant with medium education vs low education supporting legalization are <span class="math inline">\(exp(0.7504) = 2.12\)</span>. Among Southern Protestants, odds are <span class="math inline">\(exp(0.7504 + 0.2526) = 2.73\)</span>. Therefore, the estimated effects of education for Southern Protestants are in the same direction as for Protestants but are somewhat larger. Note, however, that the interaction effect coefficient is not not significantly different from zero, so the effect of education among Protestants and Southern Protestants is not significantly different.</p>
+<p>Among Catholics, the medium vs low education odds are <span class="math inline">\(exp(0.7504- 0.3892) = 1.44\)</span>. And the high vs low education odds are <span class="math inline">\(exp(1.3689 - 0.9442) = 1.53\)</span>. Increasing education is still associated with more positive attitudes, but the effects are smaller than they are among Protestants and Southern Protestants.</p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p><strong>Example Summarization</strong></p>
+<p>We used logistic regression to investigate whether groups with the Christian religion might moderate the effects of education on attitudes toward abortion legalization. For Protestants, higher education education was associated with higher, significant, increase of odds of a more positive attitude toward abortion legalization, <em>b</em> = 0.7504, <em>SE</em> = 0.1774, <em>OR</em> = 2.12, <em>p</em> &lt; .01. There was a significant interaction for Catholics at high levels of education, <em>b</em> = -0.9442, <em>SE</em> = 0.3066, <em>p</em> &lt; .01, relative to the Protestant reference group, but no significant interaction at medium education, and no interaction at all for Southern Protestants relative to the reference group. The figure above graphs the interaction, showing the change in the expected probability of positive attitude by education level for Protestant, Southern Protestant, and Catholic religious groups. Overall, the significant interaction for Catholics at high levels of education suggests that education has a different relationship to attitudes toward abortion depending on the individual’s religious group, but the difference between Protestant and Southern Protestant is minimal.</p>
+</div>
 </div>
             </section>
 
