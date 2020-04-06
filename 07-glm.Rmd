@@ -120,11 +120,17 @@ glimpse(donner)
 ```
 
 ```{r, fig.height=3.5}
-donner %>%
+donner %>%  mutate(surv = as.numeric(surv)-1) %>%
   ggplot(aes(x = age, y = surv, color = sex)) +
   geom_jitter() +
+  geom_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE) +
   theme_mf() +
   labs(title = "Donner Party Survivorship", color = "")
+```
+
+```{r}
+donner %>%
+  ggplot(aes(x = age, y = surv, color = sex)) +
 ```
 
 Fit a logistic regression $SURV = SEX + AGE + SEX : AGE$.
@@ -202,7 +208,7 @@ Interpret the *coefficient* estimates using the **odds ratio**, the ratio of the
 
 $$\theta = \frac{\pi / (1 - \pi) |_{X = X_1}}{\pi / (1 - \pi) |_{X = X_0}} = \frac{\exp (X_1 \hat{\beta})}{\exp (X_0 \hat{\beta})} = \exp ((X_1-X_0) \hat{\beta}) = \exp (\delta \hat{\beta})$$
 
-The odds of a female surviving are multiplied by a factor of $\exp(1 \cdot (-0.19)) = 0.824$ per additional year of age. The odds of a male surviving are multiplied by a factor of $\exp(1 \cdot (-0.161-0.19)) = 0.968$ per additional year of age.   
+The odds of a female surviving are multiplied by a factor of $\exp(1 \cdot (-0.19)) = 0.824$ per additional year of age (or the odds fall by $1 - 0.824 = 17.6\%$). The odds of a male surviving are multiplied by a factor of $\exp(1 \cdot (-0.161-0.19)) = 0.968$ per additional year of age.   
 
 ```{r results=FALSE}
 exp(1 * (coef(m)["age"] + 0*coef(m)["sexM:age"]))  # female
