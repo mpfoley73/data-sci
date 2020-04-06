@@ -344,7 +344,7 @@ indicates the model fits okay, but not great. The Residual Deviance of 50.26 wit
 
 ## Ordinal Logistic Regression
 
-These notes rely on [UVA](https://data.library.virginia.edu/fitting-and-interpreting-a-proportional-odds-model/) and [PSU STAT 504 class notes](https://online.stat.psu.edu/stat504/node/171/).
+These notes rely on [UVA](https://data.library.virginia.edu/fitting-and-interpreting-a-proportional-odds-model/), [PSU STAT 504 class notes](https://online.stat.psu.edu/stat504/node/171/), and [Laerd Statistics](https://statistics.laerd.com/spss-tutorials/ordinal-regression-using-spss-statistics.php).
 
 The ordinal logistic regression model is
 
@@ -372,6 +372,11 @@ ideology <- data.frame(
 table(ideology)
 ```
 
+### Assumptions
+
+Ordinal regression makes four assumptions about the underlying data.  One is that the response variable is ordinal (duh).  The second is that the explanatory variables are continuous or categorical.  You can include ordinal variables, but you need to treat them either as continous or categorical.  Third, there is no multicollinearity.  Fourth, the odds are proportional, meaning each independent variable has an identical effect at each cumulative split of the ordinal dependent variable. Test for proportionality with a full likelihood ratio test comparing the fitted location model to a model with varying location parameters. This test can sometimes flag violations that do not exist, so can also run separate binomial logistic regressions on cumulative dichotomous dependent variables to further determine if this assumption is met. 
+
+### Modeling 
 Fit a proportional odds logistic regression.
 
 ```{r message=FALSE}
