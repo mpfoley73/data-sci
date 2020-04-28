@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.7 Model Validation | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.7 Model Validation | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-31" />
+<meta name="date" content="2020-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -183,7 +183,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>5</b> Continuous Variable Analysis</a><ul>
 <li class="chapter" data-level="5.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>5.0.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a><ul>
+<li class="chapter" data-level="" data-path="supervised-machine-learning.html"><a href="supervised-machine-learning.html"><i class="fa fa-check"></i>Supervised Machine Learning</a></li>
+<li class="chapter" data-level="6" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>6</b> Ordinary Least Squares</a><ul>
 <li class="chapter" data-level="6.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>6.1</b> Linear Regression Model</a></li>
 <li class="chapter" data-level="6.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>6.2</b> Parameter Estimation</a></li>
 <li class="chapter" data-level="6.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>6.3</b> Model Assumptions</a><ul>
@@ -208,29 +209,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
 <li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a></li>
 <li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
-<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a></li>
-<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a><ul>
-<li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-16"><i class="fa fa-check"></i>Example</a></li>
+<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>7.3.1</b> Assumptions</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>7.3.2</b> Modeling</a></li>
+<li class="chapter" data-level="7.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>7.3.3</b> Case Study</a></li>
 </ul></li>
+<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
-<li class="chapter" data-level="9" data-path="classification-1.html"><a href="classification-1.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
-<li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
-<li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="8" data-path="linear-discriminant-analysis.html"><a href="linear-discriminant-analysis.html"><i class="fa fa-check"></i><b>8</b> Linear Discriminant Analysis</a></li>
+<li class="chapter" data-level="9" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
+<li class="chapter" data-level="10" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>10</b> Regularization</a></li>
+<li class="chapter" data-level="11" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>11</b> Decision Trees</a><ul>
+<li class="chapter" data-level="11.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>11.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>11.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="11.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>11.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="11.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>11.1.3</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="11.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>11.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>11.2.1</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
-<li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
-<li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
-<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+<li class="chapter" data-level="11.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>11.3</b> Bagging</a></li>
+<li class="chapter" data-level="11.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>11.4</b> Random Forests</a></li>
+<li class="chapter" data-level="11.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>11.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="11.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>11.6</b> Summary</a></li>
+<li class="chapter" data-level="11.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>11.7</b> Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>11</b> Regularization</a></li>
 <li class="chapter" data-level="12" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>12</b> Non-linear Models</a><ul>
 <li class="chapter" data-level="12.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>12.1</b> Splines</a></li>
 <li class="chapter" data-level="12.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>12.2</b> MARS</a></li>
@@ -240,18 +243,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>13.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="13.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>13.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="13.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>13.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="13.4" data-path="example-17.html"><a href="example-17.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
+<li class="chapter" data-level="13.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
 <li class="chapter" data-level="13.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>13.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>14</b> Principal Components Analysis</a></li>
 <li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a></li>
 <li class="chapter" data-level="16" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>16</b> Text Mining</a></li>
+<li class="chapter" data-level="17" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>17</b> Survival Analysis</a></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
 <li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="16.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>16.0.1</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="17.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>17.0.1</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
@@ -288,17 +292,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The coefficient of determination (<strong>R-squared</strong>) is the percent of total variation in the response variable that is explained by the regression line.</p>
 <p><span class="math display">\[R^2 = 1 - \frac{SSE}{SST}\]</span></p>
 <p>where <span class="math inline">\(SSE = \sum_{i=1}^n{(y_i - \hat{y}_i)^2}\)</span> is the sum squared differences between the predicted and observed value, <span class="math inline">\(SST = \sum_{i = 1}^n{(y_i - \bar{y})^2}\)</span> is the sum of squared differences between the observed and overall mean value, and <span class="math inline">\(RSS = \sum_{i=1}^n{(\hat{y}_i - \bar{y})^2}\)</span> is the sum of squared differences between the predicted and overall mean “no-relationship line” value. At the extremes, <span class="math inline">\(R^2 = 1\)</span> means all data points fall perfectly on the regression line - the predictors account for <em>all</em> variation in the response; <span class="math inline">\(R^2 = 0\)</span> means the regression line is horizontal at <span class="math inline">\(\bar{y}\)</span> - the predictors account for <em>none</em> of the variation in the response. In the simple case of a single predictor variable, <span class="math inline">\(R^2\)</span> equals the squared correlation between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, <span class="math inline">\(r = Cor(x,y)\)</span>.</p>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="model-validation.html#cb430-1"></a>ssr &lt;-<span class="st"> </span><span class="kw">sum</span>((m<span class="op">$</span>fitted.values <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(d<span class="op">$</span>mpg))<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb430-2"><a href="model-validation.html#cb430-2"></a>sse &lt;-<span class="st"> </span><span class="kw">sum</span>(m<span class="op">$</span>residuals<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb430-3"><a href="model-validation.html#cb430-3"></a>sst &lt;-<span class="st"> </span><span class="kw">sum</span>((d<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(d<span class="op">$</span>mpg))<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb430-4"><a href="model-validation.html#cb430-4"></a>(r2 &lt;-<span class="st"> </span>ssr <span class="op">/</span><span class="st"> </span>sst)</span></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="model-validation.html#cb431-1"></a>ssr &lt;-<span class="st"> </span><span class="kw">sum</span>((m<span class="op">$</span>fitted.values <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(d<span class="op">$</span>mpg))<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb431-2"><a href="model-validation.html#cb431-2"></a>sse &lt;-<span class="st"> </span><span class="kw">sum</span>(m<span class="op">$</span>residuals<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb431-3"><a href="model-validation.html#cb431-3"></a>sst &lt;-<span class="st"> </span><span class="kw">sum</span>((d<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(d<span class="op">$</span>mpg))<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb431-4"><a href="model-validation.html#cb431-4"></a>(r2 &lt;-<span class="st"> </span>ssr <span class="op">/</span><span class="st"> </span>sst)</span></code></pre></div>
 <pre><code>## [1] 0.88</code></pre>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="model-validation.html#cb432-1"></a>(r2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>sse <span class="op">/</span><span class="st"> </span>sst)</span></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="model-validation.html#cb433-1"></a>(r2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>sse <span class="op">/</span><span class="st"> </span>sst)</span></code></pre></div>
 <pre><code>## [1] 0.88</code></pre>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="model-validation.html#cb434-1"></a><span class="kw">summary</span>(m)<span class="op">$</span>r.squared</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="model-validation.html#cb435-1"></a><span class="kw">summary</span>(m)<span class="op">$</span>r.squared</span></code></pre></div>
 <pre><code>## [1] 0.88</code></pre>
 <p><span class="math inline">\(R^2\)</span> is also equal to the correlation between the fitted value and observed values, <span class="math inline">\(R^2 = Cor(Y, \hat{Y})^2\)</span>.</p>
-<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="model-validation.html#cb436-1"></a><span class="kw">cor</span>(m<span class="op">$</span>fitted.values, d<span class="op">$</span>mpg)<span class="op">^</span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="model-validation.html#cb437-1"></a><span class="kw">cor</span>(m<span class="op">$</span>fitted.values, d<span class="op">$</span>mpg)<span class="op">^</span><span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 0.88</code></pre>
 <p>R-squared is proportional to the the variance in the response, <em>SST</em>. Given a constant percentage error in predictions, a test set with relatively low variation in the reponse will have a lower R-squared. Conversely, test sets with large variation, e.g., housing data with home sale ranging from $60K to $2M may have a large R-squared despite average prediction errors of &gt;$10K.</p>
 <p>A close variant of R-squared is the non-parametric Spearman’s rank correlation. This statistic is the correlation of the <em>ranks</em> of the response and the predicted values. It is used when the model goal is ranking.</p>
@@ -307,12 +311,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">6.7.1.2</span> RMSE</h4>
 <p>The root mean squared error (<strong>RMSE</strong>) is the average prediction error (square root of mean squared error).</p>
 <p><span class="math display">\[RMSE = \sqrt{\frac{\sum_{i=1}^n{(y_i - \hat{y}_i)^2}}{n}}\]</span></p>
-<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="model-validation.html#cb438-1"></a><span class="kw">sqrt</span>(<span class="kw">mean</span>((d<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span>m<span class="op">$</span>fitted.values)<span class="op">^</span><span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="model-validation.html#cb439-1"></a><span class="kw">sqrt</span>(<span class="kw">mean</span>((d<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span>m<span class="op">$</span>fitted.values)<span class="op">^</span><span class="dv">2</span>))</span></code></pre></div>
 <pre><code>## [1] 2.1</code></pre>
 <p>The <code>rmse()</code> function from the <code>Metrics</code> package, and the <code>postResample()</code> function in <code>caret</code> calculate RMSE.</p>
-<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="model-validation.html#cb440-1"></a><span class="kw">rmse</span>(<span class="dt">actual =</span> d<span class="op">$</span>mpg, <span class="dt">predicted =</span> m<span class="op">$</span>fitted.values)</span></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="model-validation.html#cb441-1"></a><span class="kw">rmse</span>(<span class="dt">actual =</span> d<span class="op">$</span>mpg, <span class="dt">predicted =</span> m<span class="op">$</span>fitted.values)</span></code></pre></div>
 <pre><code>## [1] 2.1</code></pre>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="model-validation.html#cb442-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m<span class="op">$</span>fitted.values, <span class="dt">obs =</span> d<span class="op">$</span>mpg)[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="model-validation.html#cb443-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m<span class="op">$</span>fitted.values, <span class="dt">obs =</span> d<span class="op">$</span>mpg)[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## RMSE 
 ##  2.1</code></pre>
 <p>The mean squared error of a model with theoretical residual of mean zero and constant variance <span class="math inline">\(\sigma^2\)</span> can be decomposed into the model’s bias and the model’s variance:</p>
@@ -324,30 +328,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">6.7.1.3</span> RSE</h4>
 <p>The residual standard error (<strong>RSE</strong>, or model sigma <span class="math inline">\(\hat{\sigma}\)</span>) is an estimate of the standard deviation of <span class="math inline">\(\epsilon\)</span>. It is roughly the average amount the response deviates from the true regression line.</p>
 <p><span class="math display">\[\sigma = \sqrt{\frac{\sum_{i=1}^n{(y_i - \hat{y}_i)^2}}{n-k-1}}\]</span></p>
-<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="model-validation.html#cb444-1"></a><span class="kw">sqrt</span>(<span class="kw">sum</span>((d<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span>m<span class="op">$</span>fitted.values)<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="model-validation.html#cb445-1"></a><span class="kw">sqrt</span>(<span class="kw">sum</span>((d<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span>m<span class="op">$</span>fitted.values)<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## [1] 2.5</code></pre>
-<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="model-validation.html#cb446-1"></a><span class="co"># sd is sqrt(sse / (n-1)), sigma = sqrt(sse / (n - k - 1))</span></span>
-<span id="cb446-2"><a href="model-validation.html#cb446-2"></a><span class="kw">sd</span>(m<span class="op">$</span>residuals) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>((n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))  </span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="model-validation.html#cb447-1"></a><span class="co"># sd is sqrt(sse / (n-1)), sigma = sqrt(sse / (n - k - 1))</span></span>
+<span id="cb447-2"><a href="model-validation.html#cb447-2"></a><span class="kw">sd</span>(m<span class="op">$</span>residuals) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>((n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))  </span></code></pre></div>
 <pre><code>## [1] 2.5</code></pre>
-<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="model-validation.html#cb448-1"></a><span class="kw">summary</span>(m)<span class="op">$</span>sigma </span></code></pre></div>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="model-validation.html#cb449-1"></a><span class="kw">summary</span>(m)<span class="op">$</span>sigma </span></code></pre></div>
 <pre><code>## [1] 2.5</code></pre>
-<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="model-validation.html#cb450-1"></a><span class="kw">sigma</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="model-validation.html#cb451-1"></a><span class="kw">sigma</span>(m)</span></code></pre></div>
 <pre><code>## [1] 2.5</code></pre>
 </div>
 <div id="mae" class="section level4">
 <h4><span class="header-section-number">6.7.1.4</span> MAE</h4>
 <p>The mean absolute error (<strong>MAE</strong>) is the average absolute prediction arror. It is less sensitive to outliers.</p>
 <p><span class="math display">\[MAE = \frac{\sum_{i=1}^n{|y_i - \hat{y}_i|}}{n}\]</span></p>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="model-validation.html#cb452-1"></a><span class="kw">sum</span>(<span class="kw">abs</span>(d<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span>m<span class="op">$</span>fitted.values)) <span class="op">/</span><span class="st"> </span>n</span></code></pre></div>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="model-validation.html#cb453-1"></a><span class="kw">sum</span>(<span class="kw">abs</span>(d<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span>m<span class="op">$</span>fitted.values)) <span class="op">/</span><span class="st"> </span>n</span></code></pre></div>
 <pre><code>## [1] 1.7</code></pre>
 <p>The <code>postResample()</code> function in <code>caret</code> conveniently calculates all three.</p>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="model-validation.html#cb454-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m<span class="op">$</span>fitted.values, <span class="dt">obs =</span> d<span class="op">$</span>mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="model-validation.html#cb455-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m<span class="op">$</span>fitted.values, <span class="dt">obs =</span> d<span class="op">$</span>mpg)</span></code></pre></div>
 <pre><code>##     RMSE Rsquared      MAE 
 ##     2.08     0.88     1.70</code></pre>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="model-validation.html#cb456-1"></a><span class="kw">defaultSummary</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">obs =</span> d<span class="op">$</span>mpg, <span class="dt">pred =</span> m<span class="op">$</span>fitted.values), <span class="dt">model =</span> m)</span></code></pre></div>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="model-validation.html#cb457-1"></a><span class="kw">defaultSummary</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">obs =</span> d<span class="op">$</span>mpg, <span class="dt">pred =</span> m<span class="op">$</span>fitted.values), <span class="dt">model =</span> m)</span></code></pre></div>
 <pre><code>##     RMSE Rsquared      MAE 
 ##     2.08     0.88     1.70</code></pre>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="model-validation.html#cb458-1"></a><span class="kw">apply</span>(<span class="kw">as.matrix</span>(m<span class="op">$</span>fitted.values), <span class="dv">2</span>, postResample, <span class="dt">obs =</span> d<span class="op">$</span>mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="model-validation.html#cb459-1"></a><span class="kw">apply</span>(<span class="kw">as.matrix</span>(m<span class="op">$</span>fitted.values), <span class="dv">2</span>, postResample, <span class="dt">obs =</span> d<span class="op">$</span>mpg)</span></code></pre></div>
 <pre><code>##          [,1]
 ## RMSE     2.08
 ## Rsquared 0.88
@@ -358,27 +362,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">6.7.1.5</span> Adjusted R-squared</h4>
 <p>The adjusted R-squared (<span class="math inline">\(\bar{R}^2\)</span>) penalizes the R-squared metric for increasing number of predictors.</p>
 <p><span class="math display">\[\bar{R}^2 = 1 - \frac{SSE}{SST} \cdot \frac{n-1}{n-k-1}\]</span></p>
-<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="model-validation.html#cb460-1"></a>(adj_r2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>sse<span class="op">/</span>sst <span class="op">*</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="model-validation.html#cb461-1"></a>(adj_r2 &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>sse<span class="op">/</span>sst <span class="op">*</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## [1] 0.83</code></pre>
-<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="model-validation.html#cb462-1"></a><span class="kw">summary</span>(m)<span class="op">$</span>adj.r.squared</span></code></pre></div>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="model-validation.html#cb463-1"></a><span class="kw">summary</span>(m)<span class="op">$</span>adj.r.squared</span></code></pre></div>
 <pre><code>## [1] 0.83</code></pre>
 </div>
 <div id="aic" class="section level4">
 <h4><span class="header-section-number">6.7.1.6</span> AIC</h4>
 <p>Akaike’s Information Criteria (<strong>AIC</strong>) is a penalization metric. The lower the AIC, the better the model.</p>
-<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="model-validation.html#cb464-1"></a><span class="kw">AIC</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="model-validation.html#cb465-1"></a><span class="kw">AIC</span>(m)</span></code></pre></div>
 <pre><code>## [1] 160</code></pre>
 </div>
 <div id="aicc" class="section level4">
 <h4><span class="header-section-number">6.7.1.7</span> AICc</h4>
 <p><strong>AICc</strong> corrects AIC for small sample sizes.</p>
-<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="model-validation.html#cb466-1"></a><span class="kw">AIC</span>(m) <span class="op">+</span><span class="st"> </span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>k <span class="op">*</span><span class="st"> </span>(k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="model-validation.html#cb467-1"></a><span class="kw">AIC</span>(m) <span class="op">+</span><span class="st"> </span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>k <span class="op">*</span><span class="st"> </span>(k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 168</code></pre>
 </div>
 <div id="bic" class="section level4">
 <h4><span class="header-section-number">6.7.1.8</span> BIC</h4>
 <p>The Basiean information criteria (<strong>BIC</strong>) is like AIC, but with a stronger penalty for additional variables.</p>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="model-validation.html#cb468-1"></a><span class="kw">BIC</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="model-validation.html#cb469-1"></a><span class="kw">BIC</span>(m)</span></code></pre></div>
 <pre><code>## [1] 176</code></pre>
 </div>
 <div id="mallows-cp" class="section level4">
@@ -388,14 +392,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h5><span class="header-section-number">6.7.1.9.1</span> Example</h5>
 <p>Compare the full model to a model without <code>cyl</code>.</p>
 <p>The <code>glance()</code> function from the <code>broom</code> package calculates many validation metrics. Here are the validation stats for the full model and then the reduced model.</p>
-<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="model-validation.html#cb470-1"></a><span class="kw">library</span>(broom)</span>
-<span id="cb470-2"><a href="model-validation.html#cb470-2"></a></span>
-<span id="cb470-3"><a href="model-validation.html#cb470-3"></a><span class="kw">glance</span>(m) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(adj.r.squared, sigma, AIC, BIC, p.value)</span></code></pre></div>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="model-validation.html#cb471-1"></a><span class="kw">library</span>(broom)</span>
+<span id="cb471-2"><a href="model-validation.html#cb471-2"></a></span>
+<span id="cb471-3"><a href="model-validation.html#cb471-3"></a><span class="kw">glance</span>(m) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(adj.r.squared, sigma, AIC, BIC, p.value)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##   adj.r.squared sigma   AIC   BIC      p.value
 ##           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;
 ## 1         0.826  2.51  160.  176. 0.0000000481</code></pre>
-<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="model-validation.html#cb472-1"></a><span class="kw">glance</span>(<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>cyl, d[, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(adj.r.squared, sigma, AIC, BIC, p.value)</span></code></pre></div>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="model-validation.html#cb473-1"></a><span class="kw">glance</span>(<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>cyl, d[, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(adj.r.squared, sigma, AIC, BIC, p.value)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##   adj.r.squared sigma   AIC   BIC       p.value
 ##           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;
@@ -414,19 +418,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <code>caret</code> package provides useful methods for cross-validation.</p>
 <div id="example-15" class="section level5">
 <h5><span class="header-section-number">6.7.2.1.1</span> Example</h5>
-<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="model-validation.html#cb474-1"></a><span class="kw">library</span>(caret)</span>
-<span id="cb474-2"><a href="model-validation.html#cb474-2"></a></span>
-<span id="cb474-3"><a href="model-validation.html#cb474-3"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb474-4"><a href="model-validation.html#cb474-4"></a>train_idx &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(<span class="dt">y =</span> d<span class="op">$</span>mpg, <span class="dt">p =</span> <span class="fl">0.80</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb474-5"><a href="model-validation.html#cb474-5"></a>d.train &lt;-<span class="st"> </span>d[train_idx, ]</span>
-<span id="cb474-6"><a href="model-validation.html#cb474-6"></a>d.test &lt;-<span class="st"> </span>d[<span class="op">-</span>train_idx, ]</span></code></pre></div>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="model-validation.html#cb475-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb475-2"><a href="model-validation.html#cb475-2"></a></span>
+<span id="cb475-3"><a href="model-validation.html#cb475-3"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb475-4"><a href="model-validation.html#cb475-4"></a>train_idx &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(<span class="dt">y =</span> d<span class="op">$</span>mpg, <span class="dt">p =</span> <span class="fl">0.80</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb475-5"><a href="model-validation.html#cb475-5"></a>d.train &lt;-<span class="st"> </span>d[train_idx, ]</span>
+<span id="cb475-6"><a href="model-validation.html#cb475-6"></a>d.test &lt;-<span class="st"> </span>d[<span class="op">-</span>train_idx, ]</span></code></pre></div>
 <p>Build the model using <code>d.train</code>, make predictions, then calculate the R2, RMSE, and MAE. Use the <code>train()</code> function from the <code>caret</code> package. Use <code>method = "none"</code> to simply fit the model to the entire data set.</p>
-<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="model-validation.html#cb475-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb475-2"><a href="model-validation.html#cb475-2"></a>m1 &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb475-3"><a href="model-validation.html#cb475-3"></a>            <span class="dt">data =</span> d.train[, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>],</span>
-<span id="cb475-4"><a href="model-validation.html#cb475-4"></a>            <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb475-5"><a href="model-validation.html#cb475-5"></a>            <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;none&quot;</span>))</span>
-<span id="cb475-6"><a href="model-validation.html#cb475-6"></a><span class="kw">print</span>(m1)</span></code></pre></div>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="model-validation.html#cb476-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb476-2"><a href="model-validation.html#cb476-2"></a>m1 &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb476-3"><a href="model-validation.html#cb476-3"></a>            <span class="dt">data =</span> d.train[, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>],</span>
+<span id="cb476-4"><a href="model-validation.html#cb476-4"></a>            <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb476-5"><a href="model-validation.html#cb476-5"></a>            <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;none&quot;</span>))</span>
+<span id="cb476-6"><a href="model-validation.html#cb476-6"></a><span class="kw">print</span>(m1)</span></code></pre></div>
 <pre><code>## Linear Regression 
 ## 
 ## 28 samples
@@ -434,8 +438,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## No pre-processing
 ## Resampling: None</code></pre>
-<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="model-validation.html#cb477-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m1, <span class="dt">newdata =</span> d.test), </span>
-<span id="cb477-2"><a href="model-validation.html#cb477-2"></a>             <span class="dt">obs =</span> d.test<span class="op">$</span>mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="model-validation.html#cb478-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m1, <span class="dt">newdata =</span> d.test), </span>
+<span id="cb478-2"><a href="model-validation.html#cb478-2"></a>             <span class="dt">obs =</span> d.test<span class="op">$</span>mpg)</span></code></pre></div>
 <pre><code>##     RMSE Rsquared      MAE 
 ##     3.10     0.96     2.45</code></pre>
 <p>The validation set method is only useful when you have a large data set to partition. A second disadvantage is that building a model on a fraction of the data leaves out information. The test error will vary with which observations are included in the training set.</p>
@@ -444,12 +448,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="loocv" class="section level4">
 <h4><span class="header-section-number">6.7.2.2</span> LOOCV</h4>
 <p>Leave one out cross validation (LOOCV) works by successively modeling with training sets leaving out one data point, then averaging the prediction errors.</p>
-<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="model-validation.html#cb479-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb479-2"><a href="model-validation.html#cb479-2"></a>m2 &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb479-3"><a href="model-validation.html#cb479-3"></a>            <span class="dt">data =</span> d.train[, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>],</span>
-<span id="cb479-4"><a href="model-validation.html#cb479-4"></a>            <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb479-5"><a href="model-validation.html#cb479-5"></a>            <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;LOOCV&quot;</span>))</span>
-<span id="cb479-6"><a href="model-validation.html#cb479-6"></a><span class="kw">print</span>(m2)</span></code></pre></div>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="model-validation.html#cb480-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb480-2"><a href="model-validation.html#cb480-2"></a>m2 &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb480-3"><a href="model-validation.html#cb480-3"></a>            <span class="dt">data =</span> d.train[, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>],</span>
+<span id="cb480-4"><a href="model-validation.html#cb480-4"></a>            <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb480-5"><a href="model-validation.html#cb480-5"></a>            <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;LOOCV&quot;</span>))</span>
+<span id="cb480-6"><a href="model-validation.html#cb480-6"></a><span class="kw">print</span>(m2)</span></code></pre></div>
 <pre><code>## Linear Regression 
 ## 
 ## 28 samples
@@ -464,8 +468,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   2.8   0.76      2.3
 ## 
 ## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
-<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="model-validation.html#cb481-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m2, <span class="dt">newdata =</span> d.test), </span>
-<span id="cb481-2"><a href="model-validation.html#cb481-2"></a>             <span class="dt">obs =</span> d.test<span class="op">$</span>mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="model-validation.html#cb482-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m2, <span class="dt">newdata =</span> d.test), </span>
+<span id="cb482-2"><a href="model-validation.html#cb482-2"></a>             <span class="dt">obs =</span> d.test<span class="op">$</span>mpg)</span></code></pre></div>
 <pre><code>##     RMSE Rsquared      MAE 
 ##     3.10     0.96     2.45</code></pre>
 <p>This method isn’t perfect either. It repeats as many times as there are data points, so the execution time may be long. LOOCV is also sensitive to outliers.</p>
@@ -474,13 +478,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">6.7.2.3</span> K-fold Cross-Validation</h4>
 <p>K-fold cross-validation splits the dataset into <em>k</em> folds (subsets), then uses <em>k-1</em> of the folds for a training set and the remaining fold for a test set, then repeats for all permutations of k taken k-1 at a time. E.g., 3-fold cross-validation will partition the data into sets A, B, and C, then create train/test splits of [AB, C], [AC, B], and [BC, A].</p>
 <p>K-fold cross-validation is less computationally expensive than LOOCV, and often yields more accurate test error rate estimates. What is the right value of k? The lower is <em>k</em> the more biased the estimates; the higher is <em>k</em> the larger the estimate variability. At the extremes <em>k</em> = 2 is the validation set method, and <em>k = n</em> is the LOOCV method. In practice, one typically performs k-fold cross-validation using k = 5 or k = 10 because these values have been empirically shown to balence bias and variance.</p>
-<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="model-validation.html#cb483-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb483-2"><a href="model-validation.html#cb483-2"></a>m3 &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb483-3"><a href="model-validation.html#cb483-3"></a>            <span class="dt">data =</span> d.train[, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>],</span>
-<span id="cb483-4"><a href="model-validation.html#cb483-4"></a>            <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb483-5"><a href="model-validation.html#cb483-5"></a>            <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,</span>
-<span id="cb483-6"><a href="model-validation.html#cb483-6"></a>                                     <span class="dt">number =</span> <span class="dv">5</span>))</span>
-<span id="cb483-7"><a href="model-validation.html#cb483-7"></a><span class="kw">print</span>(m3)</span></code></pre></div>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="model-validation.html#cb484-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb484-2"><a href="model-validation.html#cb484-2"></a>m3 &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb484-3"><a href="model-validation.html#cb484-3"></a>            <span class="dt">data =</span> d.train[, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>],</span>
+<span id="cb484-4"><a href="model-validation.html#cb484-4"></a>            <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb484-5"><a href="model-validation.html#cb484-5"></a>            <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,</span>
+<span id="cb484-6"><a href="model-validation.html#cb484-6"></a>                                     <span class="dt">number =</span> <span class="dv">5</span>))</span>
+<span id="cb484-7"><a href="model-validation.html#cb484-7"></a><span class="kw">print</span>(m3)</span></code></pre></div>
 <pre><code>## Linear Regression 
 ## 
 ## 28 samples
@@ -495,22 +499,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   3     0.85      2.6
 ## 
 ## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
-<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="model-validation.html#cb485-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m3, <span class="dt">newdata =</span> d.test), </span>
-<span id="cb485-2"><a href="model-validation.html#cb485-2"></a>             <span class="dt">obs =</span> d.test<span class="op">$</span>mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="model-validation.html#cb486-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m3, <span class="dt">newdata =</span> d.test), </span>
+<span id="cb486-2"><a href="model-validation.html#cb486-2"></a>             <span class="dt">obs =</span> d.test<span class="op">$</span>mpg)</span></code></pre></div>
 <pre><code>##     RMSE Rsquared      MAE 
 ##     3.10     0.96     2.45</code></pre>
 </div>
 <div id="repeated-k-fold-cv" class="section level4">
 <h4><span class="header-section-number">6.7.2.4</span> Repeated K-fold CV</h4>
 <p>You can also perform k-fold cross-validation multiple times and average the results. Specify <code>method = "repeatedcv"</code> and <code>repeats = 3</code> in the <code>trainControl</code> object for three repeats.</p>
-<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="model-validation.html#cb487-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb487-2"><a href="model-validation.html#cb487-2"></a>m4 &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb487-3"><a href="model-validation.html#cb487-3"></a>            <span class="dt">data =</span> d.train[, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>],</span>
-<span id="cb487-4"><a href="model-validation.html#cb487-4"></a>            <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb487-5"><a href="model-validation.html#cb487-5"></a>            <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;repeatedcv&quot;</span>,</span>
-<span id="cb487-6"><a href="model-validation.html#cb487-6"></a>                                     <span class="dt">number =</span> <span class="dv">5</span>,</span>
-<span id="cb487-7"><a href="model-validation.html#cb487-7"></a>                                     <span class="dt">repeats =</span> <span class="dv">3</span>))</span>
-<span id="cb487-8"><a href="model-validation.html#cb487-8"></a><span class="kw">print</span>(m4)</span></code></pre></div>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="model-validation.html#cb488-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb488-2"><a href="model-validation.html#cb488-2"></a>m4 &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb488-3"><a href="model-validation.html#cb488-3"></a>            <span class="dt">data =</span> d.train[, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>],</span>
+<span id="cb488-4"><a href="model-validation.html#cb488-4"></a>            <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb488-5"><a href="model-validation.html#cb488-5"></a>            <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;repeatedcv&quot;</span>,</span>
+<span id="cb488-6"><a href="model-validation.html#cb488-6"></a>                                     <span class="dt">number =</span> <span class="dv">5</span>,</span>
+<span id="cb488-7"><a href="model-validation.html#cb488-7"></a>                                     <span class="dt">repeats =</span> <span class="dv">3</span>))</span>
+<span id="cb488-8"><a href="model-validation.html#cb488-8"></a><span class="kw">print</span>(m4)</span></code></pre></div>
 <pre><code>## Linear Regression 
 ## 
 ## 28 samples
@@ -525,8 +529,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   3.1   0.81      2.7
 ## 
 ## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
-<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="model-validation.html#cb489-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m4, <span class="dt">newdata =</span> d.test), </span>
-<span id="cb489-2"><a href="model-validation.html#cb489-2"></a>             <span class="dt">obs =</span> d.test<span class="op">$</span>mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="model-validation.html#cb490-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m4, <span class="dt">newdata =</span> d.test), </span>
+<span id="cb490-2"><a href="model-validation.html#cb490-2"></a>             <span class="dt">obs =</span> d.test<span class="op">$</span>mpg)</span></code></pre></div>
 <pre><code>##     RMSE Rsquared      MAE 
 ##     3.10     0.96     2.45</code></pre>
 </div>
@@ -534,12 +538,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">6.7.2.5</span> Bootstrapping</h4>
 <p>Bootstrapping randomly selects a sample of n observations with replacement from the original dataset to evaluate the model. The procedure is repeated many times.</p>
 <p>Specify <code>method = "boot"</code> and <code>number = 100</code> to perform 100 bootstrap samples.</p>
-<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="model-validation.html#cb491-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb491-2"><a href="model-validation.html#cb491-2"></a>m5 &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb491-3"><a href="model-validation.html#cb491-3"></a>            <span class="dt">data =</span> d.train[, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>],</span>
-<span id="cb491-4"><a href="model-validation.html#cb491-4"></a>            <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb491-5"><a href="model-validation.html#cb491-5"></a>            <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;boot&quot;</span>,</span>
-<span id="cb491-6"><a href="model-validation.html#cb491-6"></a>                                     <span class="dt">number =</span> <span class="dv">100</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="model-validation.html#cb492-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb492-2"><a href="model-validation.html#cb492-2"></a>m5 &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb492-3"><a href="model-validation.html#cb492-3"></a>            <span class="dt">data =</span> d.train[, <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>],</span>
+<span id="cb492-4"><a href="model-validation.html#cb492-4"></a>            <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb492-5"><a href="model-validation.html#cb492-5"></a>            <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;boot&quot;</span>,</span>
+<span id="cb492-6"><a href="model-validation.html#cb492-6"></a>                                     <span class="dt">number =</span> <span class="dv">100</span>))</span></code></pre></div>
 <pre><code>## Warning in predict.lm(modelFit, newdata): prediction from a rank-deficient fit
 ## may be misleading
 
@@ -548,7 +552,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 ## Warning in predict.lm(modelFit, newdata): prediction from a rank-deficient fit
 ## may be misleading</code></pre>
-<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="model-validation.html#cb493-1"></a><span class="kw">print</span>(m5)</span></code></pre></div>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="model-validation.html#cb494-1"></a><span class="kw">print</span>(m5)</span></code></pre></div>
 <pre><code>## Linear Regression 
 ## 
 ## 28 samples
@@ -563,8 +567,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   3.9   0.64      3.2
 ## 
 ## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
-<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="model-validation.html#cb495-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m5, <span class="dt">newdata =</span> d.test), </span>
-<span id="cb495-2"><a href="model-validation.html#cb495-2"></a>             <span class="dt">obs =</span> d.test<span class="op">$</span>mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="model-validation.html#cb496-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(m5, <span class="dt">newdata =</span> d.test), </span>
+<span id="cb496-2"><a href="model-validation.html#cb496-2"></a>             <span class="dt">obs =</span> d.test<span class="op">$</span>mpg)</span></code></pre></div>
 <pre><code>##     RMSE Rsquared      MAE 
 ##     3.10     0.96     2.45</code></pre>
 </div>
@@ -572,9 +576,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="gain-curve" class="section level3">
 <h3><span class="header-section-number">6.7.3</span> Gain Curve</h3>
 <p>For supervised learning purposes, a visual way to evaluate a regression model is with the gain curve. This visualization compares a predictive model score to an actual outcome (either binary (0/1) or continuous). The gain curve plot measures how well the model score sorts the data compared to the true outcome value. The x-axis is the fraction of items seen when sorted by score, and the y-axis is the cumulative summed true outcome when sorted by score. For comparison, GainCurvePlot also plots the “wizard curve”: the gain curve when the data is sorted according to its true outcome. A relative Gini score close to 1 means the model sorts responses well.</p>
-<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="model-validation.html#cb497-1"></a><span class="kw">library</span>(WVPlots)</span>
-<span id="cb497-2"><a href="model-validation.html#cb497-2"></a>d<span class="op">$</span>fitted &lt;-<span class="st"> </span>m<span class="op">$</span>fitted.values</span>
-<span id="cb497-3"><a href="model-validation.html#cb497-3"></a><span class="kw">GainCurvePlot</span>(d, <span class="dt">xvar =</span> <span class="st">&quot;fitted&quot;</span>, <span class="dt">truthVar =</span> <span class="st">&quot;mpg&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Model Gain Curve&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="model-validation.html#cb498-1"></a><span class="kw">library</span>(WVPlots)</span>
+<span id="cb498-2"><a href="model-validation.html#cb498-2"></a>d<span class="op">$</span>fitted &lt;-<span class="st"> </span>m<span class="op">$</span>fitted.values</span>
+<span id="cb498-3"><a href="model-validation.html#cb498-3"></a><span class="kw">GainCurvePlot</span>(d, <span class="dt">xvar =</span> <span class="st">&quot;fitted&quot;</span>, <span class="dt">truthVar =</span> <span class="st">&quot;mpg&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Model Gain Curve&quot;</span>)</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-214-1.png" width="672" /></p>
 </div>
 </div>

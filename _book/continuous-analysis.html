@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Continuous Variable Analysis | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Continuous Variable Analysis | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-31" />
+<meta name="date" content="2020-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="k-way-tables.html"/>
-<link rel="next" href="regression.html"/>
+<link rel="next" href="supervised-machine-learning.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -183,7 +183,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>5</b> Continuous Variable Analysis</a><ul>
 <li class="chapter" data-level="5.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>5.0.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a><ul>
+<li class="chapter" data-level="" data-path="supervised-machine-learning.html"><a href="supervised-machine-learning.html"><i class="fa fa-check"></i>Supervised Machine Learning</a></li>
+<li class="chapter" data-level="6" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>6</b> Ordinary Least Squares</a><ul>
 <li class="chapter" data-level="6.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>6.1</b> Linear Regression Model</a></li>
 <li class="chapter" data-level="6.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>6.2</b> Parameter Estimation</a></li>
 <li class="chapter" data-level="6.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>6.3</b> Model Assumptions</a><ul>
@@ -208,29 +209,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
 <li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a></li>
 <li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
-<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a></li>
-<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a><ul>
-<li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-16"><i class="fa fa-check"></i>Example</a></li>
+<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>7.3.1</b> Assumptions</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>7.3.2</b> Modeling</a></li>
+<li class="chapter" data-level="7.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>7.3.3</b> Case Study</a></li>
 </ul></li>
+<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
-<li class="chapter" data-level="9" data-path="classification-1.html"><a href="classification-1.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
-<li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
-<li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="8" data-path="linear-discriminant-analysis.html"><a href="linear-discriminant-analysis.html"><i class="fa fa-check"></i><b>8</b> Linear Discriminant Analysis</a></li>
+<li class="chapter" data-level="9" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
+<li class="chapter" data-level="10" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>10</b> Regularization</a></li>
+<li class="chapter" data-level="11" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>11</b> Decision Trees</a><ul>
+<li class="chapter" data-level="11.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>11.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>11.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="11.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>11.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="11.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>11.1.3</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="11.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>11.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>11.2.1</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
-<li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
-<li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
-<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+<li class="chapter" data-level="11.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>11.3</b> Bagging</a></li>
+<li class="chapter" data-level="11.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>11.4</b> Random Forests</a></li>
+<li class="chapter" data-level="11.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>11.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="11.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>11.6</b> Summary</a></li>
+<li class="chapter" data-level="11.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>11.7</b> Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>11</b> Regularization</a></li>
 <li class="chapter" data-level="12" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>12</b> Non-linear Models</a><ul>
 <li class="chapter" data-level="12.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>12.1</b> Splines</a></li>
 <li class="chapter" data-level="12.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>12.2</b> MARS</a></li>
@@ -240,18 +243,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>13.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="13.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>13.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="13.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>13.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="13.4" data-path="example-17.html"><a href="example-17.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
+<li class="chapter" data-level="13.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
 <li class="chapter" data-level="13.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>13.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>14</b> Principal Components Analysis</a></li>
 <li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a></li>
 <li class="chapter" data-level="16" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>16</b> Text Mining</a></li>
+<li class="chapter" data-level="17" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>17</b> Survival Analysis</a></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
 <li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="16.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>16.0.1</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="17.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>17.0.1</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
@@ -407,27 +411,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb325-4"><a href="continuous-analysis.html#cb325-4"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
 <span id="cb325-5"><a href="continuous-analysis.html#cb325-5"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
 <span id="cb325-6"><a href="continuous-analysis.html#cb325-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Spearman&#39;s Rho&quot;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-150-1.png" width="360" /></p>
 <p>Both <code>star_pos</code> and <code>finish_pos</code> are ordinal variables, so use Spearman’s rho instead of Pearson. Normally, you replace the variable values with their ranks, but in this case, the values <em>are</em> their ranks. After that, Spearman’s <span class="math inline">\(\rho\)</span> is the same as Pearson’s r.</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="continuous-analysis.html#cb326-1"></a>x &lt;-<span class="st"> </span><span class="kw">rank</span>(nascard_sr1<span class="op">$</span>start_pos)</span>
-<span id="cb326-2"><a href="continuous-analysis.html#cb326-2"></a>y &lt;-<span class="st"> </span><span class="kw">rank</span>(nascard_sr1<span class="op">$</span>finish_pos)</span>
-<span id="cb326-3"><a href="continuous-analysis.html#cb326-3"></a></span>
-<span id="cb326-4"><a href="continuous-analysis.html#cb326-4"></a>(<span class="dt">rho =</span> <span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">*</span><span class="st"> </span>(y <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y))) <span class="op">/</span></span>
-<span id="cb326-5"><a href="continuous-analysis.html#cb326-5"></a><span class="st">   </span><span class="kw">sqrt</span>(<span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x))<span class="op">^</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y))<span class="op">^</span><span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="continuous-analysis.html#cb327-1"></a>x &lt;-<span class="st"> </span><span class="kw">rank</span>(nascard_sr1<span class="op">$</span>start_pos)</span>
+<span id="cb327-2"><a href="continuous-analysis.html#cb327-2"></a>y &lt;-<span class="st"> </span><span class="kw">rank</span>(nascard_sr1<span class="op">$</span>finish_pos)</span>
+<span id="cb327-3"><a href="continuous-analysis.html#cb327-3"></a></span>
+<span id="cb327-4"><a href="continuous-analysis.html#cb327-4"></a>(<span class="dt">rho =</span> <span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">*</span><span class="st"> </span>(y <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y))) <span class="op">/</span></span>
+<span id="cb327-5"><a href="continuous-analysis.html#cb327-5"></a><span class="st">   </span><span class="kw">sqrt</span>(<span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x))<span class="op">^</span><span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y))<span class="op">^</span><span class="dv">2</span>)))</span></code></pre></div>
 <pre><code>## [1] -0.038</code></pre>
 <p>Test <span class="math inline">\(H_0: \rho = 0\)</span> with test statistic <span class="math inline">\(T\)</span>.</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="continuous-analysis.html#cb328-1"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(nascard_sr1)</span>
-<span id="cb328-2"><a href="continuous-analysis.html#cb328-2"></a>(<span class="dt">t =</span> rho <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>((n <span class="op">-</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rho<span class="op">^</span><span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="continuous-analysis.html#cb329-1"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(nascard_sr1)</span>
+<span id="cb329-2"><a href="continuous-analysis.html#cb329-2"></a>(<span class="dt">t =</span> rho <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>((n <span class="op">-</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rho<span class="op">^</span><span class="dv">2</span>)))</span></code></pre></div>
 <pre><code>## [1] -0.22</code></pre>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="continuous-analysis.html#cb330-1"></a><span class="kw">pt</span>(<span class="dt">q =</span> <span class="kw">abs</span>(t), <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="continuous-analysis.html#cb331-1"></a><span class="kw">pt</span>(<span class="dt">q =</span> <span class="kw">abs</span>(t), <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 0.83</code></pre>
 <p><span class="math inline">\(P(T&gt;.2206) = .8268\)</span>, so <em>do not</em> reject <span class="math inline">\(H_0\)</span> that the correlation is zero. <code>cor.test()</code> performs these calculations. Specify <code>method = "spearman"</code>.</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="continuous-analysis.html#cb332-1"></a><span class="kw">cor.test</span>(</span>
-<span id="cb332-2"><a href="continuous-analysis.html#cb332-2"></a>  <span class="dt">x =</span> nascard_sr1<span class="op">$</span>start_pos,</span>
-<span id="cb332-3"><a href="continuous-analysis.html#cb332-3"></a>  <span class="dt">y =</span> nascard_sr1<span class="op">$</span>finish_pos,</span>
-<span id="cb332-4"><a href="continuous-analysis.html#cb332-4"></a>  <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
-<span id="cb332-5"><a href="continuous-analysis.html#cb332-5"></a>  <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span></span>
-<span id="cb332-6"><a href="continuous-analysis.html#cb332-6"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="continuous-analysis.html#cb333-1"></a><span class="kw">cor.test</span>(</span>
+<span id="cb333-2"><a href="continuous-analysis.html#cb333-2"></a>  <span class="dt">x =</span> nascard_sr1<span class="op">$</span>start_pos,</span>
+<span id="cb333-3"><a href="continuous-analysis.html#cb333-3"></a>  <span class="dt">y =</span> nascard_sr1<span class="op">$</span>finish_pos,</span>
+<span id="cb333-4"><a href="continuous-analysis.html#cb333-4"></a>  <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
+<span id="cb333-5"><a href="continuous-analysis.html#cb333-5"></a>  <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span></span>
+<span id="cb333-6"><a href="continuous-analysis.html#cb333-6"></a>)</span></code></pre></div>
 <pre><code>## 
 ##  Spearman&#39;s rank correlation rho
 ## 
@@ -446,32 +451,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[Z = \hat{\tau} \sqrt{\frac{9n(n - 1)}{2(2n + 5)}}.\]</span></p>
 <p>Kendall’s tau is a non-parametric test, so there is no associated confidence interval.</p>
 <p>From the <code>nascard</code> study, what was the correlation between the driver’s starting position <code>start_pos</code> and finishing position <code>finish_pos</code>? Spearman’s rho was <span class="math inline">\(\hat{\rho} = -0.038\)</span>. For Kendall’s tau, for each observation, count the number of other observations where both <code>start_pos</code> and <code>finish_pos</code> is larger. The sum is <span class="math inline">\(k = 293\)</span>. Then calculate Kendall’s <span class="math inline">\(\tau\)</span> is <span class="math inline">\(\hat{\tau} = \frac{4 * 293}{35(35-1)} -1 = -.0151\)</span>.</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="continuous-analysis.html#cb334-1"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(nascard_sr1)</span>
-<span id="cb334-2"><a href="continuous-analysis.html#cb334-2"></a>k &lt;-<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb334-3"><a href="continuous-analysis.html#cb334-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {</span>
-<span id="cb334-4"><a href="continuous-analysis.html#cb334-4"></a>  <span class="cf">for</span>(j <span class="cf">in</span> i<span class="op">:</span>n) {</span>
-<span id="cb334-5"><a href="continuous-analysis.html#cb334-5"></a>    k =<span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="kw">if_else</span>(</span>
-<span id="cb334-6"><a href="continuous-analysis.html#cb334-6"></a>      nascard_sr1[j, ]<span class="op">$</span>start_pos <span class="op">&gt;</span><span class="st"> </span>nascard_sr1[i, ]<span class="op">$</span>start_pos</span>
-<span id="cb334-7"><a href="continuous-analysis.html#cb334-7"></a>      <span class="op">&amp;</span><span class="st"> </span>nascard_sr1[j, ]<span class="op">$</span>finish_pos <span class="op">&gt;</span><span class="st"> </span>nascard_sr1[i, ]<span class="op">$</span>finish_pos, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb334-8"><a href="continuous-analysis.html#cb334-8"></a>  }</span>
-<span id="cb334-9"><a href="continuous-analysis.html#cb334-9"></a>}</span>
-<span id="cb334-10"><a href="continuous-analysis.html#cb334-10"></a>(k)</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="continuous-analysis.html#cb335-1"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(nascard_sr1)</span>
+<span id="cb335-2"><a href="continuous-analysis.html#cb335-2"></a>k &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb335-3"><a href="continuous-analysis.html#cb335-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n) {</span>
+<span id="cb335-4"><a href="continuous-analysis.html#cb335-4"></a>  <span class="cf">for</span>(j <span class="cf">in</span> i<span class="op">:</span>n) {</span>
+<span id="cb335-5"><a href="continuous-analysis.html#cb335-5"></a>    k =<span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="kw">if_else</span>(</span>
+<span id="cb335-6"><a href="continuous-analysis.html#cb335-6"></a>      nascard_sr1[j, ]<span class="op">$</span>start_pos <span class="op">&gt;</span><span class="st"> </span>nascard_sr1[i, ]<span class="op">$</span>start_pos</span>
+<span id="cb335-7"><a href="continuous-analysis.html#cb335-7"></a>      <span class="op">&amp;</span><span class="st"> </span>nascard_sr1[j, ]<span class="op">$</span>finish_pos <span class="op">&gt;</span><span class="st"> </span>nascard_sr1[i, ]<span class="op">$</span>finish_pos, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb335-8"><a href="continuous-analysis.html#cb335-8"></a>  }</span>
+<span id="cb335-9"><a href="continuous-analysis.html#cb335-9"></a>}</span>
+<span id="cb335-10"><a href="continuous-analysis.html#cb335-10"></a>(k)</span></code></pre></div>
 <pre><code>## [1] 293</code></pre>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="continuous-analysis.html#cb336-1"></a>(<span class="dt">tau =</span> <span class="fl">4.0</span><span class="op">*</span>k <span class="op">/</span><span class="st"> </span>(n <span class="op">*</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="continuous-analysis.html#cb337-1"></a>(<span class="dt">tau =</span> <span class="fl">4.0</span><span class="op">*</span>k <span class="op">/</span><span class="st"> </span>(n <span class="op">*</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] -0.015</code></pre>
 <p>Test <span class="math inline">\(H_0: \tau = 0\)</span> with test statistic <span class="math inline">\(T\)</span>.</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="continuous-analysis.html#cb338-1"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(nascard_sr1)</span>
-<span id="cb338-2"><a href="continuous-analysis.html#cb338-2"></a>(<span class="dt">t =</span> tau <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">9</span> <span class="op">*</span><span class="st"> </span>n <span class="op">*</span><span class="st"> </span>(n<span class="dv">-1</span>) <span class="op">/</span><span class="st"> </span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">2</span><span class="op">*</span>n <span class="op">+</span><span class="st"> </span><span class="dv">5</span>))))</span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="continuous-analysis.html#cb339-1"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(nascard_sr1)</span>
+<span id="cb339-2"><a href="continuous-analysis.html#cb339-2"></a>(<span class="dt">t =</span> tau <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">9</span> <span class="op">*</span><span class="st"> </span>n <span class="op">*</span><span class="st"> </span>(n<span class="dv">-1</span>) <span class="op">/</span><span class="st"> </span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">2</span><span class="op">*</span>n <span class="op">+</span><span class="st"> </span><span class="dv">5</span>))))</span></code></pre></div>
 <pre><code>## [1] -0.13</code></pre>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="continuous-analysis.html#cb340-1"></a><span class="kw">pt</span>(<span class="dt">q =</span> <span class="kw">abs</span>(t), <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="continuous-analysis.html#cb341-1"></a><span class="kw">pt</span>(<span class="dt">q =</span> <span class="kw">abs</span>(t), <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 0.9</code></pre>
 <p><span class="math inline">\(P(|T| &gt; 0.128) = .8991\)</span>, so <em>do not</em> reject <span class="math inline">\(H_0\)</span> that the correlation is zero. <code>cor.test()</code> performs these calculations. Specify <code>method = "kendall"</code>.</p>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="continuous-analysis.html#cb342-1"></a><span class="kw">cor.test</span>(</span>
-<span id="cb342-2"><a href="continuous-analysis.html#cb342-2"></a>  <span class="dt">x =</span> nascard_sr1<span class="op">$</span>start_pos,</span>
-<span id="cb342-3"><a href="continuous-analysis.html#cb342-3"></a>  <span class="dt">y =</span> nascard_sr1<span class="op">$</span>finish_pos,</span>
-<span id="cb342-4"><a href="continuous-analysis.html#cb342-4"></a>  <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
-<span id="cb342-5"><a href="continuous-analysis.html#cb342-5"></a>  <span class="dt">method =</span> <span class="st">&quot;kendall&quot;</span></span>
-<span id="cb342-6"><a href="continuous-analysis.html#cb342-6"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="continuous-analysis.html#cb343-1"></a><span class="kw">cor.test</span>(</span>
+<span id="cb343-2"><a href="continuous-analysis.html#cb343-2"></a>  <span class="dt">x =</span> nascard_sr1<span class="op">$</span>start_pos,</span>
+<span id="cb343-3"><a href="continuous-analysis.html#cb343-3"></a>  <span class="dt">y =</span> nascard_sr1<span class="op">$</span>finish_pos,</span>
+<span id="cb343-4"><a href="continuous-analysis.html#cb343-4"></a>  <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
+<span id="cb343-5"><a href="continuous-analysis.html#cb343-5"></a>  <span class="dt">method =</span> <span class="st">&quot;kendall&quot;</span></span>
+<span id="cb343-6"><a href="continuous-analysis.html#cb343-6"></a>)</span></code></pre></div>
 <pre><code>## 
 ##  Kendall&#39;s rank correlation tau
 ## 
@@ -482,59 +487,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    tau 
 ## -0.015</code></pre>
 <p>Here is a fun way to tie Pearson, Spearman, and Kendal together: Calculate Spearman’s rho and Kendall’s tau for all 898 races in the <code>nascard</code> data set and calculate the Pearson correlation of their values!</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="continuous-analysis.html#cb344-1"></a>nascard_smry &lt;-<span class="st"> </span><span class="kw">nest</span>(nascard, <span class="op">-</span><span class="kw">c</span>(series_race, year)) <span class="op">%&gt;%</span></span>
-<span id="cb344-2"><a href="continuous-analysis.html#cb344-2"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb344-3"><a href="continuous-analysis.html#cb344-3"></a>    <span class="dt">spearman =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">cor.test</span>(.<span class="op">$</span>start_pos, .<span class="op">$</span>finish_pos, </span>
-<span id="cb344-4"><a href="continuous-analysis.html#cb344-4"></a>                                    <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, </span>
-<span id="cb344-5"><a href="continuous-analysis.html#cb344-5"></a>                                    <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>)),</span>
-<span id="cb344-6"><a href="continuous-analysis.html#cb344-6"></a>    <span class="dt">spearman_est =</span> <span class="kw">unlist</span>(<span class="kw">map</span>(spearman, <span class="op">~</span><span class="st"> </span>.<span class="op">$</span>estimate)),</span>
-<span id="cb344-7"><a href="continuous-analysis.html#cb344-7"></a>    <span class="dt">spearman_p =</span> <span class="kw">unlist</span>(<span class="kw">map</span>(spearman, <span class="op">~</span><span class="st"> </span>.<span class="op">$</span>p.value)),</span>
-<span id="cb344-8"><a href="continuous-analysis.html#cb344-8"></a>    <span class="dt">kendall =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">cor.test</span>(.<span class="op">$</span>start_pos, .<span class="op">$</span>finish_pos,</span>
-<span id="cb344-9"><a href="continuous-analysis.html#cb344-9"></a>                                    <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
-<span id="cb344-10"><a href="continuous-analysis.html#cb344-10"></a>                                    <span class="dt">method =</span> <span class="st">&quot;kendall&quot;</span>)),</span>
-<span id="cb344-11"><a href="continuous-analysis.html#cb344-11"></a>    <span class="dt">kendall_est =</span> <span class="kw">unlist</span>(<span class="kw">map</span>(kendall, <span class="op">~</span><span class="st"> </span>.<span class="op">$</span>estimate)),</span>
-<span id="cb344-12"><a href="continuous-analysis.html#cb344-12"></a>    <span class="dt">kendall_p =</span> <span class="kw">unlist</span>(<span class="kw">map</span>(kendall, <span class="op">~</span><span class="st"> </span>.<span class="op">$</span>p.value))</span>
-<span id="cb344-13"><a href="continuous-analysis.html#cb344-13"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="continuous-analysis.html#cb345-1"></a>nascard_smry2 &lt;-<span class="st"> </span>nascard_smry <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb345-2"><a href="continuous-analysis.html#cb345-2"></a><span class="st">  </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span></span>
-<span id="cb345-3"><a href="continuous-analysis.html#cb345-3"></a><span class="st">  </span><span class="kw">summarize</span>(</span>
-<span id="cb345-4"><a href="continuous-analysis.html#cb345-4"></a>    <span class="dt">spearman_r =</span> <span class="kw">mean</span>(spearman_est),</span>
-<span id="cb345-5"><a href="continuous-analysis.html#cb345-5"></a>    <span class="dt">kendall_tau =</span> <span class="kw">mean</span>(kendall_est)</span>
-<span id="cb345-6"><a href="continuous-analysis.html#cb345-6"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb345-7"><a href="continuous-analysis.html#cb345-7"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(spearman_r, kendall_tau), </span>
-<span id="cb345-8"><a href="continuous-analysis.html#cb345-8"></a>               <span class="dt">names_to =</span> <span class="st">&quot;method&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;estimate&quot;</span>) </span>
-<span id="cb345-9"><a href="continuous-analysis.html#cb345-9"></a><span class="kw">ggplot</span>(nascard_smry2, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">color =</span> method)) <span class="op">+</span></span>
-<span id="cb345-10"><a href="continuous-analysis.html#cb345-10"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> estimate)) <span class="op">+</span></span>
-<span id="cb345-11"><a href="continuous-analysis.html#cb345-11"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
-<span id="cb345-12"><a href="continuous-analysis.html#cb345-12"></a><span class="st">  </span><span class="kw">scale_color_mf</span>() <span class="op">+</span></span>
-<span id="cb345-13"><a href="continuous-analysis.html#cb345-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Average Rank Correlations vs Year&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="continuous-analysis.html#cb345-1"></a>nascard_smry &lt;-<span class="st"> </span><span class="kw">nest</span>(nascard, <span class="op">-</span><span class="kw">c</span>(series_race, year)) <span class="op">%&gt;%</span></span>
+<span id="cb345-2"><a href="continuous-analysis.html#cb345-2"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb345-3"><a href="continuous-analysis.html#cb345-3"></a>    <span class="dt">spearman =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">cor.test</span>(.<span class="op">$</span>start_pos, .<span class="op">$</span>finish_pos, </span>
+<span id="cb345-4"><a href="continuous-analysis.html#cb345-4"></a>                                    <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, </span>
+<span id="cb345-5"><a href="continuous-analysis.html#cb345-5"></a>                                    <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>)),</span>
+<span id="cb345-6"><a href="continuous-analysis.html#cb345-6"></a>    <span class="dt">spearman_est =</span> <span class="kw">unlist</span>(<span class="kw">map</span>(spearman, <span class="op">~</span><span class="st"> </span>.<span class="op">$</span>estimate)),</span>
+<span id="cb345-7"><a href="continuous-analysis.html#cb345-7"></a>    <span class="dt">spearman_p =</span> <span class="kw">unlist</span>(<span class="kw">map</span>(spearman, <span class="op">~</span><span class="st"> </span>.<span class="op">$</span>p.value)),</span>
+<span id="cb345-8"><a href="continuous-analysis.html#cb345-8"></a>    <span class="dt">kendall =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">cor.test</span>(.<span class="op">$</span>start_pos, .<span class="op">$</span>finish_pos,</span>
+<span id="cb345-9"><a href="continuous-analysis.html#cb345-9"></a>                                    <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
+<span id="cb345-10"><a href="continuous-analysis.html#cb345-10"></a>                                    <span class="dt">method =</span> <span class="st">&quot;kendall&quot;</span>)),</span>
+<span id="cb345-11"><a href="continuous-analysis.html#cb345-11"></a>    <span class="dt">kendall_est =</span> <span class="kw">unlist</span>(<span class="kw">map</span>(kendall, <span class="op">~</span><span class="st"> </span>.<span class="op">$</span>estimate)),</span>
+<span id="cb345-12"><a href="continuous-analysis.html#cb345-12"></a>    <span class="dt">kendall_p =</span> <span class="kw">unlist</span>(<span class="kw">map</span>(kendall, <span class="op">~</span><span class="st"> </span>.<span class="op">$</span>p.value))</span>
+<span id="cb345-13"><a href="continuous-analysis.html#cb345-13"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="continuous-analysis.html#cb346-1"></a>nascard_smry2 &lt;-<span class="st"> </span>nascard_smry <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb346-2"><a href="continuous-analysis.html#cb346-2"></a><span class="st">  </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span></span>
+<span id="cb346-3"><a href="continuous-analysis.html#cb346-3"></a><span class="st">  </span><span class="kw">summarize</span>(</span>
+<span id="cb346-4"><a href="continuous-analysis.html#cb346-4"></a>    <span class="dt">spearman_r =</span> <span class="kw">mean</span>(spearman_est),</span>
+<span id="cb346-5"><a href="continuous-analysis.html#cb346-5"></a>    <span class="dt">kendall_tau =</span> <span class="kw">mean</span>(kendall_est)</span>
+<span id="cb346-6"><a href="continuous-analysis.html#cb346-6"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb346-7"><a href="continuous-analysis.html#cb346-7"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(spearman_r, kendall_tau), </span>
+<span id="cb346-8"><a href="continuous-analysis.html#cb346-8"></a>               <span class="dt">names_to =</span> <span class="st">&quot;method&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;estimate&quot;</span>) </span>
+<span id="cb346-9"><a href="continuous-analysis.html#cb346-9"></a><span class="kw">ggplot</span>(nascard_smry2, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">color =</span> method)) <span class="op">+</span></span>
+<span id="cb346-10"><a href="continuous-analysis.html#cb346-10"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> estimate)) <span class="op">+</span></span>
+<span id="cb346-11"><a href="continuous-analysis.html#cb346-11"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb346-12"><a href="continuous-analysis.html#cb346-12"></a><span class="st">  </span><span class="kw">scale_color_mf</span>() <span class="op">+</span></span>
+<span id="cb346-13"><a href="continuous-analysis.html#cb346-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Average Rank Correlations vs Year&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-160-1.png" width="672" /></p>
 <p>In terms of significance, the two tests usually return the same results.</p>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="continuous-analysis.html#cb346-1"></a><span class="kw">table</span>(</span>
-<span id="cb346-2"><a href="continuous-analysis.html#cb346-2"></a>  <span class="kw">ifelse</span>(nascard_smry<span class="op">$</span>spearman_p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.05</span>, <span class="st">&quot;sig&quot;</span>, <span class="st">&quot;insig&quot;</span>),</span>
-<span id="cb346-3"><a href="continuous-analysis.html#cb346-3"></a>  <span class="kw">ifelse</span>(nascard_smry<span class="op">$</span>kendall_p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.05</span>, <span class="st">&quot;sig&quot;</span>, <span class="st">&quot;insig&quot;</span>)</span>
-<span id="cb346-4"><a href="continuous-analysis.html#cb346-4"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="continuous-analysis.html#cb347-1"></a><span class="kw">table</span>(</span>
+<span id="cb347-2"><a href="continuous-analysis.html#cb347-2"></a>  <span class="kw">ifelse</span>(nascard_smry<span class="op">$</span>spearman_p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.05</span>, <span class="st">&quot;sig&quot;</span>, <span class="st">&quot;insig&quot;</span>),</span>
+<span id="cb347-3"><a href="continuous-analysis.html#cb347-3"></a>  <span class="kw">ifelse</span>(nascard_smry<span class="op">$</span>kendall_p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.05</span>, <span class="st">&quot;sig&quot;</span>, <span class="st">&quot;insig&quot;</span>)</span>
+<span id="cb347-4"><a href="continuous-analysis.html#cb347-4"></a>)</span></code></pre></div>
 <pre><code>##        
 ##         insig sig
 ##   insig   344  18
 ##   sig      11 525</code></pre>
 <p>Calculate the Pearson coefficient of the relationship between Spearman’s rho and Kendall’s tau.</p>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="continuous-analysis.html#cb348-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> nascard_smry, <span class="kw">aes</span>(<span class="dt">x =</span> kendall_est, <span class="dt">y =</span> spearman_est)) <span class="op">+</span></span>
-<span id="cb348-2"><a href="continuous-analysis.html#cb348-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb348-3"><a href="continuous-analysis.html#cb348-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
-<span id="cb348-4"><a href="continuous-analysis.html#cb348-4"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
-<span id="cb348-5"><a href="continuous-analysis.html#cb348-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Pearson&#39;s r of Spearman&#39;s rho vs Kendall&#39;s tau&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="continuous-analysis.html#cb349-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> nascard_smry, <span class="kw">aes</span>(<span class="dt">x =</span> kendall_est, <span class="dt">y =</span> spearman_est)) <span class="op">+</span></span>
+<span id="cb349-2"><a href="continuous-analysis.html#cb349-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb349-3"><a href="continuous-analysis.html#cb349-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb349-4"><a href="continuous-analysis.html#cb349-4"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb349-5"><a href="continuous-analysis.html#cb349-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Pearson&#39;s r of Spearman&#39;s rho vs Kendall&#39;s tau&quot;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-162-1.png" width="672" /></p>
 <p>The scatterplot with fitted line has r-squared equal to the Pearson coefficient squared.</p>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="continuous-analysis.html#cb349-1"></a><span class="kw">cor.test</span>(</span>
-<span id="cb349-2"><a href="continuous-analysis.html#cb349-2"></a>  <span class="dt">x =</span> nascard_smry<span class="op">$</span>spearman_est,</span>
-<span id="cb349-3"><a href="continuous-analysis.html#cb349-3"></a>  <span class="dt">y =</span> nascard_smry<span class="op">$</span>kendall_est,</span>
-<span id="cb349-4"><a href="continuous-analysis.html#cb349-4"></a>  <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
-<span id="cb349-5"><a href="continuous-analysis.html#cb349-5"></a>  <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span></span>
-<span id="cb349-6"><a href="continuous-analysis.html#cb349-6"></a>)<span class="op">$</span>estimate<span class="op">^</span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="continuous-analysis.html#cb351-1"></a><span class="kw">cor.test</span>(</span>
+<span id="cb351-2"><a href="continuous-analysis.html#cb351-2"></a>  <span class="dt">x =</span> nascard_smry<span class="op">$</span>spearman_est,</span>
+<span id="cb351-3"><a href="continuous-analysis.html#cb351-3"></a>  <span class="dt">y =</span> nascard_smry<span class="op">$</span>kendall_est,</span>
+<span id="cb351-4"><a href="continuous-analysis.html#cb351-4"></a>  <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
+<span id="cb351-5"><a href="continuous-analysis.html#cb351-5"></a>  <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span></span>
+<span id="cb351-6"><a href="continuous-analysis.html#cb351-6"></a>)<span class="op">$</span>estimate<span class="op">^</span><span class="dv">2</span></span></code></pre></div>
 <pre><code>##  cor 
 ## 0.98</code></pre>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="continuous-analysis.html#cb351-1"></a><span class="kw">summary</span>(<span class="kw">lm</span>(kendall_est <span class="op">~</span><span class="st"> </span>spearman_est, <span class="dt">data =</span> nascard_smry))<span class="op">$</span>r.squared</span></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="continuous-analysis.html#cb353-1"></a><span class="kw">summary</span>(<span class="kw">lm</span>(kendall_est <span class="op">~</span><span class="st"> </span>spearman_est, <span class="dt">data =</span> nascard_smry))<span class="op">$</span>r.squared</span></code></pre></div>
 <pre><code>## [1] 0.98</code></pre>
 
 </div>
@@ -546,7 +552,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="k-way-tables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="supervised-machine-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

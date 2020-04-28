@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6.2 Parameter Estimation | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6.2 Parameter Estimation | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-03-31" />
+<meta name="date" content="2020-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -183,7 +183,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>5</b> Continuous Variable Analysis</a><ul>
 <li class="chapter" data-level="5.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>5.0.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a><ul>
+<li class="chapter" data-level="" data-path="supervised-machine-learning.html"><a href="supervised-machine-learning.html"><i class="fa fa-check"></i>Supervised Machine Learning</a></li>
+<li class="chapter" data-level="6" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>6</b> Ordinary Least Squares</a><ul>
 <li class="chapter" data-level="6.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>6.1</b> Linear Regression Model</a></li>
 <li class="chapter" data-level="6.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>6.2</b> Parameter Estimation</a></li>
 <li class="chapter" data-level="6.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>6.3</b> Model Assumptions</a><ul>
@@ -208,29 +209,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
 <li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a></li>
 <li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
-<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a></li>
-<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a><ul>
-<li class="chapter" data-level="" data-path="poisson-regression.html"><a href="poisson-regression.html#example-16"><i class="fa fa-check"></i>Example</a></li>
+<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>7.3.1</b> Assumptions</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>7.3.2</b> Modeling</a></li>
+<li class="chapter" data-level="7.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>7.3.3</b> Case Study</a></li>
 </ul></li>
+<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
-<li class="chapter" data-level="9" data-path="classification-1.html"><a href="classification-1.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
-<li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
-<li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="8" data-path="linear-discriminant-analysis.html"><a href="linear-discriminant-analysis.html"><i class="fa fa-check"></i><b>8</b> Linear Discriminant Analysis</a></li>
+<li class="chapter" data-level="9" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
+<li class="chapter" data-level="10" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>10</b> Regularization</a></li>
+<li class="chapter" data-level="11" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>11</b> Decision Trees</a><ul>
+<li class="chapter" data-level="11.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>11.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>11.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="11.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>11.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="11.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>11.1.3</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="11.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>11.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>11.2.1</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
-<li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
-<li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
-<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+<li class="chapter" data-level="11.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>11.3</b> Bagging</a></li>
+<li class="chapter" data-level="11.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>11.4</b> Random Forests</a></li>
+<li class="chapter" data-level="11.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>11.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="11.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>11.6</b> Summary</a></li>
+<li class="chapter" data-level="11.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>11.7</b> Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>11</b> Regularization</a></li>
 <li class="chapter" data-level="12" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>12</b> Non-linear Models</a><ul>
 <li class="chapter" data-level="12.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>12.1</b> Splines</a></li>
 <li class="chapter" data-level="12.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>12.2</b> MARS</a></li>
@@ -240,18 +243,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>13.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="13.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>13.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="13.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>13.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="13.4" data-path="example-17.html"><a href="example-17.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
+<li class="chapter" data-level="13.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
 <li class="chapter" data-level="13.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>13.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>14</b> Principal Components Analysis</a></li>
 <li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a></li>
 <li class="chapter" data-level="16" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>16</b> Text Mining</a></li>
+<li class="chapter" data-level="17" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>17</b> Survival Analysis</a></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
 <li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="16.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>16.0.1</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="17.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>17.0.1</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
@@ -289,15 +293,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="example-7" class="section level4">
 <h4><span class="header-section-number">6.2.0.1</span> Example</h4>
 <p>Dataset <code>mtcars</code> contains response variable fuel consumption <code>mpg</code> and 10 aspects of automobile design and performance for 32 automobiles. What is the relationship between the response variable and its predictors?</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="parameter-estimation.html#cb359-1"></a>d &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span></span>
-<span id="cb359-2"><a href="parameter-estimation.html#cb359-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">vs =</span> <span class="kw">factor</span>(vs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;S&quot;</span>)),</span>
-<span id="cb359-3"><a href="parameter-estimation.html#cb359-3"></a>         <span class="dt">am =</span> <span class="kw">factor</span>(am, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;automatic&quot;</span>, <span class="st">&quot;manual&quot;</span>)),</span>
-<span id="cb359-4"><a href="parameter-estimation.html#cb359-4"></a>         <span class="dt">cyl =</span> <span class="kw">ordered</span>(cyl),</span>
-<span id="cb359-5"><a href="parameter-estimation.html#cb359-5"></a>         <span class="dt">gear =</span> <span class="kw">ordered</span>(gear), </span>
-<span id="cb359-6"><a href="parameter-estimation.html#cb359-6"></a>         <span class="dt">carb =</span> <span class="kw">ordered</span>(carb))</span>
-<span id="cb359-7"><a href="parameter-estimation.html#cb359-7"></a><span class="kw">glimpse</span>(d)</span></code></pre></div>
-<pre><code>## Observations: 32
-## Variables: 11
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="parameter-estimation.html#cb356-1"></a>d &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span></span>
+<span id="cb356-2"><a href="parameter-estimation.html#cb356-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">vs =</span> <span class="kw">factor</span>(vs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;S&quot;</span>)),</span>
+<span id="cb356-3"><a href="parameter-estimation.html#cb356-3"></a>         <span class="dt">am =</span> <span class="kw">factor</span>(am, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;automatic&quot;</span>, <span class="st">&quot;manual&quot;</span>)),</span>
+<span id="cb356-4"><a href="parameter-estimation.html#cb356-4"></a>         <span class="dt">cyl =</span> <span class="kw">ordered</span>(cyl),</span>
+<span id="cb356-5"><a href="parameter-estimation.html#cb356-5"></a>         <span class="dt">gear =</span> <span class="kw">ordered</span>(gear), </span>
+<span id="cb356-6"><a href="parameter-estimation.html#cb356-6"></a>         <span class="dt">carb =</span> <span class="kw">ordered</span>(carb))</span>
+<span id="cb356-7"><a href="parameter-estimation.html#cb356-7"></a><span class="kw">glimpse</span>(d)</span></code></pre></div>
+<pre><code>## Rows: 32
+## Columns: 11
 ## $ mpg  &lt;dbl&gt; 21, 21, 23, 21, 19, 18, 14, 24, 23, 19, 18, 16, 17, 15, 10, 10...
 ## $ cyl  &lt;ord&gt; 6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4,...
 ## $ disp &lt;dbl&gt; 160, 160, 108, 258, 360, 225, 360, 147, 141, 168, 168, 276, 27...
@@ -310,21 +314,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ gear &lt;ord&gt; 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3,...
 ## $ carb &lt;ord&gt; 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1,...</code></pre>
 <p>The data consists of 32 observations. A scatterplot matrix of the numeric variables shows the strongest individual association with <code>mpg</code> is from <code>wt</code> (corr = -0.87) followed by <code>disp</code> (corr = -0.85) and <code>hp</code> (corr = -0.78), <code>drat</code> is moderately correlated with <code>mpg</code> (corr = 0.68), and <code>qsec</code> is weakly correlated with <code>mpg</code> (corr = 0.42).</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="parameter-estimation.html#cb361-1"></a><span class="kw">corrplot</span>(<span class="kw">cor</span>(<span class="kw">subset</span>(d, <span class="dt">select =</span> <span class="kw">c</span>(mpg, disp, hp, drat, wt, qsec))), </span>
-<span id="cb361-2"><a href="parameter-estimation.html#cb361-2"></a>         <span class="dt">type =</span> <span class="st">&quot;upper&quot;</span>, </span>
-<span id="cb361-3"><a href="parameter-estimation.html#cb361-3"></a>         <span class="dt">method =</span> <span class="st">&quot;number&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="parameter-estimation.html#cb358-1"></a><span class="kw">corrplot</span>(<span class="kw">cor</span>(<span class="kw">subset</span>(d, <span class="dt">select =</span> <span class="kw">c</span>(mpg, disp, hp, drat, wt, qsec))), </span>
+<span id="cb358-2"><a href="parameter-estimation.html#cb358-2"></a>         <span class="dt">type =</span> <span class="st">&quot;upper&quot;</span>, </span>
+<span id="cb358-3"><a href="parameter-estimation.html#cb358-3"></a>         <span class="dt">method =</span> <span class="st">&quot;number&quot;</span>)</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
 <p>Many of the Predictor variables are strongly correlated with each other. Boxplots of the categorical variables shows differences in levels, although ordinal variables <code>gear</code> and and <code>carb</code> do not have a monotonic relationshiop with <code>mpg</code>.</p>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="parameter-estimation.html#cb362-1"></a>p_list &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
-<span id="cb362-2"><a href="parameter-estimation.html#cb362-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">c</span>(<span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;vs&quot;</span>, <span class="st">&quot;am&quot;</span>, <span class="st">&quot;gear&quot;</span>, <span class="st">&quot;carb&quot;</span>)) {</span>
-<span id="cb362-3"><a href="parameter-estimation.html#cb362-3"></a>  p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d, <span class="kw">aes_string</span>(<span class="dt">x =</span> i, <span class="dt">y =</span> <span class="st">&quot;mpg&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</span>
-<span id="cb362-4"><a href="parameter-estimation.html#cb362-4"></a>  p_list &lt;-<span class="st"> </span><span class="kw">c</span>(p_list, <span class="kw">list</span>(p))</span>
-<span id="cb362-5"><a href="parameter-estimation.html#cb362-5"></a>}</span>
-<span id="cb362-6"><a href="parameter-estimation.html#cb362-6"></a><span class="kw">do.call</span>(<span class="st">&quot;grid.arrange&quot;</span>, <span class="kw">c</span>(p_list, <span class="dt">ncol =</span> <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="parameter-estimation.html#cb359-1"></a>p_list &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
+<span id="cb359-2"><a href="parameter-estimation.html#cb359-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">c</span>(<span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;vs&quot;</span>, <span class="st">&quot;am&quot;</span>, <span class="st">&quot;gear&quot;</span>, <span class="st">&quot;carb&quot;</span>)) {</span>
+<span id="cb359-3"><a href="parameter-estimation.html#cb359-3"></a>  p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d, <span class="kw">aes_string</span>(<span class="dt">x =</span> i, <span class="dt">y =</span> <span class="st">&quot;mpg&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</span>
+<span id="cb359-4"><a href="parameter-estimation.html#cb359-4"></a>  p_list &lt;-<span class="st"> </span><span class="kw">c</span>(p_list, <span class="kw">list</span>(p))</span>
+<span id="cb359-5"><a href="parameter-estimation.html#cb359-5"></a>}</span>
+<span id="cb359-6"><a href="parameter-estimation.html#cb359-6"></a><span class="kw">do.call</span>(<span class="st">&quot;grid.arrange&quot;</span>, <span class="kw">c</span>(p_list, <span class="dt">ncol =</span> <span class="dv">2</span>))</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-167-1.png" width="672" /></p>
 <p>I’ll drop the <code>gear</code> and <code>carb</code> predictors, and fit a population model to the remaining predictors.</p>
-<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="parameter-estimation.html#cb363-1"></a>m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])</span>
-<span id="cb363-2"><a href="parameter-estimation.html#cb363-2"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="parameter-estimation.html#cb360-1"></a>m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])</span>
+<span id="cb360-2"><a href="parameter-estimation.html#cb360-2"></a><span class="kw">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ ., data = d[, 1:9])
@@ -352,11 +356,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Multiple R-squared:  0.877,  Adjusted R-squared:  0.826 
 ## F-statistic: 17.4 on 9 and 22 DF,  p-value: 0.0000000481</code></pre>
 <p>The <code>summary()</code> function shows <span class="math inline">\(\hat{\beta}\)</span> as <code>Estimate</code>, <span class="math inline">\(SE({\hat{\beta}})\)</span> as <code>Std. Error</code>, and <span class="math inline">\(\hat{\sigma}\)</span> as <code>Residual standard error</code>. You can verify this by manually peforming these calculations using matrix algebra (see matrix algebra in r notes at <a href="https://www.dummies.com/programming/r/how-to-do-matrix-arithmetic-in-r/">R for Dummies</a>). Here are the coefficient estimators, <span class="math inline">\(\hat{\beta} = (X&#39;X)^{-1}X&#39;y\)</span>.</p>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="parameter-estimation.html#cb365-1"></a>X &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(m)</span>
-<span id="cb365-2"><a href="parameter-estimation.html#cb365-2"></a>y &lt;-<span class="st"> </span>d<span class="op">$</span>mpg</span>
-<span id="cb365-3"><a href="parameter-estimation.html#cb365-3"></a></span>
-<span id="cb365-4"><a href="parameter-estimation.html#cb365-4"></a>beta_hat &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y</span>
-<span id="cb365-5"><a href="parameter-estimation.html#cb365-5"></a><span class="kw">round</span>(beta_hat, <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="parameter-estimation.html#cb362-1"></a>X &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(m)</span>
+<span id="cb362-2"><a href="parameter-estimation.html#cb362-2"></a>y &lt;-<span class="st"> </span>d<span class="op">$</span>mpg</span>
+<span id="cb362-3"><a href="parameter-estimation.html#cb362-3"></a></span>
+<span id="cb362-4"><a href="parameter-estimation.html#cb362-4"></a>beta_hat &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y</span>
+<span id="cb362-5"><a href="parameter-estimation.html#cb362-5"></a><span class="kw">round</span>(beta_hat, <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##                [,1]
 ## (Intercept) 19.5410
 ## cyl.L        0.3426
@@ -369,16 +373,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## vsS          1.2378
 ## ammanual     3.0009</code></pre>
 <p>Here is the residual standard error, <span class="math inline">\(\hat{\sigma} = \sqrt{(n-k-1)^{-1} \hat{e}&#39;\hat{e}}\)</span>.</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="parameter-estimation.html#cb367-1"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(X)</span>
-<span id="cb367-2"><a href="parameter-estimation.html#cb367-2"></a>k &lt;-<span class="st"> </span><span class="kw">ncol</span>(X) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>  <span class="co"># exclude the intercept term</span></span>
-<span id="cb367-3"><a href="parameter-estimation.html#cb367-3"></a>y_hat &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>beta_hat</span>
-<span id="cb367-4"><a href="parameter-estimation.html#cb367-4"></a>sse &lt;-<span class="st"> </span><span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat)<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb367-5"><a href="parameter-estimation.html#cb367-5"></a>rse &lt;-<span class="st"> </span><span class="kw">sqrt</span>(sse <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</span>
-<span id="cb367-6"><a href="parameter-estimation.html#cb367-6"></a><span class="kw">cat</span>(<span class="st">&quot;Residual standard error: &quot;</span>, <span class="kw">round</span>(rse, <span class="dv">3</span>), <span class="st">&quot; on &quot;</span>, (n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>), <span class="st">&quot; degrees of freedom.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="parameter-estimation.html#cb364-1"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(X)</span>
+<span id="cb364-2"><a href="parameter-estimation.html#cb364-2"></a>k &lt;-<span class="st"> </span><span class="kw">ncol</span>(X) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>  <span class="co"># exclude the intercept term</span></span>
+<span id="cb364-3"><a href="parameter-estimation.html#cb364-3"></a>y_hat &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>beta_hat</span>
+<span id="cb364-4"><a href="parameter-estimation.html#cb364-4"></a>sse &lt;-<span class="st"> </span><span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat)<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb364-5"><a href="parameter-estimation.html#cb364-5"></a>rse &lt;-<span class="st"> </span><span class="kw">sqrt</span>(sse <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</span>
+<span id="cb364-6"><a href="parameter-estimation.html#cb364-6"></a><span class="kw">cat</span>(<span class="st">&quot;Residual standard error: &quot;</span>, <span class="kw">round</span>(rse, <span class="dv">3</span>), <span class="st">&quot; on &quot;</span>, (n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>), <span class="st">&quot; degrees of freedom.&quot;</span>)</span></code></pre></div>
 <pre><code>## Residual standard error:  2.5  on  22  degrees of freedom.</code></pre>
 <p>Use the residual standard errors to derive the standard errors of the coefficients, <span class="math inline">\(SE(\hat{\beta}) = \sqrt{\hat{\sigma}^2 (X&#39;X)^{-1}}\)</span>.</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="parameter-estimation.html#cb369-1"></a>se_beta_hat &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">diag</span>(rse<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X)))</span>
-<span id="cb369-2"><a href="parameter-estimation.html#cb369-2"></a><span class="kw">matrix</span>(<span class="kw">round</span>(se_beta_hat, <span class="dv">5</span>), <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">names</span>(se_beta_hat), <span class="st">&quot;Std. Error&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="parameter-estimation.html#cb366-1"></a>se_beta_hat &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">diag</span>(rse<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X)))</span>
+<span id="cb366-2"><a href="parameter-estimation.html#cb366-2"></a><span class="kw">matrix</span>(<span class="kw">round</span>(se_beta_hat, <span class="dv">5</span>), <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">names</span>(se_beta_hat), <span class="st">&quot;Std. Error&quot;</span>))</span></code></pre></div>
 <pre><code>##             Std. Error
 ## (Intercept)     14.146
 ## cyl.L            2.765

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7.2 Multinomial Logistic Regression | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7.2 Multinomial Logistic Regression | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-04-03" />
+<meta name="date" content="2020-04-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -183,7 +183,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>5</b> Continuous Variable Analysis</a><ul>
 <li class="chapter" data-level="5.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>5.0.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a><ul>
+<li class="chapter" data-level="" data-path="supervised-machine-learning.html"><a href="supervised-machine-learning.html"><i class="fa fa-check"></i>Supervised Machine Learning</a></li>
+<li class="chapter" data-level="6" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>6</b> Ordinary Least Squares</a><ul>
 <li class="chapter" data-level="6.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>6.1</b> Linear Regression Model</a></li>
 <li class="chapter" data-level="6.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>6.2</b> Parameter Estimation</a></li>
 <li class="chapter" data-level="6.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>6.3</b> Model Assumptions</a><ul>
@@ -209,28 +210,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a></li>
 <li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
 <li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>7.3.1</b> Case Study</a></li>
+<li class="chapter" data-level="7.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>7.3.1</b> Assumptions</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>7.3.2</b> Modeling</a></li>
+<li class="chapter" data-level="7.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>7.3.3</b> Case Study</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
-<li class="chapter" data-level="9" data-path="classification-1.html"><a href="classification-1.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
-<li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
-<li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="8" data-path="linear-discriminant-analysis.html"><a href="linear-discriminant-analysis.html"><i class="fa fa-check"></i><b>8</b> Linear Discriminant Analysis</a></li>
+<li class="chapter" data-level="9" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
+<li class="chapter" data-level="10" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>10</b> Regularization</a></li>
+<li class="chapter" data-level="11" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>11</b> Decision Trees</a><ul>
+<li class="chapter" data-level="11.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>11.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>11.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="11.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>11.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="11.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>11.1.3</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="11.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>11.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>11.2.1</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
-<li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
-<li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
-<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+<li class="chapter" data-level="11.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>11.3</b> Bagging</a></li>
+<li class="chapter" data-level="11.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>11.4</b> Random Forests</a></li>
+<li class="chapter" data-level="11.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>11.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="11.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>11.6</b> Summary</a></li>
+<li class="chapter" data-level="11.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>11.7</b> Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>11</b> Regularization</a></li>
 <li class="chapter" data-level="12" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>12</b> Non-linear Models</a><ul>
 <li class="chapter" data-level="12.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>12.1</b> Splines</a></li>
 <li class="chapter" data-level="12.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>12.2</b> MARS</a></li>
@@ -246,12 +249,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>14</b> Principal Components Analysis</a></li>
 <li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a></li>
 <li class="chapter" data-level="16" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>16</b> Text Mining</a></li>
+<li class="chapter" data-level="17" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>17</b> Survival Analysis</a></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
 <li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="16.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>16.0.1</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="17.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>17.0.1</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
@@ -285,91 +289,90 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Interpet the <span class="math inline">\(k^{th}\)</span> element of <span class="math inline">\(\beta_j\)</span> as the increase in log-odds of falling a response in category <span class="math inline">\(j\)</span> relative to category <span class="math inline">\(j^*\)</span> resulting from a one-unit increase in the <span class="math inline">\(k^{th}\)</span> predictor term, holding the other terms constant.</p>
 <p>Multinomial model is a type of GLM.</p>
 <p>Here is an example using multinomial logistic regression. A researcher classified the stomach contents of <span class="math inline">\(n = 219\)</span> alligators according to <span class="math inline">\(r = 5\)</span> categories (<em>fish, Inv., Rept, Bird, Other</em>) as a function of covariates <em>Lake</em>, <em>Sex</em>, and <em>Size</em>..</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="multinomial-logistic-regression.html#cb21-1"></a>gator_dat &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
-<span id="cb21-2"><a href="multinomial-logistic-regression.html#cb21-2"></a>  <span class="op">~</span>profile, <span class="op">~</span>Gender, <span class="op">~</span>Size, <span class="op">~</span>Lake, <span class="op">~</span>Fish, <span class="op">~</span>Invertebrate, <span class="op">~</span>Reptile, <span class="op">~</span>Bird, <span class="op">~</span>Other,</span>
-<span id="cb21-3"><a href="multinomial-logistic-regression.html#cb21-3"></a>  <span class="st">&quot;1&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;george&quot;</span>,  <span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
-<span id="cb21-4"><a href="multinomial-logistic-regression.html#cb21-4"></a>  <span class="st">&quot;2&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;george&quot;</span>, <span class="dv">13</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">2</span>,</span>
-<span id="cb21-5"><a href="multinomial-logistic-regression.html#cb21-5"></a>  <span class="st">&quot;3&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;george&quot;</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
-<span id="cb21-6"><a href="multinomial-logistic-regression.html#cb21-6"></a>  <span class="st">&quot;4&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;george&quot;</span>, <span class="dv">9</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>,</span>
-<span id="cb21-7"><a href="multinomial-logistic-regression.html#cb21-7"></a>  <span class="st">&quot;5&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;hancock&quot;</span>, <span class="dv">16</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>,</span>
-<span id="cb21-8"><a href="multinomial-logistic-regression.html#cb21-8"></a>  <span class="st">&quot;6&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;hancock&quot;</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">5</span>,</span>
-<span id="cb21-9"><a href="multinomial-logistic-regression.html#cb21-9"></a>  <span class="st">&quot;7&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;hancock&quot;</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>,</span>
-<span id="cb21-10"><a href="multinomial-logistic-regression.html#cb21-10"></a>  <span class="st">&quot;8&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;hancock&quot;</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>,</span>
-<span id="cb21-11"><a href="multinomial-logistic-regression.html#cb21-11"></a>  <span class="st">&quot;9&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;oklawaha&quot;</span>, <span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>,</span>
-<span id="cb21-12"><a href="multinomial-logistic-regression.html#cb21-12"></a>  <span class="st">&quot;10&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;oklawaha&quot;</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
-<span id="cb21-13"><a href="multinomial-logistic-regression.html#cb21-13"></a>  <span class="st">&quot;11&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;oklawaha&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
-<span id="cb21-14"><a href="multinomial-logistic-regression.html#cb21-14"></a>  <span class="st">&quot;12&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;oklawaha&quot;</span>, <span class="dv">13</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb21-15"><a href="multinomial-logistic-regression.html#cb21-15"></a>  <span class="st">&quot;13&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;trafford&quot;</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">4</span>,</span>
-<span id="cb21-16"><a href="multinomial-logistic-regression.html#cb21-16"></a>  <span class="st">&quot;14&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;trafford&quot;</span>, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
-<span id="cb21-17"><a href="multinomial-logistic-regression.html#cb21-17"></a>  <span class="st">&quot;15&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;trafford&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb21-18"><a href="multinomial-logistic-regression.html#cb21-18"></a>  <span class="st">&quot;16&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;trafford&quot;</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">5</span></span>
-<span id="cb21-19"><a href="multinomial-logistic-regression.html#cb21-19"></a>)</span>
-<span id="cb21-20"><a href="multinomial-logistic-regression.html#cb21-20"></a>gator_dat &lt;-<span class="st"> </span>gator_dat <span class="op">%&gt;%</span></span>
-<span id="cb21-21"><a href="multinomial-logistic-regression.html#cb21-21"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb21-22"><a href="multinomial-logistic-regression.html#cb21-22"></a>    <span class="dt">Gender =</span> <span class="kw">as_factor</span>(Gender),</span>
-<span id="cb21-23"><a href="multinomial-logistic-regression.html#cb21-23"></a>    <span class="dt">Lake =</span> <span class="kw">fct_relevel</span>(Lake, <span class="st">&quot;hancock&quot;</span>),</span>
-<span id="cb21-24"><a href="multinomial-logistic-regression.html#cb21-24"></a>    <span class="dt">Size =</span> <span class="kw">as_factor</span>(Size)</span>
-<span id="cb21-25"><a href="multinomial-logistic-regression.html#cb21-25"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="multinomial-logistic-regression.html#cb520-1"></a>gator_dat &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
+<span id="cb520-2"><a href="multinomial-logistic-regression.html#cb520-2"></a>  <span class="op">~</span>profile, <span class="op">~</span>Gender, <span class="op">~</span>Size, <span class="op">~</span>Lake, <span class="op">~</span>Fish, <span class="op">~</span>Invertebrate, <span class="op">~</span>Reptile, <span class="op">~</span>Bird, <span class="op">~</span>Other,</span>
+<span id="cb520-3"><a href="multinomial-logistic-regression.html#cb520-3"></a>  <span class="st">&quot;1&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;george&quot;</span>,  <span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb520-4"><a href="multinomial-logistic-regression.html#cb520-4"></a>  <span class="st">&quot;2&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;george&quot;</span>, <span class="dv">13</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">2</span>,</span>
+<span id="cb520-5"><a href="multinomial-logistic-regression.html#cb520-5"></a>  <span class="st">&quot;3&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;george&quot;</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb520-6"><a href="multinomial-logistic-regression.html#cb520-6"></a>  <span class="st">&quot;4&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;george&quot;</span>, <span class="dv">9</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>,</span>
+<span id="cb520-7"><a href="multinomial-logistic-regression.html#cb520-7"></a>  <span class="st">&quot;5&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;hancock&quot;</span>, <span class="dv">16</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>,</span>
+<span id="cb520-8"><a href="multinomial-logistic-regression.html#cb520-8"></a>  <span class="st">&quot;6&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;hancock&quot;</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">5</span>,</span>
+<span id="cb520-9"><a href="multinomial-logistic-regression.html#cb520-9"></a>  <span class="st">&quot;7&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;hancock&quot;</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>,</span>
+<span id="cb520-10"><a href="multinomial-logistic-regression.html#cb520-10"></a>  <span class="st">&quot;8&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;hancock&quot;</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>,</span>
+<span id="cb520-11"><a href="multinomial-logistic-regression.html#cb520-11"></a>  <span class="st">&quot;9&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;oklawaha&quot;</span>, <span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>,</span>
+<span id="cb520-12"><a href="multinomial-logistic-regression.html#cb520-12"></a>  <span class="st">&quot;10&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;oklawaha&quot;</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb520-13"><a href="multinomial-logistic-regression.html#cb520-13"></a>  <span class="st">&quot;11&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;oklawaha&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
+<span id="cb520-14"><a href="multinomial-logistic-regression.html#cb520-14"></a>  <span class="st">&quot;12&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;oklawaha&quot;</span>, <span class="dv">13</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb520-15"><a href="multinomial-logistic-regression.html#cb520-15"></a>  <span class="st">&quot;13&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;trafford&quot;</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">4</span>,</span>
+<span id="cb520-16"><a href="multinomial-logistic-regression.html#cb520-16"></a>  <span class="st">&quot;14&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&lt;2.3&quot;</span>, <span class="st">&quot;trafford&quot;</span>, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb520-17"><a href="multinomial-logistic-regression.html#cb520-17"></a>  <span class="st">&quot;15&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;trafford&quot;</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb520-18"><a href="multinomial-logistic-regression.html#cb520-18"></a>  <span class="st">&quot;16&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;&gt;2.3&quot;</span>, <span class="st">&quot;trafford&quot;</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">5</span></span>
+<span id="cb520-19"><a href="multinomial-logistic-regression.html#cb520-19"></a>)</span>
+<span id="cb520-20"><a href="multinomial-logistic-regression.html#cb520-20"></a>gator_dat &lt;-<span class="st"> </span>gator_dat <span class="op">%&gt;%</span></span>
+<span id="cb520-21"><a href="multinomial-logistic-regression.html#cb520-21"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb520-22"><a href="multinomial-logistic-regression.html#cb520-22"></a>    <span class="dt">Gender =</span> <span class="kw">as_factor</span>(Gender),</span>
+<span id="cb520-23"><a href="multinomial-logistic-regression.html#cb520-23"></a>    <span class="dt">Lake =</span> <span class="kw">fct_relevel</span>(Lake, <span class="st">&quot;hancock&quot;</span>),</span>
+<span id="cb520-24"><a href="multinomial-logistic-regression.html#cb520-24"></a>    <span class="dt">Size =</span> <span class="kw">as_factor</span>(Size)</span>
+<span id="cb520-25"><a href="multinomial-logistic-regression.html#cb520-25"></a>  )</span></code></pre></div>
 <p>There are 4 equations to estimate:</p>
 <p><span class="math display">\[\log \left( \frac{\pi_j} {\pi_{j^*}} \right) = \beta X\]</span></p>
 <p>where <span class="math inline">\(\pi_{j^*}\)</span> is the probability of fish, the baseline category.</p>
 <p>Run a multivariate logistic regression model with <code>VGAM::vglm()</code>.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="multinomial-logistic-regression.html#cb22-1"></a><span class="kw">library</span>(VGAM)</span></code></pre></div>
-<pre><code>## Warning: package &#39;VGAM&#39; was built under R version 3.6.2</code></pre>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="multinomial-logistic-regression.html#cb521-1"></a><span class="kw">library</span>(VGAM)</span></code></pre></div>
 <p><code>vglm()</code> fits 4 logit models.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="multinomial-logistic-regression.html#cb24-1"></a>gator_vglm &lt;-<span class="st"> </span><span class="kw">vglm</span>(</span>
-<span id="cb24-2"><a href="multinomial-logistic-regression.html#cb24-2"></a>  <span class="kw">cbind</span>(Bird,Invertebrate,Reptile,Other,Fish) <span class="op">~</span><span class="st"> </span>Lake <span class="op">+</span><span class="st"> </span>Size <span class="op">+</span><span class="st"> </span>Gender, </span>
-<span id="cb24-3"><a href="multinomial-logistic-regression.html#cb24-3"></a>  <span class="dt">data =</span> gator_dat, </span>
-<span id="cb24-4"><a href="multinomial-logistic-regression.html#cb24-4"></a>  <span class="dt">family =</span> multinomial</span>
-<span id="cb24-5"><a href="multinomial-logistic-regression.html#cb24-5"></a>)</span>
-<span id="cb24-6"><a href="multinomial-logistic-regression.html#cb24-6"></a><span class="kw">summary</span>(gator_vglm)</span></code></pre></div>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="multinomial-logistic-regression.html#cb522-1"></a>gator_vglm &lt;-<span class="st"> </span><span class="kw">vglm</span>(</span>
+<span id="cb522-2"><a href="multinomial-logistic-regression.html#cb522-2"></a>  <span class="kw">cbind</span>(Bird,Invertebrate,Reptile,Other,Fish) <span class="op">~</span><span class="st"> </span>Lake <span class="op">+</span><span class="st"> </span>Size <span class="op">+</span><span class="st"> </span>Gender, </span>
+<span id="cb522-3"><a href="multinomial-logistic-regression.html#cb522-3"></a>  <span class="dt">data =</span> gator_dat, </span>
+<span id="cb522-4"><a href="multinomial-logistic-regression.html#cb522-4"></a>  <span class="dt">family =</span> multinomial</span>
+<span id="cb522-5"><a href="multinomial-logistic-regression.html#cb522-5"></a>)</span>
+<span id="cb522-6"><a href="multinomial-logistic-regression.html#cb522-6"></a><span class="kw">summary</span>(gator_vglm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## vglm(formula = cbind(Bird, Invertebrate, Reptile, Other, Fish) ~ 
 ##     Lake + Size + Gender, family = multinomial, data = gator_dat)
 ## 
 ## Pearson residuals:
-##                        Min      1Q   Median     3Q   Max
-## log(mu[,1]/mu[,5]) -1.1985 -0.5478 -0.22421 0.3678 3.478
-## log(mu[,2]/mu[,5]) -1.3218 -0.4611  0.01054 0.3810 1.866
-## log(mu[,3]/mu[,5]) -0.7033 -0.5751 -0.35511 0.2610 2.064
-## log(mu[,4]/mu[,5]) -1.6945 -0.2893 -0.10807 1.1236 1.367
+##                       Min     1Q  Median    3Q  Max
+## log(mu[,1]/mu[,5]) -1.199 -0.548 -0.2242 0.368 3.48
+## log(mu[,2]/mu[,5]) -1.322 -0.461  0.0105 0.381 1.87
+## log(mu[,3]/mu[,5]) -0.703 -0.575 -0.3551 0.261 2.06
+## log(mu[,4]/mu[,5]) -1.694 -0.289 -0.1081 1.124 1.37
 ## 
 ## Coefficients: 
 ##                Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept):1   -1.8568     0.5813  -3.195 0.001400 ** 
-## (Intercept):2   -1.6115     0.5508  -2.926 0.003435 ** 
-## (Intercept):3   -2.2866     0.6566  -3.483 0.000497 ***
-## (Intercept):4   -0.6642     0.3802  -1.747 0.080639 .  
-## Lakegeorge:1    -0.5753     0.7952  -0.723 0.469429    
-## Lakegeorge:2     1.7805     0.6232   2.857 0.004277 ** 
-## Lakegeorge:3    -1.1295     1.1928  -0.947 0.343687    
-## Lakegeorge:4    -0.7666     0.5686  -1.348 0.177563    
-## Lakeoklawaha:1  -1.1256     1.1923  -0.944 0.345132    
-## Lakeoklawaha:2   2.6937     0.6693   4.025 5.70e-05 ***
-## Lakeoklawaha:3   1.4008     0.8105   1.728 0.083926 .  
-## Lakeoklawaha:4  -0.7405     0.7421  -0.998 0.318372    
-## Laketrafford:1   0.6617     0.8461   0.782 0.434145    
-## Laketrafford:2   2.9363     0.6874   4.272 1.94e-05 ***
-## Laketrafford:3   1.9316     0.8253   2.340 0.019263 *  
-## Laketrafford:4   0.7912     0.5879   1.346 0.178400    
-## Size&gt;2.3:1       0.7302     0.6523   1.120 0.262918    
-## Size&gt;2.3:2      -1.3363     0.4112  -3.250 0.001155 ** 
-## Size&gt;2.3:3       0.5570     0.6466   0.861 0.388977    
-## Size&gt;2.3:4      -0.2906     0.4599  -0.632 0.527515    
-## Genderm:1       -0.6064     0.6888  -0.880 0.378666    
-## Genderm:2       -0.4630     0.3955  -1.171 0.241796    
-## Genderm:3       -0.6276     0.6853  -0.916 0.359785    
-## Genderm:4       -0.2526     0.4663  -0.542 0.588100    
+## (Intercept):1    -1.857      0.581   -3.19   0.0014 ** 
+## (Intercept):2    -1.611      0.551   -2.93   0.0034 ** 
+## (Intercept):3    -2.287      0.657   -3.48   0.0005 ***
+## (Intercept):4    -0.664      0.380   -1.75   0.0806 .  
+## Lakegeorge:1     -0.575      0.795   -0.72   0.4694    
+## Lakegeorge:2      1.781      0.623    2.86   0.0043 ** 
+## Lakegeorge:3     -1.129      1.193   -0.95   0.3437    
+## Lakegeorge:4     -0.767      0.569   -1.35   0.1776    
+## Lakeoklawaha:1   -1.126      1.192   -0.94   0.3451    
+## Lakeoklawaha:2    2.694      0.669    4.02 0.000057 ***
+## Lakeoklawaha:3    1.401      0.810    1.73   0.0839 .  
+## Lakeoklawaha:4   -0.741      0.742   -1.00   0.3184    
+## Laketrafford:1    0.662      0.846    0.78   0.4341    
+## Laketrafford:2    2.936      0.687    4.27 0.000019 ***
+## Laketrafford:3    1.932      0.825    2.34   0.0193 *  
+## Laketrafford:4    0.791      0.588    1.35   0.1784    
+## Size&gt;2.3:1        0.730      0.652    1.12   0.2629    
+## Size&gt;2.3:2       -1.336      0.411   -3.25   0.0012 ** 
+## Size&gt;2.3:3        0.557      0.647    0.86   0.3890    
+## Size&gt;2.3:4       -0.291      0.460   -0.63   0.5275    
+## Genderm:1        -0.606      0.689   -0.88   0.3787    
+## Genderm:2        -0.463      0.396   -1.17   0.2418    
+## Genderm:3        -0.628      0.685   -0.92   0.3598    
+## Genderm:4        -0.253      0.466   -0.54   0.5881    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Names of linear predictors: log(mu[,1]/mu[,5]), log(mu[,2]/mu[,5]), 
 ## log(mu[,3]/mu[,5]), log(mu[,4]/mu[,5])
 ## 
-## Residual deviance: 50.2637 on 40 degrees of freedom
+## Residual deviance: 50 on 40 degrees of freedom
 ## 
-## Log-likelihood: -73.3221 on 40 degrees of freedom
+## Log-likelihood: -73 on 40 degrees of freedom
 ## 
 ## Number of Fisher scoring iterations: 5 
 ## 
@@ -378,10 +381,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Reference group is level  5  of the response</code></pre>
 <p>The <strong>residual deviance</strong> is 50.2637 on 40 degrees of freedom. Residual deviance tests the current model fit versus the saturated model. The saturated model, which fits a separate multinomial distribution to each of the 16 profiles (unique combinations of lake, sex and size), has 16 × 4 = 64 parameters. The current model has an intercept, three lake coefficients, one sex coefficient and one size coefficient for each of the four logit equations, for a total of 24 parameters. Therefore, the overall fit statistics have 64 − 24 = 40 degrees of freedom.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="multinomial-logistic-regression.html#cb26-1"></a>E &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">fitted</span>(gator_vglm) <span class="op">*</span><span class="st"> </span><span class="kw">rowSums</span>(gator_dat[, <span class="dv">5</span><span class="op">:</span><span class="dv">9</span>]))</span>
-<span id="cb26-2"><a href="multinomial-logistic-regression.html#cb26-2"></a>O &lt;-<span class="st"> </span>gator_dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Bird, Invertebrate, Reptile, Other, Fish) <span class="op">+</span><span class="st"> </span><span class="fl">.000001</span></span>
-<span id="cb26-3"><a href="multinomial-logistic-regression.html#cb26-3"></a>(g2 &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(O <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(O <span class="op">/</span><span class="st"> </span>E)))</span></code></pre></div>
-<pre><code>## [1] 50.26321</code></pre>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="multinomial-logistic-regression.html#cb524-1"></a>E &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">fitted</span>(gator_vglm) <span class="op">*</span><span class="st"> </span><span class="kw">rowSums</span>(gator_dat[, <span class="dv">5</span><span class="op">:</span><span class="dv">9</span>]))</span>
+<span id="cb524-2"><a href="multinomial-logistic-regression.html#cb524-2"></a>O &lt;-<span class="st"> </span>gator_dat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Bird, Invertebrate, Reptile, Other, Fish) <span class="op">+</span><span class="st"> </span><span class="fl">.000001</span></span>
+<span id="cb524-3"><a href="multinomial-logistic-regression.html#cb524-3"></a>(g2 &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(O <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(O <span class="op">/</span><span class="st"> </span>E)))</span></code></pre></div>
+<pre><code>## [1] 50</code></pre>
 <p>indicates the model fits okay, but not great. The Residual Deviance of 50.26 with 40 df from the table above output is reasonable, with p-value of 0.1282 and the statistics/df is close to 1 that is 1.256.</p>
 </div>
             </section>

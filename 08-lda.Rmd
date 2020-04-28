@@ -1,0 +1,16 @@
+# Linear Discriminant Analysis
+
+Linear Discriminant Analysis (LDA) is a supervised machine learning classification (binary or multimonial) and dimension reduction method.  LDA finds linear combinations of variables that best "discriminate" the response classes.
+
+LDA assumes the predictor variables are continuous random variables normally distributed and with equal variance.  You will typically scale the data to meet these conditions.
+
+For a response variable of $k$ levels, LDA produces $k-1$ discriminants using Bayes Theorem.
+
+$$Pr[Y = C_l | X] = \frac{P[Y = C_l] P[X | Y = C_l]}{\sum_{l=1}^C Pr[Y = C_l] Pr[X | Y = C_l]}$$
+
+The probability that $Y$ equals class level $C_l$ given the predictors $X$ equals the *prior probability* of $Y$ multiplied by the probability of observing $X$ if $Y = C_l$ divided by the sum of all priors and probabilities of $X$ given the priors.  The predicted value for any $X$ is just the $C_l$ with the maximimum probability.
+
+One often used way to calculate the probabilities is by assuming $X$ has a multivariate normal distribution with means $\mu_l$ and common variance $\Sigma$. Then the linear discriminant function group $l$ is
+
+$$X'\Sigma^{-1}\mu_l - 0.5 \mu_l^{'}\Sigma^{-1}\mu_l + \log(Pr[Y = C_l])$$
+The theoretical means and covariance matrix is estimated by the sample mean $\mu = \bar{x}_l$ and covariance $\Sigma = S$, and the predictors 

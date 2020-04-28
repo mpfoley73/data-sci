@@ -128,11 +128,6 @@ donner %>%  mutate(surv = as.numeric(surv)-1) %>%
   labs(title = "Donner Party Survivorship", color = "")
 ```
 
-```{r}
-donner %>%
-  ggplot(aes(x = age, y = surv, color = sex)) +
-```
-
 Fit a logistic regression $SURV = SEX + AGE + SEX : AGE$.
 
 ```{r}

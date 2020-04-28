@@ -1,4 +1,13 @@
-# Regression
+# PART 2: Supervised Machine Learning {-}
+
+Machine learning (ML) develops algorithms to identify patterns in data (unsupervised ML) or make predictions and inferences (supervised ML). 
+
+Supervised ML trains the machine to learn from prior examples to *predict* either a categorical outcome (classification) or a numeric outcome (regression), or to *infer* the relationships between the outcome and its explanatory variables.  
+
+Two early forms of supervised ML are *[linear regression (OLS)](http://rpubs.com/mpfoley73/527767)* and *[generalized linear models (GLM)](http://rpubs.com/mpfoley73/527573)* (Poisson and logistic regression).  These methods have been improved with advanced linear methods, including *stepwise selection*, [*regularization*](http://rpubs.com/mpfoley73/521922) (ridge, lasso, elastic net), *principal components regression*, and *partial least squares*.  With greater computing capacity, non-linear models are now in use, including *polynomial regression*, *step functions*, *splines*, and generalized additive models (*GAM*).  [Decision trees](http://rpubs.com/mpfoley73/529130) (*bagging*, *random forests*, and, *boosting*) are additional options for regression and classification, and *support vector machines* is an additional option for classification.
+
+
+# Ordinary Least Squares
 
 ```{r message=FALSE}
 library(caret)
@@ -14,11 +23,7 @@ library(broom)  # for augment()
 ```
 
 
-Machine learning (ML) develops algorithms to identify patterns in data (unsupervised ML) or make predictions and inferences (supervised ML). 
 
-Supervised ML trains the machine to learn from prior examples to *predict* either a categorical outcome (classification) or a numeric outcome (regression), or to *infer* the relationships between the outcome and its explanatory variables.  
-
-Two early forms of supervised ML are *[linear regression (OLS)](http://rpubs.com/mpfoley73/527767)* and *[generalized linear models (GLM)](http://rpubs.com/mpfoley73/527573)* (Poisson and logistic regression).  These methods have been improved with advanced linear methods, including *stepwise selection*, [*regularization*](http://rpubs.com/mpfoley73/521922) (ridge, lasso, elastic net), *principal components regression*, and *partial least squares*.  With greater computing capacity, non-linear models are now in use, including *polynomial regression*, *step functions*, *splines*, and generalized additive models (*GAM*).  [Decision trees](http://rpubs.com/mpfoley73/529130) (*bagging*, *random forests*, and, *boosting*) are additional options for regression and classification, and *support vector machines* is an additional option for classification.
 
 These notes cover *linear regression*.  
 
