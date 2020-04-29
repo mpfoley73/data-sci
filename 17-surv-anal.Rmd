@@ -1,6 +1,98 @@
 # Survival Analysis
 
-```{r}
-library(asaur)  # Applied Survival Analysis Using R
+Survival analysis models time to event.  Whereas linear regression models a normal distribution of outcomes, time-to-event analysis only takes on positive values, so survival analysis uses the Weibull distribution.  Another complication with surival analysis is censoring.
+
+These notes rely on the [Survival Analysis in R](https://campus.datacamp.com/courses/survival-analysis-in-r) DataCamp course and Applied Survival Analysis Using R by Dirk Moore [@Moore2016].  
+
+Most surival analysis uses the `survival` and `survminer` packages.
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(survival)
+library(survminer)
 ```
 
+
+The examples in these notes will use the following data sets.
+
+### GBSG2
+
+`GBSG2` contains time to death of 686 breast cancer patients.  
+
+```{r}
+data(GBSG2, package = "TH.data")
+```
+
+Column `cens` indicate whether or not a person in the study has died (0-censored, 1-event).
+
+```{r}
+GBSG2 %>% count(cens)
+```
+
+You will typically structure your data in a `Surv` object.  In the sampled data shown below, "+" indicates a censored observation.
+
+```{r}
+sobj <- Surv(time = GBSG2$time, event = GBSG2$cens)
+head(sobj, n = 10)
+summary(sobj)
+```
+
+
+### Unemp
+
+UnempDur contains time to re-employment of 3,343 unemployed persons.
+
+```{r}
+data(UnempDur, package = "Ecdat")
+```
+
+Column `censor1` indicates the re-employment event in a full-time job.  Column `spell` indicates the length of time unemployed in number of two-week intervals.
+
+```{r}
+UnempDur %>% count(censor1)
+```
+
+```{r}
+sobj <- Surv(time = UnempDur$spell, event = UnempDur$censor1)
+head(sobj)
+summary(sobj)
+```
+
+
+## Background
+
+You can specify the survival distribution function either as a *survival function* of the form
+
+$$S(t) = 1 - F(t) = pr(T > t), \hspace{3mm} 0 < t < \infty$$
+
+or as a *hazard function*,  the instantaneous failure rate given survival up to time $t$
+
+$$h(t) = \lim_{\delta \rightarrow 0}{\frac{pr(t < T < t + \delta|T > 1)}{\delta}}.$$
+
+The survival function is the compliment of the the cumulative distribution function.  The Kaplan-Meier estimator for the survival function is
+
+$$\hat{S} = \prod_{i: t_i < t}{\frac{n_i - d_i}{n_i}}$$
+
+where $n_i$ is the number of persons under observation at time $i$ and $d_i$ is the number of individuals dying at time $i$.  Calculate the Kaplan-Meier estimate with the `survfit()` function.
+
+```{r}
+
+```
+
+
+
+```{r}
+library(survival)
+
+tm <- c(
+    0, # birth
+    1 / 365,  # first day of life
+    7 / 365,  # seventh day of life
+    28 / 365, # fourth week of life
+    1:110     # subsequent years
+)
+hazMale = survexp.us[, "male", "2004"]
+hazFemale = survexp.us[, "female", "2004"]
+plot(tm, hazMale)
+)
+```
