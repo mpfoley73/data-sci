@@ -73,26 +73,121 @@ The survival function is the compliment of the the cumulative distribution funct
 
 $$\hat{S} = \prod_{i: t_i < t}{\frac{n_i - d_i}{n_i}}$$
 
-where $n_i$ is the number of persons under observation at time $i$ and $d_i$ is the number of individuals dying at time $i$.  Calculate the Kaplan-Meier estimate with the `survfit()` function.
+where $n_i$ is the number of persons under observation at time $i$ and $d_i$ is the number of individuals dying at time $i$.  The Kaplan-Meier curve falls only when a subject dies, not when a subject is censored.  Calculate the Kaplan-Meier estimate with the `survfit()` function.
+
+Below is a Kaplan-Meier estimate fit one survival curve for all observations.  Suppose you throw a party and for an hour monitor how long guests dance.  Variable `time` is the right-censored dancing time, and `obs_end` indicates if you observed the person stop dancing before you stopped monitoring (1|0).
+
+```{r fig.height=8}
+dancedat <- data.frame(
+  name = c("Chris", "Martin", "Conny", "Desi", "Reni", "Phil", 
+    "Flo", "Andrea", "Isaac", "Dayra", "Caspar"),
+  time = c(20, 2, 14, 22, 3, 7, 4, 15, 25, 17, 12),
+  obs_end = c(1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0)
+)
+
+km <- survfit(Surv(time, obs_end) ~ 1, data = dancedat)
+
+ggsurvplot(
+  fit = km, 
+  palette = "blue", 
+  linetype = 1, 
+  surv.median.line = "hv", 
+  risk.table = TRUE,
+  cumevents = TRUE, 
+  cumcensor = TRUE,
+  tables.height = 0.1
+)
+```
 
 ```{r}
+km <- survfit(Surv(time, cens) ~ 1, data = GBSG2)
+
+ggsurvplot(km, risk.table = TRUE, surv.median.line = "hv")
+```
+
+The Kaplan-Meier estimate is used mainly as a descriptive tool.  The Weibull model produces a smooth survival curve instead of a step function.  The Weibull model assumes a Weibull distribution.  
+
+Fit a Weibull model with the `survreg()` function.
+
+```{r}
+wb <- survreg(Surv(time, cens) ~ 1, data = GBSG2)
+
+# 90% of patients survive beyond time point 385
+# Alternatively, 10% of patients die at time 385
+predict(wb, type = "quantile", p = 1 - 0.9, newdata = data.frame(1))
+# The median survival time is 1694
+predict(wb, type = "quantile", p = 1 - 0.5, newdata = data.frame(1))
+
+surv <- seq(.99, .01, by = -.01)
+t <- predict(wb, type = "quantile", p = 1 - surv, newdata = data.frame(1))
+head(data.frame(time = t, surv = surv))
+
+surv_wb <- data.frame(time = t, surv = surv, 
+                      upper = NA, lower = NA, std.err = NA)
+ggsurvplot_df(fit = surv_wb, surv.geom = geom_line)
+```
+
+Fit a Weibull model controlling for hormonal therapy `horTh` and tumor size `tsize`.
+
+```{r}
+wbmod <- survreg(Surv(time, cens) ~ horTh + tsize, data = GBSG2)
+
+coef(wbmod)
+summary(wbmod)
+
+surv <- seq(.99, .01, by = -.01)
+newdata <- expand.grid(
+    horTh = levels(GBSG2$horTh),
+    tsize = quantile(GBSG2$tsize, probs = c(0.25, 0.50, 0.75))
+)
+t <- predict(wbmod, type = "quantile", p = 1 - surv, newdata = newdata)
+
+surv_wbmod <- surv_wbmod_wide <- cbind(newdata, t) %>%
+    pivot_longer(names_to = "surv_id", values_to = "time", cols = -c(1:2)) %>%
+    mutate(tsize = as.numeric(tsize),
+           surv_id = as.factor(as.numeric(surv_id))) %>%
+    data.frame()
+surv_wbmod$surv = surv[as.numeric(surv_wbmod$surv_id)]
+surv_wbmod$upper = NA
+surv_wbmod$lower = NA
+surv_wbmod$std.err = NA
+surv_wbmod$strata = NA
+surv_wbmod[, c("upper", "lower", "std.err", "strata")] <- NA
+ggsurvplot_df(surv_wbmod, surv.geom = geom_line,
+  linetype = "horTh", color = "tsize", legend.title = NULL)
+```
+
+Interpret the coefficient as the probability of surviving falls by 0.012 per unit increase in the tumor size and increases by 0.312 if taking hormonal therapy.
+
+You can fit other models with the `dist = c("lognormal", "exponential")` parameter.
+
+The Cox model (aka, proportional hazards model) is the most widely used model for survival analysis.  Whereas the Weibull model is fully parametric, the Cox model is semi-parameteric.  Fit a Cox proportional hazards model with `coxph()`.  Negative values indicate a *longer* survival period.
+
+```{r}
+cxmod <- coxph(Surv(time, cens) ~ horTh + tsize, data = GBSG2)
+coef(cxmod)
+
+newdata <- expand.grid(
+    horTh = levels(GBSG2$horTh),
+    tsize = quantile(GBSG2$tsize, probs = c(0.25, 0.50, 0.75))
+)
+rownames(newdata) <- letters[1:6]
+
+# Create survival curves.  The rownames show up in the model
+cxsf <- survfit(cxmod, data = GBSG2, newdata = newdata, conf.type = "none")
+head(cxsf$surv)
+head(cxsf$time)
+
+# surv_summary() creates the data.frame with a nice summary from survfit() results, including columns like time (survival time) and surv (survival probability).
+surv_cxmod0 <- surv_summary(cxsf)
+
+# get tne correspondng new_data cols
+surv_cxmod <- cbind(surv_cxmod0, newdata[as.character(surv_cxmod0$strata), ])
+
+ggsurvplot_df(surv_cxmod, linetype = "horTh", color = "tsize",
+  legend.title = NULL, censor = FALSE)
+
 
 ```
 
-
-
-```{r}
-library(survival)
-
-tm <- c(
-    0, # birth
-    1 / 365,  # first day of life
-    7 / 365,  # seventh day of life
-    28 / 365, # fourth week of life
-    1:110     # subsequent years
-)
-hazMale = survexp.us[, "male", "2004"]
-hazFemale = survexp.us[, "female", "2004"]
-plot(tm, hazMale)
-)
-```
+The visualization shows that patients with smaller tumors tend to survive longer and patients who receive hormonal therapy tend to survive longer.
