@@ -1,0 +1,16 @@
+```{r include=FALSE}
+library(tidyverse)
+library(mfstylr)
+```
+
+# Experiment Design
+
+These notes are structured from the [PSU STAT 503](https://online.stat.psu.edu/stat503/) course.
+
+## Single Factor
+
+## Blocking
+
+## Nested
+
+## Split Plot
