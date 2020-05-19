@@ -129,15 +129,10 @@ That is, the hazard at time $t$ is the probability the event occurs in the neigh
 
 $$S(t) = exp(-H(t))$$
 
-Several parametric distributions are available for modeling survival data.  The exponential distribution is the easiest to use because it has a constant hazard $h(t) = \lambda$.  The cumulative hazard is $H(t) = \int_0^t \lambda dt = \lambda t$ and the corresponding survival function is 
 
-$$S(t) = e^{-H(t)} = e^{-\lambda t}.$$
+## Survival Curve Estimation
 
-The expected survival time is $E(T) = \int_0^\infty S(t)dt = \int_0^\infty d^{-\lambda t} dt = 1 / \lambda.$.  The median survival time is $S(t) = e^{-\lambda t} = 0.5$, or $t_{med} = \log(2) / \lambda$.  
-
-The Weibull distribution is more appropriate for modeling lifetimes, however.  The Weibull hazard function is $h(t) = \alpha \lambda (\lambda t)^{\alpha - 1} = \alpha \lambda^\alpha t^{\alpha-1}$.  The cumulative hazard function is $H(t) = (\lambda t)^\alpha$ and the corresponding survival funcdtion is
-
-$$S(t) = e^{-(\lambda t)^\alpha}.$$
+There are parametric and non-parametric methods to estimate a survivor curve.
 
 The Kaplan-Meier estimator for the survival function is
 
@@ -174,6 +169,40 @@ km <- survfit(Surv(time, cens) ~ 1, data = GBSG2)
 
 ggsurvplot(km, risk.table = TRUE, surv.median.line = "hv")
 ```
+
+
+
+Several parametric distributions are available for modeling survival data.  The exponential distribution is the easiest to use because it has a constant hazard $h(t) = \lambda$.  The cumulative hazard is $H(t) = \int_0^t \lambda dt = \lambda t$ and the corresponding survival function is 
+
+$$S(t) = e^{-H(t)} = e^{-\lambda t}.$$
+
+The expected survival time is $E(T) = \int_0^\infty S(t)dt = \int_0^\infty d^{-\lambda t} dt = 1 / \lambda.$.  The median survival time is $S(t) = e^{-\lambda t} = 0.5$, or $t_{med} = \log(2) / \lambda$.  
+
+The Weibull distribution is more appropriate for modeling lifetimes, however.  The Weibull hazard function is $h(t) = \alpha \lambda (\lambda t)^{\alpha - 1} = \alpha \lambda^\alpha t^{\alpha-1}$.  
+
+```{r}
+data.frame(t = rep(1:80, 3),
+           alpha = c(rep(1.5, 80), rep(1, 80), rep(0.75, 80)),
+           lambda = rep(0.03, 240)) %>%
+  mutate(
+    f = dweibull(x = t, shape = alpha, scale = 1 / 0.03),
+    S = pweibull(q = t, shape = alpha, scale = 1 / 0.03, lower.tail = FALSE),
+    h = f / S  # same as alpha * lambda^alpha * t^(alpha-1)
+  ) %>%
+  ggplot(aes(x = t, y = h, color = as.factor(alpha))) +
+  geom_line() +
+  theme(legend.position = "top") +
+  labs(y = "hazard", x = "time", color = "alpha",
+       title = "Weibul hazard function at varying levels of alpha",
+       subtitle = "Lambda = 0.03",
+       caption = "alpha = 1 is special case of exponential function.")
+```
+
+The cumulative hazard function is $H(t) = (\lambda t)^\alpha$ and the corresponding survival function is
+
+$$S(t) = e^{-(\lambda t)^\alpha}.$$
+
+The exponential distribution is a special case of the Weibull where $\alpha = 1$.  The expected survival time is $E(t) = \frac{\Gamma (1 + 1 / \alpha)}{\lambda}$.  The median survival time is $t_{med} = \frac{[\log(2)]^{1 / \alpha}}{\lambda}$
 
 The Kaplan-Meier estimate is used mainly as a descriptive tool.  The Weibull model produces a smooth survival curve instead of a step function.  The Weibull model assumes a Weibull distribution.  
 
@@ -264,5 +293,7 @@ The visualization shows that patients with smaller tumors tend to survive longer
 
 
 ## Survival Curve Estimation
+
+When
 
 ## Proportional Hazards Model
