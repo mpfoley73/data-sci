@@ -55,7 +55,7 @@ data("pharmacoSmoking", package = "asaur")
 head(pharmacoSmoking)
 ```
 
-###hepatoCellular
+### hepatoCellular
 
 Overall and recurrence-free survival of patients with hepatocellular carcinoma.  The survival outcomes are `OS` (overall survival) and `RFS` (recurrence-free survival), and the corresponding censoring indicators are `Death` and `Recurrance`.
 
@@ -109,7 +109,7 @@ summary(sobj)
 
 This section reviews the fundamentals of survival analysis, including the hazard probability density, and survival functions.
 
-You can specify the survival distribution function either as a *survival function* of the form
+You can specify the survival distribution function either as a *survival function*, the probability of surviving up to time $t$, 
 
 $$S(t) = 1 - F(t) = pr(T > t), \hspace{3mm} 0 < t < \infty$$
 
@@ -117,7 +117,29 @@ or as a *hazard function*,  the instantaneous failure rate given survival up to 
 
 $$h(t) = \lim_{\delta \rightarrow 0}{\frac{pr(t < T < t + \delta|T > 1)}{\delta}}.$$
 
-The survival function is the compliment of the the cumulative distribution function.  The Kaplan-Meier estimator for the survival function is
+The survival function is the compliment of the the cumulative risk function,
+
+$$F(t) = Pr(T \le t), \hspace{3mm} 0 < t < \infty$$  
+
+The probability density function, $f(t)$ is the derivative of the cumulative risk function $F'(t)$ or the negative derivative of the survival function $-S'(t)$.  The hazard function is the ratio of the probability density function to the survival function,
+
+$$h(t) = \frac{f(t)}{S(t)}$$
+
+That is, the hazard at time $t$ is the probability the event occurs in the neighborhood of time t divided by the probability that the subject is alive at time $t$.  The survival function is the exponent of the negative cumulative hazard function, $H(t),
+
+$$S(t) = exp(-H(t))$$
+
+Several parametric distributions are available for modeling survival data.  The exponential distribution is the easiest to use because it has a constant hazard $h(t) = \lambda$.  The cumulative hazard is $H(t) = \int_0^t \lambda dt = \lambda t$ and the corresponding survival function is 
+
+$$S(t) = e^{-H(t)} = e^{-\lambda t}.$$
+
+The expected survival time is $E(T) = \int_0^\infty S(t)dt = \int_0^\infty d^{-\lambda t} dt = 1 / \lambda.$.  The median survival time is $S(t) = e^{-\lambda t} = 0.5$, or $t_{med} = \log(2) / \lambda$.  
+
+The Weibull distribution is more appropriate for modeling lifetimes, however.  The Weibull hazard function is $h(t) = \alpha \lambda (\lambda t)^{\alpha - 1} = \alpha \lambda^\alpha t^{\alpha-1}$.  The cumulative hazard function is $H(t) = (\lambda t)^\alpha$ and the corresponding survival funcdtion is
+
+$$S(t) = e^{-(\lambda t)^\alpha}.$$
+
+The Kaplan-Meier estimator for the survival function is
 
 $$\hat{S} = \prod_{i: t_i < t}{\frac{n_i - d_i}{n_i}}$$
 
