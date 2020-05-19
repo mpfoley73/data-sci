@@ -1,10 +1,10 @@
 # Survival Analysis
 
-Survival analysis models time to event.  Whereas linear regression models a normal distribution of outcomes, time-to-event analysis only takes on positive values, so survival analysis uses the Weibull distribution.  Another complication with surival analysis is censoring.
+Survival analysis models time to event.  Whereas linear regression outcomes are assumed to have a normal distribution, time-to-event outcomes are assumed to have a Weibull or exponential distribution.  Survival analysis also deals with censoring (unknown starting event and/or ending event).
 
 These notes rely on the [Survival Analysis in R](https://campus.datacamp.com/courses/survival-analysis-in-r) DataCamp course and Applied Survival Analysis Using R by Dirk Moore [@Moore2016].  
 
-Most surival analysis uses the `survival` and `survminer` packages.
+Most surival analysis uses the `survival` package for modeling and the `survminer` package for visualization.
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -12,24 +12,70 @@ library(survival)
 library(survminer)
 ```
 
+The examples in these notes use the following data sets.
 
-The examples in these notes will use the following data sets.
+### Xelox
+
+Data from a Phase II clinical trial of Xeloda and exaliplatin given before surgery to advanced gastric cancer patients with para-aortic lymph node metastasis.  `timeWeeks` is survival time; `delta` is the censoring indicator (1 = death, 0 = censored).
+
+```{r}
+data(gastricXelox, package = "asaur")
+
+head(gastricXelox)
+```
+
+### pancreatic
+
+Data from a Phase II clinical trial of patients with locally advanced or metastatic pancreatic cancer.  Column `stage` is a covariate indicating the diagnosis (LA = locally advance, M = metastatic); the event of interest is either `progression` or `death`.  There was no censoring in this data because none of the subjects lived very long.
+
+```{r}
+data(pancreatic, package = "asaur")
+
+head(pancreatic)
+```
+
+### prostateSurvival
+
+There are two outcomes of interest indicated by `status`, death from prostate cancer, and death from other causes, a competing risks survival analysis problem.
+
+```{r}
+data("prostateSurvival", package = "asaur")
+
+head(prostateSurvival)
+```
+
+
+### pharmacoSmoking
+
+The primary outcome variable `ttr` is the time from randomization until relapse (return to smoking).  Individuals who remained non-smokers for six months were censored.
+
+```{r}
+data("pharmacoSmoking", package = "asaur")
+
+head(pharmacoSmoking)
+```
+
+###hepatoCellular
+
+Overall and recurrence-free survival of patients with hepatocellular carcinoma.  The survival outcomes are `OS` (overall survival) and `RFS` (recurrence-free survival), and the corresponding censoring indicators are `Death` and `Recurrance`.
+
+```{r}
+data("hepatoCellular", package = "asaur")
+
+head(hepatoCellular)
+```
 
 ### GBSG2
 
-`GBSG2` contains time to death of 686 breast cancer patients.  
+`GBSG2` contains time to death of 686 breast cancer patients.  Column `cens` indicates whether or not a person in the study has died (0-censored, 1-event).
 
 ```{r}
 data(GBSG2, package = "TH.data")
-```
 
-Column `cens` indicate whether or not a person in the study has died (0-censored, 1-event).
-
-```{r}
 GBSG2 %>% count(cens)
 ```
 
-You will typically structure your data in a `Surv` object.  In the sampled data shown below, "+" indicates a censored observation.
+You typically structure data in a `Surv` object.  In the sampled data shown below, "+" indicates a censored observation.
 
 ```{r}
 sobj <- Surv(time = GBSG2$time, event = GBSG2$cens)
@@ -59,7 +105,9 @@ summary(sobj)
 ```
 
 
-## Background
+## Survival Theory
+
+This section reviews the fundamentals of survival analysis, including the hazard probability density, and survival functions.
 
 You can specify the survival distribution function either as a *survival function* of the form
 
@@ -191,3 +239,8 @@ ggsurvplot_df(surv_cxmod, linetype = "horTh", color = "tsize",
 ```
 
 The visualization shows that patients with smaller tumors tend to survive longer and patients who receive hormonal therapy tend to survive longer.
+
+
+## Survival Curve Estimation
+
+## Proportional Hazards Model
