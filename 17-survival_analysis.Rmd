@@ -188,8 +188,6 @@ hazMale = survexp.us[, "male", "2004"]
 
 hazFemale = survexp.us[, "female", "2004"]
 
-plot(tm, hazMale)
-
-)
+#plot(tm, hazMale)
 
 ```

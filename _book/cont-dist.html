@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Continuous Distributions | My Data Science Notes</title>
+  <title>1.3 Continuous Distributions | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Continuous Distributions | My Data Science Notes" />
+  <meta property="og:title" content="1.3 Continuous Distributions | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Continuous Distributions | My Data Science Notes" />
+  <meta name="twitter:title" content="1.3 Continuous Distributions | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,15 +24,15 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-04-28" />
+<meta name="date" content="2020-05-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="gamma.html"/>
-<link rel="next" href="normal.html"/>
+<link rel="prev" href="disc-dist.html"/>
+<link rel="next" href="join-distributions.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -136,126 +136,149 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Intro</a></li>
 <li class="chapter" data-level="1" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>1</b> Probability</a><ul>
 <li class="chapter" data-level="1.1" data-path="principles.html"><a href="principles.html"><i class="fa fa-check"></i><b>1.1</b> Principles</a></li>
+<li class="chapter" data-level="1.2" data-path="disc-dist.html"><a href="disc-dist.html"><i class="fa fa-check"></i><b>1.2</b> Discrete Distributions</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="disc-dist.html"><a href="disc-dist.html#bernoulli"><i class="fa fa-check"></i><b>1.2.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="1.2.2" data-path="disc-dist.html"><a href="disc-dist.html#binomial"><i class="fa fa-check"></i><b>1.2.2</b> Binomial</a></li>
+<li class="chapter" data-level="1.2.3" data-path="disc-dist.html"><a href="disc-dist.html#poission"><i class="fa fa-check"></i><b>1.2.3</b> Poission</a></li>
+<li class="chapter" data-level="1.2.4" data-path="disc-dist.html"><a href="disc-dist.html#multinomial"><i class="fa fa-check"></i><b>1.2.4</b> Multinomial</a></li>
+<li class="chapter" data-level="1.2.5" data-path="disc-dist.html"><a href="disc-dist.html#negative-binomial"><i class="fa fa-check"></i><b>1.2.5</b> Negative-Binomial</a></li>
+<li class="chapter" data-level="1.2.6" data-path="disc-dist.html"><a href="disc-dist.html#geometric"><i class="fa fa-check"></i><b>1.2.6</b> Geometric</a></li>
+<li class="chapter" data-level="1.2.7" data-path="disc-dist.html"><a href="disc-dist.html#hypergeometric"><i class="fa fa-check"></i><b>1.2.7</b> Hypergeometric</a></li>
+<li class="chapter" data-level="1.2.8" data-path="disc-dist.html"><a href="disc-dist.html#gamma"><i class="fa fa-check"></i><b>1.2.8</b> Gamma</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="disc-dist.html"><a href="disc-dist.html"><i class="fa fa-check"></i><b>2</b> Discrete Distributions</a><ul>
-<li class="chapter" data-level="2.1" data-path="bernoulli.html"><a href="bernoulli.html"><i class="fa fa-check"></i><b>2.1</b> Bernoulli</a></li>
-<li class="chapter" data-level="2.2" data-path="binomial.html"><a href="binomial.html"><i class="fa fa-check"></i><b>2.2</b> Binomial</a></li>
-<li class="chapter" data-level="2.3" data-path="poission.html"><a href="poission.html"><i class="fa fa-check"></i><b>2.3</b> Poission</a></li>
-<li class="chapter" data-level="2.4" data-path="multinomial.html"><a href="multinomial.html"><i class="fa fa-check"></i><b>2.4</b> Multinomial</a></li>
-<li class="chapter" data-level="2.5" data-path="negative-binomial.html"><a href="negative-binomial.html"><i class="fa fa-check"></i><b>2.5</b> Negative-Binomial</a></li>
-<li class="chapter" data-level="2.6" data-path="geometric.html"><a href="geometric.html"><i class="fa fa-check"></i><b>2.6</b> Geometric</a></li>
-<li class="chapter" data-level="2.7" data-path="hypergeometric.html"><a href="hypergeometric.html"><i class="fa fa-check"></i><b>2.7</b> Hypergeometric</a></li>
-<li class="chapter" data-level="2.8" data-path="gamma.html"><a href="gamma.html"><i class="fa fa-check"></i><b>2.8</b> Gamma</a></li>
+<li class="chapter" data-level="1.3" data-path="cont-dist.html"><a href="cont-dist.html"><i class="fa fa-check"></i><b>1.3</b> Continuous Distributions</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="cont-dist.html"><a href="cont-dist.html#normal"><i class="fa fa-check"></i><b>1.3.1</b> Normal</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="cont-dist.html"><a href="cont-dist.html"><i class="fa fa-check"></i><b>3</b> Continuous Distributions</a><ul>
-<li class="chapter" data-level="3.1" data-path="normal.html"><a href="normal.html"><i class="fa fa-check"></i><b>3.1</b> Normal</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="normal.html"><a href="normal.html#example-2"><i class="fa fa-check"></i><b>3.1.1</b> Example</a></li>
-<li class="chapter" data-level="3.1.2" data-path="normal.html"><a href="normal.html#example-3"><i class="fa fa-check"></i><b>3.1.2</b> Example</a></li>
-<li class="chapter" data-level="3.1.3" data-path="normal.html"><a href="normal.html#example-4"><i class="fa fa-check"></i><b>3.1.3</b> Example</a></li>
-<li class="chapter" data-level="3.1.4" data-path="normal.html"><a href="normal.html#normal-approximation-to-binomial"><i class="fa fa-check"></i><b>3.1.4</b> Normal Approximation to Binomial</a></li>
-<li class="chapter" data-level="3.1.5" data-path="normal.html"><a href="normal.html#example-5"><i class="fa fa-check"></i><b>3.1.5</b> Example</a></li>
-<li class="chapter" data-level="3.1.6" data-path="normal.html"><a href="normal.html#example-6"><i class="fa fa-check"></i><b>3.1.6</b> Example</a></li>
-<li class="chapter" data-level="3.1.7" data-path="normal.html"><a href="normal.html#from-sample-to-population"><i class="fa fa-check"></i><b>3.1.7</b> From Sample to Population</a></li>
+<li class="chapter" data-level="1.4" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>1.4</b> Join Distributions</a></li>
+<li class="chapter" data-level="1.5" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>1.5</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
-<li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
+<li class="chapter" data-level="2" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>2</b> Categorical Analysis - Nonmodel</a><ul>
+<li class="chapter" data-level="2.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>2.1</b> Chi-Square Test</a></li>
+<li class="chapter" data-level="2.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>2.2</b> One-Way Tables</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>2.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
+<li class="chapter" data-level="2.2.2" data-path="one-way-tables.html"><a href="one-way-tables.html#proportion-test"><i class="fa fa-check"></i><b>2.2.2</b> Proportion Test</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>4</b> Categorical Analysis - Nonmodel</a><ul>
-<li class="chapter" data-level="4.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>4.1</b> Chi-Square Test</a></li>
-<li class="chapter" data-level="4.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> One-Way Tables</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
-<li class="chapter" data-level="4.2.2" data-path="one-way-tables.html"><a href="one-way-tables.html#proportion-test"><i class="fa fa-check"></i><b>4.2.2</b> Proportion Test</a></li>
+<li class="chapter" data-level="2.3" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>2.3</b> Two-Way Tables</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-square-independence-test"><i class="fa fa-check"></i><b>2.3.1</b> Chi-Square Independence Test</a></li>
+<li class="chapter" data-level="2.3.2" data-path="two-way-tables.html"><a href="two-way-tables.html#residuals-analysis"><i class="fa fa-check"></i><b>2.3.2</b> Residuals Analysis</a></li>
+<li class="chapter" data-level="2.3.3" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>2.3.3</b> Difference in Proportions</a></li>
+<li class="chapter" data-level="2.3.4" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>2.3.4</b> Relative Risk</a></li>
+<li class="chapter" data-level="2.3.5" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>2.3.5</b> Odds Ratio</a></li>
+<li class="chapter" data-level="2.3.6" data-path="two-way-tables.html"><a href="two-way-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>2.3.6</b> Partitioning Chi-Square</a></li>
+<li class="chapter" data-level="2.3.7" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>2.3.7</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.3</b> Two-Way Tables</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-square-independence-test"><i class="fa fa-check"></i><b>4.3.1</b> Chi-Square Independence Test</a></li>
-<li class="chapter" data-level="4.3.2" data-path="two-way-tables.html"><a href="two-way-tables.html#residuals-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Residuals Analysis</a></li>
-<li class="chapter" data-level="4.3.3" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.3.3</b> Difference in Proportions</a></li>
-<li class="chapter" data-level="4.3.4" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.3.4</b> Relative Risk</a></li>
-<li class="chapter" data-level="4.3.5" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.3.5</b> Odds Ratio</a></li>
-<li class="chapter" data-level="4.3.6" data-path="two-way-tables.html"><a href="two-way-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>4.3.6</b> Partitioning Chi-Square</a></li>
-<li class="chapter" data-level="4.3.7" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>4.3.7</b> Correlation</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>4.4</b> K-Way Tables</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>4.4.1</b> Odds Ratio</a></li>
-<li class="chapter" data-level="4.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>4.4.2</b> Chi-Square Independence Test</a></li>
+<li class="chapter" data-level="2.4" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>2.4</b> K-Way Tables</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>2.4.1</b> Odds Ratio</a></li>
+<li class="chapter" data-level="2.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>2.4.2</b> Chi-Square Independence Test</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>5</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="5.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>5.0.1</b> Correlation</a></li>
+<li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="supervised-machine-learning.html"><a href="supervised-machine-learning.html"><i class="fa fa-check"></i>Supervised Machine Learning</a></li>
-<li class="chapter" data-level="6" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>6</b> Ordinary Least Squares</a><ul>
-<li class="chapter" data-level="6.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>6.1</b> Linear Regression Model</a></li>
-<li class="chapter" data-level="6.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>6.2</b> Parameter Estimation</a></li>
-<li class="chapter" data-level="6.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>6.3</b> Model Assumptions</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>6.3.1</b> Linearity</a></li>
-<li class="chapter" data-level="6.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>6.3.2</b> Multicollinearity</a></li>
-<li class="chapter" data-level="6.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>6.3.3</b> Normality</a></li>
-<li class="chapter" data-level="6.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>6.3.4</b> Equal Variances</a></li>
+<li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
+<li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
+<li class="chapter" data-level="4.2" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>4.2</b> Blocking</a></li>
+<li class="chapter" data-level="4.3" data-path="nested.html"><a href="nested.html"><i class="fa fa-check"></i><b>4.3</b> Nested</a></li>
+<li class="chapter" data-level="4.4" data-path="split-plot.html"><a href="split-plot.html"><i class="fa fa-check"></i><b>4.4</b> Split Plot</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>6.4</b> Prediction</a></li>
-<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>6.5</b> Inference</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>6.5.1</b> <em>t</em>-Test</a></li>
-<li class="chapter" data-level="6.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>6.5.2</b> <em>F</em>-Test</a></li>
+<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a></li>
+<li class="chapter" data-level="5" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>5</b> Ordinary Least Squares</a><ul>
+<li class="chapter" data-level="5.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>5.1</b> Linear Regression Model</a></li>
+<li class="chapter" data-level="5.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>5.2</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="5.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>5.3</b> Model Assumptions</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>5.3.1</b> Linearity</a></li>
+<li class="chapter" data-level="5.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>5.3.2</b> Multicollinearity</a></li>
+<li class="chapter" data-level="5.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>5.3.3</b> Normality</a></li>
+<li class="chapter" data-level="5.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>5.3.4</b> Equal Variances</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>6.6</b> Interpretation</a></li>
-<li class="chapter" data-level="6.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>6.7</b> Model Validation</a><ul>
-<li class="chapter" data-level="6.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>6.7.1</b> Accuracy Metrics</a></li>
-<li class="chapter" data-level="6.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>6.7.2</b> Cross-Validation</a></li>
-<li class="chapter" data-level="6.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>6.7.3</b> Gain Curve</a></li>
+<li class="chapter" data-level="5.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>5.4</b> Prediction</a></li>
+<li class="chapter" data-level="5.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5.5</b> Inference</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>5.5.1</b> <em>t</em>-Test</a></li>
+<li class="chapter" data-level="5.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>5.5.2</b> <em>F</em>-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>6.8</b> Reference</a></li>
+<li class="chapter" data-level="5.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>5.6</b> Interpretation</a></li>
+<li class="chapter" data-level="5.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>5.7</b> Model Validation</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>5.7.1</b> Accuracy Metrics</a></li>
+<li class="chapter" data-level="5.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>5.7.2</b> Cross-Validation</a></li>
+<li class="chapter" data-level="5.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>5.7.3</b> Gain Curve</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
-<li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a></li>
-<li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
-<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>7.3.1</b> Assumptions</a></li>
-<li class="chapter" data-level="7.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>7.3.2</b> Modeling</a></li>
-<li class="chapter" data-level="7.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>7.3.3</b> Case Study</a></li>
+<li class="chapter" data-level="5.8" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>5.8</b> Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a></li>
+<li class="chapter" data-level="6" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>6</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="6.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="6.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>6.2</b> Multinomial Logistic Regression</a></li>
+<li class="chapter" data-level="6.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>6.3</b> Ordinal Logistic Regression</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>6.3.1</b> Assumptions</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>6.3.2</b> Modeling</a></li>
+<li class="chapter" data-level="6.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>6.3.3</b> Case Study</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="linear-discriminant-analysis.html"><a href="linear-discriminant-analysis.html"><i class="fa fa-check"></i><b>8</b> Linear Discriminant Analysis</a></li>
-<li class="chapter" data-level="9" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
-<li class="chapter" data-level="10" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>10</b> Regularization</a></li>
-<li class="chapter" data-level="11" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>11</b> Decision Trees</a><ul>
-<li class="chapter" data-level="11.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>11.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="11.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>11.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="11.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>11.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="11.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>11.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="6.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>6.4</b> Poisson Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>11.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>11.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="7" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html"><i class="fa fa-check"></i><b>7</b> Multivariate Statistical Analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>7.1</b> Background</a></li>
+<li class="chapter" data-level="7.2" data-path="manova.html"><a href="manova.html"><i class="fa fa-check"></i><b>7.2</b> MANOVA</a></li>
+<li class="chapter" data-level="7.3" data-path="repeated-measures.html"><a href="repeated-measures.html"><i class="fa fa-check"></i><b>7.3</b> Repeated Measures</a></li>
+<li class="chapter" data-level="7.4" data-path="lda.html"><a href="lda.html"><i class="fa fa-check"></i><b>7.4</b> LDA</a></li>
+<li class="chapter" data-level="7.5" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>7.5</b> PCA</a></li>
+<li class="chapter" data-level="7.6" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>7.6</b> Factor Analysis</a></li>
+<li class="chapter" data-level="7.7" data-path="canonical-correlation.html"><a href="canonical-correlation.html"><i class="fa fa-check"></i><b>7.7</b> Canonical Correlation</a></li>
+<li class="chapter" data-level="7.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>7.8</b> Cluster Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>11.3</b> Bagging</a></li>
-<li class="chapter" data-level="11.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>11.4</b> Random Forests</a></li>
-<li class="chapter" data-level="11.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>11.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="11.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>11.6</b> Summary</a></li>
-<li class="chapter" data-level="11.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>11.7</b> Reference</a></li>
+<li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
+<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a></li>
+<li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
+<li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>12</b> Non-linear Models</a><ul>
-<li class="chapter" data-level="12.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>12.1</b> Splines</a></li>
-<li class="chapter" data-level="12.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>12.2</b> MARS</a></li>
-<li class="chapter" data-level="12.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>12.3</b> GAM</a></li>
+<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>13</b> Support Vector Machines</a><ul>
-<li class="chapter" data-level="13.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>13.1</b> Maximal Margin Classifier</a></li>
-<li class="chapter" data-level="13.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>13.2</b> Support Vector Classifier</a></li>
-<li class="chapter" data-level="13.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>13.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="13.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
-<li class="chapter" data-level="13.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>13.5</b> Using Caret</a></li>
+<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
+<li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
+<li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
+<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>14</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a></li>
-<li class="chapter" data-level="16" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>16</b> Text Mining</a></li>
-<li class="chapter" data-level="17" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>17</b> Survival Analysis</a></li>
+<li class="chapter" data-level="11" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>11</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="11.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>11.1</b> Splines</a></li>
+<li class="chapter" data-level="11.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>11.2</b> MARS</a></li>
+<li class="chapter" data-level="11.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>11.3</b> GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>12</b> Support Vector Machines</a><ul>
+<li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
+<li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="12.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a></li>
+<li class="chapter" data-level="15" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>15</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="15.0.1" data-path="survival-analysis.html"><a href="survival-analysis.html#xelox"><i class="fa fa-check"></i><b>15.0.1</b> Xelox</a></li>
+<li class="chapter" data-level="15.0.2" data-path="survival-analysis.html"><a href="survival-analysis.html#pancreatic"><i class="fa fa-check"></i><b>15.0.2</b> pancreatic</a></li>
+<li class="chapter" data-level="15.0.3" data-path="survival-analysis.html"><a href="survival-analysis.html#prostatesurvival"><i class="fa fa-check"></i><b>15.0.3</b> prostateSurvival</a></li>
+<li class="chapter" data-level="15.0.4" data-path="survival-analysis.html"><a href="survival-analysis.html#pharmacosmoking"><i class="fa fa-check"></i><b>15.0.4</b> pharmacoSmoking</a></li>
+<li class="chapter" data-level="15.0.5" data-path="survival-analysis.html"><a href="survival-analysis.html#hepatocellular"><i class="fa fa-check"></i><b>15.0.5</b> hepatoCellular</a></li>
+<li class="chapter" data-level="15.0.6" data-path="survival-analysis.html"><a href="survival-analysis.html#gbsg2"><i class="fa fa-check"></i><b>15.0.6</b> GBSG2</a></li>
+<li class="chapter" data-level="15.0.7" data-path="survival-analysis.html"><a href="survival-analysis.html#unemp"><i class="fa fa-check"></i><b>15.0.7</b> Unemp</a></li>
+<li class="chapter" data-level="15.1" data-path="survival-theory.html"><a href="survival-theory.html"><i class="fa fa-check"></i><b>15.1</b> Survival Theory</a></li>
+<li class="chapter" data-level="15.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>15.2</b> Survival Curve Estimation</a></li>
+<li class="chapter" data-level="15.3" data-path="survival-curve-estimation-1.html"><a href="survival-curve-estimation-1.html"><i class="fa fa-check"></i><b>15.3</b> Survival Curve Estimation</a></li>
+<li class="chapter" data-level="15.4" data-path="proportional-hazards-model.html"><a href="proportional-hazards-model.html"><i class="fa fa-check"></i><b>15.4</b> Proportional Hazards Model</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="survival-analysis-1.html"><a href="survival-analysis-1.html"><i class="fa fa-check"></i><b>16</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="16.0.1" data-path="survival-analysis-1.html"><a href="survival-analysis-1.html#gbsg2-1"><i class="fa fa-check"></i><b>16.0.1</b> GBSG2</a></li>
+<li class="chapter" data-level="16.0.2" data-path="survival-analysis-1.html"><a href="survival-analysis-1.html#unemp-1"><i class="fa fa-check"></i><b>16.0.2</b> Unemp</a></li>
+<li class="chapter" data-level="16.1" data-path="background-1.html"><a href="background-1.html"><i class="fa fa-check"></i><b>16.1</b> Background</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
 <li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="17.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>17.0.1</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="16.1.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>16.1.1</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
@@ -281,16 +304,252 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="cont_dist" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Continuous Distributions</h1>
+<div id="cont_dist" class="section level2">
+<h2><span class="header-section-number">1.3</span> Continuous Distributions</h2>
+<div id="normal" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Normal</h3>
+<p>Random variable <span class="math inline">\(X\)</span> is distributed <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span> if</p>
+<p><span class="math display">\[f(X)=\frac{{1}}{{\sigma \sqrt{{2\pi}}}}e^{-.5(\frac{{x-\mu}}{{\sigma}})^2}\]</span>.</p>
+<div id="example-1" class="section level4 unnumbered">
+<h4>Example</h4>
+<p><em>IQ scores are distributed <span class="math inline">\(X \sim N(100, 16^2\)</span>. What is the probability a randomly selected person’s IQ is &lt;90?</em></p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="cont-dist.html#cb86-1"></a>my_mean =<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb86-2"><a href="cont-dist.html#cb86-2"></a>my_sd =<span class="st"> </span><span class="dv">16</span></span>
+<span id="cb86-3"><a href="cont-dist.html#cb86-3"></a>my_x =<span class="st"> </span><span class="dv">90</span></span>
+<span id="cb86-4"><a href="cont-dist.html#cb86-4"></a><span class="co"># exact</span></span>
+<span id="cb86-5"><a href="cont-dist.html#cb86-5"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.27</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="cont-dist.html#cb88-1"></a><span class="co"># simulated</span></span>
+<span id="cb88-2"><a href="cont-dist.html#cb88-2"></a><span class="kw">mean</span>(<span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd) <span class="op">&lt;=</span><span class="st"> </span>my_x)</span></code></pre></div>
+<pre><code>## [1] 0.26</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="cont-dist.html#cb90-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb90-2"><a href="cont-dist.html#cb90-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb90-3"><a href="cont-dist.html#cb90-3"></a></span>
+<span id="cb90-4"><a href="cont-dist.html#cb90-4"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1500</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb90-5"><a href="cont-dist.html#cb90-5"></a>           <span class="dt">prob =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1500</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb90-6"><a href="cont-dist.html#cb90-6"></a>                        <span class="dt">mean =</span> my_mean, </span>
+<span id="cb90-7"><a href="cont-dist.html#cb90-7"></a>                        <span class="dt">sd =</span> my_sd, </span>
+<span id="cb90-8"><a href="cont-dist.html#cb90-8"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb90-9"><a href="cont-dist.html#cb90-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cdf =</span> <span class="kw">ifelse</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;=</span><span class="st"> </span>my_x, prob, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb90-10"><a href="cont-dist.html#cb90-10"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb90-11"><a href="cont-dist.html#cb90-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> prob)) <span class="op">+</span></span>
+<span id="cb90-12"><a href="cont-dist.html#cb90-12"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb90-13"><a href="cont-dist.html#cb90-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_mean)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb90-14"><a href="cont-dist.html#cb90-14"></a>       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&#39;P(X&lt;=&#39;</span><span class="op">~</span>.(my_x)<span class="op">~</span><span class="st">&#39;) when mean is&#39;</span><span class="op">~</span>.(my_mean)<span class="op">~</span><span class="st">&#39; and variance is&#39;</span><span class="op">~</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;.&#39;</span>),</span>
+<span id="cb90-15"><a href="cont-dist.html#cb90-15"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb90-16"><a href="cont-dist.html#cb90-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+</div>
+<div id="example-2" class="section level4">
+<h4><span class="header-section-number">1.3.1.1</span> Example</h4>
+<p><em>IQ scores are distributed </em><span class="math inline">\(X \sim N(100, 16^2\)</span><em>. What is the probability a randomly selected person’s IQ is &gt;140?</em></p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="cont-dist.html#cb91-1"></a>my_mean =<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb91-2"><a href="cont-dist.html#cb91-2"></a>my_sd =<span class="st"> </span><span class="dv">16</span></span>
+<span id="cb91-3"><a href="cont-dist.html#cb91-3"></a>my_x =<span class="st"> </span><span class="dv">140</span></span>
+<span id="cb91-4"><a href="cont-dist.html#cb91-4"></a><span class="co"># exact</span></span>
+<span id="cb91-5"><a href="cont-dist.html#cb91-5"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0062</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="cont-dist.html#cb93-1"></a><span class="co"># simulated</span></span>
+<span id="cb93-2"><a href="cont-dist.html#cb93-2"></a><span class="kw">mean</span>(<span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd) <span class="op">&gt;</span><span class="st"> </span>my_x)</span></code></pre></div>
+<pre><code>## [1] 0.0052</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="cont-dist.html#cb95-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb95-2"><a href="cont-dist.html#cb95-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb95-3"><a href="cont-dist.html#cb95-3"></a></span>
+<span id="cb95-4"><a href="cont-dist.html#cb95-4"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1500</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb95-5"><a href="cont-dist.html#cb95-5"></a>           <span class="dt">prob =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1500</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb95-6"><a href="cont-dist.html#cb95-6"></a>                        <span class="dt">mean =</span> my_mean, </span>
+<span id="cb95-7"><a href="cont-dist.html#cb95-7"></a>                        <span class="dt">sd =</span> my_sd, </span>
+<span id="cb95-8"><a href="cont-dist.html#cb95-8"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb95-9"><a href="cont-dist.html#cb95-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cdf =</span> <span class="kw">ifelse</span>(x <span class="op">&gt;</span><span class="st"> </span>my_x <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;</span><span class="st"> </span><span class="dv">1000</span>, prob, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb95-10"><a href="cont-dist.html#cb95-10"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb95-11"><a href="cont-dist.html#cb95-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> prob)) <span class="op">+</span></span>
+<span id="cb95-12"><a href="cont-dist.html#cb95-12"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb95-13"><a href="cont-dist.html#cb95-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_mean)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb95-14"><a href="cont-dist.html#cb95-14"></a>       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&#39;P(X&lt;=&#39;</span><span class="op">~</span>.(my_x)<span class="op">~</span><span class="st">&#39;) when mean is&#39;</span><span class="op">~</span>.(my_mean)<span class="op">~</span><span class="st">&#39; and variance is&#39;</span><span class="op">~</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;.&#39;</span>),</span>
+<span id="cb95-15"><a href="cont-dist.html#cb95-15"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb95-16"><a href="cont-dist.html#cb95-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+</div>
+<div id="example-3" class="section level4">
+<h4><span class="header-section-number">1.3.1.2</span> Example</h4>
+<p><em>IQ scores are distributed </em><span class="math inline">\(X \sim N(100, 16^2\)</span><em>. What is the probability a randomly selected person’s IQ is between 92 and 114?</em></p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="cont-dist.html#cb96-1"></a>my_mean =<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb96-2"><a href="cont-dist.html#cb96-2"></a>my_sd =<span class="st"> </span><span class="dv">16</span></span>
+<span id="cb96-3"><a href="cont-dist.html#cb96-3"></a>my_x_l =<span class="st"> </span><span class="dv">92</span></span>
+<span id="cb96-4"><a href="cont-dist.html#cb96-4"></a>my_x_h =<span class="st"> </span><span class="dv">114</span></span>
+<span id="cb96-5"><a href="cont-dist.html#cb96-5"></a><span class="co"># exact</span></span>
+<span id="cb96-6"><a href="cont-dist.html#cb96-6"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x_h, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>) <span class="op">-</span></span>
+<span id="cb96-7"><a href="cont-dist.html#cb96-7"></a><span class="st">  </span><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x_l, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.5</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="cont-dist.html#cb98-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb98-2"><a href="cont-dist.html#cb98-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb98-3"><a href="cont-dist.html#cb98-3"></a></span>
+<span id="cb98-4"><a href="cont-dist.html#cb98-4"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1500</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb98-5"><a href="cont-dist.html#cb98-5"></a>           <span class="dt">prob =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1500</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb98-6"><a href="cont-dist.html#cb98-6"></a>                        <span class="dt">mean =</span> my_mean, </span>
+<span id="cb98-7"><a href="cont-dist.html#cb98-7"></a>                        <span class="dt">sd =</span> my_sd, </span>
+<span id="cb98-8"><a href="cont-dist.html#cb98-8"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb98-9"><a href="cont-dist.html#cb98-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cdf =</span> <span class="kw">ifelse</span>(x <span class="op">&gt;</span><span class="st"> </span>my_x_l <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;=</span><span class="st"> </span>my_x_h, prob, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb98-10"><a href="cont-dist.html#cb98-10"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb98-11"><a href="cont-dist.html#cb98-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> prob)) <span class="op">+</span></span>
+<span id="cb98-12"><a href="cont-dist.html#cb98-12"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb98-13"><a href="cont-dist.html#cb98-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_mean)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb98-14"><a href="cont-dist.html#cb98-14"></a>       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&#39;P(X&lt;=&#39;</span><span class="op">~</span>.(my_x)<span class="op">~</span><span class="st">&#39;) when mean is&#39;</span><span class="op">~</span>.(my_mean)<span class="op">~</span><span class="st">&#39; and variance is&#39;</span><span class="op">~</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;.&#39;</span>),</span>
+<span id="cb98-15"><a href="cont-dist.html#cb98-15"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb98-16"><a href="cont-dist.html#cb98-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+</div>
+<div id="example-4" class="section level4">
+<h4><span class="header-section-number">1.3.1.3</span> Example</h4>
+<p><em>Class scores are distributed </em><span class="math inline">\(X \sim N(70, 10^2\)</span><em>. If the instructor wants to give A’s to &gt;=85th percentile and B’s to 75th-85th percentile, what are the cutoffs?</em></p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="cont-dist.html#cb99-1"></a>my_mean =<span class="st"> </span><span class="dv">70</span></span>
+<span id="cb99-2"><a href="cont-dist.html#cb99-2"></a>my_sd =<span class="st"> </span><span class="dv">10</span></span>
+<span id="cb99-3"><a href="cont-dist.html#cb99-3"></a>my_pct_l =<span class="st"> </span><span class="fl">.75</span></span>
+<span id="cb99-4"><a href="cont-dist.html#cb99-4"></a>my_pct_h =<span class="st"> </span><span class="fl">.85</span></span>
+<span id="cb99-5"><a href="cont-dist.html#cb99-5"></a></span>
+<span id="cb99-6"><a href="cont-dist.html#cb99-6"></a><span class="kw">qnorm</span>(<span class="dt">p =</span> my_pct_l, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 77</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="cont-dist.html#cb101-1"></a><span class="kw">qnorm</span>(<span class="dt">p =</span> my_pct_h, <span class="dt">mean =</span> my_mean, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 80</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="cont-dist.html#cb103-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb103-2"><a href="cont-dist.html#cb103-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb103-3"><a href="cont-dist.html#cb103-3"></a></span>
+<span id="cb103-4"><a href="cont-dist.html#cb103-4"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1000</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb103-5"><a href="cont-dist.html#cb103-5"></a>           <span class="dt">prob =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1000</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb103-6"><a href="cont-dist.html#cb103-6"></a>                        <span class="dt">mean =</span> my_mean, </span>
+<span id="cb103-7"><a href="cont-dist.html#cb103-7"></a>                        <span class="dt">sd =</span> my_sd, </span>
+<span id="cb103-8"><a href="cont-dist.html#cb103-8"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb103-9"><a href="cont-dist.html#cb103-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cdf =</span> <span class="kw">ifelse</span>(prob <span class="op">&gt;</span><span class="st"> </span>my_pct_l <span class="op">&amp;</span><span class="st"> </span>prob <span class="op">&lt;=</span><span class="st"> </span>my_pct_h, prob, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb103-10"><a href="cont-dist.html#cb103-10"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb103-11"><a href="cont-dist.html#cb103-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> prob)) <span class="op">+</span></span>
+<span id="cb103-12"><a href="cont-dist.html#cb103-12"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb103-13"><a href="cont-dist.html#cb103-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_mean)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb103-14"><a href="cont-dist.html#cb103-14"></a>       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&#39;P(X&lt;=x) = [&#39;</span><span class="op">~</span>.(my_pct_l)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>.(my_pct_h)<span class="op">~</span><span class="st">&#39;] when mean is&#39;</span><span class="op">~</span>.(my_mean)<span class="op">~</span><span class="st">&#39; and variance is&#39;</span><span class="op">~</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;.&#39;</span>),</span>
+<span id="cb103-15"><a href="cont-dist.html#cb103-15"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb103-16"><a href="cont-dist.html#cb103-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+</div>
+<div id="normal-approximation-to-binomial" class="section level4">
+<h4><span class="header-section-number">1.3.1.4</span> Normal Approximation to Binomial</h4>
+<p>The CLT implies that certain distributions can be approximated by the normal distribution.</p>
+<p>The binomial distribution <span class="math inline">\(X \sim B(n,p)\)</span> is approximately normal with mean <span class="math inline">\(\mu = n p\)</span> and variance <span class="math inline">\(\sigma^2=np(1-p)\)</span>. The approximation is useful when the expected number of successes and failures is at least 5: <span class="math inline">\(np&gt;=5\)</span> and <span class="math inline">\(n(1-p)&gt;=5\)</span>.</p>
+</div>
+<div id="example-5" class="section level4">
+<h4><span class="header-section-number">1.3.1.5</span> Example</h4>
+<p><em>A measure requires p&gt;=50% popular to pass. A sample of n=1,000 yields x=460 approvals. What is the probability that the overall population approves, P(X)&gt;0.5?</em></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="cont-dist.html#cb104-1"></a>my_x =<span class="st"> </span><span class="dv">460</span></span>
+<span id="cb104-2"><a href="cont-dist.html#cb104-2"></a>my_p =<span class="st"> </span><span class="fl">0.50</span></span>
+<span id="cb104-3"><a href="cont-dist.html#cb104-3"></a>my_n =<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb104-4"><a href="cont-dist.html#cb104-4"></a></span>
+<span id="cb104-5"><a href="cont-dist.html#cb104-5"></a>my_mean =<span class="st"> </span>my_p <span class="op">*</span><span class="st"> </span>my_n</span>
+<span id="cb104-6"><a href="cont-dist.html#cb104-6"></a>my_sd =<span class="st"> </span><span class="kw">round</span>(<span class="kw">sqrt</span>(my_n <span class="op">*</span><span class="st"> </span>my_p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>my_p)), <span class="dv">1</span>)</span>
+<span id="cb104-7"><a href="cont-dist.html#cb104-7"></a></span>
+<span id="cb104-8"><a href="cont-dist.html#cb104-8"></a><span class="co"># Exact binomial</span></span>
+<span id="cb104-9"><a href="cont-dist.html#cb104-9"></a><span class="kw">pbinom</span>(<span class="dt">q =</span> my_x, <span class="dt">size =</span> my_n, <span class="dt">prob =</span> my_p, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0062</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="cont-dist.html#cb106-1"></a><span class="co"># Normal approximation</span></span>
+<span id="cb106-2"><a href="cont-dist.html#cb106-2"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x, <span class="dt">mean =</span> my_p <span class="op">*</span><span class="st"> </span>my_n, <span class="dt">sd =</span> <span class="kw">sqrt</span>(my_n <span class="op">*</span><span class="st"> </span>my_p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>my_p)), <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0057</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="cont-dist.html#cb108-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb108-2"><a href="cont-dist.html#cb108-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb108-3"><a href="cont-dist.html#cb108-3"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb108-4"><a href="cont-dist.html#cb108-4"></a></span>
+<span id="cb108-5"><a href="cont-dist.html#cb108-5"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">400</span><span class="op">:</span><span class="dv">600</span>, </span>
+<span id="cb108-6"><a href="cont-dist.html#cb108-6"></a>           <span class="dt">Normal =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">400</span><span class="op">:</span><span class="dv">600</span>, </span>
+<span id="cb108-7"><a href="cont-dist.html#cb108-7"></a>                        <span class="dt">mean =</span> my_p <span class="op">*</span><span class="st"> </span>my_n, </span>
+<span id="cb108-8"><a href="cont-dist.html#cb108-8"></a>                        <span class="dt">sd =</span> <span class="kw">sqrt</span>(my_n <span class="op">*</span><span class="st"> </span>my_p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>my_p)), </span>
+<span id="cb108-9"><a href="cont-dist.html#cb108-9"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb108-10"><a href="cont-dist.html#cb108-10"></a>           <span class="dt">Binomial =</span> <span class="kw">pbinom</span>(<span class="dt">q =</span> <span class="dv">400</span><span class="op">:</span><span class="dv">600</span>, </span>
+<span id="cb108-11"><a href="cont-dist.html#cb108-11"></a>                        <span class="dt">size =</span> my_n, </span>
+<span id="cb108-12"><a href="cont-dist.html#cb108-12"></a>                        <span class="dt">prob =</span> my_p, </span>
+<span id="cb108-13"><a href="cont-dist.html#cb108-13"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb108-14"><a href="cont-dist.html#cb108-14"></a><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;Distribution&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;cdf&quot;</span>, <span class="kw">c</span>(<span class="op">-</span>x)) <span class="op">%&gt;%</span></span>
+<span id="cb108-15"><a href="cont-dist.html#cb108-15"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf, <span class="dt">color =</span> Distribution)) <span class="op">+</span></span>
+<span id="cb108-16"><a href="cont-dist.html#cb108-16"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb108-17"><a href="cont-dist.html#cb108-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~B(n=&#39;</span><span class="op">~</span>.(my_n)<span class="op">~</span><span class="st">&#39;, p=&#39;</span><span class="op">~</span>.(my_p)<span class="op">~</span><span class="st">&#39;),  &#39;</span><span class="op">~</span><span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_mean)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_sd)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb108-18"><a href="cont-dist.html#cb108-18"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Normal approximation to the binomial&quot;</span>,</span>
+<span id="cb108-19"><a href="cont-dist.html#cb108-19"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb108-20"><a href="cont-dist.html#cb108-20"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p>The Poisson distribution <span class="math inline">\(x~P(\lambda)\)</span> is approximately normal with mean <span class="math inline">\(\mu = \lambda\)</span> and variance <span class="math inline">\(\sigma^2 = \lambda\)</span>, for large values of <span class="math inline">\(\lambda\)</span>.</p>
+</div>
+<div id="example-6" class="section level4">
+<h4><span class="header-section-number">1.3.1.6</span> Example</h4>
+<p><em>The annual number of earthquakes registering at least 2.5 on the Richter Scale and having an epicenter within 40 miles of downtown Memphis follows a Poisson distribution with mean </em><span class="math inline">\(\lambda=6.5\)</span><em>. What is the probability that at least </em><span class="math inline">\(x&gt;=9\)</span>* such earthquakes will strike next year?*</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="cont-dist.html#cb109-1"></a>my_x =<span class="st"> </span><span class="dv">9</span></span>
+<span id="cb109-2"><a href="cont-dist.html#cb109-2"></a>my_lambda =<span class="st"> </span><span class="fl">6.5</span></span>
+<span id="cb109-3"><a href="cont-dist.html#cb109-3"></a>my_sd =<span class="st"> </span><span class="kw">round</span>(<span class="kw">sqrt</span>(my_lambda), <span class="dv">2</span>)</span>
+<span id="cb109-4"><a href="cont-dist.html#cb109-4"></a></span>
+<span id="cb109-5"><a href="cont-dist.html#cb109-5"></a><span class="co"># Exact Poisson</span></span>
+<span id="cb109-6"><a href="cont-dist.html#cb109-6"></a><span class="kw">ppois</span>(<span class="dt">q =</span> my_x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lambda =</span> my_lambda, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.21</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="cont-dist.html#cb111-1"></a><span class="co"># Normal approximation</span></span>
+<span id="cb111-2"><a href="cont-dist.html#cb111-2"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dt">mean =</span> my_lambda, <span class="dt">sd =</span> my_sd, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.22</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="cont-dist.html#cb113-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb113-2"><a href="cont-dist.html#cb113-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb113-3"><a href="cont-dist.html#cb113-3"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb113-4"><a href="cont-dist.html#cb113-4"></a></span>
+<span id="cb113-5"><a href="cont-dist.html#cb113-5"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">200</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb113-6"><a href="cont-dist.html#cb113-6"></a>           <span class="dt">Normal =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">200</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb113-7"><a href="cont-dist.html#cb113-7"></a>                        <span class="dt">mean =</span> my_lambda, </span>
+<span id="cb113-8"><a href="cont-dist.html#cb113-8"></a>                        <span class="dt">sd =</span> my_sd, </span>
+<span id="cb113-9"><a href="cont-dist.html#cb113-9"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb113-10"><a href="cont-dist.html#cb113-10"></a>           <span class="dt">Poisson =</span> <span class="kw">ppois</span>(<span class="dt">q =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">200</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb113-11"><a href="cont-dist.html#cb113-11"></a>                        <span class="dt">lambda =</span> my_lambda, </span>
+<span id="cb113-12"><a href="cont-dist.html#cb113-12"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb113-13"><a href="cont-dist.html#cb113-13"></a><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;Distribution&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;cdf&quot;</span>, <span class="kw">c</span>(<span class="op">-</span>x)) <span class="op">%&gt;%</span></span>
+<span id="cb113-14"><a href="cont-dist.html#cb113-14"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf, <span class="dt">color =</span> Distribution)) <span class="op">+</span></span>
+<span id="cb113-15"><a href="cont-dist.html#cb113-15"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb113-16"><a href="cont-dist.html#cb113-16"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~P(&#39;</span><span class="op">~</span>lambda<span class="op">~</span><span class="st">&#39;=&#39;</span><span class="op">~</span>.(my_lambda)<span class="op">~</span><span class="st">&#39;),  &#39;</span><span class="op">~</span><span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_lambda)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_lambda)<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb113-17"><a href="cont-dist.html#cb113-17"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Normal approximation to the Poisson&quot;</span>,</span>
+<span id="cb113-18"><a href="cont-dist.html#cb113-18"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb113-19"><a href="cont-dist.html#cb113-19"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+</div>
+<div id="from-sample-to-population" class="section level4">
+<h4><span class="header-section-number">1.3.1.7</span> From Sample to Population</h4>
+<p><em>Suppose a person’s blood pressure typically measures 160?20 mm. If one takes n=5 blood pressure readings, what is the probability the average will be &lt;=150?</em></p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="cont-dist.html#cb114-1"></a>my_mu =<span class="st"> </span><span class="dv">160</span></span>
+<span id="cb114-2"><a href="cont-dist.html#cb114-2"></a>my_sigma =<span class="st"> </span><span class="dv">20</span></span>
+<span id="cb114-3"><a href="cont-dist.html#cb114-3"></a>my_n =<span class="st"> </span><span class="dv">5</span></span>
+<span id="cb114-4"><a href="cont-dist.html#cb114-4"></a>my_x =<span class="st"> </span><span class="dv">150</span></span>
+<span id="cb114-5"><a href="cont-dist.html#cb114-5"></a></span>
+<span id="cb114-6"><a href="cont-dist.html#cb114-6"></a>my_se =<span class="st"> </span><span class="kw">round</span>(my_sigma <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(my_n), <span class="dv">1</span>)</span>
+<span id="cb114-7"><a href="cont-dist.html#cb114-7"></a></span>
+<span id="cb114-8"><a href="cont-dist.html#cb114-8"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> my_x, <span class="dt">mean =</span> my_mu, <span class="dt">sd =</span> my_sigma <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(my_n), <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.13</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="cont-dist.html#cb116-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb116-2"><a href="cont-dist.html#cb116-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb116-3"><a href="cont-dist.html#cb116-3"></a></span>
+<span id="cb116-4"><a href="cont-dist.html#cb116-4"></a><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1000</span><span class="op">:</span><span class="dv">2000</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb116-5"><a href="cont-dist.html#cb116-5"></a>           <span class="dt">prob =</span> <span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">1000</span><span class="op">:</span><span class="dv">2000</span> <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, </span>
+<span id="cb116-6"><a href="cont-dist.html#cb116-6"></a>                        <span class="dt">mean =</span> my_mu, </span>
+<span id="cb116-7"><a href="cont-dist.html#cb116-7"></a>                        <span class="dt">sd =</span> my_sigma <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(my_n), </span>
+<span id="cb116-8"><a href="cont-dist.html#cb116-8"></a>                        <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb116-9"><a href="cont-dist.html#cb116-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cdf =</span> <span class="kw">ifelse</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;=</span><span class="st"> </span>my_x, prob, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb116-10"><a href="cont-dist.html#cb116-10"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb116-11"><a href="cont-dist.html#cb116-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> prob)) <span class="op">+</span></span>
+<span id="cb116-12"><a href="cont-dist.html#cb116-12"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> cdf), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb116-13"><a href="cont-dist.html#cb116-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&#39;X~N(&#39;</span><span class="op">~</span>mu<span class="op">==</span>.(my_mu)<span class="op">~</span><span class="st">&#39;,&#39;</span><span class="op">~</span>sigma<span class="op">^</span>{<span class="dv">2</span>}<span class="op">==</span>.(my_se)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;)&#39;</span>),</span>
+<span id="cb116-14"><a href="cont-dist.html#cb116-14"></a>       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&#39;P(X&lt;=&#39;</span><span class="op">~</span>.(my_x)<span class="op">~</span><span class="st">&#39;) when mean is&#39;</span><span class="op">~</span>.(my_mu)<span class="op">~</span><span class="st">&#39; and variance is&#39;</span><span class="op">~</span>sigma<span class="op">~</span><span class="st">&#39;/sqrt(n)&#39;</span><span class="op">~</span>.(my_se)<span class="op">^</span>{<span class="dv">2</span>}<span class="op">~</span><span class="st">&#39;.&#39;</span>),</span>
+<span id="cb116-15"><a href="cont-dist.html#cb116-15"></a>       <span class="dt">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb116-16"><a href="cont-dist.html#cb116-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Probability&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="cont-dist.html#cb117-1"></a>knitr<span class="op">::</span><span class="kw">include_app</span>(<span class="st">&quot;https://mpfoley73.shinyapps.io/shiny_dist/&quot;</span>, </span>
+<span id="cb117-2"><a href="cont-dist.html#cb117-2"></a>  <span class="dt">height =</span> <span class="st">&quot;600px&quot;</span>)</span></code></pre></div>
+<iframe src="https://mpfoley73.shinyapps.io/shiny_dist/?showcase=0" width="672" height="600px">
+</iframe>
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="gamma.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="normal.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="disc-dist.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="join-distributions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

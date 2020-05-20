@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.3 Two-Way Tables | My Data Science Notes</title>
+  <title>2.3 Two-Way Tables | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.3 Two-Way Tables | My Data Science Notes" />
+  <meta property="og:title" content="2.3 Two-Way Tables | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.3 Two-Way Tables | My Data Science Notes" />
+  <meta name="twitter:title" content="2.3 Two-Way Tables | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-04-28" />
+<meta name="date" content="2020-05-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -136,126 +136,149 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Intro</a></li>
 <li class="chapter" data-level="1" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>1</b> Probability</a><ul>
 <li class="chapter" data-level="1.1" data-path="principles.html"><a href="principles.html"><i class="fa fa-check"></i><b>1.1</b> Principles</a></li>
+<li class="chapter" data-level="1.2" data-path="disc-dist.html"><a href="disc-dist.html"><i class="fa fa-check"></i><b>1.2</b> Discrete Distributions</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="disc-dist.html"><a href="disc-dist.html#bernoulli"><i class="fa fa-check"></i><b>1.2.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="1.2.2" data-path="disc-dist.html"><a href="disc-dist.html#binomial"><i class="fa fa-check"></i><b>1.2.2</b> Binomial</a></li>
+<li class="chapter" data-level="1.2.3" data-path="disc-dist.html"><a href="disc-dist.html#poission"><i class="fa fa-check"></i><b>1.2.3</b> Poission</a></li>
+<li class="chapter" data-level="1.2.4" data-path="disc-dist.html"><a href="disc-dist.html#multinomial"><i class="fa fa-check"></i><b>1.2.4</b> Multinomial</a></li>
+<li class="chapter" data-level="1.2.5" data-path="disc-dist.html"><a href="disc-dist.html#negative-binomial"><i class="fa fa-check"></i><b>1.2.5</b> Negative-Binomial</a></li>
+<li class="chapter" data-level="1.2.6" data-path="disc-dist.html"><a href="disc-dist.html#geometric"><i class="fa fa-check"></i><b>1.2.6</b> Geometric</a></li>
+<li class="chapter" data-level="1.2.7" data-path="disc-dist.html"><a href="disc-dist.html#hypergeometric"><i class="fa fa-check"></i><b>1.2.7</b> Hypergeometric</a></li>
+<li class="chapter" data-level="1.2.8" data-path="disc-dist.html"><a href="disc-dist.html#gamma"><i class="fa fa-check"></i><b>1.2.8</b> Gamma</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="disc-dist.html"><a href="disc-dist.html"><i class="fa fa-check"></i><b>2</b> Discrete Distributions</a><ul>
-<li class="chapter" data-level="2.1" data-path="bernoulli.html"><a href="bernoulli.html"><i class="fa fa-check"></i><b>2.1</b> Bernoulli</a></li>
-<li class="chapter" data-level="2.2" data-path="binomial.html"><a href="binomial.html"><i class="fa fa-check"></i><b>2.2</b> Binomial</a></li>
-<li class="chapter" data-level="2.3" data-path="poission.html"><a href="poission.html"><i class="fa fa-check"></i><b>2.3</b> Poission</a></li>
-<li class="chapter" data-level="2.4" data-path="multinomial.html"><a href="multinomial.html"><i class="fa fa-check"></i><b>2.4</b> Multinomial</a></li>
-<li class="chapter" data-level="2.5" data-path="negative-binomial.html"><a href="negative-binomial.html"><i class="fa fa-check"></i><b>2.5</b> Negative-Binomial</a></li>
-<li class="chapter" data-level="2.6" data-path="geometric.html"><a href="geometric.html"><i class="fa fa-check"></i><b>2.6</b> Geometric</a></li>
-<li class="chapter" data-level="2.7" data-path="hypergeometric.html"><a href="hypergeometric.html"><i class="fa fa-check"></i><b>2.7</b> Hypergeometric</a></li>
-<li class="chapter" data-level="2.8" data-path="gamma.html"><a href="gamma.html"><i class="fa fa-check"></i><b>2.8</b> Gamma</a></li>
+<li class="chapter" data-level="1.3" data-path="cont-dist.html"><a href="cont-dist.html"><i class="fa fa-check"></i><b>1.3</b> Continuous Distributions</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="cont-dist.html"><a href="cont-dist.html#normal"><i class="fa fa-check"></i><b>1.3.1</b> Normal</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="cont-dist.html"><a href="cont-dist.html"><i class="fa fa-check"></i><b>3</b> Continuous Distributions</a><ul>
-<li class="chapter" data-level="3.1" data-path="normal.html"><a href="normal.html"><i class="fa fa-check"></i><b>3.1</b> Normal</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="normal.html"><a href="normal.html#example-2"><i class="fa fa-check"></i><b>3.1.1</b> Example</a></li>
-<li class="chapter" data-level="3.1.2" data-path="normal.html"><a href="normal.html#example-3"><i class="fa fa-check"></i><b>3.1.2</b> Example</a></li>
-<li class="chapter" data-level="3.1.3" data-path="normal.html"><a href="normal.html#example-4"><i class="fa fa-check"></i><b>3.1.3</b> Example</a></li>
-<li class="chapter" data-level="3.1.4" data-path="normal.html"><a href="normal.html#normal-approximation-to-binomial"><i class="fa fa-check"></i><b>3.1.4</b> Normal Approximation to Binomial</a></li>
-<li class="chapter" data-level="3.1.5" data-path="normal.html"><a href="normal.html#example-5"><i class="fa fa-check"></i><b>3.1.5</b> Example</a></li>
-<li class="chapter" data-level="3.1.6" data-path="normal.html"><a href="normal.html#example-6"><i class="fa fa-check"></i><b>3.1.6</b> Example</a></li>
-<li class="chapter" data-level="3.1.7" data-path="normal.html"><a href="normal.html#from-sample-to-population"><i class="fa fa-check"></i><b>3.1.7</b> From Sample to Population</a></li>
+<li class="chapter" data-level="1.4" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>1.4</b> Join Distributions</a></li>
+<li class="chapter" data-level="1.5" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>1.5</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>3.2</b> Join Distributions</a></li>
-<li class="chapter" data-level="3.3" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>3.3</b> Likelihood</a></li>
+<li class="chapter" data-level="2" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>2</b> Categorical Analysis - Nonmodel</a><ul>
+<li class="chapter" data-level="2.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>2.1</b> Chi-Square Test</a></li>
+<li class="chapter" data-level="2.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>2.2</b> One-Way Tables</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>2.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
+<li class="chapter" data-level="2.2.2" data-path="one-way-tables.html"><a href="one-way-tables.html#proportion-test"><i class="fa fa-check"></i><b>2.2.2</b> Proportion Test</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>4</b> Categorical Analysis - Nonmodel</a><ul>
-<li class="chapter" data-level="4.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>4.1</b> Chi-Square Test</a></li>
-<li class="chapter" data-level="4.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>4.2</b> One-Way Tables</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>4.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
-<li class="chapter" data-level="4.2.2" data-path="one-way-tables.html"><a href="one-way-tables.html#proportion-test"><i class="fa fa-check"></i><b>4.2.2</b> Proportion Test</a></li>
+<li class="chapter" data-level="2.3" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>2.3</b> Two-Way Tables</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-square-independence-test"><i class="fa fa-check"></i><b>2.3.1</b> Chi-Square Independence Test</a></li>
+<li class="chapter" data-level="2.3.2" data-path="two-way-tables.html"><a href="two-way-tables.html#residuals-analysis"><i class="fa fa-check"></i><b>2.3.2</b> Residuals Analysis</a></li>
+<li class="chapter" data-level="2.3.3" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>2.3.3</b> Difference in Proportions</a></li>
+<li class="chapter" data-level="2.3.4" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>2.3.4</b> Relative Risk</a></li>
+<li class="chapter" data-level="2.3.5" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>2.3.5</b> Odds Ratio</a></li>
+<li class="chapter" data-level="2.3.6" data-path="two-way-tables.html"><a href="two-way-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>2.3.6</b> Partitioning Chi-Square</a></li>
+<li class="chapter" data-level="2.3.7" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>2.3.7</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>4.3</b> Two-Way Tables</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-square-independence-test"><i class="fa fa-check"></i><b>4.3.1</b> Chi-Square Independence Test</a></li>
-<li class="chapter" data-level="4.3.2" data-path="two-way-tables.html"><a href="two-way-tables.html#residuals-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Residuals Analysis</a></li>
-<li class="chapter" data-level="4.3.3" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>4.3.3</b> Difference in Proportions</a></li>
-<li class="chapter" data-level="4.3.4" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>4.3.4</b> Relative Risk</a></li>
-<li class="chapter" data-level="4.3.5" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>4.3.5</b> Odds Ratio</a></li>
-<li class="chapter" data-level="4.3.6" data-path="two-way-tables.html"><a href="two-way-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>4.3.6</b> Partitioning Chi-Square</a></li>
-<li class="chapter" data-level="4.3.7" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>4.3.7</b> Correlation</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>4.4</b> K-Way Tables</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>4.4.1</b> Odds Ratio</a></li>
-<li class="chapter" data-level="4.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>4.4.2</b> Chi-Square Independence Test</a></li>
+<li class="chapter" data-level="2.4" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>2.4</b> K-Way Tables</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>2.4.1</b> Odds Ratio</a></li>
+<li class="chapter" data-level="2.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>2.4.2</b> Chi-Square Independence Test</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>5</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="5.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>5.0.1</b> Correlation</a></li>
+<li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="supervised-machine-learning.html"><a href="supervised-machine-learning.html"><i class="fa fa-check"></i>Supervised Machine Learning</a></li>
-<li class="chapter" data-level="6" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>6</b> Ordinary Least Squares</a><ul>
-<li class="chapter" data-level="6.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>6.1</b> Linear Regression Model</a></li>
-<li class="chapter" data-level="6.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>6.2</b> Parameter Estimation</a></li>
-<li class="chapter" data-level="6.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>6.3</b> Model Assumptions</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>6.3.1</b> Linearity</a></li>
-<li class="chapter" data-level="6.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>6.3.2</b> Multicollinearity</a></li>
-<li class="chapter" data-level="6.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>6.3.3</b> Normality</a></li>
-<li class="chapter" data-level="6.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>6.3.4</b> Equal Variances</a></li>
+<li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
+<li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
+<li class="chapter" data-level="4.2" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>4.2</b> Blocking</a></li>
+<li class="chapter" data-level="4.3" data-path="nested.html"><a href="nested.html"><i class="fa fa-check"></i><b>4.3</b> Nested</a></li>
+<li class="chapter" data-level="4.4" data-path="split-plot.html"><a href="split-plot.html"><i class="fa fa-check"></i><b>4.4</b> Split Plot</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>6.4</b> Prediction</a></li>
-<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>6.5</b> Inference</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>6.5.1</b> <em>t</em>-Test</a></li>
-<li class="chapter" data-level="6.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>6.5.2</b> <em>F</em>-Test</a></li>
+<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a></li>
+<li class="chapter" data-level="5" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>5</b> Ordinary Least Squares</a><ul>
+<li class="chapter" data-level="5.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>5.1</b> Linear Regression Model</a></li>
+<li class="chapter" data-level="5.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>5.2</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="5.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>5.3</b> Model Assumptions</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>5.3.1</b> Linearity</a></li>
+<li class="chapter" data-level="5.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>5.3.2</b> Multicollinearity</a></li>
+<li class="chapter" data-level="5.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>5.3.3</b> Normality</a></li>
+<li class="chapter" data-level="5.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>5.3.4</b> Equal Variances</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>6.6</b> Interpretation</a></li>
-<li class="chapter" data-level="6.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>6.7</b> Model Validation</a><ul>
-<li class="chapter" data-level="6.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>6.7.1</b> Accuracy Metrics</a></li>
-<li class="chapter" data-level="6.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>6.7.2</b> Cross-Validation</a></li>
-<li class="chapter" data-level="6.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>6.7.3</b> Gain Curve</a></li>
+<li class="chapter" data-level="5.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>5.4</b> Prediction</a></li>
+<li class="chapter" data-level="5.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5.5</b> Inference</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>5.5.1</b> <em>t</em>-Test</a></li>
+<li class="chapter" data-level="5.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>5.5.2</b> <em>F</em>-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="6.8" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>6.8</b> Reference</a></li>
+<li class="chapter" data-level="5.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>5.6</b> Interpretation</a></li>
+<li class="chapter" data-level="5.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>5.7</b> Model Validation</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>5.7.1</b> Accuracy Metrics</a></li>
+<li class="chapter" data-level="5.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>5.7.2</b> Cross-Validation</a></li>
+<li class="chapter" data-level="5.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>5.7.3</b> Gain Curve</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models</a><ul>
-<li class="chapter" data-level="7.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>7.1</b> Logistic Regression</a></li>
-<li class="chapter" data-level="7.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>7.2</b> Multinomial Logistic Regression</a></li>
-<li class="chapter" data-level="7.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>7.3</b> Ordinal Logistic Regression</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>7.3.1</b> Assumptions</a></li>
-<li class="chapter" data-level="7.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>7.3.2</b> Modeling</a></li>
-<li class="chapter" data-level="7.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>7.3.3</b> Case Study</a></li>
+<li class="chapter" data-level="5.8" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>5.8</b> Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>7.4</b> Poisson Regression</a></li>
+<li class="chapter" data-level="6" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>6</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="6.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="6.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>6.2</b> Multinomial Logistic Regression</a></li>
+<li class="chapter" data-level="6.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>6.3</b> Ordinal Logistic Regression</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>6.3.1</b> Assumptions</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>6.3.2</b> Modeling</a></li>
+<li class="chapter" data-level="6.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>6.3.3</b> Case Study</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="linear-discriminant-analysis.html"><a href="linear-discriminant-analysis.html"><i class="fa fa-check"></i><b>8</b> Linear Discriminant Analysis</a></li>
-<li class="chapter" data-level="9" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
-<li class="chapter" data-level="10" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>10</b> Regularization</a></li>
-<li class="chapter" data-level="11" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>11</b> Decision Trees</a><ul>
-<li class="chapter" data-level="11.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>11.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="11.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>11.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="11.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>11.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="11.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>11.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="6.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>6.4</b> Poisson Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>11.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>11.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="7" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html"><i class="fa fa-check"></i><b>7</b> Multivariate Statistical Analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>7.1</b> Background</a></li>
+<li class="chapter" data-level="7.2" data-path="manova.html"><a href="manova.html"><i class="fa fa-check"></i><b>7.2</b> MANOVA</a></li>
+<li class="chapter" data-level="7.3" data-path="repeated-measures.html"><a href="repeated-measures.html"><i class="fa fa-check"></i><b>7.3</b> Repeated Measures</a></li>
+<li class="chapter" data-level="7.4" data-path="lda.html"><a href="lda.html"><i class="fa fa-check"></i><b>7.4</b> LDA</a></li>
+<li class="chapter" data-level="7.5" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>7.5</b> PCA</a></li>
+<li class="chapter" data-level="7.6" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>7.6</b> Factor Analysis</a></li>
+<li class="chapter" data-level="7.7" data-path="canonical-correlation.html"><a href="canonical-correlation.html"><i class="fa fa-check"></i><b>7.7</b> Canonical Correlation</a></li>
+<li class="chapter" data-level="7.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>7.8</b> Cluster Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>11.3</b> Bagging</a></li>
-<li class="chapter" data-level="11.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>11.4</b> Random Forests</a></li>
-<li class="chapter" data-level="11.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>11.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="11.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>11.6</b> Summary</a></li>
-<li class="chapter" data-level="11.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>11.7</b> Reference</a></li>
+<li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
+<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a></li>
+<li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
+<li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>12</b> Non-linear Models</a><ul>
-<li class="chapter" data-level="12.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>12.1</b> Splines</a></li>
-<li class="chapter" data-level="12.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>12.2</b> MARS</a></li>
-<li class="chapter" data-level="12.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>12.3</b> GAM</a></li>
+<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>13</b> Support Vector Machines</a><ul>
-<li class="chapter" data-level="13.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>13.1</b> Maximal Margin Classifier</a></li>
-<li class="chapter" data-level="13.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>13.2</b> Support Vector Classifier</a></li>
-<li class="chapter" data-level="13.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>13.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="13.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>13.4</b> Example</a></li>
-<li class="chapter" data-level="13.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>13.5</b> Using Caret</a></li>
+<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
+<li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
+<li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
+<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>14</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a></li>
-<li class="chapter" data-level="16" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>16</b> Text Mining</a></li>
-<li class="chapter" data-level="17" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>17</b> Survival Analysis</a></li>
+<li class="chapter" data-level="11" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>11</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="11.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>11.1</b> Splines</a></li>
+<li class="chapter" data-level="11.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>11.2</b> MARS</a></li>
+<li class="chapter" data-level="11.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>11.3</b> GAM</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>12</b> Support Vector Machines</a><ul>
+<li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
+<li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="12.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a></li>
+<li class="chapter" data-level="15" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>15</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="15.0.1" data-path="survival-analysis.html"><a href="survival-analysis.html#xelox"><i class="fa fa-check"></i><b>15.0.1</b> Xelox</a></li>
+<li class="chapter" data-level="15.0.2" data-path="survival-analysis.html"><a href="survival-analysis.html#pancreatic"><i class="fa fa-check"></i><b>15.0.2</b> pancreatic</a></li>
+<li class="chapter" data-level="15.0.3" data-path="survival-analysis.html"><a href="survival-analysis.html#prostatesurvival"><i class="fa fa-check"></i><b>15.0.3</b> prostateSurvival</a></li>
+<li class="chapter" data-level="15.0.4" data-path="survival-analysis.html"><a href="survival-analysis.html#pharmacosmoking"><i class="fa fa-check"></i><b>15.0.4</b> pharmacoSmoking</a></li>
+<li class="chapter" data-level="15.0.5" data-path="survival-analysis.html"><a href="survival-analysis.html#hepatocellular"><i class="fa fa-check"></i><b>15.0.5</b> hepatoCellular</a></li>
+<li class="chapter" data-level="15.0.6" data-path="survival-analysis.html"><a href="survival-analysis.html#gbsg2"><i class="fa fa-check"></i><b>15.0.6</b> GBSG2</a></li>
+<li class="chapter" data-level="15.0.7" data-path="survival-analysis.html"><a href="survival-analysis.html#unemp"><i class="fa fa-check"></i><b>15.0.7</b> Unemp</a></li>
+<li class="chapter" data-level="15.1" data-path="survival-theory.html"><a href="survival-theory.html"><i class="fa fa-check"></i><b>15.1</b> Survival Theory</a></li>
+<li class="chapter" data-level="15.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>15.2</b> Survival Curve Estimation</a></li>
+<li class="chapter" data-level="15.3" data-path="survival-curve-estimation-1.html"><a href="survival-curve-estimation-1.html"><i class="fa fa-check"></i><b>15.3</b> Survival Curve Estimation</a></li>
+<li class="chapter" data-level="15.4" data-path="proportional-hazards-model.html"><a href="proportional-hazards-model.html"><i class="fa fa-check"></i><b>15.4</b> Proportional Hazards Model</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="survival-analysis-1.html"><a href="survival-analysis-1.html"><i class="fa fa-check"></i><b>16</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="16.0.1" data-path="survival-analysis-1.html"><a href="survival-analysis-1.html#gbsg2-1"><i class="fa fa-check"></i><b>16.0.1</b> GBSG2</a></li>
+<li class="chapter" data-level="16.0.2" data-path="survival-analysis-1.html"><a href="survival-analysis-1.html#unemp-1"><i class="fa fa-check"></i><b>16.0.2</b> Unemp</a></li>
+<li class="chapter" data-level="16.1" data-path="background-1.html"><a href="background-1.html"><i class="fa fa-check"></i><b>16.1</b> Background</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
 <li class="chapter" data-level="" data-path="publishing-to-bookdown.html"><a href="publishing-to-bookdown.html"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="17.0.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>17.0.1</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="16.1.1" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>16.1.1</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
@@ -282,7 +305,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="two-way-tables" class="section level2">
-<h2><span class="header-section-number">4.3</span> Two-Way Tables</h2>
+<h2><span class="header-section-number">2.3</span> Two-Way Tables</h2>
 <p>These notes rely on PSU STATS 504 <a href="https://online.stat.psu.edu/stat504/node/69/">course notes</a>.</p>
 <p>A two-way frequency table is a frequency table for <em>two</em> categorical variables. You usually construct a two-way table to test whether the frequency counts in one categorical variable differ from the other categorical variable using the chi-square independence test. If there is a significant difference (i.e., the variables are related), then describe the relationship with an analysis of the residuals, calculations of measures of association (difference in proportions, relative risk, or odds ratio), and partition tests.</p>
 <p>Here are three case studies that illustrate the concepts. The first is a simple 2x2 table. The second is a 3x2 table that extends some of the concepts. The third is a 2x4 table where one factor is <em>ordinal</em>.</p>
@@ -331,7 +354,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  No CHD     307       246       439    245  1237
 ##   Total     319       254       470    286  1329</code></pre>
 <div id="chi-square-independence-test" class="section level3">
-<h3><span class="header-section-number">4.3.1</span> Chi-Square Independence Test</h3>
+<h3><span class="header-section-number">2.3.1</span> Chi-Square Independence Test</h3>
 <p>The <strong>chi-square independence test</strong> tests whether observed joint frequency counts <span class="math inline">\(O_{ij}\)</span> differ from expected frequency counts <span class="math inline">\(E_{ij}\)</span> under the <em>independence model</em> (the model of independent explanatory variables, <span class="math inline">\(\pi_{ij} = \pi_{i+} \pi_{+j}\)</span>. <span class="math inline">\(H_0\)</span> is <span class="math inline">\(O_{ij} = E_{ij}\)</span>.</p>
 <p>There are two possible test statistics for this test, Pearson <span class="math inline">\(X^2\)</span> (and the continuity adjusted <span class="math inline">\(X^2\)</span>), and deviance <span class="math inline">\(G^2\)</span>. As <span class="math inline">\(n \rightarrow \infty\)</span> their sampling distributions approach <span class="math inline">\(\chi_{df}^2\)</span> with degrees of freedom (df) equal to the saturated model df <span class="math inline">\(I \times J - 1\)</span> minus the independence model df <span class="math inline">\((I - 1) + (J - 1)\)</span>, which you can algebraically solve for <span class="math inline">\(df = (I - 1)(J - 1)\)</span>.</p>
 <p>The Pearson goodness-of-fit statistic is</p>
@@ -382,7 +405,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The p-value is very low, so reject the null hypothesis of independence. This demonstrates that a relationship exists between cholesterol and CHD. Now you should describe that relationship by evaluating the (i) residuals, (ii) measures of association, and (iii) partitioning chi-square.</p>
 </div>
 <div id="residuals-analysis" class="section level3">
-<h3><span class="header-section-number">4.3.2</span> Residuals Analysis</h3>
+<h3><span class="header-section-number">2.3.2</span> Residuals Analysis</h3>
 <p>If the chi-squared independence test rejects <span class="math inline">\(H_0\)</span> of identical frequency distributions, the next step is to identify <em>which</em> cells may be driving the lack of fit. The Pearson residuals in the two-way table are</p>
 <p><span class="math display">\[r_{ij} = \frac{O_{ij} - E_{ij}}{\sqrt{E_{ij}}}\]</span></p>
 <p>where <span class="math inline">\(X^2 = \sum{r_{ij}}\)</span>. The <span class="math inline">\(r_{ij}\)</span> values have a normal distribution with mean 0, but with <em>unequal</em> variances. The <em>standardized</em> Pearson residual for a two-way table is</p>
@@ -419,7 +442,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## No CHD    0.34      0.39    0.0054    1.7</code></pre>
 </div>
 <div id="difference-in-proportions" class="section level3">
-<h3><span class="header-section-number">4.3.3</span> Difference in Proportions</h3>
+<h3><span class="header-section-number">2.3.3</span> Difference in Proportions</h3>
 <p>The difference in proportions measure is the difference in the probabilities of characteristic <span class="math inline">\(Z\)</span> conditioned on two groups <span class="math inline">\(Y = 1\)</span> and <span class="math inline">\(Y = 2\)</span>: <span class="math inline">\(\delta = \pi_{1|1} - \pi_{1|2}\)</span>. In social sciences and epidemiology <span class="math inline">\(\pi_{1|1}\)</span> and <span class="math inline">\(\pi_{1|2}\)</span> are sometimes referred to as “risk” values. The point estimate for <span class="math inline">\(\delta\)</span> is <span class="math inline">\(r = p_{1|1} - p_{1|2}\)</span>.</p>
 <p>Under the normal approximation method, the sampling distribution of the difference in population proportions has a normal distribution centered at <span class="math inline">\(d\)</span> with variance <span class="math inline">\(Var(\delta)\)</span>. The point estimate for <span class="math inline">\(Var(\delta)\)</span> is <span class="math inline">\(Var(d)\)</span>.</p>
 <p><span class="math display">\[Var(d) = \frac{p_{1|1} (1 - p_{1|1})}{n_{1+}} + \frac{p_{1|2} (1 - p_{1|2})}{n_{2+}}\]</span></p>
@@ -467,7 +490,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb198-15"><a href="two-way-tables.html#cb198-15"></a>       <span class="dt">x =</span> <span class="st">&quot;d&quot;</span>,</span>
 <span id="cb198-16"><a href="two-way-tables.html#cb198-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span></span>
 <span id="cb198-17"><a href="two-way-tables.html#cb198-17"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
 <p>The normal approximation method applies when the central limit theorem conditions hold:</p>
 <ul>
 <li>the sample is independently drawn (random sampling without replacement from <span class="math inline">\(n &lt; 10\%\)</span> of the population in observational studies, or random assignment in experiments),</li>
@@ -506,7 +529,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb201-18"><a href="two-way-tables.html#cb201-18"></a>       <span class="dt">x =</span> <span class="st">&quot;d&quot;</span>,</span>
 <span id="cb201-19"><a href="two-way-tables.html#cb201-19"></a>       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span></span>
 <span id="cb201-20"><a href="two-way-tables.html#cb201-20"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) </span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
 <p>The null hypothesis <span class="math inline">\(H_0: \delta_0 = 0\)</span> is equivalent to saying that two variables are independent, <span class="math inline">\(\pi_{1|1} = \pi_{1|2}\)</span>, so you can also use the <span class="math inline">\(\chi^2\)</span> or <span class="math inline">\(G^2\)</span> test for independence in a 2 × 2. That’s what <code>prop.test()</code> is doing. The square of the z-statistic is algebraically equal to <span class="math inline">\(\chi^2\)</span>. The two-sided test comparing <span class="math inline">\(Z\)</span> to a <span class="math inline">\(N(0, 1)\)</span> is identical to comparing <span class="math inline">\(\chi^2\)</span> to a chi-square distribution with df = 1. Compare the <span class="math inline">\(Z^2\)</span> to the output from <code>prop.test()</code>.</p>
 <div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="two-way-tables.html#cb202-1"></a>z<span class="op">^</span><span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 4.8</code></pre>
@@ -541,7 +564,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>You could go on to try other pairwise tests to establish which levels differ from the others.</p>
 </div>
 <div id="relative-risk" class="section level3">
-<h3><span class="header-section-number">4.3.4</span> Relative Risk</h3>
+<h3><span class="header-section-number">2.3.4</span> Relative Risk</h3>
 <p>The relative risk measure is the ratio of the probabilities of characteristic <span class="math inline">\(Z\)</span> conditioned on two groups <span class="math inline">\(Y = 1\)</span> and <span class="math inline">\(Y = 2\)</span>: <span class="math inline">\(\rho = \pi_{1|1} / \pi_{1|2}\)</span>. In social sciences and epidemiology <span class="math inline">\(\rho\)</span> is sometimes referred to as the “relative risk”. The point estimate for <span class="math inline">\(\rho\)</span> is <span class="math inline">\(r = p_{1|1} / p_{1|2}\)</span>.</p>
 <p>Because <span class="math inline">\(\rho\)</span> is non-negative, a normal approximation for <span class="math inline">\(\log \rho\)</span> has a less skewed distribution than <span class="math inline">\(\rho\)</span>. The approximate variance of <span class="math inline">\(\log \rho\)</span> is</p>
 <p><span class="math display">\[Var(\log \rho) = \frac{1 - \pi_{11}/\pi_{1+}}{n_{1+}\pi_{11}/\pi_{1+}} + \frac{1 - \pi_{21}/\pi_{2+}}{n_{2+}\pi_{21}/\pi_{2+}}\]</span></p>
@@ -576,7 +599,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##      1.00      0.84      1.75      3.81</code></pre>
 </div>
 <div id="odds-ratio" class="section level3">
-<h3><span class="header-section-number">4.3.5</span> Odds Ratio</h3>
+<h3><span class="header-section-number">2.3.5</span> Odds Ratio</h3>
 <p>The odds ratio is the most commonly used measure of association. It is also a natural parameter for many of the log-linear and logistic models. The odds is the ratio of probabilities of “success” and “failure”. When conditioned on a variable, the odds ratio is</p>
 <p><span class="math display">\[\theta = \frac{\pi_{1|1} / \pi_{2|1}} {\pi_{1|2} / \pi_{2|2}}\]</span></p>
 <p>and is estimated by the sample frequencies</p>
@@ -610,7 +633,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <div id="partitioning-chi-square" class="section level3">
-<h3><span class="header-section-number">4.3.6</span> Partitioning Chi-Square</h3>
+<h3><span class="header-section-number">2.3.6</span> Partitioning Chi-Square</h3>
 <p>Besides looking at the residuals or the measures of association, another way to describe the effects is to form a sequence of smaller tables by combining or collapsing rows and/or columns in a meaningful way.</p>
 <p>For the smoking study, you might ask whether a student is more likely to smoke if <em>either</em> parent smokes. Collapse the first two rows (1 parent smokes, both parents smoke) and run the chi-squared test.</p>
 <div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="two-way-tables.html#cb230-1"></a>smoke_clps_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rbind</span>(smoke_o[<span class="dv">1</span>, ] <span class="op">+</span><span class="st"> </span>smoke_o[<span class="dv">2</span>, ], smoke_o[<span class="dv">3</span>, ])</span>
@@ -635,7 +658,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The estimated odds a student smokes if both parents smoke compared to one parent is 1.27 (X^2 = 9, p = 0.</p>
 </div>
 <div id="correlation" class="section level3">
-<h3><span class="header-section-number">4.3.7</span> Correlation</h3>
+<h3><span class="header-section-number">2.3.7</span> Correlation</h3>
 <p>When classification is ordinal, there may exist a linear trend among the levels of the characteristics. Measure the linear relationship with Pearson’s correlation coefficient, or its nonparametric alternatives, Spearman’s correlation coefficient and Kendall’s tau.</p>
 <p>In the CHD study, the four levels of cholesterol (0-199, 200-219, 220-259, and 260+) may be treated as ordinal data. You can also treat the presence of heart disease as ordinal. The Pearson correlation,</p>
 <p><span class="math display">\[r = \frac{cov(X, Y)}{s_X s_Y}\]</span></p>
