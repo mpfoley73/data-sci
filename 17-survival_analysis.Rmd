@@ -1,193 +1,301 @@
 # Survival Analysis
 
-
-
-Survival analysis models time to event.  Whereas linear regression models a normal distribution of outcomes, time-to-event analysis only takes on positive values, so survival analysis uses the Weibull distribution.  Another complication with surival analysis is censoring.
-
-
-
 These notes rely on the [Survival Analysis in R](https://campus.datacamp.com/courses/survival-analysis-in-r) DataCamp course and Applied Survival Analysis Using R by Dirk Moore [@Moore2016].  
 
+Survival analysis models time to event.  Whereas linear regression outcomes are assumed to have a normal distribution, time-to-event outcomes are assumed to have a Weibull or exponential distribution.  Survival analysis also deals with censoring (unknown starting event and/or ending event).
 
-
-Most surival analysis uses the `survival` and `survminer` packages.
-
-
+Most surival analysis uses the `survival` package for modeling and the `survminer` package for visualization.
 
 ```{r message=FALSE, warning=FALSE}
-
 library(tidyverse)
-
 library(survival)
-
 library(survminer)
+```
 
+
+## Survival Theory
+
+This section reviews the fundamentals of survival analysis, including the hazard probability density, and survival functions.
+
+You can specify the survival distribution function either as a *survival function* or as a *hazard function*.  The survival function is the probability of surviving up to time $t$, 
+
+$$S(t) = 1 - F(t) = pr(T > t), \hspace{3mm} 0 < t < \infty$$
+
+where $F(t) = Pr(T \le t), \hspace{3mm} 0 < t < \infty$ is the cumulative risk function.  The hazard function is the instantaneous death rate given survival up to time $t$,
+
+$$h(t) = \lim_{\delta \rightarrow 0}{\frac{pr(t < T < t + \delta|T > t)}{\delta}}.$$
+
+The survival function and the hazard function are related.  The probability of dying during the interval $(t, t + \delta)$, $f(t) = F'(t)$, is the probability of dying during $t + \delta$ given survival up to point $t$ times the probability of surviving up to point $t$, $f(t) = h(t) S(t)$.
+
+$S(t)$ is also the exponent of the negative cumulative hazard function,
+
+$$S(t) = e^{-H(t)}.$$
+
+You can use the survival function to estimate the mean and median survival times.  The mean survival time is $E(T) = \int S(t)dt$.  The median survival time is $S(t) = 0.5$.
+
+
+## Survival Curve Estimation
+
+There are parametric and non-parametric methods to estimate a survivor curve.  The usual non-parametric method is the *Kaplan-Meier* estimator.  The usual parametric method is the *Weibull* distribution, of which the exponential distribution is a special case.  In between the two is the *Cox proportional hazards model*, the most common way to estimate a survivor curve.
+
+### Kaplan-Meier
+
+The Kaplan-Meier estimator for the survival function is
+
+$$\hat{S} = \prod_{i: t_i < t}{\frac{n_i - d_i}{n_i}}$$
+
+where $n_i$ is the number of persons under observation at time $i$ and $d_i$ is the number of individuals dying at time $i$.  The Kaplan-Meier curve falls only when a subject dies, not when a subject is censored.  Calculate the Kaplan-Meier estimate with the `survfit()` function.
+
+Here is an example of a Kaplan-Meier survival function estimate.  `GBSG2` contains time to death of 686 breast cancer patients.  Column `cens` indicates whether or not a person in the study has died (0-censored, 1-event).
+
+```{r}
+data(GBSG2, package = "TH.data")
+head(GBSG2)
+```
+
+`survfit()` creates survival curves from a formula or from a previously fitted Cox model.  The formula below is an intercept-only model.  Structure the response variable as a `Surv` object.  
+
+```{r}
+km_fit <- survfit(Surv(time, cens) ~ 1, data = GBSG2)
+km_fit
+```
+
+```{r}
+ggsurvplot(
+  fit = km_fit, 
+#  palette = "uchicago", 
+  linetype = 1, 
+  surv.median.line = "hv",
+  # risk.table = TRUE,
+  # cumevents = TRUE, 
+  # cumcensor = TRUE
+  title = "Kaplan-Meier Survival Function Estimate"
+)
 ```
 
 
 
+You typically structure data in a `Surv` object.  In the sampled data shown below, "+" indicates a censored observation.
+
+```{r}
+summary(GBSG2$time)
+sobj <- Surv(time = GBSG2$time, event = GBSG2$cens)
+head(sobj, n = 10)
+summary(sobj)
+```
 
 
-The examples in these notes will use the following data sets.
+```{r}
+km <- survfit(Surv(time, cens) ~ 1, data = GBSG2)
+
+ggsurvplot(km, risk.table = TRUE, surv.median.line = "hv")
+```
 
 
+
+Several parametric distributions are available for modeling survival data.  The exponential distribution is the easiest to use because it has a constant hazard $h(t) = \lambda$.  The cumulative hazard is $H(t) = \int_0^t \lambda dt = \lambda t$ and the corresponding survival function is 
+
+$$S(t) = e^{-H(t)} = e^{-\lambda t}.$$
+
+The expected survival time is $E(T) = \int_0^\infty S(t)dt = \int_0^\infty d^{-\lambda t} dt = 1 / \lambda.$.  The median survival time is $S(t) = e^{-\lambda t} = 0.5$, or $t_{med} = \log(2) / \lambda$.  
+
+The Weibull distribution is more appropriate for modeling lifetimes, however.  The Weibull hazard function is $h(t) = \alpha \lambda (\lambda t)^{\alpha - 1} = \alpha \lambda^\alpha t^{\alpha-1}$.  
+
+```{r}
+data.frame(t = rep(1:80, 3),
+           alpha = c(rep(1.5, 80), rep(1, 80), rep(0.75, 80)),
+           lambda = rep(0.03, 240)) %>%
+  mutate(
+    f = dweibull(x = t, shape = alpha, scale = 1 / 0.03),
+    S = pweibull(q = t, shape = alpha, scale = 1 / 0.03, lower.tail = FALSE),
+    h = f / S  # same as alpha * lambda^alpha * t^(alpha-1)
+  ) %>%
+  ggplot(aes(x = t, y = h, color = as.factor(alpha))) +
+  geom_line() +
+  theme(legend.position = "top") +
+  labs(y = "hazard", x = "time", color = "alpha",
+       title = "Weibul hazard function at varying levels of alpha",
+       subtitle = "Lambda = 0.03",
+       caption = "alpha = 1 is special case of exponential function.")
+```
+
+The cumulative hazard function is $H(t) = (\lambda t)^\alpha$ and the corresponding survival function is
+
+$$S(t) = e^{-(\lambda t)^\alpha}.$$
+
+The exponential distribution is a special case of the Weibull where $\alpha = 1$.  The expected survival time is $E(t) = \frac{\Gamma (1 + 1 / \alpha)}{\lambda}$.  The median survival time is $t_{med} = \frac{[\log(2)]^{1 / \alpha}}{\lambda}$
+
+The Kaplan-Meier estimate is used mainly as a descriptive tool.  The Weibull model produces a smooth survival curve instead of a step function.  The Weibull model assumes a Weibull distribution.  
+
+Fit a Weibull model with the `survreg()` function.
+
+```{r}
+wb <- survreg(Surv(time, cens) ~ 1, data = GBSG2)
+
+# 90% of patients survive beyond time point 385
+# Alternatively, 10% of patients die at time 385
+predict(wb, type = "quantile", p = 1 - 0.9, newdata = data.frame(1))
+# The median survival time is 1694
+predict(wb, type = "quantile", p = 1 - 0.5, newdata = data.frame(1))
+
+surv <- seq(.99, .01, by = -.01)
+t <- predict(wb, type = "quantile", p = 1 - surv, newdata = data.frame(1))
+head(data.frame(time = t, surv = surv))
+
+surv_wb <- data.frame(time = t, surv = surv, 
+                      upper = NA, lower = NA, std.err = NA)
+ggsurvplot_df(fit = surv_wb, surv.geom = geom_line)
+```
+
+Fit a Weibull model controlling for hormonal therapy `horTh` and tumor size `tsize`.
+
+```{r}
+wbmod <- survreg(Surv(time, cens) ~ horTh + tsize, data = GBSG2)
+
+coef(wbmod)
+summary(wbmod)
+
+surv <- seq(.99, .01, by = -.01)
+newdata <- expand.grid(
+    horTh = levels(GBSG2$horTh),
+    tsize = quantile(GBSG2$tsize, probs = c(0.25, 0.50, 0.75))
+)
+t <- predict(wbmod, type = "quantile", p = 1 - surv, newdata = newdata)
+
+surv_wbmod <- surv_wbmod_wide <- cbind(newdata, t) %>%
+    pivot_longer(names_to = "surv_id", values_to = "time", cols = -c(1:2)) %>%
+    mutate(tsize = as.numeric(tsize),
+           surv_id = as.factor(as.numeric(surv_id))) %>%
+    data.frame()
+surv_wbmod$surv = surv[as.numeric(surv_wbmod$surv_id)]
+surv_wbmod$upper = NA
+surv_wbmod$lower = NA
+surv_wbmod$std.err = NA
+surv_wbmod$strata = NA
+surv_wbmod[, c("upper", "lower", "std.err", "strata")] <- NA
+ggsurvplot_df(surv_wbmod, surv.geom = geom_line,
+  linetype = "horTh", color = "tsize", legend.title = NULL)
+```
+
+Interpret the coefficient as the probability of surviving falls by 0.012 per unit increase in the tumor size and increases by 0.312 if taking hormonal therapy.
+
+You can fit other models with the `dist = c("lognormal", "exponential")` parameter.
+
+The Cox model (aka, proportional hazards model) is the most widely used model for survival analysis.  Whereas the Weibull model is fully parametric, the Cox model is semi-parameteric.  Fit a Cox proportional hazards model with `coxph()`.  Negative values indicate a *longer* survival period.
+
+```{r}
+cxmod <- coxph(Surv(time, cens) ~ horTh + tsize, data = GBSG2)
+coef(cxmod)
+
+newdata <- expand.grid(
+    horTh = levels(GBSG2$horTh),
+    tsize = quantile(GBSG2$tsize, probs = c(0.25, 0.50, 0.75))
+)
+rownames(newdata) <- letters[1:6]
+
+# Create survival curves.  The rownames show up in the model
+cxsf <- survfit(cxmod, data = GBSG2, newdata = newdata, conf.type = "none")
+head(cxsf$surv)
+head(cxsf$time)
+
+# surv_summary() creates the data.frame with a nice summary from survfit() results, including columns like time (survival time) and surv (survival probability).
+surv_cxmod0 <- surv_summary(cxsf)
+
+# get tne correspondng new_data cols
+surv_cxmod <- cbind(surv_cxmod0, newdata[as.character(surv_cxmod0$strata), ])
+
+ggsurvplot_df(surv_cxmod, linetype = "horTh", color = "tsize",
+  legend.title = NULL, censor = FALSE)
+
+
+```
+
+The visualization shows that patients with smaller tumors tend to survive longer and patients who receive hormonal therapy tend to survive longer.
+
+
+## Survival Curve Estimation
+
+When
+
+## Proportional Hazards Model
+
+
+The examples in these notes use the following data sets.
+
+### Xelox
+
+Data from a Phase II clinical trial of Xeloda and exaliplatin given before surgery to advanced gastric cancer patients with para-aortic lymph node metastasis.  `timeWeeks` is survival time; `delta` is the censoring indicator (1 = death, 0 = censored).
+
+```{r}
+data(gastricXelox, package = "asaur")
+
+head(gastricXelox)
+```
+
+### pancreatic
+
+Data from a Phase II clinical trial of patients with locally advanced or metastatic pancreatic cancer.  Column `stage` is a covariate indicating the diagnosis (LA = locally advance, M = metastatic); the event of interest is either `progression` or `death`.  There was no censoring in this data because none of the subjects lived very long.
+
+```{r}
+data(pancreatic, package = "asaur")
+
+head(pancreatic)
+```
+
+### prostateSurvival
+
+There are two outcomes of interest indicated by `status`, death from prostate cancer, and death from other causes, a competing risks survival analysis problem.
+
+```{r}
+data("prostateSurvival", package = "asaur")
+
+head(prostateSurvival)
+```
+
+
+### pharmacoSmoking
+
+The primary outcome variable `ttr` is the time from randomization until relapse (return to smoking).  Individuals who remained non-smokers for six months were censored.
+
+```{r}
+data("pharmacoSmoking", package = "asaur")
+
+head(pharmacoSmoking)
+```
+
+### hepatoCellular
+
+Overall and recurrence-free survival of patients with hepatocellular carcinoma.  The survival outcomes are `OS` (overall survival) and `RFS` (recurrence-free survival), and the corresponding censoring indicators are `Death` and `Recurrance`.
+
+```{r}
+data("hepatoCellular", package = "asaur")
+
+head(hepatoCellular)
+```
 
 ### GBSG2
-
-
-
-`GBSG2` contains time to death of 686 breast cancer patients.  
-
-
-
-```{r}
-
-data(GBSG2, package = "TH.data")
-
-```
-
-
-
-Column `cens` indicate whether or not a person in the study has died (0-censored, 1-event).
-
-
-
-```{r}
-
-GBSG2 %>% count(cens)
-
-```
-
-
-
-You will typically structure your data in a `Surv` object.  In the sampled data shown below, "+" indicates a censored observation.
-
-
-
-```{r}
-
-sobj <- Surv(time = GBSG2$time, event = GBSG2$cens)
-
-head(sobj, n = 10)
-
-summary(sobj)
-
-```
-
 
 
 
 
 ### Unemp
 
-
-
 UnempDur contains time to re-employment of 3,343 unemployed persons.
 
-
-
 ```{r}
-
 data(UnempDur, package = "Ecdat")
-
 ```
-
-
 
 Column `censor1` indicates the re-employment event in a full-time job.  Column `spell` indicates the length of time unemployed in number of two-week intervals.
 
-
-
 ```{r}
-
 UnempDur %>% count(censor1)
-
 ```
 
-
-
 ```{r}
-
 sobj <- Surv(time = UnempDur$spell, event = UnempDur$censor1)
-
 head(sobj)
-
 summary(sobj)
-
 ```
 
 
-
-
-
-## Background
-
-
-
-You can specify the survival distribution function either as a *survival function* of the form
-
-
-
-$$S(t) = 1 - F(t) = pr(T > t), \hspace{3mm} 0 < t < \infty$$
-
-
-
-or as a *hazard function*,  the instantaneous failure rate given survival up to time $t$
-
-
-
-$$h(t) = \lim_{\delta \rightarrow 0}{\frac{pr(t < T < t + \delta|T > 1)}{\delta}}.$$
-
-
-
-The survival function is the compliment of the the cumulative distribution function.  The Kaplan-Meier estimator for the survival function is
-
-
-
-$$\hat{S} = \prod_{i: t_i < t}{\frac{n_i - d_i}{n_i}}$$
-
-
-
-where $n_i$ is the number of persons under observation at time $i$ and $d_i$ is the number of individuals dying at time $i$.  Calculate the Kaplan-Meier estimate with the `survfit()` function.
-
-
-
-```{r}
-
-
-
-```
-
-
-
-
-
-
-
-```{r}
-
-library(survival)
-
-
-
-tm <- c(
-
-    0, # birth
-
-    1 / 365,  # first day of life
-
-    7 / 365,  # seventh day of life
-
-    28 / 365, # fourth week of life
-
-    1:110     # subsequent years
-
-)
-
-hazMale = survexp.us[, "male", "2004"]
-
-hazFemale = survexp.us[, "female", "2004"]
-
-#plot(tm, hazMale)
-
-```
