@@ -60,35 +60,15 @@ km_fit <- survfit(Surv(time, cens) ~ 1, data = GBSG2)
 km_fit
 ```
 
+Plot the fitted model with `ggsurvplot()`.  The plus sign ("+") indicates censored observations.
+
 ```{r}
 ggsurvplot(
   fit = km_fit, 
-#  palette = "uchicago", 
   linetype = 1, 
   surv.median.line = "hv",
-  # risk.table = TRUE,
-  # cumevents = TRUE, 
-  # cumcensor = TRUE
   title = "Kaplan-Meier Survival Function Estimate"
 )
-```
-
-
-
-You typically structure data in a `Surv` object.  In the sampled data shown below, "+" indicates a censored observation.
-
-```{r}
-summary(GBSG2$time)
-sobj <- Surv(time = GBSG2$time, event = GBSG2$cens)
-head(sobj, n = 10)
-summary(sobj)
-```
-
-
-```{r}
-km <- survfit(Surv(time, cens) ~ 1, data = GBSG2)
-
-ggsurvplot(km, risk.table = TRUE, surv.median.line = "hv")
 ```
 
 
