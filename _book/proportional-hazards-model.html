@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-05-29" />
+<meta name="date" content="2020-06-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -307,9 +307,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="xelox" class="section level3">
 <h3><span class="header-section-number">14.4.1</span> Xelox</h3>
 <p>Data from a Phase II clinical trial of Xeloda and exaliplatin given before surgery to advanced gastric cancer patients with para-aortic lymph node metastasis. <code>timeWeeks</code> is survival time; <code>delta</code> is the censoring indicator (1 = death, 0 = censored).</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="proportional-hazards-model.html#cb34-1"></a><span class="kw">data</span>(gastricXelox, <span class="dt">package =</span> <span class="st">&quot;asaur&quot;</span>)</span>
-<span id="cb34-2"><a href="proportional-hazards-model.html#cb34-2"></a></span>
-<span id="cb34-3"><a href="proportional-hazards-model.html#cb34-3"></a><span class="kw">head</span>(gastricXelox)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="proportional-hazards-model.html#cb27-1"></a><span class="kw">data</span>(gastricXelox, <span class="dt">package =</span> <span class="st">&quot;asaur&quot;</span>)</span>
+<span id="cb27-2"><a href="proportional-hazards-model.html#cb27-2"></a></span>
+<span id="cb27-3"><a href="proportional-hazards-model.html#cb27-3"></a><span class="kw">head</span>(gastricXelox)</span></code></pre></div>
 <pre><code>##   timeWeeks delta
 ## 1         4     1
 ## 2         8     1
@@ -321,9 +321,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="pancreatic" class="section level3">
 <h3><span class="header-section-number">14.4.2</span> pancreatic</h3>
 <p>Data from a Phase II clinical trial of patients with locally advanced or metastatic pancreatic cancer. Column <code>stage</code> is a covariate indicating the diagnosis (LA = locally advance, M = metastatic); the event of interest is either <code>progression</code> or <code>death</code>. There was no censoring in this data because none of the subjects lived very long.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="proportional-hazards-model.html#cb36-1"></a><span class="kw">data</span>(pancreatic, <span class="dt">package =</span> <span class="st">&quot;asaur&quot;</span>)</span>
-<span id="cb36-2"><a href="proportional-hazards-model.html#cb36-2"></a></span>
-<span id="cb36-3"><a href="proportional-hazards-model.html#cb36-3"></a><span class="kw">head</span>(pancreatic)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="proportional-hazards-model.html#cb29-1"></a><span class="kw">data</span>(pancreatic, <span class="dt">package =</span> <span class="st">&quot;asaur&quot;</span>)</span>
+<span id="cb29-2"><a href="proportional-hazards-model.html#cb29-2"></a></span>
+<span id="cb29-3"><a href="proportional-hazards-model.html#cb29-3"></a><span class="kw">head</span>(pancreatic)</span></code></pre></div>
 <pre><code>##   stage    onstudy progression      death
 ## 1     M 12/16/2005    2/2/2006 10/19/2006
 ## 2     M   1/6/2006   2/26/2006  4/19/2006
@@ -335,9 +335,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="prostatesurvival" class="section level3">
 <h3><span class="header-section-number">14.4.3</span> prostateSurvival</h3>
 <p>There are two outcomes of interest indicated by <code>status</code>, death from prostate cancer, and death from other causes, a competing risks survival analysis problem.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="proportional-hazards-model.html#cb38-1"></a><span class="kw">data</span>(<span class="st">&quot;prostateSurvival&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;asaur&quot;</span>)</span>
-<span id="cb38-2"><a href="proportional-hazards-model.html#cb38-2"></a></span>
-<span id="cb38-3"><a href="proportional-hazards-model.html#cb38-3"></a><span class="kw">head</span>(prostateSurvival)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="proportional-hazards-model.html#cb31-1"></a><span class="kw">data</span>(<span class="st">&quot;prostateSurvival&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;asaur&quot;</span>)</span>
+<span id="cb31-2"><a href="proportional-hazards-model.html#cb31-2"></a></span>
+<span id="cb31-3"><a href="proportional-hazards-model.html#cb31-3"></a><span class="kw">head</span>(prostateSurvival)</span></code></pre></div>
 <pre><code>##   grade stage ageGroup survTime status
 ## 1  mode   T1c      80+       18      0
 ## 2  mode  T1ab    75-79       23      0
@@ -349,9 +349,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="pharmacosmoking" class="section level3">
 <h3><span class="header-section-number">14.4.4</span> pharmacoSmoking</h3>
 <p>The primary outcome variable <code>ttr</code> is the time from randomization until relapse (return to smoking). Individuals who remained non-smokers for six months were censored.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="proportional-hazards-model.html#cb40-1"></a><span class="kw">data</span>(<span class="st">&quot;pharmacoSmoking&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;asaur&quot;</span>)</span>
-<span id="cb40-2"><a href="proportional-hazards-model.html#cb40-2"></a></span>
-<span id="cb40-3"><a href="proportional-hazards-model.html#cb40-3"></a><span class="kw">head</span>(pharmacoSmoking)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="proportional-hazards-model.html#cb33-1"></a><span class="kw">data</span>(<span class="st">&quot;pharmacoSmoking&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;asaur&quot;</span>)</span>
+<span id="cb33-2"><a href="proportional-hazards-model.html#cb33-2"></a></span>
+<span id="cb33-3"><a href="proportional-hazards-model.html#cb33-3"></a><span class="kw">head</span>(pharmacoSmoking)</span></code></pre></div>
 <pre><code>##    id ttr relapse         grp age gender     race employment yearsSmoking
 ## 1  21 182       0   patchOnly  36   Male    white         ft           26
 ## 2 113  14       1   patchOnly  41   Male    white      other           27
@@ -370,9 +370,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="hepatocellular" class="section level3">
 <h3><span class="header-section-number">14.4.5</span> hepatoCellular</h3>
 <p>Overall and recurrence-free survival of patients with hepatocellular carcinoma. The survival outcomes are <code>OS</code> (overall survival) and <code>RFS</code> (recurrence-free survival), and the corresponding censoring indicators are <code>Death</code> and <code>Recurrance</code>.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="proportional-hazards-model.html#cb42-1"></a><span class="kw">data</span>(<span class="st">&quot;hepatoCellular&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;asaur&quot;</span>)</span>
-<span id="cb42-2"><a href="proportional-hazards-model.html#cb42-2"></a></span>
-<span id="cb42-3"><a href="proportional-hazards-model.html#cb42-3"></a><span class="kw">head</span>(hepatoCellular)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="proportional-hazards-model.html#cb35-1"></a><span class="kw">data</span>(<span class="st">&quot;hepatoCellular&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;asaur&quot;</span>)</span>
+<span id="cb35-2"><a href="proportional-hazards-model.html#cb35-2"></a></span>
+<span id="cb35-3"><a href="proportional-hazards-model.html#cb35-3"></a><span class="kw">head</span>(hepatoCellular)</span></code></pre></div>
 <pre><code>##   Number Age Gender HBsAg Cirrhosis ALT AST AFP Tumorsize Tumordifferentiation
 ## 1      1  57      0     1         1   1   2   2         2                    1
 ## 2      2  58      1     0         0   1   1   2         1                    1
@@ -422,18 +422,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="unemp" class="section level3">
 <h3><span class="header-section-number">14.4.7</span> Unemp</h3>
 <p>UnempDur contains time to re-employment of 3,343 unemployed persons.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="proportional-hazards-model.html#cb44-1"></a><span class="kw">data</span>(UnempDur, <span class="dt">package =</span> <span class="st">&quot;Ecdat&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="proportional-hazards-model.html#cb37-1"></a><span class="kw">data</span>(UnempDur, <span class="dt">package =</span> <span class="st">&quot;Ecdat&quot;</span>)</span></code></pre></div>
 <p>Column <code>censor1</code> indicates the re-employment event in a full-time job. Column <code>spell</code> indicates the length of time unemployed in number of two-week intervals.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="proportional-hazards-model.html#cb45-1"></a>UnempDur <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(censor1)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="proportional-hazards-model.html#cb38-1"></a>UnempDur <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(censor1)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   censor1     n
 ##     &lt;dbl&gt; &lt;int&gt;
 ## 1       0  2270
 ## 2       1  1073</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="proportional-hazards-model.html#cb47-1"></a>sobj &lt;-<span class="st"> </span><span class="kw">Surv</span>(<span class="dt">time =</span> UnempDur<span class="op">$</span>spell, <span class="dt">event =</span> UnempDur<span class="op">$</span>censor1)</span>
-<span id="cb47-2"><a href="proportional-hazards-model.html#cb47-2"></a><span class="kw">head</span>(sobj)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="proportional-hazards-model.html#cb40-1"></a>sobj &lt;-<span class="st"> </span><span class="kw">Surv</span>(<span class="dt">time =</span> UnempDur<span class="op">$</span>spell, <span class="dt">event =</span> UnempDur<span class="op">$</span>censor1)</span>
+<span id="cb40-2"><a href="proportional-hazards-model.html#cb40-2"></a><span class="kw">head</span>(sobj)</span></code></pre></div>
 <pre><code>## [1]  5  13  21   3   9+ 11+</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="proportional-hazards-model.html#cb49-1"></a><span class="kw">summary</span>(sobj)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="proportional-hazards-model.html#cb42-1"></a><span class="kw">summary</span>(sobj)</span></code></pre></div>
 <pre><code>##       time            status     
 ##  Min.   : 1.000   Min.   :0.000  
 ##  1st Qu.: 2.000   1st Qu.:0.000  

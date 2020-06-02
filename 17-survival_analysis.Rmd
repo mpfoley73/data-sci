@@ -1,10 +1,10 @@
 # Survival Analysis
 
-These notes rely on the [Survival Analysis in R](https://campus.datacamp.com/courses/survival-analysis-in-r) DataCamp course and Applied Survival Analysis Using R by Dirk Moore [@Moore2016].  
+These notes rely on the [Survival Analysis in R](https://campus.datacamp.com/courses/survival-analysis-in-r) DataCamp course and Applied Survival Analysis Using R [@Moore2016].  
 
 Survival analysis models time to event.  Whereas linear regression outcomes are assumed to have a normal distribution, time-to-event outcomes are assumed to have a Weibull or exponential distribution.  Survival analysis also deals with censoring (unknown starting event and/or ending event).
 
-Most surival analysis uses the `survival` package for modeling and the `survminer` package for visualization.
+Most survival analyses use the `survival` package for modeling and the `survminer` package for visualization.
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -17,15 +17,15 @@ library(survminer)
 
 This section reviews the fundamentals of survival analysis, including the hazard probability density, and survival functions.
 
-You can specify the survival distribution function either as a *survival function* or as a *hazard function*.  The survival function is the probability of surviving up to time $t$, 
+You can specify the survival distribution function either as a *survival function* or as a *hazard function*.  Define $F(t) = Pr(T \le t), \hspace{3mm} 0 < t < \infty$ as the cumulative risk function, the probability of dying on or before time $t$.  Then the survival function is the probability of *surviving* up to time $t$, 
 
-$$S(t) = 1 - F(t) = pr(T > t), \hspace{3mm} 0 < t < \infty$$
+$$S(t) = 1 - F(t) = pr(T > t), \hspace{3mm} 0 < t < \infty.$$
 
-where $F(t) = Pr(T \le t), \hspace{3mm} 0 < t < \infty$ is the cumulative risk function.  The hazard function is the instantaneous death rate given survival up to time $t$,
+The hazard function is the instantaneous death rate given survival up to time $t$,
 
 $$h(t) = \lim_{\delta \rightarrow 0}{\frac{pr(t < T < t + \delta|T > t)}{\delta}}.$$
 
-The survival function and the hazard function are related.  The probability of dying during the interval $(t, t + \delta)$, $f(t) = F'(t)$, is the probability of dying during $t + \delta$ given survival up to point $t$ times the probability of surviving up to point $t$, $f(t) = h(t) S(t)$.
+The survival function and the hazard function are related.  The probability of dying during the interval $(t, t + \delta)$, $f(t) = F'(t)$, is the probability of dying during the interval given survival up to point $t$ times the probability of surviving up to point $t$, $f(t) = h(t) S(t)$.
 
 $S(t)$ is also the exponent of the negative cumulative hazard function,
 
@@ -44,21 +44,26 @@ The Kaplan-Meier estimator for the survival function is
 
 $$\hat{S} = \prod_{i: t_i < t}{\frac{n_i - d_i}{n_i}}$$
 
-where $n_i$ is the number of persons under observation at time $i$ and $d_i$ is the number of individuals dying at time $i$.  The Kaplan-Meier curve falls only when a subject dies, not when a subject is censored.  Calculate the Kaplan-Meier estimate with the `survfit()` function.
+where $n_i$ is the number of persons under observation at time $i$ and $d_i$ is the number of individuals dying at time $i$.  The Kaplan-Meier curve falls only when a subject dies, not when a subject is censored.  Confidence limits can be calculated using the "delta" method to obtain the variance of $\log \left(\hat{S}(t) \right)$ (see p27 of Moore).
 
-Here is an example of a Kaplan-Meier survival function estimate.  `GBSG2` contains time to death of 686 breast cancer patients.  Column `cens` indicates whether or not a person in the study has died (0-censored, 1-event).
+Calculate the Kaplan-Meier survival function estimate with the `survfit()` function. Here is an example.  `GBSG2` contains time to death of 686 breast cancer patients.  Column `cens` indicates whether or not a person in the study has died (0-censored, 1-event).
 
 ```{r}
 data(GBSG2, package = "TH.data")
 head(GBSG2)
+
+data(gastricXelox, package = "asaur")
+head(gastricXelox)
 ```
 
 `survfit()` creates survival curves from a formula or from a previously fitted Cox model.  The formula below is an intercept-only model.  Structure the response variable as a `Surv` object.  
 
 ```{r}
-km_fit <- survfit(Surv(time, cens) ~ 1, data = GBSG2)
+km_fit <- survfit(Surv(time, cens) ~ 1, data = GBSG2, conf.type = "log-log")
+km_fit <- survfit(Surv(timeWeeks, delta) ~ 1, data = gastricXelox, conf.type = "log-log")
 km_fit
 ```
+The `survfit` object indicates 686 records (patients), 299 events (deaths), with median survival time of 1807 days, 95% CI of (1528, 2018) days.
 
 Plot the fitted model with `ggsurvplot()`.  The plus sign ("+") indicates censored observations.
 
@@ -71,7 +76,9 @@ ggsurvplot(
 )
 ```
 
+### Weibull
 
+### Cox
 
 Several parametric distributions are available for modeling survival data.  The exponential distribution is the easiest to use because it has a constant hazard $h(t) = \lambda$.  The cumulative hazard is $H(t) = \int_0^t \lambda dt = \lambda t$ and the corresponding survival function is 
 
