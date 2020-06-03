@@ -156,10 +156,7 @@ km_diff
 The chi-sq test statistic is 10.3 on one d.f., for a p-value of 0.001, so yes, males and females had different survival patterns.
 
 
-
-
 ### Weibull
-
 
 Several parametric distributions are available for modeling survival data.  The exponential distribution is the easiest to use because it has a constant hazard $h(t) = \lambda$.  The cumulative hazard is $H(t) = \int_0^t \lambda dt = \lambda t$ and the corresponding survival function is 
 
