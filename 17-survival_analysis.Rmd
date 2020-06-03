@@ -195,6 +195,7 @@ The Kaplan-Meier estimate is used mainly as a descriptive tool.  The Weibull mod
 Fit a Weibull model with the `survreg()` function.
 
 ```{r}
+data(GBSG2, package = "TH.data")
 wb <- survreg(Surv(time, cens) ~ 1, data = GBSG2)
 
 # 90% of patients survive beyond time point 385
@@ -295,7 +296,7 @@ The p-values for all three overall tests (likelihood, Wald, and score) are signi
 Having fit a Cox model to the data, it’s possible to visualize the predicted survival proportion at any given time for a particular risk group. Function `survfit()` estimates the survival proportion at the mean values of covariates by default.
 
 ```{r}
-ggsurvplot(survfit(lung_cox_2, data = lung), 
+ggsurvplot(surv_fit(lung_cox_2, data = lung), 
            palette = "#2E9FDF", ggtheme = theme_minimal())
 ```
 
@@ -304,15 +305,25 @@ To display the effects of one or more particular covariates, construct a data fr
 ```{r}
 newdata <- expand.grid(
     sex = unique(lung$sex),
-    age = quantile(lung$age, probs = c(0.25, 0.50, 0.75)),
+#    age = quantile(lung$age, probs = c(0.25, 0.50, 0.75)),
+    age = median(lung$age),
     ph.ecog = 1
 )
-rownames(newdata) <- letters[1:6]
+rownames(newdata) <- c("male", "female")
 
 # Create survival curves.  The rownames show up in the model
-lung_pred <- survfit(lung_cox_2, newdata = newdata)
-ggsurvplot(survfit(lung_cox_2, newdata = newdata), data = lung,
-           conf.int = TRUE, 
-           ggtheme = theme_minimal())
+lung_pred <- survfit(lung_cox_2, newdata = newdata, data = lung)
+
+# surv_summary() creates the data.frame with a summary of the survfit() results, including columns like time (survival time) and surv (survival probability).
+lung_pred0 <- surv_summary(lung_pred)
+# get the corresponding new_data cols
+lung_pred1 <- cbind(lung_pred0, newdata[as.character(lung_pred0$strata), ])
+ggsurvplot_df(
+  lung_pred1, 
+  color = "sex", 
+  legend.labs = c("M", "F"),
+  legend.title = "Sex", 
+  conf.int = TRUE, 
+  ggtheme = theme_minimal())
 ```
 
