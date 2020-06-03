@@ -84,7 +84,19 @@ Consider the first failure time, $t_1$.  The probability that patient $i$ is the
 
 $$p_1 = \frac{h_i(t_1)}{\sum_{k \in R_1} h_k(t_1)} = \frac{h_0(t_1) \psi_i}{\sum_{k \in R_1} h_0(t_1) \psi_k} = \frac{\psi_i}{\sum_{k \in R_1} \psi_k}$$
 
-The next failure event has a reduced $R_2$ patients at risk.  The partial likelihood for the $D$ failure times is the product $L_i = p_1 p_2 \cdots p_D$. Use maximum partial likelihood estimation to find the value of $\phi$ that maximizes the likelihood function.
+The next failure event has a reduced $R_2$ patients at risk.  The partial likelihood for the $D$ failure times is the product $L_i = p_1 p_2 \cdots p_D$. Cox uses maximum partial likelihood estimation to find the value of $\phi$ that maximizes the likelihood function.
+
+Fit a Cox proportional hazards model with `coxph()`. The model below regresses survival on the menopausal status factor variable  `menostat = c(pre, post)` and patient `age`.
+
+```{r}
+mdl.cox <- coxph(Surv(time, cens) ~ menostat + age, data = GBSG2)
+summary(mdl.cox)
+```
+
+The model summary shows that of the 686 patients, there were 299 events (deaths).
+
+
+
 
 Several parametric distributions are available for modeling survival data.  The exponential distribution is the easiest to use because it has a constant hazard $h(t) = \lambda$.  The cumulative hazard is $H(t) = \int_0^t \lambda dt = \lambda t$ and the corresponding survival function is 
 
