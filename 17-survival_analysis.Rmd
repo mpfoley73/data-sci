@@ -51,16 +51,12 @@ Calculate the Kaplan-Meier survival function estimate with the `survfit()` funct
 ```{r}
 data(GBSG2, package = "TH.data")
 head(GBSG2)
-
-data(gastricXelox, package = "asaur")
-head(gastricXelox)
 ```
 
 `survfit()` creates survival curves from a formula or from a previously fitted Cox model.  The formula below is an intercept-only model.  Structure the response variable as a `Surv` object.  
 
 ```{r}
 km_fit <- survfit(Surv(time, cens) ~ 1, data = GBSG2, conf.type = "log-log")
-km_fit <- survfit(Surv(timeWeeks, delta) ~ 1, data = gastricXelox, conf.type = "log-log")
 km_fit
 ```
 The `survfit` object indicates 686 records (patients), 299 events (deaths), with median survival time of 1807 days, 95% CI of (1528, 2018) days.
@@ -71,7 +67,7 @@ Plot the fitted model with `ggsurvplot()`.  The plus sign ("+") indicates censor
 ggsurvplot(
   fit = km_fit, 
   linetype = 1, 
-  surv.median.line = "hv",
+  surv.median.line = "hv", conf.int = TRUE,
   title = "Kaplan-Meier Survival Function Estimate"
 )
 ```
@@ -79,6 +75,16 @@ ggsurvplot(
 ### Weibull
 
 ### Cox
+
+The Cox proportional hazards model uses partial likelihood to fit a regression model to censored survival data, much like linear regression. Partial likelihood  differs from a likelihood in two ways. First, it is a product of expressions, one for each failure time (censoring times do not contribute any factors). Second, the  factors of a partial likelihood are conditional probabilities. 
+
+The hazard function for subject $i$ at time $t_j$ is $h_i(t_j) = h_0(t_j) \psi_i$ where $\psi_i = e^{z_i \beta}$.  In the very simple case of a control group and experimental group, $z_i = 1$ for the experimental group and $0$ for the control group.
+
+Consider the first failure time, $t_1$.  The probability that patient $i$ is the one to fail is the proportion of patient $i$'s hazard divided by the sum of the hazards of all $R_1$ patients at risk,
+
+$$p_1 = \frac{h_i(t_1)}{\sum_{k \in R_1} h_k(t_1)} = \frac{h_0(t_1) \psi_i}{\sum_{k \in R_1} h_0(t_1) \psi_k} = \frac{\psi_i}{\sum_{k \in R_1} \psi_k}$$
+
+The next failure event has a reduced $R_2$ patients at risk.  The partial likelihood for the $D$ failure times is the product $L_i = p_1 p_2 \cdots p_D$. Use maximum partial likelihood estimation to find the value of $\phi$ that maximizes the likelihood function.
 
 Several parametric distributions are available for modeling survival data.  The exponential distribution is the easiest to use because it has a constant hazard $h(t) = \lambda$.  The cumulative hazard is $H(t) = \int_0^t \lambda dt = \lambda t$ and the corresponding survival function is 
 

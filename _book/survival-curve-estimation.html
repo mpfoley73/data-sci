@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-01" />
+<meta name="date" content="2020-06-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,6 +258,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.1" data-path="survival-theory.html"><a href="survival-theory.html"><i class="fa fa-check"></i><b>14.1</b> Survival Theory</a></li>
 <li class="chapter" data-level="14.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>14.2</b> Survival Curve Estimation</a><ul>
 <li class="chapter" data-level="14.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>14.2.1</b> Kaplan-Meier</a></li>
+<li class="chapter" data-level="14.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>14.2.2</b> Weibull</a></li>
+<li class="chapter" data-level="14.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>14.2.3</b> Cox</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="survival-curve-estimation-1.html"><a href="survival-curve-estimation-1.html"><i class="fa fa-check"></i><b>14.3</b> Survival Curve Estimation</a></li>
 <li class="chapter" data-level="14.4" data-path="proportional-hazards-model.html"><a href="proportional-hazards-model.html"><i class="fa fa-check"></i><b>14.4</b> Proportional Hazards Model</a><ul>
@@ -308,8 +310,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">14.2.1</span> Kaplan-Meier</h3>
 <p>The Kaplan-Meier estimator for the survival function is</p>
 <p><span class="math display">\[\hat{S} = \prod_{i: t_i &lt; t}{\frac{n_i - d_i}{n_i}}\]</span></p>
-<p>where <span class="math inline">\(n_i\)</span> is the number of persons under observation at time <span class="math inline">\(i\)</span> and <span class="math inline">\(d_i\)</span> is the number of individuals dying at time <span class="math inline">\(i\)</span>. The Kaplan-Meier curve falls only when a subject dies, not when a subject is censored. Calculate the Kaplan-Meier estimate with the <code>survfit()</code> function.</p>
-<p>Here is an example of a Kaplan-Meier survival function estimate. <code>GBSG2</code> contains time to death of 686 breast cancer patients. Column <code>cens</code> indicates whether or not a person in the study has died (0-censored, 1-event).</p>
+<p>where <span class="math inline">\(n_i\)</span> is the number of persons under observation at time <span class="math inline">\(i\)</span> and <span class="math inline">\(d_i\)</span> is the number of individuals dying at time <span class="math inline">\(i\)</span>. The Kaplan-Meier curve falls only when a subject dies, not when a subject is censored. Confidence limits can be calculated using the “delta” method to obtain the variance of <span class="math inline">\(\log \left(\hat{S}(t) \right)\)</span> (see p27 of Moore).</p>
+<p>Calculate the Kaplan-Meier survival function estimate with the <code>survfit()</code> function. Here is an example. <code>GBSG2</code> contains time to death of 686 breast cancer patients. Column <code>cens</code> indicates whether or not a person in the study has died (0-censored, 1-event).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="survival-curve-estimation.html#cb2-1"></a><span class="kw">data</span>(GBSG2, <span class="dt">package =</span> <span class="st">&quot;TH.data&quot;</span>)</span>
 <span id="cb2-2"><a href="survival-curve-estimation.html#cb2-2"></a><span class="kw">head</span>(GBSG2)</span></code></pre></div>
 <pre><code>##   horTh age menostat tsize tgrade pnodes progrec estrec time cens
@@ -320,20 +322,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5    no  73     Post    35     II      1      26     65  772    1
 ## 6    no  32      Pre    57    III     24       0     13  448    1</code></pre>
 <p><code>survfit()</code> creates survival curves from a formula or from a previously fitted Cox model. The formula below is an intercept-only model. Structure the response variable as a <code>Surv</code> object.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="survival-curve-estimation.html#cb4-1"></a>km_fit &lt;-<span class="st"> </span><span class="kw">survfit</span>(<span class="kw">Surv</span>(time, cens) <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> GBSG2)</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="survival-curve-estimation.html#cb4-1"></a>km_fit &lt;-<span class="st"> </span><span class="kw">survfit</span>(<span class="kw">Surv</span>(time, cens) <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> GBSG2, <span class="dt">conf.type =</span> <span class="st">&quot;log-log&quot;</span>)</span>
 <span id="cb4-2"><a href="survival-curve-estimation.html#cb4-2"></a>km_fit</span></code></pre></div>
-<pre><code>## Call: survfit(formula = Surv(time, cens) ~ 1, data = GBSG2)
+<pre><code>## Call: survfit(formula = Surv(time, cens) ~ 1, data = GBSG2, conf.type = &quot;log-log&quot;)
 ## 
 ##       n  events  median 0.95LCL 0.95UCL 
-##     686     299    1807    1587    2030</code></pre>
+##     686     299    1807    1528    2018</code></pre>
+<p>The <code>survfit</code> object indicates 686 records (patients), 299 events (deaths), with median survival time of 1807 days, 95% CI of (1528, 2018) days.</p>
 <p>Plot the fitted model with <code>ggsurvplot()</code>. The plus sign (“+”) indicates censored observations.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="survival-curve-estimation.html#cb6-1"></a><span class="kw">ggsurvplot</span>(</span>
 <span id="cb6-2"><a href="survival-curve-estimation.html#cb6-2"></a>  <span class="dt">fit =</span> km_fit, </span>
 <span id="cb6-3"><a href="survival-curve-estimation.html#cb6-3"></a>  <span class="dt">linetype =</span> <span class="dv">1</span>, </span>
-<span id="cb6-4"><a href="survival-curve-estimation.html#cb6-4"></a>  <span class="dt">surv.median.line =</span> <span class="st">&quot;hv&quot;</span>,</span>
+<span id="cb6-4"><a href="survival-curve-estimation.html#cb6-4"></a>  <span class="dt">surv.median.line =</span> <span class="st">&quot;hv&quot;</span>, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb6-5"><a href="survival-curve-estimation.html#cb6-5"></a>  <span class="dt">title =</span> <span class="st">&quot;Kaplan-Meier Survival Function Estimate&quot;</span></span>
 <span id="cb6-6"><a href="survival-curve-estimation.html#cb6-6"></a>)</span></code></pre></div>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="weibull" class="section level3">
+<h3><span class="header-section-number">14.2.2</span> Weibull</h3>
+</div>
+<div id="cox" class="section level3">
+<h3><span class="header-section-number">14.2.3</span> Cox</h3>
+<p>The Cox proportional hazards model uses partial likelihood to fit a regression model to censored survival data, much like linear regression. Partial likelihood differs from a likelihood in two ways. First, it is a product of expressions, one for each failure time (censoring times do not contribute any factors). Second, the factors of a partial likelihood are conditional probabilities.</p>
+<p>The hazard function for subject <span class="math inline">\(i\)</span> at time <span class="math inline">\(t_j\)</span> is <span class="math inline">\(h_i(t_j) = h_0(t_j) \psi_i\)</span> where <span class="math inline">\(\psi_i = e^{z_i \beta}\)</span>. In the very simple case of a control group and experimental group, <span class="math inline">\(z_i = 1\)</span> for the experimental group and <span class="math inline">\(0\)</span> for the control group.</p>
+<p>Consider the first failure time, <span class="math inline">\(t_1\)</span>. The probability that patient <span class="math inline">\(i\)</span> is the one to fail is the proportion of patient <span class="math inline">\(i\)</span>’s hazard divided by the sum of the hazards of all <span class="math inline">\(R_1\)</span> patients at risk,</p>
+<p><span class="math display">\[p_1 = \frac{h_i(t_1)}{\sum_{k \in R_1} h_k(t_1)} = \frac{h_0(t_1) \psi_i}{\sum_{k \in R_1} h_0(t_1) \psi_k} = \frac{\psi_i}{\sum_{k \in R_1} \psi_k}\]</span></p>
+<p>The next failure event has a reduced <span class="math inline">\(R_2\)</span> patients at risk. The partial likelihood for the <span class="math inline">\(D\)</span> failure times is the product <span class="math inline">\(L_i = p_1 p_2 \cdots p_D\)</span>. Use maximum partial likelihood estimation to find the value of <span class="math inline">\(\phi\)</span> that maximizes the likelihood function.</p>
 <p>Several parametric distributions are available for modeling survival data. The exponential distribution is the easiest to use because it has a constant hazard <span class="math inline">\(h(t) = \lambda\)</span>. The cumulative hazard is <span class="math inline">\(H(t) = \int_0^t \lambda dt = \lambda t\)</span> and the corresponding survival function is</p>
 <p><span class="math display">\[S(t) = e^{-H(t)} = e^{-\lambda t}.\]</span></p>
 <p>The expected survival time is <span class="math inline">\(E(T) = \int_0^\infty S(t)dt = \int_0^\infty d^{-\lambda t} dt = 1 / \lambda.\)</span>. The median survival time is <span class="math inline">\(S(t) = e^{-\lambda t} = 0.5\)</span>, or <span class="math inline">\(t_{med} = \log(2) / \lambda\)</span>.</p>

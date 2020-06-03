@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-01" />
+<meta name="date" content="2020-06-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,6 +258,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.1" data-path="survival-theory.html"><a href="survival-theory.html"><i class="fa fa-check"></i><b>14.1</b> Survival Theory</a></li>
 <li class="chapter" data-level="14.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>14.2</b> Survival Curve Estimation</a><ul>
 <li class="chapter" data-level="14.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>14.2.1</b> Kaplan-Meier</a></li>
+<li class="chapter" data-level="14.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>14.2.2</b> Weibull</a></li>
+<li class="chapter" data-level="14.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>14.2.3</b> Cox</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="survival-curve-estimation-1.html"><a href="survival-curve-estimation-1.html"><i class="fa fa-check"></i><b>14.3</b> Survival Curve Estimation</a></li>
 <li class="chapter" data-level="14.4" data-path="proportional-hazards-model.html"><a href="proportional-hazards-model.html"><i class="fa fa-check"></i><b>14.4</b> Proportional Hazards Model</a><ul>
@@ -303,9 +305,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="survival-analysis" class="section level1">
 <h1><span class="header-section-number">Chapter 14</span> Survival Analysis</h1>
-<p>These notes rely on the <a href="https://campus.datacamp.com/courses/survival-analysis-in-r">Survival Analysis in R</a> DataCamp course and Applied Survival Analysis Using R by Dirk Moore <span class="citation">(Moore <a href="#ref-Moore2016" role="doc-biblioref">2016</a>)</span>.</p>
+<p>These notes rely on the <a href="https://campus.datacamp.com/courses/survival-analysis-in-r">Survival Analysis in R</a> DataCamp course and Applied Survival Analysis Using R <span class="citation">(Moore <a href="#ref-Moore2016" role="doc-biblioref">2016</a>)</span>.</p>
 <p>Survival analysis models time to event. Whereas linear regression outcomes are assumed to have a normal distribution, time-to-event outcomes are assumed to have a Weibull or exponential distribution. Survival analysis also deals with censoring (unknown starting event and/or ending event).</p>
-<p>Most surival analysis uses the <code>survival</code> package for modeling and the <code>survminer</code> package for visualization.</p>
+<p>Most survival analyses use the <code>survival</code> package for modeling and the <code>survminer</code> package for visualization.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="survival-analysis.html#cb1-1"></a><span class="kw">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="survival-analysis.html#cb1-2"></a><span class="kw">library</span>(survival)</span>
 <span id="cb1-3"><a href="survival-analysis.html#cb1-3"></a><span class="kw">library</span>(survminer)</span></code></pre></div>

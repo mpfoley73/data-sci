@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-01" />
+<meta name="date" content="2020-06-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,6 +258,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.1" data-path="survival-theory.html"><a href="survival-theory.html"><i class="fa fa-check"></i><b>14.1</b> Survival Theory</a></li>
 <li class="chapter" data-level="14.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>14.2</b> Survival Curve Estimation</a><ul>
 <li class="chapter" data-level="14.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>14.2.1</b> Kaplan-Meier</a></li>
+<li class="chapter" data-level="14.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>14.2.2</b> Weibull</a></li>
+<li class="chapter" data-level="14.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>14.2.3</b> Cox</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="survival-curve-estimation-1.html"><a href="survival-curve-estimation-1.html"><i class="fa fa-check"></i><b>14.3</b> Survival Curve Estimation</a></li>
 <li class="chapter" data-level="14.4" data-path="proportional-hazards-model.html"><a href="proportional-hazards-model.html"><i class="fa fa-check"></i><b>14.4</b> Proportional Hazards Model</a><ul>
@@ -304,11 +306,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="survival-theory" class="section level2">
 <h2><span class="header-section-number">14.1</span> Survival Theory</h2>
 <p>This section reviews the fundamentals of survival analysis, including the hazard probability density, and survival functions.</p>
-<p>You can specify the survival distribution function either as a <em>survival function</em> or as a <em>hazard function</em>. The survival function is the probability of surviving up to time <span class="math inline">\(t\)</span>,</p>
-<p><span class="math display">\[S(t) = 1 - F(t) = pr(T &gt; t), \hspace{3mm} 0 &lt; t &lt; \infty\]</span></p>
-<p>where <span class="math inline">\(F(t) = Pr(T \le t), \hspace{3mm} 0 &lt; t &lt; \infty\)</span> is the cumulative risk function. The hazard function is the instantaneous death rate given survival up to time <span class="math inline">\(t\)</span>,</p>
+<p>You can specify the survival distribution function either as a <em>survival function</em> or as a <em>hazard function</em>. Define <span class="math inline">\(F(t) = Pr(T \le t), \hspace{3mm} 0 &lt; t &lt; \infty\)</span> as the cumulative risk function, the probability of dying on or before time <span class="math inline">\(t\)</span>. Then the survival function is the probability of <em>surviving</em> up to time <span class="math inline">\(t\)</span>,</p>
+<p><span class="math display">\[S(t) = 1 - F(t) = pr(T &gt; t), \hspace{3mm} 0 &lt; t &lt; \infty.\]</span></p>
+<p>The hazard function is the instantaneous death rate given survival up to time <span class="math inline">\(t\)</span>,</p>
 <p><span class="math display">\[h(t) = \lim_{\delta \rightarrow 0}{\frac{pr(t &lt; T &lt; t + \delta|T &gt; t)}{\delta}}.\]</span></p>
-<p>The survival function and the hazard function are related. The probability of dying during the interval <span class="math inline">\((t, t + \delta)\)</span>, <span class="math inline">\(f(t) = F&#39;(t)\)</span>, is the probability of dying during <span class="math inline">\(t + \delta\)</span> given survival up to point <span class="math inline">\(t\)</span> times the probability of surviving up to point <span class="math inline">\(t\)</span>, <span class="math inline">\(f(t) = h(t) S(t)\)</span>.</p>
+<p>The survival function and the hazard function are related. The probability of dying during the interval <span class="math inline">\((t, t + \delta)\)</span>, <span class="math inline">\(f(t) = F&#39;(t)\)</span>, is the probability of dying during the interval given survival up to point <span class="math inline">\(t\)</span> times the probability of surviving up to point <span class="math inline">\(t\)</span>, <span class="math inline">\(f(t) = h(t) S(t)\)</span>.</p>
 <p><span class="math inline">\(S(t)\)</span> is also the exponent of the negative cumulative hazard function,</p>
 <p><span class="math display">\[S(t) = e^{-H(t)}.\]</span></p>
 <p>You can use the survival function to estimate the mean and median survival times. The mean survival time is <span class="math inline">\(E(T) = \int S(t)dt\)</span>. The median survival time is <span class="math inline">\(S(t) = 0.5\)</span>.</p>
