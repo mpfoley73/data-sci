@@ -158,7 +158,18 @@ The chi-sq test statistic is 10.3 on one d.f., for a p-value of 0.001, so yes, m
 
 ### Weibull
 
-Several parametric distributions are available for modeling survival data.  The exponential distribution is the easiest to use because it has a constant hazard $h(t) = \lambda$.  The cumulative hazard is $H(t) = \int_0^t \lambda dt = \lambda t$ and the corresponding survival function is 
+Kaplan-Meier curves and logrank tests are examples of univariate analysis. They describe the survival as a function of a single categorical factor variable. Weibull and other parametric models describe the function of *multiple* covariates.
+
+Several parametric distributions are available for modeling survival data.  The exponential distribution is the easiest to use because it has a time-independent function,
+
+$$\log h_i(t) = \alpha + \beta X_i$$
+or
+
+$$h_i(t) = e^{\left(\alpha + \beta X_i \right)} = \lambda$$
+
+where $i$ is the observation number.   The constant $\alpha$ is a kind of baseline log-hazard, because $\log h_i(t) = \alpha$, or $h_i(t) = e^\alpha$, when $X$ is zero.
+
+The cumulative hazard is $H(t) = \int_0^t \lambda dt = \lambda t$ and the corresponding survival function is 
 
 $$S(t) = e^{-H(t)} = e^{-\lambda t}.$$
 
@@ -250,20 +261,21 @@ You can fit other models with the `dist = c("lognormal", "exponential")` paramet
 
 ### Cox
 
-The Cox proportional hazards model uses partial likelihood to fit a regression model to censored survival data, much like linear regression. Partial likelihood  differs from a likelihood in two ways. First, it is a product of expressions, one for each failure time (censoring times do not contribute any factors). Second, the  factors of a partial likelihood are conditional probabilities. 
+Whereas parametric models specify the baseline hazard function, $\alpha(t) = \log h_0(t)$, the Cox proportional hazards model is semi-parametric in that it leaves it unspecified.  
 
-Kaplan-Meier curves and logrank tests are examples of univariate analysis. They describe the survival as a function of a single categorical factor variable. The Cox proportional hazards model describes the function of multiple covariates.
+$$\log h_i(t) = \alpha(t) + \beta X_i$$
 
+or
 
-The hazard function for subject $i$ at time $t$ is $h_i(t) = h_0(t) \psi_i$ where $\psi_i = e^{X_i \beta}$ and $X$ is a set of coveriates.  $h_0(t)$ is the baseline hazard, the value when all the $X$ covariates equal zero ($e^{X_i \beta} = 1$).  The Cox model can be written as a multiple linear regression of the logarithm of the hazard on the variables, with the baseline hazard intercept  that varies with time.  The $e^{\beta_j}$ values are called the hazard ratios.  A positive $e^{\beta_j}$ means the hazard increases with the covariate.
+$$h_i(t) = h_0(t) \cdot e^{X_i \beta} = h_0(t) \psi_i$$
 
-The Cox model is a proportional-hazards model, meaning the hazard of the event in any group is a constant multiple of the hazard in any other.
+The $e^{\beta_j}$ values are called the hazard ratios.  A positive $e^{\beta_j}$ means the hazard increases with the covariate. The proportionality of the model comes from the lack of time dependence in the $X$ variables.  Two ratio of the hazard functions of two individuals is 
 
-Consider the first failure time, $t_1$.  The probability that patient $i$ is the one to fail is the proportion of patient $i$'s hazard divided by the sum of the hazards of all $R_1$ patients at risk,
+$$\frac{h_i(t)}{h_{i'}(t)} = \frac{h_0(t) \cdot e^{X_i \beta}}{h_0(t) \cdot e^{X_{i'} \beta}}$$
+
+Remarkably, even though the baseline hazard is unspecified, the Cox model can still be estimated by the method of partial likelihood. Consider the first failure time, $t_1$.  The probability that patient $i$ is the one to fail is the proportion of patient $i$'s hazard divided by the sum of the hazards of all $R_1$ patients at risk,
 
 $$p_1 = \frac{h_i(t_1)}{\sum_{k \in R_1} h_k(t_1)} = \frac{h_0(t_1) \psi_i}{\sum_{k \in R_1} h_0(t_1) \psi_k} = \frac{\psi_i}{\sum_{k \in R_1} \psi_k}$$
-
-The hazard ratio is time independent - the patient survivor curves are proportional to each other.
 
 The next failure event has a reduced $R_2$ patients at risk.  The partial likelihood for $D$ failure times is the product $L_i = p_1 p_2 \cdots p_D$. The Cox model uses maximum partial likelihood estimation to find the value of $\phi$ that maximizes the likelihood function.
 
@@ -293,11 +305,10 @@ summary(lung_cox_2)
 
 The p-values for all three overall tests (likelihood, Wald, and score) are significant, indicating that the model is significant (not all $\beta$ values are 0). 
 
-Having fit a Cox model to the data, it’s possible to visualize the predicted survival proportion at any given time for a particular risk group. Function `survfit()` estimates the survival proportion at the mean values of covariates by default.
+Having fit a Cox model to the data, it’s possible to visualize the predicted survival proportion at any given time for a particular risk group. Function `survfit()` estimates the survival proportion, by default at the mean values of covariates.
 
 ```{r}
-ggsurvplot(surv_fit(lung_cox_2, data = lung), 
-           palette = "#2E9FDF", ggtheme = theme_minimal())
+ggsurvplot(survfit(lung_cox_2), data = lung, palette = "#2E9FDF", ggtheme = theme_minimal())
 ```
 
 To display the effects of one or more particular covariates, construct a data frame with test cases and pass to `survfit()` with the `newdata` argument.
