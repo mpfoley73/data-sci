@@ -308,7 +308,7 @@ The p-values for all three overall tests (likelihood, Wald, and score) are signi
 Having fit a Cox model to the data, it’s possible to visualize the predicted survival proportion at any given time for a particular risk group. Function `survfit()` estimates the survival proportion, by default at the mean values of covariates.
 
 ```{r}
-ggsurvplot(survfit(lung_cox_2), data = lung, palette = "#2E9FDF", ggtheme = theme_minimal())
+#ggsurvplot(survfit(lung_cox_2), data = lung, palette = "#2E9FDF", ggtheme = theme_minimal())
 ```
 
 To display the effects of one or more particular covariates, construct a data frame with test cases and pass to `survfit()` with the `newdata` argument.

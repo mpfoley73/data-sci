@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-03" />
+<meta name="date" content="2020-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -225,7 +225,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>7.8</b> Cluster Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
-<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a></li>
+<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a><ul>
+<li class="chapter" data-level="9.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>9.1</b> Ridge</a></li>
+<li class="chapter" data-level="9.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>9.2</b> Lasso</a></li>
+<li class="chapter" data-level="9.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>9.3</b> Elastic Net</a></li>
+<li class="chapter" data-level="" data-path="model-summary.html"><a href="model-summary.html"><i class="fa fa-check"></i>Model Summary</a></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
 <li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
 <li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
@@ -250,7 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
 <li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
@@ -303,8 +308,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[\hat{S} = \prod_{i: t_i &lt; t}{\frac{n_i - d_i}{n_i}}\]</span></p>
 <p>where <span class="math inline">\(n_i\)</span> is the number of persons under observation at time <span class="math inline">\(i\)</span> and <span class="math inline">\(d_i\)</span> is the number of individuals dying at time <span class="math inline">\(i\)</span>. The Kaplan-Meier curve falls only when a subject dies, not when a subject is censored. Confidence limits can be calculated using the “delta” method to obtain the variance of <span class="math inline">\(\log \left(\hat{S}(t) \right)\)</span> (see p27 of Moore).</p>
 <p>Calculate the Kaplan-Meier survival function estimate with the <code>survfit()</code> function. Here is an example using the <code>lung</code> data from the <code>survival</code> package to death of 228 patients witha advanced lung cancer. Column <code>status</code> indicates whether or not a person in the study has died (1 = censored, 2 = dead).</p>
-<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="survival-curve-estimation.html#cb746-1"></a><span class="kw">data</span>(lung, <span class="dt">package =</span> <span class="st">&quot;survival&quot;</span>)</span>
-<span id="cb746-2"><a href="survival-curve-estimation.html#cb746-2"></a><span class="kw">head</span>(lung)</span></code></pre></div>
+<div class="sourceCode" id="cb771"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb771-1"><a href="survival-curve-estimation.html#cb771-1"></a><span class="kw">data</span>(lung, <span class="dt">package =</span> <span class="st">&quot;survival&quot;</span>)</span>
+<span id="cb771-2"><a href="survival-curve-estimation.html#cb771-2"></a><span class="kw">head</span>(lung)</span></code></pre></div>
 <pre><code>##   inst time status age sex ph.ecog ph.karno pat.karno meal.cal wt.loss
 ## 1    3  306      2  74   1       1       90       100     1175      NA
 ## 2    3  455      2  68   1       0       90        90     1225      15
@@ -313,8 +318,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5    1  883      2  60   1       0      100        90       NA       0
 ## 6   12 1022      1  74   1       1       50        80      513       0</code></pre>
 <p><code>survfit()</code> creates survival curves from a formula or from a previously fitted Cox model. The formula below is an intercept-only model. Structure the response variable as a <code>Surv</code> object.</p>
-<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="survival-curve-estimation.html#cb748-1"></a>km_fit &lt;-<span class="st"> </span><span class="kw">survfit</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>sex, <span class="dt">data =</span> lung)</span>
-<span id="cb748-2"><a href="survival-curve-estimation.html#cb748-2"></a>km_fit</span></code></pre></div>
+<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb773-1"><a href="survival-curve-estimation.html#cb773-1"></a>km_fit &lt;-<span class="st"> </span><span class="kw">survfit</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>sex, <span class="dt">data =</span> lung)</span>
+<span id="cb773-2"><a href="survival-curve-estimation.html#cb773-2"></a>km_fit</span></code></pre></div>
 <pre><code>## Call: survfit(formula = Surv(time, status) ~ sex, data = lung)
 ## 
 ##         n events median 0.95LCL 0.95UCL
@@ -322,16 +327,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## sex=2  90     53    426     348     550</code></pre>
 <p>The printed <code>survfit</code> object shows there were 138 records (patients) for males (<code>sex=1</code>) and 90 records for females (<code>sex=2</code>), and 112 events (deaths) for males and 53 events for females. It also shows the 95% CI in days for the median time to event.</p>
 <p>The <code>survfit</code> object contains more variables, including detailed <code>time</code> points with the number at risk <code>n.risk</code>, events <code>n.event</code>, and censors <code>n.censor</code> at each time point and strata <code>strata</code>.</p>
-<div class="sourceCode" id="cb750"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb750-1"><a href="survival-curve-estimation.html#cb750-1"></a><span class="kw">data.frame</span>(</span>
-<span id="cb750-2"><a href="survival-curve-estimation.html#cb750-2"></a>  <span class="dt">strata =</span> km_fit<span class="op">$</span>strata,</span>
-<span id="cb750-3"><a href="survival-curve-estimation.html#cb750-3"></a>  <span class="dt">time =</span> km_fit<span class="op">$</span>time,</span>
-<span id="cb750-4"><a href="survival-curve-estimation.html#cb750-4"></a>  <span class="dt">n.risk =</span> km_fit<span class="op">$</span>n.risk,</span>
-<span id="cb750-5"><a href="survival-curve-estimation.html#cb750-5"></a>  <span class="dt">n.event =</span> km_fit<span class="op">$</span>n.event,</span>
-<span id="cb750-6"><a href="survival-curve-estimation.html#cb750-6"></a>  <span class="dt">n.censor =</span> km_fit<span class="op">$</span>n.censor,</span>
-<span id="cb750-7"><a href="survival-curve-estimation.html#cb750-7"></a>  <span class="dt">surv =</span> km_fit<span class="op">$</span>surv,</span>
-<span id="cb750-8"><a href="survival-curve-estimation.html#cb750-8"></a>  <span class="dt">upper =</span> km_fit<span class="op">$</span>upper,</span>
-<span id="cb750-9"><a href="survival-curve-estimation.html#cb750-9"></a>  <span class="dt">lower =</span> km_fit<span class="op">$</span>lower</span>
-<span id="cb750-10"><a href="survival-curve-estimation.html#cb750-10"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb775-1"><a href="survival-curve-estimation.html#cb775-1"></a><span class="kw">data.frame</span>(</span>
+<span id="cb775-2"><a href="survival-curve-estimation.html#cb775-2"></a>  <span class="dt">strata =</span> km_fit<span class="op">$</span>strata,</span>
+<span id="cb775-3"><a href="survival-curve-estimation.html#cb775-3"></a>  <span class="dt">time =</span> km_fit<span class="op">$</span>time,</span>
+<span id="cb775-4"><a href="survival-curve-estimation.html#cb775-4"></a>  <span class="dt">n.risk =</span> km_fit<span class="op">$</span>n.risk,</span>
+<span id="cb775-5"><a href="survival-curve-estimation.html#cb775-5"></a>  <span class="dt">n.event =</span> km_fit<span class="op">$</span>n.event,</span>
+<span id="cb775-6"><a href="survival-curve-estimation.html#cb775-6"></a>  <span class="dt">n.censor =</span> km_fit<span class="op">$</span>n.censor,</span>
+<span id="cb775-7"><a href="survival-curve-estimation.html#cb775-7"></a>  <span class="dt">surv =</span> km_fit<span class="op">$</span>surv,</span>
+<span id="cb775-8"><a href="survival-curve-estimation.html#cb775-8"></a>  <span class="dt">upper =</span> km_fit<span class="op">$</span>upper,</span>
+<span id="cb775-9"><a href="survival-curve-estimation.html#cb775-9"></a>  <span class="dt">lower =</span> km_fit<span class="op">$</span>lower</span>
+<span id="cb775-10"><a href="survival-curve-estimation.html#cb775-10"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</span></code></pre></div>
 <pre><code>##   strata time n.risk n.event n.censor surv upper lower
 ## 1    119   11    138       3        0 0.98  1.00  0.95
 ## 2     87   12    135       1        0 0.97  1.00  0.94
@@ -340,61 +345,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5    119   26    131       1        0 0.94  0.98  0.90
 ## 6     87   30    130       1        0 0.93  0.98  0.89</code></pre>
 <p>Plot the fitted model with <code>ggsurvplot()</code>. A vertical drop in the curves indicates an event. The vertical tick mark on the curves means that a patient was censored.</p>
-<div class="sourceCode" id="cb752"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb752-1"><a href="survival-curve-estimation.html#cb752-1"></a><span class="kw">ggsurvplot</span>(</span>
-<span id="cb752-2"><a href="survival-curve-estimation.html#cb752-2"></a>  km_fit,</span>
-<span id="cb752-3"><a href="survival-curve-estimation.html#cb752-3"></a>  <span class="dt">linetype =</span> <span class="st">&quot;strata&quot;</span>, <span class="co"># Change line type by groups</span></span>
-<span id="cb752-4"><a href="survival-curve-estimation.html#cb752-4"></a>  <span class="dt">pval =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb752-5"><a href="survival-curve-estimation.html#cb752-5"></a>  <span class="dt">conf.int =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb752-6"><a href="survival-curve-estimation.html#cb752-6"></a>  <span class="dt">risk.table =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb752-7"><a href="survival-curve-estimation.html#cb752-7"></a>  <span class="dt">surv.median.line =</span> <span class="st">&quot;hv&quot;</span>, <span class="co"># median horizontal and vertical ref lines</span></span>
-<span id="cb752-8"><a href="survival-curve-estimation.html#cb752-8"></a>  <span class="dt">ggtheme =</span> <span class="kw">theme_bw</span>(),</span>
-<span id="cb752-9"><a href="survival-curve-estimation.html#cb752-9"></a>  <span class="dt">palette =</span> <span class="kw">c</span>(<span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#2E9FDF&quot;</span>),</span>
-<span id="cb752-10"><a href="survival-curve-estimation.html#cb752-10"></a>  <span class="dt">title =</span> <span class="st">&quot;Kaplan-Meier Survival Function Estimate&quot;</span></span>
-<span id="cb752-11"><a href="survival-curve-estimation.html#cb752-11"></a>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-348-1.png" width="576" /></p>
+<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="survival-curve-estimation.html#cb777-1"></a><span class="kw">ggsurvplot</span>(</span>
+<span id="cb777-2"><a href="survival-curve-estimation.html#cb777-2"></a>  km_fit,</span>
+<span id="cb777-3"><a href="survival-curve-estimation.html#cb777-3"></a>  <span class="dt">linetype =</span> <span class="st">&quot;strata&quot;</span>, <span class="co"># Change line type by groups</span></span>
+<span id="cb777-4"><a href="survival-curve-estimation.html#cb777-4"></a>  <span class="dt">pval =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb777-5"><a href="survival-curve-estimation.html#cb777-5"></a>  <span class="dt">conf.int =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb777-6"><a href="survival-curve-estimation.html#cb777-6"></a>  <span class="dt">risk.table =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb777-7"><a href="survival-curve-estimation.html#cb777-7"></a>  <span class="dt">surv.median.line =</span> <span class="st">&quot;hv&quot;</span>, <span class="co"># median horizontal and vertical ref lines</span></span>
+<span id="cb777-8"><a href="survival-curve-estimation.html#cb777-8"></a>  <span class="dt">ggtheme =</span> <span class="kw">theme_bw</span>(),</span>
+<span id="cb777-9"><a href="survival-curve-estimation.html#cb777-9"></a>  <span class="dt">palette =</span> <span class="kw">c</span>(<span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#2E9FDF&quot;</span>),</span>
+<span id="cb777-10"><a href="survival-curve-estimation.html#cb777-10"></a>  <span class="dt">title =</span> <span class="st">&quot;Kaplan-Meier Survival Function Estimate&quot;</span></span>
+<span id="cb777-11"><a href="survival-curve-estimation.html#cb777-11"></a>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-361-1.png" width="576" /></p>
 <p>Reading the figure, you can see the median survival is 270 days for <code>sex=1</code> and 426 days for <code>sex=2</code>. These key values are available from the <code>summary()</code> object.</p>
-<div class="sourceCode" id="cb753"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb753-1"><a href="survival-curve-estimation.html#cb753-1"></a><span class="kw">summary</span>(km_fit)<span class="op">$</span>table</span></code></pre></div>
+<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="survival-curve-estimation.html#cb778-1"></a><span class="kw">summary</span>(km_fit)<span class="op">$</span>table</span></code></pre></div>
 <pre><code>##       records n.max n.start events *rmean *se(rmean) median 0.95LCL 0.95UCL
 ## sex=1     138   138     138    112    325         23    270     212     310
 ## sex=2      90    90      90     53    458         34    426     348     550</code></pre>
 <p><code>ggsurvplot()</code> can plot the cumulative risk function (aka “cumulative incidence” or “cumulative events”), <span class="math inline">\(F(t) = 1 - S(t)\)</span>, with argument <code>fun = "event"</code>, and the cumulative hazard function, <span class="math inline">\(H(t) = -\log(S(t)).\)</span>, with argument <code>fun = "cumhaz"</code>.</p>
-<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb755-1"><a href="survival-curve-estimation.html#cb755-1"></a><span class="kw">ggsurvplot</span>(</span>
-<span id="cb755-2"><a href="survival-curve-estimation.html#cb755-2"></a>  km_fit,</span>
-<span id="cb755-3"><a href="survival-curve-estimation.html#cb755-3"></a>  <span class="dt">fun =</span> <span class="st">&quot;event&quot;</span>,</span>
-<span id="cb755-4"><a href="survival-curve-estimation.html#cb755-4"></a>  <span class="dt">linetype =</span> <span class="st">&quot;strata&quot;</span>, <span class="co"># Change line type by groups</span></span>
-<span id="cb755-5"><a href="survival-curve-estimation.html#cb755-5"></a>  <span class="dt">pval =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb755-6"><a href="survival-curve-estimation.html#cb755-6"></a>  <span class="dt">conf.int =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb755-7"><a href="survival-curve-estimation.html#cb755-7"></a>  <span class="dt">ggtheme =</span> <span class="kw">theme_bw</span>(),</span>
-<span id="cb755-8"><a href="survival-curve-estimation.html#cb755-8"></a>  <span class="dt">palette =</span> <span class="kw">c</span>(<span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#2E9FDF&quot;</span>),</span>
-<span id="cb755-9"><a href="survival-curve-estimation.html#cb755-9"></a>  <span class="dt">title =</span> <span class="st">&quot;Kaplan-Meier Cumulative Risk Function Estimate&quot;</span></span>
-<span id="cb755-10"><a href="survival-curve-estimation.html#cb755-10"></a>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-350-1.png" width="672" /></p>
-<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb756-1"><a href="survival-curve-estimation.html#cb756-1"></a><span class="kw">ggsurvplot</span>(</span>
-<span id="cb756-2"><a href="survival-curve-estimation.html#cb756-2"></a>  km_fit,</span>
-<span id="cb756-3"><a href="survival-curve-estimation.html#cb756-3"></a>  <span class="dt">fun =</span> <span class="st">&quot;cumhaz&quot;</span>,</span>
-<span id="cb756-4"><a href="survival-curve-estimation.html#cb756-4"></a>  <span class="dt">linetype =</span> <span class="st">&quot;strata&quot;</span>, <span class="co"># Change line type by groups</span></span>
-<span id="cb756-5"><a href="survival-curve-estimation.html#cb756-5"></a>  <span class="dt">pval =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb756-6"><a href="survival-curve-estimation.html#cb756-6"></a>  <span class="dt">conf.int =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb756-7"><a href="survival-curve-estimation.html#cb756-7"></a>  <span class="dt">ggtheme =</span> <span class="kw">theme_bw</span>(),</span>
-<span id="cb756-8"><a href="survival-curve-estimation.html#cb756-8"></a>  <span class="dt">palette =</span> <span class="kw">c</span>(<span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#2E9FDF&quot;</span>),</span>
-<span id="cb756-9"><a href="survival-curve-estimation.html#cb756-9"></a>  <span class="dt">title =</span> <span class="st">&quot;Kaplan-Meier Cumulative Hazard Function Estimate&quot;</span></span>
-<span id="cb756-10"><a href="survival-curve-estimation.html#cb756-10"></a>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-351-1.png" width="672" /></p>
+<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="survival-curve-estimation.html#cb780-1"></a><span class="kw">ggsurvplot</span>(</span>
+<span id="cb780-2"><a href="survival-curve-estimation.html#cb780-2"></a>  km_fit,</span>
+<span id="cb780-3"><a href="survival-curve-estimation.html#cb780-3"></a>  <span class="dt">fun =</span> <span class="st">&quot;event&quot;</span>,</span>
+<span id="cb780-4"><a href="survival-curve-estimation.html#cb780-4"></a>  <span class="dt">linetype =</span> <span class="st">&quot;strata&quot;</span>, <span class="co"># Change line type by groups</span></span>
+<span id="cb780-5"><a href="survival-curve-estimation.html#cb780-5"></a>  <span class="dt">pval =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb780-6"><a href="survival-curve-estimation.html#cb780-6"></a>  <span class="dt">conf.int =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb780-7"><a href="survival-curve-estimation.html#cb780-7"></a>  <span class="dt">ggtheme =</span> <span class="kw">theme_bw</span>(),</span>
+<span id="cb780-8"><a href="survival-curve-estimation.html#cb780-8"></a>  <span class="dt">palette =</span> <span class="kw">c</span>(<span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#2E9FDF&quot;</span>),</span>
+<span id="cb780-9"><a href="survival-curve-estimation.html#cb780-9"></a>  <span class="dt">title =</span> <span class="st">&quot;Kaplan-Meier Cumulative Risk Function Estimate&quot;</span></span>
+<span id="cb780-10"><a href="survival-curve-estimation.html#cb780-10"></a>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-363-1.png" width="672" /></p>
+<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="survival-curve-estimation.html#cb781-1"></a><span class="kw">ggsurvplot</span>(</span>
+<span id="cb781-2"><a href="survival-curve-estimation.html#cb781-2"></a>  km_fit,</span>
+<span id="cb781-3"><a href="survival-curve-estimation.html#cb781-3"></a>  <span class="dt">fun =</span> <span class="st">&quot;cumhaz&quot;</span>,</span>
+<span id="cb781-4"><a href="survival-curve-estimation.html#cb781-4"></a>  <span class="dt">linetype =</span> <span class="st">&quot;strata&quot;</span>, <span class="co"># Change line type by groups</span></span>
+<span id="cb781-5"><a href="survival-curve-estimation.html#cb781-5"></a>  <span class="dt">pval =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb781-6"><a href="survival-curve-estimation.html#cb781-6"></a>  <span class="dt">conf.int =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb781-7"><a href="survival-curve-estimation.html#cb781-7"></a>  <span class="dt">ggtheme =</span> <span class="kw">theme_bw</span>(),</span>
+<span id="cb781-8"><a href="survival-curve-estimation.html#cb781-8"></a>  <span class="dt">palette =</span> <span class="kw">c</span>(<span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#2E9FDF&quot;</span>),</span>
+<span id="cb781-9"><a href="survival-curve-estimation.html#cb781-9"></a>  <span class="dt">title =</span> <span class="st">&quot;Kaplan-Meier Cumulative Hazard Function Estimate&quot;</span></span>
+<span id="cb781-10"><a href="survival-curve-estimation.html#cb781-10"></a>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-364-1.png" width="672" /></p>
 <p><code>ggsurvplot()</code> can produce faceted plots for more complicated analyses. For example, fit a survival curve to the <code>survival::colon</code> data set with predictors <code>sex</code>, <code>rx</code>, and <code>adhere</code>.</p>
-<div class="sourceCode" id="cb757"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb757-1"><a href="survival-curve-estimation.html#cb757-1"></a>km_fit_colon &lt;-<span class="st"> </span><span class="kw">survfit</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>rx <span class="op">+</span><span class="st"> </span>adhere, <span class="dt">data =</span> colon)</span>
-<span id="cb757-2"><a href="survival-curve-estimation.html#cb757-2"></a></span>
-<span id="cb757-3"><a href="survival-curve-estimation.html#cb757-3"></a>p &lt;-<span class="st"> </span>km_fit_colon <span class="op">%&gt;%</span></span>
-<span id="cb757-4"><a href="survival-curve-estimation.html#cb757-4"></a><span class="st">  </span><span class="kw">ggsurvplot</span>(<span class="dt">fun =</span> <span class="st">&quot;event&quot;</span>, </span>
-<span id="cb757-5"><a href="survival-curve-estimation.html#cb757-5"></a>             <span class="dt">conf.int =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb757-6"><a href="survival-curve-estimation.html#cb757-6"></a>             <span class="dt">ggtheme =</span> <span class="kw">theme_bw</span>()) </span>
-<span id="cb757-7"><a href="survival-curve-estimation.html#cb757-7"></a>p<span class="op">$</span>plot <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;right&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(rx <span class="op">~</span><span class="st"> </span>adhere)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-352-1.png" width="672" /></p>
+<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="survival-curve-estimation.html#cb782-1"></a>km_fit_colon &lt;-<span class="st"> </span><span class="kw">survfit</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>rx <span class="op">+</span><span class="st"> </span>adhere, <span class="dt">data =</span> colon)</span>
+<span id="cb782-2"><a href="survival-curve-estimation.html#cb782-2"></a></span>
+<span id="cb782-3"><a href="survival-curve-estimation.html#cb782-3"></a>p &lt;-<span class="st"> </span>km_fit_colon <span class="op">%&gt;%</span></span>
+<span id="cb782-4"><a href="survival-curve-estimation.html#cb782-4"></a><span class="st">  </span><span class="kw">ggsurvplot</span>(<span class="dt">fun =</span> <span class="st">&quot;event&quot;</span>, </span>
+<span id="cb782-5"><a href="survival-curve-estimation.html#cb782-5"></a>             <span class="dt">conf.int =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb782-6"><a href="survival-curve-estimation.html#cb782-6"></a>             <span class="dt">ggtheme =</span> <span class="kw">theme_bw</span>()) </span>
+<span id="cb782-7"><a href="survival-curve-estimation.html#cb782-7"></a>p<span class="op">$</span>plot <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;right&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(rx <span class="op">~</span><span class="st"> </span>adhere)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-365-1.png" width="672" /></p>
 <div id="log-rank-test" class="section level4">
 <h4><span class="header-section-number">15.2.1.1</span> Log-Rank Test</h4>
 <p>Compare survival curves with the log-rank test (<span class="math inline">\(H_0\)</span>: no difference). The log rank test is a non-parametric test, so it makes no assumptions about the survival distributions. The log rank test compares the observed and expected (<span class="math inline">\(H_0\)</span>) number of events in each group. The log rank test statistic is approximately chi-square distributed.</p>
 <p>Function <code>survdiff()</code> performs the log-rank test.</p>
-<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="survival-curve-estimation.html#cb758-1"></a>km_diff &lt;-<span class="st"> </span><span class="kw">survdiff</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>sex, <span class="dt">data =</span> lung)</span>
-<span id="cb758-2"><a href="survival-curve-estimation.html#cb758-2"></a>km_diff</span></code></pre></div>
+<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="survival-curve-estimation.html#cb783-1"></a>km_diff &lt;-<span class="st"> </span><span class="kw">survdiff</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>sex, <span class="dt">data =</span> lung)</span>
+<span id="cb783-2"><a href="survival-curve-estimation.html#cb783-2"></a>km_diff</span></code></pre></div>
 <pre><code>## Call:
 ## survdiff(formula = Surv(time, status) ~ sex, data = lung)
 ## 
@@ -408,46 +413,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="weibull" class="section level3">
 <h3><span class="header-section-number">15.2.2</span> Weibull</h3>
-<p>Several parametric distributions are available for modeling survival data. The exponential distribution is the easiest to use because it has a constant hazard <span class="math inline">\(h(t) = \lambda\)</span>. The cumulative hazard is <span class="math inline">\(H(t) = \int_0^t \lambda dt = \lambda t\)</span> and the corresponding survival function is</p>
+<p>Kaplan-Meier curves and logrank tests are examples of univariate analysis. They describe the survival as a function of a single categorical factor variable. Weibull and other parametric models describe the function of <em>multiple</em> covariates.</p>
+<p>Several parametric distributions are available for modeling survival data. The exponential distribution is the easiest to use because it has a time-independent function,</p>
+<p><span class="math display">\[\log h_i(t) = \alpha + \beta X_i\]</span>
+or</p>
+<p><span class="math display">\[h_i(t) = e^{\left(\alpha + \beta X_i \right)} = \lambda\]</span></p>
+<p>where <span class="math inline">\(i\)</span> is the observation number. The constant <span class="math inline">\(\alpha\)</span> is a kind of baseline log-hazard, because <span class="math inline">\(\log h_i(t) = \alpha\)</span>, or <span class="math inline">\(h_i(t) = e^\alpha\)</span>, when <span class="math inline">\(X\)</span> is zero.</p>
+<p>The cumulative hazard is <span class="math inline">\(H(t) = \int_0^t \lambda dt = \lambda t\)</span> and the corresponding survival function is</p>
 <p><span class="math display">\[S(t) = e^{-H(t)} = e^{-\lambda t}.\]</span></p>
 <p>The expected survival time is <span class="math inline">\(E(T) = \int_0^\infty S(t)dt = \int_0^\infty d^{-\lambda t} dt = 1 / \lambda.\)</span>. The median survival time is <span class="math inline">\(S(t) = e^{-\lambda t} = 0.5\)</span>, or <span class="math inline">\(t_{med} = \log(2) / \lambda\)</span>.</p>
 <p>The Weibull distribution is more appropriate for modeling lifetimes, however. The Weibull hazard function is <span class="math inline">\(h(t) = \alpha \lambda (\lambda t)^{\alpha - 1} = \alpha \lambda^\alpha t^{\alpha-1}\)</span>.</p>
-<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="survival-curve-estimation.html#cb760-1"></a><span class="kw">data.frame</span>(<span class="dt">t =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">80</span>, <span class="dv">3</span>),</span>
-<span id="cb760-2"><a href="survival-curve-estimation.html#cb760-2"></a>           <span class="dt">alpha =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="fl">1.5</span>, <span class="dv">80</span>), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">80</span>), <span class="kw">rep</span>(<span class="fl">0.75</span>, <span class="dv">80</span>)),</span>
-<span id="cb760-3"><a href="survival-curve-estimation.html#cb760-3"></a>           <span class="dt">lambda =</span> <span class="kw">rep</span>(<span class="fl">0.03</span>, <span class="dv">240</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb760-4"><a href="survival-curve-estimation.html#cb760-4"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb760-5"><a href="survival-curve-estimation.html#cb760-5"></a>    <span class="dt">f =</span> <span class="kw">dweibull</span>(<span class="dt">x =</span> t, <span class="dt">shape =</span> alpha, <span class="dt">scale =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="fl">0.03</span>),</span>
-<span id="cb760-6"><a href="survival-curve-estimation.html#cb760-6"></a>    <span class="dt">S =</span> <span class="kw">pweibull</span>(<span class="dt">q =</span> t, <span class="dt">shape =</span> alpha, <span class="dt">scale =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="fl">0.03</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>),</span>
-<span id="cb760-7"><a href="survival-curve-estimation.html#cb760-7"></a>    <span class="dt">h =</span> f <span class="op">/</span><span class="st"> </span>S  <span class="co"># same as alpha * lambda^alpha * t^(alpha-1)</span></span>
-<span id="cb760-8"><a href="survival-curve-estimation.html#cb760-8"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb760-9"><a href="survival-curve-estimation.html#cb760-9"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> t, <span class="dt">y =</span> h, <span class="dt">color =</span> <span class="kw">as.factor</span>(alpha))) <span class="op">+</span></span>
-<span id="cb760-10"><a href="survival-curve-estimation.html#cb760-10"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb760-11"><a href="survival-curve-estimation.html#cb760-11"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;top&quot;</span>) <span class="op">+</span></span>
-<span id="cb760-12"><a href="survival-curve-estimation.html#cb760-12"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;hazard&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;time&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;alpha&quot;</span>,</span>
-<span id="cb760-13"><a href="survival-curve-estimation.html#cb760-13"></a>       <span class="dt">title =</span> <span class="st">&quot;Weibul hazard function at varying levels of alpha&quot;</span>,</span>
-<span id="cb760-14"><a href="survival-curve-estimation.html#cb760-14"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Lambda = 0.03&quot;</span>,</span>
-<span id="cb760-15"><a href="survival-curve-estimation.html#cb760-15"></a>       <span class="dt">caption =</span> <span class="st">&quot;alpha = 1 is special case of exponential function.&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-354-1.png" width="672" /></p>
+<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb785-1"><a href="survival-curve-estimation.html#cb785-1"></a><span class="kw">data.frame</span>(<span class="dt">t =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">80</span>, <span class="dv">3</span>),</span>
+<span id="cb785-2"><a href="survival-curve-estimation.html#cb785-2"></a>           <span class="dt">alpha =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="fl">1.5</span>, <span class="dv">80</span>), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">80</span>), <span class="kw">rep</span>(<span class="fl">0.75</span>, <span class="dv">80</span>)),</span>
+<span id="cb785-3"><a href="survival-curve-estimation.html#cb785-3"></a>           <span class="dt">lambda =</span> <span class="kw">rep</span>(<span class="fl">0.03</span>, <span class="dv">240</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb785-4"><a href="survival-curve-estimation.html#cb785-4"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb785-5"><a href="survival-curve-estimation.html#cb785-5"></a>    <span class="dt">f =</span> <span class="kw">dweibull</span>(<span class="dt">x =</span> t, <span class="dt">shape =</span> alpha, <span class="dt">scale =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="fl">0.03</span>),</span>
+<span id="cb785-6"><a href="survival-curve-estimation.html#cb785-6"></a>    <span class="dt">S =</span> <span class="kw">pweibull</span>(<span class="dt">q =</span> t, <span class="dt">shape =</span> alpha, <span class="dt">scale =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="fl">0.03</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>),</span>
+<span id="cb785-7"><a href="survival-curve-estimation.html#cb785-7"></a>    <span class="dt">h =</span> f <span class="op">/</span><span class="st"> </span>S  <span class="co"># same as alpha * lambda^alpha * t^(alpha-1)</span></span>
+<span id="cb785-8"><a href="survival-curve-estimation.html#cb785-8"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb785-9"><a href="survival-curve-estimation.html#cb785-9"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> t, <span class="dt">y =</span> h, <span class="dt">color =</span> <span class="kw">as.factor</span>(alpha))) <span class="op">+</span></span>
+<span id="cb785-10"><a href="survival-curve-estimation.html#cb785-10"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb785-11"><a href="survival-curve-estimation.html#cb785-11"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;top&quot;</span>) <span class="op">+</span></span>
+<span id="cb785-12"><a href="survival-curve-estimation.html#cb785-12"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;hazard&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;time&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;alpha&quot;</span>,</span>
+<span id="cb785-13"><a href="survival-curve-estimation.html#cb785-13"></a>       <span class="dt">title =</span> <span class="st">&quot;Weibul hazard function at varying levels of alpha&quot;</span>,</span>
+<span id="cb785-14"><a href="survival-curve-estimation.html#cb785-14"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Lambda = 0.03&quot;</span>,</span>
+<span id="cb785-15"><a href="survival-curve-estimation.html#cb785-15"></a>       <span class="dt">caption =</span> <span class="st">&quot;alpha = 1 is special case of exponential function.&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-367-1.png" width="672" /></p>
 <p>The cumulative hazard function is <span class="math inline">\(H(t) = (\lambda t)^\alpha\)</span> and the corresponding survival function is</p>
 <p><span class="math display">\[S(t) = e^{-(\lambda t)^\alpha}.\]</span></p>
 <p>The exponential distribution is a special case of the Weibull where <span class="math inline">\(\alpha = 1\)</span>. The expected survival time is <span class="math inline">\(E(t) = \frac{\Gamma (1 + 1 / \alpha)}{\lambda}\)</span>. The median survival time is <span class="math inline">\(t_{med} = \frac{[\log(2)]^{1 / \alpha}}{\lambda}\)</span></p>
 <p>The Kaplan-Meier estimate is used mainly as a descriptive tool. The Weibull model produces a smooth survival curve instead of a step function. The Weibull model assumes a Weibull distribution.</p>
 <p>Fit a Weibull model with the <code>survreg()</code> function.</p>
-<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb761-1"><a href="survival-curve-estimation.html#cb761-1"></a><span class="kw">data</span>(GBSG2, <span class="dt">package =</span> <span class="st">&quot;TH.data&quot;</span>)</span>
-<span id="cb761-2"><a href="survival-curve-estimation.html#cb761-2"></a>wb &lt;-<span class="st"> </span><span class="kw">survreg</span>(<span class="kw">Surv</span>(time, cens) <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> GBSG2)</span>
-<span id="cb761-3"><a href="survival-curve-estimation.html#cb761-3"></a></span>
-<span id="cb761-4"><a href="survival-curve-estimation.html#cb761-4"></a><span class="co"># 90% of patients survive beyond time point 385</span></span>
-<span id="cb761-5"><a href="survival-curve-estimation.html#cb761-5"></a><span class="co"># Alternatively, 10% of patients die at time 385</span></span>
-<span id="cb761-6"><a href="survival-curve-estimation.html#cb761-6"></a><span class="kw">predict</span>(wb, <span class="dt">type =</span> <span class="st">&quot;quantile&quot;</span>, <span class="dt">p =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.9</span>, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="survival-curve-estimation.html#cb786-1"></a><span class="kw">data</span>(GBSG2, <span class="dt">package =</span> <span class="st">&quot;TH.data&quot;</span>)</span>
+<span id="cb786-2"><a href="survival-curve-estimation.html#cb786-2"></a>wb &lt;-<span class="st"> </span><span class="kw">survreg</span>(<span class="kw">Surv</span>(time, cens) <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> GBSG2)</span>
+<span id="cb786-3"><a href="survival-curve-estimation.html#cb786-3"></a></span>
+<span id="cb786-4"><a href="survival-curve-estimation.html#cb786-4"></a><span class="co"># 90% of patients survive beyond time point 385</span></span>
+<span id="cb786-5"><a href="survival-curve-estimation.html#cb786-5"></a><span class="co"># Alternatively, 10% of patients die at time 385</span></span>
+<span id="cb786-6"><a href="survival-curve-estimation.html#cb786-6"></a><span class="kw">predict</span>(wb, <span class="dt">type =</span> <span class="st">&quot;quantile&quot;</span>, <span class="dt">p =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.9</span>, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dv">1</span>))</span></code></pre></div>
 <pre><code>##   1 
 ## 385</code></pre>
-<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb763-1"><a href="survival-curve-estimation.html#cb763-1"></a><span class="co"># The median survival time is 1694</span></span>
-<span id="cb763-2"><a href="survival-curve-estimation.html#cb763-2"></a><span class="kw">predict</span>(wb, <span class="dt">type =</span> <span class="st">&quot;quantile&quot;</span>, <span class="dt">p =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="survival-curve-estimation.html#cb788-1"></a><span class="co"># The median survival time is 1694</span></span>
+<span id="cb788-2"><a href="survival-curve-estimation.html#cb788-2"></a><span class="kw">predict</span>(wb, <span class="dt">type =</span> <span class="st">&quot;quantile&quot;</span>, <span class="dt">p =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dv">1</span>))</span></code></pre></div>
 <pre><code>##    1 
 ## 1694</code></pre>
-<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb765-1"><a href="survival-curve-estimation.html#cb765-1"></a>surv &lt;-<span class="st"> </span><span class="kw">seq</span>(.<span class="dv">99</span>, <span class="fl">.01</span>, <span class="dt">by =</span> <span class="fl">-.01</span>)</span>
-<span id="cb765-2"><a href="survival-curve-estimation.html#cb765-2"></a>t &lt;-<span class="st"> </span><span class="kw">predict</span>(wb, <span class="dt">type =</span> <span class="st">&quot;quantile&quot;</span>, <span class="dt">p =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>surv, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dv">1</span>))</span>
-<span id="cb765-3"><a href="survival-curve-estimation.html#cb765-3"></a><span class="kw">head</span>(<span class="kw">data.frame</span>(<span class="dt">time =</span> t, <span class="dt">surv =</span> surv))</span></code></pre></div>
+<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="survival-curve-estimation.html#cb790-1"></a>surv &lt;-<span class="st"> </span><span class="kw">seq</span>(.<span class="dv">99</span>, <span class="fl">.01</span>, <span class="dt">by =</span> <span class="fl">-.01</span>)</span>
+<span id="cb790-2"><a href="survival-curve-estimation.html#cb790-2"></a>t &lt;-<span class="st"> </span><span class="kw">predict</span>(wb, <span class="dt">type =</span> <span class="st">&quot;quantile&quot;</span>, <span class="dt">p =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>surv, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dv">1</span>))</span>
+<span id="cb790-3"><a href="survival-curve-estimation.html#cb790-3"></a><span class="kw">head</span>(<span class="kw">data.frame</span>(<span class="dt">time =</span> t, <span class="dt">surv =</span> surv))</span></code></pre></div>
 <pre><code>##   time surv
 ## 1   61 0.99
 ## 2  105 0.98
@@ -455,17 +466,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4  183 0.96
 ## 5  219 0.95
 ## 6  253 0.94</code></pre>
-<div class="sourceCode" id="cb767"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb767-1"><a href="survival-curve-estimation.html#cb767-1"></a>surv_wb &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">time =</span> t, <span class="dt">surv =</span> surv, </span>
-<span id="cb767-2"><a href="survival-curve-estimation.html#cb767-2"></a>                      <span class="dt">upper =</span> <span class="ot">NA</span>, <span class="dt">lower =</span> <span class="ot">NA</span>, <span class="dt">std.err =</span> <span class="ot">NA</span>)</span>
-<span id="cb767-3"><a href="survival-curve-estimation.html#cb767-3"></a><span class="kw">ggsurvplot_df</span>(<span class="dt">fit =</span> surv_wb, <span class="dt">surv.geom =</span> geom_line)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-355-1.png" width="672" /></p>
+<div class="sourceCode" id="cb792"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb792-1"><a href="survival-curve-estimation.html#cb792-1"></a>surv_wb &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">time =</span> t, <span class="dt">surv =</span> surv, </span>
+<span id="cb792-2"><a href="survival-curve-estimation.html#cb792-2"></a>                      <span class="dt">upper =</span> <span class="ot">NA</span>, <span class="dt">lower =</span> <span class="ot">NA</span>, <span class="dt">std.err =</span> <span class="ot">NA</span>)</span>
+<span id="cb792-3"><a href="survival-curve-estimation.html#cb792-3"></a><span class="kw">ggsurvplot_df</span>(<span class="dt">fit =</span> surv_wb, <span class="dt">surv.geom =</span> geom_line)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-368-1.png" width="672" /></p>
 <p>Fit a Weibull model controlling for hormonal therapy <code>horTh</code> and tumor size <code>tsize</code>.</p>
-<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb768-1"><a href="survival-curve-estimation.html#cb768-1"></a>wbmod &lt;-<span class="st"> </span><span class="kw">survreg</span>(<span class="kw">Surv</span>(time, cens) <span class="op">~</span><span class="st"> </span>horTh <span class="op">+</span><span class="st"> </span>tsize, <span class="dt">data =</span> GBSG2)</span>
-<span id="cb768-2"><a href="survival-curve-estimation.html#cb768-2"></a></span>
-<span id="cb768-3"><a href="survival-curve-estimation.html#cb768-3"></a><span class="kw">coef</span>(wbmod)</span></code></pre></div>
+<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb793-1"><a href="survival-curve-estimation.html#cb793-1"></a>wbmod &lt;-<span class="st"> </span><span class="kw">survreg</span>(<span class="kw">Surv</span>(time, cens) <span class="op">~</span><span class="st"> </span>horTh <span class="op">+</span><span class="st"> </span>tsize, <span class="dt">data =</span> GBSG2)</span>
+<span id="cb793-2"><a href="survival-curve-estimation.html#cb793-2"></a></span>
+<span id="cb793-3"><a href="survival-curve-estimation.html#cb793-3"></a><span class="kw">coef</span>(wbmod)</span></code></pre></div>
 <pre><code>## (Intercept)    horThyes       tsize 
 ##       7.961       0.312      -0.012</code></pre>
-<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb770-1"><a href="survival-curve-estimation.html#cb770-1"></a><span class="kw">summary</span>(wbmod)</span></code></pre></div>
+<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb795-1"><a href="survival-curve-estimation.html#cb795-1"></a><span class="kw">summary</span>(wbmod)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## survreg(formula = Surv(time, cens) ~ horTh + tsize, data = GBSG2)
@@ -482,43 +493,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  Chisq= 28 on 2 degrees of freedom, p= 0.00000076 
 ## Number of Newton-Raphson Iterations: 5 
 ## n= 686</code></pre>
-<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb772-1"><a href="survival-curve-estimation.html#cb772-1"></a>surv &lt;-<span class="st"> </span><span class="kw">seq</span>(.<span class="dv">99</span>, <span class="fl">.01</span>, <span class="dt">by =</span> <span class="fl">-.01</span>)</span>
-<span id="cb772-2"><a href="survival-curve-estimation.html#cb772-2"></a>newdata &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(</span>
-<span id="cb772-3"><a href="survival-curve-estimation.html#cb772-3"></a>    <span class="dt">horTh =</span> <span class="kw">levels</span>(GBSG2<span class="op">$</span>horTh),</span>
-<span id="cb772-4"><a href="survival-curve-estimation.html#cb772-4"></a>    <span class="dt">tsize =</span> <span class="kw">quantile</span>(GBSG2<span class="op">$</span>tsize, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.50</span>, <span class="fl">0.75</span>))</span>
-<span id="cb772-5"><a href="survival-curve-estimation.html#cb772-5"></a>)</span>
-<span id="cb772-6"><a href="survival-curve-estimation.html#cb772-6"></a>t &lt;-<span class="st"> </span><span class="kw">predict</span>(wbmod, <span class="dt">type =</span> <span class="st">&quot;quantile&quot;</span>, <span class="dt">p =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>surv, <span class="dt">newdata =</span> newdata)</span>
-<span id="cb772-7"><a href="survival-curve-estimation.html#cb772-7"></a></span>
-<span id="cb772-8"><a href="survival-curve-estimation.html#cb772-8"></a>surv_wbmod &lt;-<span class="st"> </span>surv_wbmod_wide &lt;-<span class="st"> </span><span class="kw">cbind</span>(newdata, t) <span class="op">%&gt;%</span></span>
-<span id="cb772-9"><a href="survival-curve-estimation.html#cb772-9"></a><span class="st">    </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">&quot;surv_id&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;time&quot;</span>, <span class="dt">cols =</span> <span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb772-10"><a href="survival-curve-estimation.html#cb772-10"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">tsize =</span> <span class="kw">as.numeric</span>(tsize),</span>
-<span id="cb772-11"><a href="survival-curve-estimation.html#cb772-11"></a>           <span class="dt">surv_id =</span> <span class="kw">as.factor</span>(<span class="kw">as.numeric</span>(surv_id))) <span class="op">%&gt;%</span></span>
-<span id="cb772-12"><a href="survival-curve-estimation.html#cb772-12"></a><span class="st">    </span><span class="kw">data.frame</span>()</span>
-<span id="cb772-13"><a href="survival-curve-estimation.html#cb772-13"></a>surv_wbmod<span class="op">$</span>surv =<span class="st"> </span>surv[<span class="kw">as.numeric</span>(surv_wbmod<span class="op">$</span>surv_id)]</span>
-<span id="cb772-14"><a href="survival-curve-estimation.html#cb772-14"></a>surv_wbmod<span class="op">$</span>upper =<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb772-15"><a href="survival-curve-estimation.html#cb772-15"></a>surv_wbmod<span class="op">$</span>lower =<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb772-16"><a href="survival-curve-estimation.html#cb772-16"></a>surv_wbmod<span class="op">$</span>std.err =<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb772-17"><a href="survival-curve-estimation.html#cb772-17"></a>surv_wbmod<span class="op">$</span>strata =<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb772-18"><a href="survival-curve-estimation.html#cb772-18"></a>surv_wbmod[, <span class="kw">c</span>(<span class="st">&quot;upper&quot;</span>, <span class="st">&quot;lower&quot;</span>, <span class="st">&quot;std.err&quot;</span>, <span class="st">&quot;strata&quot;</span>)] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb772-19"><a href="survival-curve-estimation.html#cb772-19"></a><span class="kw">ggsurvplot_df</span>(surv_wbmod, <span class="dt">surv.geom =</span> geom_line,</span>
-<span id="cb772-20"><a href="survival-curve-estimation.html#cb772-20"></a>  <span class="dt">linetype =</span> <span class="st">&quot;horTh&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;tsize&quot;</span>, <span class="dt">legend.title =</span> <span class="ot">NULL</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-356-1.png" width="672" /></p>
+<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="survival-curve-estimation.html#cb797-1"></a>surv &lt;-<span class="st"> </span><span class="kw">seq</span>(.<span class="dv">99</span>, <span class="fl">.01</span>, <span class="dt">by =</span> <span class="fl">-.01</span>)</span>
+<span id="cb797-2"><a href="survival-curve-estimation.html#cb797-2"></a>newdata &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(</span>
+<span id="cb797-3"><a href="survival-curve-estimation.html#cb797-3"></a>    <span class="dt">horTh =</span> <span class="kw">levels</span>(GBSG2<span class="op">$</span>horTh),</span>
+<span id="cb797-4"><a href="survival-curve-estimation.html#cb797-4"></a>    <span class="dt">tsize =</span> <span class="kw">quantile</span>(GBSG2<span class="op">$</span>tsize, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.50</span>, <span class="fl">0.75</span>))</span>
+<span id="cb797-5"><a href="survival-curve-estimation.html#cb797-5"></a>)</span>
+<span id="cb797-6"><a href="survival-curve-estimation.html#cb797-6"></a>t &lt;-<span class="st"> </span><span class="kw">predict</span>(wbmod, <span class="dt">type =</span> <span class="st">&quot;quantile&quot;</span>, <span class="dt">p =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>surv, <span class="dt">newdata =</span> newdata)</span>
+<span id="cb797-7"><a href="survival-curve-estimation.html#cb797-7"></a></span>
+<span id="cb797-8"><a href="survival-curve-estimation.html#cb797-8"></a>surv_wbmod &lt;-<span class="st"> </span>surv_wbmod_wide &lt;-<span class="st"> </span><span class="kw">cbind</span>(newdata, t) <span class="op">%&gt;%</span></span>
+<span id="cb797-9"><a href="survival-curve-estimation.html#cb797-9"></a><span class="st">    </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">&quot;surv_id&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;time&quot;</span>, <span class="dt">cols =</span> <span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb797-10"><a href="survival-curve-estimation.html#cb797-10"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">tsize =</span> <span class="kw">as.numeric</span>(tsize),</span>
+<span id="cb797-11"><a href="survival-curve-estimation.html#cb797-11"></a>           <span class="dt">surv_id =</span> <span class="kw">as.factor</span>(<span class="kw">as.numeric</span>(surv_id))) <span class="op">%&gt;%</span></span>
+<span id="cb797-12"><a href="survival-curve-estimation.html#cb797-12"></a><span class="st">    </span><span class="kw">data.frame</span>()</span>
+<span id="cb797-13"><a href="survival-curve-estimation.html#cb797-13"></a>surv_wbmod<span class="op">$</span>surv =<span class="st"> </span>surv[<span class="kw">as.numeric</span>(surv_wbmod<span class="op">$</span>surv_id)]</span>
+<span id="cb797-14"><a href="survival-curve-estimation.html#cb797-14"></a>surv_wbmod<span class="op">$</span>upper =<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb797-15"><a href="survival-curve-estimation.html#cb797-15"></a>surv_wbmod<span class="op">$</span>lower =<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb797-16"><a href="survival-curve-estimation.html#cb797-16"></a>surv_wbmod<span class="op">$</span>std.err =<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb797-17"><a href="survival-curve-estimation.html#cb797-17"></a>surv_wbmod<span class="op">$</span>strata =<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb797-18"><a href="survival-curve-estimation.html#cb797-18"></a>surv_wbmod[, <span class="kw">c</span>(<span class="st">&quot;upper&quot;</span>, <span class="st">&quot;lower&quot;</span>, <span class="st">&quot;std.err&quot;</span>, <span class="st">&quot;strata&quot;</span>)] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb797-19"><a href="survival-curve-estimation.html#cb797-19"></a><span class="kw">ggsurvplot_df</span>(surv_wbmod, <span class="dt">surv.geom =</span> geom_line,</span>
+<span id="cb797-20"><a href="survival-curve-estimation.html#cb797-20"></a>  <span class="dt">linetype =</span> <span class="st">&quot;horTh&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;tsize&quot;</span>, <span class="dt">legend.title =</span> <span class="ot">NULL</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-369-1.png" width="672" /></p>
 <p>Interpret the coefficient as the probability of surviving falls by 0.012 per unit increase in the tumor size and increases by 0.312 if taking hormonal therapy.</p>
 <p>You can fit other models with the <code>dist = c("lognormal", "exponential")</code> parameter.</p>
 </div>
 <div id="cox" class="section level3">
 <h3><span class="header-section-number">15.2.3</span> Cox</h3>
-<p>The Cox proportional hazards model uses partial likelihood to fit a regression model to censored survival data, much like linear regression. Partial likelihood differs from a likelihood in two ways. First, it is a product of expressions, one for each failure time (censoring times do not contribute any factors). Second, the factors of a partial likelihood are conditional probabilities.</p>
-<p>Kaplan-Meier curves and logrank tests are examples of univariate analysis. They describe the survival as a function of a single categorical factor variable. The Cox proportional hazards model describes the function of multiple covariates.</p>
-<p>The hazard function for subject <span class="math inline">\(i\)</span> at time <span class="math inline">\(t\)</span> is <span class="math inline">\(h_i(t) = h_0(t) \psi_i\)</span> where <span class="math inline">\(\psi_i = e^{X_i \beta}\)</span> and <span class="math inline">\(X\)</span> is a set of coveriates. <span class="math inline">\(h_0(t)\)</span> is the baseline hazard, the value when all the <span class="math inline">\(X\)</span> covariates equal zero (<span class="math inline">\(e^{X_i \beta} = 1\)</span>). The Cox model can be written as a multiple linear regression of the logarithm of the hazard on the variables, with the baseline hazard intercept that varies with time. The <span class="math inline">\(e^{\beta_j}\)</span> values are called the hazard ratios. A positive <span class="math inline">\(e^{\beta_j}\)</span> means the hazard increases with the covariate.</p>
-<p>The Cox model is a proportional-hazards model, meaning the hazard of the event in any group is a constant multiple of the hazard in any other.</p>
-<p>Consider the first failure time, <span class="math inline">\(t_1\)</span>. The probability that patient <span class="math inline">\(i\)</span> is the one to fail is the proportion of patient <span class="math inline">\(i\)</span>’s hazard divided by the sum of the hazards of all <span class="math inline">\(R_1\)</span> patients at risk,</p>
+<p>Whereas parametric models specify the baseline hazard function, <span class="math inline">\(\alpha(t) = \log h_0(t)\)</span>, the Cox proportional hazards model is semi-parametric in that it leaves it unspecified.</p>
+<p><span class="math display">\[\log h_i(t) = \alpha(t) + \beta X_i\]</span></p>
+<p>or</p>
+<p><span class="math display">\[h_i(t) = h_0(t) \cdot e^{X_i \beta} = h_0(t) \psi_i\]</span></p>
+<p>The <span class="math inline">\(e^{\beta_j}\)</span> values are called the hazard ratios. A positive <span class="math inline">\(e^{\beta_j}\)</span> means the hazard increases with the covariate. The proportionality of the model comes from the lack of time dependence in the <span class="math inline">\(X\)</span> variables. Two ratio of the hazard functions of two individuals is</p>
+<p><span class="math display">\[\frac{h_i(t)}{h_{i&#39;}(t)} = \frac{h_0(t) \cdot e^{X_i \beta}}{h_0(t) \cdot e^{X_{i&#39;} \beta}}\]</span></p>
+<p>Remarkably, even though the baseline hazard is unspecified, the Cox model can still be estimated by the method of partial likelihood. Consider the first failure time, <span class="math inline">\(t_1\)</span>. The probability that patient <span class="math inline">\(i\)</span> is the one to fail is the proportion of patient <span class="math inline">\(i\)</span>’s hazard divided by the sum of the hazards of all <span class="math inline">\(R_1\)</span> patients at risk,</p>
 <p><span class="math display">\[p_1 = \frac{h_i(t_1)}{\sum_{k \in R_1} h_k(t_1)} = \frac{h_0(t_1) \psi_i}{\sum_{k \in R_1} h_0(t_1) \psi_k} = \frac{\psi_i}{\sum_{k \in R_1} \psi_k}\]</span></p>
-<p>The hazard ratio is time independent - the patient survivor curves are proportional to each other.</p>
 <p>The next failure event has a reduced <span class="math inline">\(R_2\)</span> patients at risk. The partial likelihood for <span class="math inline">\(D\)</span> failure times is the product <span class="math inline">\(L_i = p_1 p_2 \cdots p_D\)</span>. The Cox model uses maximum partial likelihood estimation to find the value of <span class="math inline">\(\phi\)</span> that maximizes the likelihood function.</p>
 <p>Fit a Cox proportional hazards model with <code>coxph()</code>. Here is a simple Cox proportional hazards model for a single covariate, <code>sex</code>.</p>
-<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb773-1"><a href="survival-curve-estimation.html#cb773-1"></a>lung_cox &lt;-<span class="st"> </span><span class="kw">coxph</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>sex, <span class="dt">data =</span> lung)</span>
-<span id="cb773-2"><a href="survival-curve-estimation.html#cb773-2"></a><span class="kw">summary</span>(lung_cox)</span></code></pre></div>
+<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="survival-curve-estimation.html#cb798-1"></a>lung_cox &lt;-<span class="st"> </span><span class="kw">coxph</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>sex, <span class="dt">data =</span> lung)</span>
+<span id="cb798-2"><a href="survival-curve-estimation.html#cb798-2"></a><span class="kw">summary</span>(lung_cox)</span></code></pre></div>
 <pre><code>## Call:
 ## coxph(formula = Surv(time, status) ~ sex, data = lung)
 ## 
@@ -542,8 +554,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Below the coefficients estimators table is a table of hazard ratio Confidence intervals.</p>
 <p>The last section of the summary object is three tests for the overall significance of the model: the likelihood-ratio test, Wald test, and score logrank statistics. These three methods are asymptotically equivalent. The Likelihood ratio test has better behavior for small sample sizes, so it is generally preferred.</p>
 <p>A multivariate analysis works the same way. Here is the Cox model with two additional covariates: <code>age</code> and <code>ph.ecog</code>.</p>
-<div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb775-1"><a href="survival-curve-estimation.html#cb775-1"></a>lung_cox_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">coxph</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>ph.ecog, <span class="dt">data =</span> lung)</span>
-<span id="cb775-2"><a href="survival-curve-estimation.html#cb775-2"></a><span class="kw">summary</span>(lung_cox_<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="survival-curve-estimation.html#cb800-1"></a>lung_cox_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">coxph</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>ph.ecog, <span class="dt">data =</span> lung)</span>
+<span id="cb800-2"><a href="survival-curve-estimation.html#cb800-2"></a><span class="kw">summary</span>(lung_cox_<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## Call:
 ## coxph(formula = Surv(time, status) ~ age + sex + ph.ecog, data = lung)
 ## 
@@ -567,34 +579,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Wald test            = 29.9  on 3 df,   p=0.000001
 ## Score (logrank) test = 30.5  on 3 df,   p=0.000001</code></pre>
 <p>The p-values for all three overall tests (likelihood, Wald, and score) are significant, indicating that the model is significant (not all <span class="math inline">\(\beta\)</span> values are 0).</p>
-<p>Having fit a Cox model to the data, it’s possible to visualize the predicted survival proportion at any given time for a particular risk group. Function <code>survfit()</code> estimates the survival proportion at the mean values of covariates by default.</p>
-<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="survival-curve-estimation.html#cb777-1"></a><span class="kw">ggsurvplot</span>(<span class="kw">surv_fit</span>(lung_cox_<span class="dv">2</span>, <span class="dt">data =</span> lung), </span>
-<span id="cb777-2"><a href="survival-curve-estimation.html#cb777-2"></a>           <span class="dt">palette =</span> <span class="st">&quot;#2E9FDF&quot;</span>, <span class="dt">ggtheme =</span> <span class="kw">theme_minimal</span>())</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-359-1.png" width="672" /></p>
+<p>Having fit a Cox model to the data, it’s possible to visualize the predicted survival proportion at any given time for a particular risk group. Function <code>survfit()</code> estimates the survival proportion, by default at the mean values of covariates.</p>
+<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="survival-curve-estimation.html#cb802-1"></a><span class="co">#ggsurvplot(survfit(lung_cox_2), data = lung, palette = &quot;#2E9FDF&quot;, ggtheme = theme_minimal())</span></span></code></pre></div>
 <p>To display the effects of one or more particular covariates, construct a data frame with test cases and pass to <code>survfit()</code> with the <code>newdata</code> argument.</p>
-<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="survival-curve-estimation.html#cb778-1"></a>newdata &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(</span>
-<span id="cb778-2"><a href="survival-curve-estimation.html#cb778-2"></a>    <span class="dt">sex =</span> <span class="kw">unique</span>(lung<span class="op">$</span>sex),</span>
-<span id="cb778-3"><a href="survival-curve-estimation.html#cb778-3"></a><span class="co">#    age = quantile(lung$age, probs = c(0.25, 0.50, 0.75)),</span></span>
-<span id="cb778-4"><a href="survival-curve-estimation.html#cb778-4"></a>    <span class="dt">age =</span> <span class="kw">median</span>(lung<span class="op">$</span>age),</span>
-<span id="cb778-5"><a href="survival-curve-estimation.html#cb778-5"></a>    <span class="dt">ph.ecog =</span> <span class="dv">1</span></span>
-<span id="cb778-6"><a href="survival-curve-estimation.html#cb778-6"></a>)</span>
-<span id="cb778-7"><a href="survival-curve-estimation.html#cb778-7"></a><span class="kw">rownames</span>(newdata) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>)</span>
-<span id="cb778-8"><a href="survival-curve-estimation.html#cb778-8"></a></span>
-<span id="cb778-9"><a href="survival-curve-estimation.html#cb778-9"></a><span class="co"># Create survival curves.  The rownames show up in the model</span></span>
-<span id="cb778-10"><a href="survival-curve-estimation.html#cb778-10"></a>lung_pred &lt;-<span class="st"> </span><span class="kw">survfit</span>(lung_cox_<span class="dv">2</span>, <span class="dt">newdata =</span> newdata, <span class="dt">data =</span> lung)</span>
-<span id="cb778-11"><a href="survival-curve-estimation.html#cb778-11"></a></span>
-<span id="cb778-12"><a href="survival-curve-estimation.html#cb778-12"></a><span class="co"># surv_summary() creates the data.frame with a summary of the survfit() results, including columns like time (survival time) and surv (survival probability).</span></span>
-<span id="cb778-13"><a href="survival-curve-estimation.html#cb778-13"></a>lung_pred0 &lt;-<span class="st"> </span><span class="kw">surv_summary</span>(lung_pred)</span>
-<span id="cb778-14"><a href="survival-curve-estimation.html#cb778-14"></a><span class="co"># get the corresponding new_data cols</span></span>
-<span id="cb778-15"><a href="survival-curve-estimation.html#cb778-15"></a>lung_pred1 &lt;-<span class="st"> </span><span class="kw">cbind</span>(lung_pred0, newdata[<span class="kw">as.character</span>(lung_pred0<span class="op">$</span>strata), ])</span>
-<span id="cb778-16"><a href="survival-curve-estimation.html#cb778-16"></a><span class="kw">ggsurvplot_df</span>(</span>
-<span id="cb778-17"><a href="survival-curve-estimation.html#cb778-17"></a>  lung_pred1, </span>
-<span id="cb778-18"><a href="survival-curve-estimation.html#cb778-18"></a>  <span class="dt">color =</span> <span class="st">&quot;sex&quot;</span>, </span>
-<span id="cb778-19"><a href="survival-curve-estimation.html#cb778-19"></a>  <span class="dt">legend.labs =</span> <span class="kw">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>),</span>
-<span id="cb778-20"><a href="survival-curve-estimation.html#cb778-20"></a>  <span class="dt">legend.title =</span> <span class="st">&quot;Sex&quot;</span>, </span>
-<span id="cb778-21"><a href="survival-curve-estimation.html#cb778-21"></a>  <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, </span>
-<span id="cb778-22"><a href="survival-curve-estimation.html#cb778-22"></a>  <span class="dt">ggtheme =</span> <span class="kw">theme_minimal</span>())</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-360-1.png" width="672" /></p>
+<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb803-1"><a href="survival-curve-estimation.html#cb803-1"></a>newdata &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(</span>
+<span id="cb803-2"><a href="survival-curve-estimation.html#cb803-2"></a>    <span class="dt">sex =</span> <span class="kw">unique</span>(lung<span class="op">$</span>sex),</span>
+<span id="cb803-3"><a href="survival-curve-estimation.html#cb803-3"></a><span class="co">#    age = quantile(lung$age, probs = c(0.25, 0.50, 0.75)),</span></span>
+<span id="cb803-4"><a href="survival-curve-estimation.html#cb803-4"></a>    <span class="dt">age =</span> <span class="kw">median</span>(lung<span class="op">$</span>age),</span>
+<span id="cb803-5"><a href="survival-curve-estimation.html#cb803-5"></a>    <span class="dt">ph.ecog =</span> <span class="dv">1</span></span>
+<span id="cb803-6"><a href="survival-curve-estimation.html#cb803-6"></a>)</span>
+<span id="cb803-7"><a href="survival-curve-estimation.html#cb803-7"></a><span class="kw">rownames</span>(newdata) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>)</span>
+<span id="cb803-8"><a href="survival-curve-estimation.html#cb803-8"></a></span>
+<span id="cb803-9"><a href="survival-curve-estimation.html#cb803-9"></a><span class="co"># Create survival curves.  The rownames show up in the model</span></span>
+<span id="cb803-10"><a href="survival-curve-estimation.html#cb803-10"></a>lung_pred &lt;-<span class="st"> </span><span class="kw">survfit</span>(lung_cox_<span class="dv">2</span>, <span class="dt">newdata =</span> newdata, <span class="dt">data =</span> lung)</span>
+<span id="cb803-11"><a href="survival-curve-estimation.html#cb803-11"></a></span>
+<span id="cb803-12"><a href="survival-curve-estimation.html#cb803-12"></a><span class="co"># surv_summary() creates the data.frame with a summary of the survfit() results, including columns like time (survival time) and surv (survival probability).</span></span>
+<span id="cb803-13"><a href="survival-curve-estimation.html#cb803-13"></a>lung_pred0 &lt;-<span class="st"> </span><span class="kw">surv_summary</span>(lung_pred)</span>
+<span id="cb803-14"><a href="survival-curve-estimation.html#cb803-14"></a><span class="co"># get the corresponding new_data cols</span></span>
+<span id="cb803-15"><a href="survival-curve-estimation.html#cb803-15"></a>lung_pred1 &lt;-<span class="st"> </span><span class="kw">cbind</span>(lung_pred0, newdata[<span class="kw">as.character</span>(lung_pred0<span class="op">$</span>strata), ])</span>
+<span id="cb803-16"><a href="survival-curve-estimation.html#cb803-16"></a><span class="kw">ggsurvplot_df</span>(</span>
+<span id="cb803-17"><a href="survival-curve-estimation.html#cb803-17"></a>  lung_pred1, </span>
+<span id="cb803-18"><a href="survival-curve-estimation.html#cb803-18"></a>  <span class="dt">color =</span> <span class="st">&quot;sex&quot;</span>, </span>
+<span id="cb803-19"><a href="survival-curve-estimation.html#cb803-19"></a>  <span class="dt">legend.labs =</span> <span class="kw">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>),</span>
+<span id="cb803-20"><a href="survival-curve-estimation.html#cb803-20"></a>  <span class="dt">legend.title =</span> <span class="st">&quot;Sex&quot;</span>, </span>
+<span id="cb803-21"><a href="survival-curve-estimation.html#cb803-21"></a>  <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, </span>
+<span id="cb803-22"><a href="survival-curve-estimation.html#cb803-22"></a>  <span class="dt">ggtheme =</span> <span class="kw">theme_minimal</span>())</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-373-1.png" width="672" /></p>
 
 </div>
 </div>

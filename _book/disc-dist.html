@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-03" />
+<meta name="date" content="2020-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -225,7 +225,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>7.8</b> Cluster Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
-<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a></li>
+<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a><ul>
+<li class="chapter" data-level="9.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>9.1</b> Ridge</a></li>
+<li class="chapter" data-level="9.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>9.2</b> Lasso</a></li>
+<li class="chapter" data-level="9.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>9.3</b> Elastic Net</a></li>
+<li class="chapter" data-level="" data-path="model-summary.html"><a href="model-summary.html"><i class="fa fa-check"></i>Model Summary</a></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
 <li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
 <li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
@@ -250,7 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
 <li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
@@ -437,10 +442,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>What is the expected number of heads in 25 coin flips if the probability of heads is 0.3?</p>
 <p>The expected value, <span class="math inline">\(\mu = np\)</span>, is 7.5. Here’s an empirical test from 10,000 samples.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="disc-dist.html#cb26-1"></a><span class="kw">mean</span>(<span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">prob =</span> <span class="fl">.3</span>))</span></code></pre></div>
-<pre><code>## [1] 7.5034</code></pre>
+<pre><code>## [1] 7.4928</code></pre>
 <p>The variance, <span class="math inline">\(\sigma^2 = np (1 - p)\)</span>, is 5.25. Here’s an empirical test.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="disc-dist.html#cb28-1"></a><span class="kw">var</span>(<span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">size =</span> <span class="dv">25</span>, <span class="dt">prob =</span> <span class="fl">.3</span>))</span></code></pre></div>
-<pre><code>## [1] 5.221673</code></pre>
+<pre><code>## [1] 5.162471</code></pre>
 <p>Suppose X and Y are independent random variables distributed <span class="math inline">\(X \sim Bin(10, .6)\)</span> and <span class="math inline">\(Y \sim Bin(10, .7)\)</span>. What is the probability that either variable is &lt;=4?</p>
 <p>Let <span class="math inline">\(P(A) = P(X&lt;=4)\)</span> and <span class="math inline">\(P(B) = P(Y&lt;=4)\)</span>. Then <span class="math inline">\(P(A|B) = P(A) + P(B) - P(AB)\)</span>, and because the events are independent, <span class="math inline">\(P(AB) = P(A)P(B)\)</span>.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="disc-dist.html#cb30-1"></a>p_a &lt;-<span class="st"> </span><span class="kw">pbinom</span>(<span class="dt">q =</span> <span class="dv">4</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="fl">0.6</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span>
@@ -453,7 +458,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb32-3"><a href="disc-dist.html#cb32-3"></a>  <span class="dt">y =</span> <span class="kw">rbinom</span>(<span class="dv">10000</span>, <span class="dv">10</span>, <span class="fl">0.7</span>)</span>
 <span id="cb32-4"><a href="disc-dist.html#cb32-4"></a>  )</span>
 <span id="cb32-5"><a href="disc-dist.html#cb32-5"></a><span class="kw">mean</span>(<span class="kw">if_else</span>(df<span class="op">$</span>x <span class="op">&lt;=</span><span class="st"> </span><span class="dv">4</span> <span class="op">|</span><span class="st"> </span>df<span class="op">$</span>y <span class="op">&lt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
-<pre><code>## [1] 0.2067</code></pre>
+<pre><code>## [1] 0.204</code></pre>
 <p>A couple other points to remember:</p>
 <ul>
 <li>The Bernoulli distribution is a special case of the binomial with <span class="math inline">\(n = 1\)</span>.</li>
@@ -616,7 +621,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb58-2"><a href="disc-dist.html#cb58-2"></a><span class="kw">mean</span>(my_dat)</span></code></pre></div>
 <pre><code>## [1] 12</code></pre>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="disc-dist.html#cb60-1"></a><span class="kw">var</span>(my_dat)</span></code></pre></div>
-<pre><code>## [1] 61</code></pre>
+<pre><code>## [1] 63</code></pre>
 <p><img src="data-sci_files/figure-html/unnamed-chunk-36-1.png" width="576" /></p>
 </div>
 </div>

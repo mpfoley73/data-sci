@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-03" />
+<meta name="date" content="2020-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -225,7 +225,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>7.8</b> Cluster Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
-<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a></li>
+<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a><ul>
+<li class="chapter" data-level="9.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>9.1</b> Ridge</a></li>
+<li class="chapter" data-level="9.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>9.2</b> Lasso</a></li>
+<li class="chapter" data-level="9.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>9.3</b> Elastic Net</a></li>
+<li class="chapter" data-level="" data-path="model-summary.html"><a href="model-summary.html"><i class="fa fa-check"></i>Model Summary</a></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
 <li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
 <li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
@@ -250,7 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
 <li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
@@ -328,27 +333,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="create-vignette" class="section level3 unnumbered">
 <h3>Create Vignette</h3>
 <p>Add a directory and template vignette with <code>use_vignette(name, title)</code>.</p>
-<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="packages.html#cb780-1"></a><span class="kw">use_vignette</span>(<span class="st">&quot;Creating-Plots-with-mfstylr&quot;</span>, <span class="st">&quot;Creating Plots with mfstylr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb805"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb805-1"><a href="packages.html#cb805-1"></a><span class="kw">use_vignette</span>(<span class="st">&quot;Creating-Plots-with-mfstylr&quot;</span>, <span class="st">&quot;Creating Plots with mfstylr&quot;</span>)</span></code></pre></div>
 <div id="step-2-create-an-r-markdown-template" class="section level4 unnumbered">
 <h4>Step 2: Create an R Markdown template</h4>
 <p>I relied on <a href="http://freerangestats.info/blog/2017/09/09/rmarkdown">this blog</a> at <em>free range statistics</em> for a lot what follows. There is also good information about R Markdown and templates in Yihui Xie’s <strong>R Markdown: The Definitive Guide</strong> <span class="citation">(Xie, Allaire, and Grolemund <a href="#ref-Xie2019b" role="doc-biblioref">2019</a>)</span>.</p>
 <p>Use <code>usethis::use_rmarkdown_template()</code> to create an Rmd template. I will create a “Kaggle Report” template. In the Console (or a script), enter</p>
-<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="packages.html#cb781-1"></a>usethis<span class="op">::</span><span class="kw">use_rmarkdown_template</span>(</span>
-<span id="cb781-2"><a href="packages.html#cb781-2"></a>  <span class="dt">template_name =</span> <span class="st">&quot;Kaggle Report&quot;</span>,</span>
-<span id="cb781-3"><a href="packages.html#cb781-3"></a>  <span class="dt">template_dir =</span> <span class="st">&quot;kaggle_report&quot;</span>,</span>
-<span id="cb781-4"><a href="packages.html#cb781-4"></a>  <span class="dt">template_description =</span> <span class="st">&quot;Template for creating Kaggle reports in RMarkdown.&quot;</span>,</span>
-<span id="cb781-5"><a href="packages.html#cb781-5"></a>  <span class="dt">template_create_dir =</span> <span class="ot">FALSE</span></span>
-<span id="cb781-6"><a href="packages.html#cb781-6"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb806-1"><a href="packages.html#cb806-1"></a>usethis<span class="op">::</span><span class="kw">use_rmarkdown_template</span>(</span>
+<span id="cb806-2"><a href="packages.html#cb806-2"></a>  <span class="dt">template_name =</span> <span class="st">&quot;Kaggle Report&quot;</span>,</span>
+<span id="cb806-3"><a href="packages.html#cb806-3"></a>  <span class="dt">template_dir =</span> <span class="st">&quot;kaggle_report&quot;</span>,</span>
+<span id="cb806-4"><a href="packages.html#cb806-4"></a>  <span class="dt">template_description =</span> <span class="st">&quot;Template for creating Kaggle reports in RMarkdown.&quot;</span>,</span>
+<span id="cb806-5"><a href="packages.html#cb806-5"></a>  <span class="dt">template_create_dir =</span> <span class="ot">FALSE</span></span>
+<span id="cb806-6"><a href="packages.html#cb806-6"></a>)</span></code></pre></div>
 <p>Since my project directory is <code>C:\Users\mpfol\OneDrive\Documents\GitHub\mfstylr</code>, <code>use_rmarkdown_template()</code> creates subdirectories <code>.\inst\rmarkdown\templates\kaggle_report\skeleton</code> with three files</p>
 <ul>
 <li><code>.\inst\rmarkdown\templates\kaggle_report\template.yaml</code></li>
 <li><code>.\inst\rmarkdown\templates\kaggle_report\skeleton\skeleton.Rmd</code></li>
 </ul>
 <p>My kaggle report template will include a logo. Looks like there are two ways to embed an image in your document. One is a direct image loading reference <code>!()</code>, but I don’t think you can control the attributes this way. A second way is adding html tags.</p>
-<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="packages.html#cb782-1"></a><span class="op">!</span>[](logo.png)</span>
-<span id="cb782-2"><a href="packages.html#cb782-2"></a></span>
-<span id="cb782-3"><a href="packages.html#cb782-3"></a><span class="co"># or for more control</span></span>
-<span id="cb782-4"><a href="packages.html#cb782-4"></a><span class="op">&lt;</span>img src=<span class="st">&quot;logo.png&quot;</span> style=<span class="st">&quot;position:absolute;top:0px;right:0px;&quot;</span> <span class="op">/</span><span class="er">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="packages.html#cb807-1"></a><span class="op">!</span>[](logo.png)</span>
+<span id="cb807-2"><a href="packages.html#cb807-2"></a></span>
+<span id="cb807-3"><a href="packages.html#cb807-3"></a><span class="co"># or for more control</span></span>
+<span id="cb807-4"><a href="packages.html#cb807-4"></a><span class="op">&lt;</span>img src=<span class="st">&quot;logo.png&quot;</span> style=<span class="st">&quot;position:absolute;top:0px;right:0px;&quot;</span> <span class="op">/</span><span class="er">&gt;</span></span></code></pre></div>
 
 </div>
 </div>

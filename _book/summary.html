@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-03" />
+<meta name="date" content="2020-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -225,7 +225,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>7.8</b> Cluster Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
-<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a></li>
+<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a><ul>
+<li class="chapter" data-level="9.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>9.1</b> Ridge</a></li>
+<li class="chapter" data-level="9.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>9.2</b> Lasso</a></li>
+<li class="chapter" data-level="9.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>9.3</b> Elastic Net</a></li>
+<li class="chapter" data-level="" data-path="model-summary.html"><a href="model-summary.html"><i class="fa fa-check"></i>Model Summary</a></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
 <li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
 <li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
@@ -250,7 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
 <li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
@@ -297,12 +302,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="summary" class="section level2">
 <h2><span class="header-section-number">10.6</span> Summary</h2>
 <p>Okay, I’m going to tally up the results! For the classification division, the winner is the manual classification tree! Gradient boosting made a valiant run at it, but came up just a little short.</p>
-<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="summary.html#cb709-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual Class&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_1b_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)), </span>
-<span id="cb709-2"><a href="summary.html#cb709-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Class w.tuneGrid&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_<span class="dv">3</span>_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)),</span>
-<span id="cb709-3"><a href="summary.html#cb709-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.bag.acc, <span class="dv">5</span>)),</span>
-<span id="cb709-4"><a href="summary.html#cb709-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.frst.acc, <span class="dv">5</span>)),</span>
-<span id="cb709-5"><a href="summary.html#cb709-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.gbm.acc, <span class="dv">5</span>))</span>
-<span id="cb709-6"><a href="summary.html#cb709-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Acc))</span></code></pre></div>
+<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="summary.html#cb734-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual Class&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_1b_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)), </span>
+<span id="cb734-2"><a href="summary.html#cb734-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Class w.tuneGrid&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_<span class="dv">3</span>_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)),</span>
+<span id="cb734-3"><a href="summary.html#cb734-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.bag.acc, <span class="dv">5</span>)),</span>
+<span id="cb734-4"><a href="summary.html#cb734-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.frst.acc, <span class="dv">5</span>)),</span>
+<span id="cb734-5"><a href="summary.html#cb734-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.gbm.acc, <span class="dv">5</span>))</span>
+<span id="cb734-6"><a href="summary.html#cb734-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Acc))</span></code></pre></div>
 <pre><code>##               model  Acc
 ## 1      Manual Class 0.86
 ## 2 Gradient Boosting 0.85
@@ -310,12 +315,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4           Bagging 0.83
 ## 5     Random Forest 0.83</code></pre>
 <p>And now for the regression division, the winnner is… gradient boosting!</p>
-<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb711-1"><a href="summary.html#cb711-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual ANOVA&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">1</span>_pruned_rmse, <span class="dv">5</span>)), </span>
-<span id="cb711-2"><a href="summary.html#cb711-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;ANOVA w.tuneGrid&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">3</span>_pruned_rmse, <span class="dv">5</span>)),</span>
-<span id="cb711-3"><a href="summary.html#cb711-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.bag.rmse, <span class="dv">5</span>)),</span>
-<span id="cb711-4"><a href="summary.html#cb711-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.frst.rmse, <span class="dv">5</span>)),</span>
-<span id="cb711-5"><a href="summary.html#cb711-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.gbm.rmse, <span class="dv">5</span>))</span>
-<span id="cb711-6"><a href="summary.html#cb711-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(RMSE)</span></code></pre></div>
+<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="summary.html#cb736-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual ANOVA&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">1</span>_pruned_rmse, <span class="dv">5</span>)), </span>
+<span id="cb736-2"><a href="summary.html#cb736-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;ANOVA w.tuneGrid&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">3</span>_pruned_rmse, <span class="dv">5</span>)),</span>
+<span id="cb736-3"><a href="summary.html#cb736-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.bag.rmse, <span class="dv">5</span>)),</span>
+<span id="cb736-4"><a href="summary.html#cb736-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.frst.rmse, <span class="dv">5</span>)),</span>
+<span id="cb736-5"><a href="summary.html#cb736-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.gbm.rmse, <span class="dv">5</span>))</span>
+<span id="cb736-6"><a href="summary.html#cb736-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(RMSE)</span></code></pre></div>
 <pre><code>##               model RMSE
 ## 1 Gradient Boosting  1.4
 ## 2     Random Forest  1.8
@@ -324,29 +329,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5      Manual ANOVA  2.4</code></pre>
 <p>Here are plots of the ROC curves for all the models (one from each chapter) on the same graph. The ROCR package provides the prediction() and performance() functions which generate the data required for plotting the ROC curve, given a set of predictions and actual (true) values.
 The more “up and to the left” the ROC curve of a model is, the better the model. The AUC performance metric is literally the “Area Under the ROC Curve”, so the greater the area under this curve, the higher the AUC, and the better-performing the model is.</p>
-<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="summary.html#cb713-1"></a><span class="kw">library</span>(ROCR)</span>
-<span id="cb713-2"><a href="summary.html#cb713-2"></a><span class="co"># List of predictions</span></span>
-<span id="cb713-3"><a href="summary.html#cb713-3"></a>oj.class.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_<span class="dv">3</span>, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb713-4"><a href="summary.html#cb713-4"></a>oj.bag.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.bag, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb713-5"><a href="summary.html#cb713-5"></a>oj.frst.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.frst, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb713-6"><a href="summary.html#cb713-6"></a>oj.gbm.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.gbm, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb713-7"><a href="summary.html#cb713-7"></a></span>
-<span id="cb713-8"><a href="summary.html#cb713-8"></a>preds_list &lt;-<span class="st"> </span><span class="kw">list</span>(oj.class.pred, oj.bag.pred, oj.frst.pred, oj.gbm.pred)</span>
-<span id="cb713-9"><a href="summary.html#cb713-9"></a><span class="co">#preds_list &lt;- list(oj.class.pred)</span></span>
-<span id="cb713-10"><a href="summary.html#cb713-10"></a></span>
-<span id="cb713-11"><a href="summary.html#cb713-11"></a><span class="co"># List of actual values (same for all)</span></span>
-<span id="cb713-12"><a href="summary.html#cb713-12"></a>m &lt;-<span class="st"> </span><span class="kw">length</span>(preds_list)</span>
-<span id="cb713-13"><a href="summary.html#cb713-13"></a>actuals_list &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">list</span>(oj_test<span class="op">$</span>Purchase), m)</span>
-<span id="cb713-14"><a href="summary.html#cb713-14"></a></span>
-<span id="cb713-15"><a href="summary.html#cb713-15"></a><span class="co"># Plot the ROC curves</span></span>
-<span id="cb713-16"><a href="summary.html#cb713-16"></a>pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(preds_list, actuals_list)</span>
-<span id="cb713-17"><a href="summary.html#cb713-17"></a><span class="co">#pred &lt;- prediction(oj.class.pred[,2], oj_test$Purchase)</span></span>
-<span id="cb713-18"><a href="summary.html#cb713-18"></a>rocs &lt;-<span class="st"> </span><span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb713-19"><a href="summary.html#cb713-19"></a><span class="kw">plot</span>(rocs, <span class="dt">col =</span> <span class="kw">as.list</span>(<span class="dv">1</span><span class="op">:</span>m), <span class="dt">main =</span> <span class="st">&quot;Test Set ROC Curves&quot;</span>)</span>
-<span id="cb713-20"><a href="summary.html#cb713-20"></a><span class="kw">legend</span>(<span class="dt">x =</span> <span class="st">&quot;bottomright&quot;</span>, </span>
-<span id="cb713-21"><a href="summary.html#cb713-21"></a>       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Decision Tree&quot;</span>, <span class="st">&quot;Bagged Trees&quot;</span>, <span class="st">&quot;Random Forest&quot;</span>, <span class="st">&quot;GBM&quot;</span>),</span>
-<span id="cb713-22"><a href="summary.html#cb713-22"></a>       <span class="dt">fill =</span> <span class="dv">1</span><span class="op">:</span>m)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-326-1.png" width="672" /></p>
+<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="summary.html#cb738-1"></a><span class="kw">library</span>(ROCR)</span>
+<span id="cb738-2"><a href="summary.html#cb738-2"></a><span class="co"># List of predictions</span></span>
+<span id="cb738-3"><a href="summary.html#cb738-3"></a>oj.class.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_<span class="dv">3</span>, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb738-4"><a href="summary.html#cb738-4"></a>oj.bag.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.bag, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb738-5"><a href="summary.html#cb738-5"></a>oj.frst.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.frst, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb738-6"><a href="summary.html#cb738-6"></a>oj.gbm.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.gbm, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
+<span id="cb738-7"><a href="summary.html#cb738-7"></a></span>
+<span id="cb738-8"><a href="summary.html#cb738-8"></a>preds_list &lt;-<span class="st"> </span><span class="kw">list</span>(oj.class.pred, oj.bag.pred, oj.frst.pred, oj.gbm.pred)</span>
+<span id="cb738-9"><a href="summary.html#cb738-9"></a><span class="co">#preds_list &lt;- list(oj.class.pred)</span></span>
+<span id="cb738-10"><a href="summary.html#cb738-10"></a></span>
+<span id="cb738-11"><a href="summary.html#cb738-11"></a><span class="co"># List of actual values (same for all)</span></span>
+<span id="cb738-12"><a href="summary.html#cb738-12"></a>m &lt;-<span class="st"> </span><span class="kw">length</span>(preds_list)</span>
+<span id="cb738-13"><a href="summary.html#cb738-13"></a>actuals_list &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">list</span>(oj_test<span class="op">$</span>Purchase), m)</span>
+<span id="cb738-14"><a href="summary.html#cb738-14"></a></span>
+<span id="cb738-15"><a href="summary.html#cb738-15"></a><span class="co"># Plot the ROC curves</span></span>
+<span id="cb738-16"><a href="summary.html#cb738-16"></a>pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(preds_list, actuals_list)</span>
+<span id="cb738-17"><a href="summary.html#cb738-17"></a><span class="co">#pred &lt;- prediction(oj.class.pred[,2], oj_test$Purchase)</span></span>
+<span id="cb738-18"><a href="summary.html#cb738-18"></a>rocs &lt;-<span class="st"> </span><span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb738-19"><a href="summary.html#cb738-19"></a><span class="kw">plot</span>(rocs, <span class="dt">col =</span> <span class="kw">as.list</span>(<span class="dv">1</span><span class="op">:</span>m), <span class="dt">main =</span> <span class="st">&quot;Test Set ROC Curves&quot;</span>)</span>
+<span id="cb738-20"><a href="summary.html#cb738-20"></a><span class="kw">legend</span>(<span class="dt">x =</span> <span class="st">&quot;bottomright&quot;</span>, </span>
+<span id="cb738-21"><a href="summary.html#cb738-21"></a>       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Decision Tree&quot;</span>, <span class="st">&quot;Bagged Trees&quot;</span>, <span class="st">&quot;Random Forest&quot;</span>, <span class="st">&quot;GBM&quot;</span>),</span>
+<span id="cb738-22"><a href="summary.html#cb738-22"></a>       <span class="dt">fill =</span> <span class="dv">1</span><span class="op">:</span>m)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-339-1.png" width="672" /></p>
 </div>
             </section>
 

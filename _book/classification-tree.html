@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-03" />
+<meta name="date" content="2020-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -225,7 +225,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>7.8</b> Cluster Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
-<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a></li>
+<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a><ul>
+<li class="chapter" data-level="9.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>9.1</b> Ridge</a></li>
+<li class="chapter" data-level="9.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>9.2</b> Lasso</a></li>
+<li class="chapter" data-level="9.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>9.3</b> Elastic Net</a></li>
+<li class="chapter" data-level="" data-path="model-summary.html"><a href="model-summary.html"><i class="fa fa-check"></i>Model Summary</a></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
 <li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
 <li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
@@ -250,7 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
 <li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
@@ -297,37 +302,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="classification-tree" class="section level2">
 <h2><span class="header-section-number">10.1</span> Classification Tree</h2>
 <p>A simple classification tree is rarely performed on its own; the bagged, random forest, and gradient boosting methods build on this logic. However, it is good to start here to build understanding. I’ll learn by example. Using the <code>ISLR::OJ</code> data set, I will predict which brand of orange juice, Citrus Hill (CH) or Minute Maid = (MM), customers <code>Purchase</code> using from the 17 feature variables. Load the libraries and data.</p>
-<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="classification-tree.html#cb574-1"></a><span class="kw">library</span>(ISLR)  <span class="co"># OJ dataset</span></span>
-<span id="cb574-2"><a href="classification-tree.html#cb574-2"></a><span class="kw">library</span>(rpart)  <span class="co"># classification and regression trees </span></span>
-<span id="cb574-3"><a href="classification-tree.html#cb574-3"></a><span class="kw">library</span>(caret)  <span class="co"># modeling workflow</span></span>
-<span id="cb574-4"><a href="classification-tree.html#cb574-4"></a><span class="kw">library</span>(rpart.plot)  <span class="co"># better formatted plots than the ones in rpart</span></span>
-<span id="cb574-5"><a href="classification-tree.html#cb574-5"></a><span class="kw">library</span>(plotROC)  <span class="co"># ROC curves</span></span>
-<span id="cb574-6"><a href="classification-tree.html#cb574-6"></a><span class="kw">library</span>(ROCR)</span>
-<span id="cb574-7"><a href="classification-tree.html#cb574-7"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb574-8"><a href="classification-tree.html#cb574-8"></a><span class="kw">library</span>(skimr)  <span class="co"># neat alternative to glance &amp; summary</span></span>
-<span id="cb574-9"><a href="classification-tree.html#cb574-9"></a></span>
-<span id="cb574-10"><a href="classification-tree.html#cb574-10"></a>oj_dat &lt;-<span class="st"> </span>OJ</span>
-<span id="cb574-11"><a href="classification-tree.html#cb574-11"></a><span class="co">#skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, </span></span>
-<span id="cb574-12"><a href="classification-tree.html#cb574-12"></a><span class="co">#                                p100 = NULL, hist = NULL))</span></span>
-<span id="cb574-13"><a href="classification-tree.html#cb574-13"></a><span class="co">#skim(oj_dat)</span></span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="classification-tree.html#cb599-1"></a><span class="kw">library</span>(ISLR)  <span class="co"># OJ dataset</span></span>
+<span id="cb599-2"><a href="classification-tree.html#cb599-2"></a><span class="kw">library</span>(rpart)  <span class="co"># classification and regression trees </span></span>
+<span id="cb599-3"><a href="classification-tree.html#cb599-3"></a><span class="kw">library</span>(caret)  <span class="co"># modeling workflow</span></span>
+<span id="cb599-4"><a href="classification-tree.html#cb599-4"></a><span class="kw">library</span>(rpart.plot)  <span class="co"># better formatted plots than the ones in rpart</span></span>
+<span id="cb599-5"><a href="classification-tree.html#cb599-5"></a><span class="kw">library</span>(plotROC)  <span class="co"># ROC curves</span></span>
+<span id="cb599-6"><a href="classification-tree.html#cb599-6"></a><span class="kw">library</span>(ROCR)</span>
+<span id="cb599-7"><a href="classification-tree.html#cb599-7"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb599-8"><a href="classification-tree.html#cb599-8"></a><span class="kw">library</span>(skimr)  <span class="co"># neat alternative to glance &amp; summary</span></span>
+<span id="cb599-9"><a href="classification-tree.html#cb599-9"></a></span>
+<span id="cb599-10"><a href="classification-tree.html#cb599-10"></a>oj_dat &lt;-<span class="st"> </span>OJ</span>
+<span id="cb599-11"><a href="classification-tree.html#cb599-11"></a><span class="co">#skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, </span></span>
+<span id="cb599-12"><a href="classification-tree.html#cb599-12"></a><span class="co">#                                p100 = NULL, hist = NULL))</span></span>
+<span id="cb599-13"><a href="classification-tree.html#cb599-13"></a><span class="co">#skim(oj_dat)</span></span></code></pre></div>
 <p>I’ll split <code>oj_dat</code> (n = 1,070) into <code>oj_train</code> (80%, n = 857) and <code>oj_test</code> (20%, n = 213). I’ll fit a simple decision tree with <code>oj_train</code>, then later a bagged tree, a random forest, and a gradient boosting tree. I’ll compare their predictive performance with <code>oj_test</code>.</p>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="classification-tree.html#cb575-1"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb575-2"><a href="classification-tree.html#cb575-2"></a>partition &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(<span class="dt">y =</span> oj_dat<span class="op">$</span>Purchase, <span class="dt">p =</span> <span class="fl">0.8</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb575-3"><a href="classification-tree.html#cb575-3"></a>oj_train &lt;-<span class="st"> </span>oj_dat[partition, ]</span>
-<span id="cb575-4"><a href="classification-tree.html#cb575-4"></a>oj_test &lt;-<span class="st"> </span>oj_dat[<span class="op">-</span>partition, ]</span></code></pre></div>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="classification-tree.html#cb600-1"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb600-2"><a href="classification-tree.html#cb600-2"></a>partition &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(<span class="dt">y =</span> oj_dat<span class="op">$</span>Purchase, <span class="dt">p =</span> <span class="fl">0.8</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb600-3"><a href="classification-tree.html#cb600-3"></a>oj_train &lt;-<span class="st"> </span>oj_dat[partition, ]</span>
+<span id="cb600-4"><a href="classification-tree.html#cb600-4"></a>oj_test &lt;-<span class="st"> </span>oj_dat[<span class="op">-</span>partition, ]</span></code></pre></div>
 <p>Function <code>rpart::rpart()</code> builds a full tree, minimizing the Gini index <span class="math inline">\(G\)</span> by default (<code>parms = list(split = "gini")</code>), until the stopping criterion is satisfied. The default stopping criterion is</p>
 <ul>
 <li>only attempt a split if the current node as at least <code>minsplit = 20</code> observations,</li>
 <li>only accept a split if each of the two resulting nodes have at least <code>minbucket = round(minsplit/3)</code> observations, and</li>
 <li>only accept a split if the resulting overall fit improves by <code>cp = 0.01</code> (i.e., <span class="math inline">\(\Delta G &lt;= 0.01\)</span>).</li>
 </ul>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="classification-tree.html#cb576-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb576-2"><a href="classification-tree.html#cb576-2"></a>oj_model_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rpart</span>(</span>
-<span id="cb576-3"><a href="classification-tree.html#cb576-3"></a>   <span class="dt">formula =</span> Purchase <span class="op">~</span><span class="st"> </span>.,</span>
-<span id="cb576-4"><a href="classification-tree.html#cb576-4"></a>   <span class="dt">data =</span> oj_train,</span>
-<span id="cb576-5"><a href="classification-tree.html#cb576-5"></a>   <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>  <span class="co"># &quot;class&quot; for classification, &quot;anova&quot; for regression</span></span>
-<span id="cb576-6"><a href="classification-tree.html#cb576-6"></a>   )</span>
-<span id="cb576-7"><a href="classification-tree.html#cb576-7"></a><span class="kw">print</span>(oj_model_<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="classification-tree.html#cb601-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb601-2"><a href="classification-tree.html#cb601-2"></a>oj_model_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rpart</span>(</span>
+<span id="cb601-3"><a href="classification-tree.html#cb601-3"></a>   <span class="dt">formula =</span> Purchase <span class="op">~</span><span class="st"> </span>.,</span>
+<span id="cb601-4"><a href="classification-tree.html#cb601-4"></a>   <span class="dt">data =</span> oj_train,</span>
+<span id="cb601-5"><a href="classification-tree.html#cb601-5"></a>   <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>  <span class="co"># &quot;class&quot; for classification, &quot;anova&quot; for regression</span></span>
+<span id="cb601-6"><a href="classification-tree.html#cb601-6"></a>   )</span>
+<span id="cb601-7"><a href="classification-tree.html#cb601-7"></a><span class="kw">print</span>(oj_model_<span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## n= 857 
 ## 
 ## node), split, n, loss, yval, (yprob)
@@ -346,11 +351,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##      7) LoyalCH&lt; 0.28 174  22 MM (0.126 0.874) *</code></pre>
 <p>The output starts with the root node. The predicted class at the root is <code>CH</code> and this prediction produces 334 errors on the 857 observations for a success rate of 0.61026838 and an error rate of 0.38973162. The child nodes of node “x” are labeled 2x) and 2x+1), so the child nodes of 1) are 2) and 3), and the child nodes of 2) are 4) and 5). Terminal nodes are labeled with an asterisk (*).</p>
 <p>Surprisingly, only 3 of the 17 features were used the in full tree: <code>LoyalCH</code> (Customer brand loyalty for CH), <code>PriceDiff</code> (relative price of MM over CH), and <code>SalePriceMM</code> (absolute price of MM). The first split is at <code>LoyalCH</code> = 0.48285. Here is what the full (unpruned) tree looks like.</p>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="classification-tree.html#cb578-1"></a><span class="kw">rpart.plot</span>(oj_model_<span class="dv">1</span>, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-262-1.png" width="672" /></p>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="classification-tree.html#cb603-1"></a><span class="kw">rpart.plot</span>(oj_model_<span class="dv">1</span>, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-275-1.png" width="672" /></p>
 <p>The boxes show the node classification (based on mode), the proportion of observations that are <em>not</em> <code>CH</code>, and the proportion of observations included in the node.</p>
 <p><code>rpart()</code> not only grew the full tree, it identified the set of cost complexity parameters, and measured the model performance of each corresponding tree using cross-validation. <code>printcp()</code> displays the candidate <span class="math inline">\(c_p\)</span> values. You can use this table to decide how to prune the tree.</p>
-<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="classification-tree.html#cb579-1"></a><span class="kw">printcp</span>(oj_model_<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="classification-tree.html#cb604-1"></a><span class="kw">printcp</span>(oj_model_<span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## 
 ## Classification tree:
 ## rpart(formula = Purchase ~ ., data = oj_train, method = &quot;class&quot;)
@@ -368,40 +373,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3  0      3         0      0    0
 ## 4  0      5         0      0    0</code></pre>
 <p>There are 4 <span class="math inline">\(c_p\)</span> values in this model. The model with the smallest complexity parameter allows the most splits (<code>nsplit</code>). The highest complexity parameter corresponds to a tree with just a root node. <code>rel error</code> is the error rate relative to the root node. The root node absolute error is 0.38973162 (the proportion of MM), so its <code>rel error</code> is 0.38973162/0.38973162 = 1.0. That means the absolute error of the full tree (at CP = 0.01) is 0.42814 * 0.38973162 = 0.1669. You can verify that by calculating the error rate of the predicted values:</p>
-<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="classification-tree.html#cb581-1"></a><span class="kw">data.frame</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(oj_model_<span class="dv">1</span>, <span class="dt">newdata =</span> oj_train, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb581-2"><a href="classification-tree.html#cb581-2"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">obs =</span> oj_train<span class="op">$</span>Purchase,</span>
-<span id="cb581-3"><a href="classification-tree.html#cb581-3"></a>          <span class="dt">err =</span> <span class="kw">if_else</span>(pred <span class="op">!=</span><span class="st"> </span>obs, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb581-4"><a href="classification-tree.html#cb581-4"></a><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">mean_err =</span> <span class="kw">mean</span>(err))</span></code></pre></div>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="classification-tree.html#cb606-1"></a><span class="kw">data.frame</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(oj_model_<span class="dv">1</span>, <span class="dt">newdata =</span> oj_train, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb606-2"><a href="classification-tree.html#cb606-2"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">obs =</span> oj_train<span class="op">$</span>Purchase,</span>
+<span id="cb606-3"><a href="classification-tree.html#cb606-3"></a>          <span class="dt">err =</span> <span class="kw">if_else</span>(pred <span class="op">!=</span><span class="st"> </span>obs, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb606-4"><a href="classification-tree.html#cb606-4"></a><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">mean_err =</span> <span class="kw">mean</span>(err))</span></code></pre></div>
 <pre><code>##   mean_err
 ## 1     0.17</code></pre>
 <p>Finishing the CP table tour, <code>xerror</code> is the relative cross-validated error rate and <code>xstd</code> is its standard error. If you want the lowest possible error, then prune to the tree with the smallest relative CV error (<code>xerror</code>) (<span class="math inline">\(c_p\)</span> = 0.01, CV error = 0.18). If you want to balance predictive power with simplicity, prune to the smallest tree within 1 SE of the one with the smallest relative error. The CP table is not super-helpful for finding that tree. I’ll add a column to find it.</p>
-<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="classification-tree.html#cb583-1"></a>oj_model_<span class="dv">1</span><span class="op">$</span>cptable <span class="op">%&gt;%</span></span>
-<span id="cb583-2"><a href="classification-tree.html#cb583-2"></a><span class="st">   </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span></span>
-<span id="cb583-3"><a href="classification-tree.html#cb583-3"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">min_xerror_idx =</span> <span class="kw">which.min</span>(oj_model_<span class="dv">1</span><span class="op">$</span>cptable[, <span class="st">&quot;xerror&quot;</span>]),</span>
-<span id="cb583-4"><a href="classification-tree.html#cb583-4"></a>          <span class="dt">rownum =</span> <span class="kw">row_number</span>(),</span>
-<span id="cb583-5"><a href="classification-tree.html#cb583-5"></a>          <span class="dt">xerror_cap =</span> oj_model_<span class="dv">1</span><span class="op">$</span>cptable[min_xerror_idx, <span class="st">&quot;xerror&quot;</span>] <span class="op">+</span><span class="st"> </span></span>
-<span id="cb583-6"><a href="classification-tree.html#cb583-6"></a><span class="st">             </span>oj_model_<span class="dv">1</span><span class="op">$</span>cptable[min_xerror_idx, <span class="st">&quot;xstd&quot;</span>],</span>
-<span id="cb583-7"><a href="classification-tree.html#cb583-7"></a>          <span class="dt">eval =</span> <span class="kw">case_when</span>(rownum <span class="op">==</span><span class="st"> </span>min_xerror_idx <span class="op">~</span><span class="st"> &quot;min xerror&quot;</span>,</span>
-<span id="cb583-8"><a href="classification-tree.html#cb583-8"></a>                           xerror <span class="op">&lt;</span><span class="st"> </span>xerror_cap <span class="op">~</span><span class="st"> &quot;under cap&quot;</span>,</span>
-<span id="cb583-9"><a href="classification-tree.html#cb583-9"></a>                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb583-10"><a href="classification-tree.html#cb583-10"></a><span class="st">   </span><span class="kw">select</span>(<span class="op">-</span>rownum, <span class="op">-</span>min_xerror_idx) </span></code></pre></div>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="classification-tree.html#cb608-1"></a>oj_model_<span class="dv">1</span><span class="op">$</span>cptable <span class="op">%&gt;%</span></span>
+<span id="cb608-2"><a href="classification-tree.html#cb608-2"></a><span class="st">   </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span></span>
+<span id="cb608-3"><a href="classification-tree.html#cb608-3"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">min_xerror_idx =</span> <span class="kw">which.min</span>(oj_model_<span class="dv">1</span><span class="op">$</span>cptable[, <span class="st">&quot;xerror&quot;</span>]),</span>
+<span id="cb608-4"><a href="classification-tree.html#cb608-4"></a>          <span class="dt">rownum =</span> <span class="kw">row_number</span>(),</span>
+<span id="cb608-5"><a href="classification-tree.html#cb608-5"></a>          <span class="dt">xerror_cap =</span> oj_model_<span class="dv">1</span><span class="op">$</span>cptable[min_xerror_idx, <span class="st">&quot;xerror&quot;</span>] <span class="op">+</span><span class="st"> </span></span>
+<span id="cb608-6"><a href="classification-tree.html#cb608-6"></a><span class="st">             </span>oj_model_<span class="dv">1</span><span class="op">$</span>cptable[min_xerror_idx, <span class="st">&quot;xstd&quot;</span>],</span>
+<span id="cb608-7"><a href="classification-tree.html#cb608-7"></a>          <span class="dt">eval =</span> <span class="kw">case_when</span>(rownum <span class="op">==</span><span class="st"> </span>min_xerror_idx <span class="op">~</span><span class="st"> &quot;min xerror&quot;</span>,</span>
+<span id="cb608-8"><a href="classification-tree.html#cb608-8"></a>                           xerror <span class="op">&lt;</span><span class="st"> </span>xerror_cap <span class="op">~</span><span class="st"> &quot;under cap&quot;</span>,</span>
+<span id="cb608-9"><a href="classification-tree.html#cb608-9"></a>                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb608-10"><a href="classification-tree.html#cb608-10"></a><span class="st">   </span><span class="kw">select</span>(<span class="op">-</span>rownum, <span class="op">-</span>min_xerror_idx) </span></code></pre></div>
 <pre><code>##      CP nsplit rel.error xerror  xstd xerror_cap       eval
 ## 1 0.479      0      1.00   1.00 0.043        0.5           
 ## 2 0.033      1      0.52   0.54 0.036        0.5           
 ## 3 0.013      3      0.46   0.47 0.034        0.5  under cap
 ## 4 0.010      5      0.43   0.46 0.034        0.5 min xerror</code></pre>
 <p>The simplest tree using the 1-SE rule is $c_p = 0.01347305, CV error = 0.18). Fortunately, <code>plotcp()</code> presents a nice graphical representation of the relationship between <code>xerror</code> and <code>cp</code>.</p>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="classification-tree.html#cb585-1"></a><span class="kw">plotcp</span>(oj_model_<span class="dv">1</span>, <span class="dt">upper =</span> <span class="st">&quot;splits&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-266-1.png" width="672" /></p>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="classification-tree.html#cb610-1"></a><span class="kw">plotcp</span>(oj_model_<span class="dv">1</span>, <span class="dt">upper =</span> <span class="st">&quot;splits&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-279-1.png" width="672" /></p>
 <p>The dashed line is set at the minimum <code>xerror</code> + <code>xstd</code>. The top axis shows the number of splits in the tree. I’m not sure why the CP values are not the same as in the table (they are close, but not the same). The figure suggests I should prune to 5 or 3 splits. I see this curve never really hits a minimum - it is still decreasing at 5 splits. The default tuning parameter value <code>cp = 0.01</code> may be too small, so I’ll set it to <code>cp = 0.001</code> and start over.</p>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="classification-tree.html#cb586-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb586-2"><a href="classification-tree.html#cb586-2"></a>oj_model_1b &lt;-<span class="st"> </span><span class="kw">rpart</span>(</span>
-<span id="cb586-3"><a href="classification-tree.html#cb586-3"></a>   <span class="dt">formula =</span> Purchase <span class="op">~</span><span class="st"> </span>.,</span>
-<span id="cb586-4"><a href="classification-tree.html#cb586-4"></a>   <span class="dt">data =</span> oj_train,</span>
-<span id="cb586-5"><a href="classification-tree.html#cb586-5"></a>   <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>,</span>
-<span id="cb586-6"><a href="classification-tree.html#cb586-6"></a>   <span class="dt">cp =</span> <span class="fl">0.001</span></span>
-<span id="cb586-7"><a href="classification-tree.html#cb586-7"></a>   )</span>
-<span id="cb586-8"><a href="classification-tree.html#cb586-8"></a><span class="kw">print</span>(oj_model_1b)</span></code></pre></div>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="classification-tree.html#cb611-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb611-2"><a href="classification-tree.html#cb611-2"></a>oj_model_1b &lt;-<span class="st"> </span><span class="kw">rpart</span>(</span>
+<span id="cb611-3"><a href="classification-tree.html#cb611-3"></a>   <span class="dt">formula =</span> Purchase <span class="op">~</span><span class="st"> </span>.,</span>
+<span id="cb611-4"><a href="classification-tree.html#cb611-4"></a>   <span class="dt">data =</span> oj_train,</span>
+<span id="cb611-5"><a href="classification-tree.html#cb611-5"></a>   <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>,</span>
+<span id="cb611-6"><a href="classification-tree.html#cb611-6"></a>   <span class="dt">cp =</span> <span class="fl">0.001</span></span>
+<span id="cb611-7"><a href="classification-tree.html#cb611-7"></a>   )</span>
+<span id="cb611-8"><a href="classification-tree.html#cb611-8"></a><span class="kw">print</span>(oj_model_1b)</span></code></pre></div>
 <pre><code>## n= 857 
 ## 
 ## node), split, n, loss, yval, (yprob)
@@ -451,39 +456,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##          29) WeekofPurchase&gt;=2.7e+02 13   0 MM (0.000 1.000) *
 ##        15) LoyalCH&lt; 0.035 57   1 MM (0.018 0.982) *</code></pre>
 <p>This is a much larger tree. Did I find a <code>cp</code> value that produces a local min?</p>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="classification-tree.html#cb588-1"></a><span class="kw">plotcp</span>(oj_model_1b, <span class="dt">upper =</span> <span class="st">&quot;splits&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-268-1.png" width="672" /></p>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="classification-tree.html#cb613-1"></a><span class="kw">plotcp</span>(oj_model_1b, <span class="dt">upper =</span> <span class="st">&quot;splits&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-281-1.png" width="672" /></p>
 <p>Yes, the min is at CP = 0.011 with 5 splits. The min + 1 SE is at CP = 0.021 with 3 splits. I’ll prune the tree to 3 splits.</p>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="classification-tree.html#cb589-1"></a>oj_model_1b_pruned &lt;-<span class="st"> </span><span class="kw">prune</span>(</span>
-<span id="cb589-2"><a href="classification-tree.html#cb589-2"></a>   oj_model_1b,</span>
-<span id="cb589-3"><a href="classification-tree.html#cb589-3"></a>   <span class="dt">cp =</span> oj_model_1b<span class="op">$</span>cptable[oj_model_1b<span class="op">$</span>cptable[, <span class="dv">2</span>] <span class="op">==</span><span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;CP&quot;</span>]</span>
-<span id="cb589-4"><a href="classification-tree.html#cb589-4"></a>)</span>
-<span id="cb589-5"><a href="classification-tree.html#cb589-5"></a><span class="kw">rpart.plot</span>(oj_model_1b_pruned, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-269-1.png" width="672" /></p>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="classification-tree.html#cb614-1"></a>oj_model_1b_pruned &lt;-<span class="st"> </span><span class="kw">prune</span>(</span>
+<span id="cb614-2"><a href="classification-tree.html#cb614-2"></a>   oj_model_1b,</span>
+<span id="cb614-3"><a href="classification-tree.html#cb614-3"></a>   <span class="dt">cp =</span> oj_model_1b<span class="op">$</span>cptable[oj_model_1b<span class="op">$</span>cptable[, <span class="dv">2</span>] <span class="op">==</span><span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;CP&quot;</span>]</span>
+<span id="cb614-4"><a href="classification-tree.html#cb614-4"></a>)</span>
+<span id="cb614-5"><a href="classification-tree.html#cb614-5"></a><span class="kw">rpart.plot</span>(oj_model_1b_pruned, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-282-1.png" width="672" /></p>
 <p>The most “important” indicator of <code>Purchase</code> appears to be <code>LoyalCH</code>. From the <strong>rpart</strong> <a href="https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf">vignette</a> (page 12),</p>
 <blockquote>
 <p>“An overall measure of variable importance is the sum of the goodness of split measures for each split for which it was the primary variable, plus goodness (adjusted agreement) for all splits in which it was a surrogate.”</p>
 </blockquote>
 <p>Surrogates refer to alternative features for a node to handle missing data. For each split, CART evaluates a variety of alternative “surrogate” splits to use when the feature value for the primary split is NA. Surrogate splits are splits that produce results similar to the original split.</p>
 <p>A variable’s importance is the sum of the improvement in the overall Gini (or RMSE) measure produced by the nodes in which it appears. Here is the variable importance for this model.</p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="classification-tree.html#cb590-1"></a>oj_model_1b_pruned<span class="op">$</span>variable.importance</span></code></pre></div>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="classification-tree.html#cb615-1"></a>oj_model_1b_pruned<span class="op">$</span>variable.importance</span></code></pre></div>
 <pre><code>##        LoyalCH      PriceDiff    SalePriceMM        StoreID WeekofPurchase 
 ##          150.2           20.8           11.6           10.0            8.4 
 ##         DiscMM        PriceMM      PctDiscMM        PriceCH    SalePriceCH 
 ##            7.1            7.1            6.3            3.1            1.0</code></pre>
-<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="classification-tree.html#cb592-1"></a>oj_model_1b_pruned<span class="op">$</span>variable.importance <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb592-2"><a href="classification-tree.html#cb592-2"></a><span class="st">   </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span></span>
-<span id="cb592-3"><a href="classification-tree.html#cb592-3"></a><span class="st">   </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;Feature&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb592-4"><a href="classification-tree.html#cb592-4"></a><span class="st">   </span><span class="kw">rename</span>(<span class="dt">Overall =</span> <span class="st">&#39;.&#39;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb592-5"><a href="classification-tree.html#cb592-5"></a><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(Feature, Overall), <span class="dt">y =</span> Overall)) <span class="op">+</span></span>
-<span id="cb592-6"><a href="classification-tree.html#cb592-6"></a><span class="st">   </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> <span class="dv">0</span>, <span class="dt">ymax =</span> Overall), <span class="dt">color =</span> <span class="st">&quot;cadetblue&quot;</span>, <span class="dt">size =</span> <span class="fl">.3</span>) <span class="op">+</span></span>
-<span id="cb592-7"><a href="classification-tree.html#cb592-7"></a><span class="st">   </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
-<span id="cb592-8"><a href="classification-tree.html#cb592-8"></a><span class="st">   </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
-<span id="cb592-9"><a href="classification-tree.html#cb592-9"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Variable Importance with Simple Classication&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-271-1.png" width="672" /></p>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="classification-tree.html#cb617-1"></a>oj_model_1b_pruned<span class="op">$</span>variable.importance <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb617-2"><a href="classification-tree.html#cb617-2"></a><span class="st">   </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span></span>
+<span id="cb617-3"><a href="classification-tree.html#cb617-3"></a><span class="st">   </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;Feature&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb617-4"><a href="classification-tree.html#cb617-4"></a><span class="st">   </span><span class="kw">rename</span>(<span class="dt">Overall =</span> <span class="st">&#39;.&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb617-5"><a href="classification-tree.html#cb617-5"></a><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(Feature, Overall), <span class="dt">y =</span> Overall)) <span class="op">+</span></span>
+<span id="cb617-6"><a href="classification-tree.html#cb617-6"></a><span class="st">   </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> <span class="dv">0</span>, <span class="dt">ymax =</span> Overall), <span class="dt">color =</span> <span class="st">&quot;cadetblue&quot;</span>, <span class="dt">size =</span> <span class="fl">.3</span>) <span class="op">+</span></span>
+<span id="cb617-7"><a href="classification-tree.html#cb617-7"></a><span class="st">   </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
+<span id="cb617-8"><a href="classification-tree.html#cb617-8"></a><span class="st">   </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
+<span id="cb617-9"><a href="classification-tree.html#cb617-9"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Variable Importance with Simple Classication&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-284-1.png" width="672" /></p>
 <p><code>LoyalCH</code> is by far the most important variable, as expected from its position at the top of the tree, and one level down.</p>
 <p>You can see how the surrogates appear in the model with the <code>summary()</code> function.</p>
-<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="classification-tree.html#cb593-1"></a><span class="kw">summary</span>(oj_model_1b_pruned)</span></code></pre></div>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="classification-tree.html#cb618-1"></a><span class="kw">summary</span>(oj_model_1b_pruned)</span></code></pre></div>
 <pre><code>## Call:
 ## rpart(formula = Purchase ~ ., data = oj_train, method = &quot;class&quot;, 
 ##     cp = 0.001)
@@ -574,13 +579,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     class counts:     9    31
 ##    probabilities: 0.225 0.775</code></pre>
 <p>The last step is to make predictions on the validation data set. For a classification tree, set argument <code>type = "class"</code>.</p>
-<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="classification-tree.html#cb595-1"></a>oj_model_1b_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_1b_pruned, oj_test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="classification-tree.html#cb620-1"></a>oj_model_1b_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_1b_pruned, oj_test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span></code></pre></div>
 <p>I’ll evaluate the predictions and record the accuracy (correct classification percentage) for comparison to other models. Two ways to evaluate the model are the confusion matrix, and the ROC curve.</p>
 <div id="confusion-matrix" class="section level3">
 <h3><span class="header-section-number">10.1.1</span> Confusion Matrix</h3>
 <p>Print the confusion matrix with <code>caret::confusionMatrix()</code> to see how well does this model performs against the test data set.</p>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="classification-tree.html#cb596-1"></a>oj_model_1b_cm &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> oj_model_1b_preds, <span class="dt">reference =</span> oj_test<span class="op">$</span>Purchase)</span>
-<span id="cb596-2"><a href="classification-tree.html#cb596-2"></a>oj_model_1b_cm</span></code></pre></div>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="classification-tree.html#cb621-1"></a>oj_model_1b_cm &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> oj_model_1b_preds, <span class="dt">reference =</span> oj_test<span class="op">$</span>Purchase)</span>
+<span id="cb621-2"><a href="classification-tree.html#cb621-2"></a>oj_model_1b_cm</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -609,7 +614,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##        &#39;Positive&#39; Class : CH                 
 ## </code></pre>
 <p>The confusion matrix is at the top. It also includes a lot of statistics. It’s worth getting familiar with the stats. The model accuracy and 95% CI are calculated from the binomial test.</p>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="classification-tree.html#cb598-1"></a><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">113</span> <span class="op">+</span><span class="st"> </span><span class="dv">70</span>, <span class="dt">n =</span> <span class="dv">213</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="classification-tree.html#cb623-1"></a><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">113</span> <span class="op">+</span><span class="st"> </span><span class="dv">70</span>, <span class="dt">n =</span> <span class="dv">213</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Exact binomial test
 ## 
@@ -623,7 +628,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## probability of success 
 ##                   0.86</code></pre>
 <p>The “No Information Rate” (NIR) statistic is the class rate for the largest class. In this case CH is the largest class, so NIR = 130/213 = 0.6103. “P-Value [Acc &gt; NIR]” is the binomial test that the model accuracy is significantly better than the NIR (i.e., significantly better than just always guessing CH).</p>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="classification-tree.html#cb600-1"></a><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">113</span> <span class="op">+</span><span class="st"> </span><span class="dv">70</span>, <span class="dt">n =</span> <span class="dv">213</span>, <span class="dt">p =</span> <span class="dv">130</span><span class="op">/</span><span class="dv">213</span>, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="classification-tree.html#cb625-1"></a><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">113</span> <span class="op">+</span><span class="st"> </span><span class="dv">70</span>, <span class="dt">n =</span> <span class="dv">213</span>, <span class="dt">p =</span> <span class="dv">130</span><span class="op">/</span><span class="dv">213</span>, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Exact binomial test
 ## 
@@ -641,22 +646,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>where</p>
 <p><span class="math display">\[RA = \frac{ActFalse \times PredFalse + ActTrue \times PredTrue}{Total \times Total}\]</span></p>
 <p>is the hypotheical probability of a chance agreement. ActFalse will be the number of “MM” (13 + 70 = 83) and actual true will be the number of “CH” (113 + 17 = 130). The predicted counts are</p>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="classification-tree.html#cb602-1"></a><span class="kw">table</span>(oj_model_1b_preds)</span></code></pre></div>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="classification-tree.html#cb627-1"></a><span class="kw">table</span>(oj_model_1b_preds)</span></code></pre></div>
 <pre><code>## oj_model_1b_preds
 ##  CH  MM 
 ## 126  87</code></pre>
 <p>So, <span class="math inline">\(RA = (83*87 + 130*126) / 213^2 = 0.5202\)</span> and <span class="math inline">\(\kappa = (0.8592 - 0.5202)/(1 - 0.5202) = 0.7064\)</span>. The kappa statistic varies from 0 to 1 where 0 means accurate predictions occur merely by chance, and 1 means the predictions are in perfect agreement with the observations. In this case, a kappa statistic of 0.7064 is “substantial”. See chart <a href="https://www.statisticshowto.datasciencecentral.com/cohens-kappa-statistic/">here</a>.</p>
 <p>The other measures from the <code>confusionMatrix()</code> output are various proportions and you can remind yourself of their definitions in the documentation with <code>?confusionMatrix</code>.</p>
 <p>Visuals are almost always helpful. Here is a plot of the confusion matrix.</p>
-<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="classification-tree.html#cb604-1"></a><span class="kw">plot</span>(oj_test<span class="op">$</span>Purchase, oj_model_1b_preds, </span>
-<span id="cb604-2"><a href="classification-tree.html#cb604-2"></a>     <span class="dt">main =</span> <span class="st">&quot;Simple Classification: Predicted vs. Actual&quot;</span>,</span>
-<span id="cb604-3"><a href="classification-tree.html#cb604-3"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
-<span id="cb604-4"><a href="classification-tree.html#cb604-4"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-278-1.png" width="672" /></p>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="classification-tree.html#cb629-1"></a><span class="kw">plot</span>(oj_test<span class="op">$</span>Purchase, oj_model_1b_preds, </span>
+<span id="cb629-2"><a href="classification-tree.html#cb629-2"></a>     <span class="dt">main =</span> <span class="st">&quot;Simple Classification: Predicted vs. Actual&quot;</span>,</span>
+<span id="cb629-3"><a href="classification-tree.html#cb629-3"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
+<span id="cb629-4"><a href="classification-tree.html#cb629-4"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-291-1.png" width="672" /></p>
 <p>By the way, how does the validation set accuracy ()</p>
-<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="classification-tree.html#cb605-1"></a>oj_model_1b_train_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_1b_pruned, oj_train, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb605-2"><a href="classification-tree.html#cb605-2"></a>oj_model_1b_train_cm &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> oj_model_1b_train_preds, <span class="dt">reference =</span> oj_train<span class="op">$</span>Purchase)</span>
-<span id="cb605-3"><a href="classification-tree.html#cb605-3"></a>oj_model_1b_train_cm<span class="op">$</span>overall</span></code></pre></div>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="classification-tree.html#cb630-1"></a>oj_model_1b_train_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_1b_pruned, oj_train, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb630-2"><a href="classification-tree.html#cb630-2"></a>oj_model_1b_train_cm &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> oj_model_1b_train_preds, <span class="dt">reference =</span> oj_train<span class="op">$</span>Purchase)</span>
+<span id="cb630-3"><a href="classification-tree.html#cb630-3"></a>oj_model_1b_train_cm<span class="op">$</span>overall</span></code></pre></div>
 <pre><code>##                                     Accuracy 
 ## 0.822637106184364030880828977387864142656326 
 ##                                        Kappa 
@@ -676,23 +681,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="roc-curve" class="section level3">
 <h3><span class="header-section-number">10.1.2</span> ROC Curve</h3>
 <p>Another measure of accuracy is the ROC (receiver operating characteristics) curve <span class="citation">(Fawcett <a href="#ref-Fawcett2005" role="doc-biblioref">2005</a>)</span>. The ROC curve is a plot of the true positive rate (TPR, sensitivity) versus the false positive rate (FPR, 1 - specificity) for a set of thresholds. By default, the threshold for predicting the default classification is 0.50, but it could be any threshold. The ROC curves varies the thresholds. (I’ll use the <code>geom_roc</code> geom from <strong>plotROC</strong>.</p>
-<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="classification-tree.html#cb607-1"></a><span class="kw">data.frame</span>(<span class="dt">M =</span> <span class="kw">predict</span>(oj_model_1b_pruned, oj_test, <span class="st">&quot;prob&quot;</span>)[, <span class="dv">1</span>],</span>
-<span id="cb607-2"><a href="classification-tree.html#cb607-2"></a>           <span class="dt">D =</span> <span class="kw">if_else</span>(oj_test<span class="op">$</span>Purchase <span class="op">==</span><span class="st"> &quot;CH&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb607-3"><a href="classification-tree.html#cb607-3"></a><span class="st">   </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></span>
-<span id="cb607-4"><a href="classification-tree.html#cb607-4"></a><span class="st">   </span><span class="kw">geom_roc</span>(<span class="kw">aes</span>(<span class="dt">m =</span> M, <span class="dt">d =</span> D), <span class="dt">hjust =</span> <span class="fl">-0.4</span>, <span class="dt">vjust =</span> <span class="fl">1.5</span>, <span class="dt">linealpha =</span> <span class="fl">0.6</span>, <span class="dt">labelsize =</span> <span class="dv">3</span>, <span class="dt">n.cuts =</span> <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb607-5"><a href="classification-tree.html#cb607-5"></a><span class="st">   </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb607-6"><a href="classification-tree.html#cb607-6"></a><span class="st">   </span><span class="kw">coord_equal</span>() <span class="op">+</span></span>
-<span id="cb607-7"><a href="classification-tree.html#cb607-7"></a><span class="st">   </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
-<span id="cb607-8"><a href="classification-tree.html#cb607-8"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;FPR&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;TPR&quot;</span>,</span>
-<span id="cb607-9"><a href="classification-tree.html#cb607-9"></a>        <span class="dt">title =</span> <span class="st">&quot;Model 1b ROC Curve&quot;</span>,</span>
-<span id="cb607-10"><a href="classification-tree.html#cb607-10"></a>        <span class="dt">subtitle =</span> <span class="st">&quot;Pruned model using rpart&quot;</span>,</span>
-<span id="cb607-11"><a href="classification-tree.html#cb607-11"></a>        <span class="dt">caption =</span> <span class="st">&quot;Data: ISLM OJ data set.&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-280-1.png" width="672" /></p>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="classification-tree.html#cb632-1"></a><span class="kw">data.frame</span>(<span class="dt">M =</span> <span class="kw">predict</span>(oj_model_1b_pruned, oj_test, <span class="st">&quot;prob&quot;</span>)[, <span class="dv">1</span>],</span>
+<span id="cb632-2"><a href="classification-tree.html#cb632-2"></a>           <span class="dt">D =</span> <span class="kw">if_else</span>(oj_test<span class="op">$</span>Purchase <span class="op">==</span><span class="st"> &quot;CH&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb632-3"><a href="classification-tree.html#cb632-3"></a><span class="st">   </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb632-4"><a href="classification-tree.html#cb632-4"></a><span class="st">   </span><span class="kw">geom_roc</span>(<span class="kw">aes</span>(<span class="dt">m =</span> M, <span class="dt">d =</span> D), <span class="dt">hjust =</span> <span class="fl">-0.4</span>, <span class="dt">vjust =</span> <span class="fl">1.5</span>, <span class="dt">linealpha =</span> <span class="fl">0.6</span>, <span class="dt">labelsize =</span> <span class="dv">3</span>, <span class="dt">n.cuts =</span> <span class="dv">10</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb632-5"><a href="classification-tree.html#cb632-5"></a><span class="st">   </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb632-6"><a href="classification-tree.html#cb632-6"></a><span class="st">   </span><span class="kw">coord_equal</span>() <span class="op">+</span></span>
+<span id="cb632-7"><a href="classification-tree.html#cb632-7"></a><span class="st">   </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
+<span id="cb632-8"><a href="classification-tree.html#cb632-8"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;FPR&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;TPR&quot;</span>,</span>
+<span id="cb632-9"><a href="classification-tree.html#cb632-9"></a>        <span class="dt">title =</span> <span class="st">&quot;Model 1b ROC Curve&quot;</span>,</span>
+<span id="cb632-10"><a href="classification-tree.html#cb632-10"></a>        <span class="dt">subtitle =</span> <span class="st">&quot;Pruned model using rpart&quot;</span>,</span>
+<span id="cb632-11"><a href="classification-tree.html#cb632-11"></a>        <span class="dt">caption =</span> <span class="st">&quot;Data: ISLM OJ data set.&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-293-1.png" width="672" /></p>
 <p>You can also use <code>prediction()</code> and <code>plot.prediction()</code> from the <strong>ROCR</strong> package.</p>
-<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="classification-tree.html#cb608-1"></a>pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(<span class="kw">predict</span>(oj_model_1b_pruned, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[, <span class="dv">2</span>], oj_test<span class="op">$</span>Purchase)</span>
-<span id="cb608-2"><a href="classification-tree.html#cb608-2"></a><span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>))</span>
-<span id="cb608-3"><a href="classification-tree.html#cb608-3"></a><span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-281-1.png" width="672" /></p>
+<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="classification-tree.html#cb633-1"></a>pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(<span class="kw">predict</span>(oj_model_1b_pruned, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[, <span class="dv">2</span>], oj_test<span class="op">$</span>Purchase)</span>
+<span id="cb633-2"><a href="classification-tree.html#cb633-2"></a><span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>))</span>
+<span id="cb633-3"><a href="classification-tree.html#cb633-3"></a><span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-294-1.png" width="672" /></p>
 <p>Hmm, not quite the same…</p>
 <p>A few points on the ROC space are helpful for understanding how to use it.</p>
 <ul>
@@ -714,25 +719,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>set particular values to consider for each parameter by defining a <code>tuneGrid</code>.</li>
 </ul>
 <p>I’ll build the model using 10-fold cross-validation to optimize the hyperparameter CP. If you don’t have any idea what the tuning parameter ought to look like, use <code>tuneLength</code> to get close, then fine-tune with <code>tuneGrid</code>. That’s what I’ll do. I’ll create a training control object that I can re-use in other model builds.</p>
-<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="classification-tree.html#cb609-1"></a>oj_trControl =<span class="st"> </span><span class="kw">trainControl</span>(</span>
-<span id="cb609-2"><a href="classification-tree.html#cb609-2"></a>   <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="co"># k-fold cross validation</span></span>
-<span id="cb609-3"><a href="classification-tree.html#cb609-3"></a>   <span class="dt">number =</span> <span class="dv">10</span>,  <span class="co"># 10 folds</span></span>
-<span id="cb609-4"><a href="classification-tree.html#cb609-4"></a>   <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save predictions for the optimal tuning parameter</span></span>
-<span id="cb609-5"><a href="classification-tree.html#cb609-5"></a>   <span class="dt">classProbs =</span> <span class="ot">TRUE</span>  <span class="co"># return class probabilities in addition to predicted values</span></span>
-<span id="cb609-6"><a href="classification-tree.html#cb609-6"></a><span class="co">#   summaryFunction = twoClassSummary  # computes sensitivity, specificity and the area under the ROC curve.</span></span>
-<span id="cb609-7"><a href="classification-tree.html#cb609-7"></a>   )</span></code></pre></div>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="classification-tree.html#cb634-1"></a>oj_trControl =<span class="st"> </span><span class="kw">trainControl</span>(</span>
+<span id="cb634-2"><a href="classification-tree.html#cb634-2"></a>   <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="co"># k-fold cross validation</span></span>
+<span id="cb634-3"><a href="classification-tree.html#cb634-3"></a>   <span class="dt">number =</span> <span class="dv">10</span>,  <span class="co"># 10 folds</span></span>
+<span id="cb634-4"><a href="classification-tree.html#cb634-4"></a>   <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save predictions for the optimal tuning parameter</span></span>
+<span id="cb634-5"><a href="classification-tree.html#cb634-5"></a>   <span class="dt">classProbs =</span> <span class="ot">TRUE</span>  <span class="co"># return class probabilities in addition to predicted values</span></span>
+<span id="cb634-6"><a href="classification-tree.html#cb634-6"></a><span class="co">#   summaryFunction = twoClassSummary  # computes sensitivity, specificity and the area under the ROC curve.</span></span>
+<span id="cb634-7"><a href="classification-tree.html#cb634-7"></a>   )</span></code></pre></div>
 <p>Now fit the model.</p>
-<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="classification-tree.html#cb610-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb610-2"><a href="classification-tree.html#cb610-2"></a>oj_model_<span class="dv">2</span> =<span class="st"> </span><span class="kw">train</span>(</span>
-<span id="cb610-3"><a href="classification-tree.html#cb610-3"></a>   Purchase <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb610-4"><a href="classification-tree.html#cb610-4"></a>   <span class="dt">data =</span> oj_train, </span>
-<span id="cb610-5"><a href="classification-tree.html#cb610-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
-<span id="cb610-6"><a href="classification-tree.html#cb610-6"></a>   <span class="dt">tuneLength =</span> <span class="dv">5</span>,</span>
-<span id="cb610-7"><a href="classification-tree.html#cb610-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;Accuracy&quot;</span>,</span>
-<span id="cb610-8"><a href="classification-tree.html#cb610-8"></a>   <span class="dt">trControl =</span> oj_trControl</span>
-<span id="cb610-9"><a href="classification-tree.html#cb610-9"></a>   )</span></code></pre></div>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="classification-tree.html#cb635-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb635-2"><a href="classification-tree.html#cb635-2"></a>oj_model_<span class="dv">2</span> =<span class="st"> </span><span class="kw">train</span>(</span>
+<span id="cb635-3"><a href="classification-tree.html#cb635-3"></a>   Purchase <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb635-4"><a href="classification-tree.html#cb635-4"></a>   <span class="dt">data =</span> oj_train, </span>
+<span id="cb635-5"><a href="classification-tree.html#cb635-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
+<span id="cb635-6"><a href="classification-tree.html#cb635-6"></a>   <span class="dt">tuneLength =</span> <span class="dv">5</span>,</span>
+<span id="cb635-7"><a href="classification-tree.html#cb635-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;Accuracy&quot;</span>,</span>
+<span id="cb635-8"><a href="classification-tree.html#cb635-8"></a>   <span class="dt">trControl =</span> oj_trControl</span>
+<span id="cb635-9"><a href="classification-tree.html#cb635-9"></a>   )</span></code></pre></div>
 <p><code>caret</code> built a full tree using <code>rpart</code>’s default parameters: gini splitting index, at least 20 observations in a node in order to consider splitting it, and at least 6 observations in each node. Caret then calculated the accuracy for each candidate value of <span class="math inline">\(\alpha\)</span>. Here is the results.</p>
-<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="classification-tree.html#cb611-1"></a><span class="kw">print</span>(oj_model_<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="classification-tree.html#cb636-1"></a><span class="kw">print</span>(oj_model_<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## CART 
 ## 
 ## 857 samples
@@ -754,16 +759,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final value used for the model was cp = 0.009.</code></pre>
 <p>The second <code>cp</code> (0.008982036) produced the highest accuracy. I can drill into the best value of <code>cp</code> using a tuning grid. I’ll try that now.</p>
-<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="classification-tree.html#cb613-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb613-2"><a href="classification-tree.html#cb613-2"></a>oj_model_<span class="dv">3</span> =<span class="st"> </span><span class="kw">train</span>(</span>
-<span id="cb613-3"><a href="classification-tree.html#cb613-3"></a>   Purchase <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb613-4"><a href="classification-tree.html#cb613-4"></a>   <span class="dt">data =</span> oj_train, </span>
-<span id="cb613-5"><a href="classification-tree.html#cb613-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
-<span id="cb613-6"><a href="classification-tree.html#cb613-6"></a>   <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(<span class="dt">cp =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="fl">0.001</span>, <span class="dt">to =</span> <span class="fl">0.010</span>, <span class="dt">length =</span> <span class="dv">11</span>)),  </span>
-<span id="cb613-7"><a href="classification-tree.html#cb613-7"></a>   <span class="dt">metric=</span><span class="st">&#39;Accuracy&#39;</span>,</span>
-<span id="cb613-8"><a href="classification-tree.html#cb613-8"></a>   <span class="dt">trControl =</span> oj_trControl</span>
-<span id="cb613-9"><a href="classification-tree.html#cb613-9"></a>   )</span>
-<span id="cb613-10"><a href="classification-tree.html#cb613-10"></a><span class="kw">print</span>(oj_model_<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="classification-tree.html#cb638-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb638-2"><a href="classification-tree.html#cb638-2"></a>oj_model_<span class="dv">3</span> =<span class="st"> </span><span class="kw">train</span>(</span>
+<span id="cb638-3"><a href="classification-tree.html#cb638-3"></a>   Purchase <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb638-4"><a href="classification-tree.html#cb638-4"></a>   <span class="dt">data =</span> oj_train, </span>
+<span id="cb638-5"><a href="classification-tree.html#cb638-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
+<span id="cb638-6"><a href="classification-tree.html#cb638-6"></a>   <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(<span class="dt">cp =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="fl">0.001</span>, <span class="dt">to =</span> <span class="fl">0.010</span>, <span class="dt">length =</span> <span class="dv">11</span>)),  </span>
+<span id="cb638-7"><a href="classification-tree.html#cb638-7"></a>   <span class="dt">metric=</span><span class="st">&#39;Accuracy&#39;</span>,</span>
+<span id="cb638-8"><a href="classification-tree.html#cb638-8"></a>   <span class="dt">trControl =</span> oj_trControl</span>
+<span id="cb638-9"><a href="classification-tree.html#cb638-9"></a>   )</span>
+<span id="cb638-10"><a href="classification-tree.html#cb638-10"></a><span class="kw">print</span>(oj_model_<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## CART 
 ## 
 ## 857 samples
@@ -791,7 +796,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final value used for the model was cp = 0.0082.</code></pre>
 <p>The beset model is at cp = 0.009. Here are the rules in the final model.</p>
-<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="classification-tree.html#cb615-1"></a>oj_model_<span class="dv">3</span><span class="op">$</span>finalModel</span></code></pre></div>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="classification-tree.html#cb640-1"></a>oj_model_<span class="dv">3</span><span class="op">$</span>finalModel</span></code></pre></div>
 <pre><code>## n= 857 
 ## 
 ## node), split, n, loss, yval, (yprob)
@@ -815,32 +820,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##        13) SalePriceMM&lt; 2 75  18 MM (0.240 0.760) *
 ##       7) LoyalCH&lt; 0.28 174  22 MM (0.126 0.874) *</code></pre>
 <p>Here is the tree.</p>
-<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="classification-tree.html#cb617-1"></a><span class="kw">rpart.plot</span>(oj_model_<span class="dv">3</span><span class="op">$</span>finalModel)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-287-1.png" width="672" /></p>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="classification-tree.html#cb642-1"></a><span class="kw">rpart.plot</span>(oj_model_<span class="dv">3</span><span class="op">$</span>finalModel)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-300-1.png" width="672" /></p>
 <p>Here is the ROC curve.</p>
-<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="classification-tree.html#cb618-1"></a><span class="kw">library</span>(plotROC)</span>
-<span id="cb618-2"><a href="classification-tree.html#cb618-2"></a><span class="kw">ggplot</span>(oj_model_<span class="dv">3</span><span class="op">$</span>pred) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb618-3"><a href="classification-tree.html#cb618-3"></a><span class="st">    </span><span class="kw">geom_roc</span>(</span>
-<span id="cb618-4"><a href="classification-tree.html#cb618-4"></a>       <span class="kw">aes</span>(</span>
-<span id="cb618-5"><a href="classification-tree.html#cb618-5"></a>          <span class="dt">m =</span> MM, </span>
-<span id="cb618-6"><a href="classification-tree.html#cb618-6"></a>          <span class="dt">d =</span> <span class="kw">factor</span>(obs, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;CH&quot;</span>, <span class="st">&quot;MM&quot;</span>))</span>
-<span id="cb618-7"><a href="classification-tree.html#cb618-7"></a>       ),</span>
-<span id="cb618-8"><a href="classification-tree.html#cb618-8"></a>       <span class="dt">hjust =</span> <span class="fl">-0.4</span>, <span class="dt">vjust =</span> <span class="fl">1.5</span></span>
-<span id="cb618-9"><a href="classification-tree.html#cb618-9"></a>    ) <span class="op">+</span></span>
-<span id="cb618-10"><a href="classification-tree.html#cb618-10"></a><span class="st">   </span><span class="kw">coord_equal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="classification-tree.html#cb643-1"></a><span class="kw">library</span>(plotROC)</span>
+<span id="cb643-2"><a href="classification-tree.html#cb643-2"></a><span class="kw">ggplot</span>(oj_model_<span class="dv">3</span><span class="op">$</span>pred) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb643-3"><a href="classification-tree.html#cb643-3"></a><span class="st">    </span><span class="kw">geom_roc</span>(</span>
+<span id="cb643-4"><a href="classification-tree.html#cb643-4"></a>       <span class="kw">aes</span>(</span>
+<span id="cb643-5"><a href="classification-tree.html#cb643-5"></a>          <span class="dt">m =</span> MM, </span>
+<span id="cb643-6"><a href="classification-tree.html#cb643-6"></a>          <span class="dt">d =</span> <span class="kw">factor</span>(obs, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;CH&quot;</span>, <span class="st">&quot;MM&quot;</span>))</span>
+<span id="cb643-7"><a href="classification-tree.html#cb643-7"></a>       ),</span>
+<span id="cb643-8"><a href="classification-tree.html#cb643-8"></a>       <span class="dt">hjust =</span> <span class="fl">-0.4</span>, <span class="dt">vjust =</span> <span class="fl">1.5</span></span>
+<span id="cb643-9"><a href="classification-tree.html#cb643-9"></a>    ) <span class="op">+</span></span>
+<span id="cb643-10"><a href="classification-tree.html#cb643-10"></a><span class="st">   </span><span class="kw">coord_equal</span>()</span></code></pre></div>
 <pre><code>## Warning in verify_d(data$d): D not labeled 0/1, assuming CH = 0 and MM = 1!</code></pre>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-288-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-301-1.png" width="672" /></p>
 <p>Here are the cross-validated Accuracy for each candidate cp value.</p>
-<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="classification-tree.html#cb620-1"></a><span class="kw">plot</span>(oj_model_<span class="dv">3</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-289-1.png" width="672" /></p>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="classification-tree.html#cb645-1"></a><span class="kw">plot</span>(oj_model_<span class="dv">3</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-302-1.png" width="672" /></p>
 <p>Evaluate the model by making predictions with the test data set.</p>
-<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="classification-tree.html#cb621-1"></a>oj_model_<span class="dv">3</span>_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_<span class="dv">3</span>, oj_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="classification-tree.html#cb646-1"></a>oj_model_<span class="dv">3</span>_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_<span class="dv">3</span>, oj_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span></code></pre></div>
 <p>The confusion matrix shows the true positives and true negatives.</p>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="classification-tree.html#cb622-1"></a>oj_model_<span class="dv">3</span>_cm &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(</span>
-<span id="cb622-2"><a href="classification-tree.html#cb622-2"></a>   <span class="dt">data =</span> oj_model_<span class="dv">3</span>_preds, </span>
-<span id="cb622-3"><a href="classification-tree.html#cb622-3"></a>   <span class="dt">reference =</span> oj_test<span class="op">$</span>Purchase</span>
-<span id="cb622-4"><a href="classification-tree.html#cb622-4"></a>)</span>
-<span id="cb622-5"><a href="classification-tree.html#cb622-5"></a>oj_model_<span class="dv">3</span>_cm</span></code></pre></div>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="classification-tree.html#cb647-1"></a>oj_model_<span class="dv">3</span>_cm &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(</span>
+<span id="cb647-2"><a href="classification-tree.html#cb647-2"></a>   <span class="dt">data =</span> oj_model_<span class="dv">3</span>_preds, </span>
+<span id="cb647-3"><a href="classification-tree.html#cb647-3"></a>   <span class="dt">reference =</span> oj_test<span class="op">$</span>Purchase</span>
+<span id="cb647-4"><a href="classification-tree.html#cb647-4"></a>)</span>
+<span id="cb647-5"><a href="classification-tree.html#cb647-5"></a>oj_model_<span class="dv">3</span>_cm</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -869,18 +874,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##        &#39;Positive&#39; Class : CH                
 ## </code></pre>
 <p>The accuracy metric is the slightly worse than in my previous model. Here is a graphical representation of the confusion matrix.</p>
-<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="classification-tree.html#cb624-1"></a><span class="kw">plot</span>(oj_test<span class="op">$</span>Purchase, oj_model_<span class="dv">3</span>_preds, </span>
-<span id="cb624-2"><a href="classification-tree.html#cb624-2"></a>     <span class="dt">main =</span> <span class="st">&quot;Simple Classification: Predicted vs. Actual&quot;</span>,</span>
-<span id="cb624-3"><a href="classification-tree.html#cb624-3"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
-<span id="cb624-4"><a href="classification-tree.html#cb624-4"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-292-1.png" width="672" /></p>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="classification-tree.html#cb649-1"></a><span class="kw">plot</span>(oj_test<span class="op">$</span>Purchase, oj_model_<span class="dv">3</span>_preds, </span>
+<span id="cb649-2"><a href="classification-tree.html#cb649-2"></a>     <span class="dt">main =</span> <span class="st">&quot;Simple Classification: Predicted vs. Actual&quot;</span>,</span>
+<span id="cb649-3"><a href="classification-tree.html#cb649-3"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
+<span id="cb649-4"><a href="classification-tree.html#cb649-4"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-305-1.png" width="672" /></p>
 <p>Finally, here is the variable importance plot.</p>
-<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="classification-tree.html#cb625-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(oj_model_<span class="dv">3</span>), <span class="dt">main=</span><span class="st">&quot;Variable Importance with Simple Classication&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-293-1.png" width="672" /></p>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="classification-tree.html#cb650-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(oj_model_<span class="dv">3</span>), <span class="dt">main=</span><span class="st">&quot;Variable Importance with Simple Classication&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-306-1.png" width="672" /></p>
 <p>Looks like the manual effort faired best. Here is a summary the accuracy rates of the three models.</p>
-<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="classification-tree.html#cb626-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual Class&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_1b_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)), </span>
-<span id="cb626-2"><a href="classification-tree.html#cb626-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Caret w/tuneGrid&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_<span class="dv">3</span>_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>))</span>
-<span id="cb626-3"><a href="classification-tree.html#cb626-3"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="classification-tree.html#cb651-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual Class&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_1b_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)), </span>
+<span id="cb651-2"><a href="classification-tree.html#cb651-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Caret w/tuneGrid&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_<span class="dv">3</span>_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>))</span>
+<span id="cb651-3"><a href="classification-tree.html#cb651-3"></a>)</span></code></pre></div>
 <pre><code>##                      model  Acc
 ## Accuracy      Manual Class 0.86
 ## Accuracy1 Caret w/tuneGrid 0.85</code></pre>
