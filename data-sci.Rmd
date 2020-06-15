@@ -1,3 +1,300 @@
+--- 
+title: "My Data Science Notes"
+author: "Michael Foley"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output:
+  bookdown::gitbook:
+    lib_dir: assets
+    split_by: section
+    config:
+      toolbar:
+        position: static
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is a compendium of notes from classes, tutorials, etc. that I reference from time to time."
+---
+--- 
+title: "My Data Science Notes"
+author: "Michael Foley"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output:
+  bookdown::gitbook:
+    lib_dir: assets
+    split_by: section
+    config:
+      toolbar:
+        position: static
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is a compendium of notes from classes, tutorials, etc. that I reference from time to time."
+---
+
+# Intro {-}
+
+These notes are pulled from various classes, tutorials, books, etc. and are intended for my own consumption.  If you are finding this on the internet, I hope it is useful to you, but you should know that I am just a student and there's a good chance whatever you're reading here is mistaken.  In fact, that should probably be your null hypothesis... or your prior.  Whatever.
+
+<!--chapter:end:index.Rmd-->
+
+
+# Probability {#probability}
+
+Placeholder
+
+
+## Principles
+## Discrete Distributions {#disc_dist}
+### Bernoulli
+### Binomial
+### Poission
+### Multinomial
+### Negative-Binomial
+#### Examples {-}
+### Geometric
+#### Examples {-}
+### Hypergeometric
+#### Example {-}
+### Gamma
+#### Examples {-}
+## Continuous Distributions {#cont_dist}
+### Normal
+#### Example {-}
+#### Example
+#### Example
+#### Example
+#### Normal Approximation to Binomial
+#### Example
+#### Example
+#### From Sample to Population
+## Join Distributions
+## Likelihood
+
+<!--chapter:end:01-probability.Rmd-->
+
+
+# Categorical Analysis - Nonmodel {#discrete_analysis}
+
+Placeholder
+
+
+## Chi-Square Test
+## One-Way Tables
+### Chi-Square Goodness-of-Fit Test
+### Proportion Test
+## Two-Way Tables
+### Chi-Square Independence Test
+### Residuals Analysis
+### Difference in Proportions
+### Relative Risk
+### Odds Ratio
+### Partitioning Chi-Square
+### Correlation
+## K-Way Tables
+### Odds Ratio
+### Chi-Square Independence Test
+#### Mutual Independence
+#### Joint Independence
+#### Marginal Independence
+#### Conditional Independence
+#### Homogenous Associations
+
+<!--chapter:end:02-discrete_analysis.Rmd-->
+
+
+# Continuous Variable Analysis {#continuous_analysis}
+
+Placeholder
+
+
+### Correlation
+#### Pearson's r
+#### Spearman's Rho
+#### Kendall's Tau
+
+<!--chapter:end:03-continuous_analysis.Rmd-->
+
+```{r include=FALSE}
+library(tidyverse)
+library(mfstylr)
+```
+
+# Experiment Design
+
+These notes are structured from the [PSU STAT 503](https://online.stat.psu.edu/stat503/) course.
+
+## Single Factor
+
+## Blocking
+
+## Nested
+
+## Split Plot
+
+<!--chapter:end:04-experiment_design.Rmd-->
+
+
+# PART 2: Supervised Machine Learning {-}
+
+Placeholder
+
+
+## Linear Regression Model
+## Parameter Estimation
+#### Example
+## Model Assumptions
+### Linearity
+### Multicollinearity
+#### Example
+#### Example
+### Normality
+### Equal Variances
+## Prediction
+#### Example
+#### Example 
+## Inference
+### *t*-Test
+#### Example
+### *F*-Test
+#### Example
+## Interpretation
+## Model Validation
+### Accuracy Metrics
+#### R-Squared
+#### RMSE
+#### RSE
+#### MAE
+#### Adjusted R-squared
+#### AIC
+#### AICc
+#### BIC
+#### Mallows Cp
+##### Example
+### Cross-Validation
+#### Validation Set
+##### Example
+#### LOOCV
+#### K-fold Cross-Validation
+#### Repeated K-fold CV
+#### Bootstrapping
+### Gain Curve
+## Reference
+
+<!--chapter:end:06-ols.Rmd-->
+
+
+# Generalized Linear Models
+
+Placeholder
+
+
+## Logistic Regression
+## Multinomial Logistic Regression
+## Ordinal Logistic Regression
+### Assumptions
+### Modeling 
+### Case Study
+## Poisson Regression
+
+<!--chapter:end:07-glm.Rmd-->
+
+
+# Multivariate Statistical Analysis
+
+Placeholder
+
+
+## Background
+## MANOVA
+## Repeated Measures
+## LDA
+## PCA
+## Factor Analysis
+## Canonical Correlation
+## Cluster Analysis
+
+<!--chapter:end:08-multivariate.Rmd-->
+
+# Classification
+
+<!--chapter:end:09-pls.Rmd-->
+
+
+# Regularization
+
+Placeholder
+
+
+## Ridge
+#### Example {-}
+## Lasso
+#### Example {-}
+## Elastic Net
+#### Example {-}
+## Model Summary {-}
+
+<!--chapter:end:10-glmnet.Rmd-->
+
+
+# Decision Trees
+
+Placeholder
+
+
+## Classification Tree
+### Confusion Matrix
+### ROC Curve
+### Caret Approach
+## Regression Trees
+### Caret Approach
+## Bagging
+## Random Forests
+#### Bagging Classification Example
+#### Random Forest Classification Example
+#### Bagging Regression Example
+#### Random Forest Regression Example
+## Gradient Boosting
+#### Gradient Boosting Classification Example
+#### Gradient Boosting Regression Example
+## Summary
+## Reference
+
+<!--chapter:end:11-cart.Rmd-->
+
+
+# Non-linear Models
+
+Placeholder
+
+
+## Splines
+## MARS
+## GAM
+
+<!--chapter:end:12-nonlin.Rmd-->
+
+
+# Support Vector Machines
+
+Placeholder
+
+
+## Maximal Margin Classifier
+## Support Vector Classifier
+## Support Vector Machines
+## Example
+## Using Caret
+
+<!--chapter:end:13-svm.Rmd-->
+
+# Principal Components Analysis
+
+<!--chapter:end:14-pca.Rmd-->
+
 # Text Mining
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
@@ -185,51 +482,6 @@ pal <- pal[-(1:4)]
 wordcloud(
   words = austin_word_cnt$word,
   freq = austin_word_cnt$n,
-  max.words = 30,
-  colors = pal
-)
-```
-
-```{r}
-pa_file <- readxl::read_excel("./../../PeoplaAnalyticsCloud.xlsx")
-pa_tidy <- pa_file %>%
-  mutate(
-    linenumber = row_number(),
-    ) %>%
-  ungroup() %>%
-  unnest_tokens(output = word, input = comment) %>%
-#  unnest_tokens(output = bigram, input = comment, token = "ngrams", n = 2) 
-  anti_join(stop_words) %>%
-  anti_join(custom_stop_words)
-pa_tidy_n <- pa_tidy %>%
-  count(word)
-pal <- brewer.pal(9,"BuGn")
-pal <- pal[-(1:4)]
-wordcloud(
-  words = pa_tidy_n$word,
-  freq = pa_tidy_n$n,
-  max.words = 30,
-  colors = pal
-)
-
-pa_2gram <- pa_tidy %>%
-  separate(bigram, c("word1", "word2"), sep = " ") %>%
-  filter(!word1 %in% stop_words$word &
-           !word2 %in% stop_words$word &
-           !is.na(word1) & !is.na(word2)) %>%
-  unite(bigram, word1, word2, sep = " ")
-
-
-pa_2gram %>%
-  count(book, bigram, sort = TRUE)
-
-pa_2gram2 <- pa_2gram %>%
-  count(bigram)
-pal <- brewer.pal(9,"BuGn")
-pal <- pal[-(1:4)]
-wordcloud(
-  words = pa_2gram2$bigram,
-  freq = pa_2gram2$n,
   max.words = 30,
   colors = pal
 )
@@ -1125,4 +1377,45 @@ Introduction to Natural Language Processing in R.
 
 There are also some projects in DataCamp, and tutorial.
 
+
+
+<!--chapter:end:16-text-mining.Rmd-->
+
+
+# Survival Analysis
+
+Placeholder
+
+
+## Basic Concepts
+## Survival Curve Estimation
+### Kaplan-Meier
+#### Log-Rank Test
+### Weibull
+### Cox
+
+<!--chapter:end:17-survival_analysis.Rmd-->
+
+
+# Appendix {-}
+
+Placeholder
+
+
+## Publishing to BookDown {-}
+## Shiny Apps {-}
+## Packages {-}
+### Create a package {-}
+### Document Functions with roxygen
+### Create Data {-}
+### Create Vignette {-}
+#### Step 2: Create an R Markdown template {-}
+
+<!--chapter:end:18-appendix.Rmd-->
+
+`r if (knitr::is_html_output()) '
+# References {-}
+'`
+
+<!--chapter:end:19-references.Rmd-->
 
