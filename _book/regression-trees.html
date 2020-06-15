@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-03" />
+<meta name="date" content="2020-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -225,7 +225,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>7.8</b> Cluster Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
-<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a></li>
+<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a><ul>
+<li class="chapter" data-level="9.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>9.1</b> Ridge</a></li>
+<li class="chapter" data-level="9.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>9.2</b> Lasso</a></li>
+<li class="chapter" data-level="9.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>9.3</b> Elastic Net</a></li>
+<li class="chapter" data-level="" data-path="model-summary.html"><a href="model-summary.html"><i class="fa fa-check"></i>Model Summary</a></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
 <li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
 <li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
@@ -250,7 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-16.html"><a href="example-16.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
 <li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
@@ -297,25 +302,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="regression-trees" class="section level2">
 <h2><span class="header-section-number">10.2</span> Regression Trees</h2>
 <p>A simple regression tree is built in a manner similar to a simple classificatioon tree, and like the simple classification tree, it is rarely invoked on its own; the bagged, random forest, and gradient boosting methods build on this logic. I’ll learn by example again. Using the <code>ISLR::Carseats</code> data set, I will predict <code>Sales</code> using from the 10 feature variables. Load the data.</p>
-<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="regression-trees.html#cb628-1"></a>carseats_dat &lt;-<span class="st"> </span>Carseats</span>
-<span id="cb628-2"><a href="regression-trees.html#cb628-2"></a><span class="co">#skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, </span></span>
-<span id="cb628-3"><a href="regression-trees.html#cb628-3"></a><span class="co">#                                p100 = NULL, hist = NULL))</span></span>
-<span id="cb628-4"><a href="regression-trees.html#cb628-4"></a><span class="co">#skim(carseats_dat)</span></span></code></pre></div>
+<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb653-1"><a href="regression-trees.html#cb653-1"></a>carseats_dat &lt;-<span class="st"> </span>Carseats</span>
+<span id="cb653-2"><a href="regression-trees.html#cb653-2"></a><span class="co">#skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, </span></span>
+<span id="cb653-3"><a href="regression-trees.html#cb653-3"></a><span class="co">#                                p100 = NULL, hist = NULL))</span></span>
+<span id="cb653-4"><a href="regression-trees.html#cb653-4"></a><span class="co">#skim(carseats_dat)</span></span></code></pre></div>
 <p>I’ll split <code>careseats_dat</code> (n = 400) into <code>carseats_train</code> (80%, n = 321) and <code>carseats_test</code> (20%, n = 79). I’ll fit a simple decision tree with <code>carseats_train</code>, then later a bagged tree, a random forest, and a gradient boosting tree. I’ll compare their predictive performance with <code>carseats_test</code>.</p>
-<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="regression-trees.html#cb629-1"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb629-2"><a href="regression-trees.html#cb629-2"></a>partition &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(<span class="dt">y =</span> carseats_dat<span class="op">$</span>Sales, <span class="dt">p =</span> <span class="fl">0.8</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb629-3"><a href="regression-trees.html#cb629-3"></a>carseats_train &lt;-<span class="st"> </span>carseats_dat[partition, ]</span>
-<span id="cb629-4"><a href="regression-trees.html#cb629-4"></a>carseats_test &lt;-<span class="st"> </span>carseats_dat[<span class="op">-</span>partition, ]</span></code></pre></div>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="regression-trees.html#cb654-1"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb654-2"><a href="regression-trees.html#cb654-2"></a>partition &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(<span class="dt">y =</span> carseats_dat<span class="op">$</span>Sales, <span class="dt">p =</span> <span class="fl">0.8</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb654-3"><a href="regression-trees.html#cb654-3"></a>carseats_train &lt;-<span class="st"> </span>carseats_dat[partition, ]</span>
+<span id="cb654-4"><a href="regression-trees.html#cb654-4"></a>carseats_test &lt;-<span class="st"> </span>carseats_dat[<span class="op">-</span>partition, ]</span></code></pre></div>
 <p>The first step is to build a full tree, then perform k-fold cross-validation to help select the optimal cost complexity (cp). The only difference here is the <code>rpart()</code> parameter <code>method = "anova"</code> to produce a regression tree.</p>
-<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="regression-trees.html#cb630-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb630-2"><a href="regression-trees.html#cb630-2"></a>carseats_model_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rpart</span>(</span>
-<span id="cb630-3"><a href="regression-trees.html#cb630-3"></a>   <span class="dt">formula =</span> Sales <span class="op">~</span><span class="st"> </span>.,</span>
-<span id="cb630-4"><a href="regression-trees.html#cb630-4"></a>   <span class="dt">data =</span> carseats_train,</span>
-<span id="cb630-5"><a href="regression-trees.html#cb630-5"></a>   <span class="dt">method =</span> <span class="st">&quot;anova&quot;</span>, </span>
-<span id="cb630-6"><a href="regression-trees.html#cb630-6"></a>   <span class="dt">xval =</span> <span class="dv">10</span>,</span>
-<span id="cb630-7"><a href="regression-trees.html#cb630-7"></a>   <span class="dt">model =</span> <span class="ot">TRUE</span>  <span class="co"># to plot splits with factor variables.</span></span>
-<span id="cb630-8"><a href="regression-trees.html#cb630-8"></a>)</span>
-<span id="cb630-9"><a href="regression-trees.html#cb630-9"></a><span class="kw">print</span>(carseats_model_<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="regression-trees.html#cb655-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb655-2"><a href="regression-trees.html#cb655-2"></a>carseats_model_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rpart</span>(</span>
+<span id="cb655-3"><a href="regression-trees.html#cb655-3"></a>   <span class="dt">formula =</span> Sales <span class="op">~</span><span class="st"> </span>.,</span>
+<span id="cb655-4"><a href="regression-trees.html#cb655-4"></a>   <span class="dt">data =</span> carseats_train,</span>
+<span id="cb655-5"><a href="regression-trees.html#cb655-5"></a>   <span class="dt">method =</span> <span class="st">&quot;anova&quot;</span>, </span>
+<span id="cb655-6"><a href="regression-trees.html#cb655-6"></a>   <span class="dt">xval =</span> <span class="dv">10</span>,</span>
+<span id="cb655-7"><a href="regression-trees.html#cb655-7"></a>   <span class="dt">model =</span> <span class="ot">TRUE</span>  <span class="co"># to plot splits with factor variables.</span></span>
+<span id="cb655-8"><a href="regression-trees.html#cb655-8"></a>)</span>
+<span id="cb655-9"><a href="regression-trees.html#cb655-9"></a><span class="kw">print</span>(carseats_model_<span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## n= 321 
 ## 
 ## node), split, n, deviance, yval
@@ -354,11 +359,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##      7) Price&lt; 1.1e+02 21   61 12.0 *</code></pre>
 <p>The output starts with the root node. The predicted <code>Sales</code> at the root is the mean <code>Sales</code> for the training data set, 7.535950 (values are $000s). The deviance at the root is the SSE, 2567.768. The child nodes of node “x” are labeled 2x) and 2x+1), so the child nodes of 1) are 2) and 3), and the child nodes of 2) are 4) and 5). Terminal nodes are labeled with an asterisk (*).</p>
 <p>The first split is at <code>ShelveLoc</code> = [Bad, Medium] vs Good. Here is what the full (unpruned) tree looks like.</p>
-<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="regression-trees.html#cb632-1"></a><span class="kw">rpart.plot</span>(carseats_model_<span class="dv">1</span>, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-298-1.png" width="672" /></p>
+<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="regression-trees.html#cb657-1"></a><span class="kw">rpart.plot</span>(carseats_model_<span class="dv">1</span>, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-311-1.png" width="672" /></p>
 <p>The boxes show the node predicted value (mean) and the proportion of observations that are in the node (or child nodes).</p>
 <p><code>rpart()</code> not only grew the full tree, it also used cross-validation to test the performance of the possible complexity hyperparameters. <code>printcp()</code> displays the candidate cp values. You can use this table to decide how to prune the tree.</p>
-<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="regression-trees.html#cb633-1"></a><span class="kw">printcp</span>(carseats_model_<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="regression-trees.html#cb658-1"></a><span class="kw">printcp</span>(carseats_model_<span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## 
 ## Regression tree:
 ## rpart(formula = Sales ~ ., data = carseats_train, method = &quot;anova&quot;, 
@@ -390,23 +395,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 15  0     14         0      1    0
 ## 16  0     15         0      1    0</code></pre>
 <p>There are 16 possible cp values in this model. The model with the smallest complexity parameter allows the most splits (<code>nsplit</code>). The highest complexity parameter corresponds to a tree with just a root node. <code>rel error</code> is the SSE relative to the root node. The root node SSE is 2567.76800, so its <code>rel error</code> is 2567.76800/2567.76800 = 1.0. That means the absolute error of the full tree (at CP = 0.01) is 0.30963 * 2567.76800 = 795.058. You can verify that by calculating the SSE of the model predicted values:</p>
-<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="regression-trees.html#cb635-1"></a><span class="kw">data.frame</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(carseats_model_<span class="dv">1</span>, <span class="dt">newdata =</span> carseats_train)) <span class="op">%&gt;%</span></span>
-<span id="cb635-2"><a href="regression-trees.html#cb635-2"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">obs =</span> carseats_train<span class="op">$</span>Sales,</span>
-<span id="cb635-3"><a href="regression-trees.html#cb635-3"></a>          <span class="dt">sq_err =</span> (obs <span class="op">-</span><span class="st"> </span>pred)<span class="op">^</span><span class="dv">2</span>) <span class="op">%&gt;%</span></span>
-<span id="cb635-4"><a href="regression-trees.html#cb635-4"></a><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">sse =</span> <span class="kw">sum</span>(sq_err))</span></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="regression-trees.html#cb660-1"></a><span class="kw">data.frame</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(carseats_model_<span class="dv">1</span>, <span class="dt">newdata =</span> carseats_train)) <span class="op">%&gt;%</span></span>
+<span id="cb660-2"><a href="regression-trees.html#cb660-2"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">obs =</span> carseats_train<span class="op">$</span>Sales,</span>
+<span id="cb660-3"><a href="regression-trees.html#cb660-3"></a>          <span class="dt">sq_err =</span> (obs <span class="op">-</span><span class="st"> </span>pred)<span class="op">^</span><span class="dv">2</span>) <span class="op">%&gt;%</span></span>
+<span id="cb660-4"><a href="regression-trees.html#cb660-4"></a><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">sse =</span> <span class="kw">sum</span>(sq_err))</span></code></pre></div>
 <pre><code>##   sse
 ## 1 795</code></pre>
 <p>Finishing the CP table tour, <code>xerror</code> is the cross-validated SSE and <code>xstd</code> is its standard error. If you want the lowest possible error, then prune to the tree with the smallest relative SSE (<code>xerror</code>). If you want to balance predictive power with simplicity, prune to the smallest tree within 1 SE of the one with the smallest relative SSE. The CP table is not super-helpful for finding that tree. I’ll add a column to find it.</p>
-<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="regression-trees.html#cb637-1"></a>carseats_model_<span class="dv">1</span><span class="op">$</span>cptable <span class="op">%&gt;%</span></span>
-<span id="cb637-2"><a href="regression-trees.html#cb637-2"></a><span class="st">   </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span></span>
-<span id="cb637-3"><a href="regression-trees.html#cb637-3"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">min_xerror_idx =</span> <span class="kw">which.min</span>(carseats_model_<span class="dv">1</span><span class="op">$</span>cptable[, <span class="st">&quot;xerror&quot;</span>]),</span>
-<span id="cb637-4"><a href="regression-trees.html#cb637-4"></a>          <span class="dt">rownum =</span> <span class="kw">row_number</span>(),</span>
-<span id="cb637-5"><a href="regression-trees.html#cb637-5"></a>          <span class="dt">xerror_cap =</span> carseats_model_<span class="dv">1</span><span class="op">$</span>cptable[min_xerror_idx, <span class="st">&quot;xerror&quot;</span>] <span class="op">+</span><span class="st"> </span></span>
-<span id="cb637-6"><a href="regression-trees.html#cb637-6"></a><span class="st">             </span>carseats_model_<span class="dv">1</span><span class="op">$</span>cptable[min_xerror_idx, <span class="st">&quot;xstd&quot;</span>],</span>
-<span id="cb637-7"><a href="regression-trees.html#cb637-7"></a>          <span class="dt">eval =</span> <span class="kw">case_when</span>(rownum <span class="op">==</span><span class="st"> </span>min_xerror_idx <span class="op">~</span><span class="st"> &quot;min xerror&quot;</span>,</span>
-<span id="cb637-8"><a href="regression-trees.html#cb637-8"></a>                           xerror <span class="op">&lt;</span><span class="st"> </span>xerror_cap <span class="op">~</span><span class="st"> &quot;under cap&quot;</span>,</span>
-<span id="cb637-9"><a href="regression-trees.html#cb637-9"></a>                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb637-10"><a href="regression-trees.html#cb637-10"></a><span class="st">   </span><span class="kw">select</span>(<span class="op">-</span>rownum, <span class="op">-</span>min_xerror_idx) </span></code></pre></div>
+<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="regression-trees.html#cb662-1"></a>carseats_model_<span class="dv">1</span><span class="op">$</span>cptable <span class="op">%&gt;%</span></span>
+<span id="cb662-2"><a href="regression-trees.html#cb662-2"></a><span class="st">   </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span></span>
+<span id="cb662-3"><a href="regression-trees.html#cb662-3"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">min_xerror_idx =</span> <span class="kw">which.min</span>(carseats_model_<span class="dv">1</span><span class="op">$</span>cptable[, <span class="st">&quot;xerror&quot;</span>]),</span>
+<span id="cb662-4"><a href="regression-trees.html#cb662-4"></a>          <span class="dt">rownum =</span> <span class="kw">row_number</span>(),</span>
+<span id="cb662-5"><a href="regression-trees.html#cb662-5"></a>          <span class="dt">xerror_cap =</span> carseats_model_<span class="dv">1</span><span class="op">$</span>cptable[min_xerror_idx, <span class="st">&quot;xerror&quot;</span>] <span class="op">+</span><span class="st"> </span></span>
+<span id="cb662-6"><a href="regression-trees.html#cb662-6"></a><span class="st">             </span>carseats_model_<span class="dv">1</span><span class="op">$</span>cptable[min_xerror_idx, <span class="st">&quot;xstd&quot;</span>],</span>
+<span id="cb662-7"><a href="regression-trees.html#cb662-7"></a>          <span class="dt">eval =</span> <span class="kw">case_when</span>(rownum <span class="op">==</span><span class="st"> </span>min_xerror_idx <span class="op">~</span><span class="st"> &quot;min xerror&quot;</span>,</span>
+<span id="cb662-8"><a href="regression-trees.html#cb662-8"></a>                           xerror <span class="op">&lt;</span><span class="st"> </span>xerror_cap <span class="op">~</span><span class="st"> &quot;under cap&quot;</span>,</span>
+<span id="cb662-9"><a href="regression-trees.html#cb662-9"></a>                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb662-10"><a href="regression-trees.html#cb662-10"></a><span class="st">   </span><span class="kw">select</span>(<span class="op">-</span>rownum, <span class="op">-</span>min_xerror_idx) </span></code></pre></div>
 <pre><code>##       CP nsplit rel.error xerror  xstd xerror_cap       eval
 ## 1  0.263      0      1.00   1.01 0.077       0.59           
 ## 2  0.121      1      0.74   0.75 0.059       0.59           
@@ -425,70 +430,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 15 0.011     14      0.32   0.57 0.039       0.59  under cap
 ## 16 0.010     15      0.31   0.57 0.038       0.59  under cap</code></pre>
 <p>Okay, so the simplest tree is the one with CP = 0.01544139 (8 splits). Fortunately, <code>plotcp()</code> presents a nice graphical representation of the relationship between <code>xerror</code> and <code>cp</code>.</p>
-<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="regression-trees.html#cb639-1"></a><span class="kw">plotcp</span>(carseats_model_<span class="dv">1</span>, <span class="dt">upper =</span> <span class="st">&quot;splits&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-302-1.png" width="672" /></p>
+<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="regression-trees.html#cb664-1"></a><span class="kw">plotcp</span>(carseats_model_<span class="dv">1</span>, <span class="dt">upper =</span> <span class="st">&quot;splits&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-315-1.png" width="672" /></p>
 <p>The dashed line is set at the minimum <code>xerror</code> + <code>xstd</code>. The top axis shows the number of splits in the tree. I’m not sure why the CP values are not the same as in the table (they are close, but not the same). The smallest relative error is at 0.01, but the maximum CP below the dashed line (one standard deviation above the mimimum error) is at CP = .019 (8 splits). Use the <code>prune()</code> function to prune the tree by specifying the associated cost-complexity <code>cp</code>.</p>
-<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="regression-trees.html#cb640-1"></a>carseats_model_<span class="dv">1</span>_pruned &lt;-<span class="st"> </span><span class="kw">prune</span>(</span>
-<span id="cb640-2"><a href="regression-trees.html#cb640-2"></a>   carseats_model_<span class="dv">1</span>,</span>
-<span id="cb640-3"><a href="regression-trees.html#cb640-3"></a>   <span class="dt">cp =</span> carseats_model_<span class="dv">1</span><span class="op">$</span>cptable[carseats_model_<span class="dv">1</span><span class="op">$</span>cptable[, <span class="dv">2</span>] <span class="op">==</span><span class="st"> </span><span class="dv">8</span>, <span class="st">&quot;CP&quot;</span>]</span>
-<span id="cb640-4"><a href="regression-trees.html#cb640-4"></a>)</span>
-<span id="cb640-5"><a href="regression-trees.html#cb640-5"></a><span class="kw">rpart.plot</span>(carseats_model_<span class="dv">1</span>_pruned, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-303-1.png" width="672" /></p>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="regression-trees.html#cb665-1"></a>carseats_model_<span class="dv">1</span>_pruned &lt;-<span class="st"> </span><span class="kw">prune</span>(</span>
+<span id="cb665-2"><a href="regression-trees.html#cb665-2"></a>   carseats_model_<span class="dv">1</span>,</span>
+<span id="cb665-3"><a href="regression-trees.html#cb665-3"></a>   <span class="dt">cp =</span> carseats_model_<span class="dv">1</span><span class="op">$</span>cptable[carseats_model_<span class="dv">1</span><span class="op">$</span>cptable[, <span class="dv">2</span>] <span class="op">==</span><span class="st"> </span><span class="dv">8</span>, <span class="st">&quot;CP&quot;</span>]</span>
+<span id="cb665-4"><a href="regression-trees.html#cb665-4"></a>)</span>
+<span id="cb665-5"><a href="regression-trees.html#cb665-5"></a><span class="kw">rpart.plot</span>(carseats_model_<span class="dv">1</span>_pruned, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-316-1.png" width="672" /></p>
 <p>The most “important” indicator of <code>Sales</code> is <code>ShelveLoc</code>. Here are the importance values from the model.</p>
-<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="regression-trees.html#cb641-1"></a>carseats_model_<span class="dv">1</span>_pruned<span class="op">$</span>variable.importance <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb641-2"><a href="regression-trees.html#cb641-2"></a><span class="st">   </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span></span>
-<span id="cb641-3"><a href="regression-trees.html#cb641-3"></a><span class="st">   </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;Feature&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb641-4"><a href="regression-trees.html#cb641-4"></a><span class="st">   </span><span class="kw">rename</span>(<span class="dt">Overall =</span> <span class="st">&#39;.&#39;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb641-5"><a href="regression-trees.html#cb641-5"></a><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(Feature, Overall), <span class="dt">y =</span> Overall)) <span class="op">+</span></span>
-<span id="cb641-6"><a href="regression-trees.html#cb641-6"></a><span class="st">   </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> <span class="dv">0</span>, <span class="dt">ymax =</span> Overall), <span class="dt">color =</span> <span class="st">&quot;cadetblue&quot;</span>, <span class="dt">size =</span> <span class="fl">.3</span>) <span class="op">+</span></span>
-<span id="cb641-7"><a href="regression-trees.html#cb641-7"></a><span class="st">   </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
-<span id="cb641-8"><a href="regression-trees.html#cb641-8"></a><span class="st">   </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
-<span id="cb641-9"><a href="regression-trees.html#cb641-9"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Variable Importance with Simple Regression&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-304-1.png" width="672" /></p>
+<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="regression-trees.html#cb666-1"></a>carseats_model_<span class="dv">1</span>_pruned<span class="op">$</span>variable.importance <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb666-2"><a href="regression-trees.html#cb666-2"></a><span class="st">   </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span></span>
+<span id="cb666-3"><a href="regression-trees.html#cb666-3"></a><span class="st">   </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;Feature&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb666-4"><a href="regression-trees.html#cb666-4"></a><span class="st">   </span><span class="kw">rename</span>(<span class="dt">Overall =</span> <span class="st">&#39;.&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb666-5"><a href="regression-trees.html#cb666-5"></a><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(Feature, Overall), <span class="dt">y =</span> Overall)) <span class="op">+</span></span>
+<span id="cb666-6"><a href="regression-trees.html#cb666-6"></a><span class="st">   </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> <span class="dv">0</span>, <span class="dt">ymax =</span> Overall), <span class="dt">color =</span> <span class="st">&quot;cadetblue&quot;</span>, <span class="dt">size =</span> <span class="fl">.3</span>) <span class="op">+</span></span>
+<span id="cb666-7"><a href="regression-trees.html#cb666-7"></a><span class="st">   </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
+<span id="cb666-8"><a href="regression-trees.html#cb666-8"></a><span class="st">   </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
+<span id="cb666-9"><a href="regression-trees.html#cb666-9"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Variable Importance with Simple Regression&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-317-1.png" width="672" /></p>
 <p>The most important indicator of <code>Sales</code> is <code>ShelveLoc</code>, then <code>Price</code>, then <code>Age</code>, all of which appear in the final model. <code>CompPrice</code> was also important.</p>
 <p>The last step is to make predictions on the validation data set. The root mean squared error (<span class="math inline">\(RMSE = \sqrt{(1/2) \sum{(actual - pred)^2}})\)</span> and mean absolute error (<span class="math inline">\(MAE = (1/n) \sum{|actual - pred|}\)</span>) are the two most common measures of predictive accuracy. The key difference is that RMSE punishes large errors more harshly. For a regression tree, set argument <code>type = "vector"</code> (or do not specify at all).</p>
-<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="regression-trees.html#cb642-1"></a>carseats_model_<span class="dv">1</span>_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(</span>
-<span id="cb642-2"><a href="regression-trees.html#cb642-2"></a>   carseats_model_<span class="dv">1</span>_pruned, </span>
-<span id="cb642-3"><a href="regression-trees.html#cb642-3"></a>   carseats_test, </span>
-<span id="cb642-4"><a href="regression-trees.html#cb642-4"></a>   <span class="dt">type =</span> <span class="st">&quot;vector&quot;</span></span>
-<span id="cb642-5"><a href="regression-trees.html#cb642-5"></a>)</span>
-<span id="cb642-6"><a href="regression-trees.html#cb642-6"></a></span>
-<span id="cb642-7"><a href="regression-trees.html#cb642-7"></a>carseats_model_<span class="dv">1</span>_pruned_rmse &lt;-<span class="st"> </span><span class="kw">RMSE</span>(</span>
-<span id="cb642-8"><a href="regression-trees.html#cb642-8"></a>   <span class="dt">pred =</span> carseats_model_<span class="dv">1</span>_preds,</span>
-<span id="cb642-9"><a href="regression-trees.html#cb642-9"></a>   <span class="dt">obs =</span> carseats_test<span class="op">$</span>Sales</span>
-<span id="cb642-10"><a href="regression-trees.html#cb642-10"></a>)</span>
-<span id="cb642-11"><a href="regression-trees.html#cb642-11"></a>carseats_model_<span class="dv">1</span>_pruned_rmse</span></code></pre></div>
+<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="regression-trees.html#cb667-1"></a>carseats_model_<span class="dv">1</span>_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(</span>
+<span id="cb667-2"><a href="regression-trees.html#cb667-2"></a>   carseats_model_<span class="dv">1</span>_pruned, </span>
+<span id="cb667-3"><a href="regression-trees.html#cb667-3"></a>   carseats_test, </span>
+<span id="cb667-4"><a href="regression-trees.html#cb667-4"></a>   <span class="dt">type =</span> <span class="st">&quot;vector&quot;</span></span>
+<span id="cb667-5"><a href="regression-trees.html#cb667-5"></a>)</span>
+<span id="cb667-6"><a href="regression-trees.html#cb667-6"></a></span>
+<span id="cb667-7"><a href="regression-trees.html#cb667-7"></a>carseats_model_<span class="dv">1</span>_pruned_rmse &lt;-<span class="st"> </span><span class="kw">RMSE</span>(</span>
+<span id="cb667-8"><a href="regression-trees.html#cb667-8"></a>   <span class="dt">pred =</span> carseats_model_<span class="dv">1</span>_preds,</span>
+<span id="cb667-9"><a href="regression-trees.html#cb667-9"></a>   <span class="dt">obs =</span> carseats_test<span class="op">$</span>Sales</span>
+<span id="cb667-10"><a href="regression-trees.html#cb667-10"></a>)</span>
+<span id="cb667-11"><a href="regression-trees.html#cb667-11"></a>carseats_model_<span class="dv">1</span>_pruned_rmse</span></code></pre></div>
 <pre><code>## [1] 2.4</code></pre>
 <p>The pruning process leads to an average prediction error of 2.39 in the test data set. Not too bad considering the standard deviation of <code>Sales</code> is 2.8. Here is a predicted vs actual plot.</p>
-<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="regression-trees.html#cb644-1"></a><span class="kw">plot</span>(carseats_test<span class="op">$</span>Sales, carseats_model_<span class="dv">1</span>_preds, </span>
-<span id="cb644-2"><a href="regression-trees.html#cb644-2"></a>     <span class="dt">main =</span> <span class="st">&quot;Simple Regression: Predicted vs. Actual&quot;</span>,</span>
-<span id="cb644-3"><a href="regression-trees.html#cb644-3"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
-<span id="cb644-4"><a href="regression-trees.html#cb644-4"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span>
-<span id="cb644-5"><a href="regression-trees.html#cb644-5"></a><span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-306-1.png" width="672" /></p>
+<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="regression-trees.html#cb669-1"></a><span class="kw">plot</span>(carseats_test<span class="op">$</span>Sales, carseats_model_<span class="dv">1</span>_preds, </span>
+<span id="cb669-2"><a href="regression-trees.html#cb669-2"></a>     <span class="dt">main =</span> <span class="st">&quot;Simple Regression: Predicted vs. Actual&quot;</span>,</span>
+<span id="cb669-3"><a href="regression-trees.html#cb669-3"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
+<span id="cb669-4"><a href="regression-trees.html#cb669-4"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span>
+<span id="cb669-5"><a href="regression-trees.html#cb669-5"></a><span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-319-1.png" width="672" /></p>
 <p>The 6 possible predicted values do a decent job of binning the observations.</p>
 <div id="caret-approach-1" class="section level3">
 <h3><span class="header-section-number">10.2.1</span> Caret Approach</h3>
 <p>I can also fit the model with <code>caret::train()</code>, specifying <code>method = "rpart"</code>.</p>
 <p>I’ll build the model using 10-fold cross-validation to optimize the hyperparameter CP.</p>
-<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="regression-trees.html#cb645-1"></a>carseats_trControl =<span class="st"> </span><span class="kw">trainControl</span>(</span>
-<span id="cb645-2"><a href="regression-trees.html#cb645-2"></a>   <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="co"># k-fold cross validation</span></span>
-<span id="cb645-3"><a href="regression-trees.html#cb645-3"></a>   <span class="dt">number =</span> <span class="dv">10</span>,  <span class="co"># 10 folds</span></span>
-<span id="cb645-4"><a href="regression-trees.html#cb645-4"></a>   <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>       <span class="co"># save predictions for the optimal tuning parameter</span></span>
-<span id="cb645-5"><a href="regression-trees.html#cb645-5"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="regression-trees.html#cb670-1"></a>carseats_trControl =<span class="st"> </span><span class="kw">trainControl</span>(</span>
+<span id="cb670-2"><a href="regression-trees.html#cb670-2"></a>   <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="co"># k-fold cross validation</span></span>
+<span id="cb670-3"><a href="regression-trees.html#cb670-3"></a>   <span class="dt">number =</span> <span class="dv">10</span>,  <span class="co"># 10 folds</span></span>
+<span id="cb670-4"><a href="regression-trees.html#cb670-4"></a>   <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>       <span class="co"># save predictions for the optimal tuning parameter</span></span>
+<span id="cb670-5"><a href="regression-trees.html#cb670-5"></a>)</span></code></pre></div>
 <p>I’ll let the model look for the best CP tuning parameter with <code>tuneLength</code> to get close, then fine-tune with <code>tuneGrid</code>.</p>
-<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="regression-trees.html#cb646-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb646-2"><a href="regression-trees.html#cb646-2"></a>carseats_model_<span class="dv">2</span> =<span class="st"> </span><span class="kw">train</span>(</span>
-<span id="cb646-3"><a href="regression-trees.html#cb646-3"></a>   Sales <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb646-4"><a href="regression-trees.html#cb646-4"></a>   <span class="dt">data =</span> carseats_train, </span>
-<span id="cb646-5"><a href="regression-trees.html#cb646-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,  <span class="co"># for classification tree</span></span>
-<span id="cb646-6"><a href="regression-trees.html#cb646-6"></a>   <span class="dt">tuneLength =</span> <span class="dv">5</span>,  <span class="co"># choose up to 5 combinations of tuning parameters (cp)</span></span>
-<span id="cb646-7"><a href="regression-trees.html#cb646-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>,  <span class="co"># evaluate hyperparamter combinations with RMSE</span></span>
-<span id="cb646-8"><a href="regression-trees.html#cb646-8"></a>   <span class="dt">trControl =</span> carseats_trControl</span>
-<span id="cb646-9"><a href="regression-trees.html#cb646-9"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="regression-trees.html#cb671-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb671-2"><a href="regression-trees.html#cb671-2"></a>carseats_model_<span class="dv">2</span> =<span class="st"> </span><span class="kw">train</span>(</span>
+<span id="cb671-3"><a href="regression-trees.html#cb671-3"></a>   Sales <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb671-4"><a href="regression-trees.html#cb671-4"></a>   <span class="dt">data =</span> carseats_train, </span>
+<span id="cb671-5"><a href="regression-trees.html#cb671-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,  <span class="co"># for classification tree</span></span>
+<span id="cb671-6"><a href="regression-trees.html#cb671-6"></a>   <span class="dt">tuneLength =</span> <span class="dv">5</span>,  <span class="co"># choose up to 5 combinations of tuning parameters (cp)</span></span>
+<span id="cb671-7"><a href="regression-trees.html#cb671-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>,  <span class="co"># evaluate hyperparamter combinations with RMSE</span></span>
+<span id="cb671-8"><a href="regression-trees.html#cb671-8"></a>   <span class="dt">trControl =</span> carseats_trControl</span>
+<span id="cb671-9"><a href="regression-trees.html#cb671-9"></a>)</span></code></pre></div>
 <pre><code>## Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo, :
 ## There were missing values in resampled performance measures.</code></pre>
-<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="regression-trees.html#cb648-1"></a><span class="kw">print</span>(carseats_model_<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="regression-trees.html#cb673-1"></a><span class="kw">print</span>(carseats_model_<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## CART 
 ## 
 ## 321 samples
@@ -509,16 +514,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final value used for the model was cp = 0.042.</code></pre>
 <p>The first <code>cp</code> (0.04167149) produced the smallest RMSE. I can drill into the best value of <code>cp</code> using a tuning grid. I’ll try that now.</p>
-<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="regression-trees.html#cb650-1"></a>myGrid &lt;-<span class="st">  </span><span class="kw">expand.grid</span>(<span class="dt">cp =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="fl">0.1</span>, <span class="dt">by =</span> <span class="fl">0.01</span>))</span>
-<span id="cb650-2"><a href="regression-trees.html#cb650-2"></a>carseats_model_<span class="dv">3</span> =<span class="st"> </span><span class="kw">train</span>(</span>
-<span id="cb650-3"><a href="regression-trees.html#cb650-3"></a>   Sales <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb650-4"><a href="regression-trees.html#cb650-4"></a>   <span class="dt">data =</span> carseats_train, </span>
-<span id="cb650-5"><a href="regression-trees.html#cb650-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,  <span class="co"># for classification tree</span></span>
-<span id="cb650-6"><a href="regression-trees.html#cb650-6"></a>   <span class="dt">tuneGrid =</span> myGrid,  <span class="co"># choose up to 5 combinations of tuning parameters (cp)</span></span>
-<span id="cb650-7"><a href="regression-trees.html#cb650-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>,  <span class="co"># evaluate hyperparamter combinations with RMSE</span></span>
-<span id="cb650-8"><a href="regression-trees.html#cb650-8"></a>   <span class="dt">trControl =</span> carseats_trControl</span>
-<span id="cb650-9"><a href="regression-trees.html#cb650-9"></a>)</span>
-<span id="cb650-10"><a href="regression-trees.html#cb650-10"></a><span class="kw">print</span>(carseats_model_<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="regression-trees.html#cb675-1"></a>myGrid &lt;-<span class="st">  </span><span class="kw">expand.grid</span>(<span class="dt">cp =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="fl">0.1</span>, <span class="dt">by =</span> <span class="fl">0.01</span>))</span>
+<span id="cb675-2"><a href="regression-trees.html#cb675-2"></a>carseats_model_<span class="dv">3</span> =<span class="st"> </span><span class="kw">train</span>(</span>
+<span id="cb675-3"><a href="regression-trees.html#cb675-3"></a>   Sales <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb675-4"><a href="regression-trees.html#cb675-4"></a>   <span class="dt">data =</span> carseats_train, </span>
+<span id="cb675-5"><a href="regression-trees.html#cb675-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,  <span class="co"># for classification tree</span></span>
+<span id="cb675-6"><a href="regression-trees.html#cb675-6"></a>   <span class="dt">tuneGrid =</span> myGrid,  <span class="co"># choose up to 5 combinations of tuning parameters (cp)</span></span>
+<span id="cb675-7"><a href="regression-trees.html#cb675-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>,  <span class="co"># evaluate hyperparamter combinations with RMSE</span></span>
+<span id="cb675-8"><a href="regression-trees.html#cb675-8"></a>   <span class="dt">trControl =</span> carseats_trControl</span>
+<span id="cb675-9"><a href="regression-trees.html#cb675-9"></a>)</span>
+<span id="cb675-10"><a href="regression-trees.html#cb675-10"></a><span class="kw">print</span>(carseats_model_<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## CART 
 ## 
 ## 321 samples
@@ -545,38 +550,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final value used for the model was cp = 0.</code></pre>
 <p>It looks like the best performing tree is the unpruned one.</p>
-<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="regression-trees.html#cb652-1"></a><span class="kw">plot</span>(carseats_model_<span class="dv">3</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-310-1.png" width="672" /></p>
+<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="regression-trees.html#cb677-1"></a><span class="kw">plot</span>(carseats_model_<span class="dv">3</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-323-1.png" width="672" /></p>
 <p>Lets’s see the final model.</p>
-<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb653-1"><a href="regression-trees.html#cb653-1"></a><span class="kw">rpart.plot</span>(carseats_model_<span class="dv">3</span><span class="op">$</span>finalModel)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-311-1.png" width="672" /></p>
+<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="regression-trees.html#cb678-1"></a><span class="kw">rpart.plot</span>(carseats_model_<span class="dv">3</span><span class="op">$</span>finalModel)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-324-1.png" width="672" /></p>
 <p>What were the most important variables?</p>
-<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="regression-trees.html#cb654-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(carseats_model_<span class="dv">3</span>), <span class="dt">main=</span><span class="st">&quot;Variable Importance with Simple Regression&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-312-1.png" width="672" /></p>
+<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="regression-trees.html#cb679-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(carseats_model_<span class="dv">3</span>), <span class="dt">main=</span><span class="st">&quot;Variable Importance with Simple Regression&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-325-1.png" width="672" /></p>
 <p>Evaluate the model by making predictions with the test data set.</p>
-<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="regression-trees.html#cb655-1"></a>carseats_model_<span class="dv">3</span>_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(carseats_model_<span class="dv">3</span>, carseats_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span>
-<span id="cb655-2"><a href="regression-trees.html#cb655-2"></a><span class="kw">data.frame</span>(<span class="dt">Actual =</span> carseats_test<span class="op">$</span>Sales, <span class="dt">Predicted =</span> carseats_model_<span class="dv">3</span>_preds) <span class="op">%&gt;%</span></span>
-<span id="cb655-3"><a href="regression-trees.html#cb655-3"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Actual, <span class="dt">y =</span> Predicted)) <span class="op">+</span></span>
-<span id="cb655-4"><a href="regression-trees.html#cb655-4"></a><span class="st">   </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb655-5"><a href="regression-trees.html#cb655-5"></a><span class="st">   </span><span class="kw">geom_smooth</span>() <span class="op">+</span></span>
-<span id="cb655-6"><a href="regression-trees.html#cb655-6"></a><span class="st">   </span><span class="kw">geom_abline</span>(<span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">intercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb655-7"><a href="regression-trees.html#cb655-7"></a><span class="st">   </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">15</span>)) <span class="op">+</span></span>
-<span id="cb655-8"><a href="regression-trees.html#cb655-8"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Simple Regression: Predicted vs. Actual&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="regression-trees.html#cb680-1"></a>carseats_model_<span class="dv">3</span>_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(carseats_model_<span class="dv">3</span>, carseats_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span>
+<span id="cb680-2"><a href="regression-trees.html#cb680-2"></a><span class="kw">data.frame</span>(<span class="dt">Actual =</span> carseats_test<span class="op">$</span>Sales, <span class="dt">Predicted =</span> carseats_model_<span class="dv">3</span>_preds) <span class="op">%&gt;%</span></span>
+<span id="cb680-3"><a href="regression-trees.html#cb680-3"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Actual, <span class="dt">y =</span> Predicted)) <span class="op">+</span></span>
+<span id="cb680-4"><a href="regression-trees.html#cb680-4"></a><span class="st">   </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb680-5"><a href="regression-trees.html#cb680-5"></a><span class="st">   </span><span class="kw">geom_smooth</span>() <span class="op">+</span></span>
+<span id="cb680-6"><a href="regression-trees.html#cb680-6"></a><span class="st">   </span><span class="kw">geom_abline</span>(<span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">intercept =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb680-7"><a href="regression-trees.html#cb680-7"></a><span class="st">   </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">15</span>)) <span class="op">+</span></span>
+<span id="cb680-8"><a href="regression-trees.html#cb680-8"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Simple Regression: Predicted vs. Actual&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-313-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-326-1.png" width="672" /></p>
 <p>Looks like the model over-estimates at the low end and undestimates at the high end. Calculate the test data set RMSE.</p>
-<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="regression-trees.html#cb657-1"></a>carseats_model_<span class="dv">3</span>_pruned_rmse &lt;-<span class="st"> </span><span class="kw">RMSE</span>(</span>
-<span id="cb657-2"><a href="regression-trees.html#cb657-2"></a>   <span class="dt">pred =</span> carseats_model_<span class="dv">3</span>_preds,</span>
-<span id="cb657-3"><a href="regression-trees.html#cb657-3"></a>   <span class="dt">obs =</span> carseats_test<span class="op">$</span>Sales</span>
-<span id="cb657-4"><a href="regression-trees.html#cb657-4"></a>)</span>
-<span id="cb657-5"><a href="regression-trees.html#cb657-5"></a>carseats_model_<span class="dv">3</span>_pruned_rmse</span></code></pre></div>
+<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="regression-trees.html#cb682-1"></a>carseats_model_<span class="dv">3</span>_pruned_rmse &lt;-<span class="st"> </span><span class="kw">RMSE</span>(</span>
+<span id="cb682-2"><a href="regression-trees.html#cb682-2"></a>   <span class="dt">pred =</span> carseats_model_<span class="dv">3</span>_preds,</span>
+<span id="cb682-3"><a href="regression-trees.html#cb682-3"></a>   <span class="dt">obs =</span> carseats_test<span class="op">$</span>Sales</span>
+<span id="cb682-4"><a href="regression-trees.html#cb682-4"></a>)</span>
+<span id="cb682-5"><a href="regression-trees.html#cb682-5"></a>carseats_model_<span class="dv">3</span>_pruned_rmse</span></code></pre></div>
 <pre><code>## [1] 2.3</code></pre>
 <p>Caret faired better in this model. Here is a summary the RMSE values of the two models.</p>
-<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="regression-trees.html#cb659-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual ANOVA&quot;</span>, </span>
-<span id="cb659-2"><a href="regression-trees.html#cb659-2"></a>                 <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">1</span>_pruned_rmse, <span class="dv">5</span>)), </span>
-<span id="cb659-3"><a href="regression-trees.html#cb659-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Caret&quot;</span>, </span>
-<span id="cb659-4"><a href="regression-trees.html#cb659-4"></a>                 <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">3</span>_pruned_rmse, <span class="dv">5</span>))</span>
-<span id="cb659-5"><a href="regression-trees.html#cb659-5"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="regression-trees.html#cb684-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual ANOVA&quot;</span>, </span>
+<span id="cb684-2"><a href="regression-trees.html#cb684-2"></a>                 <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">1</span>_pruned_rmse, <span class="dv">5</span>)), </span>
+<span id="cb684-3"><a href="regression-trees.html#cb684-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Caret&quot;</span>, </span>
+<span id="cb684-4"><a href="regression-trees.html#cb684-4"></a>                 <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">3</span>_pruned_rmse, <span class="dv">5</span>))</span>
+<span id="cb684-5"><a href="regression-trees.html#cb684-5"></a>)</span></code></pre></div>
 <pre><code>##          model RMSE
 ## 1 Manual ANOVA  2.4
 ## 2        Caret  2.3</code></pre>
