@@ -1,8 +1,8 @@
 # Decision Trees
 
-Decision trees, also known as classification and regression tree (CART) models, are tree-based methods for supervised machine learning.  Simple *classification trees* and *regression trees* are easy to use and interpret, but are not competitive with the best machine learning methods. However, they form the foundation for **bagged trees**, **random forests**, and **boosted trees** models, which although less interpretable, are very accurate.
+Decision trees, also known as classification and regression tree (CART) models, are tree-based methods for supervised machine learning.  Simple *classification trees* and *regression trees* are easy to use and interpret, but are not competitive with the best machine learning methods. However, they form the foundation for **bagged trees**, **random forests**, and **boosted trees** ensemble models, which although less interpretable, are very accurate.
 
-CART models segment the predictor space into $K$ non-overlapping terminal nodes (leaves), $A_1, A_2, \dots, A_K$.  Each node is described by a set of rules which can be used to predict new responses. The predicted value $\hat{y}$ for each node is the mode (classification), or mean (regression).
+CART models segment the predictor space into $K$ non-overlapping terminal nodes (leaves), $A_1, A_2, \dots, A_K$.  Each node is described by a set of rules which can be used to predict new responses. The predicted value $\hat{y}$ for each node is the mode (classification) or mean (regression).
 
 CART models define the nodes through a *top-down greedy* process called *recursive binary splitting*. The process is *top-down* because it begins at the top of the tree with all observations in a single region and successively splits the predictor space. It is *greedy* because at each splitting step, the best split is made at that particular step without consideration to subsequent splits.
 
@@ -14,7 +14,7 @@ For a classification tree, the most common cost functions are the Gini index,
 
 $$G = \sum_{c=1}^C{\hat{p}_{kc}(1 - \hat{p}_{kc})},$$
 
-or the entropy 
+or the entropy (aka information statistic)
 
 $$D = - \sum_{c=1}^C{\hat{p}_{kc} \log \hat{p}_{kc}}$$
 
