@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>10.5 Gradient Boosting | My Data Science Notes</title>
+  <title>9.5 Gradient Boosting | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="10.5 Gradient Boosting | My Data Science Notes" />
+  <meta property="og:title" content="9.5 Gradient Boosting | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="10.5 Gradient Boosting | My Data Science Notes" />
+  <meta name="twitter:title" content="9.5 Gradient Boosting | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-10" />
+<meta name="date" content="2020-06-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -181,91 +181,96 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="nested.html"><a href="nested.html"><i class="fa fa-check"></i><b>4.3</b> Nested</a></li>
 <li class="chapter" data-level="4.4" data-path="split-plot.html"><a href="split-plot.html"><i class="fa fa-check"></i><b>4.4</b> Split Plot</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a></li>
-<li class="chapter" data-level="5" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>5</b> Ordinary Least Squares</a><ul>
-<li class="chapter" data-level="5.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>5.1</b> Linear Regression Model</a></li>
-<li class="chapter" data-level="5.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>5.2</b> Parameter Estimation</a></li>
-<li class="chapter" data-level="5.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>5.3</b> Model Assumptions</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>5.3.1</b> Linearity</a></li>
-<li class="chapter" data-level="5.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>5.3.2</b> Multicollinearity</a></li>
-<li class="chapter" data-level="5.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>5.3.3</b> Normality</a></li>
-<li class="chapter" data-level="5.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>5.3.4</b> Equal Variances</a></li>
+<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a><ul>
+<li class="chapter" data-level="4.5" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>4.5</b> Linear Regression Model</a></li>
+<li class="chapter" data-level="4.6" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>4.6</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="4.7" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>4.7</b> Model Assumptions</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>4.7.1</b> Linearity</a></li>
+<li class="chapter" data-level="4.7.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>4.7.2</b> Multicollinearity</a></li>
+<li class="chapter" data-level="4.7.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>4.7.3</b> Normality</a></li>
+<li class="chapter" data-level="4.7.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>4.7.4</b> Equal Variances</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>5.4</b> Prediction</a></li>
-<li class="chapter" data-level="5.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5.5</b> Inference</a><ul>
-<li class="chapter" data-level="5.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>5.5.1</b> <em>t</em>-Test</a></li>
-<li class="chapter" data-level="5.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>5.5.2</b> <em>F</em>-Test</a></li>
+<li class="chapter" data-level="4.8" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>4.8</b> Prediction</a></li>
+<li class="chapter" data-level="4.9" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>4.9</b> Inference</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>4.9.1</b> <em>t</em>-Test</a></li>
+<li class="chapter" data-level="4.9.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>4.9.2</b> <em>F</em>-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>5.6</b> Interpretation</a></li>
-<li class="chapter" data-level="5.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>5.7</b> Model Validation</a><ul>
-<li class="chapter" data-level="5.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>5.7.1</b> Accuracy Metrics</a></li>
-<li class="chapter" data-level="5.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>5.7.2</b> Cross-Validation</a></li>
-<li class="chapter" data-level="5.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>5.7.3</b> Gain Curve</a></li>
+<li class="chapter" data-level="4.10" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>4.10</b> Interpretation</a></li>
+<li class="chapter" data-level="4.11" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>4.11</b> Model Validation</a><ul>
+<li class="chapter" data-level="4.11.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>4.11.1</b> Accuracy Metrics</a></li>
+<li class="chapter" data-level="4.11.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>4.11.2</b> Cross-Validation</a></li>
+<li class="chapter" data-level="4.11.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>4.11.3</b> Gain Curve</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>5.8</b> Reference</a></li>
+<li class="chapter" data-level="4.12" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>4.12</b> Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>6</b> Generalized Linear Models</a><ul>
-<li class="chapter" data-level="6.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6.1</b> Logistic Regression</a></li>
-<li class="chapter" data-level="6.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>6.2</b> Multinomial Logistic Regression</a></li>
-<li class="chapter" data-level="6.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>6.3</b> Ordinal Logistic Regression</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>6.3.1</b> Assumptions</a></li>
-<li class="chapter" data-level="6.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>6.3.2</b> Modeling</a></li>
-<li class="chapter" data-level="6.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>6.3.3</b> Case Study</a></li>
+<li class="chapter" data-level="5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>5</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="5.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>5.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="5.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>5.2</b> Multinomial Logistic Regression</a></li>
+<li class="chapter" data-level="5.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>5.3</b> Ordinal Logistic Regression</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>5.3.1</b> Assumptions</a></li>
+<li class="chapter" data-level="5.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>5.3.2</b> Modeling</a></li>
+<li class="chapter" data-level="5.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>5.3.3</b> Case Study</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>6.4</b> Poisson Regression</a></li>
+<li class="chapter" data-level="5.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>5.4</b> Poisson Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html"><i class="fa fa-check"></i><b>7</b> Multivariate Statistical Analysis</a><ul>
-<li class="chapter" data-level="7.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>7.1</b> Background</a></li>
-<li class="chapter" data-level="7.2" data-path="manova.html"><a href="manova.html"><i class="fa fa-check"></i><b>7.2</b> MANOVA</a></li>
-<li class="chapter" data-level="7.3" data-path="repeated-measures.html"><a href="repeated-measures.html"><i class="fa fa-check"></i><b>7.3</b> Repeated Measures</a></li>
-<li class="chapter" data-level="7.4" data-path="lda.html"><a href="lda.html"><i class="fa fa-check"></i><b>7.4</b> LDA</a></li>
-<li class="chapter" data-level="7.5" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>7.5</b> PCA</a></li>
-<li class="chapter" data-level="7.6" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>7.6</b> Factor Analysis</a></li>
-<li class="chapter" data-level="7.7" data-path="canonical-correlation.html"><a href="canonical-correlation.html"><i class="fa fa-check"></i><b>7.7</b> Canonical Correlation</a></li>
-<li class="chapter" data-level="7.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>7.8</b> Cluster Analysis</a></li>
+<li class="chapter" data-level="6" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html"><i class="fa fa-check"></i><b>6</b> Multivariate Statistical Analysis</a><ul>
+<li class="chapter" data-level="6.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>6.1</b> Background</a></li>
+<li class="chapter" data-level="6.2" data-path="manova.html"><a href="manova.html"><i class="fa fa-check"></i><b>6.2</b> MANOVA</a></li>
+<li class="chapter" data-level="6.3" data-path="repeated-measures.html"><a href="repeated-measures.html"><i class="fa fa-check"></i><b>6.3</b> Repeated Measures</a></li>
+<li class="chapter" data-level="6.4" data-path="lda.html"><a href="lda.html"><i class="fa fa-check"></i><b>6.4</b> LDA</a></li>
+<li class="chapter" data-level="6.5" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>6.5</b> PCA</a></li>
+<li class="chapter" data-level="6.6" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>6.6</b> Factor Analysis</a></li>
+<li class="chapter" data-level="6.7" data-path="canonical-correlation.html"><a href="canonical-correlation.html"><i class="fa fa-check"></i><b>6.7</b> Canonical Correlation</a></li>
+<li class="chapter" data-level="6.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>6.8</b> Cluster Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
-<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a><ul>
-<li class="chapter" data-level="9.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>9.1</b> Ridge</a></li>
-<li class="chapter" data-level="9.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>9.2</b> Lasso</a></li>
-<li class="chapter" data-level="9.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>9.3</b> Elastic Net</a></li>
+<li class="chapter" data-level="7" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>7</b> Classification</a></li>
+<li class="chapter" data-level="8" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>8</b> Regularization</a><ul>
+<li class="chapter" data-level="8.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>8.1</b> Ridge</a></li>
+<li class="chapter" data-level="8.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>8.2</b> Lasso</a></li>
+<li class="chapter" data-level="8.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>8.3</b> Elastic Net</a></li>
 <li class="chapter" data-level="" data-path="model-summary.html"><a href="model-summary.html"><i class="fa fa-check"></i>Model Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
-<li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="9" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>9</b> Decision Trees</a><ul>
+<li class="chapter" data-level="9.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>9.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>9.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>9.1.2</b> ROC Curve</a></li>
+<li class="chapter" data-level="9.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>9.1.3</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="9.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>9.2</b> Regression Trees</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>9.2.1</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
-<li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
-<li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
-<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+<li class="chapter" data-level="9.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>9.3</b> Bagging</a></li>
+<li class="chapter" data-level="9.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>9.4</b> Random Forests</a></li>
+<li class="chapter" data-level="9.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>9.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="9.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>9.6</b> Summary</a></li>
+<li class="chapter" data-level="9.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>9.7</b> Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>11</b> Non-linear Models</a><ul>
-<li class="chapter" data-level="11.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>11.1</b> Splines</a></li>
-<li class="chapter" data-level="11.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>11.2</b> MARS</a></li>
-<li class="chapter" data-level="11.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>11.3</b> GAM</a></li>
+<li class="chapter" data-level="10" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>10</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="10.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>10.1</b> Splines</a></li>
+<li class="chapter" data-level="10.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>10.2</b> MARS</a></li>
+<li class="chapter" data-level="10.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>10.3</b> GAM</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>12</b> Support Vector Machines</a><ul>
-<li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
-<li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
-<li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
-<li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
+<li class="chapter" data-level="11" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>11</b> Support Vector Machines</a><ul>
+<li class="chapter" data-level="11.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>11.1</b> Maximal Margin Classifier</a></li>
+<li class="chapter" data-level="11.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>11.2</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="11.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>11.3</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="11.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>11.4</b> Example</a></li>
+<li class="chapter" data-level="11.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>11.5</b> Using Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a></li>
-<li class="chapter" data-level="15" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>15</b> Survival Analysis</a><ul>
-<li class="chapter" data-level="15.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>15.1</b> Basic Concepts</a></li>
-<li class="chapter" data-level="15.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>15.2</b> Survival Curve Estimation</a><ul>
-<li class="chapter" data-level="15.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>15.2.1</b> Kaplan-Meier</a></li>
-<li class="chapter" data-level="15.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>15.2.2</b> Weibull</a></li>
-<li class="chapter" data-level="15.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>15.2.3</b> Cox</a></li>
+<li class="chapter" data-level="12" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>12</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="13" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>13</b> Text Mining</a><ul>
+<li class="chapter" data-level="13.1" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i><b>13.1</b> N-Grams</a></li>
+<li class="chapter" data-level="13.2" data-path="converting-to-and-from-non-tidy-formats.html"><a href="converting-to-and-from-non-tidy-formats.html"><i class="fa fa-check"></i><b>13.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="13.3" data-path="example-20.html"><a href="example-20.html"><i class="fa fa-check"></i><b>13.3</b> Example</a></li>
+<li class="chapter" data-level="13.4" data-path="stringr-package.html"><a href="stringr-package.html"><i class="fa fa-check"></i><b>13.4</b> stringr package</a></li>
+<li class="chapter" data-level="13.5" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>13.5</b> Regular Expressions</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>14</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>14.1</b> Basic Concepts</a></li>
+<li class="chapter" data-level="14.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>14.2</b> Survival Curve Estimation</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>14.2.1</b> Kaplan-Meier</a></li>
+<li class="chapter" data-level="14.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>14.2.2</b> Weibull</a></li>
+<li class="chapter" data-level="14.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>14.2.3</b> Cox</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
@@ -273,7 +278,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="15.2.4" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>15.2.4</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="14.2.4" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>14.2.4</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
@@ -300,7 +305,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="gradient-boosting" class="section level2">
-<h2><span class="header-section-number">10.5</span> Gradient Boosting</h2>
+<h2><span class="header-section-number">9.5</span> Gradient Boosting</h2>
 <p>Boosting is a method to improve (boost) the week learners sequentially and increase the model accuracy with a combined model. There are several boosting algorithms. One of the earliest was AdaBoost (adaptive boost). A more recent innovation is gradient boosting.</p>
 <p>Adaboost creates a single split tree (decision stump) then weights the observations by how well the initial tree performed, putting more weight on the difficult observations. It then creates a second tree using the weights so that it focuses on the difficult observations. Observations that are difficult to classify receive increasing larger weights until the algorithm identifies a model that correctly classifies them. The final model returns predictions that are a majority vode. (<em>I think Adaboost applies only to classification problems, not regressions</em>).</p>
 <p>Gradient boosting generalizes the AdaBoost method, so that the object is to minimize a loss function. In the case of classification problems, the loss function is the log-loss; for regression problems, the loss function is mean squared error. The regression trees are addative, so that the successive models can be added together to correct the residuals in the earlier models. Gradient boosting constructs its trees in a “greedy” manner, meaning it chooses the best splits based on purity scores like Gini or minimizing the loss. It is common to constrain the weak learners by setting maximum tree size parameters. Gradient boosting continues until it reaches maximum number of trees or an acceptible error level. This can result in overfitting, so it is common to employ regularization methods that penalize aspects of the model.</p>
@@ -308,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Learning Rate</strong>. Each successive tree can be weighted to slow down the learning rate. Decreasing the learning rate increases the number of required trees. Common growth rates are 0.1 to 0.3.</p>
 <p>The gradient boosting algorithm fits a shallow tree <span class="math inline">\(T_1\)</span> to the data, <span class="math inline">\(M_1 = T_1\)</span>. Then it fits a tree <span class="math inline">\(T_2\)</span> to the residuals and adds a weighted sum of the tree to the original tree as <span class="math inline">\(M_2 = M_1 + \gamma T_2\)</span>. For regularized boosting, include a learning rate factor <span class="math inline">\(\eta \in (0..1)\)</span>, <span class="math inline">\(M_2 = M_1 + \eta \gamma T_2\)</span>. A larger <span class="math inline">\(\eta\)</span> produces faster learning, but risks overfitting. The process repeats until the residuals are small enough, or until it reaches the maximum iterations. Because overfitting is a risk, use cross-validation to select the appropriate number of trees (the number of trees producing the lowest RMSE).</p>
 <div id="gradient-boosting-classification-example" class="section level4">
-<h4><span class="header-section-number">10.5.0.1</span> Gradient Boosting Classification Example</h4>
+<h4><span class="header-section-number">9.5.0.1</span> Gradient Boosting Classification Example</h4>
 <p>Again using the <code>OJ</code> data set to predict <code>Purchase</code>, this time I’ll use the gradient boosting method by specifying <code>method = "gbm"</code>. I’ll use <code>tuneLength = 5</code> and not worry about <code>tuneGrid</code> anymore. Caret tunes the following hyperparameters (see <code>modelLookup("gbm")</code>).</p>
 <ul>
 <li><code>n.trees</code>: number of boosting iterations</li>
@@ -316,19 +321,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>shrinkage</code>: shrinkage</li>
 <li><code>n.minobsinnode</code>: mimimum terminal node size</li>
 </ul>
-<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="gradient-boosting.html#cb716-1"></a>oj.gbm &lt;-<span class="st"> </span><span class="kw">train</span>(Purchase <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb716-2"><a href="gradient-boosting.html#cb716-2"></a>               <span class="dt">data =</span> oj_train, </span>
-<span id="cb716-3"><a href="gradient-boosting.html#cb716-3"></a>               <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>,  <span class="co"># for bagged tree</span></span>
-<span id="cb716-4"><a href="gradient-boosting.html#cb716-4"></a>               <span class="dt">tuneLength =</span> <span class="dv">5</span>,  <span class="co"># choose up to 5 combinations of tuning parameters</span></span>
-<span id="cb716-5"><a href="gradient-boosting.html#cb716-5"></a>               <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,  <span class="co"># evaluate hyperparamter combinations with ROC</span></span>
-<span id="cb716-6"><a href="gradient-boosting.html#cb716-6"></a>               <span class="dt">trControl =</span> <span class="kw">trainControl</span>(</span>
-<span id="cb716-7"><a href="gradient-boosting.html#cb716-7"></a>                 <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="co"># k-fold cross validation</span></span>
-<span id="cb716-8"><a href="gradient-boosting.html#cb716-8"></a>                 <span class="dt">number =</span> <span class="dv">10</span>,  <span class="co"># 10 folds</span></span>
-<span id="cb716-9"><a href="gradient-boosting.html#cb716-9"></a>                 <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save predictions for the optimal tuning parameter1</span></span>
-<span id="cb716-10"><a href="gradient-boosting.html#cb716-10"></a>                      <span class="dt">classProbs =</span> <span class="ot">TRUE</span>,  <span class="co"># return class probabilities in addition to predicted values</span></span>
-<span id="cb716-11"><a href="gradient-boosting.html#cb716-11"></a>                      <span class="dt">summaryFunction =</span> twoClassSummary  <span class="co"># for binary response variable</span></span>
-<span id="cb716-12"><a href="gradient-boosting.html#cb716-12"></a>                      )</span>
-<span id="cb716-13"><a href="gradient-boosting.html#cb716-13"></a>                    )</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="gradient-boosting.html#cb118-1"></a>oj.gbm &lt;-<span class="st"> </span><span class="kw">train</span>(Purchase <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb118-2"><a href="gradient-boosting.html#cb118-2"></a>               <span class="dt">data =</span> oj_train, </span>
+<span id="cb118-3"><a href="gradient-boosting.html#cb118-3"></a>               <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>,  <span class="co"># for bagged tree</span></span>
+<span id="cb118-4"><a href="gradient-boosting.html#cb118-4"></a>               <span class="dt">tuneLength =</span> <span class="dv">5</span>,  <span class="co"># choose up to 5 combinations of tuning parameters</span></span>
+<span id="cb118-5"><a href="gradient-boosting.html#cb118-5"></a>               <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,  <span class="co"># evaluate hyperparamter combinations with ROC</span></span>
+<span id="cb118-6"><a href="gradient-boosting.html#cb118-6"></a>               <span class="dt">trControl =</span> <span class="kw">trainControl</span>(</span>
+<span id="cb118-7"><a href="gradient-boosting.html#cb118-7"></a>                 <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="co"># k-fold cross validation</span></span>
+<span id="cb118-8"><a href="gradient-boosting.html#cb118-8"></a>                 <span class="dt">number =</span> <span class="dv">10</span>,  <span class="co"># 10 folds</span></span>
+<span id="cb118-9"><a href="gradient-boosting.html#cb118-9"></a>                 <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save predictions for the optimal tuning parameter1</span></span>
+<span id="cb118-10"><a href="gradient-boosting.html#cb118-10"></a>                      <span class="dt">classProbs =</span> <span class="ot">TRUE</span>,  <span class="co"># return class probabilities in addition to predicted values</span></span>
+<span id="cb118-11"><a href="gradient-boosting.html#cb118-11"></a>                      <span class="dt">summaryFunction =</span> twoClassSummary  <span class="co"># for binary response variable</span></span>
+<span id="cb118-12"><a href="gradient-boosting.html#cb118-12"></a>                      )</span>
+<span id="cb118-13"><a href="gradient-boosting.html#cb118-13"></a>                    )</span></code></pre></div>
 <pre><code>## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
 ##      1        1.2789             nan     0.1000    0.0273
 ##      2        1.2286             nan     0.1000    0.0245
@@ -1593,7 +1598,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     20        0.8389             nan     0.1000    0.0025
 ##     40        0.7624             nan     0.1000   -0.0009
 ##     50        0.7453             nan     0.1000   -0.0006</code></pre>
-<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="gradient-boosting.html#cb718-1"></a>oj.gbm</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="gradient-boosting.html#cb120-1"></a>oj.gbm</span></code></pre></div>
 <pre><code>## Stochastic Gradient Boosting 
 ## 
 ## 857 samples
@@ -1605,32 +1610,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Summary of sample sizes: 772, 770, 771, 771, 772, 771, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   interaction.depth  n.trees  ROC   Sens  Spec
-##   1                   50      0.89  0.87  0.72
-##   1                  100      0.89  0.87  0.73
-##   1                  150      0.89  0.87  0.73
-##   1                  200      0.88  0.87  0.72
-##   1                  250      0.88  0.86  0.73
-##   2                   50      0.89  0.87  0.75
-##   2                  100      0.88  0.86  0.73
-##   2                  150      0.88  0.87  0.74
-##   2                  200      0.88  0.86  0.72
-##   2                  250      0.88  0.85  0.73
-##   3                   50      0.88  0.87  0.72
-##   3                  100      0.88  0.86  0.75
-##   3                  150      0.87  0.85  0.72
-##   3                  200      0.87  0.84  0.72
-##   3                  250      0.87  0.83  0.72
-##   4                   50      0.89  0.86  0.76
-##   4                  100      0.88  0.84  0.73
-##   4                  150      0.87  0.84  0.73
-##   4                  200      0.87  0.85  0.72
-##   4                  250      0.87  0.85  0.72
-##   5                   50      0.89  0.86  0.76
-##   5                  100      0.88  0.85  0.75
-##   5                  150      0.87  0.84  0.75
-##   5                  200      0.86  0.85  0.75
-##   5                  250      0.86  0.84  0.73
+##   interaction.depth  n.trees  ROC        Sens       Spec     
+##   1                   50      0.8869715  0.8720247  0.7245098
+##   1                  100      0.8889466  0.8738389  0.7302139
+##   1                  150      0.8850612  0.8680697  0.7303030
+##   1                  200      0.8838868  0.8738026  0.7213012
+##   1                  250      0.8805090  0.8622642  0.7275401
+##   2                   50      0.8895139  0.8719521  0.7451872
+##   2                  100      0.8832208  0.8623367  0.7334225
+##   2                  150      0.8838687  0.8679971  0.7394831
+##   2                  200      0.8811028  0.8642598  0.7245989
+##   2                  250      0.8780432  0.8489840  0.7336898
+##   3                   50      0.8833620  0.8700290  0.7245989
+##   3                  100      0.8785063  0.8604862  0.7454545
+##   3                  150      0.8744782  0.8470972  0.7156863
+##   3                  200      0.8723217  0.8414731  0.7246881
+##   3                  250      0.8722653  0.8337446  0.7217469
+##   4                   50      0.8854180  0.8604862  0.7605169
+##   4                  100      0.8794721  0.8413280  0.7336898
+##   4                  150      0.8741609  0.8432511  0.7308378
+##   4                  200      0.8710638  0.8470972  0.7249554
+##   4                  250      0.8674771  0.8490203  0.7218360
+##   5                   50      0.8868076  0.8585994  0.7574866
+##   5                  100      0.8786285  0.8471698  0.7486631
+##   5                  150      0.8708328  0.8395138  0.7458111
+##   5                  200      0.8648622  0.8452467  0.7455437
+##   5                  250      0.8594578  0.8375544  0.7336007
 ## 
 ## Tuning parameter &#39;shrinkage&#39; was held constant at a value of 0.1
 ## 
@@ -1638,51 +1643,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ROC was used to select the optimal model using the largest value.
 ## The final values used for the model were n.trees = 50, interaction.depth =
 ##  2, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
-<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="gradient-boosting.html#cb720-1"></a><span class="kw">plot</span>(oj.gbm)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-335-1.png" width="672" /></p>
-<div class="sourceCode" id="cb721"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb721-1"><a href="gradient-boosting.html#cb721-1"></a>oj.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.gbm, oj_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span>
-<span id="cb721-2"><a href="gradient-boosting.html#cb721-2"></a><span class="kw">plot</span>(oj_test<span class="op">$</span>Purchase, oj.pred, </span>
-<span id="cb721-3"><a href="gradient-boosting.html#cb721-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Gradient Boosing Classification: Predicted vs. Actual&quot;</span>,</span>
-<span id="cb721-4"><a href="gradient-boosting.html#cb721-4"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
-<span id="cb721-5"><a href="gradient-boosting.html#cb721-5"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-335-2.png" width="672" /></p>
-<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="gradient-boosting.html#cb722-1"></a>(oj.conf &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> oj.pred, </span>
-<span id="cb722-2"><a href="gradient-boosting.html#cb722-2"></a>                            <span class="dt">reference =</span> oj_test<span class="op">$</span>Purchase))</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="gradient-boosting.html#cb122-1"></a><span class="kw">plot</span>(oj.gbm)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="gradient-boosting.html#cb123-1"></a>oj.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.gbm, oj_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span>
+<span id="cb123-2"><a href="gradient-boosting.html#cb123-2"></a><span class="kw">plot</span>(oj_test<span class="op">$</span>Purchase, oj.pred, </span>
+<span id="cb123-3"><a href="gradient-boosting.html#cb123-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Gradient Boosing Classification: Predicted vs. Actual&quot;</span>,</span>
+<span id="cb123-4"><a href="gradient-boosting.html#cb123-4"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
+<span id="cb123-5"><a href="gradient-boosting.html#cb123-5"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-65-2.png" width="672" /></p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="gradient-boosting.html#cb124-1"></a>(oj.conf &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> oj.pred, </span>
+<span id="cb124-2"><a href="gradient-boosting.html#cb124-2"></a>                            <span class="dt">reference =</span> oj_test<span class="op">$</span>Purchase))</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
 ## Prediction  CH  MM
 ##         CH 117  18
 ##         MM  13  65
-##                                              
-##                Accuracy : 0.854              
-##                  95% CI : (0.8, 0.899)       
-##     No Information Rate : 0.61               
-##     P-Value [Acc &gt; NIR] : 0.00000000000000483
-##                                              
-##                   Kappa : 0.691              
-##                                              
-##  Mcnemar&#39;s Test P-Value : 0.472              
-##                                              
-##             Sensitivity : 0.900              
-##             Specificity : 0.783              
-##          Pos Pred Value : 0.867              
-##          Neg Pred Value : 0.833              
-##              Prevalence : 0.610              
-##          Detection Rate : 0.549              
-##    Detection Prevalence : 0.634              
-##       Balanced Accuracy : 0.842              
-##                                              
-##        &#39;Positive&#39; Class : CH                 
+##                                           
+##                Accuracy : 0.8545          
+##                  95% CI : (0.7998, 0.8989)
+##     No Information Rate : 0.6103          
+##     P-Value [Acc &gt; NIR] : 4.83e-15        
+##                                           
+##                   Kappa : 0.6907          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.4725          
+##                                           
+##             Sensitivity : 0.9000          
+##             Specificity : 0.7831          
+##          Pos Pred Value : 0.8667          
+##          Neg Pred Value : 0.8333          
+##              Prevalence : 0.6103          
+##          Detection Rate : 0.5493          
+##    Detection Prevalence : 0.6338          
+##       Balanced Accuracy : 0.8416          
+##                                           
+##        &#39;Positive&#39; Class : CH              
 ## </code></pre>
-<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="gradient-boosting.html#cb724-1"></a>oj.gbm.acc &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(oj.conf<span class="op">$</span>overall[<span class="dv">1</span>])</span>
-<span id="cb724-2"><a href="gradient-boosting.html#cb724-2"></a><span class="kw">rm</span>(oj.pred)</span>
-<span id="cb724-3"><a href="gradient-boosting.html#cb724-3"></a><span class="kw">rm</span>(oj.conf)</span>
-<span id="cb724-4"><a href="gradient-boosting.html#cb724-4"></a><span class="co">#plot(oj.bag$, oj.bag$finalModel$y)</span></span>
-<span id="cb724-5"><a href="gradient-boosting.html#cb724-5"></a><span class="co">#plot(varImp(oj.gbm), main=&quot;Variable Importance with Gradient Boosting&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="gradient-boosting.html#cb126-1"></a>oj.gbm.acc &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(oj.conf<span class="op">$</span>overall[<span class="dv">1</span>])</span>
+<span id="cb126-2"><a href="gradient-boosting.html#cb126-2"></a><span class="kw">rm</span>(oj.pred)</span>
+<span id="cb126-3"><a href="gradient-boosting.html#cb126-3"></a><span class="kw">rm</span>(oj.conf)</span>
+<span id="cb126-4"><a href="gradient-boosting.html#cb126-4"></a><span class="co">#plot(oj.bag$, oj.bag$finalModel$y)</span></span>
+<span id="cb126-5"><a href="gradient-boosting.html#cb126-5"></a><span class="co">#plot(varImp(oj.gbm), main=&quot;Variable Importance with Gradient Boosting&quot;)</span></span></code></pre></div>
 </div>
 <div id="gradient-boosting-regression-example" class="section level4">
-<h4><span class="header-section-number">10.5.0.2</span> Gradient Boosting Regression Example</h4>
+<h4><span class="header-section-number">9.5.0.2</span> Gradient Boosting Regression Example</h4>
 <p>Again using the <code>Carseats</code> data set to predict <code>Sales</code>, this time I’ll use the gradient boosting method by specifying <code>method = "gbm"</code>. I’ll use <code>tuneLength = 5</code> and not worry about <code>tuneGrid</code> anymore. Caret tunes the following hyperparameters.</p>
 <ul>
 <li><code>n.trees</code>: number of boosting iterations (increasing <code>n.trees</code> reduces the error on training set, but may lead to over-fitting)</li>
@@ -1690,19 +1695,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>shrinkage</code>: learning rate (reduces the impact of each additional fitted base-learner (tree) by reducing the size of incremental steps and thus penalizes the importance of each consecutive iteration. The intuition is that it is better to improve a model by taking many small steps than by taking fewer large steps. If one of the boosting iterations turns out to be erroneous, its negative impact can be easily corrected in subsequent steps.)</li>
 <li><code>n.minobsinnode</code>: mimimum terminal node size</li>
 </ul>
-<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="gradient-boosting.html#cb725-1"></a>carseats.gbm &lt;-<span class="st"> </span><span class="kw">train</span>(Sales <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb725-2"><a href="gradient-boosting.html#cb725-2"></a>                      <span class="dt">data =</span> carseats_train, </span>
-<span id="cb725-3"><a href="gradient-boosting.html#cb725-3"></a>                      <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>,  <span class="co"># for bagged tree</span></span>
-<span id="cb725-4"><a href="gradient-boosting.html#cb725-4"></a>                      <span class="dt">tuneLength =</span> <span class="dv">5</span>,  <span class="co"># choose up to 5 combinations of tuning parameters</span></span>
-<span id="cb725-5"><a href="gradient-boosting.html#cb725-5"></a>                      <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>,  <span class="co"># evaluate hyperparamter combinations with ROC</span></span>
-<span id="cb725-6"><a href="gradient-boosting.html#cb725-6"></a>                      <span class="dt">trControl =</span> <span class="kw">trainControl</span>(</span>
-<span id="cb725-7"><a href="gradient-boosting.html#cb725-7"></a>                        <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="co"># k-fold cross validation</span></span>
-<span id="cb725-8"><a href="gradient-boosting.html#cb725-8"></a>                        <span class="dt">number =</span> <span class="dv">10</span>,  <span class="co"># 10 folds</span></span>
-<span id="cb725-9"><a href="gradient-boosting.html#cb725-9"></a>                        <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save predictions for the optimal tuning parameter1</span></span>
-<span id="cb725-10"><a href="gradient-boosting.html#cb725-10"></a>                        <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb725-11"><a href="gradient-boosting.html#cb725-11"></a>                        <span class="dt">returnData =</span> <span class="ot">FALSE</span></span>
-<span id="cb725-12"><a href="gradient-boosting.html#cb725-12"></a>                        )</span>
-<span id="cb725-13"><a href="gradient-boosting.html#cb725-13"></a>                      )</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="gradient-boosting.html#cb127-1"></a>carseats.gbm &lt;-<span class="st"> </span><span class="kw">train</span>(Sales <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb127-2"><a href="gradient-boosting.html#cb127-2"></a>                      <span class="dt">data =</span> carseats_train, </span>
+<span id="cb127-3"><a href="gradient-boosting.html#cb127-3"></a>                      <span class="dt">method =</span> <span class="st">&quot;gbm&quot;</span>,  <span class="co"># for bagged tree</span></span>
+<span id="cb127-4"><a href="gradient-boosting.html#cb127-4"></a>                      <span class="dt">tuneLength =</span> <span class="dv">5</span>,  <span class="co"># choose up to 5 combinations of tuning parameters</span></span>
+<span id="cb127-5"><a href="gradient-boosting.html#cb127-5"></a>                      <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>,  <span class="co"># evaluate hyperparamter combinations with ROC</span></span>
+<span id="cb127-6"><a href="gradient-boosting.html#cb127-6"></a>                      <span class="dt">trControl =</span> <span class="kw">trainControl</span>(</span>
+<span id="cb127-7"><a href="gradient-boosting.html#cb127-7"></a>                        <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,  <span class="co"># k-fold cross validation</span></span>
+<span id="cb127-8"><a href="gradient-boosting.html#cb127-8"></a>                        <span class="dt">number =</span> <span class="dv">10</span>,  <span class="co"># 10 folds</span></span>
+<span id="cb127-9"><a href="gradient-boosting.html#cb127-9"></a>                        <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save predictions for the optimal tuning parameter1</span></span>
+<span id="cb127-10"><a href="gradient-boosting.html#cb127-10"></a>                        <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb127-11"><a href="gradient-boosting.html#cb127-11"></a>                        <span class="dt">returnData =</span> <span class="ot">FALSE</span></span>
+<span id="cb127-12"><a href="gradient-boosting.html#cb127-12"></a>                        )</span>
+<span id="cb127-13"><a href="gradient-boosting.html#cb127-13"></a>                      )</span></code></pre></div>
 <pre><code>## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
 ##      1        7.6155             nan     0.1000    0.3126
 ##      2        7.3677             nan     0.1000    0.2471
@@ -2977,7 +2982,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    220        0.9510             nan     0.1000   -0.0040
 ##    240        0.9159             nan     0.1000   -0.0058
 ##    250        0.8952             nan     0.1000   -0.0036</code></pre>
-<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="gradient-boosting.html#cb727-1"></a>carseats.gbm</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="gradient-boosting.html#cb129-1"></a>carseats.gbm</span></code></pre></div>
 <pre><code>## Stochastic Gradient Boosting 
 ## 
 ## No pre-processing
@@ -2985,32 +2990,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Summary of sample sizes: 289, 289, 289, 289, 289, 289, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   interaction.depth  n.trees  RMSE  Rsquared  MAE 
-##   1                   50      1.9   0.66      1.50
-##   1                  100      1.5   0.75      1.26
-##   1                  150      1.4   0.79      1.11
-##   1                  200      1.3   0.82      1.03
-##   1                  250      1.2   0.82      0.98
-##   2                   50      1.6   0.75      1.27
-##   2                  100      1.3   0.81      1.06
-##   2                  150      1.2   0.83      0.99
-##   2                  200      1.2   0.83      0.98
-##   2                  250      1.2   0.83      0.99
-##   3                   50      1.4   0.78      1.16
-##   3                  100      1.3   0.82      1.02
-##   3                  150      1.2   0.82      0.99
-##   3                  200      1.3   0.81      1.01
-##   3                  250      1.3   0.81      1.02
-##   4                   50      1.4   0.79      1.12
-##   4                  100      1.3   0.81      1.03
-##   4                  150      1.3   0.80      1.04
-##   4                  200      1.3   0.80      1.06
-##   4                  250      1.3   0.80      1.06
-##   5                   50      1.3   0.80      1.10
-##   5                  100      1.3   0.81      1.04
-##   5                  150      1.3   0.81      1.04
-##   5                  200      1.3   0.80      1.04
-##   5                  250      1.3   0.80      1.06
+##   interaction.depth  n.trees  RMSE      Rsquared   MAE      
+##   1                   50      1.853439  0.6550573  1.4985804
+##   1                  100      1.547356  0.7484921  1.2635775
+##   1                  150      1.359464  0.7941783  1.1116649
+##   1                  200      1.263360  0.8152576  1.0273078
+##   1                  250      1.216972  0.8238354  0.9842987
+##   2                   50      1.559349  0.7549692  1.2703898
+##   2                  100      1.295349  0.8121515  1.0550231
+##   2                  150      1.225522  0.8259530  0.9949898
+##   2                  200      1.219263  0.8282347  0.9847772
+##   2                  250      1.222610  0.8269006  0.9882843
+##   3                   50      1.434103  0.7828979  1.1618345
+##   3                  100      1.265869  0.8154077  1.0207212
+##   3                  150      1.242808  0.8187860  0.9946575
+##   3                  200      1.263512  0.8139170  1.0132197
+##   3                  250      1.266998  0.8123660  1.0169904
+##   4                   50      1.387541  0.7897254  1.1230060
+##   4                  100      1.279528  0.8095927  1.0299009
+##   4                  150      1.297827  0.8045587  1.0399179
+##   4                  200      1.316687  0.7979882  1.0556691
+##   4                  250      1.321038  0.7972775  1.0621347
+##   5                   50      1.348922  0.7980728  1.0974910
+##   5                  100      1.277990  0.8108521  1.0389748
+##   5                  150      1.286355  0.8066147  1.0393349
+##   5                  200      1.292184  0.8042104  1.0372671
+##   5                  250      1.314433  0.7973539  1.0572041
 ## 
 ## Tuning parameter &#39;shrinkage&#39; was held constant at a value of 0.1
 ## 
@@ -3018,21 +3023,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final values used for the model were n.trees = 250, interaction.depth =
 ##  1, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
-<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="gradient-boosting.html#cb729-1"></a><span class="kw">plot</span>(carseats.gbm)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-336-1.png" width="672" /></p>
-<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="gradient-boosting.html#cb730-1"></a>carseats.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(carseats.gbm, carseats_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span>
-<span id="cb730-2"><a href="gradient-boosting.html#cb730-2"></a><span class="kw">plot</span>(carseats_test<span class="op">$</span>Sales, carseats.pred, </span>
-<span id="cb730-3"><a href="gradient-boosting.html#cb730-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Gradient Boosing Regression: Predicted vs. Actual&quot;</span>,</span>
-<span id="cb730-4"><a href="gradient-boosting.html#cb730-4"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
-<span id="cb730-5"><a href="gradient-boosting.html#cb730-5"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span>
-<span id="cb730-6"><a href="gradient-boosting.html#cb730-6"></a><span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-336-2.png" width="672" /></p>
-<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="gradient-boosting.html#cb731-1"></a>(carseats.gbm.rmse &lt;-<span class="st"> </span><span class="kw">RMSE</span>(<span class="dt">pred =</span> carseats.pred,</span>
-<span id="cb731-2"><a href="gradient-boosting.html#cb731-2"></a>                           <span class="dt">obs =</span> carseats_test<span class="op">$</span>Sales))</span></code></pre></div>
-<pre><code>## [1] 1.4</code></pre>
-<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="gradient-boosting.html#cb733-1"></a><span class="kw">rm</span>(carseats.pred)</span>
-<span id="cb733-2"><a href="gradient-boosting.html#cb733-2"></a></span>
-<span id="cb733-3"><a href="gradient-boosting.html#cb733-3"></a><span class="co">#plot(varImp(carseats.gbm), main=&quot;Variable Importance with Gradient Boosting&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="gradient-boosting.html#cb131-1"></a><span class="kw">plot</span>(carseats.gbm)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="gradient-boosting.html#cb132-1"></a>carseats.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(carseats.gbm, carseats_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</span>
+<span id="cb132-2"><a href="gradient-boosting.html#cb132-2"></a><span class="kw">plot</span>(carseats_test<span class="op">$</span>Sales, carseats.pred, </span>
+<span id="cb132-3"><a href="gradient-boosting.html#cb132-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Gradient Boosing Regression: Predicted vs. Actual&quot;</span>,</span>
+<span id="cb132-4"><a href="gradient-boosting.html#cb132-4"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
+<span id="cb132-5"><a href="gradient-boosting.html#cb132-5"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span>
+<span id="cb132-6"><a href="gradient-boosting.html#cb132-6"></a><span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-66-2.png" width="672" /></p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="gradient-boosting.html#cb133-1"></a>(carseats.gbm.rmse &lt;-<span class="st"> </span><span class="kw">RMSE</span>(<span class="dt">pred =</span> carseats.pred,</span>
+<span id="cb133-2"><a href="gradient-boosting.html#cb133-2"></a>                           <span class="dt">obs =</span> carseats_test<span class="op">$</span>Sales))</span></code></pre></div>
+<pre><code>## [1] 1.402428</code></pre>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="gradient-boosting.html#cb135-1"></a><span class="kw">rm</span>(carseats.pred)</span>
+<span id="cb135-2"><a href="gradient-boosting.html#cb135-2"></a></span>
+<span id="cb135-3"><a href="gradient-boosting.html#cb135-3"></a><span class="co">#plot(varImp(carseats.gbm), main=&quot;Variable Importance with Gradient Boosting&quot;)</span></span></code></pre></div>
 </div>
 </div>
             </section>

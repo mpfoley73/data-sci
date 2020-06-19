@@ -18,7 +18,7 @@ or the entropy (aka information statistic)
 
 $$D = - \sum_{c=1}^C{\hat{p}_{kc} \log \hat{p}_{kc}}$$
 
-where $\hat{p}_{kc}$ is the proportion of training observations in node $k$ node that are class $c$.  A completely *pure* node in a binary tree will have $\hat{p} \in [0, 1]$ and $G = D = 0$. A completely impure node in a binary tree will have $\hat{p} = 0.5$ and $G = 0.5^2 \cdot 2 = 0.25$ and $D = -(0.5 \log(0.5)) \cdot 2 = 0.69$.
+where $\hat{p}_{kc}$ is the proportion of training observations in node $k$ that are class $c$.  For a completely *pure* node in a binary tree, $\hat{p} \in \{ 0, 1 \}$ and $G = D = 0$. For a completely *impure* node in a binary tree, $\hat{p} = 0.5$ and $G = 0.5^2 \cdot 2 = 0.25$ and $D = -(0.5 \log(0.5)) \cdot 2 = 0.69$.
 
 CART repeats the splitting process for each of the child nodes until a *stopping criterion* is satisfied, usually when no node size surpasses a predefined maximum, or continued splitting does not improve the model significantly.  CART may also impose a minimum number of observations in each node.
 
@@ -33,22 +33,17 @@ CART uses cross-validation to determine which $c_p$ is optimal.
 
 ## Classification Tree
 
-A simple classification tree is rarely performed on its own; the bagged, random forest, and gradient boosting methods build on this logic. However, it is good to start here to build understanding. I'll learn by example. Using the `ISLR::OJ` data set, I will predict which brand of orange juice, Citrus Hill (CH) or Minute Maid = (MM), customers `Purchase` using from the 17 feature variables.  Load the libraries and data.
+A simple classification tree is rarely performed on its own; the bagged, random forest, and gradient boosting methods build on this logic. However, it is good to start here to build understanding. I'll learn by example. Using the `ISLR::OJ` data set, I will predict which brand of orange juice, Citrus Hill (CH) or Minute Maid = (MM), customers `Purchase` from the 17 feature variables.
 
 ```{r warning=FALSE, message=FALSE}
-library(ISLR)  # OJ dataset
+library(tidyverse)
+library(caret)
 library(rpart)  # classification and regression trees 
-library(caret)  # modeling workflow
 library(rpart.plot)  # better formatted plots than the ones in rpart
 library(plotROC)  # ROC curves
 library(ROCR)
-library(tidyverse)
-library(skimr)  # neat alternative to glance & summary
 
-oj_dat <- OJ
-#skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, 
-#                                p100 = NULL, hist = NULL))
-#skim(oj_dat)
+oj_dat <- ISLR::OJ
 ```
 
 I'll split `oj_dat` (n = 1,070) into `oj_train` (80%, n = 857) and `oj_test` (20%, n = 213).  I'll fit a simple decision tree with `oj_train`, then later a bagged tree, a random forest, and a gradient boosting tree.  I'll compare their predictive performance with `oj_test`. 
@@ -62,9 +57,10 @@ oj_test <- oj_dat[-partition, ]
 
 Function `rpart::rpart()` builds a full tree, minimizing the Gini index $G$ by default (`parms = list(split = "gini")`), until the stopping criterion is satisfied.  The default stopping criterion is 
 
-* only attempt a split if the current node as at least `minsplit = 20` observations,
-* only accept a split if each of the two resulting nodes have at least `minbucket = round(minsplit/3)` observations, and 
-* only accept a split if the resulting overall fit improves by `cp = 0.01` (i.e., $\Delta G <= 0.01$).
+* only attempt a split if the current node has at least `minsplit = 20` observations,
+* only accept a split if 
+   * the resulting nodes have at least `minbucket = round(minsplit/3)` observations, and 
+   * the resulting overall fit improves by `cp = 0.01` (i.e., $\Delta G <= 0.01$).
 
 ```{r}
 set.seed(123)
@@ -101,19 +97,21 @@ data.frame(pred = predict(oj_model_1, newdata = oj_train, type = "class")) %>%
    summarize(mean_err = mean(err))
 ```
 
-Finishing the CP table tour, `xerror` is the relative cross-validated error rate and `xstd` is its standard error. If you want the lowest possible error, then prune to the tree with the smallest relative CV error (`xerror`) ($c_p$ = 0.01, CV error = `r round(0.46407*0.38973162, 4)`).  If you want to balance predictive power with simplicity, prune to the smallest tree within 1 SE of the one with the smallest relative error.  The CP table is not super-helpful for finding that tree. I'll add a column to find it.
+Finishing the CP table tour, `xerror` is the relative cross-validated error rate and `xstd` is its standard error. If you want the lowest possible error, then prune to the tree with the smallest relative CV error, $c_p$ = 0.01.  If you want to balance predictive power with simplicity, prune to the smallest tree within 1 SE of the one with the smallest relative error.  The CP table is not super-helpful for finding that tree, so add a column to find it.
 
 ```{r}
 oj_model_1$cptable %>%
    data.frame() %>%
-   mutate(min_xerror_idx = which.min(oj_model_1$cptable[, "xerror"]),
-          rownum = row_number(),
-          xerror_cap = oj_model_1$cptable[min_xerror_idx, "xerror"] + 
-             oj_model_1$cptable[min_xerror_idx, "xstd"],
-          eval = case_when(rownum == min_xerror_idx ~ "min xerror",
-                           xerror < xerror_cap ~ "under cap",
-                           TRUE ~ "")) %>%
-   select(-rownum, -min_xerror_idx) 
+   mutate(
+      min_idx = which.min(oj_model_1$cptable[, "xerror"]),
+      rownum = row_number(),
+      xerror_cap = oj_model_1$cptable[min_idx, "xerror"] + 
+                   oj_model_1$cptable[min_idx, "xstd"],
+      eval = case_when(rownum == min_idx ~ "min xerror",
+                       xerror < xerror_cap ~ "under cap",
+                       TRUE ~ "")
+   ) %>%
+   select(-rownum, -min_idx) 
 ```
 
 The simplest tree using the 1-SE rule is $c_p = 0.01347305, CV error = `r round(0.4700599*0.38973162, 4)`).  Fortunately, `plotcp()` presents a nice graphical representation of the relationship between `xerror` and `cp`.
@@ -424,7 +422,7 @@ rbind(data.frame(model = "Manual Class", Acc = round(oj_model_1b_cm$overall["Acc
 A simple regression tree is built in a manner similar to a simple classificatioon tree, and like the simple classification tree, it is rarely invoked on its own; the bagged, random forest, and gradient boosting methods build on this logic.  I'll learn by example again. Using the `ISLR::Carseats` data set, I will predict `Sales` using from the 10 feature variables.  Load the data.
 
 ```{r}
-carseats_dat <- Carseats
+carseats_dat <- ISLR::Carseats
 #skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, 
 #                                p100 = NULL, hist = NULL))
 #skim(carseats_dat)
