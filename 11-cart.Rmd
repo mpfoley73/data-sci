@@ -14,7 +14,7 @@ For a classification tree, the most common cost functions are the Gini index,
 
 $$G = \sum_{c=1}^C{\hat{p}_{kc}(1 - \hat{p}_{kc})},$$
 
-or the entropy (aka information statistic)
+and the entropy (aka information statistic)
 
 $$D = - \sum_{c=1}^C{\hat{p}_{kc} \log \hat{p}_{kc}}$$
 
@@ -26,14 +26,12 @@ The resulting tree likely over-fits the training data and therefore does not gen
 
 $$R_{c_p}(T) = R(T) + c_p|T|$$
 
-$c_p$ can take on any value from $[0..\infty]$, but it turns out there is an optimal tree for *ranges* of $c_p$ values, so there are only a finite set of *interesting* values for $c_p$ [@James2013] [@Therneau2019] [@Kuhn2016].  A parametric algorithm identifies the interesting $c_p$ values and their associated pruned trees, $T_{c_p}$.
-
-CART uses cross-validation to determine which $c_p$ is optimal.
+$c_p$ can take on any value from $[0..\infty]$, but it turns out there is an optimal tree for *ranges* of $c_p$ values, so there are only a finite set of *interesting* values for $c_p$ [@James2013] [@Therneau2019] [@Kuhn2016].  A parametric algorithm identifies the interesting $c_p$ values and their associated pruned trees, $T_{c_p}$. CART uses cross-validation to determine which $c_p$ is optimal.
 
 
 ## Classification Tree
 
-A simple classification tree is rarely performed on its own; the bagged, random forest, and gradient boosting methods build on this logic. However, it is good to start here to build understanding. I'll learn by example. Using the `ISLR::OJ` data set, I will predict which brand of orange juice, Citrus Hill (CH) or Minute Maid = (MM), customers `Purchase` from the 17 feature variables.
+A simple classification tree is rarely performed on its own; the bagged, random forest, and gradient boosting methods build on this logic. However, it is good to start here to build understanding. I'll learn by example. Using the `ISLR::OJ` data set, I will use 17 feature variables to predict which brand of orange juice, Citrus Hill (CH) or Minute Maid = (MM), customers `Purchase`.
 
 ```{r warning=FALSE, message=FALSE}
 library(tidyverse)
@@ -46,7 +44,7 @@ library(ROCR)
 oj_dat <- ISLR::OJ
 ```
 
-I'll split `oj_dat` (n = 1,070) into `oj_train` (80%, n = 857) and `oj_test` (20%, n = 213).  I'll fit a simple decision tree with `oj_train`, then later a bagged tree, a random forest, and a gradient boosting tree.  I'll compare their predictive performance with `oj_test`. 
+I'll split `oj_dat` (n = 1,070) into `oj_train` (80%, n = 857) to fit various models, and `oj_test` (20%, n = 213) to compare their performance on new data.
 
 ```{r}
 set.seed(12345)
@@ -63,21 +61,18 @@ Function `rpart::rpart()` builds a full tree, minimizing the Gini index $G$ by d
    * the resulting overall fit improves by `cp = 0.01` (i.e., $\Delta G <= 0.01$).
 
 ```{r}
+# Use method = "class" for classification, method = "anova" for regression
 set.seed(123)
-oj_model_1 <- rpart(
-   formula = Purchase ~ .,
-   data = oj_train,
-   method = "class"  # "class" for classification, "anova" for regression
-   )
-print(oj_model_1)
+oj_mdl_cart_full <- rpart(formula = Purchase ~ ., data = oj_train, method = "class")
+print(oj_mdl_cart_full)
 ```
 
 The output starts with the root node.  The predicted class at the root is `CH` and this prediction produces 334 errors on the 857 observations for a success rate of 0.61026838 and an error rate of 0.38973162.  The child nodes of node "x" are labeled 2x) and 2x+1), so the child nodes of 1) are 2) and 3), and the child nodes of 2) are 4) and 5).  Terminal nodes are labeled with an asterisk (*).  
 
-Surprisingly, only 3 of the 17 features were used the in full tree: `LoyalCH` (Customer brand loyalty for CH), `PriceDiff` (relative price of MM over CH), and `SalePriceMM` (absolute price of MM).  The first split is at `LoyalCH` = 0.48285.  Here is what the full (unpruned) tree looks like.
+Surprisingly, only 3 of the 17 features were used the in full tree: `LoyalCH` (Customer brand loyalty for CH), `PriceDiff` (relative price of MM over CH), and `SalePriceMM` (absolute price of MM).  The first split is at `LoyalCH` = 0.48285.  Here is a diagram of the full (unpruned) tree.
 
 ```{r}
-rpart.plot(oj_model_1, yesno = TRUE)
+rpart.plot(oj_mdl_cart_full, yesno = TRUE)
 ```
 
 The boxes show the node classification (based on mode), the proportion of observations that are *not* `CH`, and the proportion of observations included in the node. 
@@ -85,13 +80,13 @@ The boxes show the node classification (based on mode), the proportion of observ
 `rpart()` not only grew the full tree, it identified the set of cost complexity parameters, and measured the model performance of each corresponding tree using cross-validation. `printcp()` displays the candidate $c_p$ values. You can use this table to decide how to prune the tree.
 
 ```{r}
-printcp(oj_model_1)
+printcp(oj_mdl_cart_full)
 ```
 
 There are 4 $c_p$ values in this model.  The model with the smallest complexity parameter allows the most splits (`nsplit`).  The highest complexity parameter corresponds to a tree with just a root node.  `rel error` is the error rate relative to the root node.  The root node absolute error is 0.38973162 (the proportion of MM), so its `rel error` is 0.38973162/0.38973162 = 1.0.  That means the absolute error of the full tree (at CP = 0.01) is 0.42814 * 0.38973162 = 0.1669.  You can verify that by calculating the error rate of the predicted values:
 
 ```{r}
-data.frame(pred = predict(oj_model_1, newdata = oj_train, type = "class")) %>%
+data.frame(pred = predict(oj_mdl_cart_full, newdata = oj_train, type = "class")) %>%
    mutate(obs = oj_train$Purchase,
           err = if_else(pred != obs, 1, 0)) %>%
    summarize(mean_err = mean(err))
@@ -100,13 +95,13 @@ data.frame(pred = predict(oj_model_1, newdata = oj_train, type = "class")) %>%
 Finishing the CP table tour, `xerror` is the relative cross-validated error rate and `xstd` is its standard error. If you want the lowest possible error, then prune to the tree with the smallest relative CV error, $c_p$ = 0.01.  If you want to balance predictive power with simplicity, prune to the smallest tree within 1 SE of the one with the smallest relative error.  The CP table is not super-helpful for finding that tree, so add a column to find it.
 
 ```{r}
-oj_model_1$cptable %>%
+oj_mdl_cart_full$cptable %>%
    data.frame() %>%
    mutate(
-      min_idx = which.min(oj_model_1$cptable[, "xerror"]),
+      min_idx = which.min(oj_mdl_cart_full$cptable[, "xerror"]),
       rownum = row_number(),
-      xerror_cap = oj_model_1$cptable[min_idx, "xerror"] + 
-                   oj_model_1$cptable[min_idx, "xstd"],
+      xerror_cap = oj_mdl_cart_full$cptable[min_idx, "xerror"] + 
+                   oj_mdl_cart_full$cptable[min_idx, "xstd"],
       eval = case_when(rownum == min_idx ~ "min xerror",
                        xerror < xerror_cap ~ "under cap",
                        TRUE ~ "")
@@ -117,36 +112,36 @@ oj_model_1$cptable %>%
 The simplest tree using the 1-SE rule is $c_p = 0.01347305, CV error = `r round(0.4700599*0.38973162, 4)`).  Fortunately, `plotcp()` presents a nice graphical representation of the relationship between `xerror` and `cp`.
 
 ```{r}
-plotcp(oj_model_1, upper = "splits")
+plotcp(oj_mdl_cart_full, upper = "splits")
 ```
 
-The dashed line is set at the minimum `xerror` + `xstd`.  The top axis shows the number of splits in the tree.  I'm not sure why the CP values are not the same as in the table (they are close, but not the same).  The figure suggests I should prune to 5 or 3 splits.  I see this curve never really hits a minimum - it is still decreasing at 5 splits.  The default tuning parameter value `cp = 0.01` may be too small, so I'll set it to `cp = 0.001` and start over.
+The dashed line is set at the minimum `xerror` + `xstd`.  The top axis shows the number of splits in the tree.  I'm not sure why the CP values are not the same as in the table (they are close, but not the same).  The figure suggests I should prune to 5 or 3 splits.  I see this curve never really hits a minimum - it is still decreasing at 5 splits.  The default tuning parameter value `cp = 0.01` may be too large, so I'll set it to `cp = 0.001` and start over.
 
 ```{r}
 set.seed(123)
-oj_model_1b <- rpart(
+oj_mdl_cart_full <- rpart(
    formula = Purchase ~ .,
    data = oj_train,
    method = "class",
    cp = 0.001
    )
-print(oj_model_1b)
+print(oj_mdl_cart_full)
 ```
 
 This is a much larger tree.  Did I find a `cp` value that produces a local min?
 
 ```{r}
-plotcp(oj_model_1b, upper = "splits")
+plotcp(oj_mdl_cart_full, upper = "splits")
 ```
 
 Yes, the min is at CP = 0.011 with 5 splits.  The min + 1 SE is at CP = 0.021 with 3 splits.  I'll prune the tree to 3 splits.
 
 ```{r}
-oj_model_1b_pruned <- prune(
-   oj_model_1b,
-   cp = oj_model_1b$cptable[oj_model_1b$cptable[, 2] == 3, "CP"]
+oj_mdl_cart <- prune(
+   oj_mdl_cart_full,
+   cp = oj_mdl_cart_full$cptable[oj_mdl_cart_full$cptable[, 2] == 3, "CP"]
 )
-rpart.plot(oj_model_1b_pruned, yesno = TRUE)
+rpart.plot(oj_mdl_cart, yesno = TRUE)
 ```
 
 The most "important" indicator of `Purchase` appears to be `LoyalCH`.  From the **rpart** [vignette](https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf) (page 12), 
@@ -158,11 +153,11 @@ Surrogates refer to alternative features for a node to handle missing data. For 
 A variable's importance is the sum of the improvement in the overall Gini (or RMSE) measure produced by the nodes in which it appears. Here is the variable importance for this model.
 
 ```{r}
-oj_model_1b_pruned$variable.importance
+oj_mdl_cart$variable.importance
 ```
 
 ```{r}
-oj_model_1b_pruned$variable.importance %>% 
+oj_mdl_cart$variable.importance %>% 
    data.frame() %>%
    rownames_to_column(var = "Feature") %>%
    rename(Overall = '.') %>%
@@ -178,13 +173,7 @@ oj_model_1b_pruned$variable.importance %>%
 You can see how the surrogates appear in the model with the `summary()` function.
 
 ```{r}
-summary(oj_model_1b_pruned)
-```
-
-The last step is to make predictions on the validation data set.  For a classification tree, set argument `type = "class"`. 
-
-```{r message=FALSE, warning=FALSE}
-oj_model_1b_preds <- predict(oj_model_1b_pruned, oj_test, type = "class")
+summary(oj_mdl_cart)
 ```
 
 I'll evaluate the predictions and record the accuracy (correct classification percentage) for comparison to other models. Two ways to evaluate the model are the confusion matrix, and the ROC curve. 
@@ -195,8 +184,9 @@ I'll evaluate the predictions and record the accuracy (correct classification pe
 Print the confusion matrix with `caret::confusionMatrix()` to see how well does this model performs against the test data set.
 
 ```{r}
-oj_model_1b_cm <- confusionMatrix(data = oj_model_1b_preds, reference = oj_test$Purchase)
-oj_model_1b_cm
+oj_preds_cart <- predict(oj_mdl_cart, oj_test, type = "class")
+oj_cm_cart <- confusionMatrix(oj_preds_cart, reference = oj_test$Purchase)
+oj_cm_cart
 ```
 
 The confusion matrix is at the top.  It also includes a lot of statistics.  It's worth getting familiar with the stats.  The model accuracy and 95% CI are calculated from the binomial test.
@@ -222,7 +212,7 @@ $$RA = \frac{ActFalse \times PredFalse + ActTrue \times PredTrue}{Total \times T
 is the hypotheical probability of a chance agreement.  ActFalse will be the number of "MM" (13 + 70 = 83) and actual true will be the number of "CH" (113 + 17 = 130).  The predicted counts are
 
 ```{r}
-table(oj_model_1b_preds)
+table(oj_preds_cart)
 ```
 
 So, $RA = (83*87 + 130*126) / 213^2 = 0.5202$ and $\kappa = (0.8592 - 0.5202)/(1 - 0.5202) = 0.7064$.  The kappa statistic varies from 0 to 1 where 0 means accurate predictions occur merely by chance, and 1 means the predictions are in perfect agreement with the observations.  In this case, a kappa statistic of 0.7064 is "substantial".  See chart [here](https://www.statisticshowto.datasciencecentral.com/cohens-kappa-statistic/).
@@ -232,63 +222,45 @@ The other measures from the `confusionMatrix()` output are various proportions a
 Visuals are almost always helpful.  Here is a plot of the confusion matrix.
 
 ```{r}
-plot(oj_test$Purchase, oj_model_1b_preds, 
+plot(oj_test$Purchase, oj_preds_cart, 
      main = "Simple Classification: Predicted vs. Actual",
      xlab = "Actual",
      ylab = "Predicted")
 ```
 
-By the way, how does the validation set accuracy ()
-
-```{r}
-oj_model_1b_train_preds <- predict(oj_model_1b_pruned, oj_train, type = "class")
-oj_model_1b_train_cm <- confusionMatrix(data = oj_model_1b_train_preds, reference = oj_train$Purchase)
-oj_model_1b_train_cm$overall
-```
-
-The accuracy on the training data set was a little lower than on the test data set.  I though it would be higher, not lower.
-
 
 ### ROC Curve
 
-Another measure of accuracy is the ROC (receiver operating characteristics) curve [@Fawcett2005].  The ROC curve is a plot of the true positive rate (TPR, sensitivity) versus the false positive rate (FPR, 1 - specificity) for a set of thresholds. By default, the threshold for predicting the default classification is 0.50, but it could be any threshold.  The ROC curves varies the thresholds.  (I'll use the `geom_roc` geom from **plotROC**.
+The ROC (receiver operating characteristics) curve [@Fawcett2005] is another measure of accuracy.  The ROC curve is a plot of the true positive rate (TPR, sensitivity) versus the false positive rate (FPR, 1 - specificity) for a set of thresholds. By default, the threshold for predicting the default classification is 0.50, but it could be any threshold. `precrec::evalmod()` calculates the confusion matrix values from the model using the holdout data set.  The AUC on the holdout set is 0.8848.  `pRoc::plot.roc()`, `plotROC::geom_roc()`, and `yardstick::roc_curve()` are all options for plotting a ROC curve.
 
 ```{r}
-data.frame(M = predict(oj_model_1b_pruned, oj_test, "prob")[, 1],
+oj_probs_cart <- predict(oj_mdl_cart, oj_test, "prob")
+
+precrec::evalmod(scores = oj_probs_cart[, "CH"], labels = oj_test$Purchase, posclass = "CH")
+
+data.frame(M = oj_probs_cart[, "CH"],
            D = if_else(oj_test$Purchase == "CH", 1, 0)) %>%
    ggplot() + 
-   geom_roc(aes(m = M, d = D), hjust = -0.4, vjust = 1.5, linealpha = 0.6, labelsize = 3, n.cuts = 10) + 
+   geom_roc(aes(m = M, d = D), 
+            hjust = -0.4, vjust = 1.5, linealpha = 0.6, labelsize = 3, 
+            n.cuts = 10) + 
    geom_abline(intercept = 0, slope = 1, linetype = 2) +
    coord_equal() +
    theme_minimal() +
-   labs(x = "FPR", y = "TPR",
-        title = "Model 1b ROC Curve",
-        subtitle = "Pruned model using rpart",
-        caption = "Data: ISLM OJ data set.")
-
+   labs(x = "FPR (1 - specificity)", y = "TPR (sensitivity)", title = "OJ CART ROC Curve")
 ```
-
-You can also use `prediction()` and `plot.prediction()` from the **ROCR** package. 
-
-```{r}
-pred <- prediction(predict(oj_model_1b_pruned, newdata = oj_test, type = "prob")[, 2], oj_test$Purchase)
-plot(performance(pred, "tpr", "fpr"))
-abline(0, 1, lty = 2)
-```
-
-Hmm, not quite the same...
 
 A few points on the ROC space are helpful for understanding how to use it.  
 
-* The lower left point (0, 0) is the result of *always* predicting "negative" or in this case "MM" if "CH" is taken as the default class.  Sure, your false positive rate is zero, but since you never predict a positive, your true positive rate is also zero.  
-* The upper right point (1, 1) is the results of *always* predicting "positive" (or "CH" here).  You catch all the positives, but you miss all the negatives.
-* The upper left point (0, 1) is the result of perfect accuracy.  You catch all the positives and all the negatives.
+* The lower left point (0, 0) is the result of *always* predicting "negative" or in this case "MM" if "CH" is taken as the default class. No false positives, but no true positives either.
+* The upper right point (1, 1) is the result of *always* predicting "positive" ("CH" here).  You catch all true positives, but miss all the true negatives.
+* The upper left point (0, 1) is the result of perfect accuracy.
 * The lower right point (1, 0) is the result of perfect imbecility.  You made the exact wrong prediction every time. 
 * The 45 degree diagonal is the result of randomly guessing positive (CH) X percent of the time.  If you guess positive 90% of the time and the prevalence is 50%, your TPR will be 90% and your FPR will also be 90%, etc.
 
-From the last bullet, it is evident that any point below and to the right of the 45 degree diagonal represents an instance where the model would have been better off just predicting entirely one way or the other.  The goal is for all nodes to bunch up in the upper left.
+The goal is for all nodes to bunch up in the upper left.
 
-Points to the left of the diagonal with a low TPR can be thought of as "conservative" predicters - they only make positive (CH) predictions with strong evidence.  Points to the left of the diagnonal with a high TPR can be thought of as "liberal" predicters - they make positive (CH) predictions with weak evidence.  
+Points to the left of the diagonal with a low TPR can be thought of as "conservative" predictors - they only make positive (CH) predictions with strong evidence.  Points to the left of the diagonal with a high TPR can be thought of as "liberal" predictors - they make positive (CH) predictions with weak evidence.  
 
 ### Caret Approach
 
@@ -411,7 +383,7 @@ plot(varImp(oj_model_3), main="Variable Importance with Simple Classication")
 Looks like the manual effort faired best.  Here is a summary the accuracy rates of the three models.
 
 ```{r}
-rbind(data.frame(model = "Manual Class", Acc = round(oj_model_1b_cm$overall["Accuracy"], 5)), 
+rbind(data.frame(model = "Manual Class", Acc = round(oj_cm_cart$overall["Accuracy"], 5)), 
       data.frame(model = "Caret w/tuneGrid", Acc = round(oj_model_3_cm$overall["Accuracy"], 5))
 )
 ```
@@ -743,7 +715,7 @@ The model algorithm explains *"ROC was used to select the optimal model using th
 The bagging (accuracy = 0.80751) and random forest (accuracy = 0.81690) models faired pretty well, but the manual classification tree is still in first place.  There's still gradient boosting to investigate!
 
 ```{r}
-rbind(data.frame(model = "Manual Class", Accuracy = round(oj_model_1b_cm$overall["Accuracy"], 5)), 
+rbind(data.frame(model = "Manual Class", Accuracy = round(oj_cm_cart$overall["Accuracy"], 5)), 
       data.frame(model = "Caret w.tuneGrid", Accuracy = round(oj_model_3_cm$overall["Accuracy"], 5)),
       data.frame(model = "Bagging", Accuracy = round(oj.bag.acc, 5)),
       data.frame(model = "Random Forest", Accuracy = round(oj.frst.acc, 5))
@@ -929,7 +901,7 @@ rm(carseats.pred)
 Okay, I'm going to tally up the results!  For the classification division, the winner is the manual classification tree!  Gradient boosting made a valiant run at it, but came up just a little short.
 
 ```{r}
-rbind(data.frame(model = "Manual Class", Acc = round(oj_model_1b_cm$overall["Accuracy"], 5)), 
+rbind(data.frame(model = "Manual Class", Acc = round(oj_cm_cart$overall["Accuracy"], 5)), 
       data.frame(model = "Class w.tuneGrid", Acc = round(oj_model_3_cm$overall["Accuracy"], 5)),
       data.frame(model = "Bagging", Acc = round(oj.bag.acc, 5)),
       data.frame(model = "Random Forest", Acc = round(oj.frst.acc, 5)),
