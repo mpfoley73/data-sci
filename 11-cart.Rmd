@@ -42,6 +42,7 @@ library(plotROC)  # ROC curves
 library(ROCR)
 
 oj_dat <- ISLR::OJ
+skimr::skim(oj_dat)
 ```
 
 I'll split `oj_dat` (n = 1,070) into `oj_train` (80%, n = 857) to fit various models, and `oj_test` (20%, n = 213) to compare their performance on new data.
@@ -153,10 +154,6 @@ Surrogates refer to alternative features for a node to handle missing data. For 
 A variable's importance is the sum of the improvement in the overall Gini (or RMSE) measure produced by the nodes in which it appears. Here is the variable importance for this model.
 
 ```{r}
-oj_mdl_cart$variable.importance
-```
-
-```{r}
 oj_mdl_cart$variable.importance %>% 
    data.frame() %>%
    rownames_to_column(var = "Feature") %>%
@@ -179,13 +176,20 @@ summary(oj_mdl_cart)
 I'll evaluate the predictions and record the accuracy (correct classification percentage) for comparison to other models. Two ways to evaluate the model are the confusion matrix, and the ROC curve. 
 
 
-### Confusion Matrix
+### Holdout Performance
 
-Print the confusion matrix with `caret::confusionMatrix()` to see how well does this model performs against the test data set.
+#### Confusion Matrix
+
+Print the confusion matrix with `caret::confusionMatrix()` to see how well does this model performs against the holdout set.
 
 ```{r}
-oj_preds_cart <- predict(oj_mdl_cart, oj_test, type = "class")
-oj_cm_cart <- confusionMatrix(oj_preds_cart, reference = oj_test$Purchase)
+oj_preds_cart <- bind_cols(
+   predict(oj_mdl_cart, newdata = oj_test, type = "prob"),
+   Pred = predict(oj_mdl_cart, newdata = oj_test, type = "class"),
+   Purchase = oj_test$Purchase
+)
+
+oj_cm_cart <- confusionMatrix(oj_preds_cart$Pred, reference = oj_test$Purchase)
 oj_cm_cart
 ```
 
@@ -209,10 +213,10 @@ where
 
 $$RA = \frac{ActFalse \times PredFalse + ActTrue \times PredTrue}{Total \times Total}$$
 
-is the hypotheical probability of a chance agreement.  ActFalse will be the number of "MM" (13 + 70 = 83) and actual true will be the number of "CH" (113 + 17 = 130).  The predicted counts are
+is the hypothetical probability of a chance agreement.  ActFalse will be the number of "MM" (13 + 70 = 83) and actual true will be the number of "CH" (113 + 17 = 130).  The predicted counts are
 
 ```{r}
-table(oj_preds_cart)
+table(oj_preds_cart$Pred)
 ```
 
 So, $RA = (83*87 + 130*126) / 213^2 = 0.5202$ and $\kappa = (0.8592 - 0.5202)/(1 - 0.5202) = 0.7064$.  The kappa statistic varies from 0 to 1 where 0 means accurate predictions occur merely by chance, and 1 means the predictions are in perfect agreement with the observations.  In this case, a kappa statistic of 0.7064 is "substantial".  See chart [here](https://www.statisticshowto.datasciencecentral.com/cohens-kappa-statistic/).
@@ -222,32 +226,25 @@ The other measures from the `confusionMatrix()` output are various proportions a
 Visuals are almost always helpful.  Here is a plot of the confusion matrix.
 
 ```{r}
-plot(oj_test$Purchase, oj_preds_cart, 
+plot(oj_test$Purchase, oj_preds_cart$Pred, 
      main = "Simple Classification: Predicted vs. Actual",
      xlab = "Actual",
      ylab = "Predicted")
 ```
 
-
-### ROC Curve
+#### ROC Curve
 
 The ROC (receiver operating characteristics) curve [@Fawcett2005] is another measure of accuracy.  The ROC curve is a plot of the true positive rate (TPR, sensitivity) versus the false positive rate (FPR, 1 - specificity) for a set of thresholds. By default, the threshold for predicting the default classification is 0.50, but it could be any threshold. `precrec::evalmod()` calculates the confusion matrix values from the model using the holdout data set.  The AUC on the holdout set is 0.8848.  `pRoc::plot.roc()`, `plotROC::geom_roc()`, and `yardstick::roc_curve()` are all options for plotting a ROC curve.
 
 ```{r}
-oj_probs_cart <- predict(oj_mdl_cart, oj_test, "prob")
+precrec::evalmod(scores = oj_preds_cart$CH, labels = oj_preds_cart$Purchase, posclass = "CH")
 
-precrec::evalmod(scores = oj_probs_cart[, "CH"], labels = oj_test$Purchase, posclass = "CH")
-
-data.frame(M = oj_probs_cart[, "CH"],
-           D = if_else(oj_test$Purchase == "CH", 1, 0)) %>%
-   ggplot() + 
-   geom_roc(aes(m = M, d = D), 
-            hjust = -0.4, vjust = 1.5, linealpha = 0.6, labelsize = 3, 
-            n.cuts = 10) + 
-   geom_abline(intercept = 0, slope = 1, linetype = 2) +
-   coord_equal() +
-   theme_minimal() +
-   labs(x = "FPR (1 - specificity)", y = "TPR (sensitivity)", title = "OJ CART ROC Curve")
+yardstick::roc_curve(oj_preds_cart, Purchase, CH) %>%
+  autoplot() +
+  labs(
+    title = "OJ CART ROC Curve",
+    subtitle = "AUC = 0.8848"
+  )
 ```
 
 A few points on the ROC space are helpful for understanding how to use it.  
@@ -260,24 +257,44 @@ A few points on the ROC space are helpful for understanding how to use it.
 
 The goal is for all nodes to bunch up in the upper left.
 
-Points to the left of the diagonal with a low TPR can be thought of as "conservative" predictors - they only make positive (CH) predictions with strong evidence.  Points to the left of the diagonal with a high TPR can be thought of as "liberal" predictors - they make positive (CH) predictions with weak evidence.  
+Points to the left of the diagonal with a low TPR can be thought of as "conservative" predictors - they only make positive (CH) predictions with strong evidence.  Points to the left of the diagonal with a high TPR can be thought of as "liberal" predictors - they make positive (CH) predictions with weak evidence.
+
+#### Gain Curve
+
+The gain curve plots the cumulative summed true outcome versus the fraction of items seen when sorted by the predicted value. The “wizard” curve is the gain curve when the data is sorted by the true outcome. If the model’s gain curve is close to the wizard curve, then the model predicted the response variable well. The gray area is the “gain” over a random prediction.
+
+130 of the 213 consumers in the holdout set purchased CH.
+
+* The gain curve encountered 77 CH purchasers (59%) within the first 79 observations (37%). 
+
+* It encountered all 130 CH purchasers on the 213th observation (100%).
+
+* The bottom of the gray area is the outcome of a random model. Only half the CH purchasers would be observed within 50% of the observations. The top of the gray area is the outcome of the perfect model, the “wizard curve”. Half the CH purchasers would be observed in 65/213=31% of the observations.
+
+```{r}
+yardstick::gain_curve(oj_preds_cart, Purchase, CH) %>%
+  autoplot() +
+  labs(
+    title = "OJ CART Gain Curve"
+  )
+```
+
 
 ### Caret Approach
 
-I can also fit the model with `caret::train()`.  There are two ways to tune hyperparameters in `train()`: 
+I can also fit the model with `caret::train()`. There are two ways to tune hyperparameters in `train()`: 
 
 * set the number of tuning parameter values to consider by setting `tuneLength`, or
 * set particular values to consider for each parameter by defining a `tuneGrid`.
 
-I'll build the model using 10-fold cross-validation to optimize the hyperparameter CP. If you don't have any idea what the tuning parameter ought to look like, use `tuneLength` to get close, then fine-tune with `tuneGrid`.  That's what I'll do.  I'll create a training control object that I can re-use in other model builds.  
+I'll build the model using 10-fold cross-validation to optimize the hyperparameter CP. If you have no idea what is the optimal tuning parameter, start with `tuneLength` to get close, then fine-tune with `tuneGrid`.  That's what I'll do.  I'll create a training control object that I can re-use in other model builds.  
 
 ```{r}
 oj_trControl = trainControl(
-   method = "cv",  # k-fold cross validation
-   number = 10,  # 10 folds
+   method = "cv",
+   number = 10,
    savePredictions = "final",       # save predictions for the optimal tuning parameter
    classProbs = TRUE  # return class probabilities in addition to predicted values
-#   summaryFunction = twoClassSummary  # computes sensitivity, specificity and the area under the ROC curve.
    )
 ```
 
@@ -285,7 +302,7 @@ Now fit the model.
 
 ```{r}
 set.seed(1234)
-oj_model_2 = train(
+oj_mdl_cart2 <- train(
    Purchase ~ ., 
    data = oj_train, 
    method = "rpart",
@@ -298,14 +315,14 @@ oj_model_2 = train(
 `caret` built a full tree using `rpart`'s default parameters: gini splitting index, at least 20 observations in a node in order to consider splitting it, and at least 6 observations in each node.  Caret then calculated the accuracy for each candidate value of $\alpha$.  Here is the results.
 
 ```{r}
-print(oj_model_2)
+print(oj_mdl_cart2)
 ```
 
-The second `cp` (0.008982036) produced the highest accuracy.  I can drill into the best value of `cp` using a tuning grid.  I'll try that now.
+The second `cp` (0.008982036) produced the highest accuracy.  I can drill into the best value of `cp` using a tuning grid.
 
 ```{r}
 set.seed(1234)
-oj_model_3 = train(
+oj_mdl_cart2 <- train(
    Purchase ~ ., 
    data = oj_train, 
    method = "rpart",
@@ -313,94 +330,86 @@ oj_model_3 = train(
    metric='Accuracy',
    trControl = oj_trControl
    )
-print(oj_model_3)
+print(oj_mdl_cart2)
 ```
 
-The beset model is at cp = 0.009.  Here are the rules in the final model.  
+The best model is at cp = 0.0082.  Here are the cross-validated accuracies for the candidate cp values.
 
 ```{r}
-oj_model_3$finalModel
+plot(oj_mdl_cart2)
 ```
 
-Here is the tree.
+Here are the rules in the final model.  
 
 ```{r}
-rpart.plot(oj_model_3$finalModel)
+oj_mdl_cart2$finalModel
 ```
 
-Here is the ROC curve.
-
 ```{r}
-library(plotROC)
-ggplot(oj_model_3$pred) + 
-    geom_roc(
-       aes(
-          m = MM, 
-          d = factor(obs, levels = c("CH", "MM"))
-       ),
-       hjust = -0.4, vjust = 1.5
-    ) +
-   coord_equal()
+rpart.plot(oj_mdl_cart2$finalModel)
 ```
 
-Here are the cross-validated Accuracy for each candidate cp value.
+Let's look at the performance on the holdout data set.
 
 ```{r}
-plot(oj_model_3)
-```
- 
-Evaluate the model by making predictions with the test data set.  
-
-```{r}
-oj_model_3_preds <- predict(oj_model_3, oj_test, type = "raw")
-```
-
-The confusion matrix shows the true positives and true negatives.
-
-```{r}
-oj_model_3_cm <- confusionMatrix(
-   data = oj_model_3_preds, 
-   reference = oj_test$Purchase
+oj_preds_cart2 <- bind_cols(
+   predict(oj_mdl_cart2, newdata = oj_test, type = "prob"),
+   Pred = predict(oj_mdl_cart2, newdata = oj_test, type = "raw"),
+   Purchase = oj_test$Purchase
 )
-oj_model_3_cm
+
+oj_cm_cart2 <- confusionMatrix(oj_preds_cart2$Pred, oj_test$Purchase)
+oj_cm_cart2
 ```
 
-The accuracy metric is the slightly worse than in my previous model.  Here is a graphical representation of the confusion matrix.
+The accuracy is 0.8451 - a little worse than the 0.8592 from the direct method.
 
 ```{r}
-plot(oj_test$Purchase, oj_model_3_preds, 
-     main = "Simple Classification: Predicted vs. Actual",
-     xlab = "Actual",
-     ylab = "Predicted")
+precrec::evalmod(scores = oj_preds_cart2$CH, labels = oj_preds_cart2$Purchase, posclass = "CH")
+
+yardstick::roc_curve(oj_preds_cart2, Purchase, CH) %>%
+  autoplot() +
+  labs(
+    title = "OJ CART ROC Curve (caret)",
+    subtitle = "AUC = 0.9104"
+  )
 ```
 
-Finally, here is the variable importance plot.
+The AUC is 0.9104.
 
 ```{r}
-plot(varImp(oj_model_3), main="Variable Importance with Simple Classication")
+yardstick::gain_curve(oj_preds_cart2, Purchase, CH) %>%
+  autoplot() +
+  labs(title = "OJ CART Gain Curve (caret)")
 ```
 
-Looks like the manual effort faired best.  Here is a summary the accuracy rates of the three models.
+Finally, here is the variable importance plot. Brand loyalty is most important, followed by price difference.
 
 ```{r}
-rbind(data.frame(model = "Manual Class", Acc = round(oj_cm_cart$overall["Accuracy"], 5)), 
-      data.frame(model = "Caret w/tuneGrid", Acc = round(oj_model_3_cm$overall["Accuracy"], 5))
+plot(varImp(oj_mdl_cart2), main="Variable Importance with CART (caret)")
+```
+
+Looks like the manual effort fared best.  Here is a summary the accuracy rates of the two models.
+
+```{r}
+scoreboard <- rbind(
+   data.frame(model = "Manual Class", Acc = round(oj_cm_cart$overall["Accuracy"], 5)), 
+   data.frame(model = "Caret w/tuneGrid", Acc = round(oj_cm_cart2$overall["Accuracy"], 5))
 )
+scoreboard
 ```
 
 
-## Regression Trees
+## Regression Tree
 
-A simple regression tree is built in a manner similar to a simple classificatioon tree, and like the simple classification tree, it is rarely invoked on its own; the bagged, random forest, and gradient boosting methods build on this logic.  I'll learn by example again. Using the `ISLR::Carseats` data set, I will predict `Sales` using from the 10 feature variables.  Load the data.
+A simple regression tree is built in a manner similar to a simple classification tree, and like the simple classification tree, it is rarely invoked on its own; the bagged, random forest, and gradient boosting methods build on this logic.  I'll learn by example again. Using the `ISLR::Carseats` data set, and predict `Sales` using from the 10 feature variables.
 
 ```{r}
 carseats_dat <- ISLR::Carseats
-#skim_with(numeric = list(p0 = NULL, p25 = NULL, p50 = NULL, p75 = NULL, 
-#                                p100 = NULL, hist = NULL))
-#skim(carseats_dat)
+skimr::skim(carseats_dat)
 ```
 
-I'll split `careseats_dat` (n = 400) into `carseats_train` (80%, n = 321) and `carseats_test` (20%, n = 79).  I'll fit a simple decision tree with `carseats_train`, then later a bagged tree, a random forest, and a gradient boosting tree.  I'll compare their predictive performance with `carseats_test`.
+Split `careseats_dat` (n = 400) into `carseats_train` (80%, n = 321) and `carseats_test` (20%, n = 79).
 
 ```{r}
 set.seed(12345)
@@ -409,40 +418,39 @@ carseats_train <- carseats_dat[partition, ]
 carseats_test <- carseats_dat[-partition, ]
 ```
 
-The first step is to build a full tree, then perform k-fold cross-validation to help select the optimal cost complexity (cp).  The only difference here is the `rpart()` parameter `method = "anova"` to produce a regression tree.
+The first step is to build a full tree, then perform k-fold cross-validation to help select the optimal cost complexity (cp). The only difference here is the `rpart()` parameter `method = "anova"` to produce a regression tree.
 
 ```{r}
 set.seed(1234)
-carseats_model_1 <- rpart(
-   formula = Sales ~ .,
-   data = carseats_train,
-   method = "anova", 
-   xval = 10,
-   model = TRUE  # to plot splits with factor variables.
-)
-print(carseats_model_1)
+carseats_mdl_cart_full <- rpart(Sales ~ ., carseats_train, method = "anova")
+# carseats_mdl_1 <- rpart(
+#    formula = Sales ~ .,
+#    data = carseats_train,
+#    method = "anova", 
+#    xval = 10,
+#    model = TRUE  # to plot splits with factor variables.
+# )
+print(carseats_mdl_cart_full)
 ```
 
-The output starts with the root node.  The predicted `Sales` at the root is the mean `Sales` for the training data set, 7.535950 (values are $000s).  The deviance at the root is the SSE, 2567.768.  The child nodes of node "x" are labeled 2x) and 2x+1), so the child nodes of 1) are 2) and 3), and the child nodes of 2) are 4) and 5).  Terminal nodes are labeled with an asterisk (*).
-
-The first split is at `ShelveLoc` = [Bad, Medium] vs Good.  Here is what the full (unpruned) tree looks like.
+The predicted `Sales` at the root is the mean `Sales` for the training data set, 7.535950 (values are $000s). The deviance at the root is the SSE, 2567.768. The first split is at `ShelveLoc` = [Bad, Medium] vs Good.  Here is the unpruned tree diagram.
 
 ```{r}
-rpart.plot(carseats_model_1, yesno = TRUE)
+rpart.plot(carseats_mdl_cart_full, yesno = TRUE)
 ```
 
 The boxes show the node predicted value (mean) and the proportion of observations that are in the node (or child nodes). 
 
-`rpart()` not only grew the full tree, it also used cross-validation to test the performance of the possible complexity hyperparameters. `printcp()` displays the candidate cp values. You can use this table to decide how to prune the tree.
+`rpart()` grew the full tree, and used cross-validation to test the performance of the possible complexity hyperparameters. `printcp()` displays the candidate cp values. You can use this table to decide how to prune the tree.
 
 ```{r}
-printcp(carseats_model_1)
+printcp(carseats_mdl_cart_full)
 ```
 
-There are 16 possible cp values in this model.  The model with the smallest complexity parameter allows the most splits (`nsplit`).  The highest complexity parameter corresponds to a tree with just a root node.  `rel error` is the SSE relative to the root node.  The root node SSE is 2567.76800, so its `rel error` is 2567.76800/2567.76800 = 1.0.  That means the absolute error of the full tree (at CP = 0.01) is 0.30963 * 2567.76800 = 795.058. You can verify that by calculating the SSE of the model predicted values:
+There were 16 possible cp values in this model. The model with the smallest complexity parameter allows the most splits (`nsplit`).  The highest complexity parameter corresponds to a tree with just a root node.  `rel error` is the SSE relative to the root node.  The root node SSE is 2567.76800, so its `rel error` is 2567.76800/2567.76800 = 1.0.  That means the absolute error of the full tree (at CP = 0.01) is 0.30963 * 2567.76800 = 795.058. You can verify that by calculating the SSE of the model predicted values:
 
 ```{r}
-data.frame(pred = predict(carseats_model_1, newdata = carseats_train)) %>%
+data.frame(pred = predict(carseats_mdl_cart_full, newdata = carseats_train)) %>%
    mutate(obs = carseats_train$Sales,
           sq_err = (obs - pred)^2) %>%
    summarize(sse = sum(sq_err))
@@ -451,38 +459,38 @@ data.frame(pred = predict(carseats_model_1, newdata = carseats_train)) %>%
 Finishing the CP table tour, `xerror` is the cross-validated SSE and `xstd` is its standard error. If you want the lowest possible error, then prune to the tree with the smallest relative SSE (`xerror`).  If you want to balance predictive power with simplicity, prune to the smallest tree within 1 SE of the one with the smallest relative SSE.  The CP table is not super-helpful for finding that tree. I'll add a column to find it.
 
 ```{r}
-carseats_model_1$cptable %>%
+carseats_mdl_cart_full$cptable %>%
    data.frame() %>%
-   mutate(min_xerror_idx = which.min(carseats_model_1$cptable[, "xerror"]),
+   mutate(min_xerror_idx = which.min(carseats_mdl_cart_full$cptable[, "xerror"]),
           rownum = row_number(),
-          xerror_cap = carseats_model_1$cptable[min_xerror_idx, "xerror"] + 
-             carseats_model_1$cptable[min_xerror_idx, "xstd"],
+          xerror_cap = carseats_mdl_cart_full$cptable[min_xerror_idx, "xerror"] + 
+             carseats_mdl_cart_full$cptable[min_xerror_idx, "xstd"],
           eval = case_when(rownum == min_xerror_idx ~ "min xerror",
                            xerror < xerror_cap ~ "under cap",
                            TRUE ~ "")) %>%
    select(-rownum, -min_xerror_idx) 
 ```
 
-Okay, so the simplest tree is the one with CP = 0.01544139 (8 splits).  Fortunately, `plotcp()` presents a nice graphical representation of the relationship between `xerror` and `cp`.
+Okay, so the simplest tree is the one with CP = 0.02599265 (5 splits).  Fortunately, `plotcp()` presents a nice graphical representation of the relationship between `xerror` and `cp`.
 
 ```{r}
-plotcp(carseats_model_1, upper = "splits")
+plotcp(carseats_mdl_cart_full, upper = "splits")
 ```
 
-The dashed line is set at the minimum `xerror` + `xstd`.  The top axis shows the number of splits in the tree.  I'm not sure why the CP values are not the same as in the table (they are close, but not the same).  The smallest relative error is at `r carseats_model_1$cptable[which.min(carseats_model_1$cptable[, "xerror"]), "CP"]`, but the maximum CP below the dashed line (one standard deviation above the mimimum error) is at CP = .019 (8 splits). Use the `prune()` function to prune the tree by specifying the associated cost-complexity `cp`.  
+The dashed line is set at the minimum `xerror` + `xstd`.  The top axis shows the number of splits in the tree.  I'm not sure why the CP values are not the same as in the table (they are close, but not the same).  The smallest relative error is at CP = 0.01000000 (15 splits), but the maximum CP below the dashed line (one standard deviation above the minimum error) is at CP = 0.02599265 (5 splits). Use the `prune()` function to prune the tree by specifying the associated cost-complexity `cp`.  
 
 ```{r}
-carseats_model_1_pruned <- prune(
-   carseats_model_1,
-   cp = carseats_model_1$cptable[carseats_model_1$cptable[, 2] == 8, "CP"]
+carseats_mdl_cart <- prune(
+   carseats_mdl_cart_full,
+   cp = carseats_mdl_cart_full$cptable[carseats_mdl_cart_full$cptable[, 2] == 5, "CP"]
 )
-rpart.plot(carseats_model_1_pruned, yesno = TRUE)
+rpart.plot(carseats_mdl_cart, yesno = TRUE)
 ```
 
 The most "important" indicator of `Sales` is `ShelveLoc`.  Here are the importance values from the model. 
 
 ```{r}
-carseats_model_1_pruned$variable.importance %>% 
+carseats_mdl_cart$variable.importance %>% 
    data.frame() %>%
    rownames_to_column(var = "Feature") %>%
    rename(Overall = '.') %>%
@@ -498,41 +506,37 @@ The most important indicator of `Sales` is `ShelveLoc`, then `Price`, then `Age`
 The last step is to make predictions on the validation data set. The root mean squared error ($RMSE = \sqrt{(1/2) \sum{(actual - pred)^2}})$ and mean absolute error ($MAE = (1/n) \sum{|actual - pred|}$) are the two most common measures of predictive accuracy. The key difference is that RMSE punishes large errors more harshly. For a regression tree, set argument `type = "vector"` (or do not specify at all). 
 
 ```{r message=FALSE, warning=FALSE}
-carseats_model_1_preds <- predict(
-   carseats_model_1_pruned, 
-   carseats_test, 
-   type = "vector"
-)
+carseats_preds_cart <- predict(carseats_mdl_cart, carseats_test, type = "vector")
 
-carseats_model_1_pruned_rmse <- RMSE(
-   pred = carseats_model_1_preds,
+carseats_rmse_cart <- RMSE(
+   pred = carseats_preds_cart,
    obs = carseats_test$Sales
 )
-carseats_model_1_pruned_rmse
+carseats_rmse_cart
 ```
 
-The pruning process leads to an average prediction error of `r round(carseats_model_1_pruned_rmse, 3)` in the test data set.  Not too bad considering the standard deviation of `Sales` is `r round(sd(carseats_test$Sales), 3)`. Here is a predicted vs actual plot. 
+The pruning process leads to an average prediction error of 2.363 in the test data set.  Not too bad considering the standard deviation of `Sales` is `r round(sd(carseats_test$Sales), 3)`. Here is a predicted vs actual plot. 
 
-```{r message=FALSE, warning=FALSE}
-plot(carseats_test$Sales, carseats_model_1_preds, 
-     main = "Simple Regression: Predicted vs. Actual",
-     xlab = "Actual",
-     ylab = "Predicted")
-abline(0, 1)
+```{r}
+data.frame(Predicted = carseats_preds_cart, Actual = carseats_test$Sales) %>%
+   ggplot(aes(x = Actual, y = Predicted)) +
+   geom_point(alpha = 0.6, color = "cadetblue") +
+   geom_smooth() +
+   geom_abline(intercept = 0, slope = 1, linetype = 2) +
+   labs(title = "Carseats CART, Predicted vs Actual")
 ```
 
 The 6 possible predicted values do a decent job of binning the observations.
 
+
 ### Caret Approach
 
-I can also fit the model with `caret::train()`, specifying `method = "rpart"`.
-
-I'll build the model using 10-fold cross-validation to optimize the hyperparameter CP. 
+I can also fit the model with `caret::train()`, specifying `method = "rpart"`. I'll build the model using 10-fold cross-validation to optimize the hyperparameter CP. 
 
 ```{r}
 carseats_trControl = trainControl(
-   method = "cv",  # k-fold cross validation
-   number = 10,  # 10 folds
+   method = "cv",
+   number = 10,
    savePredictions = "final"       # save predictions for the optimal tuning parameter
 )
 ```
@@ -542,81 +546,80 @@ I'll let the model look for the best CP tuning parameter with `tuneLength` to ge
 
 ```{r}
 set.seed(1234)
-carseats_model_2 = train(
+carseats_mdl_cart2 = train(
    Sales ~ ., 
    data = carseats_train, 
-   method = "rpart",  # for classification tree
-   tuneLength = 5,  # choose up to 5 combinations of tuning parameters (cp)
-   metric = "RMSE",  # evaluate hyperparamter combinations with RMSE
+   method = "rpart",
+   tuneLength = 5,
+   metric = "RMSE",
    trControl = carseats_trControl
 )
-print(carseats_model_2)
+print(carseats_mdl_cart2)
 ```
 
 The first `cp` (0.04167149) produced the smallest RMSE.  I can drill into the best value of `cp` using a tuning grid.  I'll try that now.
 
 ```{r}
-myGrid <-  expand.grid(cp = seq(from = 0, to = 0.1, by = 0.01))
-carseats_model_3 = train(
+set.seed(1234)
+carseats_mdl_cart2 = train(
    Sales ~ ., 
    data = carseats_train, 
-   method = "rpart",  # for classification tree
-   tuneGrid = myGrid,  # choose up to 5 combinations of tuning parameters (cp)
-   metric = "RMSE",  # evaluate hyperparamter combinations with RMSE
+   method = "rpart",
+   tuneGrid = expand.grid(cp = seq(from = 0, to = 0.1, by = 0.01)),
+   metric = "RMSE",
    trControl = carseats_trControl
 )
-print(carseats_model_3)
+print(carseats_mdl_cart2)
 ```
 
 It looks like the best performing tree is the unpruned one.
 
 ```{r}
-plot(carseats_model_3)
+plot(carseats_mdl_cart2)
 ```
 
-Lets's see the final model.
+Let's see the final model.
 
 ```{r}
-rpart.plot(carseats_model_3$finalModel)
+rpart.plot(carseats_mdl_cart2$finalModel)
 ```
 
 What were the most important variables?
+
 ```{r}
-plot(varImp(carseats_model_3), main="Variable Importance with Simple Regression")
+plot(varImp(carseats_mdl_cart2), main="Variable Importance with Simple Regression")
 ```
 
 Evaluate the model by making predictions with the test data set.  
 
 ```{r}
-carseats_model_3_preds <- predict(carseats_model_3, carseats_test, type = "raw")
-data.frame(Actual = carseats_test$Sales, Predicted = carseats_model_3_preds) %>%
+carseats_preds_cart2 <- predict(carseats_mdl_cart2, carseats_test, type = "raw")
+data.frame(Actual = carseats_test$Sales, Predicted = carseats_preds_cart2) %>%
 ggplot(aes(x = Actual, y = Predicted)) +
-   geom_point() +
-   geom_smooth() +
-   geom_abline(slope = 1, intercept = 0) + 
-   scale_y_continuous(limits = c(0, 15)) +
-   labs(title = "Simple Regression: Predicted vs. Actual")
+   geom_point(alpha = 0.6, color = "cadetblue") +
+   geom_smooth(method = "loess", formula = "y ~ x") +
+   geom_abline(intercept = 0, slope = 1, linetype = 2) +
+   labs(title = "Carseats CART, Predicted vs Actual (caret")
 ```
 
 Looks like the model over-estimates at the low end and undestimates at the high end.  Calculate the test data set RMSE.
 
 ```{r}
-carseats_model_3_pruned_rmse <- RMSE(
-   pred = carseats_model_3_preds,
+carseats_rmse_cart2 <- RMSE(
+   pred = carseats_preds_cart2,
    obs = carseats_test$Sales
 )
-carseats_model_3_pruned_rmse
+carseats_rmse_cart2
 ```
 
-
-Caret faired better in this model.  Here is a summary the RMSE values of the two models.
+Caret performed better in this model.  Here is a summary the RMSE values of the two models.
 
 ```{r}
-rbind(data.frame(model = "Manual ANOVA", 
-                 RMSE = round(carseats_model_1_pruned_rmse, 5)), 
-      data.frame(model = "Caret", 
-                 RMSE = round(carseats_model_3_pruned_rmse, 5))
+scoreboard_r <- rbind(
+   data.frame(model = "Manual ANOVA", RMSE = round(carseats_rmse_cart, 5)), 
+   data.frame(model = "Caret", RMSE = round(carseats_rmse_cart2, 5))
 )
+scoreboard_r
 ```
 
 
@@ -793,8 +796,8 @@ The model algorithm explains *"RMSE was used to select the optimal model using t
 The bagging and random forest models faired very well - they took over the first and second place!
 
 ```{r}
-rbind(data.frame(model = "Manual ANOVA", RMSE = round(carseats_model_1_pruned_rmse, 5)), 
-      data.frame(model = "ANOVA w.tuneGrid", RMSE = round(carseats_model_3_pruned_rmse, 5)),
+rbind(data.frame(model = "Manual ANOVA", RMSE = round(carseats_mdl_cart_pruned_rmse, 5)), 
+      data.frame(model = "ANOVA w.tuneGrid", RMSE = round(carseats_mdl_3_pruned_rmse, 5)),
       data.frame(model = "Bagging", RMSE = round(carseats.bag.rmse, 5)),
       data.frame(model = "Random Forest", RMSE = round(carseats.frst.rmse, 5))
 ) %>% arrange(RMSE)
@@ -912,8 +915,8 @@ rbind(data.frame(model = "Manual Class", Acc = round(oj_cm_cart$overall["Accurac
 And now for the regression division, the winnner is... gradient boosting!
 
 ```{r}
-rbind(data.frame(model = "Manual ANOVA", RMSE = round(carseats_model_1_pruned_rmse, 5)), 
-      data.frame(model = "ANOVA w.tuneGrid", RMSE = round(carseats_model_3_pruned_rmse, 5)),
+rbind(data.frame(model = "Manual ANOVA", RMSE = round(carseats_mdl_cart_pruned_rmse, 5)), 
+      data.frame(model = "ANOVA w.tuneGrid", RMSE = round(carseats_mdl_3_pruned_rmse, 5)),
       data.frame(model = "Bagging", RMSE = round(carseats.bag.rmse, 5)),
       data.frame(model = "Random Forest", RMSE = round(carseats.frst.rmse, 5)),
       data.frame(model = "Gradient Boosting", RMSE = round(carseats.gbm.rmse, 5))
