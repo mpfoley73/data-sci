@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-23" />
+<meta name="date" content="2020-06-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -233,12 +233,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>9</b> Decision Trees</a><ul>
 <li class="chapter" data-level="9.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>9.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>9.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>9.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="9.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>9.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#holdout-performance"><i class="fa fa-check"></i><b>9.1.1</b> Holdout Performance</a></li>
+<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>9.1.2</b> Caret Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>9.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>9.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="9.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>9.2</b> Regression Tree</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="regression-tree.html"><a href="regression-tree.html#caret-approach-1"><i class="fa fa-check"></i><b>9.2.1</b> Caret Approach</a></li>
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>9.3</b> Bagging</a></li>
 <li class="chapter" data-level="9.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>9.4</b> Random Forests</a></li>
@@ -307,57 +306,148 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="summary" class="section level2">
 <h2><span class="header-section-number">9.6</span> Summary</h2>
-<p>Okay, I’m going to tally up the results! For the classification division, the winner is the manual classification tree! Gradient boosting made a valiant run at it, but came up just a little short.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="summary.html#cb136-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual Class&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_1b_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)), </span>
-<span id="cb136-2"><a href="summary.html#cb136-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Class w.tuneGrid&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_model_<span class="dv">3</span>_cm<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)),</span>
-<span id="cb136-3"><a href="summary.html#cb136-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.bag.acc, <span class="dv">5</span>)),</span>
-<span id="cb136-4"><a href="summary.html#cb136-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.frst.acc, <span class="dv">5</span>)),</span>
-<span id="cb136-5"><a href="summary.html#cb136-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj.gbm.acc, <span class="dv">5</span>))</span>
-<span id="cb136-6"><a href="summary.html#cb136-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Acc))</span></code></pre></div>
-<pre><code>##                       model     Acc
-## Accuracy       Manual Class 0.85915
-## 12        Gradient Boosting 0.85446
-## Accuracy1  Class w.tuneGrid 0.84507
-## 1                   Bagging 0.82629
-## 11            Random Forest 0.82629</code></pre>
-<p>And now for the regression division, the winnner is… gradient boosting!</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="summary.html#cb138-1"></a><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual ANOVA&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">1</span>_pruned_rmse, <span class="dv">5</span>)), </span>
-<span id="cb138-2"><a href="summary.html#cb138-2"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;ANOVA w.tuneGrid&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats_model_<span class="dv">3</span>_pruned_rmse, <span class="dv">5</span>)),</span>
-<span id="cb138-3"><a href="summary.html#cb138-3"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.bag.rmse, <span class="dv">5</span>)),</span>
-<span id="cb138-4"><a href="summary.html#cb138-4"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.frst.rmse, <span class="dv">5</span>)),</span>
-<span id="cb138-5"><a href="summary.html#cb138-5"></a>      <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Gradient Boosting&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(carseats.gbm.rmse, <span class="dv">5</span>))</span>
-<span id="cb138-6"><a href="summary.html#cb138-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(RMSE)</span></code></pre></div>
-<pre><code>##               model    RMSE
-## 1 Gradient Boosting 1.40243
-## 2     Random Forest 1.75811
-## 3           Bagging 1.93279
-## 4  ANOVA w.tuneGrid 2.29833
-## 5      Manual ANOVA 2.38806</code></pre>
-<p>Here are plots of the ROC curves for all the models (one from each chapter) on the same graph. The ROCR package provides the prediction() and performance() functions which generate the data required for plotting the ROC curve, given a set of predictions and actual (true) values.
-The more “up and to the left” the ROC curve of a model is, the better the model. The AUC performance metric is literally the “Area Under the ROC Curve”, so the greater the area under this curve, the higher the AUC, and the better-performing the model is.</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="summary.html#cb140-1"></a><span class="kw">library</span>(ROCR)</span>
-<span id="cb140-2"><a href="summary.html#cb140-2"></a><span class="co"># List of predictions</span></span>
-<span id="cb140-3"><a href="summary.html#cb140-3"></a>oj.class.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj_model_<span class="dv">3</span>, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb140-4"><a href="summary.html#cb140-4"></a>oj.bag.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.bag, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb140-5"><a href="summary.html#cb140-5"></a>oj.frst.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.frst, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb140-6"><a href="summary.html#cb140-6"></a>oj.gbm.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(oj.gbm, oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>]</span>
-<span id="cb140-7"><a href="summary.html#cb140-7"></a></span>
-<span id="cb140-8"><a href="summary.html#cb140-8"></a>preds_list &lt;-<span class="st"> </span><span class="kw">list</span>(oj.class.pred, oj.bag.pred, oj.frst.pred, oj.gbm.pred)</span>
-<span id="cb140-9"><a href="summary.html#cb140-9"></a><span class="co">#preds_list &lt;- list(oj.class.pred)</span></span>
-<span id="cb140-10"><a href="summary.html#cb140-10"></a></span>
-<span id="cb140-11"><a href="summary.html#cb140-11"></a><span class="co"># List of actual values (same for all)</span></span>
-<span id="cb140-12"><a href="summary.html#cb140-12"></a>m &lt;-<span class="st"> </span><span class="kw">length</span>(preds_list)</span>
-<span id="cb140-13"><a href="summary.html#cb140-13"></a>actuals_list &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">list</span>(oj_test<span class="op">$</span>Purchase), m)</span>
-<span id="cb140-14"><a href="summary.html#cb140-14"></a></span>
-<span id="cb140-15"><a href="summary.html#cb140-15"></a><span class="co"># Plot the ROC curves</span></span>
-<span id="cb140-16"><a href="summary.html#cb140-16"></a>pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(preds_list, actuals_list)</span>
-<span id="cb140-17"><a href="summary.html#cb140-17"></a><span class="co">#pred &lt;- prediction(oj.class.pred[,2], oj_test$Purchase)</span></span>
-<span id="cb140-18"><a href="summary.html#cb140-18"></a>rocs &lt;-<span class="st"> </span><span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb140-19"><a href="summary.html#cb140-19"></a><span class="kw">plot</span>(rocs, <span class="dt">col =</span> <span class="kw">as.list</span>(<span class="dv">1</span><span class="op">:</span>m), <span class="dt">main =</span> <span class="st">&quot;Test Set ROC Curves&quot;</span>)</span>
-<span id="cb140-20"><a href="summary.html#cb140-20"></a><span class="kw">legend</span>(<span class="dt">x =</span> <span class="st">&quot;bottomright&quot;</span>, </span>
-<span id="cb140-21"><a href="summary.html#cb140-21"></a>       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Decision Tree&quot;</span>, <span class="st">&quot;Bagged Trees&quot;</span>, <span class="st">&quot;Random Forest&quot;</span>, <span class="st">&quot;GBM&quot;</span>),</span>
-<span id="cb140-22"><a href="summary.html#cb140-22"></a>       <span class="dt">fill =</span> <span class="dv">1</span><span class="op">:</span>m)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="summary.html#cb131-1"></a>resamps &lt;-<span class="st"> </span><span class="kw">resamples</span>(<span class="kw">list</span>(<span class="st">&#39;CART&#39;</span> =<span class="st"> </span>oj_mdl_cart2,</span>
+<span id="cb131-2"><a href="summary.html#cb131-2"></a>                          <span class="st">&#39;Bagging&#39;</span> =<span class="st"> </span>oj_mdl_bag,</span>
+<span id="cb131-3"><a href="summary.html#cb131-3"></a>                          <span class="st">&#39;Random Forest&#39;</span> =<span class="st"> </span>oj_mdl_bag,</span>
+<span id="cb131-4"><a href="summary.html#cb131-4"></a>                          <span class="st">&#39;GBM&#39;</span> =<span class="st"> </span>oj_mdl_gbm))</span>
+<span id="cb131-5"><a href="summary.html#cb131-5"></a></span>
+<span id="cb131-6"><a href="summary.html#cb131-6"></a><span class="kw">summary</span>(resamps)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## summary.resamples(object = resamps)
+## 
+## Models: CART, Bagging, Random Forest, GBM 
+## Number of resamples: 10 
+## 
+## Accuracy 
+##                    Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA&#39;s
+## CART          0.7058824 0.7936047 0.8314402 0.8120883 0.8441176 0.8837209    0
+## Bagging       0.7294118 0.7888509 0.8011628 0.7945774 0.8116145 0.8255814    0
+## Random Forest 0.7294118 0.7888509 0.8011628 0.7945774 0.8116145 0.8255814    0
+## GBM           0.7058824 0.8139535 0.8439588 0.8285045 0.8651505 0.8941176    0
+## 
+## Kappa 
+##                    Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA&#39;s
+## CART          0.3773806 0.5635201 0.6386667 0.6011446 0.6743840 0.7517321    0
+## Bagging       0.4334975 0.5540262 0.5716526 0.5653649 0.6090299 0.6345658    0
+## Random Forest 0.4334975 0.5540262 0.5716526 0.5653649 0.6090299 0.6345658    0
+## GBM           0.3703704 0.6006641 0.6738871 0.6365233 0.7203674 0.7783251    0</code></pre>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="summary.html#cb133-1"></a><span class="kw">bwplot</span>(resamps)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="summary.html#cb134-1"></a><span class="kw">dotplot</span>(resamps, <span class="dt">metric =</span> <span class="st">&quot;Accuracy&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-69-1.png" width="672" />
+Compute the differences among models and use a t-test to evaluate the null hypothesis that there is no difference between models.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="summary.html#cb135-1"></a>(difValues &lt;-<span class="st"> </span><span class="kw">diff</span>(resamps))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## diff.resamples(x = resamps)
+## 
+## Models: CART, Bagging, Random Forest, GBM 
+## Metrics: Accuracy, Kappa 
+## Number of differences: 6 
+## p-value adjustment: bonferroni</code></pre>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="summary.html#cb137-1"></a><span class="kw">summary</span>(difValues)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## summary.diff.resamples(object = difValues)
+## 
+## p-value adjustment: bonferroni 
+## Upper diagonal: estimates of the difference
+## Lower diagonal: p-value for H0: difference = 0
+## 
+## Accuracy 
+##               CART   Bagging  Random Forest GBM     
+## CART                  0.01751  0.01751      -0.01642
+## Bagging       0.5526           0.00000      -0.03393
+## Random Forest 0.5526 NA                     -0.03393
+## GBM           0.7832 0.1218   0.1218                
+## 
+## Kappa 
+##               CART   Bagging  Random Forest GBM     
+## CART                  0.03578  0.03578      -0.03538
+## Bagging       0.5617           0.00000      -0.07116
+## Random Forest 0.5617 NA                     -0.07116
+## GBM           0.7735 0.1466   0.1466</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="summary.html#cb139-1"></a><span class="kw">bwplot</span>(difValues, <span class="dt">layout =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="summary.html#cb140-1"></a>resamps &lt;-<span class="st"> </span><span class="kw">resamples</span>(<span class="kw">list</span>(<span class="st">&#39;CART&#39;</span> =<span class="st"> </span>cs_mdl_cart2,</span>
+<span id="cb140-2"><a href="summary.html#cb140-2"></a>                          <span class="st">&#39;Bagging&#39;</span> =<span class="st"> </span>cs_mdl_bag,</span>
+<span id="cb140-3"><a href="summary.html#cb140-3"></a>                          <span class="st">&#39;Random Forest&#39;</span> =<span class="st"> </span>cs_mdl_bag,</span>
+<span id="cb140-4"><a href="summary.html#cb140-4"></a>                          <span class="st">&#39;GBM&#39;</span> =<span class="st"> </span>cs_mdl_gbm))</span>
+<span id="cb140-5"><a href="summary.html#cb140-5"></a></span>
+<span id="cb140-6"><a href="summary.html#cb140-6"></a><span class="kw">summary</span>(resamps)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## summary.resamples(object = resamps)
+## 
+## Models: CART, Bagging, Random Forest, GBM 
+## Number of resamples: 10 
+## 
+## MAE 
+##                    Min.   1st Qu.    Median      Mean  3rd Qu.     Max. NA&#39;s
+## CART          1.3654588 1.5880059 1.7313313 1.6954527 1.799792 2.064407    0
+## Bagging       0.9303614 1.1254345 1.3464588 1.3434268 1.571260 1.737744    0
+## Random Forest 0.9303614 1.1254345 1.3464588 1.3434268 1.571260 1.737744    0
+## GBM           0.7158107 0.8573375 0.9156746 0.9384418 1.043579 1.113679    0
+## 
+## RMSE 
+##                   Min.  1st Qu.   Median     Mean  3rd Qu.     Max. NA&#39;s
+## CART          1.694854 1.902683 2.038878 2.055676 2.178660 2.496287    0
+## Bagging       1.209929 1.405502 1.693264 1.681889 1.979521 2.069958    0
+## Random Forest 1.209929 1.405502 1.693264 1.681889 1.979521 2.069958    0
+## GBM           0.930552 1.082300 1.159712 1.161540 1.271790 1.390241    0
+## 
+## Rsquared 
+##                    Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA&#39;s
+## CART          0.3858765 0.4977272 0.5185928 0.5027431 0.5272691 0.5852449    0
+## Bagging       0.5280595 0.6322136 0.6805770 0.6752390 0.7281293 0.7848460    0
+## Random Forest 0.5280595 0.6322136 0.6805770 0.6752390 0.7281293 0.7848460    0
+## GBM           0.8176434 0.8319850 0.8536650 0.8488463 0.8628293 0.8721381    0</code></pre>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="summary.html#cb142-1"></a><span class="kw">bwplot</span>(resamps)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="summary.html#cb143-1"></a><span class="kw">dotplot</span>(resamps, <span class="dt">metric =</span> <span class="st">&quot;RMSE&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-73-1.png" width="672" />
+Compute the differences among models and use a t-test to evaluate the null hypothesis that there is no difference between models.</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="summary.html#cb144-1"></a>(difValues &lt;-<span class="st"> </span><span class="kw">diff</span>(resamps))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## diff.resamples(x = resamps)
+## 
+## Models: CART, Bagging, Random Forest, GBM 
+## Metrics: MAE, RMSE, Rsquared 
+## Number of differences: 6 
+## p-value adjustment: bonferroni</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="summary.html#cb146-1"></a><span class="kw">summary</span>(difValues)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## summary.diff.resamples(object = difValues)
+## 
+## p-value adjustment: bonferroni 
+## Upper diagonal: estimates of the difference
+## Lower diagonal: p-value for H0: difference = 0
+## 
+## MAE 
+##               CART      Bagging   Random Forest GBM  
+## CART                    0.352     0.352         0.757
+## Bagging       0.0004408           0.000         0.405
+## Random Forest 0.0004408 NA                      0.405
+## GBM           1.134e-06 0.0036058 0.0036058          
+## 
+## RMSE 
+##               CART      Bagging   Random Forest GBM   
+## CART                    0.3738    0.3738        0.8941
+## Bagging       0.0001734           0.0000        0.5203
+## Random Forest 0.0001734 NA                      0.5203
+## GBM           3.338e-07 0.0003272 0.0003272           
+## 
+## Rsquared 
+##               CART      Bagging   Random Forest GBM    
+## CART                    -0.1725   -0.1725       -0.3461
+## Bagging       0.0001668            0.0000       -0.1736
+## Random Forest 0.0001668 NA                      -0.1736
+## GBM           1.468e-07 0.0006759 0.0006759</code></pre>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="summary.html#cb148-1"></a><span class="kw">bwplot</span>(difValues, <span class="dt">layout =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
 </div>
             </section>
 

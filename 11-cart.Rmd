@@ -1,16 +1,16 @@
 # Decision Trees
 
-Decision trees, also known as classification and regression tree (CART) models, are tree-based methods for supervised machine learning.  Simple *classification trees* and *regression trees* are easy to use and interpret, but are not competitive with the best machine learning methods. However, they form the foundation for **bagged trees**, **random forests**, and **boosted trees** ensemble models, which although less interpretable, are very accurate.
+Decision trees, also known as classification and regression tree (CART) models, are tree-based methods for supervised machine learning.  Simple classification trees and regression trees are easy to use and interpret, but are not competitive with the best machine learning methods. However, they form the foundation for ensemble models such as bagged trees, random forests, and boosted trees, which although less interpretable, are very accurate.
 
-CART models segment the predictor space into $K$ non-overlapping terminal nodes (leaves), $A_1, A_2, \dots, A_K$.  Each node is described by a set of rules which can be used to predict new responses. The predicted value $\hat{y}$ for each node is the mode (classification) or mean (regression).
+CART models segment the predictor space into $K$ non-overlapping terminal nodes (leaves).  Each node is described by a set of rules which can be used to predict new responses. The predicted value $\hat{y}$ for each node is the mode (classification) or mean (regression).
 
 CART models define the nodes through a *top-down greedy* process called *recursive binary splitting*. The process is *top-down* because it begins at the top of the tree with all observations in a single region and successively splits the predictor space. It is *greedy* because at each splitting step, the best split is made at that particular step without consideration to subsequent splits.
 
-The best split is the predictor variable and cutpoint that minimizes a cost function. For a regression tree, the most common cost function is the sum of squared residuals, 
+The best split is the predictor variable and cutpoint that minimizes a cost function. The most common cost function for regression trees is the sum of squared residuals, 
 
 $$RSS = \sum_{k=1}^K\sum_{i \in A_k}{\left(y_i - \hat{y}_{A_k} \right)^2}.$$
 
-For a classification tree, the most common cost functions are the Gini index, 
+For classification trees, it is the Gini index, 
 
 $$G = \sum_{c=1}^C{\hat{p}_{kc}(1 - \hat{p}_{kc})},$$
 
@@ -18,11 +18,11 @@ and the entropy (aka information statistic)
 
 $$D = - \sum_{c=1}^C{\hat{p}_{kc} \log \hat{p}_{kc}}$$
 
-where $\hat{p}_{kc}$ is the proportion of training observations in node $k$ that are class $c$.  For a completely *pure* node in a binary tree, $\hat{p} \in \{ 0, 1 \}$ and $G = D = 0$. For a completely *impure* node in a binary tree, $\hat{p} = 0.5$ and $G = 0.5^2 \cdot 2 = 0.25$ and $D = -(0.5 \log(0.5)) \cdot 2 = 0.69$.
+where $\hat{p}_{kc}$ is the proportion of training observations in node $k$ that are class $c$.  A completely *pure* node in a binary tree would have $\hat{p} \in \{ 0, 1 \}$ and $G = D = 0$. A completely *impure* node in a binary tree would have $\hat{p} = 0.5$ and $G = 0.5^2 \cdot 2 = 0.25$ and $D = -(0.5 \log(0.5)) \cdot 2 = 0.69$.
 
-CART repeats the splitting process for each of the child nodes until a *stopping criterion* is satisfied, usually when no node size surpasses a predefined maximum, or continued splitting does not improve the model significantly.  CART may also impose a minimum number of observations in each node.
+CART repeats the splitting process for each child node until a *stopping criterion* is satisfied, usually when no node size surpasses a predefined maximum, or continued splitting does not improve the model significantly.  CART may also impose a minimum number of observations in each node.
 
-The resulting tree likely over-fits the training data and therefore does not generalize well to test data, so CART *prunes* the tree, minimizing the cross-validated prediction error. Rather than cross-validating every possible subtree to find the one with minimum error, CART uses *cost-complexity pruning*. Cost-complexity is the tradeoff between error (cost) and tree size (complexity) where the tradeoff is quantified with cost-complexity parameter $c_p$.  In the equation below, the cost complexity of the tree $R_{c_p}(T)$ is the sum of its risk (error) plus a "cost complexity" factor $c_p$ multiple of the tree size $|T|$.  
+The resulting tree likely over-fits the training data and therefore does not generalize well to test data, so CART *prunes* the tree, minimizing the cross-validated prediction error. Rather than cross-validating every possible subtree to find the one with minimum error, CART uses *cost-complexity pruning*. Cost-complexity is the tradeoff between error (cost) and tree size (complexity) where the tradeoff is quantified with cost-complexity parameter $c_p$.  The cost complexity of the tree, $R_{c_p}(T)$, is the sum of its risk (error) plus a "cost complexity" factor $c_p$ multiple of the tree size $|T|$.  
 
 $$R_{c_p}(T) = R(T) + c_p|T|$$
 
@@ -31,15 +31,13 @@ $c_p$ can take on any value from $[0..\infty]$, but it turns out there is an opt
 
 ## Classification Tree
 
-A simple classification tree is rarely performed on its own; the bagged, random forest, and gradient boosting methods build on this logic. However, it is good to start here to build understanding. I'll learn by example. Using the `ISLR::OJ` data set, I will use 17 feature variables to predict which brand of orange juice, Citrus Hill (CH) or Minute Maid = (MM), customers `Purchase`.
+You don't usually build a simple classification tree on its own, but it is a good way to build understanding, and the ensemble models build on the logic. I'll learn by example, using the `ISLR::OJ` data set to predict which brand of orange juice, Citrus Hill (CH) or Minute Maid = (MM), customers `Purchase` from its 17 predictor variables.
 
 ```{r warning=FALSE, message=FALSE}
 library(tidyverse)
 library(caret)
 library(rpart)  # classification and regression trees 
 library(rpart.plot)  # better formatted plots than the ones in rpart
-library(plotROC)  # ROC curves
-library(ROCR)
 
 oj_dat <- ISLR::OJ
 skimr::skim(oj_dat)
@@ -56,7 +54,7 @@ oj_test <- oj_dat[-partition, ]
 
 Function `rpart::rpart()` builds a full tree, minimizing the Gini index $G$ by default (`parms = list(split = "gini")`), until the stopping criterion is satisfied.  The default stopping criterion is 
 
-* only attempt a split if the current node has at least `minsplit = 20` observations,
+* only attempt a split if the current node has at least `minsplit = 20` observations, and
 * only accept a split if 
    * the resulting nodes have at least `minbucket = round(minsplit/3)` observations, and 
    * the resulting overall fit improves by `cp = 0.01` (i.e., $\Delta G <= 0.01$).
@@ -68,7 +66,7 @@ oj_mdl_cart_full <- rpart(formula = Purchase ~ ., data = oj_train, method = "cla
 print(oj_mdl_cart_full)
 ```
 
-The output starts with the root node.  The predicted class at the root is `CH` and this prediction produces 334 errors on the 857 observations for a success rate of 0.61026838 and an error rate of 0.38973162.  The child nodes of node "x" are labeled 2x) and 2x+1), so the child nodes of 1) are 2) and 3), and the child nodes of 2) are 4) and 5).  Terminal nodes are labeled with an asterisk (*).  
+The output starts with the root node.  The predicted class at the root is `CH` and this prediction produces 334 errors on the 857 observations for a success rate (accuracy) of 61% (0.61026838) and an error rate of 39% (0.38973162).  The child nodes of node "x" are labeled 2x) and 2x+1), so the child nodes of 1) are 2) and 3), and the child nodes of 2) are 4) and 5).  Terminal nodes are labeled with an asterisk (*).  
 
 Surprisingly, only 3 of the 17 features were used the in full tree: `LoyalCH` (Customer brand loyalty for CH), `PriceDiff` (relative price of MM over CH), and `SalePriceMM` (absolute price of MM).  The first split is at `LoyalCH` = 0.48285.  Here is a diagram of the full (unpruned) tree.
 
@@ -185,11 +183,11 @@ Print the confusion matrix with `caret::confusionMatrix()` to see how well does 
 ```{r}
 oj_preds_cart <- bind_cols(
    predict(oj_mdl_cart, newdata = oj_test, type = "prob"),
-   Pred = predict(oj_mdl_cart, newdata = oj_test, type = "class"),
-   Purchase = oj_test$Purchase
+   predicted = predict(oj_mdl_cart, newdata = oj_test, type = "class"),
+   actual = oj_test$Purchase
 )
 
-oj_cm_cart <- confusionMatrix(oj_preds_cart$Pred, reference = oj_test$Purchase)
+oj_cm_cart <- confusionMatrix(oj_preds_cart$predicted, reference = oj_preds_cart$actual)
 oj_cm_cart
 ```
 
@@ -216,7 +214,7 @@ $$RA = \frac{ActFalse \times PredFalse + ActTrue \times PredTrue}{Total \times T
 is the hypothetical probability of a chance agreement.  ActFalse will be the number of "MM" (13 + 70 = 83) and actual true will be the number of "CH" (113 + 17 = 130).  The predicted counts are
 
 ```{r}
-table(oj_preds_cart$Pred)
+table(oj_preds_cart$predicted)
 ```
 
 So, $RA = (83*87 + 130*126) / 213^2 = 0.5202$ and $\kappa = (0.8592 - 0.5202)/(1 - 0.5202) = 0.7064$.  The kappa statistic varies from 0 to 1 where 0 means accurate predictions occur merely by chance, and 1 means the predictions are in perfect agreement with the observations.  In this case, a kappa statistic of 0.7064 is "substantial".  See chart [here](https://www.statisticshowto.datasciencecentral.com/cohens-kappa-statistic/).
@@ -226,7 +224,7 @@ The other measures from the `confusionMatrix()` output are various proportions a
 Visuals are almost always helpful.  Here is a plot of the confusion matrix.
 
 ```{r}
-plot(oj_test$Purchase, oj_preds_cart$Pred, 
+plot(oj_preds_cart$actual, oj_preds_cart$predicted, 
      main = "Simple Classification: Predicted vs. Actual",
      xlab = "Actual",
      ylab = "Predicted")
@@ -237,13 +235,12 @@ plot(oj_test$Purchase, oj_preds_cart$Pred,
 The ROC (receiver operating characteristics) curve [@Fawcett2005] is another measure of accuracy.  The ROC curve is a plot of the true positive rate (TPR, sensitivity) versus the false positive rate (FPR, 1 - specificity) for a set of thresholds. By default, the threshold for predicting the default classification is 0.50, but it could be any threshold. `precrec::evalmod()` calculates the confusion matrix values from the model using the holdout data set.  The AUC on the holdout set is 0.8848.  `pRoc::plot.roc()`, `plotROC::geom_roc()`, and `yardstick::roc_curve()` are all options for plotting a ROC curve.
 
 ```{r}
-precrec::evalmod(scores = oj_preds_cart$CH, labels = oj_preds_cart$Purchase, posclass = "CH")
-
-yardstick::roc_curve(oj_preds_cart, Purchase, CH) %>%
+mdl_auc <- Metrics::auc(actual = oj_preds_cart$actual == "CH", oj_preds_cart$CH)
+yardstick::roc_curve(oj_preds_cart, actual, CH) %>%
   autoplot() +
   labs(
     title = "OJ CART ROC Curve",
-    subtitle = "AUC = 0.8848"
+    subtitle = paste0("AUC = ", round(mdl_auc, 4))
   )
 ```
 
@@ -272,7 +269,7 @@ The gain curve plots the cumulative summed true outcome versus the fraction of i
 * The bottom of the gray area is the outcome of a random model. Only half the CH purchasers would be observed within 50% of the observations. The top of the gray area is the outcome of the perfect model, the “wizard curve”. Half the CH purchasers would be observed in 65/213=31% of the observations.
 
 ```{r}
-yardstick::gain_curve(oj_preds_cart, Purchase, CH) %>%
+yardstick::gain_curve(oj_preds_cart, actual, CH) %>%
   autoplot() +
   labs(
     title = "OJ CART Gain Curve"
@@ -354,31 +351,28 @@ Let's look at the performance on the holdout data set.
 ```{r}
 oj_preds_cart2 <- bind_cols(
    predict(oj_mdl_cart2, newdata = oj_test, type = "prob"),
-   Pred = predict(oj_mdl_cart2, newdata = oj_test, type = "raw"),
-   Purchase = oj_test$Purchase
+   Predicted = predict(oj_mdl_cart2, newdata = oj_test, type = "raw"),
+   Actual = oj_test$Purchase
 )
 
-oj_cm_cart2 <- confusionMatrix(oj_preds_cart2$Pred, oj_test$Purchase)
+oj_cm_cart2 <- confusionMatrix(oj_preds_cart2$Predicted, oj_preds_cart2$Actual)
 oj_cm_cart2
 ```
 
-The accuracy is 0.8451 - a little worse than the 0.8592 from the direct method.
+The accuracy is 0.8451 - a little worse than the 0.8592 from the direct method. The AUC is 0.9102.
 
 ```{r}
-precrec::evalmod(scores = oj_preds_cart2$CH, labels = oj_preds_cart2$Purchase, posclass = "CH")
-
-yardstick::roc_curve(oj_preds_cart2, Purchase, CH) %>%
+mdl_auc <- Metrics::auc(actual = oj_preds_cart2$Actual == "CH", oj_preds_cart2$CH)
+yardstick::roc_curve(oj_preds_cart2, Actual, CH) %>%
   autoplot() +
   labs(
     title = "OJ CART ROC Curve (caret)",
-    subtitle = "AUC = 0.9104"
+    subtitle = paste0("AUC = ", round(mdl_auc, 4))
   )
 ```
 
-The AUC is 0.9104.
-
 ```{r}
-yardstick::gain_curve(oj_preds_cart2, Purchase, CH) %>%
+yardstick::gain_curve(oj_preds_cart2, Actual, CH) %>%
   autoplot() +
   labs(title = "OJ CART Gain Curve (caret)")
 ```
@@ -405,38 +399,31 @@ scoreboard
 A simple regression tree is built in a manner similar to a simple classification tree, and like the simple classification tree, it is rarely invoked on its own; the bagged, random forest, and gradient boosting methods build on this logic.  I'll learn by example again. Using the `ISLR::Carseats` data set, and predict `Sales` using from the 10 feature variables.
 
 ```{r}
-carseats_dat <- ISLR::Carseats
-skimr::skim(carseats_dat)
+cs_dat <- ISLR::Carseats
+skimr::skim(cs_dat)
 ```
 
-Split `careseats_dat` (n = 400) into `carseats_train` (80%, n = 321) and `carseats_test` (20%, n = 79).
+Split `careseats_dat` (n = 400) into `cs_train` (80%, n = 321) and `cs_test` (20%, n = 79).
 
 ```{r}
 set.seed(12345)
-partition <- createDataPartition(y = carseats_dat$Sales, p = 0.8, list = FALSE)
-carseats_train <- carseats_dat[partition, ]
-carseats_test <- carseats_dat[-partition, ]
+partition <- createDataPartition(y = cs_dat$Sales, p = 0.8, list = FALSE)
+cs_train <- cs_dat[partition, ]
+cs_test <- cs_dat[-partition, ]
 ```
 
 The first step is to build a full tree, then perform k-fold cross-validation to help select the optimal cost complexity (cp). The only difference here is the `rpart()` parameter `method = "anova"` to produce a regression tree.
 
 ```{r}
 set.seed(1234)
-carseats_mdl_cart_full <- rpart(Sales ~ ., carseats_train, method = "anova")
-# carseats_mdl_1 <- rpart(
-#    formula = Sales ~ .,
-#    data = carseats_train,
-#    method = "anova", 
-#    xval = 10,
-#    model = TRUE  # to plot splits with factor variables.
-# )
-print(carseats_mdl_cart_full)
+cs_mdl_cart_full <- rpart(Sales ~ ., cs_train, method = "anova")
+print(cs_mdl_cart_full)
 ```
 
 The predicted `Sales` at the root is the mean `Sales` for the training data set, 7.535950 (values are $000s). The deviance at the root is the SSE, 2567.768. The first split is at `ShelveLoc` = [Bad, Medium] vs Good.  Here is the unpruned tree diagram.
 
 ```{r}
-rpart.plot(carseats_mdl_cart_full, yesno = TRUE)
+rpart.plot(cs_mdl_cart_full, yesno = TRUE)
 ```
 
 The boxes show the node predicted value (mean) and the proportion of observations that are in the node (or child nodes). 
@@ -444,14 +431,14 @@ The boxes show the node predicted value (mean) and the proportion of observation
 `rpart()` grew the full tree, and used cross-validation to test the performance of the possible complexity hyperparameters. `printcp()` displays the candidate cp values. You can use this table to decide how to prune the tree.
 
 ```{r}
-printcp(carseats_mdl_cart_full)
+printcp(cs_mdl_cart_full)
 ```
 
 There were 16 possible cp values in this model. The model with the smallest complexity parameter allows the most splits (`nsplit`).  The highest complexity parameter corresponds to a tree with just a root node.  `rel error` is the SSE relative to the root node.  The root node SSE is 2567.76800, so its `rel error` is 2567.76800/2567.76800 = 1.0.  That means the absolute error of the full tree (at CP = 0.01) is 0.30963 * 2567.76800 = 795.058. You can verify that by calculating the SSE of the model predicted values:
 
 ```{r}
-data.frame(pred = predict(carseats_mdl_cart_full, newdata = carseats_train)) %>%
-   mutate(obs = carseats_train$Sales,
+data.frame(pred = predict(cs_mdl_cart_full, newdata = cs_train)) %>%
+   mutate(obs = cs_train$Sales,
           sq_err = (obs - pred)^2) %>%
    summarize(sse = sum(sq_err))
 ```
@@ -459,12 +446,12 @@ data.frame(pred = predict(carseats_mdl_cart_full, newdata = carseats_train)) %>%
 Finishing the CP table tour, `xerror` is the cross-validated SSE and `xstd` is its standard error. If you want the lowest possible error, then prune to the tree with the smallest relative SSE (`xerror`).  If you want to balance predictive power with simplicity, prune to the smallest tree within 1 SE of the one with the smallest relative SSE.  The CP table is not super-helpful for finding that tree. I'll add a column to find it.
 
 ```{r}
-carseats_mdl_cart_full$cptable %>%
+cs_mdl_cart_full$cptable %>%
    data.frame() %>%
-   mutate(min_xerror_idx = which.min(carseats_mdl_cart_full$cptable[, "xerror"]),
+   mutate(min_xerror_idx = which.min(cs_mdl_cart_full$cptable[, "xerror"]),
           rownum = row_number(),
-          xerror_cap = carseats_mdl_cart_full$cptable[min_xerror_idx, "xerror"] + 
-             carseats_mdl_cart_full$cptable[min_xerror_idx, "xstd"],
+          xerror_cap = cs_mdl_cart_full$cptable[min_xerror_idx, "xerror"] + 
+             cs_mdl_cart_full$cptable[min_xerror_idx, "xstd"],
           eval = case_when(rownum == min_xerror_idx ~ "min xerror",
                            xerror < xerror_cap ~ "under cap",
                            TRUE ~ "")) %>%
@@ -474,23 +461,23 @@ carseats_mdl_cart_full$cptable %>%
 Okay, so the simplest tree is the one with CP = 0.02599265 (5 splits).  Fortunately, `plotcp()` presents a nice graphical representation of the relationship between `xerror` and `cp`.
 
 ```{r}
-plotcp(carseats_mdl_cart_full, upper = "splits")
+plotcp(cs_mdl_cart_full, upper = "splits")
 ```
 
 The dashed line is set at the minimum `xerror` + `xstd`.  The top axis shows the number of splits in the tree.  I'm not sure why the CP values are not the same as in the table (they are close, but not the same).  The smallest relative error is at CP = 0.01000000 (15 splits), but the maximum CP below the dashed line (one standard deviation above the minimum error) is at CP = 0.02599265 (5 splits). Use the `prune()` function to prune the tree by specifying the associated cost-complexity `cp`.  
 
 ```{r}
-carseats_mdl_cart <- prune(
-   carseats_mdl_cart_full,
-   cp = carseats_mdl_cart_full$cptable[carseats_mdl_cart_full$cptable[, 2] == 5, "CP"]
+cs_mdl_cart <- prune(
+   cs_mdl_cart_full,
+   cp = cs_mdl_cart_full$cptable[cs_mdl_cart_full$cptable[, 2] == 5, "CP"]
 )
-rpart.plot(carseats_mdl_cart, yesno = TRUE)
+rpart.plot(cs_mdl_cart, yesno = TRUE)
 ```
 
 The most "important" indicator of `Sales` is `ShelveLoc`.  Here are the importance values from the model. 
 
 ```{r}
-carseats_mdl_cart$variable.importance %>% 
+cs_mdl_cart$variable.importance %>% 
    data.frame() %>%
    rownames_to_column(var = "Feature") %>%
    rename(Overall = '.') %>%
@@ -506,19 +493,19 @@ The most important indicator of `Sales` is `ShelveLoc`, then `Price`, then `Age`
 The last step is to make predictions on the validation data set. The root mean squared error ($RMSE = \sqrt{(1/2) \sum{(actual - pred)^2}})$ and mean absolute error ($MAE = (1/n) \sum{|actual - pred|}$) are the two most common measures of predictive accuracy. The key difference is that RMSE punishes large errors more harshly. For a regression tree, set argument `type = "vector"` (or do not specify at all). 
 
 ```{r message=FALSE, warning=FALSE}
-carseats_preds_cart <- predict(carseats_mdl_cart, carseats_test, type = "vector")
+cs_preds_cart <- predict(cs_mdl_cart, cs_test, type = "vector")
 
-carseats_rmse_cart <- RMSE(
-   pred = carseats_preds_cart,
-   obs = carseats_test$Sales
+cs_rmse_cart <- RMSE(
+   pred = cs_preds_cart,
+   obs = cs_test$Sales
 )
-carseats_rmse_cart
+cs_rmse_cart
 ```
 
-The pruning process leads to an average prediction error of 2.363 in the test data set.  Not too bad considering the standard deviation of `Sales` is `r round(sd(carseats_test$Sales), 3)`. Here is a predicted vs actual plot. 
+The pruning process leads to an average prediction error of 2.363 in the test data set.  Not too bad considering the standard deviation of `Sales` is `r round(sd(cs_test$Sales), 3)`. Here is a predicted vs actual plot. 
 
 ```{r}
-data.frame(Predicted = carseats_preds_cart, Actual = carseats_test$Sales) %>%
+data.frame(Predicted = cs_preds_cart, Actual = cs_test$Sales) %>%
    ggplot(aes(x = Actual, y = Predicted)) +
    geom_point(alpha = 0.6, color = "cadetblue") +
    geom_smooth() +
@@ -534,7 +521,7 @@ The 6 possible predicted values do a decent job of binning the observations.
 I can also fit the model with `caret::train()`, specifying `method = "rpart"`. I'll build the model using 10-fold cross-validation to optimize the hyperparameter CP. 
 
 ```{r}
-carseats_trControl = trainControl(
+cs_trControl = trainControl(
    method = "cv",
    number = 10,
    savePredictions = "final"       # save predictions for the optimal tuning parameter
@@ -546,78 +533,78 @@ I'll let the model look for the best CP tuning parameter with `tuneLength` to ge
 
 ```{r}
 set.seed(1234)
-carseats_mdl_cart2 = train(
+cs_mdl_cart2 = train(
    Sales ~ ., 
-   data = carseats_train, 
+   data = cs_train, 
    method = "rpart",
    tuneLength = 5,
    metric = "RMSE",
-   trControl = carseats_trControl
+   trControl = cs_trControl
 )
-print(carseats_mdl_cart2)
+print(cs_mdl_cart2)
 ```
 
 The first `cp` (0.04167149) produced the smallest RMSE.  I can drill into the best value of `cp` using a tuning grid.  I'll try that now.
 
 ```{r}
 set.seed(1234)
-carseats_mdl_cart2 = train(
+cs_mdl_cart2 = train(
    Sales ~ ., 
-   data = carseats_train, 
+   data = cs_train, 
    method = "rpart",
    tuneGrid = expand.grid(cp = seq(from = 0, to = 0.1, by = 0.01)),
    metric = "RMSE",
-   trControl = carseats_trControl
+   trControl = cs_trControl
 )
-print(carseats_mdl_cart2)
+print(cs_mdl_cart2)
 ```
 
 It looks like the best performing tree is the unpruned one.
 
 ```{r}
-plot(carseats_mdl_cart2)
+plot(cs_mdl_cart2)
 ```
 
 Let's see the final model.
 
 ```{r}
-rpart.plot(carseats_mdl_cart2$finalModel)
+rpart.plot(cs_mdl_cart2$finalModel)
 ```
 
 What were the most important variables?
 
 ```{r}
-plot(varImp(carseats_mdl_cart2), main="Variable Importance with Simple Regression")
+plot(varImp(cs_mdl_cart2), main="Variable Importance with Simple Regression")
 ```
 
 Evaluate the model by making predictions with the test data set.  
 
 ```{r}
-carseats_preds_cart2 <- predict(carseats_mdl_cart2, carseats_test, type = "raw")
-data.frame(Actual = carseats_test$Sales, Predicted = carseats_preds_cart2) %>%
+cs_preds_cart2 <- predict(cs_mdl_cart2, cs_test, type = "raw")
+data.frame(Actual = cs_test$Sales, Predicted = cs_preds_cart2) %>%
 ggplot(aes(x = Actual, y = Predicted)) +
    geom_point(alpha = 0.6, color = "cadetblue") +
    geom_smooth(method = "loess", formula = "y ~ x") +
    geom_abline(intercept = 0, slope = 1, linetype = 2) +
-   labs(title = "Carseats CART, Predicted vs Actual (caret")
+   labs(title = "Carseats CART, Predicted vs Actual (caret)")
 ```
 
-Looks like the model over-estimates at the low end and undestimates at the high end.  Calculate the test data set RMSE.
+The model over-estimates at the low end and underestimates at the high end.  Calculate the test data set RMSE.
 
 ```{r}
-carseats_rmse_cart2 <- RMSE(
-   pred = carseats_preds_cart2,
-   obs = carseats_test$Sales
+cs_rmse_cart2 <- RMSE(
+   pred = cs_preds_cart2,
+   obs = cs_test$Sales
 )
-carseats_rmse_cart2
+cs_rmse_cart2
 ```
 
 Caret performed better in this model.  Here is a summary the RMSE values of the two models.
 
 ```{r}
 scoreboard_r <- rbind(
-   data.frame(model = "Manual ANOVA", RMSE = round(carseats_rmse_cart, 5)), 
-   data.frame(model = "Caret", RMSE = round(carseats_rmse_cart2, 5))
+   data.frame(model = "Manual ANOVA", RMSE = round(cs_rmse_cart, 5)), 
+   data.frame(model = "Caret w/tuneGrid", RMSE = round(cs_rmse_cart2, 5))
 )
 scoreboard_r
 ```
@@ -627,329 +614,390 @@ scoreboard_r
 
 Bootstrap aggregation, or *bagging*, is a general-purpose procedure for reducing the variance of a statistical learning method.  The algorithm constructs *B* regression trees using *B* bootstrapped training sets, and averages the resulting predictions. These trees are grown deep, and are not pruned. Hence each individual tree has high variance, but low bias. Averaging these *B* trees reduces the variance.  For classification trees, bagging takes the "majority vote" for the prediction.  Use a value of *B* sufficiently large that the error has settled down.
 
-To test the model accuracy, the out-of-bag observations are predicted from the models that do not use them.  If B/3 of observations are in-bag, there are *B/3* predictions per observation.  These predictions are averaged for the test prediction.  Again, for classification trees, a majority vote is taken.
+To test the model accuracy, the out-of-bag observations are predicted from the models. E.g., If *B/3* of observations are in-bag, there are *B/3* predictions per observation.  These predictions are averaged for the test prediction.  Again, for classification trees, a majority vote is taken.
 
-The downside to bagging is that it improves accuracy at the expense of interpretability.  There is no longer a single tree to interpret, so it is no longer clear which variables are more important than others.  
+The downside to bagging is that it improves accuracy at the expense of interpretability.  There is no longer a single tree to interpret, so it is unclear which variables are more important than others.  
 
 Bagged trees are a special case of random forests, so see the next section for an example.
 
 
 ## Random Forests
 
-Random forests improve bagged trees by way of a small tweak that de-correlates the trees.  As in bagging, the algorithm builds a number of decision trees on bootstrapped training samples. But when building these decision trees, each time a split in a tree is considered, a random sample of *mtry* predictors is chosen as split candidates from the full set of *p* predictors.  A fresh sample of *mtry* predictors is taken at each split.  Typically $mtry \sim \sqrt{b}$.  Bagged trees are thus a special case of random forests where *mtry = p*.
+Random forests improve bagged trees by way of a small tweak that de-correlates the trees.  As in bagging, the algorithm builds a number of decision trees on bootstrapped training samples. But when building these decision trees, each time a split in a tree is considered, a random sample of *mtry* predictors is chosen as split candidates from the full set of *p* predictors.  A fresh sample of *mtry* predictors is taken at each split.  Typically $mtry \sim \sqrt{p}$.  Bagged trees are thus a special case of random forests where *mtry = p*.
 
 
 #### Bagging Classification Example
 
-Again using the `OJ` data set to predict `Purchase`, this time I'll use the bagging method by specifying `method = "treebag"`.  I'll use `tuneLength = 5` and not worry about `tuneGrid` anymore.  Caret has no hyperparameters to tune with this model. 
+I'll predict `Purchase` from the `OJ` data set again, this time using the bagging method by specifying `method = "treebag"`. Caret has no hyperparameters to tune with this model, so I won't set `tuneLegth` or `tuneGrid`.
 
 ```{r}
-oj.bag = train(Purchase ~ ., 
-               data = oj_train, 
-               method = "treebag",  # for bagging
-               tuneLength = 5,  # choose up to 5 combinations of tuning parameters
-               metric = "ROC",  # evaluate hyperparamter combinations with ROC
-               trControl = trainControl(
-                 method = "cv",  # k-fold cross validation
-                 number = 10,  # k=10 folds
-                 savePredictions = "final",       # save predictions for the optimal tuning parameters
-                      classProbs = TRUE,  # return class probabilities in addition to predicted values
-                      summaryFunction = twoClassSummary  # for binary response variable
-                      )
-                    )
-oj.bag
-#plot(oj.bag$)
-oj.pred <- predict(oj.bag, oj_test, type = "raw")
-plot(oj_test$Purchase, oj.pred, 
-     main = "Bagging Classification: Predicted vs. Actual",
-     xlab = "Actual",
-     ylab = "Predicted")
+set.seed(1234)
+oj_mdl_bag <- train(
+   Purchase ~ ., 
+   data = oj_train, 
+   method = "treebag",
+   trControl = oj_trControl
+)
+oj_mdl_bag
 
-(oj.conf <- confusionMatrix(data = oj.pred, 
-                            reference = oj_test$Purchase))
-oj.bag.acc <- as.numeric(oj.conf$overall[1])
-rm(oj.pred)
-rm(oj.conf)
-#plot(oj.bag$, oj.bag$finalModel$y)
-plot(varImp(oj.bag), main="Variable Importance with Simple Classication")
+oj_preds_bag <- bind_cols(
+   predict(oj_mdl_bag, newdata = oj_test, type = "prob"),
+   Predicted = predict(oj_mdl_bag, newdata = oj_test, type = "raw"),
+   Actual = oj_test$Purchase
+)
+
+oj_cm_bag <- confusionMatrix(oj_preds_bag$Predicted, reference = oj_preds_bag$Actual)
+oj_cm_bag
+
+mdl_auc <- Metrics::auc(actual = oj_preds_bag$Actual == "CH", oj_preds_bag$CH)
+yardstick::roc_curve(oj_preds_bag, Actual, CH) %>%
+  autoplot() +
+  labs(
+    title = "OJ Bagging ROC Curve",
+    subtitle = paste0("AUC = ", round(mdl_auc, 4))
+  )
+
+yardstick::gain_curve(oj_preds_bag, Actual, CH) %>%
+  autoplot() +
+  labs(title = "OJ Bagging Gain Curve")
+
+
+plot(varImp(oj_mdl_bag), main="Variable Importance with Bagging")
+
+scoreboard <- rbind(
+   scoreboard,
+   data.frame(model = "Bagging", Acc = round(oj_cm_bag$overall["Accuracy"], 5))
+)
+scoreboard %>% arrange(desc(Acc))
 ```
 
 #### Random Forest Classification Example
 
-Now I'll try it with the random forest method by specifying `method = "ranger"`.  I'll stick with `tuneLength = 5`.  Caret tunes three hyperparameters: 
-
-* `mtry`: number of randomly selected predictors.  Default is sqrt(p).
-* `splitrule`: splitting rule.  For classification, options are "gini" (default) and "extratrees".
-* `min.node.size`: minimal node size.  Default is 1 for classification.
+Now I'll try it with the random forest method by specifying `method = "rf"`.  Hyperparameter `mtry` can take any value from 1 to 17 (the number of predictors) and I expect the best value to be near $\sqrt{17} \sim 4$.
 
 ```{r}
-oj.frst = train(Purchase ~ ., 
-               data = oj_train, 
-               method = "ranger",  # for random forest
-               tuneLength = 5,  # choose up to 5 combinations of tuning parameters
-               metric = "ROC",  # evaluate hyperparamter combinations with ROC
-               trControl = trainControl(
-                 method = "cv",  # k-fold cross validation
-                 number = 10,  # 10 folds
-                 savePredictions = "final",       # save predictions for the optimal tuning parameter1
-                 classProbs = TRUE,  # return class probabilities in addition to predicted values
-                 summaryFunction = twoClassSummary  # for binary response variable
-                 )
-               )
-oj.frst
-plot(oj.frst)
-oj.pred <- predict(oj.frst, oj_test, type = "raw")
-plot(oj_test$Purchase, oj.pred, 
-     main = "Random Forest Classification: Predicted vs. Actual",
-     xlab = "Actual",
-     ylab = "Predicted")
+set.seed(1234)
+oj_mdl_rf <- train(
+   Purchase ~ ., 
+   data = oj_train, 
+   method = "rf",
+   tuneGrid = expand.grid(mtry = 1:7), # searching around mtry=4
+   trControl = oj_trControl
+)
+oj_mdl_rf
 
-(oj.conf <- confusionMatrix(data = oj.pred, 
-                            reference = oj_test$Purchase))
-oj.frst.acc <- as.numeric(oj.conf$overall[1])
-rm(oj.pred)
-rm(oj.conf)
-#plot(oj.bag$, oj.bag$finalModel$y)
-#plot(varImp(oj.frst), main="Variable Importance with Simple Classication")
+# The peak accuracy is at mtry = 3
+plot(oj_mdl_rf)
+
+oj_preds_rf <- bind_cols(
+   predict(oj_mdl_rf, newdata = oj_test, type = "prob"),
+   Predicted = predict(oj_mdl_rf, newdata = oj_test, type = "raw"),
+   Actual = oj_test$Purchase
+)
+
+# Accuracy on holdout is 0.8263
+oj_cm_rf <- confusionMatrix(oj_preds_rf$Predicted, reference = oj_preds_rf$Actual)
+oj_cm_rf
+
+# AUC is 0.9190
+mdl_auc <- Metrics::auc(actual = oj_preds_rf$Actual == "CH", oj_preds_rf$CH)
+yardstick::roc_curve(oj_preds_rf, Actual, CH) %>%
+  autoplot() +
+  labs(
+    title = "OJ Random Forest ROC Curve",
+    subtitle = paste0("AUC = ", round(mdl_auc, 4))
+  )
+
+yardstick::gain_curve(oj_preds_rf, Actual, CH) %>%
+  autoplot() +
+  labs(title = "OJ Random Forest Gain Curve")
+
+
+plot(varImp(oj_mdl_rf), main="Variable Importance with Random Forest")
+
+scoreboard <- rbind(
+   scoreboard,
+   data.frame(model = "Random Forest", Acc = round(oj_cm_rf$overall["Accuracy"], 5))
+)
+scoreboard %>% arrange(desc(Acc))
 ```
 
-The model algorithm explains *"ROC was used to select the optimal model using the largest value. The final values used for the model were mtry = 9, splitrule = extratrees and min.node.size = 1."*  You can see the results of tuning grid combinations in the associated plot of ROC AUC vs mtry grouped by splitting rule.
+The bagging and random forest models did pretty well, but the manual classification tree is still in first place.  There's still gradient boosting to investigate!
 
-The bagging (accuracy = 0.80751) and random forest (accuracy = 0.81690) models faired pretty well, but the manual classification tree is still in first place.  There's still gradient boosting to investigate!
-
-```{r}
-rbind(data.frame(model = "Manual Class", Accuracy = round(oj_cm_cart$overall["Accuracy"], 5)), 
-      data.frame(model = "Caret w.tuneGrid", Accuracy = round(oj_model_3_cm$overall["Accuracy"], 5)),
-      data.frame(model = "Bagging", Accuracy = round(oj.bag.acc, 5)),
-      data.frame(model = "Random Forest", Accuracy = round(oj.frst.acc, 5))
-) %>% arrange(desc(Accuracy))
-```
 
 #### Bagging Regression Example
 
-Again using the `Carseats` data set to predict `Sales`, this time I'll use the bagging method by specifying `method = "treebag"`.  I'll use `tuneLength = 5` and not worry about `tuneGrid` anymore.  Caret has no hyperparameters to tune with this model. 
+I'll predict `Sales` from the `Carseats` data set again, this time using the bagging method by specifying `method = "treebag"`.
 
 ```{r}
-carseats.bag = train(Sales ~ ., 
-               data = carseats_train, 
-               method = "treebag",  # for bagging
-               tuneLength = 5,  # choose up to 5 combinations of tuning parameters
-               metric = "RMSE",  # evaluate hyperparamter combinations with RMSE
-               trControl = trainControl(
-                 method = "cv",  # k-fold cross validation
-                 number = 10,  # 10 folds
-                 savePredictions = "final"       # save predictions for the optimal tuning parameter1
-                 )
-               )
-carseats.bag
-#plot(carseats.bag$finalModel)
-carseats.pred <- predict(carseats.bag, carseats_test, type = "raw")
-plot(carseats_test$Sales, carseats.pred, 
-     main = "Bagging Regression: Predicted vs. Actual",
-     xlab = "Actual",
-     ylab = "Predicted")
-abline(0, 1)
+set.seed(1234)
+cs_mdl_bag <- train(
+   Sales ~ ., 
+   data = cs_train, 
+   method = "treebag",
+   trControl = cs_trControl
+)
+cs_mdl_bag
 
-(carseats.bag.rmse <- RMSE(pred = carseats.pred,
-                           obs = carseats_test$Sales))
-rm(carseats.pred)
-plot(varImp(carseats.bag), main="Variable Importance with Regression Bagging")
+cs_preds_bag <- bind_cols(
+   Predicted = predict(cs_mdl_bag, newdata = cs_test),
+   Actual = cs_test$Sales
+)
+
+# Model over-predicts at low end of Sales and under-predicts at high end
+cs_preds_bag %>%
+   ggplot(aes(x = Actual, y = Predicted)) +
+   geom_point(alpha = 0.6, color = "cadetblue") +
+   geom_smooth(method = "loess", formula = "y ~ x") +
+   geom_abline(intercept = 0, slope = 1, linetype = 2) +
+   labs(title = "Carseats Bagging, Predicted vs Actual (caret)")
+
+plot(varImp(cs_mdl_bag), main="Variable Importance with Bagging")
+
+# RMSE of 1.9185 is much improved
+cs_rmse_bag <- RMSE(pred = cs_preds_bag$Predicted, obs = cs_preds_bag$Actual)
+
+scoreboard_r <- rbind(
+   scoreboard_r,
+   data.frame(model = "Bagging", RMSE = round(cs_rmse_bag, 5))
+)
+scoreboard_r %>% arrange(RMSE)
 ```
 
 
 #### Random Forest Regression Example
 
-Now I'll try it with the random forest method by specifying `method = "ranger"`.  I'll stick with `tuneLength = 5`.  Caret tunes three hyperparameters: 
-
-* `mtry`: number of randomly selected predictors
-* `splitrule`: splitting rule.  For regression, options are "variance" (default), "extratrees", and "maxstat". 
-* `min.node.size`: minimal node size
+Now I'll try it with the random forest method by specifying `method = "rf"`.  Hyperparameter `mtry` can take any value from 1 to 10 (the number of predictors) and I expect the best value to be near $\sqrt{10} \sim 3$.
 
 ```{r}
-carseats.frst = train(Sales ~ ., 
-               data = carseats_train, 
-               method = "ranger",  # for random forest
-               tuneLength = 5,  # choose up to 5 combinations of tuning parameters
-               metric = "RMSE",  # evaluate hyperparamter combinations with RMSE
-               trControl = trainControl(
-                 method = "cv",  # k-fold cross validation
-                 number = 10,  # 10 folds
-                 savePredictions = "final"       # save predictions for the optimal tuning parameter1
-                 )
-               )
-carseats.frst
-plot(carseats.frst)
-carseats.pred <- predict(carseats.frst, carseats_test, type = "raw")
-plot(carseats_test$Sales, carseats.pred, 
-     main = "Random Forest Regression: Predicted vs. Actual",
-     xlab = "Actual",
-     ylab = "Predicted")
-abline(0, 1)
-(carseats.frst.rmse <- RMSE(pred = carseats.pred,
-                           obs = carseats_test$Sales))
-rm(carseats.pred)
-#plot(varImp(carseats.frst), main="Variable Importance with Regression Random Forest")
+set.seed(1234)
+cs_mdl_rf <- train(
+   Sales ~ ., 
+   data = cs_train, 
+   method = "rf",
+   tuneGrid = expand.grid(mtry = 1:10), # searching around mtry=3
+   trControl = cs_trControl
+)
+cs_mdl_rf
+
+# The minimum RMSE is at mtry = 7
+plot(cs_mdl_rf)
+
+cs_preds_rf <- bind_cols(
+   Predicted = predict(cs_mdl_rf, newdata = cs_test),
+   Actual = cs_test$Sales
+)
+
+# Model over-predicts at low end of Sales and under-predicts at high end
+cs_preds_rf %>%
+   ggplot(aes(x = Actual, y = Predicted)) +
+   geom_point(alpha = 0.6, color = "cadetblue") +
+   geom_smooth(method = "loess", formula = "y ~ x") +
+   geom_abline(intercept = 0, slope = 1, linetype = 2) +
+   labs(title = "Carseats Random Forest, Predicted vs Actual (caret)")
+
+plot(varImp(cs_mdl_rf), main="Variable Importance with Random Forest")
+
+# RMSE of 1.7184 is better than bagging's 1.9185.
+cs_rmse_rf <- RMSE(pred = cs_preds_rf$Predicted, obs = cs_preds_rf$Actual)
+
+scoreboard_r <- rbind(
+   scoreboard_r,
+   data.frame(model = "Random Forest", RMSE = round(cs_rmse_rf, 5))
+)
+scoreboard_r %>% arrange(RMSE)
 ```
 
-The model algorithm explains *"RMSE was used to select the optimal model using the smallest value. The final values used for the model were mtry = 11, splitrule = variance and min.node.size = 5."*  You can see the results of tuning grid combinations in the associated plot of ROC AUC vs mtry grouped by splitting rule.
-
-The bagging and random forest models faired very well - they took over the first and second place!
-
-```{r}
-rbind(data.frame(model = "Manual ANOVA", RMSE = round(carseats_mdl_cart_pruned_rmse, 5)), 
-      data.frame(model = "ANOVA w.tuneGrid", RMSE = round(carseats_mdl_3_pruned_rmse, 5)),
-      data.frame(model = "Bagging", RMSE = round(carseats.bag.rmse, 5)),
-      data.frame(model = "Random Forest", RMSE = round(carseats.frst.rmse, 5))
-) %>% arrange(RMSE)
-```
+The bagging and random forest models did very well - they took over the top positions!
 
 
 ## Gradient Boosting
 
-Boosting is a method to improve (boost) the week learners sequentially and increase the model accuracy with a combined model. There are several boosting algorithms.  One of the earliest was AdaBoost (adaptive boost).  A more recent innovation is gradient boosting.
+**Note**: I learned gradient boosting from [explained.ai](https://explained.ai/gradient-boosting/L2-loss.html).
 
-Adaboost creates a single split tree (decision stump) then weights the observations by how well the initial tree performed, putting more weight on the difficult observations.  It then creates a second tree using the weights so that it focuses on the difficult observations.  Observations that are difficult to classify receive increasing larger weights until the algorithm identifies a model that correctly classifies them.  The final model returns predictions that are a majority vode. (*I think Adaboost applies only to classification problems, not regressions*). 
- 
-Gradient boosting generalizes the AdaBoost method, so that the object is to minimize a loss function.  In the case of classification problems, the loss function is the log-loss; for regression problems, the loss function is mean squared error.  The regression trees are addative, so that the successive models can be added together to correct the residuals in the earlier models.  Gradient boosting constructs its trees in a "greedy" manner, meaning it chooses the best splits based on purity scores like Gini or minimizing the loss.  It is common to constrain the weak learners by setting maximum tree size parameters.  Gradient boosting continues until it reaches maximum number of trees or an acceptible error level.  This can result in overfitting, so it is common to employ regularization methods that penalize aspects of the model.
+Gradient boosting machine (GBM) is an additive modeling algorithm that gradually builds a composite model by iteratively adding *M* weak sub-models based on the performance of the prior iteration's composite,
 
-**Tree Constraints**.  In general the more constrained the tree, the more trees need to be grown.  Parameters to optimize include number of trees, tree depth, number of nodes, minimmum observations per split, and minimum improvement to loss.
+$$F_M(x) = \sum_m^M f_m(x).$$
 
-**Learning Rate**.  Each successive tree can be weighted to slow down the learning rate.  Decreasing the learning rate increases the number of required trees.  Common growth rates are 0.1 to 0.3.
+The idea is to fit a weak model, then replace the response values with the residuals from that model, and fit another model. Adding the residual prediction model to the original response prediction model produces a more accurate model. GBM repeats this process over and over, running new models to predict the residuals of the previous composite models, and adding the results to produce new composites. With each iteration, the model becomes stronger and stronger. The successive trees are usually weighted to slow down the learning rate. "Shrinkage" reduces the influence of each individual tree and leaves space for future trees to improve the model.
 
-The gradient boosting algorithm fits a shallow tree $T_1$ to the data, $M_1 = T_1$.  Then it fits a tree $T_2$ to the residuals and adds a weighted sum of the tree to the original tree as $M_2 = M_1 + \gamma T_2$.  For regularized boosting, include a learning rate factor $\eta \in (0..1)$, $M_2 = M_1 + \eta \gamma T_2$.  A larger $\eta$ produces faster learning, but risks overfitting.  The process repeats until the residuals are small enough, or until it reaches the maximum iterations.  Because overfitting is a risk, use cross-validation to select the appropriate number of trees (the number of trees producing the lowest RMSE).
+$$F_M(x) = f_0 + \eta\sum_{m = 1}^M f_m(x).$$
+
+The smaller the learning rate, $\eta$, the larger the number of trees, $M$. $\eta$ and $M$ are hyperparameters. Other constraints to the trees are usually applied as additional hyperparameters, including, tree depth, number of nodes, minimum observations per split, and minimum improvement to loss.
+
+The name "gradient boosting" refers to the *boosting* of a model with a *gradient*. Each round of training builds a *weak learner* and uses the residuals to calculate a gradient, the partial derivative of the loss function. Gradient boosting "descends the gradient" to adjust the model parameters to reduce the error in the next round of training.
+
+In the case of classification problems, the loss function is the log-loss; for regression problems, the loss function is mean squared error. GBM continues until it reaches maximum number of trees or an acceptable error level.
 
 
 #### Gradient Boosting Classification Example
 
-Again using the `OJ` data set to predict `Purchase`, this time I'll use the gradient boosting method by specifying `method = "gbm"`.  I'll use `tuneLength = 5` and not worry about `tuneGrid` anymore.  Caret tunes the following  hyperparameters (see `modelLookup("gbm")`). 
+I'll predict `Purchase` from the `OJ` data set again, this time using the GBM method by specifying `method = "gbm"`. `gbm` has the following tuneable hyperparameters (see `modelLookup("gbm")`). 
 
-* `n.trees`: number of boosting iterations
+* `n.trees`: number of boosting iterations, $M$
 * `interaction.depth`: maximum tree depth
-* `shrinkage`: shrinkage
+* `shrinkage`: shrinkage, $\eta$
 * `n.minobsinnode`: mimimum terminal node size
 
-```{r}
-oj.gbm <- train(Purchase ~ ., 
-               data = oj_train, 
-               method = "gbm",  # for bagged tree
-               tuneLength = 5,  # choose up to 5 combinations of tuning parameters
-               metric = "ROC",  # evaluate hyperparamter combinations with ROC
-               trControl = trainControl(
-                 method = "cv",  # k-fold cross validation
-                 number = 10,  # 10 folds
-                 savePredictions = "final",       # save predictions for the optimal tuning parameter1
-                      classProbs = TRUE,  # return class probabilities in addition to predicted values
-                      summaryFunction = twoClassSummary  # for binary response variable
-                      )
-                    )
-oj.gbm
-plot(oj.gbm)
-oj.pred <- predict(oj.gbm, oj_test, type = "raw")
-plot(oj_test$Purchase, oj.pred, 
-     main = "Gradient Boosing Classification: Predicted vs. Actual",
-     xlab = "Actual",
-     ylab = "Predicted")
+I'll use `tuneLength = 5`.
 
-(oj.conf <- confusionMatrix(data = oj.pred, 
-                            reference = oj_test$Purchase))
-oj.gbm.acc <- as.numeric(oj.conf$overall[1])
-rm(oj.pred)
-rm(oj.conf)
-#plot(oj.bag$, oj.bag$finalModel$y)
-#plot(varImp(oj.gbm), main="Variable Importance with Gradient Boosting")
+```{r}
+set.seed(1234)
+oj_mdl_gbm <- train(
+   Purchase ~ ., 
+   data = oj_train, 
+   method = "gbm",
+   tuneLength = 5,
+   trControl = oj_trControl
+)
+oj_mdl_gbm
 ```
 
+`train()` tuned `n.trees` ($M) and `interaction.depth`, holding `shrinkage = 0.1` (\eta), and `n.minobsinnode = 10`. The optimal hyperparameter values were `n.trees = 200`, and `interaction.depth = 3`.
+
+You can see from the tuning plot that accuracy is maximized at $M=200$ for tree depth of 3, but $M=150$ with tree depth of 1 worked nearly as well.
+
+```{r}
+plot(oj_mdl_gbm)
+```
+
+Let's see how the model performed on the holdout set.
+
+```{r}
+oj_preds_gbm <- bind_cols(
+   predict(oj_mdl_gbm, newdata = oj_test, type = "prob"),
+   Predicted = predict(oj_mdl_gbm, newdata = oj_test, type = "raw"),
+   Actual = oj_test$Purchase
+)
+
+oj_cm_gbm <- confusionMatrix(oj_preds_gbm$Predicted, reference = oj_preds_gbm$Actual)
+oj_cm_gbm
+```
+
+GBM improved upon boosting and random forest with accuracy of 0.8498.
+
+```{r}
+mdl_auc <- Metrics::auc(actual = oj_preds_gbm$Actual == "CH", oj_preds_bag$CH)
+yardstick::roc_curve(oj_preds_gbm, Actual, CH) %>%
+  autoplot() +
+  labs(
+    title = "OJ GBM ROC Curve",
+    subtitle = paste0("AUC = ", round(mdl_auc, 4))
+  )
+
+yardstick::gain_curve(oj_preds_gbm, Actual, CH) %>%
+  autoplot() +
+  labs(title = "OJ GBM Gain Curve")
+
+
+plot(varImp(oj_mdl_bag), main="Variable Importance with Bagging")
+
+scoreboard <- rbind(
+   scoreboard,
+   data.frame(model = "GBM", Acc = round(oj_cm_gbm$overall["Accuracy"], 5))
+)
+scoreboard %>% arrange(desc(Acc))
+```
 
 #### Gradient Boosting Regression Example
 
-Again using the `Carseats` data set to predict `Sales`, this time I'll use the gradient boosting method by specifying `method = "gbm"`.  I'll use `tuneLength = 5` and not worry about `tuneGrid` anymore.  Caret tunes the following  hyperparameters. 
-
-* `n.trees`: number of boosting iterations (increasing `n.trees` reduces the error on training set, but may lead to over-fitting)
-* `interaction.depth`: maximum tree depth (the default six - node tree appears to do an excellent job)
-* `shrinkage`: learning rate (reduces the impact of each additional fitted base-learner (tree) by reducing the size of incremental steps and thus penalizes the importance of each consecutive iteration.  The intuition is that it is better to improve a model by taking many small steps than by taking fewer large steps. If one of the boosting iterations turns out to be erroneous, its negative impact can be easily corrected in subsequent steps.)
-* `n.minobsinnode`: mimimum terminal node size
+I'll predict `Sales` from the `Carseats` data set again, this time using the bagging method by specifying `method = "gbm"`
 
 ```{r}
-carseats.gbm <- train(Sales ~ ., 
-                      data = carseats_train, 
-                      method = "gbm",  # for bagged tree
-                      tuneLength = 5,  # choose up to 5 combinations of tuning parameters
-                      metric = "RMSE",  # evaluate hyperparamter combinations with ROC
-                      trControl = trainControl(
-                        method = "cv",  # k-fold cross validation
-                        number = 10,  # 10 folds
-                        savePredictions = "final",       # save predictions for the optimal tuning parameter1
-                        verboseIter = FALSE,
-                        returnData = FALSE
-                        )
-                      )
-carseats.gbm
-plot(carseats.gbm)
-carseats.pred <- predict(carseats.gbm, carseats_test, type = "raw")
-plot(carseats_test$Sales, carseats.pred, 
-     main = "Gradient Boosing Regression: Predicted vs. Actual",
-     xlab = "Actual",
-     ylab = "Predicted")
-abline(0,1)
+set.seed(1234)
+garbage <- capture.output(
+cs_mdl_gbm <- train(
+   Sales ~ ., 
+   data = cs_train, 
+   method = "gbm",
+   tuneLength = 5,
+   trControl = cs_trControl
+))
+cs_mdl_gbm
+```
 
-(carseats.gbm.rmse <- RMSE(pred = carseats.pred,
-                           obs = carseats_test$Sales))
-rm(carseats.pred)
+The optimal tuning parameters were at $M = 250$ and `interation.depth = 1`.
 
-#plot(varImp(carseats.gbm), main="Variable Importance with Gradient Boosting")
+```{r}
+plot(cs_mdl_gbm)
+```
+
+Here is the holdout set peformance.
+
+```{r}
+cs_preds_gbm <- bind_cols(
+   Predicted = predict(cs_mdl_gbm, newdata = cs_test),
+   Actual = cs_test$Sales
+)
+
+# Model over-predicts at low end of Sales and under-predicts at high end
+cs_preds_gbm %>%
+   ggplot(aes(x = Actual, y = Predicted)) +
+   geom_point(alpha = 0.6, color = "cadetblue") +
+   geom_smooth(method = "loess", formula = "y ~ x") +
+   geom_abline(intercept = 0, slope = 1, linetype = 2) +
+   labs(title = "Carseats GBM, Predicted vs Actual")
+```
+
+The RMSE is 1.438 - the best of the bunch.
+
+```{r}
+# RMSE of 1.7184 is better than bagging's 1.9185.
+cs_rmse_gbm <- RMSE(pred = cs_preds_gbm$Predicted, obs = cs_preds_gbm$Actual)
+
+scoreboard_r <- rbind(
+   scoreboard_r,
+   data.frame(model = "GBM", RMSE = round(cs_rmse_gbm, 5))
+)
+scoreboard_r %>% arrange(RMSE)
 ```
 
 ## Summary
 
-Okay, I'm going to tally up the results!  For the classification division, the winner is the manual classification tree!  Gradient boosting made a valiant run at it, but came up just a little short.
-
 ```{r}
-rbind(data.frame(model = "Manual Class", Acc = round(oj_cm_cart$overall["Accuracy"], 5)), 
-      data.frame(model = "Class w.tuneGrid", Acc = round(oj_model_3_cm$overall["Accuracy"], 5)),
-      data.frame(model = "Bagging", Acc = round(oj.bag.acc, 5)),
-      data.frame(model = "Random Forest", Acc = round(oj.frst.acc, 5)),
-      data.frame(model = "Gradient Boosting", Acc = round(oj.gbm.acc, 5))
-) %>% arrange(desc(Acc))
+resamps <- resamples(list('CART' = oj_mdl_cart2,
+                          'Bagging' = oj_mdl_bag,
+                          'Random Forest' = oj_mdl_bag,
+                          'GBM' = oj_mdl_gbm))
+
+summary(resamps)
+```
+```{r}
+bwplot(resamps)
 ```
 
-And now for the regression division, the winnner is... gradient boosting!
+```{r}
+dotplot(resamps, metric = "Accuracy")
+```
+Compute the differences among models and use a t-test to evaluate the null hypothesis that there is no difference between models.
 
 ```{r}
-rbind(data.frame(model = "Manual ANOVA", RMSE = round(carseats_mdl_cart_pruned_rmse, 5)), 
-      data.frame(model = "ANOVA w.tuneGrid", RMSE = round(carseats_mdl_3_pruned_rmse, 5)),
-      data.frame(model = "Bagging", RMSE = round(carseats.bag.rmse, 5)),
-      data.frame(model = "Random Forest", RMSE = round(carseats.frst.rmse, 5)),
-      data.frame(model = "Gradient Boosting", RMSE = round(carseats.gbm.rmse, 5))
-) %>% arrange(RMSE)
+(difValues <- diff(resamps))
+summary(difValues)
+bwplot(difValues, layout = c(3, 1))
 ```
 
+```{r}
+resamps <- resamples(list('CART' = cs_mdl_cart2,
+                          'Bagging' = cs_mdl_bag,
+                          'Random Forest' = cs_mdl_bag,
+                          'GBM' = cs_mdl_gbm))
 
-Here are plots of the ROC curves for all the models (one from each chapter) on the same graph. The ROCR package provides the prediction() and performance() functions which generate the data required for plotting the ROC curve, given a set of predictions and actual (true) values. 
-The more "up and to the left" the ROC curve of a model is, the better the model. The AUC performance metric is literally the "Area Under the ROC Curve", so the greater the area under this curve, the higher the AUC, and the better-performing the model is.
+summary(resamps)
+```
+```{r}
+bwplot(resamps)
+```
 
 ```{r}
-library(ROCR)
-# List of predictions
-oj.class.pred <- predict(oj_model_3, oj_test, type = "prob")[,2]
-oj.bag.pred <- predict(oj.bag, oj_test, type = "prob")[,2]
-oj.frst.pred <- predict(oj.frst, oj_test, type = "prob")[,2]
-oj.gbm.pred <- predict(oj.gbm, oj_test, type = "prob")[,2]
+dotplot(resamps, metric = "RMSE")
+```
+Compute the differences among models and use a t-test to evaluate the null hypothesis that there is no difference between models.
 
-preds_list <- list(oj.class.pred, oj.bag.pred, oj.frst.pred, oj.gbm.pred)
-#preds_list <- list(oj.class.pred)
-
-# List of actual values (same for all)
-m <- length(preds_list)
-actuals_list <- rep(list(oj_test$Purchase), m)
-
-# Plot the ROC curves
-pred <- prediction(preds_list, actuals_list)
-#pred <- prediction(oj.class.pred[,2], oj_test$Purchase)
-rocs <- performance(pred, "tpr", "fpr")
-plot(rocs, col = as.list(1:m), main = "Test Set ROC Curves")
-legend(x = "bottomright", 
-       legend = c("Decision Tree", "Bagged Trees", "Random Forest", "GBM"),
-       fill = 1:m)
+```{r}
+(difValues <- diff(resamps))
+summary(difValues)
+bwplot(difValues, layout = c(3, 1))
 ```
 
 
