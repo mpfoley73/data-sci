@@ -174,7 +174,7 @@ summary(oj_mdl_cart)
 I'll evaluate the predictions and record the accuracy (correct classification percentage) for comparison to other models. Two ways to evaluate the model are the confusion matrix, and the ROC curve. 
 
 
-### Holdout Performance
+### Measuring Performance
 
 #### Confusion Matrix
 
@@ -277,7 +277,7 @@ yardstick::gain_curve(oj_preds_cart, actual, CH) %>%
 ```
 
 
-### Caret Approach
+### Training with Caret
 
 I can also fit the model with `caret::train()`. There are two ways to tune hyperparameters in `train()`: 
 
@@ -290,8 +290,9 @@ I'll build the model using 10-fold cross-validation to optimize the hyperparamet
 oj_trControl = trainControl(
    method = "cv",
    number = 10,
-   savePredictions = "final",       # save predictions for the optimal tuning parameter
-   classProbs = TRUE  # return class probabilities in addition to predicted values
+   savePredictions = "final",       # save preds for the optimal tuning parameter
+   classProbs = TRUE,  # class probs in addition to preds
+   summaryFunction = twoClassSummary
    )
 ```
 
@@ -304,7 +305,7 @@ oj_mdl_cart2 <- train(
    data = oj_train, 
    method = "rpart",
    tuneLength = 5,
-   metric = "Accuracy",
+   metric = "ROC",
    trControl = oj_trControl
    )
 ```
@@ -324,7 +325,7 @@ oj_mdl_cart2 <- train(
    data = oj_train, 
    method = "rpart",
    tuneGrid = expand.grid(cp = seq(from = 0.001, to = 0.010, length = 11)),  
-   metric='Accuracy',
+   metric = "ROC",
    trControl = oj_trControl
    )
 print(oj_mdl_cart2)
@@ -516,7 +517,7 @@ data.frame(Predicted = cs_preds_cart, Actual = cs_test$Sales) %>%
 The 6 possible predicted values do a decent job of binning the observations.
 
 
-### Caret Approach
+### Training with Caret
 
 I can also fit the model with `caret::train()`, specifying `method = "rpart"`. I'll build the model using 10-fold cross-validation to optimize the hyperparameter CP. 
 
@@ -610,25 +611,21 @@ scoreboard_r
 ```
 
 
-## Bagging
+## Bagged Trees
 
-Bootstrap aggregation, or *bagging*, is a general-purpose procedure for reducing the variance of a statistical learning method.  The algorithm constructs *B* regression trees using *B* bootstrapped training sets, and averages the resulting predictions. These trees are grown deep, and are not pruned. Hence each individual tree has high variance, but low bias. Averaging these *B* trees reduces the variance.  For classification trees, bagging takes the "majority vote" for the prediction.  Use a value of *B* sufficiently large that the error has settled down.
+One drawback of decision trees is that they are high-variance estimators. A small number of additional training observations can dramatically alter the prediction performance of a learned tree.
 
-To test the model accuracy, the out-of-bag observations are predicted from the models. E.g., If *B/3* of observations are in-bag, there are *B/3* predictions per observation.  These predictions are averaged for the test prediction.  Again, for classification trees, a majority vote is taken.
+Bootstrap aggregation, or *bagging*, is a general-purpose procedure for reducing the variance of a statistical learning method.  The algorithm constructs *B* regression trees using *B* bootstrapped training sets, and averages the resulting predictions. These trees are grown deep, and are not pruned. Hence each individual tree has high variance, but low bias. Averaging the *B* trees reduces the variance.  The predicted value for an observation is the mode (classification) or mean (regression) of the trees. *B* usually equals ~25.
 
-The downside to bagging is that it improves accuracy at the expense of interpretability.  There is no longer a single tree to interpret, so it is unclear which variables are more important than others.  
+To test the model accuracy, the out-of-bag observations are predicted from the models. For a training set of size *n*, each tree is composed of $\sim (1 - e^{-1})n = .632n$ unique observations in-bag and $.368n$ out-of-bag. For each tree in the ensemble, bagging makes predictions on the tree's out-of-bag observations. I think (*see* page 197 of [@Kuhn2016]) bagging measures the performance (RMSE, Accuracy, ROC, etc.) of each tree in the ensemble and averages them to produce an overall performance estimate. (This makes no sense to me. If each tree has poor performance, then the average performance of many trees will still be poor. An ensemble of *B* trees will produce $\sim .368 B$ predictions per unique observation. Seems like you should take the mean/mode of each observation's prediction as the final prediction. Then you have *n* predictions to compare to *n* actuals, and you assess performance on that.)
 
-Bagged trees are a special case of random forests, so see the next section for an example.
+The downside to bagging is that there is no single tree with a set of rules to interpret. It becomes unclear which variables are more important than others. 
 
+The next section explains how bagged trees are a special case of random forests.
 
-## Random Forests
+### Bagged Classification Tree
 
-Random forests improve bagged trees by way of a small tweak that de-correlates the trees.  As in bagging, the algorithm builds a number of decision trees on bootstrapped training samples. But when building these decision trees, each time a split in a tree is considered, a random sample of *mtry* predictors is chosen as split candidates from the full set of *p* predictors.  A fresh sample of *mtry* predictors is taken at each split.  Typically $mtry \sim \sqrt{p}$.  Bagged trees are thus a special case of random forests where *mtry = p*.
-
-
-#### Bagging Classification Example
-
-I'll predict `Purchase` from the `OJ` data set again, this time using the bagging method by specifying `method = "treebag"`. Caret has no hyperparameters to tune with this model, so I won't set `tuneLegth` or `tuneGrid`.
+Leaning by example, I'll predict `Purchase` from the `OJ` data set again, this time using the bagging method by specifying `method = "treebag"`. Caret has no hyperparameters to tune with this model, so I won't set `tuneLegth` or `tuneGrid`. The ensemble size defaults to `nbagg = 25`, but you can override it (I didn't).
 
 ```{r}
 set.seed(1234)
@@ -636,10 +633,19 @@ oj_mdl_bag <- train(
    Purchase ~ ., 
    data = oj_train, 
    method = "treebag",
-   trControl = oj_trControl
+   trControl = oj_trControl,
+   metric = "ROC"
 )
+oj_mdl_bag$finalModel
 oj_mdl_bag
+# summary(oj_mdl_bag)
+```
 
+If you review the `summary(oj_mdl_bag)`, you'll see that caret built *B* = 25 trees from 25 bootstrapped training sets of 857 samples (the size of `oj_train`). I *think* caret started by splitting the training set into 10 folds, then using 9 of the folds to run the bagging algorithm and collect performance measures on the hold-out fold. After repeating the process for all 10 folds, it averaged the performance measures to produce the resampling results shown above. Had there been hyperparameters to tune, caret would have repeated this process for all hyperparameter combinations and the resampling results above would be from the best performing combination. Then caret ran the bagging algorithm again on the *entire* data set, and the trees you see in `summary(oj_mdl_bag)` are what it produces. (*It seems inefficient to cross-validate a bagging algorithm given that the out-of-bag samples are there for performance testing.*)
+
+Let's look at the performance on the holdout data set.
+
+```{r}
 oj_preds_bag <- bind_cols(
    predict(oj_mdl_bag, newdata = oj_test, type = "prob"),
    Predicted = predict(oj_mdl_bag, newdata = oj_test, type = "raw"),
@@ -648,7 +654,11 @@ oj_preds_bag <- bind_cols(
 
 oj_cm_bag <- confusionMatrix(oj_preds_bag$Predicted, reference = oj_preds_bag$Actual)
 oj_cm_bag
+```
 
+The accuracy is 0.8451 - surprisingly worse than the 0.85915 of the single tree model, but that is a difference of three predictions in a set of 213. 
+
+```{r}
 mdl_auc <- Metrics::auc(actual = oj_preds_bag$Actual == "CH", oj_preds_bag$CH)
 yardstick::roc_curve(oj_preds_bag, Actual, CH) %>%
   autoplot() +
@@ -671,6 +681,14 @@ scoreboard <- rbind(
 scoreboard %>% arrange(desc(Acc))
 ```
 
+
+## Random Forests
+
+Random forests improve bagged trees by way of a small tweak that de-correlates the trees.  As in bagging, the algorithm builds a number of decision trees on bootstrapped training samples. But when building these decision trees, each time a split in a tree is considered, a random sample of *mtry* predictors is chosen as split candidates from the full set of *p* predictors.  A fresh sample of *mtry* predictors is taken at each split.  Typically $mtry \sim \sqrt{p}$.  Bagged trees are thus a special case of random forests where *mtry = p*.
+
+
+
+
 #### Random Forest Classification Example
 
 Now I'll try it with the random forest method by specifying `method = "rf"`.  Hyperparameter `mtry` can take any value from 1 to 17 (the number of predictors) and I expect the best value to be near $\sqrt{17} \sim 4$.
@@ -681,6 +699,7 @@ oj_mdl_rf <- train(
    Purchase ~ ., 
    data = oj_train, 
    method = "rf",
+   metric = "ROC",
    tuneGrid = expand.grid(mtry = 1:7), # searching around mtry=4
    trControl = oj_trControl
 )
@@ -843,13 +862,15 @@ I'll use `tuneLength = 5`.
 
 ```{r}
 set.seed(1234)
+garbage <- capture.output(
 oj_mdl_gbm <- train(
    Purchase ~ ., 
    data = oj_train, 
    method = "gbm",
+   metric = "ROC",
    tuneLength = 5,
    trControl = oj_trControl
-)
+))
 oj_mdl_gbm
 ```
 
@@ -952,7 +973,22 @@ scoreboard_r <- rbind(
 scoreboard_r %>% arrange(RMSE)
 ```
 
-## Summary
+## Model Comparison
+
+### Classification Trees
+
+```{r}
+mdls <- list(
+   "Single Tree (caret)" = oj_mdl_cart2,
+   "Bagged" = oj_mdl_bag,
+   "Random Forest" = oj_mdl_rf,
+   "GBM" = oj_mdl_gbm
+)
+# Make predictions on holdout set
+holdout_set_pred_probs   <- map(candidate_models, predict, type = "prob", newdata = as.data.frame(d20))
+holdout_set_pred_classes <- map(candidate_models, predict, type = "raw", newdata = as.data.frame(d20))
+```
+
 
 ```{r}
 resamps <- resamples(list('CART' = oj_mdl_cart2,
