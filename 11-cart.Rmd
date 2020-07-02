@@ -872,6 +872,18 @@ oj_mdl_gbm <- train(
    trControl = oj_trControl
 ))
 oj_mdl_gbm
+
+set.seed(1234)
+garbage <- capture.output(
+oj_mdl_xgb <- train(
+   Purchase ~ ., 
+   data = oj_train, 
+   method = "xgbTree",
+   metric = "ROC",
+   tuneLength = 5,
+   trControl = oj_trControl
+))
+oj_mdl_xgb
 ```
 
 `train()` tuned `n.trees` ($M) and `interaction.depth`, holding `shrinkage = 0.1` (\eta), and `n.minobsinnode = 10`. The optimal hyperparameter values were `n.trees = 200`, and `interaction.depth = 3`.
@@ -880,6 +892,7 @@ You can see from the tuning plot that accuracy is maximized at $M=200$ for tree 
 
 ```{r}
 plot(oj_mdl_gbm)
+plot(oj_mdl_xgb)
 ```
 
 Let's see how the model performed on the holdout set.
@@ -893,6 +906,15 @@ oj_preds_gbm <- bind_cols(
 
 oj_cm_gbm <- confusionMatrix(oj_preds_gbm$Predicted, reference = oj_preds_gbm$Actual)
 oj_cm_gbm
+
+oj_preds_xgb <- bind_cols(
+   predict(oj_mdl_xgb, newdata = oj_test, type = "prob"),
+   Predicted = predict(oj_mdl_xgb, newdata = oj_test, type = "raw"),
+   Actual = oj_test$Purchase
+)
+
+oj_cm_xgb <- confusionMatrix(oj_preds_xgb$Predicted, reference = oj_preds_xgb$Actual)
+oj_cm_xgb
 ```
 
 GBM improved upon boosting and random forest with accuracy of 0.8498.
@@ -943,7 +965,7 @@ The optimal tuning parameters were at $M = 250$ and `interation.depth = 1`.
 plot(cs_mdl_gbm)
 ```
 
-Here is the holdout set peformance.
+Here is the holdout set performance.
 
 ```{r}
 cs_preds_gbm <- bind_cols(
@@ -973,67 +995,60 @@ scoreboard_r <- rbind(
 scoreboard_r %>% arrange(RMSE)
 ```
 
-## Model Comparison
+## Summary
+
+I created four classification trees using the `ISLR::OJ` data set and four regression trees using the `ISLR::Carseats` data set. Let's compare their performance.
 
 ### Classification Trees
 
+The `caret::resamples()` function summarizes the resampling performance on the final model produced in `train()`. It creates summary statistics (mean, min, max, etc.) for each performance metric (ROC, RMSE, etc.) for a list of models.
+
 ```{r}
-mdls <- list(
-   "Single Tree (caret)" = oj_mdl_cart2,
-   "Bagged" = oj_mdl_bag,
-   "Random Forest" = oj_mdl_rf,
-   "GBM" = oj_mdl_gbm
-)
-# Make predictions on holdout set
-holdout_set_pred_probs   <- map(candidate_models, predict, type = "prob", newdata = as.data.frame(d20))
-holdout_set_pred_classes <- map(candidate_models, predict, type = "raw", newdata = as.data.frame(d20))
+oj_resamples <- resamples(list("Single Tree (caret)" = oj_mdl_cart2,
+                               "Bagged" = oj_mdl_bag,
+                               "Random Forest" = oj_mdl_rf,
+                               "GBM" = oj_mdl_gbm))
+summary(oj_resamples)
 ```
 
+The mean ROC value is the performance measure I used to evaluate the models in `train()` (you can compare the Mean column to each model's object (e.g., `print(oj_mdl_cart2)`)). The best performing model on resamples based on the mean ROC score was GBM. It also had the highest mean sensitivity and specificity. Here is a box plot of the distributions.
 
 ```{r}
-resamps <- resamples(list('CART' = oj_mdl_cart2,
-                          'Bagging' = oj_mdl_bag,
-                          'Random Forest' = oj_mdl_bag,
-                          'GBM' = oj_mdl_gbm))
-
-summary(resamps)
-```
-```{r}
-bwplot(resamps)
+bwplot(oj_resamples)
 ```
 
-```{r}
-dotplot(resamps, metric = "Accuracy")
-```
-Compute the differences among models and use a t-test to evaluate the null hypothesis that there is no difference between models.
+One way to evaluate the box plots is with a post-hoc test of differences. The single tree was about the same as the random forest and bagged models.
 
 ```{r}
-(difValues <- diff(resamps))
-summary(difValues)
-bwplot(difValues, layout = c(3, 1))
+(oj_diff <- diff(oj_resamples))
+# summary(oj_diff)
+dotplot(oj_diff)
 ```
 
-```{r}
-resamps <- resamples(list('CART' = cs_mdl_cart2,
-                          'Bagging' = cs_mdl_bag,
-                          'Random Forest' = cs_mdl_bag,
-                          'GBM' = cs_mdl_gbm))
+### Regression Trees
 
-summary(resamps)
-```
-```{r}
-bwplot(resamps)
-```
+Here is the summary of resampling metrics for the Carseats models.
 
 ```{r}
-dotplot(resamps, metric = "RMSE")
+cs_resamples <- resamples(list("Single Tree (caret)" = cs_mdl_cart2,
+                               "Bagged" = cs_mdl_bag,
+                               "Random Forest" = cs_mdl_rf,
+                               "GBM" = cs_mdl_gbm))
+summary(cs_resamples)
 ```
-Compute the differences among models and use a t-test to evaluate the null hypothesis that there is no difference between models.
+
+The best performing model on resamples based on the mean RMSE score was GBM. It also had the lowest mean absolut error (MAE) and highest R-squared. Here is a box plot of the distributions.
 
 ```{r}
-(difValues <- diff(resamps))
-summary(difValues)
-bwplot(difValues, layout = c(3, 1))
+bwplot(cs_resamples)
+```
+
+The post-hoc test indicates all models differed from each other.
+
+```{r}
+(cs_diff <- diff(cs_resamples))
+# summary(cs_diff)
+dotplot(cs_diff)
 ```
 
 
