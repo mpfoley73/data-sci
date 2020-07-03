@@ -1,3 +1,13 @@
+```{r include=FALSE}
+scoreboard <- function(dat){
+   dat %>%
+      flextable::flextable() %>%
+      flextable::colformat_num(j = 2, digits = 4) %>%
+      flextable::autofit()
+}
+```
+
+
 # Decision Trees
 
 Decision trees, also known as classification and regression tree (CART) models, are tree-based methods for supervised machine learning.  Simple classification trees and regression trees are easy to use and interpret, but are not competitive with the best machine learning methods. However, they form the foundation for ensemble models such as bagged trees, random forests, and boosted trees, which although less interpretable, are very accurate.
@@ -387,11 +397,11 @@ plot(varImp(oj_mdl_cart2), main="Variable Importance with CART (caret)")
 Looks like the manual effort fared best.  Here is a summary the accuracy rates of the two models.
 
 ```{r}
-scoreboard <- rbind(
-   data.frame(model = "Manual Class", Acc = round(oj_cm_cart$overall["Accuracy"], 5)), 
-   data.frame(model = "Caret w/tuneGrid", Acc = round(oj_cm_cart2$overall["Accuracy"], 5))
-)
-scoreboard
+oj_scoreboard <- rbind(
+   data.frame(Model = "Single Tree", Accuracy = oj_cm_cart$overall["Accuracy"]),
+   data.frame(Model = "Single Tree (caret)", Accuracy = oj_cm_cart2$overall["Accuracy"])
+) %>% arrange(desc(Accuracy))
+scoreboard(oj_scoreboard)
 ```
 
 
@@ -593,21 +603,17 @@ ggplot(aes(x = Actual, y = Predicted)) +
 The model over-estimates at the low end and underestimates at the high end.  Calculate the test data set RMSE.
 
 ```{r}
-cs_rmse_cart2 <- RMSE(
-   pred = cs_preds_cart2,
-   obs = cs_test$Sales
-)
-cs_rmse_cart2
+(cs_rmse_cart2 <- RMSE(pred = cs_preds_cart2, obs = cs_test$Sales))
 ```
 
 Caret performed better in this model.  Here is a summary the RMSE values of the two models.
 
 ```{r}
-scoreboard_r <- rbind(
-   data.frame(model = "Manual ANOVA", RMSE = round(cs_rmse_cart, 5)), 
-   data.frame(model = "Caret w/tuneGrid", RMSE = round(cs_rmse_cart2, 5))
-)
-scoreboard_r
+cs_scoreboard <- rbind(
+   data.frame(Model = "Single Tree", RMSE = cs_rmse_cart),
+   data.frame(Model = "Single Tree (caret)", RMSE = cs_rmse_cart2)
+) %>% arrange(RMSE)
+scoreboard(cs_scoreboard)
 ```
 
 
@@ -656,7 +662,7 @@ oj_cm_bag <- confusionMatrix(oj_preds_bag$Predicted, reference = oj_preds_bag$Ac
 oj_cm_bag
 ```
 
-The accuracy is 0.8451 - surprisingly worse than the 0.85915 of the single tree model, but that is a difference of three predictions in a set of 213. 
+The accuracy is 0.8451 - surprisingly worse than the 0.85915 of the single tree model, but that is a difference of three predictions in a set of 213. Here are the ROC and gain curves.
 
 ```{r}
 mdl_auc <- Metrics::auc(actual = oj_preds_bag$Actual == "CH", oj_preds_bag$CH)
@@ -670,81 +676,23 @@ yardstick::roc_curve(oj_preds_bag, Actual, CH) %>%
 yardstick::gain_curve(oj_preds_bag, Actual, CH) %>%
   autoplot() +
   labs(title = "OJ Bagging Gain Curve")
-
-
-plot(varImp(oj_mdl_bag), main="Variable Importance with Bagging")
-
-scoreboard <- rbind(
-   scoreboard,
-   data.frame(model = "Bagging", Acc = round(oj_cm_bag$overall["Accuracy"], 5))
-)
-scoreboard %>% arrange(desc(Acc))
 ```
 
-
-## Random Forests
-
-Random forests improve bagged trees by way of a small tweak that de-correlates the trees.  As in bagging, the algorithm builds a number of decision trees on bootstrapped training samples. But when building these decision trees, each time a split in a tree is considered, a random sample of *mtry* predictors is chosen as split candidates from the full set of *p* predictors.  A fresh sample of *mtry* predictors is taken at each split.  Typically $mtry \sim \sqrt{p}$.  Bagged trees are thus a special case of random forests where *mtry = p*.
-
-
-
-
-#### Random Forest Classification Example
-
-Now I'll try it with the random forest method by specifying `method = "rf"`.  Hyperparameter `mtry` can take any value from 1 to 17 (the number of predictors) and I expect the best value to be near $\sqrt{17} \sim 4$.
+Let's see what are the most important variables.
 
 ```{r}
-set.seed(1234)
-oj_mdl_rf <- train(
-   Purchase ~ ., 
-   data = oj_train, 
-   method = "rf",
-   metric = "ROC",
-   tuneGrid = expand.grid(mtry = 1:7), # searching around mtry=4
-   trControl = oj_trControl
-)
-oj_mdl_rf
+plot(varImp(oj_mdl_bag), main="Variable Importance with Bagging")
+```
+Finally, let's check out the scoreboard. Bagging fared worse than the single tree models.
 
-# The peak accuracy is at mtry = 3
-plot(oj_mdl_rf)
-
-oj_preds_rf <- bind_cols(
-   predict(oj_mdl_rf, newdata = oj_test, type = "prob"),
-   Predicted = predict(oj_mdl_rf, newdata = oj_test, type = "raw"),
-   Actual = oj_test$Purchase
-)
-
-# Accuracy on holdout is 0.8263
-oj_cm_rf <- confusionMatrix(oj_preds_rf$Predicted, reference = oj_preds_rf$Actual)
-oj_cm_rf
-
-# AUC is 0.9190
-mdl_auc <- Metrics::auc(actual = oj_preds_rf$Actual == "CH", oj_preds_rf$CH)
-yardstick::roc_curve(oj_preds_rf, Actual, CH) %>%
-  autoplot() +
-  labs(
-    title = "OJ Random Forest ROC Curve",
-    subtitle = paste0("AUC = ", round(mdl_auc, 4))
-  )
-
-yardstick::gain_curve(oj_preds_rf, Actual, CH) %>%
-  autoplot() +
-  labs(title = "OJ Random Forest Gain Curve")
-
-
-plot(varImp(oj_mdl_rf), main="Variable Importance with Random Forest")
-
-scoreboard <- rbind(
-   scoreboard,
-   data.frame(model = "Random Forest", Acc = round(oj_cm_rf$overall["Accuracy"], 5))
-)
-scoreboard %>% arrange(desc(Acc))
+```{r}
+oj_scoreboard <- rbind(oj_scoreboard,
+   data.frame(Model = "Bagging", Accuracy = oj_cm_bag$overall["Accuracy"])
+) %>% arrange(desc(Accuracy))
+scoreboard(oj_scoreboard)
 ```
 
-The bagging and random forest models did pretty well, but the manual classification tree is still in first place.  There's still gradient boosting to investigate!
-
-
-#### Bagging Regression Example
+### Bagging Regression Tree
 
 I'll predict `Sales` from the `Carseats` data set again, this time using the bagging method by specifying `method = "treebag"`.
 
@@ -757,34 +705,113 @@ cs_mdl_bag <- train(
    trControl = cs_trControl
 )
 cs_mdl_bag
+```
 
+Let's look at the performance on the holdout data set. The RMSE is 1.9185, but the model over-predicts at low end of Sales and under-predicts at high end.
+
+```{r}
 cs_preds_bag <- bind_cols(
    Predicted = predict(cs_mdl_bag, newdata = cs_test),
    Actual = cs_test$Sales
 )
+(cs_rmse_bag <- RMSE(pred = cs_preds_bag$Predicted, obs = cs_preds_bag$Actual))
 
-# Model over-predicts at low end of Sales and under-predicts at high end
 cs_preds_bag %>%
    ggplot(aes(x = Actual, y = Predicted)) +
    geom_point(alpha = 0.6, color = "cadetblue") +
    geom_smooth(method = "loess", formula = "y ~ x") +
    geom_abline(intercept = 0, slope = 1, linetype = 2) +
    labs(title = "Carseats Bagging, Predicted vs Actual (caret)")
-
-plot(varImp(cs_mdl_bag), main="Variable Importance with Bagging")
-
-# RMSE of 1.9185 is much improved
-cs_rmse_bag <- RMSE(pred = cs_preds_bag$Predicted, obs = cs_preds_bag$Actual)
-
-scoreboard_r <- rbind(
-   scoreboard_r,
-   data.frame(model = "Bagging", RMSE = round(cs_rmse_bag, 5))
-)
-scoreboard_r %>% arrange(RMSE)
 ```
 
+Now the variable importance.
 
-#### Random Forest Regression Example
+```{r}
+plot(varImp(cs_mdl_bag), main="Variable Importance with Bagging")
+```
+
+Before moving on, check in with the scoreboard.
+
+```{r}
+cs_scoreboard <- rbind(cs_scoreboard,
+   data.frame(Model = "Bagging", RMSE = cs_rmse_bag)
+) %>% arrange(RMSE)
+scoreboard(cs_scoreboard)
+```
+
+## Random Forests
+
+Random forests improve bagged trees by way of a small tweak that de-correlates the trees.  As in bagging, the algorithm builds a number of decision trees on bootstrapped training samples. But when building these decision trees, each time a split in a tree is considered, a random sample of *mtry* predictors is chosen as split candidates from the full set of *p* predictors.  A fresh sample of *mtry* predictors is taken at each split.  Typically $mtry \sim \sqrt{p}$.  Bagged trees are thus a special case of random forests where *mtry = p*.
+
+#### Random Forest Classification Tree
+
+Now I'll try it with the random forest method by specifying `method = "rf"`.  Hyperparameter `mtry` can take any value from 1 to 17 (the number of predictors) and I expect the best value to be near $\sqrt{17} \sim 4$.
+
+```{r}
+set.seed(1234)
+oj_mdl_rf <- train(
+   Purchase ~ ., 
+   data = oj_train, 
+   method = "rf",
+   metric = "ROC",
+   tuneGrid = expand.grid(mtry = 1:10), # searching around mtry=4
+   trControl = oj_trControl
+)
+oj_mdl_rf
+```
+
+The largest ROC score was at mtry = 7 - higher than I expected.
+
+```{r}
+plot(oj_mdl_rf)
+```
+
+Use the model to make predictions on the test set. 
+
+```{r}
+oj_preds_rf <- bind_cols(
+   predict(oj_mdl_rf, newdata = oj_test, type = "prob"),
+   Predicted = predict(oj_mdl_rf, newdata = oj_test, type = "raw"),
+   Actual = oj_test$Purchase
+)
+
+oj_cm_rf <- confusionMatrix(oj_preds_rf$Predicted, reference = oj_preds_rf$Actual)
+oj_cm_rf
+```
+
+The accuracy on the holdout set is 0.8310. The AUC is 0.9244. Here are the ROC and gain curves.
+
+```{r}
+# AUC is 0.9190
+mdl_auc <- Metrics::auc(actual = oj_preds_rf$Actual == "CH", oj_preds_rf$CH)
+yardstick::roc_curve(oj_preds_rf, Actual, CH) %>%
+  autoplot() +
+  labs(
+    title = "OJ Random Forest ROC Curve",
+    subtitle = paste0("AUC = ", round(mdl_auc, 4))
+  )
+
+yardstick::gain_curve(oj_preds_rf, Actual, CH) %>%
+  autoplot() +
+  labs(title = "OJ Random Forest Gain Curve")
+```
+
+What are the most important variables?
+
+```{r}
+plot(varImp(oj_mdl_rf), main="Variable Importance with Random Forest")
+```
+
+Let's update the scoreboard. The bagging and random forest models did pretty well, but the manual classification tree is still in first place.  There's still gradient boosting to investigate!
+
+```{r}
+oj_scoreboard <- rbind(oj_scoreboard,
+   data.frame(Model = "Random Forest", Accuracy = oj_cm_rf$overall["Accuracy"])
+) %>% arrange(desc(Accuracy))
+scoreboard(oj_scoreboard)
+```
+
+#### Random Forest Regression Tree
 
 Now I'll try it with the random forest method by specifying `method = "rf"`.  Hyperparameter `mtry` can take any value from 1 to 10 (the number of predictors) and I expect the best value to be near $\sqrt{10} \sim 3$.
 
@@ -798,37 +825,45 @@ cs_mdl_rf <- train(
    trControl = cs_trControl
 )
 cs_mdl_rf
+```
 
-# The minimum RMSE is at mtry = 7
+The minimum RMSE is at mtry = 7.
+
+```{r}
 plot(cs_mdl_rf)
+```
 
+Make predictions on the test set. Like the bagged tree model, this one also over-predicts at low end of Sales and under-predicts at high end. The RMSE of 1.7184 is better than bagging's 1.9185.
+
+```{r}
 cs_preds_rf <- bind_cols(
    Predicted = predict(cs_mdl_rf, newdata = cs_test),
    Actual = cs_test$Sales
 )
+(cs_rmse_rf <- RMSE(pred = cs_preds_rf$Predicted, obs = cs_preds_rf$Actual))
 
-# Model over-predicts at low end of Sales and under-predicts at high end
 cs_preds_rf %>%
    ggplot(aes(x = Actual, y = Predicted)) +
    geom_point(alpha = 0.6, color = "cadetblue") +
    geom_smooth(method = "loess", formula = "y ~ x") +
    geom_abline(intercept = 0, slope = 1, linetype = 2) +
    labs(title = "Carseats Random Forest, Predicted vs Actual (caret)")
+```
 
+```{r}
 plot(varImp(cs_mdl_rf), main="Variable Importance with Random Forest")
+```
 
-# RMSE of 1.7184 is better than bagging's 1.9185.
-cs_rmse_rf <- RMSE(pred = cs_preds_rf$Predicted, obs = cs_preds_rf$Actual)
+Let's check in with the scoreboard.
 
-scoreboard_r <- rbind(
-   scoreboard_r,
-   data.frame(model = "Random Forest", RMSE = round(cs_rmse_rf, 5))
-)
-scoreboard_r %>% arrange(RMSE)
+```{r}
+cs_scoreboard <- rbind(cs_scoreboard,
+   data.frame(Model = "Random Forest", RMSE = cs_rmse_rf)
+) %>% arrange(RMSE)
+scoreboard(cs_scoreboard)
 ```
 
 The bagging and random forest models did very well - they took over the top positions!
-
 
 ## Gradient Boosting
 
@@ -849,14 +884,18 @@ The name "gradient boosting" refers to the *boosting* of a model with a *gradien
 In the case of classification problems, the loss function is the log-loss; for regression problems, the loss function is mean squared error. GBM continues until it reaches maximum number of trees or an acceptable error level.
 
 
-#### Gradient Boosting Classification Example
+#### Gradient Boosting Classification Tree
+
+In addition to the gradient boosting machine algorithm, implemented in **caret** with `method = gbm`, there is a variable called Extreme Gradient Boosting, XGBoost, which frankly I don't know anything about other than it is supposed to work extremely well. Let's try them both!
+
+##### GBM
 
 I'll predict `Purchase` from the `OJ` data set again, this time using the GBM method by specifying `method = "gbm"`. `gbm` has the following tuneable hyperparameters (see `modelLookup("gbm")`). 
 
 * `n.trees`: number of boosting iterations, $M$
 * `interaction.depth`: maximum tree depth
 * `shrinkage`: shrinkage, $\eta$
-* `n.minobsinnode`: mimimum terminal node size
+* `n.minobsinnode`: minimum terminal node size
 
 I'll use `tuneLength = 5`.
 
@@ -872,7 +911,66 @@ oj_mdl_gbm <- train(
    trControl = oj_trControl
 ))
 oj_mdl_gbm
+```
 
+`train()` tuned `n.trees` ($M) and `interaction.depth`, holding `shrinkage = 0.1` (\eta), and `n.minobsinnode = 10`. The optimal hyperparameter values were `n.trees = 50`, and `interaction.depth = 5`.
+
+You can see from the tuning plot that accuracy is maximized at $M=50$ for tree depth of 5, but $M=50$ with tree depth of 3 worked nearly as well.
+
+```{r}
+plot(oj_mdl_gbm)
+```
+
+Let's see how the model performed on the holdout set. The accuracy was 0.8451.
+
+```{r}
+oj_preds_gbm <- bind_cols(
+   predict(oj_mdl_gbm, newdata = oj_test, type = "prob"),
+   Predicted = predict(oj_mdl_gbm, newdata = oj_test, type = "raw"),
+   Actual = oj_test$Purchase
+)
+
+oj_cm_gbm <- confusionMatrix(oj_preds_gbm$Predicted, reference = oj_preds_gbm$Actual)
+oj_cm_gbm
+```
+
+AUC was 0.9386. Here are the ROC and gain curves.
+
+```{r}
+mdl_auc <- Metrics::auc(actual = oj_preds_gbm$Actual == "CH", oj_preds_gbm$CH)
+yardstick::roc_curve(oj_preds_gbm, Actual, CH) %>%
+  autoplot() +
+  labs(
+    title = "OJ GBM ROC Curve",
+    subtitle = paste0("AUC = ", round(mdl_auc, 4))
+  )
+
+yardstick::gain_curve(oj_preds_gbm, Actual, CH) %>%
+  autoplot() +
+  labs(title = "OJ GBM Gain Curve")
+```
+
+Now the variable importance. Just a few variables. `LoyalCH` is at the top again.
+
+```{r}
+plot(varImp(oj_mdl_xgb), main="Variable Importance with Gradient Boosting")
+```
+
+##### XGBoost
+
+I'll predict `Purchase` from the `OJ` data set again, this time using the XGBoost method by specifying `method = "xgbTree"`. `xgbTree` has the following tuneable hyperparameters (see `modelLookup("xgbTree")`). The first three are the same as `xgb`.
+
+* `nrounds`: number of boosting iterations, $M$
+* `max_depth`: maximum tree depth
+* `eta`: shrinkage, $\eta$
+* `gamma`: minimum loss reduction
+* `colsamle_bytree`: subsample ratio of columns
+* `min_child_weight`: minimum size of instance weight
+* `substample`: subsample percentage
+
+I'll use `tuneLength = 5` again.
+
+```{r}
 set.seed(1234)
 garbage <- capture.output(
 oj_mdl_xgb <- train(
@@ -886,27 +984,17 @@ oj_mdl_xgb <- train(
 oj_mdl_xgb
 ```
 
-`train()` tuned `n.trees` ($M) and `interaction.depth`, holding `shrinkage = 0.1` (\eta), and `n.minobsinnode = 10`. The optimal hyperparameter values were `n.trees = 200`, and `interaction.depth = 3`.
+`train()` tuned `eta` ($\eta$),  `max_depth`, `colsample_bytree`, `subsample`, and `nrounds`, holding `gamma = 0`, and `min_child_weight = 1`. The optimal hyperparameter values were `eta = 0.3`,  `max_depth - 1`, `colsample_bytree = 0.6`, `subsample = 1`, and `nrounds = 50`.
 
-You can see from the tuning plot that accuracy is maximized at $M=200$ for tree depth of 3, but $M=150$ with tree depth of 1 worked nearly as well.
+With so many hyperparameters, the tuning plot is nearly unreadable.
 
 ```{r}
-plot(oj_mdl_gbm)
 plot(oj_mdl_xgb)
 ```
 
-Let's see how the model performed on the holdout set.
+Let's see how the model performed on the holdout set. The accuracy was 0.8732 - much better than the 0.8451 from regular gradient boosting.
 
 ```{r}
-oj_preds_gbm <- bind_cols(
-   predict(oj_mdl_gbm, newdata = oj_test, type = "prob"),
-   Predicted = predict(oj_mdl_gbm, newdata = oj_test, type = "raw"),
-   Actual = oj_test$Purchase
-)
-
-oj_cm_gbm <- confusionMatrix(oj_preds_gbm$Predicted, reference = oj_preds_gbm$Actual)
-oj_cm_gbm
-
 oj_preds_xgb <- bind_cols(
    predict(oj_mdl_xgb, newdata = oj_test, type = "prob"),
    Predicted = predict(oj_mdl_xgb, newdata = oj_test, type = "raw"),
@@ -917,32 +1005,42 @@ oj_cm_xgb <- confusionMatrix(oj_preds_xgb$Predicted, reference = oj_preds_xgb$Ac
 oj_cm_xgb
 ```
 
-GBM improved upon boosting and random forest with accuracy of 0.8498.
+AUC was 0.9386 for gradient boosting, and here it is 0.9323. Here are the ROC and gain curves.
 
 ```{r}
-mdl_auc <- Metrics::auc(actual = oj_preds_gbm$Actual == "CH", oj_preds_bag$CH)
-yardstick::roc_curve(oj_preds_gbm, Actual, CH) %>%
+mdl_auc <- Metrics::auc(actual = oj_preds_xgb$Actual == "CH", oj_preds_xgb$CH)
+yardstick::roc_curve(oj_preds_xgb, Actual, CH) %>%
   autoplot() +
   labs(
-    title = "OJ GBM ROC Curve",
+    title = "OJ XGBoost ROC Curve",
     subtitle = paste0("AUC = ", round(mdl_auc, 4))
   )
 
-yardstick::gain_curve(oj_preds_gbm, Actual, CH) %>%
+yardstick::gain_curve(oj_preds_xgb, Actual, CH) %>%
   autoplot() +
-  labs(title = "OJ GBM Gain Curve")
-
-
-plot(varImp(oj_mdl_bag), main="Variable Importance with Bagging")
-
-scoreboard <- rbind(
-   scoreboard,
-   data.frame(model = "GBM", Acc = round(oj_cm_gbm$overall["Accuracy"], 5))
-)
-scoreboard %>% arrange(desc(Acc))
+  labs(title = "OJ XGBoost Gain Curve")
 ```
 
-#### Gradient Boosting Regression Example
+Now the variable importance. Nothing jumps out at me here. It's the same top variables as regular gradient boosting.
+
+```{r}
+plot(varImp(oj_mdl_xgb), main="Variable Importance with XGBoost")
+```
+
+Okay, let's check in with the leader board. Wow, XGBoost *is* extreme.
+
+```{r}
+oj_scoreboard <- rbind(oj_scoreboard,
+   data.frame(Model = "Gradient Boosting", Accuracy = oj_cm_gbm$overall["Accuracy"])) %>%
+   rbind(data.frame(Model = "XGBoost", Accuracy = oj_cm_xgb$overall["Accuracy"])) %>%
+arrange(desc(Accuracy))
+scoreboard(oj_scoreboard)
+```
+
+
+#### Gradient Boosting Regression Tree
+
+##### GBM
 
 I'll predict `Sales` from the `Carseats` data set again, this time using the bagging method by specifying `method = "gbm"`
 
@@ -993,6 +1091,23 @@ scoreboard_r <- rbind(
    data.frame(model = "GBM", RMSE = round(cs_rmse_gbm, 5))
 )
 scoreboard_r %>% arrange(RMSE)
+```
+
+##### XGBoost
+
+I'll predict `Sales` from the `Carseats` data set again, this time using the bagging method by specifying `method = "xgb"`
+
+```{r}
+set.seed(1234)
+garbage <- capture.output(
+cs_mdl_gbm <- train(
+   Sales ~ ., 
+   data = cs_train, 
+   method = "gbm",
+   tuneLength = 5,
+   trControl = cs_trControl
+))
+cs_mdl_gbm
 ```
 
 ## Summary
