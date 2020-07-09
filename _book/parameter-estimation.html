@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.2 Parameter Estimation | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.2 Parameter Estimation | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-10" />
+<meta name="date" content="2020-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,7 @@
 
 
 
+<script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
@@ -173,7 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="3.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
+<li class="chapter" data-level="3.0.1" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
 <li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
@@ -233,18 +234,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
 <li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>10.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>10.1.2</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="10.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>10.2</b> Regression Tree</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>10.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
+<li class="chapter" data-level="10.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>10.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>10.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="10.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>10.3.2</b> Bagging Regression Tree</a></li>
+</ul></li>
 <li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
 <li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
-<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>10.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="10.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>10.6.2</b> Regression Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="reference.html"><a href="reference.html#reference"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>11</b> Non-linear Models</a><ul>
 <li class="chapter" data-level="11.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>11.1</b> Splines</a></li>
@@ -255,11 +261,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
 <li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a></li>
+<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a><ul>
+<li class="chapter" data-level="14.1" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i><b>14.1</b> N-Grams</a></li>
+<li class="chapter" data-level="14.2" data-path="converting-to-and-from-non-tidy-formats.html"><a href="converting-to-and-from-non-tidy-formats.html"><i class="fa fa-check"></i><b>14.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="14.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>14.3</b> Example</a></li>
+<li class="chapter" data-level="14.4" data-path="stringr-package.html"><a href="stringr-package.html"><i class="fa fa-check"></i><b>14.4</b> stringr package</a></li>
+<li class="chapter" data-level="14.5" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>14.5</b> Regular Expressions</a></li>
+</ul></li>
 <li class="chapter" data-level="15" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>15</b> Survival Analysis</a><ul>
 <li class="chapter" data-level="15.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>15.1</b> Basic Concepts</a></li>
 <li class="chapter" data-level="15.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>15.2</b> Survival Curve Estimation</a><ul>
@@ -308,110 +320,110 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[\hat{\sigma} = \sqrt{(n-k-1)^{-1} e&#39;e}.\]</span></p>
 <p>The standard error for the coefficient estimators is the square root of the error variance divided by <span class="math inline">\((X&#39;X)\)</span>.</p>
 <p><span class="math display">\[SE(\hat{\beta}) = \sqrt{\hat{\sigma}^2 (X&#39;X)^{-1}}.\]</span></p>
-<div id="example-7" class="section level4">
+<div id="example" class="section level4">
 <h4><span class="header-section-number">5.2.0.1</span> Example</h4>
 <p>Dataset <code>mtcars</code> contains response variable fuel consumption <code>mpg</code> and 10 aspects of automobile design and performance for 32 automobiles. What is the relationship between the response variable and its predictors?</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="parameter-estimation.html#cb356-1"></a>d &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span></span>
-<span id="cb356-2"><a href="parameter-estimation.html#cb356-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">vs =</span> <span class="kw">factor</span>(vs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;S&quot;</span>)),</span>
-<span id="cb356-3"><a href="parameter-estimation.html#cb356-3"></a>         <span class="dt">am =</span> <span class="kw">factor</span>(am, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;automatic&quot;</span>, <span class="st">&quot;manual&quot;</span>)),</span>
-<span id="cb356-4"><a href="parameter-estimation.html#cb356-4"></a>         <span class="dt">cyl =</span> <span class="kw">ordered</span>(cyl),</span>
-<span id="cb356-5"><a href="parameter-estimation.html#cb356-5"></a>         <span class="dt">gear =</span> <span class="kw">ordered</span>(gear), </span>
-<span id="cb356-6"><a href="parameter-estimation.html#cb356-6"></a>         <span class="dt">carb =</span> <span class="kw">ordered</span>(carb))</span>
-<span id="cb356-7"><a href="parameter-estimation.html#cb356-7"></a><span class="kw">glimpse</span>(d)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="parameter-estimation.html#cb8-1"></a>d &lt;-<span class="st"> </span>mtcars <span class="op">%&gt;%</span></span>
+<span id="cb8-2"><a href="parameter-estimation.html#cb8-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">vs =</span> <span class="kw">factor</span>(vs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;S&quot;</span>)),</span>
+<span id="cb8-3"><a href="parameter-estimation.html#cb8-3"></a>         <span class="dt">am =</span> <span class="kw">factor</span>(am, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;automatic&quot;</span>, <span class="st">&quot;manual&quot;</span>)),</span>
+<span id="cb8-4"><a href="parameter-estimation.html#cb8-4"></a>         <span class="dt">cyl =</span> <span class="kw">ordered</span>(cyl),</span>
+<span id="cb8-5"><a href="parameter-estimation.html#cb8-5"></a>         <span class="dt">gear =</span> <span class="kw">ordered</span>(gear), </span>
+<span id="cb8-6"><a href="parameter-estimation.html#cb8-6"></a>         <span class="dt">carb =</span> <span class="kw">ordered</span>(carb))</span>
+<span id="cb8-7"><a href="parameter-estimation.html#cb8-7"></a><span class="kw">glimpse</span>(d)</span></code></pre></div>
 <pre><code>## Rows: 32
 ## Columns: 11
-## $ mpg  &lt;dbl&gt; 21, 21, 23, 21, 19, 18, 14, 24, 23, 19, 18, 16, 17, 15, 10, 10...
+## $ mpg  &lt;dbl&gt; 21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17...
 ## $ cyl  &lt;ord&gt; 6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4,...
-## $ disp &lt;dbl&gt; 160, 160, 108, 258, 360, 225, 360, 147, 141, 168, 168, 276, 27...
+## $ disp &lt;dbl&gt; 160.0, 160.0, 108.0, 258.0, 360.0, 225.0, 360.0, 146.7, 140.8,...
 ## $ hp   &lt;dbl&gt; 110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, ...
-## $ drat &lt;dbl&gt; 3.9, 3.9, 3.8, 3.1, 3.1, 2.8, 3.2, 3.7, 3.9, 3.9, 3.9, 3.1, 3....
-## $ wt   &lt;dbl&gt; 2.6, 2.9, 2.3, 3.2, 3.4, 3.5, 3.6, 3.2, 3.1, 3.4, 3.4, 4.1, 3....
-## $ qsec &lt;dbl&gt; 16, 17, 19, 19, 17, 20, 16, 20, 23, 18, 19, 17, 18, 18, 18, 18...
+## $ drat &lt;dbl&gt; 3.90, 3.90, 3.85, 3.08, 3.15, 2.76, 3.21, 3.69, 3.92, 3.92, 3....
+## $ wt   &lt;dbl&gt; 2.620, 2.875, 2.320, 3.215, 3.440, 3.460, 3.570, 3.190, 3.150,...
+## $ qsec &lt;dbl&gt; 16.46, 17.02, 18.61, 19.44, 17.02, 20.22, 15.84, 20.00, 22.90,...
 ## $ vs   &lt;fct&gt; V, V, S, S, V, S, V, S, S, S, S, V, V, V, V, V, V, S, S, S, S,...
 ## $ am   &lt;fct&gt; manual, manual, manual, automatic, automatic, automatic, autom...
 ## $ gear &lt;ord&gt; 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3,...
 ## $ carb &lt;ord&gt; 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1,...</code></pre>
 <p>The data consists of 32 observations. A scatterplot matrix of the numeric variables shows the strongest individual association with <code>mpg</code> is from <code>wt</code> (corr = -0.87) followed by <code>disp</code> (corr = -0.85) and <code>hp</code> (corr = -0.78), <code>drat</code> is moderately correlated with <code>mpg</code> (corr = 0.68), and <code>qsec</code> is weakly correlated with <code>mpg</code> (corr = 0.42).</p>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="parameter-estimation.html#cb358-1"></a><span class="kw">corrplot</span>(<span class="kw">cor</span>(<span class="kw">subset</span>(d, <span class="dt">select =</span> <span class="kw">c</span>(mpg, disp, hp, drat, wt, qsec))), </span>
-<span id="cb358-2"><a href="parameter-estimation.html#cb358-2"></a>         <span class="dt">type =</span> <span class="st">&quot;upper&quot;</span>, </span>
-<span id="cb358-3"><a href="parameter-estimation.html#cb358-3"></a>         <span class="dt">method =</span> <span class="st">&quot;number&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="parameter-estimation.html#cb10-1"></a><span class="kw">corrplot</span>(<span class="kw">cor</span>(<span class="kw">subset</span>(d, <span class="dt">select =</span> <span class="kw">c</span>(mpg, disp, hp, drat, wt, qsec))), </span>
+<span id="cb10-2"><a href="parameter-estimation.html#cb10-2"></a>         <span class="dt">type =</span> <span class="st">&quot;upper&quot;</span>, </span>
+<span id="cb10-3"><a href="parameter-estimation.html#cb10-3"></a>         <span class="dt">method =</span> <span class="st">&quot;number&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Many of the Predictor variables are strongly correlated with each other. Boxplots of the categorical variables shows differences in levels, although ordinal variables <code>gear</code> and and <code>carb</code> do not have a monotonic relationshiop with <code>mpg</code>.</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="parameter-estimation.html#cb359-1"></a>p_list &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
-<span id="cb359-2"><a href="parameter-estimation.html#cb359-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">c</span>(<span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;vs&quot;</span>, <span class="st">&quot;am&quot;</span>, <span class="st">&quot;gear&quot;</span>, <span class="st">&quot;carb&quot;</span>)) {</span>
-<span id="cb359-3"><a href="parameter-estimation.html#cb359-3"></a>  p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d, <span class="kw">aes_string</span>(<span class="dt">x =</span> i, <span class="dt">y =</span> <span class="st">&quot;mpg&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</span>
-<span id="cb359-4"><a href="parameter-estimation.html#cb359-4"></a>  p_list &lt;-<span class="st"> </span><span class="kw">c</span>(p_list, <span class="kw">list</span>(p))</span>
-<span id="cb359-5"><a href="parameter-estimation.html#cb359-5"></a>}</span>
-<span id="cb359-6"><a href="parameter-estimation.html#cb359-6"></a><span class="kw">do.call</span>(<span class="st">&quot;grid.arrange&quot;</span>, <span class="kw">c</span>(p_list, <span class="dt">ncol =</span> <span class="dv">2</span>))</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="parameter-estimation.html#cb11-1"></a>p_list &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
+<span id="cb11-2"><a href="parameter-estimation.html#cb11-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">c</span>(<span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;vs&quot;</span>, <span class="st">&quot;am&quot;</span>, <span class="st">&quot;gear&quot;</span>, <span class="st">&quot;carb&quot;</span>)) {</span>
+<span id="cb11-3"><a href="parameter-estimation.html#cb11-3"></a>  p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d, <span class="kw">aes_string</span>(<span class="dt">x =</span> i, <span class="dt">y =</span> <span class="st">&quot;mpg&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</span>
+<span id="cb11-4"><a href="parameter-estimation.html#cb11-4"></a>  p_list &lt;-<span class="st"> </span><span class="kw">c</span>(p_list, <span class="kw">list</span>(p))</span>
+<span id="cb11-5"><a href="parameter-estimation.html#cb11-5"></a>}</span>
+<span id="cb11-6"><a href="parameter-estimation.html#cb11-6"></a><span class="kw">do.call</span>(<span class="st">&quot;grid.arrange&quot;</span>, <span class="kw">c</span>(p_list, <span class="dt">ncol =</span> <span class="dv">2</span>))</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>I’ll drop the <code>gear</code> and <code>carb</code> predictors, and fit a population model to the remaining predictors.</p>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="parameter-estimation.html#cb360-1"></a>m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])</span>
-<span id="cb360-2"><a href="parameter-estimation.html#cb360-2"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="parameter-estimation.html#cb12-1"></a>m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])</span>
+<span id="cb12-2"><a href="parameter-estimation.html#cb12-2"></a><span class="kw">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ ., data = d[, 1:9])
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -3.998 -1.355 -0.311  1.199  4.110 
+##     Min      1Q  Median      3Q     Max 
+## -3.9978 -1.3551 -0.3108  1.1992  4.1102 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept) 19.54098   14.14642    1.38    0.181  
-## cyl.L        0.34256    2.76483    0.12    0.903  
-## cyl.Q        1.38843    1.11210    1.25    0.225  
-## disp         0.00669    0.01351    0.49    0.626  
-## hp          -0.02914    0.01718   -1.70    0.104  
-## drat         0.58806    1.50311    0.39    0.699  
-## wt          -3.15525    1.42023   -2.22    0.037 *
-## qsec         0.52324    0.69013    0.76    0.456  
-## vsS          1.23780    2.10606    0.59    0.563  
-## ammanual     3.00091    1.85340    1.62    0.120  
+##              Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept) 19.540985  14.146419   1.381   0.1810  
+## cyl.L        0.342558   2.764833   0.124   0.9025  
+## cyl.Q        1.388429   1.112097   1.248   0.2250  
+## disp         0.006688   0.013512   0.495   0.6255  
+## hp          -0.029141   0.017182  -1.696   0.1040  
+## drat         0.588059   1.503111   0.391   0.6994  
+## wt          -3.155246   1.420235  -2.222   0.0369 *
+## qsec         0.523235   0.690130   0.758   0.4564  
+## vsS          1.237800   2.106056   0.588   0.5627  
+## ammanual     3.000910   1.853400   1.619   0.1197  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 2.5 on 22 degrees of freedom
-## Multiple R-squared:  0.877,  Adjusted R-squared:  0.826 
-## F-statistic: 17.4 on 9 and 22 DF,  p-value: 0.0000000481</code></pre>
+## Residual standard error: 2.514 on 22 degrees of freedom
+## Multiple R-squared:  0.8765,	Adjusted R-squared:  0.826 
+## F-statistic: 17.35 on 9 and 22 DF,  p-value: 4.814e-08</code></pre>
 <p>The <code>summary()</code> function shows <span class="math inline">\(\hat{\beta}\)</span> as <code>Estimate</code>, <span class="math inline">\(SE({\hat{\beta}})\)</span> as <code>Std. Error</code>, and <span class="math inline">\(\hat{\sigma}\)</span> as <code>Residual standard error</code>. You can verify this by manually peforming these calculations using matrix algebra (see matrix algebra in r notes at <a href="https://www.dummies.com/programming/r/how-to-do-matrix-arithmetic-in-r/">R for Dummies</a>). Here are the coefficient estimators, <span class="math inline">\(\hat{\beta} = (X&#39;X)^{-1}X&#39;y\)</span>.</p>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="parameter-estimation.html#cb362-1"></a>X &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(m)</span>
-<span id="cb362-2"><a href="parameter-estimation.html#cb362-2"></a>y &lt;-<span class="st"> </span>d<span class="op">$</span>mpg</span>
-<span id="cb362-3"><a href="parameter-estimation.html#cb362-3"></a></span>
-<span id="cb362-4"><a href="parameter-estimation.html#cb362-4"></a>beta_hat &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y</span>
-<span id="cb362-5"><a href="parameter-estimation.html#cb362-5"></a><span class="kw">round</span>(beta_hat, <span class="dv">5</span>)</span></code></pre></div>
-<pre><code>##                [,1]
-## (Intercept) 19.5410
-## cyl.L        0.3426
-## cyl.Q        1.3884
-## disp         0.0067
-## hp          -0.0291
-## drat         0.5881
-## wt          -3.1553
-## qsec         0.5232
-## vsS          1.2378
-## ammanual     3.0009</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="parameter-estimation.html#cb14-1"></a>X &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(m)</span>
+<span id="cb14-2"><a href="parameter-estimation.html#cb14-2"></a>y &lt;-<span class="st"> </span>d<span class="op">$</span>mpg</span>
+<span id="cb14-3"><a href="parameter-estimation.html#cb14-3"></a></span>
+<span id="cb14-4"><a href="parameter-estimation.html#cb14-4"></a>beta_hat &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y</span>
+<span id="cb14-5"><a href="parameter-estimation.html#cb14-5"></a><span class="kw">round</span>(beta_hat, <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##                 [,1]
+## (Intercept) 19.54098
+## cyl.L        0.34256
+## cyl.Q        1.38843
+## disp         0.00669
+## hp          -0.02914
+## drat         0.58806
+## wt          -3.15525
+## qsec         0.52324
+## vsS          1.23780
+## ammanual     3.00091</code></pre>
 <p>Here is the residual standard error, <span class="math inline">\(\hat{\sigma} = \sqrt{(n-k-1)^{-1} \hat{e}&#39;\hat{e}}\)</span>.</p>
-<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="parameter-estimation.html#cb364-1"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(X)</span>
-<span id="cb364-2"><a href="parameter-estimation.html#cb364-2"></a>k &lt;-<span class="st"> </span><span class="kw">ncol</span>(X) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>  <span class="co"># exclude the intercept term</span></span>
-<span id="cb364-3"><a href="parameter-estimation.html#cb364-3"></a>y_hat &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>beta_hat</span>
-<span id="cb364-4"><a href="parameter-estimation.html#cb364-4"></a>sse &lt;-<span class="st"> </span><span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat)<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb364-5"><a href="parameter-estimation.html#cb364-5"></a>rse &lt;-<span class="st"> </span><span class="kw">sqrt</span>(sse <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</span>
-<span id="cb364-6"><a href="parameter-estimation.html#cb364-6"></a><span class="kw">cat</span>(<span class="st">&quot;Residual standard error: &quot;</span>, <span class="kw">round</span>(rse, <span class="dv">3</span>), <span class="st">&quot; on &quot;</span>, (n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>), <span class="st">&quot; degrees of freedom.&quot;</span>)</span></code></pre></div>
-<pre><code>## Residual standard error:  2.5  on  22  degrees of freedom.</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="parameter-estimation.html#cb16-1"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(X)</span>
+<span id="cb16-2"><a href="parameter-estimation.html#cb16-2"></a>k &lt;-<span class="st"> </span><span class="kw">ncol</span>(X) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>  <span class="co"># exclude the intercept term</span></span>
+<span id="cb16-3"><a href="parameter-estimation.html#cb16-3"></a>y_hat &lt;-<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>beta_hat</span>
+<span id="cb16-4"><a href="parameter-estimation.html#cb16-4"></a>sse &lt;-<span class="st"> </span><span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat)<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb16-5"><a href="parameter-estimation.html#cb16-5"></a>rse &lt;-<span class="st"> </span><span class="kw">sqrt</span>(sse <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))</span>
+<span id="cb16-6"><a href="parameter-estimation.html#cb16-6"></a><span class="kw">cat</span>(<span class="st">&quot;Residual standard error: &quot;</span>, <span class="kw">round</span>(rse, <span class="dv">3</span>), <span class="st">&quot; on &quot;</span>, (n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>), <span class="st">&quot; degrees of freedom.&quot;</span>)</span></code></pre></div>
+<pre><code>## Residual standard error:  2.514  on  22  degrees of freedom.</code></pre>
 <p>Use the residual standard errors to derive the standard errors of the coefficients, <span class="math inline">\(SE(\hat{\beta}) = \sqrt{\hat{\sigma}^2 (X&#39;X)^{-1}}\)</span>.</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="parameter-estimation.html#cb366-1"></a>se_beta_hat &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">diag</span>(rse<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X)))</span>
-<span id="cb366-2"><a href="parameter-estimation.html#cb366-2"></a><span class="kw">matrix</span>(<span class="kw">round</span>(se_beta_hat, <span class="dv">5</span>), <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">names</span>(se_beta_hat), <span class="st">&quot;Std. Error&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="parameter-estimation.html#cb18-1"></a>se_beta_hat &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">diag</span>(rse<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X)))</span>
+<span id="cb18-2"><a href="parameter-estimation.html#cb18-2"></a><span class="kw">matrix</span>(<span class="kw">round</span>(se_beta_hat, <span class="dv">5</span>), <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">names</span>(se_beta_hat), <span class="st">&quot;Std. Error&quot;</span>))</span></code></pre></div>
 <pre><code>##             Std. Error
-## (Intercept)     14.146
-## cyl.L            2.765
-## cyl.Q            1.112
-## disp             0.014
-## hp               0.017
-## drat             1.503
-## wt               1.420
-## qsec             0.690
-## vsS              2.106
-## ammanual         1.853</code></pre>
+## (Intercept)   14.14642
+## cyl.L          2.76483
+## cyl.Q          1.11210
+## disp           0.01351
+## hp             0.01718
+## drat           1.50311
+## wt             1.42023
+## qsec           0.69013
+## vsS            2.10606
+## ammanual       1.85340</code></pre>
 </div>
 </div>
             </section>

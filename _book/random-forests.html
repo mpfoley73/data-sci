@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.4 Random Forests | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.4 Random Forests | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,14 +24,14 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-29" />
+<meta name="date" content="2020-07-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="bagging.html"/>
+<link rel="prev" href="bagged-trees.html"/>
 <link rel="next" href="gradient-boosting.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,6 +51,8 @@
 
 
 <script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="assets/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<script src="assets/tabwid-1.0.0/tabwid.js"></script>
 
 
 <style type="text/css">
@@ -174,7 +176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="3.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
+<li class="chapter" data-level="3.0.1" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
 <li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
@@ -233,17 +235,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>9</b> Decision Trees</a><ul>
 <li class="chapter" data-level="9.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>9.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#holdout-performance"><i class="fa fa-check"></i><b>9.1.1</b> Holdout Performance</a></li>
-<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>9.1.2</b> Caret Approach</a></li>
+<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>9.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>9.1.2</b> Training with Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>9.2</b> Regression Tree</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="regression-tree.html"><a href="regression-tree.html#caret-approach-1"><i class="fa fa-check"></i><b>9.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="9.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>9.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>9.3</b> Bagging</a></li>
+<li class="chapter" data-level="9.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>9.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>9.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="9.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>9.3.2</b> Bagging Regression Tree</a></li>
+</ul></li>
 <li class="chapter" data-level="9.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>9.4</b> Random Forests</a></li>
 <li class="chapter" data-level="9.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>9.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="9.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>9.6</b> Summary</a></li>
-<li class="chapter" data-level="9.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>9.7</b> Reference</a></li>
+<li class="chapter" data-level="9.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>9.6</b> Summary</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>9.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="9.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>9.6.2</b> Regression Trees</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>10</b> Non-linear Models</a><ul>
 <li class="chapter" data-level="10.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>10.1</b> Splines</a></li>
@@ -254,14 +261,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>11.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="11.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>11.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="11.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>11.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="11.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>11.4</b> Example</a></li>
+<li class="chapter" data-level="11.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>11.4</b> Example</a></li>
 <li class="chapter" data-level="11.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>11.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>12</b> Principal Components Analysis</a></li>
 <li class="chapter" data-level="13" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>13</b> Text Mining</a><ul>
 <li class="chapter" data-level="13.1" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i><b>13.1</b> N-Grams</a></li>
 <li class="chapter" data-level="13.2" data-path="converting-to-and-from-non-tidy-formats.html"><a href="converting-to-and-from-non-tidy-formats.html"><i class="fa fa-check"></i><b>13.2</b> Converting to and from non-tidy formats</a></li>
-<li class="chapter" data-level="13.3" data-path="example-20.html"><a href="example-20.html"><i class="fa fa-check"></i><b>13.3</b> Example</a></li>
+<li class="chapter" data-level="13.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>13.3</b> Example</a></li>
 <li class="chapter" data-level="13.4" data-path="stringr-package.html"><a href="stringr-package.html"><i class="fa fa-check"></i><b>13.4</b> stringr package</a></li>
 <li class="chapter" data-level="13.5" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>13.5</b> Regular Expressions</a></li>
 </ul></li>
@@ -307,101 +314,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="random-forests" class="section level2">
 <h2><span class="header-section-number">9.4</span> Random Forests</h2>
 <p>Random forests improve bagged trees by way of a small tweak that de-correlates the trees. As in bagging, the algorithm builds a number of decision trees on bootstrapped training samples. But when building these decision trees, each time a split in a tree is considered, a random sample of <em>mtry</em> predictors is chosen as split candidates from the full set of <em>p</em> predictors. A fresh sample of <em>mtry</em> predictors is taken at each split. Typically <span class="math inline">\(mtry \sim \sqrt{p}\)</span>. Bagged trees are thus a special case of random forests where <em>mtry = p</em>.</p>
-<div id="bagging-classification-example" class="section level4">
-<h4><span class="header-section-number">9.4.0.1</span> Bagging Classification Example</h4>
-<p>I’ll predict <code>Purchase</code> from the <code>OJ</code> data set again, this time using the bagging method by specifying <code>method = "treebag"</code>. Caret has no hyperparameters to tune with this model, so I won’t set <code>tuneLegth</code> or <code>tuneGrid</code>.</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="random-forests.html#cb81-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb81-2"><a href="random-forests.html#cb81-2"></a>oj_mdl_bag &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
-<span id="cb81-3"><a href="random-forests.html#cb81-3"></a>   Purchase <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb81-4"><a href="random-forests.html#cb81-4"></a>   <span class="dt">data =</span> oj_train, </span>
-<span id="cb81-5"><a href="random-forests.html#cb81-5"></a>   <span class="dt">method =</span> <span class="st">&quot;treebag&quot;</span>,</span>
-<span id="cb81-6"><a href="random-forests.html#cb81-6"></a>   <span class="dt">trControl =</span> oj_trControl</span>
-<span id="cb81-7"><a href="random-forests.html#cb81-7"></a>)</span>
-<span id="cb81-8"><a href="random-forests.html#cb81-8"></a>oj_mdl_bag</span></code></pre></div>
-<pre><code>## Bagged CART 
-## 
-## 857 samples
-##  17 predictor
-##   2 classes: &#39;CH&#39;, &#39;MM&#39; 
-## 
-## No pre-processing
-## Resampling: Cross-Validated (10 fold) 
-## Summary of sample sizes: 772, 772, 771, 770, 771, 771, ... 
-## Resampling results:
-## 
-##   Accuracy   Kappa    
-##   0.7945774  0.5653649</code></pre>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="random-forests.html#cb83-1"></a>oj_preds_bag &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(</span>
-<span id="cb83-2"><a href="random-forests.html#cb83-2"></a>   <span class="kw">predict</span>(oj_mdl_bag, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>),</span>
-<span id="cb83-3"><a href="random-forests.html#cb83-3"></a>   <span class="dt">Predicted =</span> <span class="kw">predict</span>(oj_mdl_bag, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>),</span>
-<span id="cb83-4"><a href="random-forests.html#cb83-4"></a>   <span class="dt">Actual =</span> oj_test<span class="op">$</span>Purchase</span>
-<span id="cb83-5"><a href="random-forests.html#cb83-5"></a>)</span>
-<span id="cb83-6"><a href="random-forests.html#cb83-6"></a></span>
-<span id="cb83-7"><a href="random-forests.html#cb83-7"></a>oj_cm_bag &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(oj_preds_bag<span class="op">$</span>Predicted, <span class="dt">reference =</span> oj_preds_bag<span class="op">$</span>Actual)</span>
-<span id="cb83-8"><a href="random-forests.html#cb83-8"></a>oj_cm_bag</span></code></pre></div>
-<pre><code>## Confusion Matrix and Statistics
-## 
-##           Reference
-## Prediction  CH  MM
-##         CH 113  16
-##         MM  17  67
-##                                           
-##                Accuracy : 0.8451          
-##                  95% CI : (0.7894, 0.8909)
-##     No Information Rate : 0.6103          
-##     P-Value [Acc &gt; NIR] : 6.311e-14       
-##                                           
-##                   Kappa : 0.675           
-##                                           
-##  Mcnemar&#39;s Test P-Value : 1               
-##                                           
-##             Sensitivity : 0.8692          
-##             Specificity : 0.8072          
-##          Pos Pred Value : 0.8760          
-##          Neg Pred Value : 0.7976          
-##              Prevalence : 0.6103          
-##          Detection Rate : 0.5305          
-##    Detection Prevalence : 0.6056          
-##       Balanced Accuracy : 0.8382          
-##                                           
-##        &#39;Positive&#39; Class : CH              
-## </code></pre>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="random-forests.html#cb85-1"></a>mdl_auc &lt;-<span class="st"> </span>Metrics<span class="op">::</span><span class="kw">auc</span>(<span class="dt">actual =</span> oj_preds_bag<span class="op">$</span>Actual <span class="op">==</span><span class="st"> &quot;CH&quot;</span>, oj_preds_bag<span class="op">$</span>CH)</span>
-<span id="cb85-2"><a href="random-forests.html#cb85-2"></a>yardstick<span class="op">::</span><span class="kw">roc_curve</span>(oj_preds_bag, Actual, CH) <span class="op">%&gt;%</span></span>
-<span id="cb85-3"><a href="random-forests.html#cb85-3"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
-<span id="cb85-4"><a href="random-forests.html#cb85-4"></a><span class="st">  </span><span class="kw">labs</span>(</span>
-<span id="cb85-5"><a href="random-forests.html#cb85-5"></a>    <span class="dt">title =</span> <span class="st">&quot;OJ Bagging ROC Curve&quot;</span>,</span>
-<span id="cb85-6"><a href="random-forests.html#cb85-6"></a>    <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;AUC = &quot;</span>, <span class="kw">round</span>(mdl_auc, <span class="dv">4</span>))</span>
-<span id="cb85-7"><a href="random-forests.html#cb85-7"></a>  )</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="random-forests.html#cb86-1"></a>yardstick<span class="op">::</span><span class="kw">gain_curve</span>(oj_preds_bag, Actual, CH) <span class="op">%&gt;%</span></span>
-<span id="cb86-2"><a href="random-forests.html#cb86-2"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
-<span id="cb86-3"><a href="random-forests.html#cb86-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;OJ Bagging Gain Curve&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-55-2.png" width="672" /></p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="random-forests.html#cb87-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(oj_mdl_bag), <span class="dt">main=</span><span class="st">&quot;Variable Importance with Bagging&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-55-3.png" width="672" /></p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="random-forests.html#cb88-1"></a>scoreboard &lt;-<span class="st"> </span><span class="kw">rbind</span>(</span>
-<span id="cb88-2"><a href="random-forests.html#cb88-2"></a>   scoreboard,</span>
-<span id="cb88-3"><a href="random-forests.html#cb88-3"></a>   <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_cm_bag<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>))</span>
-<span id="cb88-4"><a href="random-forests.html#cb88-4"></a>)</span>
-<span id="cb88-5"><a href="random-forests.html#cb88-5"></a>scoreboard <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Acc))</span></code></pre></div>
-<pre><code>##                      model     Acc
-## Accuracy      Manual Class 0.85915
-## Accuracy1 Caret w/tuneGrid 0.84507
-## Accuracy2          Bagging 0.84507</code></pre>
-</div>
-<div id="random-forest-classification-example" class="section level4">
-<h4><span class="header-section-number">9.4.0.2</span> Random Forest Classification Example</h4>
+<div id="random-forest-classification-tree" class="section level4">
+<h4><span class="header-section-number">9.4.0.1</span> Random Forest Classification Tree</h4>
 <p>Now I’ll try it with the random forest method by specifying <code>method = "rf"</code>. Hyperparameter <code>mtry</code> can take any value from 1 to 17 (the number of predictors) and I expect the best value to be near <span class="math inline">\(\sqrt{17} \sim 4\)</span>.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="random-forests.html#cb90-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb90-2"><a href="random-forests.html#cb90-2"></a>oj_mdl_rf &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
-<span id="cb90-3"><a href="random-forests.html#cb90-3"></a>   Purchase <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb90-4"><a href="random-forests.html#cb90-4"></a>   <span class="dt">data =</span> oj_train, </span>
-<span id="cb90-5"><a href="random-forests.html#cb90-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rf&quot;</span>,</span>
-<span id="cb90-6"><a href="random-forests.html#cb90-6"></a>   <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(<span class="dt">mtry =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>), <span class="co"># searching around mtry=4</span></span>
-<span id="cb90-7"><a href="random-forests.html#cb90-7"></a>   <span class="dt">trControl =</span> oj_trControl</span>
-<span id="cb90-8"><a href="random-forests.html#cb90-8"></a>)</span>
-<span id="cb90-9"><a href="random-forests.html#cb90-9"></a>oj_mdl_rf</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="random-forests.html#cb97-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb97-2"><a href="random-forests.html#cb97-2"></a>oj_mdl_rf &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
+<span id="cb97-3"><a href="random-forests.html#cb97-3"></a>   Purchase <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb97-4"><a href="random-forests.html#cb97-4"></a>   <span class="dt">data =</span> oj_train, </span>
+<span id="cb97-5"><a href="random-forests.html#cb97-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rf&quot;</span>,</span>
+<span id="cb97-6"><a href="random-forests.html#cb97-6"></a>   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</span>
+<span id="cb97-7"><a href="random-forests.html#cb97-7"></a>   <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(<span class="dt">mtry =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), <span class="co"># searching around mtry=4</span></span>
+<span id="cb97-8"><a href="random-forests.html#cb97-8"></a>   <span class="dt">trControl =</span> oj_trControl</span>
+<span id="cb97-9"><a href="random-forests.html#cb97-9"></a>)</span>
+<span id="cb97-10"><a href="random-forests.html#cb97-10"></a>oj_mdl_rf</span></code></pre></div>
 <pre><code>## Random Forest 
 ## 
 ## 857 samples
@@ -413,136 +338,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Summary of sample sizes: 772, 772, 771, 770, 771, 771, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   mtry  Accuracy   Kappa    
-##   1     0.7608011  0.4678965
-##   2     0.8050845  0.5797842
-##   3     0.8086002  0.5909228
-##   4     0.8003653  0.5741523
-##   5     0.7945780  0.5629979
-##   6     0.7981482  0.5707518
-##   7     0.7969444  0.5698499
+##   mtry  ROC        Sens       Spec     
+##    1    0.8419091  0.9024673  0.5479501
+##    2    0.8625832  0.8756531  0.6976827
+##    3    0.8667189  0.8623004  0.7214795
+##    4    0.8680957  0.8507983  0.7183601
+##    5    0.8678322  0.8469521  0.7091800
+##    6    0.8687425  0.8431785  0.7273619
+##    7    0.8690552  0.8394049  0.7213904
+##    8    0.8673816  0.8432148  0.7212121
+##    9    0.8675878  0.8317489  0.7182709
+##   10    0.8653655  0.8412917  0.7152406
 ## 
-## Accuracy was used to select the optimal model using the largest value.
-## The final value used for the model was mtry = 3.</code></pre>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="random-forests.html#cb92-1"></a><span class="co"># The peak accuracy is at mtry = 3</span></span>
-<span id="cb92-2"><a href="random-forests.html#cb92-2"></a><span class="kw">plot</span>(oj_mdl_rf)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="random-forests.html#cb93-1"></a>oj_preds_rf &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(</span>
-<span id="cb93-2"><a href="random-forests.html#cb93-2"></a>   <span class="kw">predict</span>(oj_mdl_rf, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>),</span>
-<span id="cb93-3"><a href="random-forests.html#cb93-3"></a>   <span class="dt">Predicted =</span> <span class="kw">predict</span>(oj_mdl_rf, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>),</span>
-<span id="cb93-4"><a href="random-forests.html#cb93-4"></a>   <span class="dt">Actual =</span> oj_test<span class="op">$</span>Purchase</span>
-<span id="cb93-5"><a href="random-forests.html#cb93-5"></a>)</span>
-<span id="cb93-6"><a href="random-forests.html#cb93-6"></a></span>
-<span id="cb93-7"><a href="random-forests.html#cb93-7"></a><span class="co"># Accuracy on holdout is 0.8263</span></span>
-<span id="cb93-8"><a href="random-forests.html#cb93-8"></a>oj_cm_rf &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(oj_preds_rf<span class="op">$</span>Predicted, <span class="dt">reference =</span> oj_preds_rf<span class="op">$</span>Actual)</span>
-<span id="cb93-9"><a href="random-forests.html#cb93-9"></a>oj_cm_rf</span></code></pre></div>
+## ROC was used to select the optimal model using the largest value.
+## The final value used for the model was mtry = 7.</code></pre>
+<p>The largest ROC score was at mtry = 7 - higher than I expected.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="random-forests.html#cb99-1"></a><span class="kw">plot</span>(oj_mdl_rf)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p>Use the model to make predictions on the test set.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="random-forests.html#cb100-1"></a>oj_preds_rf &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(</span>
+<span id="cb100-2"><a href="random-forests.html#cb100-2"></a>   <span class="kw">predict</span>(oj_mdl_rf, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>),</span>
+<span id="cb100-3"><a href="random-forests.html#cb100-3"></a>   <span class="dt">Predicted =</span> <span class="kw">predict</span>(oj_mdl_rf, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>),</span>
+<span id="cb100-4"><a href="random-forests.html#cb100-4"></a>   <span class="dt">Actual =</span> oj_test<span class="op">$</span>Purchase</span>
+<span id="cb100-5"><a href="random-forests.html#cb100-5"></a>)</span>
+<span id="cb100-6"><a href="random-forests.html#cb100-6"></a></span>
+<span id="cb100-7"><a href="random-forests.html#cb100-7"></a>oj_cm_rf &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(oj_preds_rf<span class="op">$</span>Predicted, <span class="dt">reference =</span> oj_preds_rf<span class="op">$</span>Actual)</span>
+<span id="cb100-8"><a href="random-forests.html#cb100-8"></a>oj_cm_rf</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
 ## Prediction  CH  MM
-##         CH 114  21
-##         MM  16  62
+##         CH 110  16
+##         MM  20  67
 ##                                           
-##                Accuracy : 0.8263          
-##                  95% CI : (0.7686, 0.8746)
+##                Accuracy : 0.831           
+##                  95% CI : (0.7738, 0.8787)
 ##     No Information Rate : 0.6103          
-##     P-Value [Acc &gt; NIR] : 7.121e-12       
+##     P-Value [Acc &gt; NIR] : 2.296e-12       
 ##                                           
-##                   Kappa : 0.6308          
+##                   Kappa : 0.6477          
 ##                                           
-##  Mcnemar&#39;s Test P-Value : 0.5108          
+##  Mcnemar&#39;s Test P-Value : 0.6171          
 ##                                           
-##             Sensitivity : 0.8769          
-##             Specificity : 0.7470          
-##          Pos Pred Value : 0.8444          
-##          Neg Pred Value : 0.7949          
+##             Sensitivity : 0.8462          
+##             Specificity : 0.8072          
+##          Pos Pred Value : 0.8730          
+##          Neg Pred Value : 0.7701          
 ##              Prevalence : 0.6103          
-##          Detection Rate : 0.5352          
-##    Detection Prevalence : 0.6338          
-##       Balanced Accuracy : 0.8120          
+##          Detection Rate : 0.5164          
+##    Detection Prevalence : 0.5915          
+##       Balanced Accuracy : 0.8267          
 ##                                           
 ##        &#39;Positive&#39; Class : CH              
 ## </code></pre>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="random-forests.html#cb95-1"></a><span class="co"># AUC is 0.9190</span></span>
-<span id="cb95-2"><a href="random-forests.html#cb95-2"></a>mdl_auc &lt;-<span class="st"> </span>Metrics<span class="op">::</span><span class="kw">auc</span>(<span class="dt">actual =</span> oj_preds_rf<span class="op">$</span>Actual <span class="op">==</span><span class="st"> &quot;CH&quot;</span>, oj_preds_rf<span class="op">$</span>CH)</span>
-<span id="cb95-3"><a href="random-forests.html#cb95-3"></a>yardstick<span class="op">::</span><span class="kw">roc_curve</span>(oj_preds_rf, Actual, CH) <span class="op">%&gt;%</span></span>
-<span id="cb95-4"><a href="random-forests.html#cb95-4"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
-<span id="cb95-5"><a href="random-forests.html#cb95-5"></a><span class="st">  </span><span class="kw">labs</span>(</span>
-<span id="cb95-6"><a href="random-forests.html#cb95-6"></a>    <span class="dt">title =</span> <span class="st">&quot;OJ Random Forest ROC Curve&quot;</span>,</span>
-<span id="cb95-7"><a href="random-forests.html#cb95-7"></a>    <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;AUC = &quot;</span>, <span class="kw">round</span>(mdl_auc, <span class="dv">4</span>))</span>
-<span id="cb95-8"><a href="random-forests.html#cb95-8"></a>  )</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-56-2.png" width="672" /></p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="random-forests.html#cb96-1"></a>yardstick<span class="op">::</span><span class="kw">gain_curve</span>(oj_preds_rf, Actual, CH) <span class="op">%&gt;%</span></span>
-<span id="cb96-2"><a href="random-forests.html#cb96-2"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
-<span id="cb96-3"><a href="random-forests.html#cb96-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;OJ Random Forest Gain Curve&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-56-3.png" width="672" /></p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="random-forests.html#cb97-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(oj_mdl_rf), <span class="dt">main=</span><span class="st">&quot;Variable Importance with Random Forest&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-56-4.png" width="672" /></p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="random-forests.html#cb98-1"></a>scoreboard &lt;-<span class="st"> </span><span class="kw">rbind</span>(</span>
-<span id="cb98-2"><a href="random-forests.html#cb98-2"></a>   scoreboard,</span>
-<span id="cb98-3"><a href="random-forests.html#cb98-3"></a>   <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_cm_rf<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>))</span>
-<span id="cb98-4"><a href="random-forests.html#cb98-4"></a>)</span>
-<span id="cb98-5"><a href="random-forests.html#cb98-5"></a>scoreboard <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Acc))</span></code></pre></div>
-<pre><code>##                      model     Acc
-## Accuracy      Manual Class 0.85915
-## Accuracy1 Caret w/tuneGrid 0.84507
-## Accuracy2          Bagging 0.84507
-## Accuracy3    Random Forest 0.82629</code></pre>
-<p>The bagging and random forest models did pretty well, but the manual classification tree is still in first place. There’s still gradient boosting to investigate!</p>
+<p>The accuracy on the holdout set is 0.8310. The AUC is 0.9244. Here are the ROC and gain curves.</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="random-forests.html#cb102-1"></a><span class="co"># AUC is 0.9190</span></span>
+<span id="cb102-2"><a href="random-forests.html#cb102-2"></a>mdl_auc &lt;-<span class="st"> </span>Metrics<span class="op">::</span><span class="kw">auc</span>(<span class="dt">actual =</span> oj_preds_rf<span class="op">$</span>Actual <span class="op">==</span><span class="st"> &quot;CH&quot;</span>, oj_preds_rf<span class="op">$</span>CH)</span>
+<span id="cb102-3"><a href="random-forests.html#cb102-3"></a>yardstick<span class="op">::</span><span class="kw">roc_curve</span>(oj_preds_rf, Actual, CH) <span class="op">%&gt;%</span></span>
+<span id="cb102-4"><a href="random-forests.html#cb102-4"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
+<span id="cb102-5"><a href="random-forests.html#cb102-5"></a><span class="st">  </span><span class="kw">labs</span>(</span>
+<span id="cb102-6"><a href="random-forests.html#cb102-6"></a>    <span class="dt">title =</span> <span class="st">&quot;OJ Random Forest ROC Curve&quot;</span>,</span>
+<span id="cb102-7"><a href="random-forests.html#cb102-7"></a>    <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;AUC = &quot;</span>, <span class="kw">round</span>(mdl_auc, <span class="dv">4</span>))</span>
+<span id="cb102-8"><a href="random-forests.html#cb102-8"></a>  )</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="random-forests.html#cb103-1"></a>yardstick<span class="op">::</span><span class="kw">gain_curve</span>(oj_preds_rf, Actual, CH) <span class="op">%&gt;%</span></span>
+<span id="cb103-2"><a href="random-forests.html#cb103-2"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
+<span id="cb103-3"><a href="random-forests.html#cb103-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;OJ Random Forest Gain Curve&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-68-2.png" width="672" /></p>
+<p>What are the most important variables?</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="random-forests.html#cb104-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(oj_mdl_rf), <span class="dt">main=</span><span class="st">&quot;Variable Importance with Random Forest&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p>Let’s update the scoreboard. The bagging and random forest models did pretty well, but the manual classification tree is still in first place. There’s still gradient boosting to investigate!</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="random-forests.html#cb105-1"></a>oj_scoreboard &lt;-<span class="st"> </span><span class="kw">rbind</span>(oj_scoreboard,</span>
+<span id="cb105-2"><a href="random-forests.html#cb105-2"></a>   <span class="kw">data.frame</span>(<span class="dt">Model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">Accuracy =</span> oj_cm_rf<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb105-3"><a href="random-forests.html#cb105-3"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Accuracy))</span>
+<span id="cb105-4"><a href="random-forests.html#cb105-4"></a><span class="kw">scoreboard</span>(oj_scoreboard)</span></code></pre></div>
+<div class="tabwid"><table style='border-collapse:collapse;'><thead><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 2.00px solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Model</span></p></td><td style="width:66px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 2.00px solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Accuracy</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Single Tree</span></p></td><td style="width:66px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">0.8592</span></p></td></tr><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Single Tree (caret)</span></p></td><td style="width:66px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">0.8545</span></p></td></tr><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Bagging</span></p></td><td style="width:66px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">0.8451</span></p></td></tr><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Random Forest</span></p></td><td style="width:66px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">0.8310</span></p></td></tr></tbody></table></div>
 </div>
-<div id="bagging-regression-example" class="section level4">
-<h4><span class="header-section-number">9.4.0.3</span> Bagging Regression Example</h4>
-<p>I’ll predict <code>Sales</code> from the <code>Carseats</code> data set again, this time using the bagging method by specifying <code>method = "treebag"</code>.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="random-forests.html#cb100-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb100-2"><a href="random-forests.html#cb100-2"></a>cs_mdl_bag &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
-<span id="cb100-3"><a href="random-forests.html#cb100-3"></a>   Sales <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb100-4"><a href="random-forests.html#cb100-4"></a>   <span class="dt">data =</span> cs_train, </span>
-<span id="cb100-5"><a href="random-forests.html#cb100-5"></a>   <span class="dt">method =</span> <span class="st">&quot;treebag&quot;</span>,</span>
-<span id="cb100-6"><a href="random-forests.html#cb100-6"></a>   <span class="dt">trControl =</span> cs_trControl</span>
-<span id="cb100-7"><a href="random-forests.html#cb100-7"></a>)</span>
-<span id="cb100-8"><a href="random-forests.html#cb100-8"></a>cs_mdl_bag</span></code></pre></div>
-<pre><code>## Bagged CART 
-## 
-## 321 samples
-##  10 predictor
-## 
-## No pre-processing
-## Resampling: Cross-Validated (10 fold) 
-## Summary of sample sizes: 289, 289, 289, 289, 289, 289, ... 
-## Resampling results:
-## 
-##   RMSE      Rsquared  MAE     
-##   1.681889  0.675239  1.343427</code></pre>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="random-forests.html#cb102-1"></a>cs_preds_bag &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(</span>
-<span id="cb102-2"><a href="random-forests.html#cb102-2"></a>   <span class="dt">Predicted =</span> <span class="kw">predict</span>(cs_mdl_bag, <span class="dt">newdata =</span> cs_test),</span>
-<span id="cb102-3"><a href="random-forests.html#cb102-3"></a>   <span class="dt">Actual =</span> cs_test<span class="op">$</span>Sales</span>
-<span id="cb102-4"><a href="random-forests.html#cb102-4"></a>)</span>
-<span id="cb102-5"><a href="random-forests.html#cb102-5"></a></span>
-<span id="cb102-6"><a href="random-forests.html#cb102-6"></a><span class="co"># Model over-predicts at low end of Sales and under-predicts at high end</span></span>
-<span id="cb102-7"><a href="random-forests.html#cb102-7"></a>cs_preds_bag <span class="op">%&gt;%</span></span>
-<span id="cb102-8"><a href="random-forests.html#cb102-8"></a><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Actual, <span class="dt">y =</span> Predicted)) <span class="op">+</span></span>
-<span id="cb102-9"><a href="random-forests.html#cb102-9"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">color =</span> <span class="st">&quot;cadetblue&quot;</span>) <span class="op">+</span></span>
-<span id="cb102-10"><a href="random-forests.html#cb102-10"></a><span class="st">   </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">formula =</span> <span class="st">&quot;y ~ x&quot;</span>) <span class="op">+</span></span>
-<span id="cb102-11"><a href="random-forests.html#cb102-11"></a><span class="st">   </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb102-12"><a href="random-forests.html#cb102-12"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Carseats Bagging, Predicted vs Actual (caret)&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="random-forests.html#cb103-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(cs_mdl_bag), <span class="dt">main=</span><span class="st">&quot;Variable Importance with Bagging&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-57-2.png" width="672" /></p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="random-forests.html#cb104-1"></a><span class="co"># RMSE of 1.9185 is much improved</span></span>
-<span id="cb104-2"><a href="random-forests.html#cb104-2"></a>cs_rmse_bag &lt;-<span class="st"> </span><span class="kw">RMSE</span>(<span class="dt">pred =</span> cs_preds_bag<span class="op">$</span>Predicted, <span class="dt">obs =</span> cs_preds_bag<span class="op">$</span>Actual)</span>
-<span id="cb104-3"><a href="random-forests.html#cb104-3"></a></span>
-<span id="cb104-4"><a href="random-forests.html#cb104-4"></a>scoreboard_r &lt;-<span class="st"> </span><span class="kw">rbind</span>(</span>
-<span id="cb104-5"><a href="random-forests.html#cb104-5"></a>   scoreboard_r,</span>
-<span id="cb104-6"><a href="random-forests.html#cb104-6"></a>   <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Bagging&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(cs_rmse_bag, <span class="dv">5</span>))</span>
-<span id="cb104-7"><a href="random-forests.html#cb104-7"></a>)</span>
-<span id="cb104-8"><a href="random-forests.html#cb104-8"></a>scoreboard_r <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(RMSE)</span></code></pre></div>
-<pre><code>##              model    RMSE
-## 1          Bagging 1.91847
-## 2 Caret w/tuneGrid 2.29833
-## 3     Manual ANOVA 2.36320</code></pre>
-</div>
-<div id="random-forest-regression-example" class="section level4">
-<h4><span class="header-section-number">9.4.0.4</span> Random Forest Regression Example</h4>
+<div id="random-forest-regression-tree" class="section level4">
+<h4><span class="header-section-number">9.4.0.2</span> Random Forest Regression Tree</h4>
 <p>Now I’ll try it with the random forest method by specifying <code>method = "rf"</code>. Hyperparameter <code>mtry</code> can take any value from 1 to 10 (the number of predictors) and I expect the best value to be near <span class="math inline">\(\sqrt{10} \sim 3\)</span>.</p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="random-forests.html#cb106-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
 <span id="cb106-2"><a href="random-forests.html#cb106-2"></a>cs_mdl_rf &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
@@ -577,37 +451,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## RMSE was used to select the optimal model using the smallest value.
 ## The final value used for the model was mtry = 7.</code></pre>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="random-forests.html#cb108-1"></a><span class="co"># The minimum RMSE is at mtry = 7</span></span>
-<span id="cb108-2"><a href="random-forests.html#cb108-2"></a><span class="kw">plot</span>(cs_mdl_rf)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+<p>The minimum RMSE is at mtry = 7.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="random-forests.html#cb108-1"></a><span class="kw">plot</span>(cs_mdl_rf)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
+<p>Make predictions on the test set. Like the bagged tree model, this one also over-predicts at low end of Sales and under-predicts at high end. The RMSE of 1.7184 is better than bagging’s 1.9185.</p>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="random-forests.html#cb109-1"></a>cs_preds_rf &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(</span>
 <span id="cb109-2"><a href="random-forests.html#cb109-2"></a>   <span class="dt">Predicted =</span> <span class="kw">predict</span>(cs_mdl_rf, <span class="dt">newdata =</span> cs_test),</span>
 <span id="cb109-3"><a href="random-forests.html#cb109-3"></a>   <span class="dt">Actual =</span> cs_test<span class="op">$</span>Sales</span>
 <span id="cb109-4"><a href="random-forests.html#cb109-4"></a>)</span>
-<span id="cb109-5"><a href="random-forests.html#cb109-5"></a></span>
-<span id="cb109-6"><a href="random-forests.html#cb109-6"></a><span class="co"># Model over-predicts at low end of Sales and under-predicts at high end</span></span>
-<span id="cb109-7"><a href="random-forests.html#cb109-7"></a>cs_preds_rf <span class="op">%&gt;%</span></span>
-<span id="cb109-8"><a href="random-forests.html#cb109-8"></a><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Actual, <span class="dt">y =</span> Predicted)) <span class="op">+</span></span>
-<span id="cb109-9"><a href="random-forests.html#cb109-9"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">color =</span> <span class="st">&quot;cadetblue&quot;</span>) <span class="op">+</span></span>
-<span id="cb109-10"><a href="random-forests.html#cb109-10"></a><span class="st">   </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">formula =</span> <span class="st">&quot;y ~ x&quot;</span>) <span class="op">+</span></span>
-<span id="cb109-11"><a href="random-forests.html#cb109-11"></a><span class="st">   </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb109-12"><a href="random-forests.html#cb109-12"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Carseats Random Forest, Predicted vs Actual (caret)&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-58-2.png" width="672" /></p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="random-forests.html#cb110-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(cs_mdl_rf), <span class="dt">main=</span><span class="st">&quot;Variable Importance with Random Forest&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-58-3.png" width="672" /></p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="random-forests.html#cb111-1"></a><span class="co"># RMSE of 1.7184 is better than bagging&#39;s 1.9185.</span></span>
-<span id="cb111-2"><a href="random-forests.html#cb111-2"></a>cs_rmse_rf &lt;-<span class="st"> </span><span class="kw">RMSE</span>(<span class="dt">pred =</span> cs_preds_rf<span class="op">$</span>Predicted, <span class="dt">obs =</span> cs_preds_rf<span class="op">$</span>Actual)</span>
-<span id="cb111-3"><a href="random-forests.html#cb111-3"></a></span>
-<span id="cb111-4"><a href="random-forests.html#cb111-4"></a>scoreboard_r &lt;-<span class="st"> </span><span class="kw">rbind</span>(</span>
-<span id="cb111-5"><a href="random-forests.html#cb111-5"></a>   scoreboard_r,</span>
-<span id="cb111-6"><a href="random-forests.html#cb111-6"></a>   <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">RMSE =</span> <span class="kw">round</span>(cs_rmse_rf, <span class="dv">5</span>))</span>
-<span id="cb111-7"><a href="random-forests.html#cb111-7"></a>)</span>
-<span id="cb111-8"><a href="random-forests.html#cb111-8"></a>scoreboard_r <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(RMSE)</span></code></pre></div>
-<pre><code>##              model    RMSE
-## 1    Random Forest 1.71836
-## 2          Bagging 1.91847
-## 3 Caret w/tuneGrid 2.29833
-## 4     Manual ANOVA 2.36320</code></pre>
+<span id="cb109-5"><a href="random-forests.html#cb109-5"></a>(cs_rmse_rf &lt;-<span class="st"> </span><span class="kw">RMSE</span>(<span class="dt">pred =</span> cs_preds_rf<span class="op">$</span>Predicted, <span class="dt">obs =</span> cs_preds_rf<span class="op">$</span>Actual))</span></code></pre></div>
+<pre><code>## [1] 1.718358</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="random-forests.html#cb111-1"></a>cs_preds_rf <span class="op">%&gt;%</span></span>
+<span id="cb111-2"><a href="random-forests.html#cb111-2"></a><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Actual, <span class="dt">y =</span> Predicted)) <span class="op">+</span></span>
+<span id="cb111-3"><a href="random-forests.html#cb111-3"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">color =</span> <span class="st">&quot;cadetblue&quot;</span>) <span class="op">+</span></span>
+<span id="cb111-4"><a href="random-forests.html#cb111-4"></a><span class="st">   </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">formula =</span> <span class="st">&quot;y ~ x&quot;</span>) <span class="op">+</span></span>
+<span id="cb111-5"><a href="random-forests.html#cb111-5"></a><span class="st">   </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb111-6"><a href="random-forests.html#cb111-6"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Carseats Random Forest, Predicted vs Actual (caret)&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="random-forests.html#cb112-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(cs_mdl_rf), <span class="dt">main=</span><span class="st">&quot;Variable Importance with Random Forest&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
+<p>Let’s check in with the scoreboard.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="random-forests.html#cb113-1"></a>cs_scoreboard &lt;-<span class="st"> </span><span class="kw">rbind</span>(cs_scoreboard,</span>
+<span id="cb113-2"><a href="random-forests.html#cb113-2"></a>   <span class="kw">data.frame</span>(<span class="dt">Model =</span> <span class="st">&quot;Random Forest&quot;</span>, <span class="dt">RMSE =</span> cs_rmse_rf)</span>
+<span id="cb113-3"><a href="random-forests.html#cb113-3"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(RMSE)</span>
+<span id="cb113-4"><a href="random-forests.html#cb113-4"></a><span class="kw">scoreboard</span>(cs_scoreboard)</span></code></pre></div>
+<div class="tabwid"><table style='border-collapse:collapse;'><thead><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 2.00px solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Model</span></p></td><td style="width:54px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 2.00px solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">RMSE</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Random Forest</span></p></td><td style="width:54px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">1.7184</span></p></td></tr><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Bagging</span></p></td><td style="width:54px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">1.9185</span></p></td></tr><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Single Tree (caret)</span></p></td><td style="width:54px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">2.2983</span></p></td></tr><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Single Tree</span></p></td><td style="width:54px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">2.3632</span></p></td></tr></tbody></table></div>
 <p>The bagging and random forest models did very well - they took over the top positions!</p>
 </div>
 </div>
@@ -616,7 +484,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="bagging.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bagged-trees.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="gradient-boosting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

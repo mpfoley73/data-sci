@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.4 Prediction | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.4 Prediction | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-10" />
+<meta name="date" content="2020-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,7 @@
 
 
 
+<script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
@@ -173,7 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="3.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
+<li class="chapter" data-level="3.0.1" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
 <li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
@@ -233,18 +234,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
 <li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>10.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>10.1.2</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="10.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>10.2</b> Regression Tree</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>10.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
+<li class="chapter" data-level="10.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>10.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>10.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="10.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>10.3.2</b> Bagging Regression Tree</a></li>
+</ul></li>
 <li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
 <li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
-<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>10.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="10.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>10.6.2</b> Regression Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="reference.html"><a href="reference.html#reference"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>11</b> Non-linear Models</a><ul>
 <li class="chapter" data-level="11.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>11.1</b> Splines</a></li>
@@ -255,11 +261,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
 <li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a></li>
+<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a><ul>
+<li class="chapter" data-level="14.1" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i><b>14.1</b> N-Grams</a></li>
+<li class="chapter" data-level="14.2" data-path="converting-to-and-from-non-tidy-formats.html"><a href="converting-to-and-from-non-tidy-formats.html"><i class="fa fa-check"></i><b>14.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="14.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>14.3</b> Example</a></li>
+<li class="chapter" data-level="14.4" data-path="stringr-package.html"><a href="stringr-package.html"><i class="fa fa-check"></i><b>14.4</b> stringr package</a></li>
+<li class="chapter" data-level="14.5" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>14.5</b> Regular Expressions</a></li>
+</ul></li>
 <li class="chapter" data-level="15" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>15</b> Survival Analysis</a><ul>
 <li class="chapter" data-level="15.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>15.1</b> Basic Concepts</a></li>
 <li class="chapter" data-level="15.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>15.2</b> Survival Curve Estimation</a><ul>
@@ -307,58 +319,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The standard error in the <strong>predicted value</strong> of <span class="math inline">\(\hat{y}\)</span> at some <span class="math inline">\(X_{new}\)</span> is</p>
 <p><span class="math display">\[SE(\hat{y}) = SE(\mu_\hat{y})^2 + \sqrt{\hat{\sigma}^2}.\]</span></p>
 <p>Notice the standard error for a predicted value is always greater than the standard error of the expected value. The <span class="math inline">\((1 - \alpha)\%\)</span> <strong>prediction interval</strong> is <span class="math inline">\(\hat{y} \pm t_{\alpha / 2} SE(\hat{y})\)</span>.</p>
-<div id="example-10" class="section level4">
+<div id="example-3" class="section level4">
 <h4><span class="header-section-number">5.4.0.1</span> Example</h4>
 <p>What is the expected value of <code>mpg</code> if the predictor values equal their mean values?</p>
 <p>R performs this calucation with the <code>predict()</code> function with parameter <code>interval = confidence</code>.</p>
-<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="prediction.html#cb413-1"></a>m &lt;-<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])</span>
-<span id="cb413-2"><a href="prediction.html#cb413-2"></a>X_new &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Const =</span> <span class="dv">1</span>,</span>
-<span id="cb413-3"><a href="prediction.html#cb413-3"></a>                    <span class="dt">cyl =</span> <span class="kw">factor</span>(<span class="kw">round</span>(<span class="kw">mean</span>(<span class="kw">as.numeric</span>(<span class="kw">as.character</span>(d<span class="op">$</span>cyl))),<span class="dv">0</span>), <span class="dt">levels =</span> <span class="kw">levels</span>(d<span class="op">$</span>cyl)), </span>
-<span id="cb413-4"><a href="prediction.html#cb413-4"></a>                    <span class="dt">disp =</span> <span class="kw">mean</span>(d<span class="op">$</span>disp),</span>
-<span id="cb413-5"><a href="prediction.html#cb413-5"></a>                    <span class="dt">hp =</span> <span class="kw">mean</span>(d<span class="op">$</span>hp),</span>
-<span id="cb413-6"><a href="prediction.html#cb413-6"></a>                    <span class="dt">drat =</span> <span class="kw">mean</span>(d<span class="op">$</span>drat),</span>
-<span id="cb413-7"><a href="prediction.html#cb413-7"></a>                    <span class="dt">wt =</span> <span class="kw">mean</span>(d<span class="op">$</span>wt),</span>
-<span id="cb413-8"><a href="prediction.html#cb413-8"></a>                    <span class="dt">qsec =</span> <span class="kw">mean</span>(d<span class="op">$</span>qsec),</span>
-<span id="cb413-9"><a href="prediction.html#cb413-9"></a>                    <span class="dt">vs =</span> <span class="kw">factor</span>(<span class="st">&quot;S&quot;</span>, <span class="dt">levels =</span> <span class="kw">levels</span>(d<span class="op">$</span>vs)), </span>
-<span id="cb413-10"><a href="prediction.html#cb413-10"></a>                    <span class="dt">am =</span> <span class="kw">factor</span>(<span class="st">&quot;manual&quot;</span>, <span class="dt">levels =</span> <span class="kw">levels</span>(d<span class="op">$</span>am)))</span>
-<span id="cb413-11"><a href="prediction.html#cb413-11"></a><span class="kw">predict.lm</span>(<span class="dt">object =</span> m, </span>
-<span id="cb413-12"><a href="prediction.html#cb413-12"></a>           <span class="dt">newdata =</span> X_new, </span>
-<span id="cb413-13"><a href="prediction.html#cb413-13"></a>           <span class="dt">interval =</span> <span class="st">&quot;confidence&quot;</span>)</span></code></pre></div>
-<pre><code>##   fit lwr upr
-## 1  21  17  25</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="prediction.html#cb65-1"></a>m &lt;-<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])</span>
+<span id="cb65-2"><a href="prediction.html#cb65-2"></a>X_new &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Const =</span> <span class="dv">1</span>,</span>
+<span id="cb65-3"><a href="prediction.html#cb65-3"></a>                    <span class="dt">cyl =</span> <span class="kw">factor</span>(<span class="kw">round</span>(<span class="kw">mean</span>(<span class="kw">as.numeric</span>(<span class="kw">as.character</span>(d<span class="op">$</span>cyl))),<span class="dv">0</span>), <span class="dt">levels =</span> <span class="kw">levels</span>(d<span class="op">$</span>cyl)), </span>
+<span id="cb65-4"><a href="prediction.html#cb65-4"></a>                    <span class="dt">disp =</span> <span class="kw">mean</span>(d<span class="op">$</span>disp),</span>
+<span id="cb65-5"><a href="prediction.html#cb65-5"></a>                    <span class="dt">hp =</span> <span class="kw">mean</span>(d<span class="op">$</span>hp),</span>
+<span id="cb65-6"><a href="prediction.html#cb65-6"></a>                    <span class="dt">drat =</span> <span class="kw">mean</span>(d<span class="op">$</span>drat),</span>
+<span id="cb65-7"><a href="prediction.html#cb65-7"></a>                    <span class="dt">wt =</span> <span class="kw">mean</span>(d<span class="op">$</span>wt),</span>
+<span id="cb65-8"><a href="prediction.html#cb65-8"></a>                    <span class="dt">qsec =</span> <span class="kw">mean</span>(d<span class="op">$</span>qsec),</span>
+<span id="cb65-9"><a href="prediction.html#cb65-9"></a>                    <span class="dt">vs =</span> <span class="kw">factor</span>(<span class="st">&quot;S&quot;</span>, <span class="dt">levels =</span> <span class="kw">levels</span>(d<span class="op">$</span>vs)), </span>
+<span id="cb65-10"><a href="prediction.html#cb65-10"></a>                    <span class="dt">am =</span> <span class="kw">factor</span>(<span class="st">&quot;manual&quot;</span>, <span class="dt">levels =</span> <span class="kw">levels</span>(d<span class="op">$</span>am)))</span>
+<span id="cb65-11"><a href="prediction.html#cb65-11"></a><span class="kw">predict.lm</span>(<span class="dt">object =</span> m, </span>
+<span id="cb65-12"><a href="prediction.html#cb65-12"></a>           <span class="dt">newdata =</span> X_new, </span>
+<span id="cb65-13"><a href="prediction.html#cb65-13"></a>           <span class="dt">interval =</span> <span class="st">&quot;confidence&quot;</span>)</span></code></pre></div>
+<pre><code>##        fit     lwr      upr
+## 1 21.21748 17.4461 24.98886</code></pre>
 <p>You can verify this by manually calculating <span class="math inline">\(SE(\mu_\hat{y}) = \sqrt{\hat{\sigma}^2 (X_{new} (X&#39;X)^{-1} X_{new}&#39;)}\)</span> using matrix algebra.</p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="prediction.html#cb415-1"></a>X2 &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">data.frame</span>(<span class="kw">model.matrix</span>(m)), mean) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>()</span>
-<span id="cb415-2"><a href="prediction.html#cb415-2"></a>X2[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">contr.poly</span>(<span class="dv">3</span>)[<span class="dv">2</span>,<span class="dv">1</span>]  <span class="co"># cyl linear</span></span>
-<span id="cb415-3"><a href="prediction.html#cb415-3"></a>X2[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">contr.poly</span>(<span class="dv">3</span>)[<span class="dv">2</span>,<span class="dv">2</span>]  <span class="co"># cyl quadratic</span></span>
-<span id="cb415-4"><a href="prediction.html#cb415-4"></a>X2[<span class="dv">9</span>] &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb415-5"><a href="prediction.html#cb415-5"></a>X2[<span class="dv">10</span>] &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb415-6"><a href="prediction.html#cb415-6"></a></span>
-<span id="cb415-7"><a href="prediction.html#cb415-7"></a>y_exp &lt;-<span class="st"> </span><span class="kw">sum</span>(m<span class="op">$</span>coefficients <span class="op">*</span><span class="st"> </span><span class="kw">as.numeric</span>(X2))</span>
-<span id="cb415-8"><a href="prediction.html#cb415-8"></a>se_y_exp &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">sqrt</span>(rse<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span></span>
-<span id="cb415-9"><a href="prediction.html#cb415-9"></a><span class="st">                              </span>X2 <span class="op">%*%</span><span class="st"> </span></span>
-<span id="cb415-10"><a href="prediction.html#cb415-10"></a><span class="st">                              </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span></span>
-<span id="cb415-11"><a href="prediction.html#cb415-11"></a><span class="st">                              </span><span class="kw">t</span>(X2)))</span>
-<span id="cb415-12"><a href="prediction.html#cb415-12"></a></span>
-<span id="cb415-13"><a href="prediction.html#cb415-13"></a>t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="dt">p =</span> <span class="fl">.05</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb415-14"><a href="prediction.html#cb415-14"></a>me &lt;-<span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_y_exp</span>
-<span id="cb415-15"><a href="prediction.html#cb415-15"></a><span class="kw">cat</span>(<span class="st">&quot;fit: &quot;</span>, <span class="kw">round</span>(y_exp, <span class="dv">6</span>),</span>
-<span id="cb415-16"><a href="prediction.html#cb415-16"></a>    <span class="st">&quot;, 95% CI: (&quot;</span>, <span class="kw">round</span>(y_exp <span class="op">-</span><span class="st"> </span>me, <span class="dv">6</span>), <span class="st">&quot;, &quot;</span>, <span class="kw">round</span>(y_exp <span class="op">+</span><span class="st"> </span>me, <span class="dv">6</span>), <span class="st">&quot;)&quot;</span>)</span></code></pre></div>
-<pre><code>## fit:  21 , 95% CI: ( 17 ,  25 )</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="prediction.html#cb67-1"></a>X2 &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">data.frame</span>(<span class="kw">model.matrix</span>(m)), mean) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>()</span>
+<span id="cb67-2"><a href="prediction.html#cb67-2"></a>X2[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">contr.poly</span>(<span class="dv">3</span>)[<span class="dv">2</span>,<span class="dv">1</span>]  <span class="co"># cyl linear</span></span>
+<span id="cb67-3"><a href="prediction.html#cb67-3"></a>X2[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">contr.poly</span>(<span class="dv">3</span>)[<span class="dv">2</span>,<span class="dv">2</span>]  <span class="co"># cyl quadratic</span></span>
+<span id="cb67-4"><a href="prediction.html#cb67-4"></a>X2[<span class="dv">9</span>] &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb67-5"><a href="prediction.html#cb67-5"></a>X2[<span class="dv">10</span>] &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb67-6"><a href="prediction.html#cb67-6"></a></span>
+<span id="cb67-7"><a href="prediction.html#cb67-7"></a>y_exp &lt;-<span class="st"> </span><span class="kw">sum</span>(m<span class="op">$</span>coefficients <span class="op">*</span><span class="st"> </span><span class="kw">as.numeric</span>(X2))</span>
+<span id="cb67-8"><a href="prediction.html#cb67-8"></a>se_y_exp &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">sqrt</span>(rse<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span></span>
+<span id="cb67-9"><a href="prediction.html#cb67-9"></a><span class="st">                              </span>X2 <span class="op">%*%</span><span class="st"> </span></span>
+<span id="cb67-10"><a href="prediction.html#cb67-10"></a><span class="st">                              </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span></span>
+<span id="cb67-11"><a href="prediction.html#cb67-11"></a><span class="st">                              </span><span class="kw">t</span>(X2)))</span>
+<span id="cb67-12"><a href="prediction.html#cb67-12"></a></span>
+<span id="cb67-13"><a href="prediction.html#cb67-13"></a>t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="dt">p =</span> <span class="fl">.05</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb67-14"><a href="prediction.html#cb67-14"></a>me &lt;-<span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_y_exp</span>
+<span id="cb67-15"><a href="prediction.html#cb67-15"></a><span class="kw">cat</span>(<span class="st">&quot;fit: &quot;</span>, <span class="kw">round</span>(y_exp, <span class="dv">6</span>),</span>
+<span id="cb67-16"><a href="prediction.html#cb67-16"></a>    <span class="st">&quot;, 95% CI: (&quot;</span>, <span class="kw">round</span>(y_exp <span class="op">-</span><span class="st"> </span>me, <span class="dv">6</span>), <span class="st">&quot;, &quot;</span>, <span class="kw">round</span>(y_exp <span class="op">+</span><span class="st"> </span>me, <span class="dv">6</span>), <span class="st">&quot;)&quot;</span>)</span></code></pre></div>
+<pre><code>## fit:  21.21748 , 95% CI: ( 17.4461 ,  24.98886 )</code></pre>
 </div>
-<div id="example-11" class="section level4">
+<div id="example-4" class="section level4">
 <h4><span class="header-section-number">5.4.0.2</span> Example</h4>
 <p>What is the predicted value of mpg if the predictor values equal their mean values?</p>
 <p>R performs this calucation with the <code>predict()</code> with parameter <code>interval = prediction</code>.</p>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="prediction.html#cb417-1"></a><span class="kw">predict.lm</span>(<span class="dt">object =</span> m, </span>
-<span id="cb417-2"><a href="prediction.html#cb417-2"></a>           <span class="dt">newdata =</span> X_new, </span>
-<span id="cb417-3"><a href="prediction.html#cb417-3"></a>           <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>)</span></code></pre></div>
-<pre><code>##   fit lwr upr
-## 1  21  15  28</code></pre>
-<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="prediction.html#cb419-1"></a>se_y_hat &lt;-<span class="st"> </span><span class="kw">sqrt</span>(rse<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>se_y_exp<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb419-2"><a href="prediction.html#cb419-2"></a>me &lt;-<span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_y_hat</span>
-<span id="cb419-3"><a href="prediction.html#cb419-3"></a><span class="kw">cat</span>(<span class="st">&quot;fit: &quot;</span>, <span class="kw">round</span>(y_exp, <span class="dv">6</span>),</span>
-<span id="cb419-4"><a href="prediction.html#cb419-4"></a>    <span class="st">&quot;, 95% CI: (&quot;</span>, <span class="kw">round</span>(y_exp <span class="op">-</span><span class="st"> </span>me, <span class="dv">6</span>), <span class="st">&quot;, &quot;</span>, <span class="kw">round</span>(y_exp <span class="op">+</span><span class="st"> </span>me, <span class="dv">6</span>), <span class="st">&quot;)&quot;</span>)</span></code></pre></div>
-<pre><code>## fit:  21 , 95% CI: ( 15 ,  28 )</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="prediction.html#cb69-1"></a><span class="kw">predict.lm</span>(<span class="dt">object =</span> m, </span>
+<span id="cb69-2"><a href="prediction.html#cb69-2"></a>           <span class="dt">newdata =</span> X_new, </span>
+<span id="cb69-3"><a href="prediction.html#cb69-3"></a>           <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>)</span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 21.21748 14.78304 27.65191</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="prediction.html#cb71-1"></a>se_y_hat &lt;-<span class="st"> </span><span class="kw">sqrt</span>(rse<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>se_y_exp<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb71-2"><a href="prediction.html#cb71-2"></a>me &lt;-<span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_y_hat</span>
+<span id="cb71-3"><a href="prediction.html#cb71-3"></a><span class="kw">cat</span>(<span class="st">&quot;fit: &quot;</span>, <span class="kw">round</span>(y_exp, <span class="dv">6</span>),</span>
+<span id="cb71-4"><a href="prediction.html#cb71-4"></a>    <span class="st">&quot;, 95% CI: (&quot;</span>, <span class="kw">round</span>(y_exp <span class="op">-</span><span class="st"> </span>me, <span class="dv">6</span>), <span class="st">&quot;, &quot;</span>, <span class="kw">round</span>(y_exp <span class="op">+</span><span class="st"> </span>me, <span class="dv">6</span>), <span class="st">&quot;)&quot;</span>)</span></code></pre></div>
+<pre><code>## fit:  21.21748 , 95% CI: ( 14.78304 ,  27.65191 )</code></pre>
 </div>
 </div>
             </section>

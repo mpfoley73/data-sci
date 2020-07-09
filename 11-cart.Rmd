@@ -953,7 +953,7 @@ yardstick::gain_curve(oj_preds_gbm, Actual, CH) %>%
 Now the variable importance. Just a few variables. `LoyalCH` is at the top again.
 
 ```{r}
-plot(varImp(oj_mdl_xgb), main="Variable Importance with Gradient Boosting")
+#plot(varImp(oj_mdl_gbm), main="Variable Importance with Gradient Boosting")
 ```
 
 ##### XGBoost
@@ -970,7 +970,7 @@ I'll predict `Purchase` from the `OJ` data set again, this time using the XGBoos
 
 I'll use `tuneLength = 5` again.
 
-```{r}
+```{r cart-xgb-oj}
 set.seed(1234)
 garbage <- capture.output(
 oj_mdl_xgb <- train(
@@ -1080,35 +1080,77 @@ cs_preds_gbm %>%
    labs(title = "Carseats GBM, Predicted vs Actual")
 ```
 
+```{r}
+#plot(varImp(cs_mdl_gbm), main="Variable Importance with GBM")
+```
+
 The RMSE is 1.438 - the best of the bunch.
 
 ```{r}
-# RMSE of 1.7184 is better than bagging's 1.9185.
 cs_rmse_gbm <- RMSE(pred = cs_preds_gbm$Predicted, obs = cs_preds_gbm$Actual)
-
-scoreboard_r <- rbind(
-   scoreboard_r,
-   data.frame(model = "GBM", RMSE = round(cs_rmse_gbm, 5))
-)
-scoreboard_r %>% arrange(RMSE)
+cs_scoreboard <- rbind(cs_scoreboard,
+   data.frame(Model = "GBM", RMSE = cs_rmse_gbm)
+) %>% arrange(RMSE)
+scoreboard(cs_scoreboard)
 ```
 
 ##### XGBoost
 
 I'll predict `Sales` from the `Carseats` data set again, this time using the bagging method by specifying `method = "xgb"`
 
-```{r}
+```{r cart-xgb-cs}
 set.seed(1234)
 garbage <- capture.output(
-cs_mdl_gbm <- train(
+cs_mdl_xgb <- train(
    Sales ~ ., 
    data = cs_train, 
-   method = "gbm",
+   method = "xgbTree",
    tuneLength = 5,
    trControl = cs_trControl
 ))
-cs_mdl_gbm
+cs_mdl_xgb
 ```
+
+The optimal tuning parameters were at $M = 250$ and `interation.depth = 1`.
+`train()` tuned `eta` ($\eta$),  `max_depth`, `gamma`, `colsample_bytree`, `subsample`, and `nrounds`, holding `gamma = 0`, and `min_child_weight = 1`. The optimal hyperparameter values were `eta = 0.4`,  `max_depth = 1`, `gamma = 0`, `colsample_bytree = 0.8`, `subsample = 1`, and `nrounds = 150`.
+
+With so many hyperparameters, the tuning plot is nearly unreadable.
+
+```{r}
+plot(cs_mdl_xgb)
+```
+
+Here is the holdout set performance.
+
+```{r}
+cs_preds_xgb <- bind_cols(
+   Predicted = predict(cs_mdl_xgb, newdata = cs_test),
+   Actual = cs_test$Sales
+)
+
+# Model over-predicts at low end of Sales and under-predicts at high end
+cs_preds_xgb %>%
+   ggplot(aes(x = Actual, y = Predicted)) +
+   geom_point(alpha = 0.6, color = "cadetblue") +
+   geom_smooth(method = "loess", formula = "y ~ x") +
+   geom_abline(intercept = 0, slope = 1, linetype = 2) +
+   labs(title = "Carseats XGBoost, Predicted vs Actual")
+```
+
+```{r}
+plot(varImp(cs_mdl_xgb), main="Variable Importance with XGBoost")
+```
+
+The RMSE is 1.438 - the best of the bunch.
+
+```{r}
+cs_rmse_xgb <- RMSE(pred = cs_preds_xgb$Predicted, obs = cs_preds_xgb$Actual)
+cs_scoreboard <- rbind(cs_scoreboard,
+   data.frame(Model = "XGBoost", RMSE = cs_rmse_xgb)
+) %>% arrange(RMSE)
+scoreboard(cs_scoreboard)
+```
+
 
 ## Summary
 
@@ -1122,17 +1164,18 @@ The `caret::resamples()` function summarizes the resampling performance on the f
 oj_resamples <- resamples(list("Single Tree (caret)" = oj_mdl_cart2,
                                "Bagged" = oj_mdl_bag,
                                "Random Forest" = oj_mdl_rf,
-                               "GBM" = oj_mdl_gbm))
+                               "GBM" = oj_mdl_gbm,
+                               "XGBoost" = oj_mdl_xgb))
 summary(oj_resamples)
 ```
 
-The mean ROC value is the performance measure I used to evaluate the models in `train()` (you can compare the Mean column to each model's object (e.g., `print(oj_mdl_cart2)`)). The best performing model on resamples based on the mean ROC score was GBM. It also had the highest mean sensitivity and specificity. Here is a box plot of the distributions.
+The mean ROC value is the performance measure I used to evaluate the models in `train()` (you can compare the Mean column to each model's object (e.g., `print(oj_mdl_cart2)`)). The best performing model on resamples based on the mean ROC score was XGBoost. It also had the highest mean sensitivity. GBM had the highest specificity. Here is a box plot of the distributions.
 
 ```{r}
 bwplot(oj_resamples)
 ```
 
-One way to evaluate the box plots is with a post-hoc test of differences. The single tree was about the same as the random forest and bagged models.
+One way to evaluate the box plots is with a post-hoc test of differences. The single tree was about the same as the random forest and bagged models. GBM and XGBoost were also statistically equivalent.
 
 ```{r}
 (oj_diff <- diff(oj_resamples))
@@ -1148,17 +1191,18 @@ Here is the summary of resampling metrics for the Carseats models.
 cs_resamples <- resamples(list("Single Tree (caret)" = cs_mdl_cart2,
                                "Bagged" = cs_mdl_bag,
                                "Random Forest" = cs_mdl_rf,
-                               "GBM" = cs_mdl_gbm))
+                               "GBM" = cs_mdl_gbm,
+                               "XGBoost" = cs_mdl_xgb))
 summary(cs_resamples)
 ```
 
-The best performing model on resamples based on the mean RMSE score was GBM. It also had the lowest mean absolut error (MAE) and highest R-squared. Here is a box plot of the distributions.
+The best performing model on resamples based on the mean RMSE score was XGBoost. It also had the lowest mean absolute error (MAE) and highest R-squared. Here is a box plot of the distributions.
 
 ```{r}
 bwplot(cs_resamples)
 ```
 
-The post-hoc test indicates all models differed from each other.
+The post-hoc test indicates all models differed from each other except for GBM and XGBoost.
 
 ```{r}
 (cs_diff <- diff(cs_resamples))
@@ -1167,29 +1211,4 @@ dotplot(cs_diff)
 ```
 
 
-## Reference
-
-Penn State University, STAT 508: Applied Data Mining and Statistical Learning, "Lesson 11: Tree-based Methods". [https://newonlinecourses.science.psu.edu/stat508/lesson/11](https://newonlinecourses.science.psu.edu/stat508/lesson/11).
-
-Brownlee, Jason. "Classification And Regression Trees for Machine Learning", Machine Learning Mastery.  [https://machinelearningmastery.com/classification-and-regression-trees-for-machine-learning/](https://machinelearningmastery.com/classification-and-regression-trees-for-machine-learning/). 
-
-Brownlee, Jason. "A Gentle Introduction to the Gradient Boosting Algorithm for Machine Learning", Machine Learning Mastery. [https://machinelearningmastery.com/gentle-introduction-gradient-boosting-algorithm-machine-learning/](https://machinelearningmastery.com/gentle-introduction-gradient-boosting-algorithm-machine-learning/).
-
-[DataCamp: Machine Learning with Tree-Based Models in R](https://campus.datacamp.com/courses/machine-learning-with-tree-based-models-in-r)
-
-[An Introduction to Statistical Learning](http://faculty.marshall.usc.edu/gareth-james/ISL/) by Gareth James, et al.
-
-[SAS Documentation](http://support.sas.com/documentation/cdl/en/stathpug/68163/HTML/default/viewer.htm#stathpug_hpsplit_details01.htm)
-
-[StatMethods: Tree-Based Models](https://www.statmethods.net/advstats/cart.html)
-
-[Machine Learning Plus](https://www.machinelearningplus.com/machine-learning/caret-package/)
-
-[GBM (Boosted Models) Tuning Parameters](https://www.listendata.com/2015/07/gbm-boosted-models-tuning-parameters.html)  from Listen Data
-
-[Harry Southworth](https://github.com/harrysouthworth/gbm/blob/master/demo/bernoulli.R) on GitHub
-
-[Gradient Boosting Classification with GBM in R](https://www.datatechnotes.com/2018/03/classification-with-gradient-boosting.html) in DataTechNotes
-
-Molnar, Christoph. "Interpretable machine learning. A Guide for Making Black Box Models Explainable", 2019. [https://christophm.github.io/interpretable-ml-book/](https://christophm.github.io/interpretable-ml-book/).
 

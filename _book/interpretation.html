@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.6 Interpretation | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.6 Interpretation | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-10" />
+<meta name="date" content="2020-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,7 @@
 
 
 
+<script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
@@ -173,7 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="3.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
+<li class="chapter" data-level="3.0.1" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
 <li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
@@ -233,18 +234,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
 <li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>10.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>10.1.2</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="10.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>10.2</b> Regression Tree</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>10.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
+<li class="chapter" data-level="10.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>10.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>10.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="10.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>10.3.2</b> Bagging Regression Tree</a></li>
+</ul></li>
 <li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
 <li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
-<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>10.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="10.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>10.6.2</b> Regression Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="reference.html"><a href="reference.html#reference"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>11</b> Non-linear Models</a><ul>
 <li class="chapter" data-level="11.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>11.1</b> Splines</a></li>
@@ -255,11 +261,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
 <li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a></li>
+<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a><ul>
+<li class="chapter" data-level="14.1" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i><b>14.1</b> N-Grams</a></li>
+<li class="chapter" data-level="14.2" data-path="converting-to-and-from-non-tidy-formats.html"><a href="converting-to-and-from-non-tidy-formats.html"><i class="fa fa-check"></i><b>14.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="14.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>14.3</b> Example</a></li>
+<li class="chapter" data-level="14.4" data-path="stringr-package.html"><a href="stringr-package.html"><i class="fa fa-check"></i><b>14.4</b> stringr package</a></li>
+<li class="chapter" data-level="14.5" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>14.5</b> Regular Expressions</a></li>
+</ul></li>
 <li class="chapter" data-level="15" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>15</b> Survival Analysis</a><ul>
 <li class="chapter" data-level="15.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>15.1</b> Basic Concepts</a></li>
 <li class="chapter" data-level="15.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>15.2</b> Survival Curve Estimation</a><ul>
@@ -302,28 +314,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="interpretation" class="section level2">
 <h2><span class="header-section-number">5.6</span> Interpretation</h2>
 <p>A plot of the standardized coefficients shows the relative importance of each variable. The distance the coefficients are from zero shows how much a change in a standard deviation of the regressor changes the mean of the predicted value. The CI shows the precision. The plot shows not only which variables are significant, but also which are important.</p>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="interpretation.html#cb429-1"></a>d_sc &lt;-<span class="st"> </span>d <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate_at</span>(<span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;drat&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;qsec&quot;</span>), scale)</span>
-<span id="cb429-2"><a href="interpretation.html#cb429-2"></a>m_sc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., d_sc[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])</span>
-<span id="cb429-3"><a href="interpretation.html#cb429-3"></a>lm_summary &lt;-<span class="st"> </span><span class="kw">summary</span>(m_sc)<span class="op">$</span>coefficients</span>
-<span id="cb429-4"><a href="interpretation.html#cb429-4"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Features =</span> <span class="kw">rownames</span>(lm_summary),</span>
-<span id="cb429-5"><a href="interpretation.html#cb429-5"></a>                 <span class="dt">Estimate =</span> lm_summary[,<span class="st">&#39;Estimate&#39;</span>],</span>
-<span id="cb429-6"><a href="interpretation.html#cb429-6"></a>                 <span class="dt">std_error =</span> lm_summary[,<span class="st">&#39;Std. Error&#39;</span>])</span>
-<span id="cb429-7"><a href="interpretation.html#cb429-7"></a>df<span class="op">$</span>lower =<span class="st"> </span>df<span class="op">$</span>Estimate <span class="op">-</span><span class="st"> </span><span class="kw">qt</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, m_sc<span class="op">$</span>df.residual) <span class="op">*</span><span class="st"> </span>df<span class="op">$</span>std_error</span>
-<span id="cb429-8"><a href="interpretation.html#cb429-8"></a>df<span class="op">$</span>upper =<span class="st"> </span>df<span class="op">$</span>Estimate <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, m_sc<span class="op">$</span>df.residual) <span class="op">*</span><span class="st"> </span>df<span class="op">$</span>std_error</span>
-<span id="cb429-9"><a href="interpretation.html#cb429-9"></a>df &lt;-<span class="st"> </span>df[df<span class="op">$</span>Features <span class="op">!=</span><span class="st"> &quot;(Intercept)&quot;</span>,]</span>
-<span id="cb429-10"><a href="interpretation.html#cb429-10"></a></span>
-<span id="cb429-11"><a href="interpretation.html#cb429-11"></a><span class="kw">ggplot</span>(df) <span class="op">+</span></span>
-<span id="cb429-12"><a href="interpretation.html#cb429-12"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="dv">4</span>) <span class="op">+</span></span>
-<span id="cb429-13"><a href="interpretation.html#cb429-13"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Estimate, <span class="dt">y =</span> Features)) <span class="op">+</span></span>
-<span id="cb429-14"><a href="interpretation.html#cb429-14"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Features, <span class="dt">yend =</span> Features, <span class="dt">x=</span>lower, <span class="dt">xend=</span>upper), </span>
-<span id="cb429-15"><a href="interpretation.html#cb429-15"></a>               <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">ends=</span><span class="st">&#39;both&#39;</span>, <span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.1</span>, <span class="st">&#39;cm&#39;</span>))) <span class="op">+</span></span>
-<span id="cb429-16"><a href="interpretation.html#cb429-16"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="st">&quot;Standardized Weight&quot;</span>) <span class="op">+</span></span>
-<span id="cb429-17"><a href="interpretation.html#cb429-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Model Feature Importance&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-192-1.png" width="672" /></p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="interpretation.html#cb81-1"></a>d_sc &lt;-<span class="st"> </span>d <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate_at</span>(<span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;drat&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;qsec&quot;</span>), scale)</span>
+<span id="cb81-2"><a href="interpretation.html#cb81-2"></a>m_sc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., d_sc[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])</span>
+<span id="cb81-3"><a href="interpretation.html#cb81-3"></a>lm_summary &lt;-<span class="st"> </span><span class="kw">summary</span>(m_sc)<span class="op">$</span>coefficients</span>
+<span id="cb81-4"><a href="interpretation.html#cb81-4"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Features =</span> <span class="kw">rownames</span>(lm_summary),</span>
+<span id="cb81-5"><a href="interpretation.html#cb81-5"></a>                 <span class="dt">Estimate =</span> lm_summary[,<span class="st">&#39;Estimate&#39;</span>],</span>
+<span id="cb81-6"><a href="interpretation.html#cb81-6"></a>                 <span class="dt">std_error =</span> lm_summary[,<span class="st">&#39;Std. Error&#39;</span>])</span>
+<span id="cb81-7"><a href="interpretation.html#cb81-7"></a>df<span class="op">$</span>lower =<span class="st"> </span>df<span class="op">$</span>Estimate <span class="op">-</span><span class="st"> </span><span class="kw">qt</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, m_sc<span class="op">$</span>df.residual) <span class="op">*</span><span class="st"> </span>df<span class="op">$</span>std_error</span>
+<span id="cb81-8"><a href="interpretation.html#cb81-8"></a>df<span class="op">$</span>upper =<span class="st"> </span>df<span class="op">$</span>Estimate <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, m_sc<span class="op">$</span>df.residual) <span class="op">*</span><span class="st"> </span>df<span class="op">$</span>std_error</span>
+<span id="cb81-9"><a href="interpretation.html#cb81-9"></a>df &lt;-<span class="st"> </span>df[df<span class="op">$</span>Features <span class="op">!=</span><span class="st"> &quot;(Intercept)&quot;</span>,]</span>
+<span id="cb81-10"><a href="interpretation.html#cb81-10"></a></span>
+<span id="cb81-11"><a href="interpretation.html#cb81-11"></a><span class="kw">ggplot</span>(df) <span class="op">+</span></span>
+<span id="cb81-12"><a href="interpretation.html#cb81-12"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb81-13"><a href="interpretation.html#cb81-13"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Estimate, <span class="dt">y =</span> Features)) <span class="op">+</span></span>
+<span id="cb81-14"><a href="interpretation.html#cb81-14"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Features, <span class="dt">yend =</span> Features, <span class="dt">x=</span>lower, <span class="dt">xend=</span>upper), </span>
+<span id="cb81-15"><a href="interpretation.html#cb81-15"></a>               <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">ends=</span><span class="st">&#39;both&#39;</span>, <span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.1</span>, <span class="st">&#39;cm&#39;</span>))) <span class="op">+</span></span>
+<span id="cb81-16"><a href="interpretation.html#cb81-16"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="st">&quot;Standardized Weight&quot;</span>) <span class="op">+</span></span>
+<span id="cb81-17"><a href="interpretation.html#cb81-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Model Feature Importance&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <p>The added variable plot shows the bivariate relationship between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_i\)</span> after accounting for the other variables. For example, the partial regression plots of <code>y ~ x1 + x2 + x3</code> would plot the residuals of <code>y ~ x2 + x3</code> vs <code>x1</code>, and so on.</p>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="interpretation.html#cb430-1"></a><span class="kw">library</span>(car)</span>
-<span id="cb430-2"><a href="interpretation.html#cb430-2"></a><span class="kw">avPlots</span>(m)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-193-1.png" width="672" /></p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="interpretation.html#cb82-1"></a><span class="kw">library</span>(car)</span>
+<span id="cb82-2"><a href="interpretation.html#cb82-2"></a><span class="kw">avPlots</span>(m)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 </div>
             </section>
 

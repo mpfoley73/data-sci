@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.1 Classification Tree | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.1 Classification Tree | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-29" />
+<meta name="date" content="2020-07-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,8 @@
 
 
 <script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="assets/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<script src="assets/tabwid-1.0.0/tabwid.js"></script>
 
 
 <style type="text/css">
@@ -174,7 +176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="3.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
+<li class="chapter" data-level="3.0.1" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
 <li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
@@ -233,17 +235,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>9</b> Decision Trees</a><ul>
 <li class="chapter" data-level="9.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>9.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#holdout-performance"><i class="fa fa-check"></i><b>9.1.1</b> Holdout Performance</a></li>
-<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>9.1.2</b> Caret Approach</a></li>
+<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>9.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>9.1.2</b> Training with Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>9.2</b> Regression Tree</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="regression-tree.html"><a href="regression-tree.html#caret-approach-1"><i class="fa fa-check"></i><b>9.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="9.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>9.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>9.3</b> Bagging</a></li>
+<li class="chapter" data-level="9.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>9.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>9.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="9.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>9.3.2</b> Bagging Regression Tree</a></li>
+</ul></li>
 <li class="chapter" data-level="9.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>9.4</b> Random Forests</a></li>
 <li class="chapter" data-level="9.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>9.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="9.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>9.6</b> Summary</a></li>
-<li class="chapter" data-level="9.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>9.7</b> Reference</a></li>
+<li class="chapter" data-level="9.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>9.6</b> Summary</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>9.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="9.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>9.6.2</b> Regression Trees</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>10</b> Non-linear Models</a><ul>
 <li class="chapter" data-level="10.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>10.1</b> Splines</a></li>
@@ -254,14 +261,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>11.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="11.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>11.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="11.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>11.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="11.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>11.4</b> Example</a></li>
+<li class="chapter" data-level="11.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>11.4</b> Example</a></li>
 <li class="chapter" data-level="11.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>11.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>12</b> Principal Components Analysis</a></li>
 <li class="chapter" data-level="13" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>13</b> Text Mining</a><ul>
 <li class="chapter" data-level="13.1" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i><b>13.1</b> N-Grams</a></li>
 <li class="chapter" data-level="13.2" data-path="converting-to-and-from-non-tidy-formats.html"><a href="converting-to-and-from-non-tidy-formats.html"><i class="fa fa-check"></i><b>13.2</b> Converting to and from non-tidy formats</a></li>
-<li class="chapter" data-level="13.3" data-path="example-20.html"><a href="example-20.html"><i class="fa fa-check"></i><b>13.3</b> Example</a></li>
+<li class="chapter" data-level="13.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>13.3</b> Example</a></li>
 <li class="chapter" data-level="13.4" data-path="stringr-package.html"><a href="stringr-package.html"><i class="fa fa-check"></i><b>13.4</b> stringr package</a></li>
 <li class="chapter" data-level="13.5" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>13.5</b> Regular Expressions</a></li>
 </ul></li>
@@ -315,7 +322,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-6"><a href="classification-tree.html#cb1-6"></a>oj_dat &lt;-<span class="st"> </span>ISLR<span class="op">::</span>OJ</span>
 <span id="cb1-7"><a href="classification-tree.html#cb1-7"></a>skimr<span class="op">::</span><span class="kw">skim</span>(oj_dat)</span></code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-2">Table 9.1: </span>Data summary</caption>
+<caption><span id="tab:unnamed-chunk-3">Table 9.1: </span>Data summary</caption>
 <tbody>
 <tr class="odd">
 <td align="left">Name</td>
@@ -651,7 +658,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The output starts with the root node. The predicted class at the root is <code>CH</code> and this prediction produces 334 errors on the 857 observations for a success rate (accuracy) of 61% (0.61026838) and an error rate of 39% (0.38973162). The child nodes of node “x” are labeled 2x) and 2x+1), so the child nodes of 1) are 2) and 3), and the child nodes of 2) are 4) and 5). Terminal nodes are labeled with an asterisk (*).</p>
 <p>Surprisingly, only 3 of the 17 features were used the in full tree: <code>LoyalCH</code> (Customer brand loyalty for CH), <code>PriceDiff</code> (relative price of MM over CH), and <code>SalePriceMM</code> (absolute price of MM). The first split is at <code>LoyalCH</code> = 0.48285. Here is a diagram of the full (unpruned) tree.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="classification-tree.html#cb5-1"></a><span class="kw">rpart.plot</span>(oj_mdl_cart_full, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>The boxes show the node classification (based on mode), the proportion of observations that are <em>not</em> <code>CH</code>, and the proportion of observations included in the node.</p>
 <p><code>rpart()</code> not only grew the full tree, it identified the set of cost complexity parameters, and measured the model performance of each corresponding tree using cross-validation. <code>printcp()</code> displays the candidate <span class="math inline">\(c_p\)</span> values. You can use this table to decide how to prune the tree.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="classification-tree.html#cb6-1"></a><span class="kw">printcp</span>(oj_mdl_cart_full)</span></code></pre></div>
@@ -698,7 +705,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 0.01000000      5 0.4281437 0.4640719 0.03373631  0.4978082 min xerror</code></pre>
 <p>The simplest tree using the 1-SE rule is $c_p = 0.01347305, CV error = 0.1832). Fortunately, <code>plotcp()</code> presents a nice graphical representation of the relationship between <code>xerror</code> and <code>cp</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="classification-tree.html#cb12-1"></a><span class="kw">plotcp</span>(oj_mdl_cart_full, <span class="dt">upper =</span> <span class="st">&quot;splits&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>The dashed line is set at the minimum <code>xerror</code> + <code>xstd</code>. The top axis shows the number of splits in the tree. I’m not sure why the CP values are not the same as in the table (they are close, but not the same). The figure suggests I should prune to 5 or 3 splits. I see this curve never really hits a minimum - it is still decreasing at 5 splits. The default tuning parameter value <code>cp = 0.01</code> may be too large, so I’ll set it to <code>cp = 0.001</code> and start over.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="classification-tree.html#cb13-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb13-2"><a href="classification-tree.html#cb13-2"></a>oj_mdl_cart_full &lt;-<span class="st"> </span><span class="kw">rpart</span>(</span>
@@ -758,14 +765,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##        15) LoyalCH&lt; 0.035047 57   1 MM (0.01754386 0.98245614) *</code></pre>
 <p>This is a much larger tree. Did I find a <code>cp</code> value that produces a local min?</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="classification-tree.html#cb15-1"></a><span class="kw">plotcp</span>(oj_mdl_cart_full, <span class="dt">upper =</span> <span class="st">&quot;splits&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>Yes, the min is at CP = 0.011 with 5 splits. The min + 1 SE is at CP = 0.021 with 3 splits. I’ll prune the tree to 3 splits.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="classification-tree.html#cb16-1"></a>oj_mdl_cart &lt;-<span class="st"> </span><span class="kw">prune</span>(</span>
 <span id="cb16-2"><a href="classification-tree.html#cb16-2"></a>   oj_mdl_cart_full,</span>
 <span id="cb16-3"><a href="classification-tree.html#cb16-3"></a>   <span class="dt">cp =</span> oj_mdl_cart_full<span class="op">$</span>cptable[oj_mdl_cart_full<span class="op">$</span>cptable[, <span class="dv">2</span>] <span class="op">==</span><span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;CP&quot;</span>]</span>
 <span id="cb16-4"><a href="classification-tree.html#cb16-4"></a>)</span>
 <span id="cb16-5"><a href="classification-tree.html#cb16-5"></a><span class="kw">rpart.plot</span>(oj_mdl_cart, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>The most “important” indicator of <code>Purchase</code> appears to be <code>LoyalCH</code>. From the <strong>rpart</strong> <a href="https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf">vignette</a> (page 12),</p>
 <blockquote>
 <p>“An overall measure of variable importance is the sum of the goodness of split measures for each split for which it was the primary variable, plus goodness (adjusted agreement) for all splits in which it was a surrogate.”</p>
@@ -781,7 +788,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb17-7"><a href="classification-tree.html#cb17-7"></a><span class="st">   </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
 <span id="cb17-8"><a href="classification-tree.html#cb17-8"></a><span class="st">   </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
 <span id="cb17-9"><a href="classification-tree.html#cb17-9"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Variable Importance with Simple Classication&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p><code>LoyalCH</code> is by far the most important variable, as expected from its position at the top of the tree, and one level down.</p>
 <p>You can see how the surrogates appear in the model with the <code>summary()</code> function.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="classification-tree.html#cb18-1"></a><span class="kw">summary</span>(oj_mdl_cart)</span></code></pre></div>
@@ -875,8 +882,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     class counts:     9    31
 ##    probabilities: 0.225 0.775</code></pre>
 <p>I’ll evaluate the predictions and record the accuracy (correct classification percentage) for comparison to other models. Two ways to evaluate the model are the confusion matrix, and the ROC curve.</p>
-<div id="holdout-performance" class="section level3">
-<h3><span class="header-section-number">9.1.1</span> Holdout Performance</h3>
+<div id="measuring-performance" class="section level3">
+<h3><span class="header-section-number">9.1.1</span> Measuring Performance</h3>
 <div id="confusion-matrix" class="section level4">
 <h4><span class="header-section-number">9.1.1.1</span> Confusion Matrix</h4>
 <p>Print the confusion matrix with <code>caret::confusionMatrix()</code> to see how well does this model performs against the holdout set.</p>
@@ -918,7 +925,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The confusion matrix is at the top. It also includes a lot of statistics. It’s worth getting familiar with the stats. The model accuracy and 95% CI are calculated from the binomial test.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="classification-tree.html#cb22-1"></a><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">113</span> <span class="op">+</span><span class="st"> </span><span class="dv">70</span>, <span class="dt">n =</span> <span class="dv">213</span>)</span></code></pre></div>
 <pre><code>## 
-##  Exact binomial test
+## 	Exact binomial test
 ## 
 ## data:  113 + 70 and 213
 ## number of successes = 183, number of trials = 213, p-value &lt; 2.2e-16
@@ -931,7 +938,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The “No Information Rate” (NIR) statistic is the class rate for the largest class. In this case CH is the largest class, so NIR = 130/213 = 0.6103. “P-Value [Acc &gt; NIR]” is the binomial test that the model accuracy is significantly better than the NIR (i.e., significantly better than just always guessing CH).</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="classification-tree.html#cb24-1"></a><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">113</span> <span class="op">+</span><span class="st"> </span><span class="dv">70</span>, <span class="dt">n =</span> <span class="dv">213</span>, <span class="dt">p =</span> <span class="dv">130</span><span class="op">/</span><span class="dv">213</span>, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
 <pre><code>## 
-##  Exact binomial test
+## 	Exact binomial test
 ## 
 ## data:  113 + 70 and 213
 ## number of successes = 183, number of trials = 213, p-value = 1.265e-15
@@ -957,7 +964,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb28-2"><a href="classification-tree.html#cb28-2"></a>     <span class="dt">main =</span> <span class="st">&quot;Simple Classification: Predicted vs. Actual&quot;</span>,</span>
 <span id="cb28-3"><a href="classification-tree.html#cb28-3"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
 <span id="cb28-4"><a href="classification-tree.html#cb28-4"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 </div>
 <div id="roc-curve" class="section level4">
 <h4><span class="header-section-number">9.1.1.2</span> ROC Curve</h4>
@@ -969,7 +976,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb29-5"><a href="classification-tree.html#cb29-5"></a>    <span class="dt">title =</span> <span class="st">&quot;OJ CART ROC Curve&quot;</span>,</span>
 <span id="cb29-6"><a href="classification-tree.html#cb29-6"></a>    <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;AUC = &quot;</span>, <span class="kw">round</span>(mdl_auc, <span class="dv">4</span>))</span>
 <span id="cb29-7"><a href="classification-tree.html#cb29-7"></a>  )</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>A few points on the ROC space are helpful for understanding how to use it.</p>
 <ul>
 <li>The lower left point (0, 0) is the result of <em>always</em> predicting “negative” or in this case “MM” if “CH” is taken as the default class. No false positives, but no true positives either.</li>
@@ -981,7 +988,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The goal is for all nodes to bunch up in the upper left.</p>
 <p>Points to the left of the diagonal with a low TPR can be thought of as “conservative” predictors - they only make positive (CH) predictions with strong evidence. Points to the left of the diagonal with a high TPR can be thought of as “liberal” predictors - they make positive (CH) predictions with weak evidence.</p>
 </div>
-<div id="gain-curve-1" class="section level4">
+<div id="gain-curve" class="section level4">
 <h4><span class="header-section-number">9.1.1.3</span> Gain Curve</h4>
 <p>The gain curve plots the cumulative summed true outcome versus the fraction of items seen when sorted by the predicted value. The “wizard” curve is the gain curve when the data is sorted by the true outcome. If the model’s gain curve is close to the wizard curve, then the model predicted the response variable well. The gray area is the “gain” over a random prediction.</p>
 <p>130 of the 213 consumers in the holdout set purchased CH.</p>
@@ -995,11 +1002,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb30-3"><a href="classification-tree.html#cb30-3"></a><span class="st">  </span><span class="kw">labs</span>(</span>
 <span id="cb30-4"><a href="classification-tree.html#cb30-4"></a>    <span class="dt">title =</span> <span class="st">&quot;OJ CART Gain Curve&quot;</span></span>
 <span id="cb30-5"><a href="classification-tree.html#cb30-5"></a>  )</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 </div>
-<div id="caret-approach" class="section level3">
-<h3><span class="header-section-number">9.1.2</span> Caret Approach</h3>
+<div id="training-with-caret" class="section level3">
+<h3><span class="header-section-number">9.1.2</span> Training with Caret</h3>
 <p>I can also fit the model with <code>caret::train()</code>. There are two ways to tune hyperparameters in <code>train()</code>:</p>
 <ul>
 <li>set the number of tuning parameter values to consider by setting <code>tuneLength</code>, or</li>
@@ -1009,9 +1016,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="classification-tree.html#cb31-1"></a>oj_trControl =<span class="st"> </span><span class="kw">trainControl</span>(</span>
 <span id="cb31-2"><a href="classification-tree.html#cb31-2"></a>   <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,</span>
 <span id="cb31-3"><a href="classification-tree.html#cb31-3"></a>   <span class="dt">number =</span> <span class="dv">10</span>,</span>
-<span id="cb31-4"><a href="classification-tree.html#cb31-4"></a>   <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save predictions for the optimal tuning parameter</span></span>
-<span id="cb31-5"><a href="classification-tree.html#cb31-5"></a>   <span class="dt">classProbs =</span> <span class="ot">TRUE</span>  <span class="co"># return class probabilities in addition to predicted values</span></span>
-<span id="cb31-6"><a href="classification-tree.html#cb31-6"></a>   )</span></code></pre></div>
+<span id="cb31-4"><a href="classification-tree.html#cb31-4"></a>   <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save preds for the optimal tuning parameter</span></span>
+<span id="cb31-5"><a href="classification-tree.html#cb31-5"></a>   <span class="dt">classProbs =</span> <span class="ot">TRUE</span>,  <span class="co"># class probs in addition to preds</span></span>
+<span id="cb31-6"><a href="classification-tree.html#cb31-6"></a>   <span class="dt">summaryFunction =</span> twoClassSummary</span>
+<span id="cb31-7"><a href="classification-tree.html#cb31-7"></a>   )</span></code></pre></div>
 <p>Now fit the model.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="classification-tree.html#cb32-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
 <span id="cb32-2"><a href="classification-tree.html#cb32-2"></a>oj_mdl_cart2 &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
@@ -1019,7 +1027,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb32-4"><a href="classification-tree.html#cb32-4"></a>   <span class="dt">data =</span> oj_train, </span>
 <span id="cb32-5"><a href="classification-tree.html#cb32-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
 <span id="cb32-6"><a href="classification-tree.html#cb32-6"></a>   <span class="dt">tuneLength =</span> <span class="dv">5</span>,</span>
-<span id="cb32-7"><a href="classification-tree.html#cb32-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;Accuracy&quot;</span>,</span>
+<span id="cb32-7"><a href="classification-tree.html#cb32-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</span>
 <span id="cb32-8"><a href="classification-tree.html#cb32-8"></a>   <span class="dt">trControl =</span> oj_trControl</span>
 <span id="cb32-9"><a href="classification-tree.html#cb32-9"></a>   )</span></code></pre></div>
 <p><code>caret</code> built a full tree using <code>rpart</code>’s default parameters: gini splitting index, at least 20 observations in a node in order to consider splitting it, and at least 6 observations in each node. Caret then calculated the accuracy for each candidate value of <span class="math inline">\(\alpha\)</span>. Here is the results.</p>
@@ -1035,15 +1043,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Summary of sample sizes: 772, 772, 771, 770, 771, 771, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   cp           Accuracy   Kappa    
-##   0.005988024  0.8085999  0.5931149
-##   0.008982036  0.8086267  0.5943277
-##   0.013473054  0.8051657  0.5885521
-##   0.032934132  0.7841798  0.5371171
-##   0.479041916  0.6603904  0.1774773
+##   cp           ROC        Sens       Spec     
+##   0.005988024  0.8539885  0.8605225  0.7274510
+##   0.008982036  0.8502309  0.8568578  0.7334225
+##   0.013473054  0.8459290  0.8473149  0.7397504
+##   0.032934132  0.7776483  0.8509071  0.6796791
+##   0.479041916  0.5878764  0.9201379  0.2556150
 ## 
-## Accuracy was used to select the optimal model using the largest value.
-## The final value used for the model was cp = 0.008982036.</code></pre>
+## ROC was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.005988024.</code></pre>
 <p>The second <code>cp</code> (0.008982036) produced the highest accuracy. I can drill into the best value of <code>cp</code> using a tuning grid.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="classification-tree.html#cb35-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
 <span id="cb35-2"><a href="classification-tree.html#cb35-2"></a>oj_mdl_cart2 &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
@@ -1051,7 +1059,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb35-4"><a href="classification-tree.html#cb35-4"></a>   <span class="dt">data =</span> oj_train, </span>
 <span id="cb35-5"><a href="classification-tree.html#cb35-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
 <span id="cb35-6"><a href="classification-tree.html#cb35-6"></a>   <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(<span class="dt">cp =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="fl">0.001</span>, <span class="dt">to =</span> <span class="fl">0.010</span>, <span class="dt">length =</span> <span class="dv">11</span>)),  </span>
-<span id="cb35-7"><a href="classification-tree.html#cb35-7"></a>   <span class="dt">metric=</span><span class="st">&#39;Accuracy&#39;</span>,</span>
+<span id="cb35-7"><a href="classification-tree.html#cb35-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</span>
 <span id="cb35-8"><a href="classification-tree.html#cb35-8"></a>   <span class="dt">trControl =</span> oj_trControl</span>
 <span id="cb35-9"><a href="classification-tree.html#cb35-9"></a>   )</span>
 <span id="cb35-10"><a href="classification-tree.html#cb35-10"></a><span class="kw">print</span>(oj_mdl_cart2)</span></code></pre></div>
@@ -1066,24 +1074,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Summary of sample sizes: 772, 772, 771, 770, 771, 771, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   cp      Accuracy   Kappa    
-##   0.0010  0.8004874  0.5753480
-##   0.0019  0.8016502  0.5785232
-##   0.0028  0.8039758  0.5845653
-##   0.0037  0.8085999  0.5955198
-##   0.0046  0.8039351  0.5851273
-##   0.0055  0.8085863  0.5937949
-##   0.0064  0.8085999  0.5931149
-##   0.0073  0.8120883  0.6011446
-##   0.0082  0.8120883  0.6011446
-##   0.0091  0.8086267  0.5943277
-##   0.0100  0.8086540  0.5953150
+##   cp      ROC        Sens       Spec     
+##   0.0010  0.8513056  0.8529390  0.7182709
+##   0.0019  0.8528471  0.8529753  0.7213012
+##   0.0028  0.8524435  0.8510522  0.7302139
+##   0.0037  0.8533529  0.8510522  0.7421569
+##   0.0046  0.8540042  0.8491292  0.7333333
+##   0.0055  0.8543820  0.8567126  0.7334225
+##   0.0064  0.8539885  0.8605225  0.7274510
+##   0.0073  0.8521076  0.8625181  0.7335116
+##   0.0082  0.8521076  0.8625181  0.7335116
+##   0.0091  0.8502309  0.8568578  0.7334225
+##   0.0100  0.8507262  0.8510885  0.7424242
 ## 
-## Accuracy was used to select the optimal model using the largest value.
-## The final value used for the model was cp = 0.0082.</code></pre>
+## ROC was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.0055.</code></pre>
 <p>The best model is at cp = 0.0082. Here are the cross-validated accuracies for the candidate cp values.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="classification-tree.html#cb37-1"></a><span class="kw">plot</span>(oj_mdl_cart2)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>Here are the rules in the final model.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="classification-tree.html#cb38-1"></a>oj_mdl_cart2<span class="op">$</span>finalModel</span></code></pre></div>
 <pre><code>## n= 857 
@@ -1106,10 +1114,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##             100) PriceCH&lt; 1.94 35  11 CH (0.68571429 0.31428571) *
 ##             101) PriceCH&gt;=1.94 17   6 MM (0.35294118 0.64705882) *
 ##            51) WeekofPurchase&lt; 246.5 12   3 MM (0.25000000 0.75000000) *
-##        13) SalePriceMM&lt; 2.04 75  18 MM (0.24000000 0.76000000) *
+##        13) SalePriceMM&lt; 2.04 75  18 MM (0.24000000 0.76000000)  
+##          26) SpecialCH&gt;=0.5 14   6 CH (0.57142857 0.42857143) *
+##          27) SpecialCH&lt; 0.5 61  10 MM (0.16393443 0.83606557) *
 ##       7) LoyalCH&lt; 0.2761415 174  22 MM (0.12643678 0.87356322) *</code></pre>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="classification-tree.html#cb40-1"></a><span class="kw">rpart.plot</span>(oj_mdl_cart2<span class="op">$</span>finalModel)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>Let’s look at the performance on the holdout data set.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="classification-tree.html#cb41-1"></a>oj_preds_cart2 &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(</span>
 <span id="cb41-2"><a href="classification-tree.html#cb41-2"></a>   <span class="kw">predict</span>(oj_mdl_cart2, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>),</span>
@@ -1123,26 +1133,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ##           Reference
 ## Prediction  CH  MM
-##         CH 115  18
-##         MM  15  65
+##         CH 117  18
+##         MM  13  65
 ##                                           
-##                Accuracy : 0.8451          
-##                  95% CI : (0.7894, 0.8909)
+##                Accuracy : 0.8545          
+##                  95% CI : (0.7998, 0.8989)
 ##     No Information Rate : 0.6103          
-##     P-Value [Acc &gt; NIR] : 6.311e-14       
+##     P-Value [Acc &gt; NIR] : 4.83e-15        
 ##                                           
-##                   Kappa : 0.6721          
+##                   Kappa : 0.6907          
 ##                                           
-##  Mcnemar&#39;s Test P-Value : 0.7277          
+##  Mcnemar&#39;s Test P-Value : 0.4725          
 ##                                           
-##             Sensitivity : 0.8846          
+##             Sensitivity : 0.9000          
 ##             Specificity : 0.7831          
-##          Pos Pred Value : 0.8647          
-##          Neg Pred Value : 0.8125          
+##          Pos Pred Value : 0.8667          
+##          Neg Pred Value : 0.8333          
 ##              Prevalence : 0.6103          
-##          Detection Rate : 0.5399          
-##    Detection Prevalence : 0.6244          
-##       Balanced Accuracy : 0.8339          
+##          Detection Rate : 0.5493          
+##    Detection Prevalence : 0.6338          
+##       Balanced Accuracy : 0.8416          
 ##                                           
 ##        &#39;Positive&#39; Class : CH              
 ## </code></pre>
@@ -1154,23 +1164,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb43-5"><a href="classification-tree.html#cb43-5"></a>    <span class="dt">title =</span> <span class="st">&quot;OJ CART ROC Curve (caret)&quot;</span>,</span>
 <span id="cb43-6"><a href="classification-tree.html#cb43-6"></a>    <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;AUC = &quot;</span>, <span class="kw">round</span>(mdl_auc, <span class="dv">4</span>))</span>
 <span id="cb43-7"><a href="classification-tree.html#cb43-7"></a>  )</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="classification-tree.html#cb44-1"></a>yardstick<span class="op">::</span><span class="kw">gain_curve</span>(oj_preds_cart2, Actual, CH) <span class="op">%&gt;%</span></span>
 <span id="cb44-2"><a href="classification-tree.html#cb44-2"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
 <span id="cb44-3"><a href="classification-tree.html#cb44-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;OJ CART Gain Curve (caret)&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <p>Finally, here is the variable importance plot. Brand loyalty is most important, followed by price difference.</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="classification-tree.html#cb45-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(oj_mdl_cart2), <span class="dt">main=</span><span class="st">&quot;Variable Importance with CART (caret)&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 <p>Looks like the manual effort fared best. Here is a summary the accuracy rates of the two models.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="classification-tree.html#cb46-1"></a>scoreboard &lt;-<span class="st"> </span><span class="kw">rbind</span>(</span>
-<span id="cb46-2"><a href="classification-tree.html#cb46-2"></a>   <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Manual Class&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_cm_cart<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>)), </span>
-<span id="cb46-3"><a href="classification-tree.html#cb46-3"></a>   <span class="kw">data.frame</span>(<span class="dt">model =</span> <span class="st">&quot;Caret w/tuneGrid&quot;</span>, <span class="dt">Acc =</span> <span class="kw">round</span>(oj_cm_cart2<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>], <span class="dv">5</span>))</span>
-<span id="cb46-4"><a href="classification-tree.html#cb46-4"></a>)</span>
-<span id="cb46-5"><a href="classification-tree.html#cb46-5"></a>scoreboard</span></code></pre></div>
-<pre><code>##                      model     Acc
-## Accuracy      Manual Class 0.85915
-## Accuracy1 Caret w/tuneGrid 0.84507</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="classification-tree.html#cb46-1"></a>oj_scoreboard &lt;-<span class="st"> </span><span class="kw">rbind</span>(</span>
+<span id="cb46-2"><a href="classification-tree.html#cb46-2"></a>   <span class="kw">data.frame</span>(<span class="dt">Model =</span> <span class="st">&quot;Single Tree&quot;</span>, <span class="dt">Accuracy =</span> oj_cm_cart<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]),</span>
+<span id="cb46-3"><a href="classification-tree.html#cb46-3"></a>   <span class="kw">data.frame</span>(<span class="dt">Model =</span> <span class="st">&quot;Single Tree (caret)&quot;</span>, <span class="dt">Accuracy =</span> oj_cm_cart2<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb46-4"><a href="classification-tree.html#cb46-4"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Accuracy))</span>
+<span id="cb46-5"><a href="classification-tree.html#cb46-5"></a><span class="kw">scoreboard</span>(oj_scoreboard)</span></code></pre></div>
+<div class="tabwid"><table style='border-collapse:collapse;'><thead><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 2.00px solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Model</span></p></td><td style="width:66px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 2.00px solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Accuracy</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Single Tree</span></p></td><td style="width:66px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">0.8592</span></p></td></tr><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Single Tree (caret)</span></p></td><td style="width:66px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">0.8545</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 <h3>References</h3>

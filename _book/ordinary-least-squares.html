@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Ordinary Least Squares | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Ordinary Least Squares | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-10" />
+<meta name="date" content="2020-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,7 @@
 
 
 
+<script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
@@ -173,7 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="3.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
+<li class="chapter" data-level="3.0.1" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
 <li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
@@ -233,18 +234,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
 <li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>10.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>10.1.2</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="10.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>10.2</b> Regression Tree</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>10.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
+<li class="chapter" data-level="10.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>10.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>10.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="10.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>10.3.2</b> Bagging Regression Tree</a></li>
+</ul></li>
 <li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
 <li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
-<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>10.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="10.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>10.6.2</b> Regression Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="reference.html"><a href="reference.html#reference"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>11</b> Non-linear Models</a><ul>
 <li class="chapter" data-level="11.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>11.1</b> Splines</a></li>
@@ -255,11 +261,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
 <li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a></li>
+<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a><ul>
+<li class="chapter" data-level="14.1" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i><b>14.1</b> N-Grams</a></li>
+<li class="chapter" data-level="14.2" data-path="converting-to-and-from-non-tidy-formats.html"><a href="converting-to-and-from-non-tidy-formats.html"><i class="fa fa-check"></i><b>14.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="14.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>14.3</b> Example</a></li>
+<li class="chapter" data-level="14.4" data-path="stringr-package.html"><a href="stringr-package.html"><i class="fa fa-check"></i><b>14.4</b> stringr package</a></li>
+<li class="chapter" data-level="14.5" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>14.5</b> Regular Expressions</a></li>
+</ul></li>
 <li class="chapter" data-level="15" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>15</b> Survival Analysis</a><ul>
 <li class="chapter" data-level="15.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>15.1</b> Basic Concepts</a></li>
 <li class="chapter" data-level="15.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>15.2</b> Survival Curve Estimation</a><ul>
@@ -301,16 +313,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="ordinary-least-squares" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Ordinary Least Squares</h1>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="ordinary-least-squares.html#cb355-1"></a><span class="kw">library</span>(caret)</span>
-<span id="cb355-2"><a href="ordinary-least-squares.html#cb355-2"></a><span class="kw">library</span>(Metrics)</span>
-<span id="cb355-3"><a href="ordinary-least-squares.html#cb355-3"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb355-4"><a href="ordinary-least-squares.html#cb355-4"></a><span class="kw">library</span>(corrplot)</span>
-<span id="cb355-5"><a href="ordinary-least-squares.html#cb355-5"></a><span class="kw">library</span>(gridExtra)</span>
-<span id="cb355-6"><a href="ordinary-least-squares.html#cb355-6"></a><span class="kw">library</span>(car)  <span class="co"># for avPlots</span></span>
-<span id="cb355-7"><a href="ordinary-least-squares.html#cb355-7"></a><span class="kw">library</span>(AppliedPredictiveModeling)</span>
-<span id="cb355-8"><a href="ordinary-least-squares.html#cb355-8"></a><span class="kw">library</span>(e1071)  <span class="co"># for skewness()</span></span>
-<span id="cb355-9"><a href="ordinary-least-squares.html#cb355-9"></a><span class="kw">library</span>(purrr)  <span class="co"># for map()</span></span>
-<span id="cb355-10"><a href="ordinary-least-squares.html#cb355-10"></a><span class="kw">library</span>(broom)  <span class="co"># for augment()</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="ordinary-least-squares.html#cb1-1"></a><span class="kw">library</span>(caret)</span>
+<span id="cb1-2"><a href="ordinary-least-squares.html#cb1-2"></a><span class="kw">library</span>(Metrics)</span></code></pre></div>
+<pre><code>## Warning: package &#39;Metrics&#39; was built under R version 4.0.2</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="ordinary-least-squares.html#cb3-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="ordinary-least-squares.html#cb3-2"></a><span class="kw">library</span>(corrplot)</span></code></pre></div>
+<pre><code>## Warning: package &#39;corrplot&#39; was built under R version 4.0.2</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="ordinary-least-squares.html#cb5-1"></a><span class="kw">library</span>(gridExtra)</span>
+<span id="cb5-2"><a href="ordinary-least-squares.html#cb5-2"></a><span class="kw">library</span>(car)  <span class="co"># for avPlots</span></span></code></pre></div>
+<pre><code>## Warning: package &#39;car&#39; was built under R version 4.0.2</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="ordinary-least-squares.html#cb7-1"></a><span class="kw">library</span>(AppliedPredictiveModeling)</span>
+<span id="cb7-2"><a href="ordinary-least-squares.html#cb7-2"></a><span class="kw">library</span>(e1071)  <span class="co"># for skewness()</span></span>
+<span id="cb7-3"><a href="ordinary-least-squares.html#cb7-3"></a><span class="kw">library</span>(purrr)  <span class="co"># for map()</span></span>
+<span id="cb7-4"><a href="ordinary-least-squares.html#cb7-4"></a><span class="kw">library</span>(broom)  <span class="co"># for augment()</span></span></code></pre></div>
 <p>These notes cover <em>linear regression</em>.</p>
 </div>
             </section>

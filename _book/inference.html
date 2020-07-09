@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.5 Inference | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.5 Inference | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-10" />
+<meta name="date" content="2020-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,7 @@
 
 
 
+<script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
@@ -173,7 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="3.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
+<li class="chapter" data-level="3.0.1" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
 <li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
@@ -233,18 +234,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
 <li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>10.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>10.1.2</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="10.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>10.2</b> Regression Tree</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>10.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
+<li class="chapter" data-level="10.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>10.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>10.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="10.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>10.3.2</b> Bagging Regression Tree</a></li>
+</ul></li>
 <li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
 <li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
-<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>10.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="10.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>10.6.2</b> Regression Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="reference.html"><a href="reference.html#reference"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>11</b> Non-linear Models</a><ul>
 <li class="chapter" data-level="11.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>11.1</b> Splines</a></li>
@@ -255,11 +261,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
 <li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a></li>
+<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a><ul>
+<li class="chapter" data-level="14.1" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i><b>14.1</b> N-Grams</a></li>
+<li class="chapter" data-level="14.2" data-path="converting-to-and-from-non-tidy-formats.html"><a href="converting-to-and-from-non-tidy-formats.html"><i class="fa fa-check"></i><b>14.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="14.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>14.3</b> Example</a></li>
+<li class="chapter" data-level="14.4" data-path="stringr-package.html"><a href="stringr-package.html"><i class="fa fa-check"></i><b>14.4</b> stringr package</a></li>
+<li class="chapter" data-level="14.5" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>14.5</b> Regular Expressions</a></li>
+</ul></li>
 <li class="chapter" data-level="15" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>15</b> Survival Analysis</a><ul>
 <li class="chapter" data-level="15.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>15.1</b> Basic Concepts</a></li>
 <li class="chapter" data-level="15.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>15.2</b> Survival Curve Estimation</a><ul>
@@ -309,34 +321,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>where <span class="math inline">\(\beta_0\)</span> is the null-hypothesized value, usually 0. <span class="math inline">\(\sigma\)</span> is unknown, but <span class="math inline">\(\frac{\hat{\sigma}^2 (n - k)}{\sigma^2} \sim \chi^2\)</span>. The ratio of the normal distribution divided by the adjusted chi-square <span class="math inline">\(\sqrt{\chi^2 / (n - k)}\)</span> is t-distributed,</p>
 <p><span class="math display">\[t = \frac{\hat{\beta} - \beta_0}{\sqrt{\hat{\sigma}^2 (X&#39;X)^{-1}}} = \frac{\hat{\beta} - \beta_0}{SE(\hat{\beta})}\]</span></p>
 <p>The <span class="math inline">\((1 - \alpha)\)</span> confidence intervals are <span class="math inline">\(CI = \hat{\beta} \pm t_{\alpha / 2, df} SE(\hat{\beta})\)</span> with <em>p</em>-value equaling the probability of measuring a <span class="math inline">\(t\)</span> of that extreme, <span class="math inline">\(p = P(t &gt; |t|)\)</span>. For a one-tail test, divide the reported p-value by two. The <span class="math inline">\(SE(\hat{\beta})\)</span> decreases with 1) a better fitting regression line (smaller <span class="math inline">\(\hat{\sigma}^2\)</span>), 2) greater variation in the predictor (larger <span class="math inline">\(X&#39;X\)</span>), and 3) larger sample size (larger n).</p>
-<div id="example-12" class="section level4">
+<div id="example-5" class="section level4">
 <h4><span class="header-section-number">5.5.1.1</span> Example</h4>
 <p>Define a 95% confidence interval around the slope parameters.</p>
 <p>The <code>summary()</code> output shows the t values and probabilities in the <code>t value</code> and <code>Pr(&gt;|t|)</code> columns. You can verify this manually using matrix algebra for <span class="math inline">\(t = \frac{(\hat{\beta} - \beta_1)}{SE(\hat{\beta})}\)</span> with <span class="math inline">\(\beta_1 = 0\)</span>. The <span class="math inline">\((1 - \alpha)\)</span> confidence interval is <span class="math inline">\(CI = \hat{\beta} \pm t_{\alpha / 2, df} SE(\hat{\beta})\)</span>. The table below gathers the parameter estimators and t-test results.</p>
-<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="inference.html#cb421-1"></a>t &lt;-<span class="st"> </span>beta_hat <span class="op">/</span><span class="st"> </span>se_beta_hat</span>
-<span id="cb421-2"><a href="inference.html#cb421-2"></a>p_value &lt;-<span class="st"> </span><span class="kw">pt</span>(<span class="dt">q =</span> <span class="kw">abs</span>(t), </span>
-<span id="cb421-3"><a href="inference.html#cb421-3"></a>              <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, </span>
-<span id="cb421-4"><a href="inference.html#cb421-4"></a>              <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span>
-<span id="cb421-5"><a href="inference.html#cb421-5"></a>t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="dt">p =</span> <span class="fl">.05</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb421-6"><a href="inference.html#cb421-6"></a>lcl =<span class="st"> </span>beta_hat <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_beta_hat</span>
-<span id="cb421-7"><a href="inference.html#cb421-7"></a>ucl =<span class="st"> </span>beta_hat <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_beta_hat</span>
-<span id="cb421-8"><a href="inference.html#cb421-8"></a><span class="kw">data.frame</span>(<span class="dt">beta =</span> <span class="kw">round</span>(beta_hat, <span class="dv">4</span>), </span>
-<span id="cb421-9"><a href="inference.html#cb421-9"></a>           <span class="dt">se =</span> <span class="kw">round</span>(se_beta_hat, <span class="dv">4</span>), </span>
-<span id="cb421-10"><a href="inference.html#cb421-10"></a>           <span class="dt">t =</span> <span class="kw">round</span>(t, <span class="dv">4</span>), </span>
-<span id="cb421-11"><a href="inference.html#cb421-11"></a>           <span class="dt">p =</span> <span class="kw">round</span>(p_value, <span class="dv">4</span>),</span>
-<span id="cb421-12"><a href="inference.html#cb421-12"></a>           <span class="dt">lcl =</span> <span class="kw">round</span>(lcl,<span class="dv">4</span>), </span>
-<span id="cb421-13"><a href="inference.html#cb421-13"></a>           <span class="dt">ucl =</span> <span class="kw">round</span>(ucl, <span class="dv">4</span>))</span></code></pre></div>
-<pre><code>##                beta     se     t     p    lcl     ucl
-## (Intercept) 19.5410 14.146  1.38 0.181 -9.797 48.8789
-## cyl.L        0.3426  2.765  0.12 0.902 -5.391  6.0765
-## cyl.Q        1.3884  1.112  1.25 0.225 -0.918  3.6948
-## disp         0.0067  0.013  0.49 0.625 -0.021  0.0347
-## hp          -0.0291  0.017 -1.70 0.104 -0.065  0.0065
-## drat         0.5881  1.503  0.39 0.699 -2.529  3.7053
-## wt          -3.1552  1.420 -2.22 0.037 -6.101 -0.2099
-## qsec         0.5232  0.690  0.76 0.456 -0.908  1.9545
-## vsS          1.2378  2.106  0.59 0.563 -3.130  5.6055
-## ammanual     3.0009  1.853  1.62 0.120 -0.843  6.8446</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="inference.html#cb73-1"></a>t &lt;-<span class="st"> </span>beta_hat <span class="op">/</span><span class="st"> </span>se_beta_hat</span>
+<span id="cb73-2"><a href="inference.html#cb73-2"></a>p_value &lt;-<span class="st"> </span><span class="kw">pt</span>(<span class="dt">q =</span> <span class="kw">abs</span>(t), </span>
+<span id="cb73-3"><a href="inference.html#cb73-3"></a>              <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, </span>
+<span id="cb73-4"><a href="inference.html#cb73-4"></a>              <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span>
+<span id="cb73-5"><a href="inference.html#cb73-5"></a>t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="dt">p =</span> <span class="fl">.05</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb73-6"><a href="inference.html#cb73-6"></a>lcl =<span class="st"> </span>beta_hat <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_beta_hat</span>
+<span id="cb73-7"><a href="inference.html#cb73-7"></a>ucl =<span class="st"> </span>beta_hat <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_beta_hat</span>
+<span id="cb73-8"><a href="inference.html#cb73-8"></a><span class="kw">data.frame</span>(<span class="dt">beta =</span> <span class="kw">round</span>(beta_hat, <span class="dv">4</span>), </span>
+<span id="cb73-9"><a href="inference.html#cb73-9"></a>           <span class="dt">se =</span> <span class="kw">round</span>(se_beta_hat, <span class="dv">4</span>), </span>
+<span id="cb73-10"><a href="inference.html#cb73-10"></a>           <span class="dt">t =</span> <span class="kw">round</span>(t, <span class="dv">4</span>), </span>
+<span id="cb73-11"><a href="inference.html#cb73-11"></a>           <span class="dt">p =</span> <span class="kw">round</span>(p_value, <span class="dv">4</span>),</span>
+<span id="cb73-12"><a href="inference.html#cb73-12"></a>           <span class="dt">lcl =</span> <span class="kw">round</span>(lcl,<span class="dv">4</span>), </span>
+<span id="cb73-13"><a href="inference.html#cb73-13"></a>           <span class="dt">ucl =</span> <span class="kw">round</span>(ucl, <span class="dv">4</span>))</span></code></pre></div>
+<pre><code>##                beta      se       t      p     lcl     ucl
+## (Intercept) 19.5410 14.1464  1.3813 0.1810 -9.7969 48.8789
+## cyl.L        0.3426  2.7648  0.1239 0.9025 -5.3914  6.0765
+## cyl.Q        1.3884  1.1121  1.2485 0.2250 -0.9179  3.6948
+## disp         0.0067  0.0135  0.4950 0.6255 -0.0213  0.0347
+## hp          -0.0291  0.0172 -1.6960 0.1040 -0.0648  0.0065
+## drat         0.5881  1.5031  0.3912 0.6994 -2.5292  3.7053
+## wt          -3.1552  1.4202 -2.2216 0.0369 -6.1006 -0.2099
+## qsec         0.5232  0.6901  0.7582 0.4564 -0.9080  1.9545
+## vsS          1.2378  2.1061  0.5877 0.5627 -3.1299  5.6055
+## ammanual     3.0009  1.8534  1.6191 0.1197 -0.8428  6.8446</code></pre>
 </div>
 </div>
 <div id="f-test" class="section level3">
@@ -344,46 +356,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <em>F</em>-test for the model is a test of the null hypothesis that none of the independent variables linearly predict the dependent variable, that is, the model parameters are jointly zero: <span class="math inline">\(H_0 : \beta_1 = \ldots = \beta_k = 0\)</span>. The regression mean sum of squares <span class="math inline">\(MSR = \frac{(\hat{y} - \bar{y})&#39;(\hat{y} - \bar{y})}{k-1}\)</span> and the error mean sum of squares <span class="math inline">\(MSE = \frac{\hat{\epsilon}&#39;\hat{\epsilon}}{n-k}\)</span> are each chi-square variables. Their ratio has an <em>F</em> distribution with <span class="math inline">\(k - 1\)</span> numerator degrees of freedom and <span class="math inline">\(n - k\)</span> denominator degrees of freedom. The F statistic can also be expressed in terms of the coefficient of correlation <span class="math inline">\(R^2 = \frac{MSR}{MST}\)</span>.</p>
 <p><span class="math display">\[F(k - 1, n - k) = \frac{MSR}{MSE} = \frac{R^2}{1 - R^2} \frac{n-k}{k-1}\]</span></p>
 <p><em>MSE</em> is <span class="math inline">\(\sigma^2\)</span>. If <span class="math inline">\(H_0\)</span> is true, that is, there is no relationship between the predictors and the response, then <span class="math inline">\(MSR\)</span> is also equal to <span class="math inline">\(\sigma^2\)</span>, so <span class="math inline">\(F = 1\)</span>. As <span class="math inline">\(R^2 \rightarrow 1\)</span>, <span class="math inline">\(F \rightarrow \infty\)</span>, and as <span class="math inline">\(R^2 \rightarrow 0\)</span>, <span class="math inline">\(F \rightarrow 0\)</span>. F increases with <span class="math inline">\(n\)</span> and decreases with <span class="math inline">\(k\)</span>.</p>
-<div id="example-13" class="section level4">
+<div id="example-6" class="section level4">
 <h4><span class="header-section-number">5.5.2.1</span> Example</h4>
 <p>What is the probability that all parameters are jointly equal to zero?</p>
 <p>The F-statistic is presented at the bottom of the <code>summary()</code> function. You can verify this manually.</p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="inference.html#cb423-1"></a>ssr &lt;-<span class="st"> </span><span class="kw">sum</span>((m<span class="op">$</span>fitted.values <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(d<span class="op">$</span>mpg))<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb423-2"><a href="inference.html#cb423-2"></a>sse &lt;-<span class="st"> </span><span class="kw">sum</span>(m<span class="op">$</span>residuals<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb423-3"><a href="inference.html#cb423-3"></a>sst &lt;-<span class="st"> </span><span class="kw">sum</span>((m<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(d<span class="op">$</span>mpg))<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb423-4"><a href="inference.html#cb423-4"></a>msr &lt;-<span class="st"> </span>ssr <span class="op">/</span><span class="st"> </span>k</span>
-<span id="cb423-5"><a href="inference.html#cb423-5"></a>mse &lt;-<span class="st"> </span>sse <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
-<span id="cb423-6"><a href="inference.html#cb423-6"></a>f =<span class="st"> </span>msr <span class="op">/</span><span class="st"> </span>mse</span>
-<span id="cb423-7"><a href="inference.html#cb423-7"></a>p_value &lt;-<span class="st"> </span><span class="kw">pf</span>(<span class="dt">q =</span> f, <span class="dt">df1 =</span> k, <span class="dt">df2 =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb423-8"><a href="inference.html#cb423-8"></a><span class="kw">cat</span>(<span class="st">&quot;F-statistic: &quot;</span>, <span class="kw">round</span>(f, <span class="dv">4</span>), <span class="st">&quot; on 3 and 65 DF,  p-value: &quot;</span>, p_value)</span></code></pre></div>
-<pre><code>## F-statistic:  17  on 3 and 65 DF,  p-value:  0.000000048</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="inference.html#cb75-1"></a>ssr &lt;-<span class="st"> </span><span class="kw">sum</span>((m<span class="op">$</span>fitted.values <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(d<span class="op">$</span>mpg))<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb75-2"><a href="inference.html#cb75-2"></a>sse &lt;-<span class="st"> </span><span class="kw">sum</span>(m<span class="op">$</span>residuals<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb75-3"><a href="inference.html#cb75-3"></a>sst &lt;-<span class="st"> </span><span class="kw">sum</span>((m<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(d<span class="op">$</span>mpg))<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb75-4"><a href="inference.html#cb75-4"></a>msr &lt;-<span class="st"> </span>ssr <span class="op">/</span><span class="st"> </span>k</span>
+<span id="cb75-5"><a href="inference.html#cb75-5"></a>mse &lt;-<span class="st"> </span>sse <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb75-6"><a href="inference.html#cb75-6"></a>f =<span class="st"> </span>msr <span class="op">/</span><span class="st"> </span>mse</span>
+<span id="cb75-7"><a href="inference.html#cb75-7"></a>p_value &lt;-<span class="st"> </span><span class="kw">pf</span>(<span class="dt">q =</span> f, <span class="dt">df1 =</span> k, <span class="dt">df2 =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb75-8"><a href="inference.html#cb75-8"></a><span class="kw">cat</span>(<span class="st">&quot;F-statistic: &quot;</span>, <span class="kw">round</span>(f, <span class="dv">4</span>), <span class="st">&quot; on 3 and 65 DF,  p-value: &quot;</span>, p_value)</span></code></pre></div>
+<pre><code>## F-statistic:  17.3549  on 3 and 65 DF,  p-value:  4.814183e-08</code></pre>
 <p>There is sufficient evidence <span class="math inline">\((F = 17.35, P &lt; .0001)\)</span> to reject <span class="math inline">\(H_0\)</span> that the parameter estimators are jointly equal to zero.</p>
 <p>The <code>aov</code> function calculates the sequential sum of squares. The regression sum of squares SSR for <code>mpg ~ cyl</code> is 824.8. Adding <code>disp</code> to the model increases SSR by 57.6. Adding <code>hp</code> to the model increases SSR by 18.5. It would seem that <code>hp</code> does not improve the model.</p>
-<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="inference.html#cb425-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(m))</span></code></pre></div>
-<pre><code>##             Df Sum Sq Mean Sq F value        Pr(&gt;F)    
-## cyl          2    825     412   65.26 0.00000000056 ***
-## disp         1     58      58    9.12        0.0063 ** 
-## hp           1     19      19    2.93        0.1011    
-## drat         1     12      12    1.89        0.1836    
-## wt           1     56      56    8.83        0.0070 ** 
-## qsec         1      2       2    0.24        0.6282    
-## vs           1      0       0    0.05        0.8289    
-## am           1     17      17    2.62        0.1197    
-## Residuals   22    139       6                          
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="inference.html#cb77-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(m))</span></code></pre></div>
+<pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## cyl          2  824.8   412.4  65.260 5.62e-10 ***
+## disp         1   57.6    57.6   9.122  0.00629 ** 
+## hp           1   18.5    18.5   2.928  0.10112    
+## drat         1   11.9    11.9   1.885  0.18355    
+## wt           1   55.8    55.8   8.828  0.00705 ** 
+## qsec         1    1.5     1.5   0.241  0.62816    
+## vs           1    0.3     0.3   0.048  0.82894    
+## am           1   16.6    16.6   2.622  0.11967    
+## Residuals   22  139.0     6.3                     
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Order matters. Had we started with <code>disp</code>, then added <code>hp</code> we would find both estimators were significant.</p>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="inference.html#cb427-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">+</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>drat <span class="op">+</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>vs <span class="op">+</span><span class="st"> </span>am <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> d)))</span></code></pre></div>
-<pre><code>##             Df Sum Sq Mean Sq F value        Pr(&gt;F)    
-## disp         1    809     809  128.00 0.00000000012 ***
-## hp           1     34      34    5.33         0.031 *  
-## drat         1     30      30    4.77         0.040 *  
-## wt           1     71      71   11.16         0.003 ** 
-## qsec         1     13      13    2.01         0.170    
-## vs           1      0       0    0.04         0.852    
-## am           1     20      20    3.24         0.086 .  
-## cyl          2     10       5    0.82         0.451    
-## Residuals   22    139       6                          
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="inference.html#cb79-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">+</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>drat <span class="op">+</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>vs <span class="op">+</span><span class="st"> </span>am <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> d)))</span></code></pre></div>
+<pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## disp         1  808.9   808.9 128.004 1.22e-10 ***
+## hp           1   33.7    33.7   5.327  0.03078 *  
+## drat         1   30.1    30.1   4.771  0.03989 *  
+## wt           1   70.5    70.5  11.158  0.00296 ** 
+## qsec         1   12.7    12.7   2.011  0.17017    
+## vs           1    0.2     0.2   0.035  0.85231    
+## am           1   20.5    20.5   3.237  0.08571 .  
+## cyl          2   10.4     5.2   0.825  0.45141    
+## Residuals   22  139.0     6.3                     
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>

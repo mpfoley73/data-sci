@@ -191,48 +191,48 @@ wordcloud(
 ```
 
 ```{r}
-pa_file <- readxl::read_excel("./../../PeoplaAnalyticsCloud.xlsx")
-pa_tidy <- pa_file %>%
-  mutate(
-    linenumber = row_number(),
-    ) %>%
-  ungroup() %>%
-  unnest_tokens(output = word, input = comment) %>%
-#  unnest_tokens(output = bigram, input = comment, token = "ngrams", n = 2) 
-  anti_join(stop_words) %>%
-  anti_join(custom_stop_words)
-pa_tidy_n <- pa_tidy %>%
-  count(word)
-pal <- brewer.pal(9,"BuGn")
-pal <- pal[-(1:4)]
-wordcloud(
-  words = pa_tidy_n$word,
-  freq = pa_tidy_n$n,
-  max.words = 30,
-  colors = pal
-)
-
-pa_2gram <- pa_tidy %>%
-  separate(bigram, c("word1", "word2"), sep = " ") %>%
-  filter(!word1 %in% stop_words$word &
-           !word2 %in% stop_words$word &
-           !is.na(word1) & !is.na(word2)) %>%
-  unite(bigram, word1, word2, sep = " ")
-
-
-pa_2gram %>%
-  count(book, bigram, sort = TRUE)
-
-pa_2gram2 <- pa_2gram %>%
-  count(bigram)
-pal <- brewer.pal(9,"BuGn")
-pal <- pal[-(1:4)]
-wordcloud(
-  words = pa_2gram2$bigram,
-  freq = pa_2gram2$n,
-  max.words = 30,
-  colors = pal
-)
+# pa_file <- readxl::read_excel("./../../PeoplaAnalyticsCloud.xlsx")
+# pa_tidy <- pa_file %>%
+#   mutate(
+#     linenumber = row_number(),
+#     ) %>%
+#   ungroup() %>%
+#   unnest_tokens(output = word, input = comment) %>%
+# #  unnest_tokens(output = bigram, input = comment, token = "ngrams", n = 2) 
+#   anti_join(stop_words) %>%
+#   anti_join(custom_stop_words)
+# pa_tidy_n <- pa_tidy %>%
+#   count(word)
+# pal <- brewer.pal(9,"BuGn")
+# pal <- pal[-(1:4)]
+# wordcloud(
+#   words = pa_tidy_n$word,
+#   freq = pa_tidy_n$n,
+#   max.words = 30,
+#   colors = pal
+# )
+# 
+# pa_2gram <- pa_tidy %>%
+#   separate(bigram, c("word1", "word2"), sep = " ") %>%
+#   filter(!word1 %in% stop_words$word &
+#            !word2 %in% stop_words$word &
+#            !is.na(word1) & !is.na(word2)) %>%
+#   unite(bigram, word1, word2, sep = " ")
+# 
+# 
+# pa_2gram %>%
+#   count(book, bigram, sort = TRUE)
+# 
+# pa_2gram2 <- pa_2gram %>%
+#   count(bigram)
+# pal <- brewer.pal(9,"BuGn")
+# pal <- pal[-(1:4)]
+# wordcloud(
+#   words = pa_2gram2$bigram,
+#   freq = pa_2gram2$n,
+#   max.words = 30,
+#   colors = pal
+# )
 ```
 
 

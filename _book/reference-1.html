@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-29" />
+<meta name="date" content="2020-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,8 @@
 
 
 <script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="assets/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<script src="assets/tabwid-1.0.0/tabwid.js"></script>
 
 
 <style type="text/css">
@@ -233,16 +235,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>9</b> Decision Trees</a><ul>
 <li class="chapter" data-level="9.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>9.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#holdout-performance"><i class="fa fa-check"></i><b>9.1.1</b> Holdout Performance</a></li>
-<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>9.1.2</b> Caret Approach</a></li>
+<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>9.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>9.1.2</b> Training with Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>9.2</b> Regression Tree</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="regression-tree.html"><a href="regression-tree.html#caret-approach-1"><i class="fa fa-check"></i><b>9.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="9.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>9.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>9.3</b> Bagging</a></li>
+<li class="chapter" data-level="9.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>9.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>9.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="9.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>9.3.2</b> Bagging Regression Tree</a></li>
+</ul></li>
 <li class="chapter" data-level="9.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>9.4</b> Random Forests</a></li>
 <li class="chapter" data-level="9.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>9.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="9.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>9.6</b> Summary</a></li>
+<li class="chapter" data-level="9.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>9.6</b> Summary</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>9.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="9.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>9.6.2</b> Regression Trees</a></li>
+</ul></li>
 <li class="chapter" data-level="9.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>9.7</b> Reference</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>10</b> Non-linear Models</a><ul>
@@ -310,7 +318,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Brownlee, Jason. “Classification And Regression Trees for Machine Learning”, Machine Learning Mastery. <a href="https://machinelearningmastery.com/classification-and-regression-trees-for-machine-learning/">https://machinelearningmastery.com/classification-and-regression-trees-for-machine-learning/</a>.</p>
 <p>Brownlee, Jason. “A Gentle Introduction to the Gradient Boosting Algorithm for Machine Learning”, Machine Learning Mastery. <a href="https://machinelearningmastery.com/gentle-introduction-gradient-boosting-algorithm-machine-learning/">https://machinelearningmastery.com/gentle-introduction-gradient-boosting-algorithm-machine-learning/</a>.</p>
 <p><a href="https://campus.datacamp.com/courses/machine-learning-with-tree-based-models-in-r">DataCamp: Machine Learning with Tree-Based Models in R</a></p>
-<p><a href="http://faculty.marshall.usc.edu/gareth-james/ISL/">An Introduction to Statistical Learning</a> by Gareth James, et al.</p>
 <p><a href="http://support.sas.com/documentation/cdl/en/stathpug/68163/HTML/default/viewer.htm#stathpug_hpsplit_details01.htm">SAS Documentation</a></p>
 <p><a href="https://www.statmethods.net/advstats/cart.html">StatMethods: Tree-Based Models</a></p>
 <p><a href="https://www.machinelearningplus.com/machine-learning/caret-package/">Machine Learning Plus</a></p>

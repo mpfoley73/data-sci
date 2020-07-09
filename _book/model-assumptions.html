@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.3 Model Assumptions | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.3 Model Assumptions | My Data Science Notes" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-06-10" />
+<meta name="date" content="2020-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,7 @@
 
 
 
+<script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
@@ -173,7 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="3.0.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
+<li class="chapter" data-level="3.0.1" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
 <li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
@@ -233,18 +234,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
 <li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#confusion-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Confusion Matrix</a></li>
-<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#roc-curve"><i class="fa fa-check"></i><b>10.1.2</b> ROC Curve</a></li>
-<li class="chapter" data-level="10.1.3" data-path="classification-tree.html"><a href="classification-tree.html#caret-approach"><i class="fa fa-check"></i><b>10.1.3</b> Caret Approach</a></li>
+<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>10.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>10.1.2</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>10.2</b> Regression Trees</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="regression-trees.html"><a href="regression-trees.html#caret-approach-1"><i class="fa fa-check"></i><b>10.2.1</b> Caret Approach</a></li>
+<li class="chapter" data-level="10.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>10.2</b> Regression Tree</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>10.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>10.3</b> Bagging</a></li>
+<li class="chapter" data-level="10.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>10.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>10.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="10.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>10.3.2</b> Bagging Regression Tree</a></li>
+</ul></li>
 <li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
 <li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a></li>
-<li class="chapter" data-level="10.7" data-path="reference-1.html"><a href="reference-1.html"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
+<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>10.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="10.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>10.6.2</b> Regression Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="reference.html"><a href="reference.html#reference"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>11</b> Non-linear Models</a><ul>
 <li class="chapter" data-level="11.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>11.1</b> Splines</a></li>
@@ -255,11 +261,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="example-19.html"><a href="example-19.html"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
+<li class="chapter" data-level="12.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
 <li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a></li>
+<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a><ul>
+<li class="chapter" data-level="14.1" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i><b>14.1</b> N-Grams</a></li>
+<li class="chapter" data-level="14.2" data-path="converting-to-and-from-non-tidy-formats.html"><a href="converting-to-and-from-non-tidy-formats.html"><i class="fa fa-check"></i><b>14.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="14.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>14.3</b> Example</a></li>
+<li class="chapter" data-level="14.4" data-path="stringr-package.html"><a href="stringr-package.html"><i class="fa fa-check"></i><b>14.4</b> stringr package</a></li>
+<li class="chapter" data-level="14.5" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>14.5</b> Regular Expressions</a></li>
+</ul></li>
 <li class="chapter" data-level="15" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>15</b> Survival Analysis</a><ul>
 <li class="chapter" data-level="15.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>15.1</b> Basic Concepts</a></li>
 <li class="chapter" data-level="15.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>15.2</b> Survival Curve Estimation</a><ul>
@@ -307,9 +319,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Use a residuals normal probability plot to compares the theoretical percentiles of the normal distribution versus the observed sample percentiles. It should be approximately linear.</p>
 <p>A scale-location plot <span class="math inline">\(\sqrt{e / sd(e)} \sim \hat{y}\)</span> checks the homogeneity of variance of the residuals (homoscedasticity). The square root of the absolute value of the residuals should be spread equally along a horizontal line.</p>
 <p>A residuals vs leverage plot identifies influential observations. A plot of the standardized residuals vs the leverage should fall within the 95% probability band.</p>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="model-assumptions.html#cb368-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb368-2"><a href="model-assumptions.html#cb368-2"></a><span class="kw">plot</span>(m, <span class="dt">labels.id =</span> <span class="ot">NULL</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-172-1.png" width="672" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="model-assumptions.html#cb20-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb20-2"><a href="model-assumptions.html#cb20-2"></a><span class="kw">plot</span>(m, <span class="dt">labels.id =</span> <span class="ot">NULL</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <div id="linearity" class="section level3">
 <h3><span class="header-section-number">5.3.1</span> Linearity</h3>
 <p>The explanatory variables should each be linearly related to the response variable: <span class="math inline">\(E(\epsilon | X_j) = 0\)</span>. A good way to test this condition is with a residuals vs fitted values plot. A curved pattern in the residuals indicates a curvature in the relationship between the response and the predictor that is not explained by our model. A linear model does not adequately describe the relationship between the predictor and the response.</p>
@@ -335,125 +347,125 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><span class="math inline">\(\lambda = -1\)</span> is an inverse transformation.</li>
 </ul>
 <p>A common source of non-linearity in a model is skewed response or independent variables (see discussion <a href="https://blog.minitab.com/blog/applying-statistics-in-quality-projects/how-could-you-benefit-from-a-box-cox-transformation">here</a>). <code>mtcars</code> has some skewed variables.</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="model-assumptions.html#cb369-1"></a>tmp &lt;-<span class="st"> </span><span class="kw">map</span>(mtcars, skewness) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb369-2"><a href="model-assumptions.html#cb369-2"></a><span class="st">  </span><span class="kw">unlist</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb369-3"><a href="model-assumptions.html#cb369-3"></a><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span></span>
-<span id="cb369-4"><a href="model-assumptions.html#cb369-4"></a><span class="st">  </span><span class="kw">rownames_to_column</span>() </span>
-<span id="cb369-5"><a href="model-assumptions.html#cb369-5"></a><span class="kw">colnames</span>(tmp) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;IV&quot;</span>, <span class="st">&quot;skew&quot;</span>)</span>
-<span id="cb369-6"><a href="model-assumptions.html#cb369-6"></a><span class="kw">ggplot</span>(tmp, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">order</span>(IV, skew), <span class="dt">y =</span> skew)) <span class="op">+</span></span>
-<span id="cb369-7"><a href="model-assumptions.html#cb369-7"></a><span class="st">  </span><span class="kw">geom_col</span>()</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-173-1.png" width="672" /></p>
-<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="model-assumptions.html#cb370-1"></a>df &lt;-<span class="st"> </span>mtcars</span>
-<span id="cb370-2"><a href="model-assumptions.html#cb370-2"></a>m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> df)</span>
-<span id="cb370-3"><a href="model-assumptions.html#cb370-3"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb370-4"><a href="model-assumptions.html#cb370-4"></a><span class="kw">plot</span>(m)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-173-2.png" width="672" /></p>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="model-assumptions.html#cb371-1"></a><span class="kw">plot</span>(m<span class="op">$</span>model<span class="op">$</span>mpg, m<span class="op">$</span>fitted.values)</span>
-<span id="cb371-2"><a href="model-assumptions.html#cb371-2"></a><span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb371-3"><a href="model-assumptions.html#cb371-3"></a><span class="kw">cor</span>(df<span class="op">$</span>mpg, df<span class="op">$</span>hp)</span></code></pre></div>
-<pre><code>## [1] -0.78</code></pre>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="model-assumptions.html#cb373-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m<span class="op">$</span>fitted.values, <span class="dt">obs =</span> m<span class="op">$</span>model<span class="op">$</span>mpg)</span></code></pre></div>
-<pre><code>##     RMSE Rsquared      MAE 
-##      3.7      0.6      2.9</code></pre>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="model-assumptions.html#cb375-1"></a>bc &lt;-<span class="st"> </span><span class="kw">BoxCoxTrans</span>(mtcars<span class="op">$</span>hp)</span>
-<span id="cb375-2"><a href="model-assumptions.html#cb375-2"></a>df<span class="op">$</span>hp_bc &lt;-<span class="st"> </span><span class="kw">predict</span>(bc, mtcars<span class="op">$</span>hp)</span>
-<span id="cb375-3"><a href="model-assumptions.html#cb375-3"></a>m_bc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp_bc, <span class="dt">data =</span> df)</span>
-<span id="cb375-4"><a href="model-assumptions.html#cb375-4"></a><span class="kw">plot</span>(m_bc)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-173-3.png" width="672" /></p>
-<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="model-assumptions.html#cb376-1"></a><span class="kw">plot</span>(m_bc<span class="op">$</span>model<span class="op">$</span>mpg, m_bc<span class="op">$</span>fitted.values)</span>
-<span id="cb376-2"><a href="model-assumptions.html#cb376-2"></a><span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb376-3"><a href="model-assumptions.html#cb376-3"></a><span class="kw">cor</span>(df<span class="op">$</span>mpg, df<span class="op">$</span>hp_bc)</span></code></pre></div>
-<pre><code>## [1] -0.85</code></pre>
-<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="model-assumptions.html#cb378-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m_bc<span class="op">$</span>fitted.values, <span class="dt">obs =</span> m_bc<span class="op">$</span>model<span class="op">$</span>mpg)</span></code></pre></div>
-<pre><code>##     RMSE Rsquared      MAE 
-##     3.14     0.72     2.41</code></pre>
-<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="model-assumptions.html#cb380-1"></a><span class="co"># Which vars are skewed?</span></span>
-<span id="cb380-2"><a href="model-assumptions.html#cb380-2"></a><span class="kw">map</span>(mtcars, skewness)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="model-assumptions.html#cb21-1"></a>tmp &lt;-<span class="st"> </span><span class="kw">map</span>(mtcars, skewness) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-2"><a href="model-assumptions.html#cb21-2"></a><span class="st">  </span><span class="kw">unlist</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-3"><a href="model-assumptions.html#cb21-3"></a><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span></span>
+<span id="cb21-4"><a href="model-assumptions.html#cb21-4"></a><span class="st">  </span><span class="kw">rownames_to_column</span>() </span>
+<span id="cb21-5"><a href="model-assumptions.html#cb21-5"></a><span class="kw">colnames</span>(tmp) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;IV&quot;</span>, <span class="st">&quot;skew&quot;</span>)</span>
+<span id="cb21-6"><a href="model-assumptions.html#cb21-6"></a><span class="kw">ggplot</span>(tmp, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">order</span>(IV, skew), <span class="dt">y =</span> skew)) <span class="op">+</span></span>
+<span id="cb21-7"><a href="model-assumptions.html#cb21-7"></a><span class="st">  </span><span class="kw">geom_col</span>()</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="model-assumptions.html#cb22-1"></a>df &lt;-<span class="st"> </span>mtcars</span>
+<span id="cb22-2"><a href="model-assumptions.html#cb22-2"></a>m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> df)</span>
+<span id="cb22-3"><a href="model-assumptions.html#cb22-3"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb22-4"><a href="model-assumptions.html#cb22-4"></a><span class="kw">plot</span>(m)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="model-assumptions.html#cb23-1"></a><span class="kw">plot</span>(m<span class="op">$</span>model<span class="op">$</span>mpg, m<span class="op">$</span>fitted.values)</span>
+<span id="cb23-2"><a href="model-assumptions.html#cb23-2"></a><span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb23-3"><a href="model-assumptions.html#cb23-3"></a><span class="kw">cor</span>(df<span class="op">$</span>mpg, df<span class="op">$</span>hp)</span></code></pre></div>
+<pre><code>## [1] -0.7761684</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="model-assumptions.html#cb25-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m<span class="op">$</span>fitted.values, <span class="dt">obs =</span> m<span class="op">$</span>model<span class="op">$</span>mpg)</span></code></pre></div>
+<pre><code>##      RMSE  Rsquared       MAE 
+## 3.7402971 0.6024373 2.9074525</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="model-assumptions.html#cb27-1"></a>bc &lt;-<span class="st"> </span><span class="kw">BoxCoxTrans</span>(mtcars<span class="op">$</span>hp)</span>
+<span id="cb27-2"><a href="model-assumptions.html#cb27-2"></a>df<span class="op">$</span>hp_bc &lt;-<span class="st"> </span><span class="kw">predict</span>(bc, mtcars<span class="op">$</span>hp)</span>
+<span id="cb27-3"><a href="model-assumptions.html#cb27-3"></a>m_bc &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp_bc, <span class="dt">data =</span> df)</span>
+<span id="cb27-4"><a href="model-assumptions.html#cb27-4"></a><span class="kw">plot</span>(m_bc)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="model-assumptions.html#cb28-1"></a><span class="kw">plot</span>(m_bc<span class="op">$</span>model<span class="op">$</span>mpg, m_bc<span class="op">$</span>fitted.values)</span>
+<span id="cb28-2"><a href="model-assumptions.html#cb28-2"></a><span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb28-3"><a href="model-assumptions.html#cb28-3"></a><span class="kw">cor</span>(df<span class="op">$</span>mpg, df<span class="op">$</span>hp_bc)</span></code></pre></div>
+<pre><code>## [1] -0.8487707</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="model-assumptions.html#cb30-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m_bc<span class="op">$</span>fitted.values, <span class="dt">obs =</span> m_bc<span class="op">$</span>model<span class="op">$</span>mpg)</span></code></pre></div>
+<pre><code>##      RMSE  Rsquared       MAE 
+## 3.1366261 0.7204118 2.4074705</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="model-assumptions.html#cb32-1"></a><span class="co"># Which vars are skewed?</span></span>
+<span id="cb32-2"><a href="model-assumptions.html#cb32-2"></a><span class="kw">map</span>(mtcars, skewness)</span></code></pre></div>
 <pre><code>## $mpg
-## [1] 0.61
+## [1] 0.610655
 ## 
 ## $cyl
-## [1] -0.17
+## [1] -0.1746119
 ## 
 ## $disp
-## [1] 0.38
+## [1] 0.381657
 ## 
 ## $hp
-## [1] 0.73
+## [1] 0.7260237
 ## 
 ## $drat
-## [1] 0.27
+## [1] 0.2659039
 ## 
 ## $wt
-## [1] 0.42
+## [1] 0.4231465
 ## 
 ## $qsec
-## [1] 0.37
+## [1] 0.3690453
 ## 
 ## $vs
-## [1] 0.24
+## [1] 0.2402577
 ## 
 ## $am
-## [1] 0.36
+## [1] 0.3640159
 ## 
 ## $gear
-## [1] 0.53
+## [1] 0.5288545
 ## 
 ## $carb
-## [1] 1.1</code></pre>
-<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="model-assumptions.html#cb382-1"></a><span class="co"># Benchmark model: mpg ~ hp</span></span>
-<span id="cb382-2"><a href="model-assumptions.html#cb382-2"></a>d0 &lt;-<span class="st"> </span>mtcars</span>
-<span id="cb382-3"><a href="model-assumptions.html#cb382-3"></a>m0 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> d0)</span>
-<span id="cb382-4"><a href="model-assumptions.html#cb382-4"></a>d0 &lt;-<span class="st"> </span><span class="kw">augment</span>(m0, d0)</span>
-<span id="cb382-5"><a href="model-assumptions.html#cb382-5"></a>d0.cor &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">cor</span>(d0<span class="op">$</span>mpg, d0<span class="op">$</span>hp), <span class="dv">2</span>)</span>
-<span id="cb382-6"><a href="model-assumptions.html#cb382-6"></a></span>
-<span id="cb382-7"><a href="model-assumptions.html#cb382-7"></a><span class="co"># Benchmark diagnostics</span></span>
-<span id="cb382-8"><a href="model-assumptions.html#cb382-8"></a>p0a &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d0, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb382-9"><a href="model-assumptions.html#cb382-9"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Response vs IV&quot;</span>,</span>
-<span id="cb382-10"><a href="model-assumptions.html#cb382-10"></a>       <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;Correlation ~ 1?  (rho = &quot;</span>, d0.cor, <span class="st">&quot;)&quot;</span>))</span>
-<span id="cb382-11"><a href="model-assumptions.html#cb382-11"></a>p0b &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d0, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb382-12"><a href="model-assumptions.html#cb382-12"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs Fits&quot;</span>,</span>
-<span id="cb382-13"><a href="model-assumptions.html#cb382-13"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Random scatter?&quot;</span>)</span>
-<span id="cb382-14"><a href="model-assumptions.html#cb382-14"></a>p0c &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d0, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb382-15"><a href="model-assumptions.html#cb382-15"></a><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>)) <span class="op">+</span></span>
-<span id="cb382-16"><a href="model-assumptions.html#cb382-16"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Observed vs Fits&quot;</span>,</span>
-<span id="cb382-17"><a href="model-assumptions.html#cb382-17"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Symmetric along 45 degree line?&quot;</span>)</span>
-<span id="cb382-18"><a href="model-assumptions.html#cb382-18"></a>p0d &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d0, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb382-19"><a href="model-assumptions.html#cb382-19"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs IV&quot;</span>,</span>
-<span id="cb382-20"><a href="model-assumptions.html#cb382-20"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Random scatter?&quot;</span>)</span>
-<span id="cb382-21"><a href="model-assumptions.html#cb382-21"></a><span class="kw">grid.arrange</span>(p0a, p0b, p0c, p0d, <span class="dt">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
+## [1] 1.050874</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="model-assumptions.html#cb34-1"></a><span class="co"># Benchmark model: mpg ~ hp</span></span>
+<span id="cb34-2"><a href="model-assumptions.html#cb34-2"></a>d0 &lt;-<span class="st"> </span>mtcars</span>
+<span id="cb34-3"><a href="model-assumptions.html#cb34-3"></a>m0 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> d0)</span>
+<span id="cb34-4"><a href="model-assumptions.html#cb34-4"></a>d0 &lt;-<span class="st"> </span><span class="kw">augment</span>(m0, d0)</span>
+<span id="cb34-5"><a href="model-assumptions.html#cb34-5"></a>d0.cor &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">cor</span>(d0<span class="op">$</span>mpg, d0<span class="op">$</span>hp), <span class="dv">2</span>)</span>
+<span id="cb34-6"><a href="model-assumptions.html#cb34-6"></a></span>
+<span id="cb34-7"><a href="model-assumptions.html#cb34-7"></a><span class="co"># Benchmark diagnostics</span></span>
+<span id="cb34-8"><a href="model-assumptions.html#cb34-8"></a>p0a &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d0, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb34-9"><a href="model-assumptions.html#cb34-9"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Response vs IV&quot;</span>,</span>
+<span id="cb34-10"><a href="model-assumptions.html#cb34-10"></a>       <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;Correlation ~ 1?  (rho = &quot;</span>, d0.cor, <span class="st">&quot;)&quot;</span>))</span>
+<span id="cb34-11"><a href="model-assumptions.html#cb34-11"></a>p0b &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d0, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb34-12"><a href="model-assumptions.html#cb34-12"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs Fits&quot;</span>,</span>
+<span id="cb34-13"><a href="model-assumptions.html#cb34-13"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Random scatter?&quot;</span>)</span>
+<span id="cb34-14"><a href="model-assumptions.html#cb34-14"></a>p0c &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d0, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb34-15"><a href="model-assumptions.html#cb34-15"></a><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>)) <span class="op">+</span></span>
+<span id="cb34-16"><a href="model-assumptions.html#cb34-16"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Observed vs Fits&quot;</span>,</span>
+<span id="cb34-17"><a href="model-assumptions.html#cb34-17"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Symmetric along 45 degree line?&quot;</span>)</span>
+<span id="cb34-18"><a href="model-assumptions.html#cb34-18"></a>p0d &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d0, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb34-19"><a href="model-assumptions.html#cb34-19"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs IV&quot;</span>,</span>
+<span id="cb34-20"><a href="model-assumptions.html#cb34-20"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Random scatter?&quot;</span>)</span>
+<span id="cb34-21"><a href="model-assumptions.html#cb34-21"></a><span class="kw">grid.arrange</span>(p0a, p0b, p0c, p0d, <span class="dt">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="model-assumptions.html#cb384-1"></a><span class="co"># Benchmark performance</span></span>
-<span id="cb384-2"><a href="model-assumptions.html#cb384-2"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m0<span class="op">$</span>fitted.values, <span class="dt">obs =</span> m0<span class="op">$</span>model<span class="op">$</span>mpg)</span></code></pre></div>
-<pre><code>##     RMSE Rsquared      MAE 
-##      3.7      0.6      2.9</code></pre>
-<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="model-assumptions.html#cb386-1"></a><span class="co"># Box-Cox transform hp</span></span>
-<span id="cb386-2"><a href="model-assumptions.html#cb386-2"></a>d1 &lt;-<span class="st"> </span>mtcars</span>
-<span id="cb386-3"><a href="model-assumptions.html#cb386-3"></a>bc &lt;-<span class="st"> </span><span class="kw">BoxCoxTrans</span>(d1<span class="op">$</span>hp)</span>
-<span id="cb386-4"><a href="model-assumptions.html#cb386-4"></a>d1<span class="op">$</span>hp_bc &lt;-<span class="st"> </span><span class="kw">predict</span>(bc, d1<span class="op">$</span>hp)</span>
-<span id="cb386-5"><a href="model-assumptions.html#cb386-5"></a>m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp_bc, <span class="dt">data =</span> d1)</span>
-<span id="cb386-6"><a href="model-assumptions.html#cb386-6"></a>d1 &lt;-<span class="st"> </span><span class="kw">augment</span>(m1, d1)</span>
-<span id="cb386-7"><a href="model-assumptions.html#cb386-7"></a>d1.cor &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">cor</span>(d1<span class="op">$</span>mpg, d1<span class="op">$</span>hp_bc), <span class="dv">2</span>)</span>
-<span id="cb386-8"><a href="model-assumptions.html#cb386-8"></a></span>
-<span id="cb386-9"><a href="model-assumptions.html#cb386-9"></a>p1a &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d1, <span class="kw">aes</span>(<span class="dt">x =</span> hp_bc, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb386-10"><a href="model-assumptions.html#cb386-10"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Response vs IV&quot;</span>,</span>
-<span id="cb386-11"><a href="model-assumptions.html#cb386-11"></a>       <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;Correlation ~ 1?  (rho = &quot;</span>, d1.cor, <span class="st">&quot;)&quot;</span>))</span>
-<span id="cb386-12"><a href="model-assumptions.html#cb386-12"></a>p1b &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d1, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb386-13"><a href="model-assumptions.html#cb386-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs Fits&quot;</span>,</span>
-<span id="cb386-14"><a href="model-assumptions.html#cb386-14"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Random scatter?&quot;</span>)</span>
-<span id="cb386-15"><a href="model-assumptions.html#cb386-15"></a>p1c &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d1, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb386-16"><a href="model-assumptions.html#cb386-16"></a><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>)) <span class="op">+</span></span>
-<span id="cb386-17"><a href="model-assumptions.html#cb386-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Observed vs Fits&quot;</span>,</span>
-<span id="cb386-18"><a href="model-assumptions.html#cb386-18"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Symmetric along 45 degree line?&quot;</span>)</span>
-<span id="cb386-19"><a href="model-assumptions.html#cb386-19"></a>p1d &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d1, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb386-20"><a href="model-assumptions.html#cb386-20"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs IV&quot;</span>,</span>
-<span id="cb386-21"><a href="model-assumptions.html#cb386-21"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Random scatter?&quot;</span>)</span>
-<span id="cb386-22"><a href="model-assumptions.html#cb386-22"></a><span class="kw">grid.arrange</span>(p1a, p1b, p1c, p1d, <span class="dt">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="model-assumptions.html#cb36-1"></a><span class="co"># Benchmark performance</span></span>
+<span id="cb36-2"><a href="model-assumptions.html#cb36-2"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m0<span class="op">$</span>fitted.values, <span class="dt">obs =</span> m0<span class="op">$</span>model<span class="op">$</span>mpg)</span></code></pre></div>
+<pre><code>##      RMSE  Rsquared       MAE 
+## 3.7402971 0.6024373 2.9074525</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="model-assumptions.html#cb38-1"></a><span class="co"># Box-Cox transform hp</span></span>
+<span id="cb38-2"><a href="model-assumptions.html#cb38-2"></a>d1 &lt;-<span class="st"> </span>mtcars</span>
+<span id="cb38-3"><a href="model-assumptions.html#cb38-3"></a>bc &lt;-<span class="st"> </span><span class="kw">BoxCoxTrans</span>(d1<span class="op">$</span>hp)</span>
+<span id="cb38-4"><a href="model-assumptions.html#cb38-4"></a>d1<span class="op">$</span>hp_bc &lt;-<span class="st"> </span><span class="kw">predict</span>(bc, d1<span class="op">$</span>hp)</span>
+<span id="cb38-5"><a href="model-assumptions.html#cb38-5"></a>m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp_bc, <span class="dt">data =</span> d1)</span>
+<span id="cb38-6"><a href="model-assumptions.html#cb38-6"></a>d1 &lt;-<span class="st"> </span><span class="kw">augment</span>(m1, d1)</span>
+<span id="cb38-7"><a href="model-assumptions.html#cb38-7"></a>d1.cor &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">cor</span>(d1<span class="op">$</span>mpg, d1<span class="op">$</span>hp_bc), <span class="dv">2</span>)</span>
+<span id="cb38-8"><a href="model-assumptions.html#cb38-8"></a></span>
+<span id="cb38-9"><a href="model-assumptions.html#cb38-9"></a>p1a &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d1, <span class="kw">aes</span>(<span class="dt">x =</span> hp_bc, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb38-10"><a href="model-assumptions.html#cb38-10"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Response vs IV&quot;</span>,</span>
+<span id="cb38-11"><a href="model-assumptions.html#cb38-11"></a>       <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;Correlation ~ 1?  (rho = &quot;</span>, d1.cor, <span class="st">&quot;)&quot;</span>))</span>
+<span id="cb38-12"><a href="model-assumptions.html#cb38-12"></a>p1b &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d1, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb38-13"><a href="model-assumptions.html#cb38-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs Fits&quot;</span>,</span>
+<span id="cb38-14"><a href="model-assumptions.html#cb38-14"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Random scatter?&quot;</span>)</span>
+<span id="cb38-15"><a href="model-assumptions.html#cb38-15"></a>p1c &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d1, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb38-16"><a href="model-assumptions.html#cb38-16"></a><span class="st">  </span><span class="kw">expand_limits</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">35</span>)) <span class="op">+</span></span>
+<span id="cb38-17"><a href="model-assumptions.html#cb38-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Observed vs Fits&quot;</span>,</span>
+<span id="cb38-18"><a href="model-assumptions.html#cb38-18"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Symmetric along 45 degree line?&quot;</span>)</span>
+<span id="cb38-19"><a href="model-assumptions.html#cb38-19"></a>p1d &lt;-<span class="st"> </span><span class="kw">ggplot</span>(d1, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb38-20"><a href="model-assumptions.html#cb38-20"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs IV&quot;</span>,</span>
+<span id="cb38-21"><a href="model-assumptions.html#cb38-21"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;Random scatter?&quot;</span>)</span>
+<span id="cb38-22"><a href="model-assumptions.html#cb38-22"></a><span class="kw">grid.arrange</span>(p1a, p1b, p1c, p1d, <span class="dt">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="model-assumptions.html#cb388-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m1<span class="op">$</span>fitted.values, <span class="dt">obs =</span> m1<span class="op">$</span>model<span class="op">$</span>mpg)</span></code></pre></div>
-<pre><code>##     RMSE Rsquared      MAE 
-##     3.14     0.72     2.41</code></pre>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-173-4.png" width="672" /></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="model-assumptions.html#cb40-1"></a><span class="kw">postResample</span>(<span class="dt">pred =</span> m1<span class="op">$</span>fitted.values, <span class="dt">obs =</span> m1<span class="op">$</span>model<span class="op">$</span>mpg)</span></code></pre></div>
+<pre><code>##      RMSE  Rsquared       MAE 
+## 3.1366261 0.7204118 2.4074705</code></pre>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-12-4.png" width="672" /></p>
 </div>
 <div id="multicollinearity" class="section level3">
 <h3><span class="header-section-number">5.3.2</span> Multicollinearity</h3>
@@ -462,79 +474,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>A residuals vs fits plot <span class="math inline">\((\epsilon \sim \hat{Y})\)</span> should have correlation <span class="math inline">\(\rho \sim 0\)</span>. A correlation matrix is helpful for picking out the correlation strengths. A good rule of thumb is correlation coefficients should be less than 0.80. However, this test may not work when a variable is correlated with a function of other variables. A model with multicollinearity may have a significant F-test with insignificant individual slope estimator t-tests. Another way to detect multicollinearity is by calculating variance inflation factors. The predictor variance <span class="math inline">\(Var(\hat{\beta_k})\)</span> increases by a factor</p>
 <p><span class="math display">\[VIF_k = \frac{1}{1 - R_k^2}\]</span></p>
 <p>where <span class="math inline">\(R_k^2\)</span> is the <span class="math inline">\(R^2\)</span> of a regression of the <span class="math inline">\(k^{th}\)</span> predictor on the remaining predictors. A <span class="math inline">\(VIF_k\)</span> of <span class="math inline">\(1\)</span> indicates no inflation (no corellation). A <span class="math inline">\(VIF_k &gt;= 4\)</span> warrants investigation. A <span class="math inline">\(VIF_k &gt;= 10\)</span> requires correction.</p>
-<div id="example-8" class="section level4">
+<div id="example-1" class="section level4">
 <h4><span class="header-section-number">5.3.2.1</span> Example</h4>
 <p>Does the model <code>mpg ~ .</code> exhibit multicollinearity?</p>
 <p>The correlation matrix above (and presented again below) has several correlated covariates. <code>disp</code> is strongly correlated with <code>wt</code> (r = 0.89) and <code>hp</code> (r = 0.79).</p>
-<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="model-assumptions.html#cb390-1"></a>m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars)</span>
-<span id="cb390-2"><a href="model-assumptions.html#cb390-2"></a><span class="kw">corrplot</span>(<span class="kw">cor</span>(<span class="kw">subset</span>(d, <span class="dt">select =</span> <span class="kw">c</span>(mpg, disp, hp, drat, wt, qsec))), <span class="dt">type =</span> <span class="st">&quot;upper&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;number&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-174-1.png" width="672" /></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="model-assumptions.html#cb42-1"></a>m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars)</span>
+<span id="cb42-2"><a href="model-assumptions.html#cb42-2"></a><span class="kw">corrplot</span>(<span class="kw">cor</span>(<span class="kw">subset</span>(d, <span class="dt">select =</span> <span class="kw">c</span>(mpg, disp, hp, drat, wt, qsec))), <span class="dt">type =</span> <span class="st">&quot;upper&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;number&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>Calculate the VIFs.</p>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="model-assumptions.html#cb391-1"></a><span class="kw">round</span>(<span class="kw">vif</span>(m), <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>##  cyl disp   hp drat   wt qsec   vs   am gear carb 
-## 15.4 21.6  9.8  3.4 15.2  7.5  5.0  4.6  5.4  7.9</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="model-assumptions.html#cb43-1"></a><span class="kw">round</span>(<span class="kw">vif</span>(m), <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb 
+## 15.37 21.62  9.83  3.37 15.16  7.53  4.97  4.65  5.36  7.91</code></pre>
 <p>There are two predictors with VIFs greater than 10, cyl (GVIF = 21.36) and disp (GVIF = 13.76). One way to address multicollinearity is removing one or more of the violating predictors from the regression model. Try removing <code>cyl</code>.</p>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="model-assumptions.html#cb393-1"></a><span class="kw">vif</span>(m &lt;-<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>cyl, <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]))</span></code></pre></div>
-<pre><code>## disp   hp drat   wt qsec   vs   am 
-##  9.9  5.4  2.8  7.6  6.0  4.2  3.5</code></pre>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="model-assumptions.html#cb395-1"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="model-assumptions.html#cb45-1"></a><span class="kw">vif</span>(m &lt;-<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>cyl, <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]))</span></code></pre></div>
+<pre><code>##     disp       hp     drat       wt     qsec       vs       am 
+## 9.865991 5.448912 2.818949 7.598119 5.979588 4.249244 3.450410</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="model-assumptions.html#cb47-1"></a><span class="kw">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ . - cyl, data = d[, 1:9])
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -3.407 -1.469 -0.282  1.142  4.537 
+##     Min      1Q  Median      3Q     Max 
+## -3.4067 -1.4690 -0.2824  1.1415  4.5365 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)   
-## (Intercept)  12.4980    12.4804    1.00   0.3266   
-## disp          0.0137     0.0114    1.21   0.2382   
-## hp           -0.0228     0.0153   -1.50   0.1478   
-## drat          0.9553     1.4074    0.68   0.5038   
-## wt           -3.9497     1.2626   -3.13   0.0046 **
-## qsec          0.8715     0.6133    1.42   0.1682   
-## vsS           0.5902     1.8330    0.32   0.7503   
-## ammanual      3.0240     1.6684    1.81   0.0824 . 
+## (Intercept) 12.49805   12.48039   1.001  0.32662   
+## disp         0.01374    0.01136   1.210  0.23821   
+## hp          -0.02282    0.01526  -1.496  0.14778   
+## drat         0.95533    1.40737   0.679  0.50376   
+## wt          -3.94974    1.26261  -3.128  0.00457 **
+## qsec         0.87149    0.61331   1.421  0.16819   
+## vsS          0.59017    1.83303   0.322  0.75027   
+## ammanual     3.02402    1.66840   1.813  0.08244 . 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 2.5 on 24 degrees of freedom
-## Multiple R-squared:  0.867,  Adjusted R-squared:  0.829 
-## F-statistic: 22.4 on 7 and 24 DF,  p-value: 0.00000000453</code></pre>
+## Residual standard error: 2.495 on 24 degrees of freedom
+## Multiple R-squared:  0.8673,	Adjusted R-squared:  0.8286 
+## F-statistic:  22.4 on 7 and 24 DF,  p-value: 4.532e-09</code></pre>
 <p>Removing <code>cyl</code> reduced the VIFs of the other variables below 10. <code>disp</code> is still right up there (VIF = 9.87), so it may be worth dropping it from the model too. The model summary still shows that there is only one significant (at .05 level a significance) variable (<code>wt</code>, p = .00457). What if I drop <code>disp</code> too?</p>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="model-assumptions.html#cb397-1"></a><span class="kw">vif</span>(m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>cyl <span class="op">-</span><span class="st"> </span>disp, <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]))</span></code></pre></div>
-<pre><code>##   hp drat   wt qsec   vs   am 
-##  5.1  2.7  5.1  5.8  4.1  3.3</code></pre>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="model-assumptions.html#cb399-1"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="model-assumptions.html#cb49-1"></a><span class="kw">vif</span>(m &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>cyl <span class="op">-</span><span class="st"> </span>disp, <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]))</span></code></pre></div>
+<pre><code>##       hp     drat       wt     qsec       vs       am 
+## 5.070665 2.709905 5.105979 5.776361 4.120656 3.272177</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="model-assumptions.html#cb51-1"></a><span class="kw">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ . - cyl - disp, data = d[, 1:9])
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -3.369 -1.721 -0.253  1.099  4.603 
+##     Min      1Q  Median      3Q     Max 
+## -3.3686 -1.7207 -0.2528  1.0986  4.6029 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)   
-## (Intercept)  16.1410    12.2232    1.32   0.1986   
-## hp           -0.0180     0.0149   -1.21   0.2380   
-## drat          0.6205     1.3926    0.45   0.6597   
-## wt           -3.0751     1.0446   -2.94   0.0069 **
-## qsec          0.7347     0.6084    1.21   0.2385   
-## vsS           0.2045     1.8217    0.11   0.9115   
-## ammanual      2.5653     1.6397    1.56   0.1303   
+## (Intercept) 16.14103   12.22322   1.321  0.19862   
+## hp          -0.01796    0.01486  -1.209  0.23801   
+## drat         0.62051    1.39261   0.446  0.65974   
+## wt          -3.07506    1.04458  -2.944  0.00691 **
+## qsec         0.73472    0.60836   1.208  0.23846   
+## vsS          0.20446    1.82173   0.112  0.91153   
+## ammanual     2.56534    1.63972   1.565  0.13027   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 2.5 on 25 degrees of freedom
-## Multiple R-squared:  0.859,  Adjusted R-squared:  0.825 
-## F-statistic: 25.4 on 6 and 25 DF,  p-value: 0.00000000169</code></pre>
+## Residual standard error: 2.518 on 25 degrees of freedom
+## Multiple R-squared:  0.8592,	Adjusted R-squared:  0.8254 
+## F-statistic: 25.42 on 6 and 25 DF,  p-value: 1.688e-09</code></pre>
 <p>The model is not improved, so keep <code>disp</code>.</p>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="model-assumptions.html#cb401-1"></a>m &lt;-<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>cyl, <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="model-assumptions.html#cb53-1"></a>m &lt;-<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>. <span class="op">-</span><span class="st"> </span>cyl, <span class="dt">data =</span> d[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>])</span></code></pre></div>
 <p>If the multicollinearity occurs because you are using a polynomial regression model, <em>center</em> the predictor variables (subtract their means).</p>
 </div>
-<div id="example-9" class="section level4">
+<div id="example-2" class="section level4">
 <h4><span class="header-section-number">5.3.2.2</span> Example</h4>
 <p>Data set <code>exerimmun</code> (<a href="https://newonlinecourses.science.psu.edu/stat501/sites/onlinecourses.science.psu.edu.stat501/files/data/exerimmun/index.txt">exerimun.txt</a>) contains observations of immunoglobin in blood (a measure of immunity) and maximal oxygen uptake (a measure of exercise level) for <span class="math inline">\(n = 30\)</span> individuals.</p>
 <ul>
@@ -542,41 +554,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>oxygent</code> = maximal oxygen uptake (ml/kg)</li>
 </ul>
 <p>How does exercise affect the immune system?</p>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="model-assumptions.html#cb402-1"></a><span class="co">#exerimmun &lt;- read_tsv(file = &quot;./Data/exerimmun.txt&quot;)</span></span>
-<span id="cb402-2"><a href="model-assumptions.html#cb402-2"></a>exerimmun &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
-<span id="cb402-3"><a href="model-assumptions.html#cb402-3"></a>  <span class="op">~</span>igg, <span class="op">~</span>oxygen,</span>
-<span id="cb402-4"><a href="model-assumptions.html#cb402-4"></a>  <span class="dv">881</span>,  <span class="fl">34.6</span>,</span>
-<span id="cb402-5"><a href="model-assumptions.html#cb402-5"></a>  <span class="dv">1290</span>, <span class="dv">45</span>,</span>
-<span id="cb402-6"><a href="model-assumptions.html#cb402-6"></a>  <span class="dv">2147</span>, <span class="fl">62.3</span>,</span>
-<span id="cb402-7"><a href="model-assumptions.html#cb402-7"></a>  <span class="dv">1909</span>, <span class="fl">58.9</span>,</span>
-<span id="cb402-8"><a href="model-assumptions.html#cb402-8"></a>  <span class="dv">1282</span>, <span class="fl">42.5</span>,</span>
-<span id="cb402-9"><a href="model-assumptions.html#cb402-9"></a>  <span class="dv">1530</span>, <span class="fl">44.3</span>,</span>
-<span id="cb402-10"><a href="model-assumptions.html#cb402-10"></a>  <span class="dv">2067</span>, <span class="fl">67.9</span>,</span>
-<span id="cb402-11"><a href="model-assumptions.html#cb402-11"></a>  <span class="dv">1982</span>, <span class="fl">58.5</span>,</span>
-<span id="cb402-12"><a href="model-assumptions.html#cb402-12"></a>  <span class="dv">1019</span>, <span class="fl">35.6</span>,</span>
-<span id="cb402-13"><a href="model-assumptions.html#cb402-13"></a>  <span class="dv">1651</span>, <span class="fl">49.6</span>,</span>
-<span id="cb402-14"><a href="model-assumptions.html#cb402-14"></a>  <span class="dv">752</span>,  <span class="dv">33</span>,</span>
-<span id="cb402-15"><a href="model-assumptions.html#cb402-15"></a>  <span class="dv">1687</span>, <span class="dv">52</span>,</span>
-<span id="cb402-16"><a href="model-assumptions.html#cb402-16"></a>  <span class="dv">1782</span>, <span class="fl">61.4</span>,</span>
-<span id="cb402-17"><a href="model-assumptions.html#cb402-17"></a>  <span class="dv">1529</span>, <span class="fl">50.2</span>,</span>
-<span id="cb402-18"><a href="model-assumptions.html#cb402-18"></a>  <span class="dv">969</span>,  <span class="fl">34.1</span>,</span>
-<span id="cb402-19"><a href="model-assumptions.html#cb402-19"></a>  <span class="dv">1660</span>, <span class="fl">52.5</span>,</span>
-<span id="cb402-20"><a href="model-assumptions.html#cb402-20"></a>  <span class="dv">2121</span>, <span class="fl">69.9</span>,</span>
-<span id="cb402-21"><a href="model-assumptions.html#cb402-21"></a>  <span class="dv">1382</span>, <span class="fl">38.8</span>,</span>
-<span id="cb402-22"><a href="model-assumptions.html#cb402-22"></a>  <span class="dv">1714</span>, <span class="fl">50.6</span>,</span>
-<span id="cb402-23"><a href="model-assumptions.html#cb402-23"></a>  <span class="dv">1959</span>, <span class="fl">69.4</span>,</span>
-<span id="cb402-24"><a href="model-assumptions.html#cb402-24"></a>  <span class="dv">1158</span>, <span class="fl">37.4</span>,</span>
-<span id="cb402-25"><a href="model-assumptions.html#cb402-25"></a>  <span class="dv">965</span>,  <span class="fl">35.1</span>,</span>
-<span id="cb402-26"><a href="model-assumptions.html#cb402-26"></a>  <span class="dv">1456</span>, <span class="dv">43</span>,</span>
-<span id="cb402-27"><a href="model-assumptions.html#cb402-27"></a>  <span class="dv">1273</span>, <span class="fl">44.1</span>,</span>
-<span id="cb402-28"><a href="model-assumptions.html#cb402-28"></a>  <span class="dv">1418</span>, <span class="fl">49.8</span>,</span>
-<span id="cb402-29"><a href="model-assumptions.html#cb402-29"></a>  <span class="dv">1743</span>, <span class="fl">54.4</span>,</span>
-<span id="cb402-30"><a href="model-assumptions.html#cb402-30"></a>  <span class="dv">1997</span>, <span class="fl">68.5</span>,</span>
-<span id="cb402-31"><a href="model-assumptions.html#cb402-31"></a>  <span class="dv">2177</span>, <span class="fl">69.5</span>,</span>
-<span id="cb402-32"><a href="model-assumptions.html#cb402-32"></a>  <span class="dv">1965</span>, <span class="dv">63</span>,</span>
-<span id="cb402-33"><a href="model-assumptions.html#cb402-33"></a>  <span class="dv">1264</span>, <span class="fl">43.2</span></span>
-<span id="cb402-34"><a href="model-assumptions.html#cb402-34"></a>)</span>
-<span id="cb402-35"><a href="model-assumptions.html#cb402-35"></a><span class="kw">head</span>(exerimmun)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="model-assumptions.html#cb54-1"></a><span class="co">#exerimmun &lt;- read_tsv(file = &quot;./Data/exerimmun.txt&quot;)</span></span>
+<span id="cb54-2"><a href="model-assumptions.html#cb54-2"></a>exerimmun &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
+<span id="cb54-3"><a href="model-assumptions.html#cb54-3"></a>  <span class="op">~</span>igg, <span class="op">~</span>oxygen,</span>
+<span id="cb54-4"><a href="model-assumptions.html#cb54-4"></a>  <span class="dv">881</span>,	<span class="fl">34.6</span>,</span>
+<span id="cb54-5"><a href="model-assumptions.html#cb54-5"></a>  <span class="dv">1290</span>,	<span class="dv">45</span>,</span>
+<span id="cb54-6"><a href="model-assumptions.html#cb54-6"></a>  <span class="dv">2147</span>,	<span class="fl">62.3</span>,</span>
+<span id="cb54-7"><a href="model-assumptions.html#cb54-7"></a>  <span class="dv">1909</span>,	<span class="fl">58.9</span>,</span>
+<span id="cb54-8"><a href="model-assumptions.html#cb54-8"></a>  <span class="dv">1282</span>,	<span class="fl">42.5</span>,</span>
+<span id="cb54-9"><a href="model-assumptions.html#cb54-9"></a>  <span class="dv">1530</span>,	<span class="fl">44.3</span>,</span>
+<span id="cb54-10"><a href="model-assumptions.html#cb54-10"></a>  <span class="dv">2067</span>,	<span class="fl">67.9</span>,</span>
+<span id="cb54-11"><a href="model-assumptions.html#cb54-11"></a>  <span class="dv">1982</span>,	<span class="fl">58.5</span>,</span>
+<span id="cb54-12"><a href="model-assumptions.html#cb54-12"></a>  <span class="dv">1019</span>,	<span class="fl">35.6</span>,</span>
+<span id="cb54-13"><a href="model-assumptions.html#cb54-13"></a>  <span class="dv">1651</span>,	<span class="fl">49.6</span>,</span>
+<span id="cb54-14"><a href="model-assumptions.html#cb54-14"></a>  <span class="dv">752</span>,	<span class="dv">33</span>,</span>
+<span id="cb54-15"><a href="model-assumptions.html#cb54-15"></a>  <span class="dv">1687</span>,	<span class="dv">52</span>,</span>
+<span id="cb54-16"><a href="model-assumptions.html#cb54-16"></a>  <span class="dv">1782</span>,	<span class="fl">61.4</span>,</span>
+<span id="cb54-17"><a href="model-assumptions.html#cb54-17"></a>  <span class="dv">1529</span>,	<span class="fl">50.2</span>,</span>
+<span id="cb54-18"><a href="model-assumptions.html#cb54-18"></a>  <span class="dv">969</span>,	<span class="fl">34.1</span>,</span>
+<span id="cb54-19"><a href="model-assumptions.html#cb54-19"></a>  <span class="dv">1660</span>,	<span class="fl">52.5</span>,</span>
+<span id="cb54-20"><a href="model-assumptions.html#cb54-20"></a>  <span class="dv">2121</span>,	<span class="fl">69.9</span>,</span>
+<span id="cb54-21"><a href="model-assumptions.html#cb54-21"></a>  <span class="dv">1382</span>,	<span class="fl">38.8</span>,</span>
+<span id="cb54-22"><a href="model-assumptions.html#cb54-22"></a>  <span class="dv">1714</span>,	<span class="fl">50.6</span>,</span>
+<span id="cb54-23"><a href="model-assumptions.html#cb54-23"></a>  <span class="dv">1959</span>,	<span class="fl">69.4</span>,</span>
+<span id="cb54-24"><a href="model-assumptions.html#cb54-24"></a>  <span class="dv">1158</span>,	<span class="fl">37.4</span>,</span>
+<span id="cb54-25"><a href="model-assumptions.html#cb54-25"></a>  <span class="dv">965</span>,	<span class="fl">35.1</span>,</span>
+<span id="cb54-26"><a href="model-assumptions.html#cb54-26"></a>  <span class="dv">1456</span>,	<span class="dv">43</span>,</span>
+<span id="cb54-27"><a href="model-assumptions.html#cb54-27"></a>  <span class="dv">1273</span>,	<span class="fl">44.1</span>,</span>
+<span id="cb54-28"><a href="model-assumptions.html#cb54-28"></a>  <span class="dv">1418</span>,	<span class="fl">49.8</span>,</span>
+<span id="cb54-29"><a href="model-assumptions.html#cb54-29"></a>  <span class="dv">1743</span>,	<span class="fl">54.4</span>,</span>
+<span id="cb54-30"><a href="model-assumptions.html#cb54-30"></a>  <span class="dv">1997</span>,	<span class="fl">68.5</span>,</span>
+<span id="cb54-31"><a href="model-assumptions.html#cb54-31"></a>  <span class="dv">2177</span>,	<span class="fl">69.5</span>,</span>
+<span id="cb54-32"><a href="model-assumptions.html#cb54-32"></a>  <span class="dv">1965</span>,	<span class="dv">63</span>,</span>
+<span id="cb54-33"><a href="model-assumptions.html#cb54-33"></a>  <span class="dv">1264</span>,	<span class="fl">43.2</span></span>
+<span id="cb54-34"><a href="model-assumptions.html#cb54-34"></a>)</span>
+<span id="cb54-35"><a href="model-assumptions.html#cb54-35"></a><span class="kw">head</span>(exerimmun)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##     igg oxygen
 ##   &lt;dbl&gt;  &lt;dbl&gt;
@@ -587,69 +599,69 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5  1282   42.5
 ## 6  1530   44.3</code></pre>
 <p>The scatterplot <code>oxygen ~ igg</code> shows some curvature. Formulate a quadratic polynomial regression function, <span class="math inline">\(igg_i = \beta_0 + \beta_1 oxygen_i + \beta_2 oxygen_i^2 + \epsilon_i\)</span> where the error terms are assumed to be independent, and normally distributed with equal variance.</p>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="model-assumptions.html#cb404-1"></a><span class="kw">ggplot</span>(exerimmun, <span class="kw">aes</span>(<span class="dt">y =</span> igg, <span class="dt">x =</span> oxygen)) <span class="op">+</span></span>
-<span id="cb404-2"><a href="model-assumptions.html#cb404-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb404-3"><a href="model-assumptions.html#cb404-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dv">2</span>), <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
-<span id="cb404-4"><a href="model-assumptions.html#cb404-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Immunoglobin in Blood&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-180-1.png" width="672" /></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="model-assumptions.html#cb56-1"></a><span class="kw">ggplot</span>(exerimmun, <span class="kw">aes</span>(<span class="dt">y =</span> igg, <span class="dt">x =</span> oxygen)) <span class="op">+</span></span>
+<span id="cb56-2"><a href="model-assumptions.html#cb56-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb56-3"><a href="model-assumptions.html#cb56-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dv">2</span>), <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb56-4"><a href="model-assumptions.html#cb56-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Immunoglobin in Blood&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>The formulated regression fits the data well (<span class="math inline">\(adj R^2 = .933\)</span>), but the terms <code>oxygen</code> and <code>oxygen^2</code> are strongly correlated.</p>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="model-assumptions.html#cb405-1"></a>m_blood &lt;-<span class="st"> </span><span class="kw">lm</span>(igg <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(oxygen, <span class="dv">2</span>), <span class="dt">data =</span> exerimmun)</span>
-<span id="cb405-2"><a href="model-assumptions.html#cb405-2"></a><span class="kw">summary</span>(m_blood)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="model-assumptions.html#cb57-1"></a>m_blood &lt;-<span class="st"> </span><span class="kw">lm</span>(igg <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(oxygen, <span class="dv">2</span>), <span class="dt">data =</span> exerimmun)</span>
+<span id="cb57-2"><a href="model-assumptions.html#cb57-2"></a><span class="kw">summary</span>(m_blood)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = igg ~ poly(oxygen, 2), data = exerimmun)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -185.37  -82.13    1.05   66.01  227.38 
+##      Min       1Q   Median       3Q      Max 
+## -185.375  -82.129    1.047   66.007  227.377 
 ## 
 ## Coefficients:
-##                  Estimate Std. Error t value            Pr(&gt;|t|)    
-## (Intercept)        1557.6       19.4   80.16 &lt;0.0000000000000002 ***
-## poly(oxygen, 2)1   2114.7      106.4   19.87 &lt;0.0000000000000002 ***
-## poly(oxygen, 2)2   -360.8      106.4   -3.39              0.0022 ** 
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       1557.63      19.43   80.16  &lt; 2e-16 ***
+## poly(oxygen, 2)1  2114.72     106.43   19.87  &lt; 2e-16 ***
+## poly(oxygen, 2)2  -360.78     106.43   -3.39  0.00217 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 106 on 27 degrees of freedom
-## Multiple R-squared:  0.938,  Adjusted R-squared:  0.933 
-## F-statistic:  203 on 2 and 27 DF,  p-value: &lt;0.0000000000000002</code></pre>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="model-assumptions.html#cb407-1"></a><span class="kw">cor</span>(exerimmun<span class="op">$</span>oxygen, exerimmun<span class="op">$</span>oxygen<span class="op">^</span><span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## [1] 0.99</code></pre>
+## Residual standard error: 106.4 on 27 degrees of freedom
+## Multiple R-squared:  0.9377,	Adjusted R-squared:  0.9331 
+## F-statistic: 203.2 on 2 and 27 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="model-assumptions.html#cb59-1"></a><span class="kw">cor</span>(exerimmun<span class="op">$</span>oxygen, exerimmun<span class="op">$</span>oxygen<span class="op">^</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 0.9949846</code></pre>
 <p>Remove the structural multicollinearity by centering the predictors. You can scale the predictors with <code>scale()</code>, but be careful to scale new data when predicting new observations with <code>predict(newdata=)</code>! Whenever possible, perform the transformation right in the model.</p>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="model-assumptions.html#cb409-1"></a>m_blood &lt;-<span class="st"> </span><span class="kw">lm</span>(igg <span class="op">~</span><span class="st"> </span><span class="kw">I</span>(oxygen <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(exerimmun<span class="op">$</span>oxygen)) <span class="op">+</span></span>
-<span id="cb409-2"><a href="model-assumptions.html#cb409-2"></a><span class="st">                </span><span class="kw">I</span>((oxygen <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(exerimmun<span class="op">$</span>oxygen))<span class="op">^</span><span class="dv">2</span>), </span>
-<span id="cb409-3"><a href="model-assumptions.html#cb409-3"></a>              <span class="dt">data =</span> exerimmun)</span>
-<span id="cb409-4"><a href="model-assumptions.html#cb409-4"></a><span class="kw">summary</span>(m_blood)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="model-assumptions.html#cb61-1"></a>m_blood &lt;-<span class="st"> </span><span class="kw">lm</span>(igg <span class="op">~</span><span class="st"> </span><span class="kw">I</span>(oxygen <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(exerimmun<span class="op">$</span>oxygen)) <span class="op">+</span></span>
+<span id="cb61-2"><a href="model-assumptions.html#cb61-2"></a><span class="st">                </span><span class="kw">I</span>((oxygen <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(exerimmun<span class="op">$</span>oxygen))<span class="op">^</span><span class="dv">2</span>), </span>
+<span id="cb61-3"><a href="model-assumptions.html#cb61-3"></a>              <span class="dt">data =</span> exerimmun)</span>
+<span id="cb61-4"><a href="model-assumptions.html#cb61-4"></a><span class="kw">summary</span>(m_blood)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = igg ~ I(oxygen - mean(exerimmun$oxygen)) + I((oxygen - 
 ##     mean(exerimmun$oxygen))^2), data = exerimmun)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -185.37  -82.13    1.05   66.01  227.38 
+##      Min       1Q   Median       3Q      Max 
+## -185.375  -82.129    1.047   66.007  227.377 
 ## 
 ## Coefficients:
-##                                        Estimate Std. Error t value
-## (Intercept)                            1632.196     29.349   55.61
-## I(oxygen - mean(exerimmun$oxygen))       34.000      1.689   20.13
-## I((oxygen - mean(exerimmun$oxygen))^2)   -0.536      0.158   -3.39
-##                                                   Pr(&gt;|t|)    
-## (Intercept)                            &lt;0.0000000000000002 ***
-## I(oxygen - mean(exerimmun$oxygen))     &lt;0.0000000000000002 ***
-## I((oxygen - mean(exerimmun$oxygen))^2)              0.0022 ** 
+##                                         Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)                            1632.1962    29.3486   55.61  &lt; 2e-16
+## I(oxygen - mean(exerimmun$oxygen))       33.9995     1.6890   20.13  &lt; 2e-16
+## I((oxygen - mean(exerimmun$oxygen))^2)   -0.5362     0.1582   -3.39  0.00217
+##                                           
+## (Intercept)                            ***
+## I(oxygen - mean(exerimmun$oxygen))     ***
+## I((oxygen - mean(exerimmun$oxygen))^2) ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 106 on 27 degrees of freedom
-## Multiple R-squared:  0.938,  Adjusted R-squared:  0.933 
-## F-statistic:  203 on 2 and 27 DF,  p-value: &lt;0.0000000000000002</code></pre>
+## Residual standard error: 106.4 on 27 degrees of freedom
+## Multiple R-squared:  0.9377,	Adjusted R-squared:  0.9331 
+## F-statistic: 203.2 on 2 and 27 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>The estimated intercept coefficient <span class="math inline">\(\hat{\beta}_0 = 1632\)</span> means a person whose maximal oxygen uptake is <span class="math inline">\(50.64\)</span> ml/kg (the mean value) is predicted to have <span class="math inline">\(1632\)</span> mg of immunoglobin in his blood. The estimated coefficient <span class="math inline">\(\hat{\beta}_1 = 34.0\)</span> means a person whose maximal oxygen uptake is near <span class="math inline">\(50.64\)</span> ml/kg is predicted to increase by 34.0 mg for every 1 ml/kg increase in maximal oxygen uptake.</p>
 <p>By performing all transformations in the model, it is straightforward to perform predictions. Here is the predicted value of immunoglobin when maximal oxygen uptake = 90.00 ml/kg.</p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="model-assumptions.html#cb411-1"></a><span class="kw">predict</span>(m_blood, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">oxygen =</span> <span class="dv">90</span>), <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>)</span></code></pre></div>
-<pre><code>##    fit  lwr  upr
-## 1 2140 1640 2640</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="model-assumptions.html#cb63-1"></a><span class="kw">predict</span>(m_blood, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">oxygen =</span> <span class="dv">90</span>), <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>)</span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 2139.632 1639.597 2639.666</code></pre>
 </div>
 </div>
 <div id="normality" class="section level3">
