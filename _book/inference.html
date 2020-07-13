@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.5 Inference | My Data Science Notes</title>
+  <title>4.5 Inference | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.5 Inference | My Data Science Notes" />
+  <meta property="og:title" content="4.5 Inference | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.5 Inference | My Data Science Notes" />
+  <meta name="twitter:title" content="4.5 Inference | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-07-07" />
+<meta name="date" content="2020-07-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,8 @@
 
 
 <script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="assets/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<script src="assets/tabwid-1.0.0/tabwid.js"></script>
 
 
 <style type="text/css">
@@ -153,7 +155,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>1.4</b> Join Distributions</a></li>
 <li class="chapter" data-level="1.5" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>1.5</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>2</b> Categorical Analysis - Nonmodel</a><ul>
+<li class="chapter" data-level="2" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>2</b> Statistical Tests</a><ul>
 <li class="chapter" data-level="2.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>2.1</b> Chi-Square Test</a></li>
 <li class="chapter" data-level="2.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>2.2</b> One-Way Tables</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>2.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
@@ -172,112 +174,118 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>2.4.1</b> Odds Ratio</a></li>
 <li class="chapter" data-level="2.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>2.4.2</b> Chi-Square Independence Test</a></li>
 </ul></li>
+<li class="chapter" data-level="2.5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>2.5</b> Continuous Variable Analysis</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>2.5.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="3.0.1" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
-<li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
-<li class="chapter" data-level="4.2" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>4.2</b> Blocking</a></li>
-<li class="chapter" data-level="4.3" data-path="nested.html"><a href="nested.html"><i class="fa fa-check"></i><b>4.3</b> Nested</a></li>
-<li class="chapter" data-level="4.4" data-path="split-plot.html"><a href="split-plot.html"><i class="fa fa-check"></i><b>4.4</b> Split Plot</a></li>
+<li class="chapter" data-level="3" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>3</b> Experiment Design</a><ul>
+<li class="chapter" data-level="3.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>3.1</b> Single Factor</a></li>
+<li class="chapter" data-level="3.2" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3.2</b> Blocking</a></li>
+<li class="chapter" data-level="3.3" data-path="nested.html"><a href="nested.html"><i class="fa fa-check"></i><b>3.3</b> Nested</a></li>
+<li class="chapter" data-level="3.4" data-path="split-plot.html"><a href="split-plot.html"><i class="fa fa-check"></i><b>3.4</b> Split Plot</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a></li>
-<li class="chapter" data-level="5" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>5</b> Ordinary Least Squares</a><ul>
-<li class="chapter" data-level="5.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>5.1</b> Linear Regression Model</a></li>
-<li class="chapter" data-level="5.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>5.2</b> Parameter Estimation</a></li>
-<li class="chapter" data-level="5.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>5.3</b> Model Assumptions</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>5.3.1</b> Linearity</a></li>
-<li class="chapter" data-level="5.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>5.3.2</b> Multicollinearity</a></li>
-<li class="chapter" data-level="5.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>5.3.3</b> Normality</a></li>
-<li class="chapter" data-level="5.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>5.3.4</b> Equal Variances</a></li>
+<li class="chapter" data-level="4" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>4</b> Ordinary Least Squares</a><ul>
+<li class="chapter" data-level="4.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>4.1</b> Linear Regression Model</a></li>
+<li class="chapter" data-level="4.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>4.2</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="4.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>4.3</b> Model Assumptions</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>4.3.1</b> Linearity</a></li>
+<li class="chapter" data-level="4.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>4.3.2</b> Multicollinearity</a></li>
+<li class="chapter" data-level="4.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>4.3.3</b> Normality</a></li>
+<li class="chapter" data-level="4.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>4.3.4</b> Equal Variances</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>5.4</b> Prediction</a></li>
-<li class="chapter" data-level="5.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>5.5</b> Inference</a><ul>
-<li class="chapter" data-level="5.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>5.5.1</b> <em>t</em>-Test</a></li>
-<li class="chapter" data-level="5.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>5.5.2</b> <em>F</em>-Test</a></li>
+<li class="chapter" data-level="4.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>4.4</b> Prediction</a></li>
+<li class="chapter" data-level="4.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>4.5</b> Inference</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>4.5.1</b> <em>t</em>-Test</a></li>
+<li class="chapter" data-level="4.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>4.5.2</b> <em>F</em>-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>5.6</b> Interpretation</a></li>
-<li class="chapter" data-level="5.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>5.7</b> Model Validation</a><ul>
-<li class="chapter" data-level="5.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>5.7.1</b> Accuracy Metrics</a></li>
-<li class="chapter" data-level="5.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>5.7.2</b> Cross-Validation</a></li>
-<li class="chapter" data-level="5.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>5.7.3</b> Gain Curve</a></li>
+<li class="chapter" data-level="4.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>4.6</b> Interpretation</a></li>
+<li class="chapter" data-level="4.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>4.7</b> Model Validation</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>4.7.1</b> Accuracy Metrics</a></li>
+<li class="chapter" data-level="4.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>4.7.2</b> Cross-Validation</a></li>
+<li class="chapter" data-level="4.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>4.7.3</b> Gain Curve</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>5.8</b> Reference</a></li>
+<li class="chapter" data-level="4.8" data-path="ols-reference.html"><a href="ols-reference.html"><i class="fa fa-check"></i><b>4.8</b> OLS Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>6</b> Generalized Linear Models</a><ul>
-<li class="chapter" data-level="6.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>6.1</b> Logistic Regression</a></li>
-<li class="chapter" data-level="6.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>6.2</b> Multinomial Logistic Regression</a></li>
-<li class="chapter" data-level="6.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>6.3</b> Ordinal Logistic Regression</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>6.3.1</b> Assumptions</a></li>
-<li class="chapter" data-level="6.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>6.3.2</b> Modeling</a></li>
-<li class="chapter" data-level="6.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>6.3.3</b> Case Study</a></li>
+<li class="chapter" data-level="5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>5</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="5.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>5.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="5.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>5.2</b> Multinomial Logistic Regression</a></li>
+<li class="chapter" data-level="5.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>5.3</b> Ordinal Logistic Regression</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>5.3.1</b> Assumptions</a></li>
+<li class="chapter" data-level="5.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>5.3.2</b> Modeling</a></li>
+<li class="chapter" data-level="5.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>5.3.3</b> Case Study</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>6.4</b> Poisson Regression</a></li>
+<li class="chapter" data-level="5.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>5.4</b> Poisson Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html"><i class="fa fa-check"></i><b>7</b> Multivariate Statistical Analysis</a><ul>
-<li class="chapter" data-level="7.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>7.1</b> Background</a></li>
-<li class="chapter" data-level="7.2" data-path="manova.html"><a href="manova.html"><i class="fa fa-check"></i><b>7.2</b> MANOVA</a></li>
-<li class="chapter" data-level="7.3" data-path="repeated-measures.html"><a href="repeated-measures.html"><i class="fa fa-check"></i><b>7.3</b> Repeated Measures</a></li>
-<li class="chapter" data-level="7.4" data-path="lda.html"><a href="lda.html"><i class="fa fa-check"></i><b>7.4</b> LDA</a></li>
-<li class="chapter" data-level="7.5" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>7.5</b> PCA</a></li>
-<li class="chapter" data-level="7.6" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>7.6</b> Factor Analysis</a></li>
-<li class="chapter" data-level="7.7" data-path="canonical-correlation.html"><a href="canonical-correlation.html"><i class="fa fa-check"></i><b>7.7</b> Canonical Correlation</a></li>
-<li class="chapter" data-level="7.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>7.8</b> Cluster Analysis</a></li>
+<li class="chapter" data-level="6" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html"><i class="fa fa-check"></i><b>6</b> Multivariate Statistical Analysis</a><ul>
+<li class="chapter" data-level="6.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>6.1</b> Background</a></li>
+<li class="chapter" data-level="6.2" data-path="manova.html"><a href="manova.html"><i class="fa fa-check"></i><b>6.2</b> MANOVA</a></li>
+<li class="chapter" data-level="6.3" data-path="repeated-measures.html"><a href="repeated-measures.html"><i class="fa fa-check"></i><b>6.3</b> Repeated Measures</a></li>
+<li class="chapter" data-level="6.4" data-path="lda.html"><a href="lda.html"><i class="fa fa-check"></i><b>6.4</b> LDA</a></li>
+<li class="chapter" data-level="6.5" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>6.5</b> PCA</a></li>
+<li class="chapter" data-level="6.6" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>6.6</b> Factor Analysis</a></li>
+<li class="chapter" data-level="6.7" data-path="canonical-correlation.html"><a href="canonical-correlation.html"><i class="fa fa-check"></i><b>6.7</b> Canonical Correlation</a></li>
+<li class="chapter" data-level="6.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>6.8</b> Cluster Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a></li>
-<li class="chapter" data-level="9" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>9</b> Regularization</a><ul>
-<li class="chapter" data-level="9.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>9.1</b> Ridge</a></li>
-<li class="chapter" data-level="9.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>9.2</b> Lasso</a></li>
-<li class="chapter" data-level="9.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>9.3</b> Elastic Net</a></li>
+<li class="chapter" data-level="7" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>7</b> Regularization</a><ul>
+<li class="chapter" data-level="7.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>7.1</b> Ridge</a></li>
+<li class="chapter" data-level="7.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>7.2</b> Lasso</a></li>
+<li class="chapter" data-level="7.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>7.3</b> Elastic Net</a></li>
 <li class="chapter" data-level="" data-path="model-summary.html"><a href="model-summary.html"><i class="fa fa-check"></i>Model Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>10</b> Decision Trees</a><ul>
-<li class="chapter" data-level="10.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>10.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>10.1.1</b> Measuring Performance</a></li>
-<li class="chapter" data-level="10.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>10.1.2</b> Training with Caret</a></li>
+<li class="chapter" data-level="8" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>8</b> Decision Trees</a><ul>
+<li class="chapter" data-level="8.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>8.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>8.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="8.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>8.1.2</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>10.2</b> Regression Tree</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>10.2.1</b> Training with Caret</a></li>
+<li class="chapter" data-level="8.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>8.2</b> Regression Tree</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>8.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>10.3</b> Bagged Trees</a><ul>
-<li class="chapter" data-level="10.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>10.3.1</b> Bagged Classification Tree</a></li>
-<li class="chapter" data-level="10.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>10.3.2</b> Bagging Regression Tree</a></li>
+<li class="chapter" data-level="8.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>8.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>8.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="8.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>8.3.2</b> Bagging Regression Tree</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>10.4</b> Random Forests</a></li>
-<li class="chapter" data-level="10.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>10.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="10.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>10.6</b> Summary</a><ul>
-<li class="chapter" data-level="10.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>10.6.1</b> Classification Trees</a></li>
-<li class="chapter" data-level="10.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>10.6.2</b> Regression Trees</a></li>
+<li class="chapter" data-level="8.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>8.4</b> Random Forests</a></li>
+<li class="chapter" data-level="8.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>8.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="8.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8.6</b> Summary</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>8.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="8.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>8.6.2</b> Regression Trees</a></li>
 </ul></li>
-<li class="chapter" data-level="10.7" data-path="reference.html"><a href="reference.html#reference"><i class="fa fa-check"></i><b>10.7</b> Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>11</b> Non-linear Models</a><ul>
-<li class="chapter" data-level="11.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>11.1</b> Splines</a></li>
-<li class="chapter" data-level="11.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>11.2</b> MARS</a></li>
-<li class="chapter" data-level="11.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>11.3</b> GAM</a></li>
+<li class="chapter" data-level="9" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>9</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="9.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>9.1</b> Splines</a></li>
+<li class="chapter" data-level="9.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>9.2</b> MARS</a></li>
+<li class="chapter" data-level="9.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>9.3</b> GAM</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>12</b> Support Vector Machines</a><ul>
-<li class="chapter" data-level="12.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>12.1</b> Maximal Margin Classifier</a></li>
-<li class="chapter" data-level="12.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>12.2</b> Support Vector Classifier</a></li>
-<li class="chapter" data-level="12.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>12.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="12.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>12.4</b> Example</a></li>
-<li class="chapter" data-level="12.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>12.5</b> Using Caret</a></li>
+<li class="chapter" data-level="10" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>10</b> Support Vector Machines</a><ul>
+<li class="chapter" data-level="10.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>10.1</b> Maximal Margin Classifier</a></li>
+<li class="chapter" data-level="10.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>10.2</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="10.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>10.3</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="10.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>10.4</b> Example</a></li>
+<li class="chapter" data-level="10.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>10.5</b> Using Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>13</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="14" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>14</b> Text Mining</a><ul>
-<li class="chapter" data-level="14.1" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i><b>14.1</b> N-Grams</a></li>
-<li class="chapter" data-level="14.2" data-path="converting-to-and-from-non-tidy-formats.html"><a href="converting-to-and-from-non-tidy-formats.html"><i class="fa fa-check"></i><b>14.2</b> Converting to and from non-tidy formats</a></li>
-<li class="chapter" data-level="14.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>14.3</b> Example</a></li>
-<li class="chapter" data-level="14.4" data-path="stringr-package.html"><a href="stringr-package.html"><i class="fa fa-check"></i><b>14.4</b> stringr package</a></li>
-<li class="chapter" data-level="14.5" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>14.5</b> Regular Expressions</a></li>
+<li class="chapter" data-level="11" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>11</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a><ul>
+<li class="chapter" data-level="12.1" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>12.1</b> Tidy Text</a></li>
+<li class="chapter" data-level="12.2" data-path="bag-of-words.html"><a href="bag-of-words.html"><i class="fa fa-check"></i><b>12.2</b> Bag of Words</a></li>
+<li class="chapter" data-level="12.3" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>12.3</b> Sentiment Analysis</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#n-grams"><i class="fa fa-check"></i><b>12.3.1</b> N-Grams</a></li>
+<li class="chapter" data-level="12.3.2" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#converting-to-and-from-non-tidy-formats"><i class="fa fa-check"></i><b>12.3.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="12.3.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>12.3.3</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>15</b> Survival Analysis</a><ul>
-<li class="chapter" data-level="15.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>15.1</b> Basic Concepts</a></li>
-<li class="chapter" data-level="15.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>15.2</b> Survival Curve Estimation</a><ul>
-<li class="chapter" data-level="15.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>15.2.1</b> Kaplan-Meier</a></li>
-<li class="chapter" data-level="15.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>15.2.2</b> Weibull</a></li>
-<li class="chapter" data-level="15.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>15.2.3</b> Cox</a></li>
+<li class="chapter" data-level="12.4" data-path="topic-modeling.html"><a href="topic-modeling.html"><i class="fa fa-check"></i><b>12.4</b> Topic Modeling</a></li>
+<li class="chapter" data-level="12.5" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html"><i class="fa fa-check"></i><b>12.5</b> Appendix: String Manipulation</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#stringr-package"><i class="fa fa-check"></i><b>12.5.1</b> stringr package</a></li>
+<li class="chapter" data-level="12.5.2" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#regular-expressions"><i class="fa fa-check"></i><b>12.5.2</b> Regular Expressions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="reference-links.html"><a href="reference-links.html"><i class="fa fa-check"></i><b>12.6</b> Reference Links</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>13</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>13.1</b> Basic Concepts</a></li>
+<li class="chapter" data-level="13.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>13.2</b> Survival Curve Estimation</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>13.2.1</b> Kaplan-Meier</a></li>
+<li class="chapter" data-level="13.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>13.2.2</b> Weibull</a></li>
+<li class="chapter" data-level="13.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>13.2.3</b> Cox</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
@@ -285,7 +293,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="15.2.4" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>15.2.4</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="13.2.4" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>13.2.4</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
@@ -312,90 +320,90 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="inference" class="section level2">
-<h2><span class="header-section-number">5.5</span> Inference</h2>
+<h2><span class="header-section-number">4.5</span> Inference</h2>
 <p>Draw conclusions about the significance of the coefficient estimates with the <em>t</em>-test and/or <em>F</em>-test.</p>
 <div id="t-test" class="section level3">
-<h3><span class="header-section-number">5.5.1</span> <em>t</em>-Test</h3>
+<h3><span class="header-section-number">4.5.1</span> <em>t</em>-Test</h3>
 <p>By assumption, the residuals are normally distributed, so the <em>Z</em>-test statistic could evaluate the parameter estimators,</p>
 <p><span class="math display">\[Z = \frac{\hat{\beta} - \beta_0}{\sqrt{\sigma^2 (X&#39;X)^{-1}}}\]</span></p>
 <p>where <span class="math inline">\(\beta_0\)</span> is the null-hypothesized value, usually 0. <span class="math inline">\(\sigma\)</span> is unknown, but <span class="math inline">\(\frac{\hat{\sigma}^2 (n - k)}{\sigma^2} \sim \chi^2\)</span>. The ratio of the normal distribution divided by the adjusted chi-square <span class="math inline">\(\sqrt{\chi^2 / (n - k)}\)</span> is t-distributed,</p>
 <p><span class="math display">\[t = \frac{\hat{\beta} - \beta_0}{\sqrt{\hat{\sigma}^2 (X&#39;X)^{-1}}} = \frac{\hat{\beta} - \beta_0}{SE(\hat{\beta})}\]</span></p>
 <p>The <span class="math inline">\((1 - \alpha)\)</span> confidence intervals are <span class="math inline">\(CI = \hat{\beta} \pm t_{\alpha / 2, df} SE(\hat{\beta})\)</span> with <em>p</em>-value equaling the probability of measuring a <span class="math inline">\(t\)</span> of that extreme, <span class="math inline">\(p = P(t &gt; |t|)\)</span>. For a one-tail test, divide the reported p-value by two. The <span class="math inline">\(SE(\hat{\beta})\)</span> decreases with 1) a better fitting regression line (smaller <span class="math inline">\(\hat{\sigma}^2\)</span>), 2) greater variation in the predictor (larger <span class="math inline">\(X&#39;X\)</span>), and 3) larger sample size (larger n).</p>
 <div id="example-5" class="section level4">
-<h4><span class="header-section-number">5.5.1.1</span> Example</h4>
+<h4><span class="header-section-number">4.5.1.1</span> Example</h4>
 <p>Define a 95% confidence interval around the slope parameters.</p>
 <p>The <code>summary()</code> output shows the t values and probabilities in the <code>t value</code> and <code>Pr(&gt;|t|)</code> columns. You can verify this manually using matrix algebra for <span class="math inline">\(t = \frac{(\hat{\beta} - \beta_1)}{SE(\hat{\beta})}\)</span> with <span class="math inline">\(\beta_1 = 0\)</span>. The <span class="math inline">\((1 - \alpha)\)</span> confidence interval is <span class="math inline">\(CI = \hat{\beta} \pm t_{\alpha / 2, df} SE(\hat{\beta})\)</span>. The table below gathers the parameter estimators and t-test results.</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="inference.html#cb73-1"></a>t &lt;-<span class="st"> </span>beta_hat <span class="op">/</span><span class="st"> </span>se_beta_hat</span>
-<span id="cb73-2"><a href="inference.html#cb73-2"></a>p_value &lt;-<span class="st"> </span><span class="kw">pt</span>(<span class="dt">q =</span> <span class="kw">abs</span>(t), </span>
-<span id="cb73-3"><a href="inference.html#cb73-3"></a>              <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, </span>
-<span id="cb73-4"><a href="inference.html#cb73-4"></a>              <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span>
-<span id="cb73-5"><a href="inference.html#cb73-5"></a>t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="dt">p =</span> <span class="fl">.05</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb73-6"><a href="inference.html#cb73-6"></a>lcl =<span class="st"> </span>beta_hat <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_beta_hat</span>
-<span id="cb73-7"><a href="inference.html#cb73-7"></a>ucl =<span class="st"> </span>beta_hat <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_beta_hat</span>
-<span id="cb73-8"><a href="inference.html#cb73-8"></a><span class="kw">data.frame</span>(<span class="dt">beta =</span> <span class="kw">round</span>(beta_hat, <span class="dv">4</span>), </span>
-<span id="cb73-9"><a href="inference.html#cb73-9"></a>           <span class="dt">se =</span> <span class="kw">round</span>(se_beta_hat, <span class="dv">4</span>), </span>
-<span id="cb73-10"><a href="inference.html#cb73-10"></a>           <span class="dt">t =</span> <span class="kw">round</span>(t, <span class="dv">4</span>), </span>
-<span id="cb73-11"><a href="inference.html#cb73-11"></a>           <span class="dt">p =</span> <span class="kw">round</span>(p_value, <span class="dv">4</span>),</span>
-<span id="cb73-12"><a href="inference.html#cb73-12"></a>           <span class="dt">lcl =</span> <span class="kw">round</span>(lcl,<span class="dv">4</span>), </span>
-<span id="cb73-13"><a href="inference.html#cb73-13"></a>           <span class="dt">ucl =</span> <span class="kw">round</span>(ucl, <span class="dv">4</span>))</span></code></pre></div>
-<pre><code>##                beta      se       t      p     lcl     ucl
-## (Intercept) 19.5410 14.1464  1.3813 0.1810 -9.7969 48.8789
-## cyl.L        0.3426  2.7648  0.1239 0.9025 -5.3914  6.0765
-## cyl.Q        1.3884  1.1121  1.2485 0.2250 -0.9179  3.6948
-## disp         0.0067  0.0135  0.4950 0.6255 -0.0213  0.0347
-## hp          -0.0291  0.0172 -1.6960 0.1040 -0.0648  0.0065
-## drat         0.5881  1.5031  0.3912 0.6994 -2.5292  3.7053
-## wt          -3.1552  1.4202 -2.2216 0.0369 -6.1006 -0.2099
-## qsec         0.5232  0.6901  0.7582 0.4564 -0.9080  1.9545
-## vsS          1.2378  2.1061  0.5877 0.5627 -3.1299  5.6055
-## ammanual     3.0009  1.8534  1.6191 0.1197 -0.8428  6.8446</code></pre>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="inference.html#cb433-1"></a>t &lt;-<span class="st"> </span>beta_hat <span class="op">/</span><span class="st"> </span>se_beta_hat</span>
+<span id="cb433-2"><a href="inference.html#cb433-2"></a>p_value &lt;-<span class="st"> </span><span class="kw">pt</span>(<span class="dt">q =</span> <span class="kw">abs</span>(t), </span>
+<span id="cb433-3"><a href="inference.html#cb433-3"></a>              <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, </span>
+<span id="cb433-4"><a href="inference.html#cb433-4"></a>              <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span>
+<span id="cb433-5"><a href="inference.html#cb433-5"></a>t_crit &lt;-<span class="st"> </span><span class="kw">qt</span>(<span class="dt">p =</span> <span class="fl">.05</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb433-6"><a href="inference.html#cb433-6"></a>lcl =<span class="st"> </span>beta_hat <span class="op">-</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_beta_hat</span>
+<span id="cb433-7"><a href="inference.html#cb433-7"></a>ucl =<span class="st"> </span>beta_hat <span class="op">+</span><span class="st"> </span>t_crit <span class="op">*</span><span class="st"> </span>se_beta_hat</span>
+<span id="cb433-8"><a href="inference.html#cb433-8"></a><span class="kw">data.frame</span>(<span class="dt">beta =</span> <span class="kw">round</span>(beta_hat, <span class="dv">4</span>), </span>
+<span id="cb433-9"><a href="inference.html#cb433-9"></a>           <span class="dt">se =</span> <span class="kw">round</span>(se_beta_hat, <span class="dv">4</span>), </span>
+<span id="cb433-10"><a href="inference.html#cb433-10"></a>           <span class="dt">t =</span> <span class="kw">round</span>(t, <span class="dv">4</span>), </span>
+<span id="cb433-11"><a href="inference.html#cb433-11"></a>           <span class="dt">p =</span> <span class="kw">round</span>(p_value, <span class="dv">4</span>),</span>
+<span id="cb433-12"><a href="inference.html#cb433-12"></a>           <span class="dt">lcl =</span> <span class="kw">round</span>(lcl,<span class="dv">4</span>), </span>
+<span id="cb433-13"><a href="inference.html#cb433-13"></a>           <span class="dt">ucl =</span> <span class="kw">round</span>(ucl, <span class="dv">4</span>))</span></code></pre></div>
+<pre><code>##                beta     se     t     p    lcl     ucl
+## (Intercept) 19.5410 14.146  1.38 0.181 -9.797 48.8789
+## cyl.L        0.3426  2.765  0.12 0.902 -5.391  6.0765
+## cyl.Q        1.3884  1.112  1.25 0.225 -0.918  3.6948
+## disp         0.0067  0.013  0.49 0.625 -0.021  0.0347
+## hp          -0.0291  0.017 -1.70 0.104 -0.065  0.0065
+## drat         0.5881  1.503  0.39 0.699 -2.529  3.7053
+## wt          -3.1552  1.420 -2.22 0.037 -6.101 -0.2099
+## qsec         0.5232  0.690  0.76 0.456 -0.908  1.9545
+## vsS          1.2378  2.106  0.59 0.563 -3.130  5.6055
+## ammanual     3.0009  1.853  1.62 0.120 -0.843  6.8446</code></pre>
 </div>
 </div>
 <div id="f-test" class="section level3">
-<h3><span class="header-section-number">5.5.2</span> <em>F</em>-Test</h3>
+<h3><span class="header-section-number">4.5.2</span> <em>F</em>-Test</h3>
 <p>The <em>F</em>-test for the model is a test of the null hypothesis that none of the independent variables linearly predict the dependent variable, that is, the model parameters are jointly zero: <span class="math inline">\(H_0 : \beta_1 = \ldots = \beta_k = 0\)</span>. The regression mean sum of squares <span class="math inline">\(MSR = \frac{(\hat{y} - \bar{y})&#39;(\hat{y} - \bar{y})}{k-1}\)</span> and the error mean sum of squares <span class="math inline">\(MSE = \frac{\hat{\epsilon}&#39;\hat{\epsilon}}{n-k}\)</span> are each chi-square variables. Their ratio has an <em>F</em> distribution with <span class="math inline">\(k - 1\)</span> numerator degrees of freedom and <span class="math inline">\(n - k\)</span> denominator degrees of freedom. The F statistic can also be expressed in terms of the coefficient of correlation <span class="math inline">\(R^2 = \frac{MSR}{MST}\)</span>.</p>
 <p><span class="math display">\[F(k - 1, n - k) = \frac{MSR}{MSE} = \frac{R^2}{1 - R^2} \frac{n-k}{k-1}\]</span></p>
 <p><em>MSE</em> is <span class="math inline">\(\sigma^2\)</span>. If <span class="math inline">\(H_0\)</span> is true, that is, there is no relationship between the predictors and the response, then <span class="math inline">\(MSR\)</span> is also equal to <span class="math inline">\(\sigma^2\)</span>, so <span class="math inline">\(F = 1\)</span>. As <span class="math inline">\(R^2 \rightarrow 1\)</span>, <span class="math inline">\(F \rightarrow \infty\)</span>, and as <span class="math inline">\(R^2 \rightarrow 0\)</span>, <span class="math inline">\(F \rightarrow 0\)</span>. F increases with <span class="math inline">\(n\)</span> and decreases with <span class="math inline">\(k\)</span>.</p>
 <div id="example-6" class="section level4">
-<h4><span class="header-section-number">5.5.2.1</span> Example</h4>
+<h4><span class="header-section-number">4.5.2.1</span> Example</h4>
 <p>What is the probability that all parameters are jointly equal to zero?</p>
 <p>The F-statistic is presented at the bottom of the <code>summary()</code> function. You can verify this manually.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="inference.html#cb75-1"></a>ssr &lt;-<span class="st"> </span><span class="kw">sum</span>((m<span class="op">$</span>fitted.values <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(d<span class="op">$</span>mpg))<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb75-2"><a href="inference.html#cb75-2"></a>sse &lt;-<span class="st"> </span><span class="kw">sum</span>(m<span class="op">$</span>residuals<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb75-3"><a href="inference.html#cb75-3"></a>sst &lt;-<span class="st"> </span><span class="kw">sum</span>((m<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(d<span class="op">$</span>mpg))<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb75-4"><a href="inference.html#cb75-4"></a>msr &lt;-<span class="st"> </span>ssr <span class="op">/</span><span class="st"> </span>k</span>
-<span id="cb75-5"><a href="inference.html#cb75-5"></a>mse &lt;-<span class="st"> </span>sse <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
-<span id="cb75-6"><a href="inference.html#cb75-6"></a>f =<span class="st"> </span>msr <span class="op">/</span><span class="st"> </span>mse</span>
-<span id="cb75-7"><a href="inference.html#cb75-7"></a>p_value &lt;-<span class="st"> </span><span class="kw">pf</span>(<span class="dt">q =</span> f, <span class="dt">df1 =</span> k, <span class="dt">df2 =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb75-8"><a href="inference.html#cb75-8"></a><span class="kw">cat</span>(<span class="st">&quot;F-statistic: &quot;</span>, <span class="kw">round</span>(f, <span class="dv">4</span>), <span class="st">&quot; on 3 and 65 DF,  p-value: &quot;</span>, p_value)</span></code></pre></div>
-<pre><code>## F-statistic:  17.3549  on 3 and 65 DF,  p-value:  4.814183e-08</code></pre>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="inference.html#cb435-1"></a>ssr &lt;-<span class="st"> </span><span class="kw">sum</span>((m<span class="op">$</span>fitted.values <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(d<span class="op">$</span>mpg))<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb435-2"><a href="inference.html#cb435-2"></a>sse &lt;-<span class="st"> </span><span class="kw">sum</span>(m<span class="op">$</span>residuals<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb435-3"><a href="inference.html#cb435-3"></a>sst &lt;-<span class="st"> </span><span class="kw">sum</span>((m<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(d<span class="op">$</span>mpg))<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb435-4"><a href="inference.html#cb435-4"></a>msr &lt;-<span class="st"> </span>ssr <span class="op">/</span><span class="st"> </span>k</span>
+<span id="cb435-5"><a href="inference.html#cb435-5"></a>mse &lt;-<span class="st"> </span>sse <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb435-6"><a href="inference.html#cb435-6"></a>f =<span class="st"> </span>msr <span class="op">/</span><span class="st"> </span>mse</span>
+<span id="cb435-7"><a href="inference.html#cb435-7"></a>p_value &lt;-<span class="st"> </span><span class="kw">pf</span>(<span class="dt">q =</span> f, <span class="dt">df1 =</span> k, <span class="dt">df2 =</span> n <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb435-8"><a href="inference.html#cb435-8"></a><span class="kw">cat</span>(<span class="st">&quot;F-statistic: &quot;</span>, <span class="kw">round</span>(f, <span class="dv">4</span>), <span class="st">&quot; on 3 and 65 DF,  p-value: &quot;</span>, p_value)</span></code></pre></div>
+<pre><code>## F-statistic:  17  on 3 and 65 DF,  p-value:  0.000000048</code></pre>
 <p>There is sufficient evidence <span class="math inline">\((F = 17.35, P &lt; .0001)\)</span> to reject <span class="math inline">\(H_0\)</span> that the parameter estimators are jointly equal to zero.</p>
 <p>The <code>aov</code> function calculates the sequential sum of squares. The regression sum of squares SSR for <code>mpg ~ cyl</code> is 824.8. Adding <code>disp</code> to the model increases SSR by 57.6. Adding <code>hp</code> to the model increases SSR by 18.5. It would seem that <code>hp</code> does not improve the model.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="inference.html#cb77-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(m))</span></code></pre></div>
-<pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-## cyl          2  824.8   412.4  65.260 5.62e-10 ***
-## disp         1   57.6    57.6   9.122  0.00629 ** 
-## hp           1   18.5    18.5   2.928  0.10112    
-## drat         1   11.9    11.9   1.885  0.18355    
-## wt           1   55.8    55.8   8.828  0.00705 ** 
-## qsec         1    1.5     1.5   0.241  0.62816    
-## vs           1    0.3     0.3   0.048  0.82894    
-## am           1   16.6    16.6   2.622  0.11967    
-## Residuals   22  139.0     6.3                     
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="inference.html#cb437-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(m))</span></code></pre></div>
+<pre><code>##             Df Sum Sq Mean Sq F value        Pr(&gt;F)    
+## cyl          2    825     412   65.26 0.00000000056 ***
+## disp         1     58      58    9.12        0.0063 ** 
+## hp           1     19      19    2.93        0.1011    
+## drat         1     12      12    1.89        0.1836    
+## wt           1     56      56    8.83        0.0070 ** 
+## qsec         1      2       2    0.24        0.6282    
+## vs           1      0       0    0.05        0.8289    
+## am           1     17      17    2.62        0.1197    
+## Residuals   22    139       6                          
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Order matters. Had we started with <code>disp</code>, then added <code>hp</code> we would find both estimators were significant.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="inference.html#cb79-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">+</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>drat <span class="op">+</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>vs <span class="op">+</span><span class="st"> </span>am <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> d)))</span></code></pre></div>
-<pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-## disp         1  808.9   808.9 128.004 1.22e-10 ***
-## hp           1   33.7    33.7   5.327  0.03078 *  
-## drat         1   30.1    30.1   4.771  0.03989 *  
-## wt           1   70.5    70.5  11.158  0.00296 ** 
-## qsec         1   12.7    12.7   2.011  0.17017    
-## vs           1    0.2     0.2   0.035  0.85231    
-## am           1   20.5    20.5   3.237  0.08571 .  
-## cyl          2   10.4     5.2   0.825  0.45141    
-## Residuals   22  139.0     6.3                     
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="inference.html#cb439-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">+</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>drat <span class="op">+</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>vs <span class="op">+</span><span class="st"> </span>am <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> d)))</span></code></pre></div>
+<pre><code>##             Df Sum Sq Mean Sq F value        Pr(&gt;F)    
+## disp         1    809     809  128.00 0.00000000012 ***
+## hp           1     34      34    5.33         0.031 *  
+## drat         1     30      30    4.77         0.040 *  
+## wt           1     71      71   11.16         0.003 ** 
+## qsec         1     13      13    2.01         0.170    
+## vs           1      0       0    0.04         0.852    
+## am           1     20      20    3.24         0.086 .  
+## cyl          2     10       5    0.82         0.451    
+## Residuals   22    139       6                          
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>

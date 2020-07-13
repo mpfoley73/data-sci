@@ -989,7 +989,7 @@ oj_mdl_xgb
 With so many hyperparameters, the tuning plot is nearly unreadable.
 
 ```{r}
-plot(oj_mdl_xgb)
+#plot(oj_mdl_xgb)
 ```
 
 Let's see how the model performed on the holdout set. The accuracy was 0.8732 - much better than the 0.8451 from regular gradient boosting.
@@ -1117,7 +1117,7 @@ The optimal tuning parameters were at $M = 250$ and `interation.depth = 1`.
 With so many hyperparameters, the tuning plot is nearly unreadable.
 
 ```{r}
-plot(cs_mdl_xgb)
+#plot(cs_mdl_xgb)
 ```
 
 Here is the holdout set performance.

@@ -124,7 +124,7 @@ dim(coffee_m)
 coffee_m[c("star", "starbucks"), 25:35]
 ```
 
-# Tidy Text
+## Tidy Text
 
 The tidy text format is a table with one token (meaningful unit of text, such as a word) per row.  The `tidytext` package assists with the major tasks in text analysis.  A typical text analysis using tidy data principles unnests tokens with `unnest_tokens()`, removes unimportant "stop words" tokens `anti_join(stop_words)`, and summarizes token counts `count()`.
 
@@ -236,8 +236,8 @@ wordcloud(
 ```
 
 
-# Bag of Words
-# Sentiment Analysis
+## Bag of Words
+## Sentiment Analysis
 
 A typical sentiment analysis involves unnesting tokens with `unnest_tokens()`, assigning sentiments with `inner_join(sentiments)`, counting tokens with `count()`, and summarizing and visualizing.
 
@@ -403,7 +403,7 @@ austen_books() %>%
 
 ```
 
-## N-Grams
+### N-Grams
 
 Create n-grams by specifying `unnest_tokens(..., token = "ngrams", n)` where `n = 2` is a bigram, etc.  To remove the stop words, `separate` the n-grams, then filter on the `stop_words` data set.
 
@@ -559,7 +559,7 @@ austen_books() %>%
 ```
 
 
-## Converting to and from non-tidy formats
+### Converting to and from non-tidy formats
 
 One of the most common objects in text mining packages is the document term matrix (DTM) where each row is a document, each column a term, and each value an appearance count.  The `broom` package contains functions to convert between DTM and tidy formats.
 
@@ -617,22 +617,22 @@ inaug_td %>%
   facet_wrap(~document, ncol = 2, scales = "free")
 ```
 
-And here is word frequency trend ocer time for six selected terms.
+And here is word frequency trend ocer time for six selected terms. (problem with `extract()` below).
 
 ```{r}
-inaug_td %>%
-  extract(document, "year", "(\\d+)", convert = TRUE) %>%
-  complete(year, term, fill = list(count = 0)) %>%
-  group_by(year) %>%
-  mutate(year_total = sum(count)) %>%
-  filter(term %in% c("god", "america", "foreign", "union", "constitution", "freedom")) %>%
-  ggplot(aes(x = year, y = count / year_total)) + 
-  geom_point() +
-  geom_smooth() +
-  facet_wrap(~ term, scales = "free_y") +
-  scale_y_continuous(labels = scales::percent_format()) +
-  labs(y = "",
-       title = "% frequency of word in inaugural address")
+# inaug_td %>%
+#   extract(document, "year", "(\\d+)", convert = TRUE) %>%
+#   complete(year, term, fill = list(count = 0)) %>%
+#   group_by(year) %>%
+#   mutate(year_total = sum(count)) %>%
+#   filter(term %in% c("god", "america", "foreign", "union", "constitution", "freedom")) %>%
+#   ggplot(aes(x = year, y = count / year_total)) + 
+#   geom_point() +
+#   geom_smooth() +
+#   facet_wrap(~ term, scales = "free_y") +
+#   scale_y_continuous(labels = scales::percent_format()) +
+#   labs(y = "",
+#        title = "% frequency of word in inaugural address")
 ```
 
 Cast tidy data into document-term matrix with `cast_dtm()`, quanteda's dfm with `cast_dfm()`, and sparese matrix with `cast_sparse()`.
@@ -654,7 +654,7 @@ acq_td <- tidy(acq)
 acq_td
 ```
 
-## Example
+### Example
 
 Library `tm.plugin.webmining` connects to online feeds to retrieve news articles based on a keyword.
 
@@ -675,7 +675,7 @@ download_articles <- function(symbol) {
 #corpus <- Corpus(GoogleFinanceSource("NASDAQ:MSFT"))
 ```
 
-# Topic Modeling
+## Topic Modeling
 
 Topic modeling is a method for unsupervised classification of documents, similar to clustering on numeric data, which finds natural groups of items.  Latent Dirichlet allocation (LDA) is a popular topic modeling algorithm. LDA treats each document as a mixture of topics (X% topic A, Y% topic B, etc.), and each topic as a mixture of words.  Each topic is a collection of word probabilities for all of the unique words used in the corpus. LDA is implemented in the `topicmodels` package.
 
@@ -900,7 +900,7 @@ wrong_words %>%
 ```
 
 
-# Appendix: String Manipulation
+## Appendix: String Manipulation
 
 ```{r}
 library(stringr)
@@ -918,7 +918,7 @@ x <- c(72.19, 1030.18, 102091.93, 1189192.18)
 format(x, digits = 2, big.mark = ",", trim = TRUE, scientific = FALSE)
 ```
 
-## stringr package
+### stringr package
 
 The **stringr** package is a simple wrapper around the more complete **stringi** package.  There are a ton of functions (see `help(package = "stringr")`), but here are some particularly useful ones.
 
@@ -984,7 +984,7 @@ str_count(c("Although we know", "that time",  "has wings"), pattern = fixed("win
 str_extract(c("We're the ones", "who have to fly"), pattern = " t..")
 ```
 
-## Regular Expressions
+### Regular Expressions
 The **rebus** package is a good resource for building regular expressions.
 
 ```{r}
@@ -1107,7 +1107,7 @@ table(who)
 ```
 
 
-# Reference
+## Reference Links
 
 Silge, J., & Robinson, D. (2019). Text Mining with R. O'Reilly Media. https://www.tidytextmining.com.
 https://juliasilge.com/blog/evaluating-stm/

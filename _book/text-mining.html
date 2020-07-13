@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 13 Text Mining | My Data Science Notes</title>
+  <title>Chapter 12 Text Mining | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 13 Text Mining | My Data Science Notes" />
+  <meta property="og:title" content="Chapter 12 Text Mining | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 13 Text Mining | My Data Science Notes" />
+  <meta name="twitter:title" content="Chapter 12 Text Mining | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-07-08" />
+<meta name="date" content="2020-07-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,8 @@
 
 
 <script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="assets/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<script src="assets/tabwid-1.0.0/tabwid.js"></script>
 
 
 <style type="text/css">
@@ -153,7 +155,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>1.4</b> Join Distributions</a></li>
 <li class="chapter" data-level="1.5" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>1.5</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>2</b> Categorical Analysis - Nonmodel</a><ul>
+<li class="chapter" data-level="2" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>2</b> Statistical Tests</a><ul>
 <li class="chapter" data-level="2.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>2.1</b> Chi-Square Test</a></li>
 <li class="chapter" data-level="2.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>2.2</b> One-Way Tables</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>2.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
@@ -172,37 +174,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>2.4.1</b> Odds Ratio</a></li>
 <li class="chapter" data-level="2.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>2.4.2</b> Chi-Square Independence Test</a></li>
 </ul></li>
+<li class="chapter" data-level="2.5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>2.5</b> Continuous Variable Analysis</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>2.5.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="3.0.1" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
-<li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
-<li class="chapter" data-level="4.2" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>4.2</b> Blocking</a></li>
-<li class="chapter" data-level="4.3" data-path="nested.html"><a href="nested.html"><i class="fa fa-check"></i><b>4.3</b> Nested</a></li>
-<li class="chapter" data-level="4.4" data-path="split-plot.html"><a href="split-plot.html"><i class="fa fa-check"></i><b>4.4</b> Split Plot</a></li>
+<li class="chapter" data-level="3" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>3</b> Experiment Design</a><ul>
+<li class="chapter" data-level="3.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>3.1</b> Single Factor</a></li>
+<li class="chapter" data-level="3.2" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3.2</b> Blocking</a></li>
+<li class="chapter" data-level="3.3" data-path="nested.html"><a href="nested.html"><i class="fa fa-check"></i><b>3.3</b> Nested</a></li>
+<li class="chapter" data-level="3.4" data-path="split-plot.html"><a href="split-plot.html"><i class="fa fa-check"></i><b>3.4</b> Split Plot</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a><ul>
-<li class="chapter" data-level="4.5" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>4.5</b> Linear Regression Model</a></li>
-<li class="chapter" data-level="4.6" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>4.6</b> Parameter Estimation</a></li>
-<li class="chapter" data-level="4.7" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>4.7</b> Model Assumptions</a><ul>
-<li class="chapter" data-level="4.7.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>4.7.1</b> Linearity</a></li>
-<li class="chapter" data-level="4.7.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>4.7.2</b> Multicollinearity</a></li>
-<li class="chapter" data-level="4.7.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>4.7.3</b> Normality</a></li>
-<li class="chapter" data-level="4.7.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>4.7.4</b> Equal Variances</a></li>
+<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a></li>
+<li class="chapter" data-level="4" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>4</b> Ordinary Least Squares</a><ul>
+<li class="chapter" data-level="4.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>4.1</b> Linear Regression Model</a></li>
+<li class="chapter" data-level="4.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>4.2</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="4.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>4.3</b> Model Assumptions</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>4.3.1</b> Linearity</a></li>
+<li class="chapter" data-level="4.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>4.3.2</b> Multicollinearity</a></li>
+<li class="chapter" data-level="4.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>4.3.3</b> Normality</a></li>
+<li class="chapter" data-level="4.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>4.3.4</b> Equal Variances</a></li>
 </ul></li>
-<li class="chapter" data-level="4.8" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>4.8</b> Prediction</a></li>
-<li class="chapter" data-level="4.9" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>4.9</b> Inference</a><ul>
-<li class="chapter" data-level="4.9.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>4.9.1</b> <em>t</em>-Test</a></li>
-<li class="chapter" data-level="4.9.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>4.9.2</b> <em>F</em>-Test</a></li>
+<li class="chapter" data-level="4.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>4.4</b> Prediction</a></li>
+<li class="chapter" data-level="4.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>4.5</b> Inference</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>4.5.1</b> <em>t</em>-Test</a></li>
+<li class="chapter" data-level="4.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>4.5.2</b> <em>F</em>-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="4.10" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>4.10</b> Interpretation</a></li>
-<li class="chapter" data-level="4.11" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>4.11</b> Model Validation</a><ul>
-<li class="chapter" data-level="4.11.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>4.11.1</b> Accuracy Metrics</a></li>
-<li class="chapter" data-level="4.11.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>4.11.2</b> Cross-Validation</a></li>
-<li class="chapter" data-level="4.11.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>4.11.3</b> Gain Curve</a></li>
+<li class="chapter" data-level="4.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>4.6</b> Interpretation</a></li>
+<li class="chapter" data-level="4.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>4.7</b> Model Validation</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>4.7.1</b> Accuracy Metrics</a></li>
+<li class="chapter" data-level="4.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>4.7.2</b> Cross-Validation</a></li>
+<li class="chapter" data-level="4.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>4.7.3</b> Gain Curve</a></li>
 </ul></li>
-<li class="chapter" data-level="4.12" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>4.12</b> Reference</a></li>
+<li class="chapter" data-level="4.8" data-path="ols-reference.html"><a href="ols-reference.html"><i class="fa fa-check"></i><b>4.8</b> OLS Reference</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>5</b> Generalized Linear Models</a><ul>
 <li class="chapter" data-level="5.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>5.1</b> Logistic Regression</a></li>
@@ -224,66 +227,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.7" data-path="canonical-correlation.html"><a href="canonical-correlation.html"><i class="fa fa-check"></i><b>6.7</b> Canonical Correlation</a></li>
 <li class="chapter" data-level="6.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>6.8</b> Cluster Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>7</b> Classification</a></li>
-<li class="chapter" data-level="8" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>8</b> Regularization</a><ul>
-<li class="chapter" data-level="8.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>8.1</b> Ridge</a></li>
-<li class="chapter" data-level="8.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>8.2</b> Lasso</a></li>
-<li class="chapter" data-level="8.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>8.3</b> Elastic Net</a></li>
+<li class="chapter" data-level="7" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>7</b> Regularization</a><ul>
+<li class="chapter" data-level="7.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>7.1</b> Ridge</a></li>
+<li class="chapter" data-level="7.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>7.2</b> Lasso</a></li>
+<li class="chapter" data-level="7.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>7.3</b> Elastic Net</a></li>
 <li class="chapter" data-level="" data-path="model-summary.html"><a href="model-summary.html"><i class="fa fa-check"></i>Model Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>9</b> Decision Trees</a><ul>
-<li class="chapter" data-level="9.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>9.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>9.1.1</b> Measuring Performance</a></li>
-<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>9.1.2</b> Training with Caret</a></li>
+<li class="chapter" data-level="8" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>8</b> Decision Trees</a><ul>
+<li class="chapter" data-level="8.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>8.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>8.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="8.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>8.1.2</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>9.2</b> Regression Tree</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>9.2.1</b> Training with Caret</a></li>
+<li class="chapter" data-level="8.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>8.2</b> Regression Tree</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>8.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>9.3</b> Bagged Trees</a><ul>
-<li class="chapter" data-level="9.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>9.3.1</b> Bagged Classification Tree</a></li>
-<li class="chapter" data-level="9.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>9.3.2</b> Bagging Regression Tree</a></li>
+<li class="chapter" data-level="8.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>8.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>8.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="8.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>8.3.2</b> Bagging Regression Tree</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>9.4</b> Random Forests</a></li>
-<li class="chapter" data-level="9.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>9.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="9.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>9.6</b> Summary</a><ul>
-<li class="chapter" data-level="9.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>9.6.1</b> Classification Trees</a></li>
-<li class="chapter" data-level="9.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>9.6.2</b> Regression Trees</a></li>
+<li class="chapter" data-level="8.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>8.4</b> Random Forests</a></li>
+<li class="chapter" data-level="8.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>8.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="8.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8.6</b> Summary</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>8.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="8.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>8.6.2</b> Regression Trees</a></li>
 </ul></li>
-<li class="chapter" data-level="9.7" data-path="reference.html"><a href="reference.html#reference"><i class="fa fa-check"></i><b>9.7</b> Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>10</b> Non-linear Models</a><ul>
-<li class="chapter" data-level="10.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>10.1</b> Splines</a></li>
-<li class="chapter" data-level="10.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>10.2</b> MARS</a></li>
-<li class="chapter" data-level="10.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>10.3</b> GAM</a></li>
+<li class="chapter" data-level="9" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>9</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="9.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>9.1</b> Splines</a></li>
+<li class="chapter" data-level="9.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>9.2</b> MARS</a></li>
+<li class="chapter" data-level="9.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>9.3</b> GAM</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>11</b> Support Vector Machines</a><ul>
-<li class="chapter" data-level="11.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>11.1</b> Maximal Margin Classifier</a></li>
-<li class="chapter" data-level="11.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>11.2</b> Support Vector Classifier</a></li>
-<li class="chapter" data-level="11.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>11.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="11.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>11.4</b> Example</a></li>
-<li class="chapter" data-level="11.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>11.5</b> Using Caret</a></li>
+<li class="chapter" data-level="10" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>10</b> Support Vector Machines</a><ul>
+<li class="chapter" data-level="10.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>10.1</b> Maximal Margin Classifier</a></li>
+<li class="chapter" data-level="10.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>10.2</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="10.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>10.3</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="10.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>10.4</b> Example</a></li>
+<li class="chapter" data-level="10.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>10.5</b> Using Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>12</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="13" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>13</b> Text Mining</a></li>
-<li class="chapter" data-level="14" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>14</b> Tidy Text</a></li>
-<li class="chapter" data-level="15" data-path="bag-of-words.html"><a href="bag-of-words.html"><i class="fa fa-check"></i><b>15</b> Bag of Words</a></li>
-<li class="chapter" data-level="16" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>16</b> Sentiment Analysis</a><ul>
-<li class="chapter" data-level="16.1" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i><b>16.1</b> N-Grams</a></li>
-<li class="chapter" data-level="16.2" data-path="converting-to-and-from-non-tidy-formats.html"><a href="converting-to-and-from-non-tidy-formats.html"><i class="fa fa-check"></i><b>16.2</b> Converting to and from non-tidy formats</a></li>
-<li class="chapter" data-level="16.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>16.3</b> Example</a></li>
+<li class="chapter" data-level="11" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>11</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a><ul>
+<li class="chapter" data-level="12.1" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>12.1</b> Tidy Text</a></li>
+<li class="chapter" data-level="12.2" data-path="bag-of-words.html"><a href="bag-of-words.html"><i class="fa fa-check"></i><b>12.2</b> Bag of Words</a></li>
+<li class="chapter" data-level="12.3" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>12.3</b> Sentiment Analysis</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#n-grams"><i class="fa fa-check"></i><b>12.3.1</b> N-Grams</a></li>
+<li class="chapter" data-level="12.3.2" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#converting-to-and-from-non-tidy-formats"><i class="fa fa-check"></i><b>12.3.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="12.3.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>12.3.3</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="topic-modeling.html"><a href="topic-modeling.html"><i class="fa fa-check"></i><b>17</b> Topic Modeling</a></li>
-<li class="chapter" data-level="18" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html"><i class="fa fa-check"></i><b>18</b> Appendix: String Manipulation</a><ul>
-<li class="chapter" data-level="18.1" data-path="stringr-package.html"><a href="stringr-package.html"><i class="fa fa-check"></i><b>18.1</b> stringr package</a></li>
-<li class="chapter" data-level="18.2" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>18.2</b> Regular Expressions</a></li>
+<li class="chapter" data-level="12.4" data-path="topic-modeling.html"><a href="topic-modeling.html"><i class="fa fa-check"></i><b>12.4</b> Topic Modeling</a></li>
+<li class="chapter" data-level="12.5" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html"><i class="fa fa-check"></i><b>12.5</b> Appendix: String Manipulation</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#stringr-package"><i class="fa fa-check"></i><b>12.5.1</b> stringr package</a></li>
+<li class="chapter" data-level="12.5.2" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#regular-expressions"><i class="fa fa-check"></i><b>12.5.2</b> Regular Expressions</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="reference.html"><a href="reference.html#reference"><i class="fa fa-check"></i><b>19</b> Reference</a></li>
-<li class="chapter" data-level="20" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>20</b> Survival Analysis</a><ul>
-<li class="chapter" data-level="20.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>20.1</b> Basic Concepts</a></li>
-<li class="chapter" data-level="20.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>20.2</b> Survival Curve Estimation</a><ul>
-<li class="chapter" data-level="20.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>20.2.1</b> Kaplan-Meier</a></li>
-<li class="chapter" data-level="20.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>20.2.2</b> Weibull</a></li>
-<li class="chapter" data-level="20.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>20.2.3</b> Cox</a></li>
+<li class="chapter" data-level="12.6" data-path="reference-links.html"><a href="reference-links.html"><i class="fa fa-check"></i><b>12.6</b> Reference Links</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>13</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>13.1</b> Basic Concepts</a></li>
+<li class="chapter" data-level="13.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>13.2</b> Survival Curve Estimation</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>13.2.1</b> Kaplan-Meier</a></li>
+<li class="chapter" data-level="13.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>13.2.2</b> Weibull</a></li>
+<li class="chapter" data-level="13.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>13.2.3</b> Cox</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
@@ -291,7 +293,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="20.2.4" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>20.2.4</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="13.2.4" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>13.2.4</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
@@ -318,13 +320,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="text-mining" class="section level1">
-<h1><span class="header-section-number">Chapter 13</span> Text Mining</h1>
+<h1><span class="header-section-number">Chapter 12</span> Text Mining</h1>
 <p>Text mining may be thought of as the process of distilling actionable insights from text, typically by identifying patterns with statistical pattern learning. Typical text mining tasks include text categorization, sentiment analysis, and topic modeling.</p>
 <p>There are two approaches to text mining. <em>Semantic parsing</em> identifies words by type and order (sentences, phrases, nouns/verbs, proper nouns, etc.). <em>Bag of Words</em> treats words as simply attributes of the document. Bag of words is obviously the simpler way to go.</p>
 <p>The <strong>qdap</strong> package provides parsing tools for preparing transcript data.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="text-mining.html#cb1-1"></a><span class="kw">library</span>(qdap)</span></code></pre></div>
+<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="text-mining.html#cb797-1"></a><span class="kw">library</span>(qdap)</span></code></pre></div>
 <p>For example, <code>freq_terms()</code> parses text and counts the terms.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="text-mining.html#cb2-1"></a><span class="kw">freq_terms</span>(DATA<span class="op">$</span>state, <span class="dt">top =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="text-mining.html#cb798-1"></a><span class="kw">freq_terms</span>(DATA<span class="op">$</span>state, <span class="dt">top =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   WORD FREQ
 ## 1 you     4
 ## 2 we      3
@@ -336,10 +338,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 8 not     2
 ## 9 what    2</code></pre>
 <p>You can also plot the terms.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="text-mining.html#cb4-1"></a><span class="kw">plot</span>(<span class="kw">freq_terms</span>(DATA<span class="op">$</span>state, <span class="dt">top =</span> <span class="dv">5</span>))</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="text-mining.html#cb800-1"></a><span class="kw">plot</span>(<span class="kw">freq_terms</span>(DATA<span class="op">$</span>state, <span class="dt">top =</span> <span class="dv">5</span>))</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-390-1.png" width="672" /></p>
 <p>There are two kinds of the corpus data types, the permanent corpus, <strong>PCorpus</strong>, and the volatile corpus, <strong>VCorpus</strong>. The volatile corpus is held in RAM rather than saved to disk. Create a volatile corpus with <code>tm::vCorpous()</code>. vCorpous() takes either a text source created with <code>tm::VectorSource()</code> or a dataframe source created with <code>Dataframe Source()</code> where the input dataframe has cols <code>doc_id</code>, <code>text_id</code> and zero or more metadata columns.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="text-mining.html#cb5-1"></a>tweets &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;https://assets.datacamp.com/production/repositories/19/datasets/27a2a8587eff17add54f4ba288e770e235ea3325/coffee.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="text-mining.html#cb801-1"></a>tweets &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;https://assets.datacamp.com/production/repositories/19/datasets/27a2a8587eff17add54f4ba288e770e235ea3325/coffee.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   num = col_double(),
@@ -358,84 +360,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   longitude = col_logical(),
 ##   latitude = col_logical()
 ## )</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="text-mining.html#cb7-1"></a>coffee_tweets &lt;-<span class="st"> </span>tweets<span class="op">$</span>text</span>
-<span id="cb7-2"><a href="text-mining.html#cb7-2"></a></span>
-<span id="cb7-3"><a href="text-mining.html#cb7-3"></a>coffee_source &lt;-<span class="st"> </span><span class="kw">VectorSource</span>(coffee_tweets)</span>
-<span id="cb7-4"><a href="text-mining.html#cb7-4"></a>coffee_corpus &lt;-<span class="st"> </span><span class="kw">VCorpus</span>(coffee_source)</span>
-<span id="cb7-5"><a href="text-mining.html#cb7-5"></a></span>
-<span id="cb7-6"><a href="text-mining.html#cb7-6"></a><span class="co"># Text of first tweet</span></span>
-<span id="cb7-7"><a href="text-mining.html#cb7-7"></a>coffee_corpus[[<span class="dv">1</span>]][<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb803-1"><a href="text-mining.html#cb803-1"></a>coffee_tweets &lt;-<span class="st"> </span>tweets<span class="op">$</span>text</span>
+<span id="cb803-2"><a href="text-mining.html#cb803-2"></a></span>
+<span id="cb803-3"><a href="text-mining.html#cb803-3"></a>coffee_source &lt;-<span class="st"> </span><span class="kw">VectorSource</span>(coffee_tweets)</span>
+<span id="cb803-4"><a href="text-mining.html#cb803-4"></a>coffee_corpus &lt;-<span class="st"> </span><span class="kw">VCorpus</span>(coffee_source)</span>
+<span id="cb803-5"><a href="text-mining.html#cb803-5"></a></span>
+<span id="cb803-6"><a href="text-mining.html#cb803-6"></a><span class="co"># Text of first tweet</span></span>
+<span id="cb803-7"><a href="text-mining.html#cb803-7"></a>coffee_corpus[[<span class="dv">1</span>]][<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## $content
 ## [1] &quot;@ayyytylerb that is so true drink lots of coffee&quot;</code></pre>
 <p>In bag of words text mining, cleaning helps aggregate terms, especially words with common stems like “miner” and “mining”. There are several functions useful for preprocessing: <code>tolower()</code>, <code>tm::removePunctuation()</code>, <code>tm::removeNumbers()</code>, <code>tm::stripWhiteSpace()</code>, and <code>removeWords()</code>. Apply these functions to the documents in a <code>VCorpus</code> object with <code>tm_map()</code>. If the function is not one of the pre-defined functions, wrap it in <code>content_transformer()</code>. Another preprocessing function is <code>stemDocument()</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="text-mining.html#cb9-1"></a><span class="co"># Create the object: text</span></span>
-<span id="cb9-2"><a href="text-mining.html#cb9-2"></a>text &lt;-<span class="st"> &quot;&lt;b&gt;She&lt;/b&gt; woke up at       6 A.M. It</span><span class="ch">\&#39;</span><span class="st">s so early!  She was only 10% awake and began drinking coffee in front of her computer.&quot;</span></span>
-<span id="cb9-3"><a href="text-mining.html#cb9-3"></a><span class="kw">tolower</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb805"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb805-1"><a href="text-mining.html#cb805-1"></a><span class="co"># Create the object: text</span></span>
+<span id="cb805-2"><a href="text-mining.html#cb805-2"></a>text &lt;-<span class="st"> &quot;&lt;b&gt;She&lt;/b&gt; woke up at       6 A.M. It</span><span class="ch">\&#39;</span><span class="st">s so early!  She was only 10% awake and began drinking coffee in front of her computer.&quot;</span></span>
+<span id="cb805-3"><a href="text-mining.html#cb805-3"></a><span class="kw">tolower</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;she&lt;/b&gt; woke up at       6 a.m. it&#39;s so early!  she was only 10% awake and began drinking coffee in front of her computer.&quot;</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="text-mining.html#cb11-1"></a><span class="kw">removePunctuation</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="text-mining.html#cb807-1"></a><span class="kw">removePunctuation</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;bSheb woke up at       6 AM Its so early  She was only 10 awake and began drinking coffee in front of her computer&quot;</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="text-mining.html#cb13-1"></a><span class="kw">removeNumbers</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb809-1"><a href="text-mining.html#cb809-1"></a><span class="kw">removeNumbers</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke up at        A.M. It&#39;s so early!  She was only % awake and began drinking coffee in front of her computer.&quot;</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="text-mining.html#cb15-1"></a><span class="kw">stripWhitespace</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb811-1"><a href="text-mining.html#cb811-1"></a><span class="kw">stripWhitespace</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke up at 6 A.M. It&#39;s so early! She was only 10% awake and began drinking coffee in front of her computer.&quot;</code></pre>
 <p>The <strong>qdap</strong> package offers other preprocessing functions.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="text-mining.html#cb17-1"></a>text &lt;-<span class="st"> &quot;&lt;b&gt;She&lt;/b&gt; woke up at       6 A.M. It</span><span class="ch">\&#39;</span><span class="st">s so early!  She was only 10% awake and began drinking coffee in front of her computer.&quot;</span></span>
-<span id="cb17-2"><a href="text-mining.html#cb17-2"></a><span class="kw">bracketX</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb813"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb813-1"><a href="text-mining.html#cb813-1"></a>text &lt;-<span class="st"> &quot;&lt;b&gt;She&lt;/b&gt; woke up at       6 A.M. It</span><span class="ch">\&#39;</span><span class="st">s so early!  She was only 10% awake and began drinking coffee in front of her computer.&quot;</span></span>
+<span id="cb813-2"><a href="text-mining.html#cb813-2"></a><span class="kw">bracketX</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;She woke up at 6 A.M. It&#39;s so early! She was only 10% awake and began drinking coffee in front of her computer.&quot;</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="text-mining.html#cb19-1"></a><span class="kw">replace_number</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb815-1"><a href="text-mining.html#cb815-1"></a><span class="kw">replace_number</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke up at six A.M. It&#39;s so early! She was only ten% awake and began drinking coffee in front of her computer.&quot;</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="text-mining.html#cb21-1"></a><span class="kw">replace_abbreviation</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="text-mining.html#cb817-1"></a><span class="kw">replace_abbreviation</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke up at 6 AM It&#39;s so early! She was only 10% awake and began drinking coffee in front of her computer.&quot;</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="text-mining.html#cb23-1"></a><span class="kw">replace_contraction</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="text-mining.html#cb819-1"></a><span class="kw">replace_contraction</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke up at 6 A.M. it is so early! She was only 10% awake and began drinking coffee in front of her computer.&quot;</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="text-mining.html#cb25-1"></a><span class="kw">replace_symbol</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="text-mining.html#cb821-1"></a><span class="kw">replace_symbol</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke up at 6 A.M. It&#39;s so early! She was only 10 percent awake and began drinking coffee in front of her computer.&quot;</code></pre>
 <p><code>tm::stopwords("en")</code> returns a vector of stop words. You can add to the list with concatenation.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="text-mining.html#cb27-1"></a>new_stops &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;coffee&quot;</span>, <span class="st">&quot;bean&quot;</span>, <span class="kw">stopwords</span>(<span class="st">&quot;en&quot;</span>))</span>
-<span id="cb27-2"><a href="text-mining.html#cb27-2"></a><span class="kw">removeWords</span>(text, new_stops)</span></code></pre></div>
+<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="text-mining.html#cb823-1"></a>new_stops &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;coffee&quot;</span>, <span class="st">&quot;bean&quot;</span>, <span class="kw">stopwords</span>(<span class="st">&quot;en&quot;</span>))</span>
+<span id="cb823-2"><a href="text-mining.html#cb823-2"></a><span class="kw">removeWords</span>(text, new_stops)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke         6 A.M. It&#39;s  early!  She   10% awake  began drinking   front   computer.&quot;</code></pre>
 <p><code>tm::stemDocument()</code> and <code>tm::stemCompletion()</code> reduce the variation in terms.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="text-mining.html#cb29-1"></a>complicate &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;complicated&quot;</span>, <span class="st">&quot;complication&quot;</span>, <span class="st">&quot;complicatedly&quot;</span>)</span>
-<span id="cb29-2"><a href="text-mining.html#cb29-2"></a></span>
-<span id="cb29-3"><a href="text-mining.html#cb29-3"></a>stem_doc &lt;-<span class="st"> </span><span class="kw">stemDocument</span>(complicate)</span>
-<span id="cb29-4"><a href="text-mining.html#cb29-4"></a></span>
-<span id="cb29-5"><a href="text-mining.html#cb29-5"></a>comp_dict &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;complicate&quot;</span>)</span>
-<span id="cb29-6"><a href="text-mining.html#cb29-6"></a></span>
-<span id="cb29-7"><a href="text-mining.html#cb29-7"></a>complete_text &lt;-<span class="st"> </span><span class="kw">stemCompletion</span>(stem_doc, comp_dict)</span>
-<span id="cb29-8"><a href="text-mining.html#cb29-8"></a>complete_text</span></code></pre></div>
+<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="text-mining.html#cb825-1"></a>complicate &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;complicated&quot;</span>, <span class="st">&quot;complication&quot;</span>, <span class="st">&quot;complicatedly&quot;</span>)</span>
+<span id="cb825-2"><a href="text-mining.html#cb825-2"></a></span>
+<span id="cb825-3"><a href="text-mining.html#cb825-3"></a>stem_doc &lt;-<span class="st"> </span><span class="kw">stemDocument</span>(complicate)</span>
+<span id="cb825-4"><a href="text-mining.html#cb825-4"></a></span>
+<span id="cb825-5"><a href="text-mining.html#cb825-5"></a>comp_dict &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;complicate&quot;</span>)</span>
+<span id="cb825-6"><a href="text-mining.html#cb825-6"></a></span>
+<span id="cb825-7"><a href="text-mining.html#cb825-7"></a>complete_text &lt;-<span class="st"> </span><span class="kw">stemCompletion</span>(stem_doc, comp_dict)</span>
+<span id="cb825-8"><a href="text-mining.html#cb825-8"></a>complete_text</span></code></pre></div>
 <pre><code>##      complic      complic      complic 
 ## &quot;complicate&quot; &quot;complicate&quot; &quot;complicate&quot;</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="text-mining.html#cb31-1"></a>clean_corpus &lt;-<span class="st"> </span><span class="cf">function</span>(corpus){</span>
-<span id="cb31-2"><a href="text-mining.html#cb31-2"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, removePunctuation)</span>
-<span id="cb31-3"><a href="text-mining.html#cb31-3"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, <span class="kw">content_transformer</span>(tolower))</span>
-<span id="cb31-4"><a href="text-mining.html#cb31-4"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, removeWords, <span class="dt">words =</span> <span class="kw">c</span>(<span class="kw">stopwords</span>(<span class="st">&quot;en&quot;</span>), <span class="st">&quot;coffee&quot;</span>, <span class="st">&quot;mug&quot;</span>))</span>
-<span id="cb31-5"><a href="text-mining.html#cb31-5"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, stripWhitespace)</span>
-<span id="cb31-6"><a href="text-mining.html#cb31-6"></a>  <span class="kw">return</span>(corpus)</span>
-<span id="cb31-7"><a href="text-mining.html#cb31-7"></a>}</span>
-<span id="cb31-8"><a href="text-mining.html#cb31-8"></a>clean_corp &lt;-<span class="st"> </span><span class="kw">clean_corpus</span>(coffee_corpus)</span>
-<span id="cb31-9"><a href="text-mining.html#cb31-9"></a><span class="kw">content</span>(clean_corp[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="text-mining.html#cb827-1"></a>clean_corpus &lt;-<span class="st"> </span><span class="cf">function</span>(corpus){</span>
+<span id="cb827-2"><a href="text-mining.html#cb827-2"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, removePunctuation)</span>
+<span id="cb827-3"><a href="text-mining.html#cb827-3"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, <span class="kw">content_transformer</span>(tolower))</span>
+<span id="cb827-4"><a href="text-mining.html#cb827-4"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, removeWords, <span class="dt">words =</span> <span class="kw">c</span>(<span class="kw">stopwords</span>(<span class="st">&quot;en&quot;</span>), <span class="st">&quot;coffee&quot;</span>, <span class="st">&quot;mug&quot;</span>))</span>
+<span id="cb827-5"><a href="text-mining.html#cb827-5"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, stripWhitespace)</span>
+<span id="cb827-6"><a href="text-mining.html#cb827-6"></a>  <span class="kw">return</span>(corpus)</span>
+<span id="cb827-7"><a href="text-mining.html#cb827-7"></a>}</span>
+<span id="cb827-8"><a href="text-mining.html#cb827-8"></a>clean_corp &lt;-<span class="st"> </span><span class="kw">clean_corpus</span>(coffee_corpus)</span>
+<span id="cb827-9"><a href="text-mining.html#cb827-9"></a><span class="kw">content</span>(clean_corp[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## [1] &quot;ayyytylerb true drink lots &quot;</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="text-mining.html#cb33-1"></a><span class="co"># compare to original</span></span>
-<span id="cb33-2"><a href="text-mining.html#cb33-2"></a><span class="kw">content</span>(coffee_corpus[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="text-mining.html#cb829-1"></a><span class="co"># compare to original</span></span>
+<span id="cb829-2"><a href="text-mining.html#cb829-2"></a><span class="kw">content</span>(coffee_corpus[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## [1] &quot;@ayyytylerb that is so true drink lots of coffee&quot;</code></pre>
 <p>To perform the analysis of the tweets, convert the corpus into either a document term matrix (DTM, documents as rows, terms as cols), or a term document matrix (TDM, terms as rows, documents as cols).</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="text-mining.html#cb35-1"></a>coffee_tdm &lt;-<span class="st"> </span><span class="kw">TermDocumentMatrix</span>(clean_corp)</span>
-<span id="cb35-2"><a href="text-mining.html#cb35-2"></a></span>
-<span id="cb35-3"><a href="text-mining.html#cb35-3"></a><span class="co"># Print coffee_tdm data</span></span>
-<span id="cb35-4"><a href="text-mining.html#cb35-4"></a>coffee_tdm</span></code></pre></div>
+<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="text-mining.html#cb831-1"></a>coffee_tdm &lt;-<span class="st"> </span><span class="kw">TermDocumentMatrix</span>(clean_corp)</span>
+<span id="cb831-2"><a href="text-mining.html#cb831-2"></a></span>
+<span id="cb831-3"><a href="text-mining.html#cb831-3"></a><span class="co"># Print coffee_tdm data</span></span>
+<span id="cb831-4"><a href="text-mining.html#cb831-4"></a>coffee_tdm</span></code></pre></div>
 <pre><code>## &lt;&lt;TermDocumentMatrix (terms: 3075, documents: 1000)&gt;&gt;
 ## Non-/sparse entries: 7384/3067616
 ## Sparsity           : 100%
 ## Maximal term length: 27
 ## Weighting          : term frequency (tf)</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="text-mining.html#cb37-1"></a><span class="co"># Convert coffee_tdm to a matrix</span></span>
-<span id="cb37-2"><a href="text-mining.html#cb37-2"></a>coffee_m &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(coffee_tdm)</span>
-<span id="cb37-3"><a href="text-mining.html#cb37-3"></a></span>
-<span id="cb37-4"><a href="text-mining.html#cb37-4"></a><span class="co"># Print the dimensions of the matrix</span></span>
-<span id="cb37-5"><a href="text-mining.html#cb37-5"></a><span class="kw">dim</span>(coffee_m)</span></code></pre></div>
+<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="text-mining.html#cb833-1"></a><span class="co"># Convert coffee_tdm to a matrix</span></span>
+<span id="cb833-2"><a href="text-mining.html#cb833-2"></a>coffee_m &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(coffee_tdm)</span>
+<span id="cb833-3"><a href="text-mining.html#cb833-3"></a></span>
+<span id="cb833-4"><a href="text-mining.html#cb833-4"></a><span class="co"># Print the dimensions of the matrix</span></span>
+<span id="cb833-5"><a href="text-mining.html#cb833-5"></a><span class="kw">dim</span>(coffee_m)</span></code></pre></div>
 <pre><code>## [1] 3075 1000</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="text-mining.html#cb39-1"></a><span class="co"># Review a portion of the matrix</span></span>
-<span id="cb39-2"><a href="text-mining.html#cb39-2"></a>coffee_m[<span class="kw">c</span>(<span class="st">&quot;star&quot;</span>, <span class="st">&quot;starbucks&quot;</span>), <span class="dv">25</span><span class="op">:</span><span class="dv">35</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb835-1"><a href="text-mining.html#cb835-1"></a><span class="co"># Review a portion of the matrix</span></span>
+<span id="cb835-2"><a href="text-mining.html#cb835-2"></a>coffee_m[<span class="kw">c</span>(<span class="st">&quot;star&quot;</span>, <span class="st">&quot;starbucks&quot;</span>), <span class="dv">25</span><span class="op">:</span><span class="dv">35</span>]</span></code></pre></div>
 <pre><code>##            Docs
 ## Terms       25 26 27 28 29 30 31 32 33 34 35
 ##   star       0  0  0  0  0  0  0  0  0  0  0

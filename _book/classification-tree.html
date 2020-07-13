@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9.1 Classification Tree | My Data Science Notes</title>
+  <title>8.1 Classification Tree | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9.1 Classification Tree | My Data Science Notes" />
+  <meta property="og:title" content="8.1 Classification Tree | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9.1 Classification Tree | My Data Science Notes" />
+  <meta name="twitter:title" content="8.1 Classification Tree | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-07-08" />
+<meta name="date" content="2020-07-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -155,7 +155,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>1.4</b> Join Distributions</a></li>
 <li class="chapter" data-level="1.5" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>1.5</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="discrete-analysis.html"><a href="discrete-analysis.html"><i class="fa fa-check"></i><b>2</b> Categorical Analysis - Nonmodel</a><ul>
+<li class="chapter" data-level="2" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>2</b> Statistical Tests</a><ul>
 <li class="chapter" data-level="2.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>2.1</b> Chi-Square Test</a></li>
 <li class="chapter" data-level="2.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>2.2</b> One-Way Tables</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>2.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
@@ -174,37 +174,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>2.4.1</b> Odds Ratio</a></li>
 <li class="chapter" data-level="2.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>2.4.2</b> Chi-Square Independence Test</a></li>
 </ul></li>
+<li class="chapter" data-level="2.5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>2.5</b> Continuous Variable Analysis</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>2.5.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>3</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="3.0.1" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>3.0.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>4</b> Experiment Design</a><ul>
-<li class="chapter" data-level="4.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>4.1</b> Single Factor</a></li>
-<li class="chapter" data-level="4.2" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>4.2</b> Blocking</a></li>
-<li class="chapter" data-level="4.3" data-path="nested.html"><a href="nested.html"><i class="fa fa-check"></i><b>4.3</b> Nested</a></li>
-<li class="chapter" data-level="4.4" data-path="split-plot.html"><a href="split-plot.html"><i class="fa fa-check"></i><b>4.4</b> Split Plot</a></li>
+<li class="chapter" data-level="3" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>3</b> Experiment Design</a><ul>
+<li class="chapter" data-level="3.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>3.1</b> Single Factor</a></li>
+<li class="chapter" data-level="3.2" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3.2</b> Blocking</a></li>
+<li class="chapter" data-level="3.3" data-path="nested.html"><a href="nested.html"><i class="fa fa-check"></i><b>3.3</b> Nested</a></li>
+<li class="chapter" data-level="3.4" data-path="split-plot.html"><a href="split-plot.html"><i class="fa fa-check"></i><b>3.4</b> Split Plot</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a><ul>
-<li class="chapter" data-level="4.5" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>4.5</b> Linear Regression Model</a></li>
-<li class="chapter" data-level="4.6" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>4.6</b> Parameter Estimation</a></li>
-<li class="chapter" data-level="4.7" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>4.7</b> Model Assumptions</a><ul>
-<li class="chapter" data-level="4.7.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>4.7.1</b> Linearity</a></li>
-<li class="chapter" data-level="4.7.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>4.7.2</b> Multicollinearity</a></li>
-<li class="chapter" data-level="4.7.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>4.7.3</b> Normality</a></li>
-<li class="chapter" data-level="4.7.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>4.7.4</b> Equal Variances</a></li>
+<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a></li>
+<li class="chapter" data-level="4" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>4</b> Ordinary Least Squares</a><ul>
+<li class="chapter" data-level="4.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>4.1</b> Linear Regression Model</a></li>
+<li class="chapter" data-level="4.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>4.2</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="4.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>4.3</b> Model Assumptions</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>4.3.1</b> Linearity</a></li>
+<li class="chapter" data-level="4.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>4.3.2</b> Multicollinearity</a></li>
+<li class="chapter" data-level="4.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>4.3.3</b> Normality</a></li>
+<li class="chapter" data-level="4.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>4.3.4</b> Equal Variances</a></li>
 </ul></li>
-<li class="chapter" data-level="4.8" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>4.8</b> Prediction</a></li>
-<li class="chapter" data-level="4.9" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>4.9</b> Inference</a><ul>
-<li class="chapter" data-level="4.9.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>4.9.1</b> <em>t</em>-Test</a></li>
-<li class="chapter" data-level="4.9.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>4.9.2</b> <em>F</em>-Test</a></li>
+<li class="chapter" data-level="4.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>4.4</b> Prediction</a></li>
+<li class="chapter" data-level="4.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>4.5</b> Inference</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>4.5.1</b> <em>t</em>-Test</a></li>
+<li class="chapter" data-level="4.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>4.5.2</b> <em>F</em>-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="4.10" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>4.10</b> Interpretation</a></li>
-<li class="chapter" data-level="4.11" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>4.11</b> Model Validation</a><ul>
-<li class="chapter" data-level="4.11.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>4.11.1</b> Accuracy Metrics</a></li>
-<li class="chapter" data-level="4.11.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>4.11.2</b> Cross-Validation</a></li>
-<li class="chapter" data-level="4.11.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>4.11.3</b> Gain Curve</a></li>
+<li class="chapter" data-level="4.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>4.6</b> Interpretation</a></li>
+<li class="chapter" data-level="4.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>4.7</b> Model Validation</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>4.7.1</b> Accuracy Metrics</a></li>
+<li class="chapter" data-level="4.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>4.7.2</b> Cross-Validation</a></li>
+<li class="chapter" data-level="4.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>4.7.3</b> Gain Curve</a></li>
 </ul></li>
-<li class="chapter" data-level="4.12" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>4.12</b> Reference</a></li>
+<li class="chapter" data-level="4.8" data-path="ols-reference.html"><a href="ols-reference.html"><i class="fa fa-check"></i><b>4.8</b> OLS Reference</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>5</b> Generalized Linear Models</a><ul>
 <li class="chapter" data-level="5.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>5.1</b> Logistic Regression</a></li>
@@ -226,58 +227,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.7" data-path="canonical-correlation.html"><a href="canonical-correlation.html"><i class="fa fa-check"></i><b>6.7</b> Canonical Correlation</a></li>
 <li class="chapter" data-level="6.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>6.8</b> Cluster Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>7</b> Classification</a></li>
-<li class="chapter" data-level="8" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>8</b> Regularization</a><ul>
-<li class="chapter" data-level="8.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>8.1</b> Ridge</a></li>
-<li class="chapter" data-level="8.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>8.2</b> Lasso</a></li>
-<li class="chapter" data-level="8.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>8.3</b> Elastic Net</a></li>
+<li class="chapter" data-level="7" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>7</b> Regularization</a><ul>
+<li class="chapter" data-level="7.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>7.1</b> Ridge</a></li>
+<li class="chapter" data-level="7.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>7.2</b> Lasso</a></li>
+<li class="chapter" data-level="7.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>7.3</b> Elastic Net</a></li>
 <li class="chapter" data-level="" data-path="model-summary.html"><a href="model-summary.html"><i class="fa fa-check"></i>Model Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>9</b> Decision Trees</a><ul>
-<li class="chapter" data-level="9.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>9.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>9.1.1</b> Measuring Performance</a></li>
-<li class="chapter" data-level="9.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>9.1.2</b> Training with Caret</a></li>
+<li class="chapter" data-level="8" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>8</b> Decision Trees</a><ul>
+<li class="chapter" data-level="8.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>8.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>8.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="8.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>8.1.2</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>9.2</b> Regression Tree</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>9.2.1</b> Training with Caret</a></li>
+<li class="chapter" data-level="8.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>8.2</b> Regression Tree</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>8.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>9.3</b> Bagged Trees</a><ul>
-<li class="chapter" data-level="9.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>9.3.1</b> Bagged Classification Tree</a></li>
-<li class="chapter" data-level="9.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>9.3.2</b> Bagging Regression Tree</a></li>
+<li class="chapter" data-level="8.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>8.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>8.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="8.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>8.3.2</b> Bagging Regression Tree</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>9.4</b> Random Forests</a></li>
-<li class="chapter" data-level="9.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>9.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="9.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>9.6</b> Summary</a><ul>
-<li class="chapter" data-level="9.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>9.6.1</b> Classification Trees</a></li>
-<li class="chapter" data-level="9.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>9.6.2</b> Regression Trees</a></li>
+<li class="chapter" data-level="8.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>8.4</b> Random Forests</a></li>
+<li class="chapter" data-level="8.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>8.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="8.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8.6</b> Summary</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>8.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="8.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>8.6.2</b> Regression Trees</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>10</b> Non-linear Models</a><ul>
-<li class="chapter" data-level="10.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>10.1</b> Splines</a></li>
-<li class="chapter" data-level="10.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>10.2</b> MARS</a></li>
-<li class="chapter" data-level="10.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>10.3</b> GAM</a></li>
+<li class="chapter" data-level="9" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>9</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="9.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>9.1</b> Splines</a></li>
+<li class="chapter" data-level="9.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>9.2</b> MARS</a></li>
+<li class="chapter" data-level="9.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>9.3</b> GAM</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>11</b> Support Vector Machines</a><ul>
-<li class="chapter" data-level="11.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>11.1</b> Maximal Margin Classifier</a></li>
-<li class="chapter" data-level="11.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>11.2</b> Support Vector Classifier</a></li>
-<li class="chapter" data-level="11.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>11.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="11.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>11.4</b> Example</a></li>
-<li class="chapter" data-level="11.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>11.5</b> Using Caret</a></li>
+<li class="chapter" data-level="10" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>10</b> Support Vector Machines</a><ul>
+<li class="chapter" data-level="10.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>10.1</b> Maximal Margin Classifier</a></li>
+<li class="chapter" data-level="10.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>10.2</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="10.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>10.3</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="10.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>10.4</b> Example</a></li>
+<li class="chapter" data-level="10.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>10.5</b> Using Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>12</b> Principal Components Analysis</a></li>
-<li class="chapter" data-level="13" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>13</b> Text Mining</a><ul>
-<li class="chapter" data-level="13.1" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i><b>13.1</b> N-Grams</a></li>
-<li class="chapter" data-level="13.2" data-path="converting-to-and-from-non-tidy-formats.html"><a href="converting-to-and-from-non-tidy-formats.html"><i class="fa fa-check"></i><b>13.2</b> Converting to and from non-tidy formats</a></li>
-<li class="chapter" data-level="13.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>13.3</b> Example</a></li>
-<li class="chapter" data-level="13.4" data-path="stringr-package.html"><a href="stringr-package.html"><i class="fa fa-check"></i><b>13.4</b> stringr package</a></li>
-<li class="chapter" data-level="13.5" data-path="regular-expressions.html"><a href="regular-expressions.html"><i class="fa fa-check"></i><b>13.5</b> Regular Expressions</a></li>
+<li class="chapter" data-level="11" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>11</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a><ul>
+<li class="chapter" data-level="12.1" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>12.1</b> Tidy Text</a></li>
+<li class="chapter" data-level="12.2" data-path="bag-of-words.html"><a href="bag-of-words.html"><i class="fa fa-check"></i><b>12.2</b> Bag of Words</a></li>
+<li class="chapter" data-level="12.3" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>12.3</b> Sentiment Analysis</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#n-grams"><i class="fa fa-check"></i><b>12.3.1</b> N-Grams</a></li>
+<li class="chapter" data-level="12.3.2" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#converting-to-and-from-non-tidy-formats"><i class="fa fa-check"></i><b>12.3.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="12.3.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>12.3.3</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>14</b> Survival Analysis</a><ul>
-<li class="chapter" data-level="14.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>14.1</b> Basic Concepts</a></li>
-<li class="chapter" data-level="14.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>14.2</b> Survival Curve Estimation</a><ul>
-<li class="chapter" data-level="14.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>14.2.1</b> Kaplan-Meier</a></li>
-<li class="chapter" data-level="14.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>14.2.2</b> Weibull</a></li>
-<li class="chapter" data-level="14.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>14.2.3</b> Cox</a></li>
+<li class="chapter" data-level="12.4" data-path="topic-modeling.html"><a href="topic-modeling.html"><i class="fa fa-check"></i><b>12.4</b> Topic Modeling</a></li>
+<li class="chapter" data-level="12.5" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html"><i class="fa fa-check"></i><b>12.5</b> Appendix: String Manipulation</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#stringr-package"><i class="fa fa-check"></i><b>12.5.1</b> stringr package</a></li>
+<li class="chapter" data-level="12.5.2" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#regular-expressions"><i class="fa fa-check"></i><b>12.5.2</b> Regular Expressions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="reference-links.html"><a href="reference-links.html"><i class="fa fa-check"></i><b>12.6</b> Reference Links</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>13</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>13.1</b> Basic Concepts</a></li>
+<li class="chapter" data-level="13.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>13.2</b> Survival Curve Estimation</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>13.2.1</b> Kaplan-Meier</a></li>
+<li class="chapter" data-level="13.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>13.2.2</b> Weibull</a></li>
+<li class="chapter" data-level="13.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>13.2.3</b> Cox</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
@@ -285,7 +293,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="14.2.4" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>14.2.4</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="13.2.4" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>13.2.4</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
@@ -312,17 +320,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="classification-tree" class="section level2">
-<h2><span class="header-section-number">9.1</span> Classification Tree</h2>
+<h2><span class="header-section-number">8.1</span> Classification Tree</h2>
 <p>You don’t usually build a simple classification tree on its own, but it is a good way to build understanding, and the ensemble models build on the logic. I’ll learn by example, using the <code>ISLR::OJ</code> data set to predict which brand of orange juice, Citrus Hill (CH) or Minute Maid = (MM), customers <code>Purchase</code> from its 17 predictor variables.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="classification-tree.html#cb1-1"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="classification-tree.html#cb1-2"></a><span class="kw">library</span>(caret)</span>
-<span id="cb1-3"><a href="classification-tree.html#cb1-3"></a><span class="kw">library</span>(rpart)  <span class="co"># classification and regression trees </span></span>
-<span id="cb1-4"><a href="classification-tree.html#cb1-4"></a><span class="kw">library</span>(rpart.plot)  <span class="co"># better formatted plots than the ones in rpart</span></span>
-<span id="cb1-5"><a href="classification-tree.html#cb1-5"></a></span>
-<span id="cb1-6"><a href="classification-tree.html#cb1-6"></a>oj_dat &lt;-<span class="st"> </span>ISLR<span class="op">::</span>OJ</span>
-<span id="cb1-7"><a href="classification-tree.html#cb1-7"></a>skimr<span class="op">::</span><span class="kw">skim</span>(oj_dat)</span></code></pre></div>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="classification-tree.html#cb612-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb612-2"><a href="classification-tree.html#cb612-2"></a><span class="kw">library</span>(caret)</span>
+<span id="cb612-3"><a href="classification-tree.html#cb612-3"></a><span class="kw">library</span>(rpart)  <span class="co"># classification and regression trees </span></span>
+<span id="cb612-4"><a href="classification-tree.html#cb612-4"></a><span class="kw">library</span>(rpart.plot)  <span class="co"># better formatted plots than the ones in rpart</span></span>
+<span id="cb612-5"><a href="classification-tree.html#cb612-5"></a></span>
+<span id="cb612-6"><a href="classification-tree.html#cb612-6"></a>oj_dat &lt;-<span class="st"> </span>ISLR<span class="op">::</span>OJ</span>
+<span id="cb612-7"><a href="classification-tree.html#cb612-7"></a>skimr<span class="op">::</span><span class="kw">skim</span>(oj_dat)</span></code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-3">Table 9.1: </span>Data summary</caption>
+<caption><span id="tab:unnamed-chunk-272">Table 8.1: </span>Data summary</caption>
 <tbody>
 <tr class="odd">
 <td align="left">Name</td>
@@ -622,10 +630,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>I’ll split <code>oj_dat</code> (n = 1,070) into <code>oj_train</code> (80%, n = 857) to fit various models, and <code>oj_test</code> (20%, n = 213) to compare their performance on new data.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="classification-tree.html#cb2-1"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb2-2"><a href="classification-tree.html#cb2-2"></a>partition &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(<span class="dt">y =</span> oj_dat<span class="op">$</span>Purchase, <span class="dt">p =</span> <span class="fl">0.8</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb2-3"><a href="classification-tree.html#cb2-3"></a>oj_train &lt;-<span class="st"> </span>oj_dat[partition, ]</span>
-<span id="cb2-4"><a href="classification-tree.html#cb2-4"></a>oj_test &lt;-<span class="st"> </span>oj_dat[<span class="op">-</span>partition, ]</span></code></pre></div>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="classification-tree.html#cb613-1"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb613-2"><a href="classification-tree.html#cb613-2"></a>partition &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(<span class="dt">y =</span> oj_dat<span class="op">$</span>Purchase, <span class="dt">p =</span> <span class="fl">0.8</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb613-3"><a href="classification-tree.html#cb613-3"></a>oj_train &lt;-<span class="st"> </span>oj_dat[partition, ]</span>
+<span id="cb613-4"><a href="classification-tree.html#cb613-4"></a>oj_test &lt;-<span class="st"> </span>oj_dat[<span class="op">-</span>partition, ]</span></code></pre></div>
 <p>Function <code>rpart::rpart()</code> builds a full tree, minimizing the Gini index <span class="math inline">\(G\)</span> by default (<code>parms = list(split = "gini")</code>), until the stopping criterion is satisfied. The default stopping criterion is</p>
 <ul>
 <li>only attempt a split if the current node has at least <code>minsplit = 20</code> observations, and</li>
@@ -635,33 +643,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>the resulting overall fit improves by <code>cp = 0.01</code> (i.e., <span class="math inline">\(\Delta G &lt;= 0.01\)</span>).</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="classification-tree.html#cb3-1"></a><span class="co"># Use method = &quot;class&quot; for classification, method = &quot;anova&quot; for regression</span></span>
-<span id="cb3-2"><a href="classification-tree.html#cb3-2"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb3-3"><a href="classification-tree.html#cb3-3"></a>oj_mdl_cart_full &lt;-<span class="st"> </span><span class="kw">rpart</span>(<span class="dt">formula =</span> Purchase <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> oj_train, <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb3-4"><a href="classification-tree.html#cb3-4"></a><span class="kw">print</span>(oj_mdl_cart_full)</span></code></pre></div>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="classification-tree.html#cb614-1"></a><span class="co"># Use method = &quot;class&quot; for classification, method = &quot;anova&quot; for regression</span></span>
+<span id="cb614-2"><a href="classification-tree.html#cb614-2"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb614-3"><a href="classification-tree.html#cb614-3"></a>oj_mdl_cart_full &lt;-<span class="st"> </span><span class="kw">rpart</span>(<span class="dt">formula =</span> Purchase <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> oj_train, <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb614-4"><a href="classification-tree.html#cb614-4"></a><span class="kw">print</span>(oj_mdl_cart_full)</span></code></pre></div>
 <pre><code>## n= 857 
 ## 
 ## node), split, n, loss, yval, (yprob)
 ##       * denotes terminal node
 ## 
-##  1) root 857 334 CH (0.61026838 0.38973162)  
-##    2) LoyalCH&gt;=0.48285 537  94 CH (0.82495345 0.17504655)  
-##      4) LoyalCH&gt;=0.7648795 271  13 CH (0.95202952 0.04797048) *
-##      5) LoyalCH&lt; 0.7648795 266  81 CH (0.69548872 0.30451128)  
-##       10) PriceDiff&gt;=-0.165 226  50 CH (0.77876106 0.22123894) *
-##       11) PriceDiff&lt; -0.165 40   9 MM (0.22500000 0.77500000) *
-##    3) LoyalCH&lt; 0.48285 320  80 MM (0.25000000 0.75000000)  
-##      6) LoyalCH&gt;=0.2761415 146  58 MM (0.39726027 0.60273973)  
-##       12) SalePriceMM&gt;=2.04 71  31 CH (0.56338028 0.43661972) *
-##       13) SalePriceMM&lt; 2.04 75  18 MM (0.24000000 0.76000000) *
-##      7) LoyalCH&lt; 0.2761415 174  22 MM (0.12643678 0.87356322) *</code></pre>
+##  1) root 857 330 CH (0.610 0.390)  
+##    2) LoyalCH&gt;=0.48 537  94 CH (0.825 0.175)  
+##      4) LoyalCH&gt;=0.76 271  13 CH (0.952 0.048) *
+##      5) LoyalCH&lt; 0.76 266  81 CH (0.695 0.305)  
+##       10) PriceDiff&gt;=-0.16 226  50 CH (0.779 0.221) *
+##       11) PriceDiff&lt; -0.16 40   9 MM (0.225 0.775) *
+##    3) LoyalCH&lt; 0.48 320  80 MM (0.250 0.750)  
+##      6) LoyalCH&gt;=0.28 146  58 MM (0.397 0.603)  
+##       12) SalePriceMM&gt;=2 71  31 CH (0.563 0.437) *
+##       13) SalePriceMM&lt; 2 75  18 MM (0.240 0.760) *
+##      7) LoyalCH&lt; 0.28 174  22 MM (0.126 0.874) *</code></pre>
 <p>The output starts with the root node. The predicted class at the root is <code>CH</code> and this prediction produces 334 errors on the 857 observations for a success rate (accuracy) of 61% (0.61026838) and an error rate of 39% (0.38973162). The child nodes of node “x” are labeled 2x) and 2x+1), so the child nodes of 1) are 2) and 3), and the child nodes of 2) are 4) and 5). Terminal nodes are labeled with an asterisk (*).</p>
 <p>Surprisingly, only 3 of the 17 features were used the in full tree: <code>LoyalCH</code> (Customer brand loyalty for CH), <code>PriceDiff</code> (relative price of MM over CH), and <code>SalePriceMM</code> (absolute price of MM). The first split is at <code>LoyalCH</code> = 0.48285. Here is a diagram of the full (unpruned) tree.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="classification-tree.html#cb5-1"></a><span class="kw">rpart.plot</span>(oj_mdl_cart_full, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="classification-tree.html#cb616-1"></a><span class="kw">rpart.plot</span>(oj_mdl_cart_full, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-275-1.png" width="672" /></p>
 <p>The boxes show the node classification (based on mode), the proportion of observations that are <em>not</em> <code>CH</code>, and the proportion of observations included in the node.</p>
 <p><code>rpart()</code> not only grew the full tree, it identified the set of cost complexity parameters, and measured the model performance of each corresponding tree using cross-validation. <code>printcp()</code> displays the candidate <span class="math inline">\(c_p\)</span> values. You can use this table to decide how to prune the tree.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="classification-tree.html#cb6-1"></a><span class="kw">printcp</span>(oj_mdl_cart_full)</span></code></pre></div>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="classification-tree.html#cb617-1"></a><span class="kw">printcp</span>(oj_mdl_cart_full)</span></code></pre></div>
 <pre><code>## 
 ## Classification tree:
 ## rpart(formula = Purchase ~ ., data = oj_train, method = &quot;class&quot;)
@@ -669,138 +677,138 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Variables actually used in tree construction:
 ## [1] LoyalCH     PriceDiff   SalePriceMM
 ## 
-## Root node error: 334/857 = 0.38973
+## Root node error: 334/857 = 0
 ## 
 ## n= 857 
 ## 
-##         CP nsplit rel error  xerror     xstd
-## 1 0.479042      0   1.00000 1.00000 0.042745
-## 2 0.032934      1   0.52096 0.54192 0.035775
-## 3 0.013473      3   0.45509 0.47006 0.033905
-## 4 0.010000      5   0.42814 0.46407 0.033736</code></pre>
+##   CP nsplit rel error xerror xstd
+## 1  0      0         1      1    0
+## 2  0      1         1      1    0
+## 3  0      3         0      0    0
+## 4  0      5         0      0    0</code></pre>
 <p>There are 4 <span class="math inline">\(c_p\)</span> values in this model. The model with the smallest complexity parameter allows the most splits (<code>nsplit</code>). The highest complexity parameter corresponds to a tree with just a root node. <code>rel error</code> is the error rate relative to the root node. The root node absolute error is 0.38973162 (the proportion of MM), so its <code>rel error</code> is 0.38973162/0.38973162 = 1.0. That means the absolute error of the full tree (at CP = 0.01) is 0.42814 * 0.38973162 = 0.1669. You can verify that by calculating the error rate of the predicted values:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="classification-tree.html#cb8-1"></a><span class="kw">data.frame</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(oj_mdl_cart_full, <span class="dt">newdata =</span> oj_train, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb8-2"><a href="classification-tree.html#cb8-2"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">obs =</span> oj_train<span class="op">$</span>Purchase,</span>
-<span id="cb8-3"><a href="classification-tree.html#cb8-3"></a>          <span class="dt">err =</span> <span class="kw">if_else</span>(pred <span class="op">!=</span><span class="st"> </span>obs, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb8-4"><a href="classification-tree.html#cb8-4"></a><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">mean_err =</span> <span class="kw">mean</span>(err))</span></code></pre></div>
-<pre><code>##    mean_err
-## 1 0.1668611</code></pre>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="classification-tree.html#cb619-1"></a><span class="kw">data.frame</span>(<span class="dt">pred =</span> <span class="kw">predict</span>(oj_mdl_cart_full, <span class="dt">newdata =</span> oj_train, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb619-2"><a href="classification-tree.html#cb619-2"></a><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">obs =</span> oj_train<span class="op">$</span>Purchase,</span>
+<span id="cb619-3"><a href="classification-tree.html#cb619-3"></a>          <span class="dt">err =</span> <span class="kw">if_else</span>(pred <span class="op">!=</span><span class="st"> </span>obs, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb619-4"><a href="classification-tree.html#cb619-4"></a><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">mean_err =</span> <span class="kw">mean</span>(err))</span></code></pre></div>
+<pre><code>##   mean_err
+## 1     0.17</code></pre>
 <p>Finishing the CP table tour, <code>xerror</code> is the relative cross-validated error rate and <code>xstd</code> is its standard error. If you want the lowest possible error, then prune to the tree with the smallest relative CV error, <span class="math inline">\(c_p\)</span> = 0.01. If you want to balance predictive power with simplicity, prune to the smallest tree within 1 SE of the one with the smallest relative error. The CP table is not super-helpful for finding that tree, so add a column to find it.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="classification-tree.html#cb10-1"></a>oj_mdl_cart_full<span class="op">$</span>cptable <span class="op">%&gt;%</span></span>
-<span id="cb10-2"><a href="classification-tree.html#cb10-2"></a><span class="st">   </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span></span>
-<span id="cb10-3"><a href="classification-tree.html#cb10-3"></a><span class="st">   </span><span class="kw">mutate</span>(</span>
-<span id="cb10-4"><a href="classification-tree.html#cb10-4"></a>      <span class="dt">min_idx =</span> <span class="kw">which.min</span>(oj_mdl_cart_full<span class="op">$</span>cptable[, <span class="st">&quot;xerror&quot;</span>]),</span>
-<span id="cb10-5"><a href="classification-tree.html#cb10-5"></a>      <span class="dt">rownum =</span> <span class="kw">row_number</span>(),</span>
-<span id="cb10-6"><a href="classification-tree.html#cb10-6"></a>      <span class="dt">xerror_cap =</span> oj_mdl_cart_full<span class="op">$</span>cptable[min_idx, <span class="st">&quot;xerror&quot;</span>] <span class="op">+</span><span class="st"> </span></span>
-<span id="cb10-7"><a href="classification-tree.html#cb10-7"></a><span class="st">                   </span>oj_mdl_cart_full<span class="op">$</span>cptable[min_idx, <span class="st">&quot;xstd&quot;</span>],</span>
-<span id="cb10-8"><a href="classification-tree.html#cb10-8"></a>      <span class="dt">eval =</span> <span class="kw">case_when</span>(rownum <span class="op">==</span><span class="st"> </span>min_idx <span class="op">~</span><span class="st"> &quot;min xerror&quot;</span>,</span>
-<span id="cb10-9"><a href="classification-tree.html#cb10-9"></a>                       xerror <span class="op">&lt;</span><span class="st"> </span>xerror_cap <span class="op">~</span><span class="st"> &quot;under cap&quot;</span>,</span>
-<span id="cb10-10"><a href="classification-tree.html#cb10-10"></a>                       <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;&quot;</span>)</span>
-<span id="cb10-11"><a href="classification-tree.html#cb10-11"></a>   ) <span class="op">%&gt;%</span></span>
-<span id="cb10-12"><a href="classification-tree.html#cb10-12"></a><span class="st">   </span><span class="kw">select</span>(<span class="op">-</span>rownum, <span class="op">-</span>min_idx) </span></code></pre></div>
-<pre><code>##           CP nsplit rel.error    xerror       xstd xerror_cap       eval
-## 1 0.47904192      0 1.0000000 1.0000000 0.04274518  0.4978082           
-## 2 0.03293413      1 0.5209581 0.5419162 0.03577468  0.4978082           
-## 3 0.01347305      3 0.4550898 0.4700599 0.03390486  0.4978082  under cap
-## 4 0.01000000      5 0.4281437 0.4640719 0.03373631  0.4978082 min xerror</code></pre>
-<p>The simplest tree using the 1-SE rule is $c_p = 0.01347305, CV error = 0.1832). Fortunately, <code>plotcp()</code> presents a nice graphical representation of the relationship between <code>xerror</code> and <code>cp</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="classification-tree.html#cb12-1"></a><span class="kw">plotcp</span>(oj_mdl_cart_full, <span class="dt">upper =</span> <span class="st">&quot;splits&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="classification-tree.html#cb621-1"></a>oj_mdl_cart_full<span class="op">$</span>cptable <span class="op">%&gt;%</span></span>
+<span id="cb621-2"><a href="classification-tree.html#cb621-2"></a><span class="st">   </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span></span>
+<span id="cb621-3"><a href="classification-tree.html#cb621-3"></a><span class="st">   </span><span class="kw">mutate</span>(</span>
+<span id="cb621-4"><a href="classification-tree.html#cb621-4"></a>      <span class="dt">min_idx =</span> <span class="kw">which.min</span>(oj_mdl_cart_full<span class="op">$</span>cptable[, <span class="st">&quot;xerror&quot;</span>]),</span>
+<span id="cb621-5"><a href="classification-tree.html#cb621-5"></a>      <span class="dt">rownum =</span> <span class="kw">row_number</span>(),</span>
+<span id="cb621-6"><a href="classification-tree.html#cb621-6"></a>      <span class="dt">xerror_cap =</span> oj_mdl_cart_full<span class="op">$</span>cptable[min_idx, <span class="st">&quot;xerror&quot;</span>] <span class="op">+</span><span class="st"> </span></span>
+<span id="cb621-7"><a href="classification-tree.html#cb621-7"></a><span class="st">                   </span>oj_mdl_cart_full<span class="op">$</span>cptable[min_idx, <span class="st">&quot;xstd&quot;</span>],</span>
+<span id="cb621-8"><a href="classification-tree.html#cb621-8"></a>      <span class="dt">eval =</span> <span class="kw">case_when</span>(rownum <span class="op">==</span><span class="st"> </span>min_idx <span class="op">~</span><span class="st"> &quot;min xerror&quot;</span>,</span>
+<span id="cb621-9"><a href="classification-tree.html#cb621-9"></a>                       xerror <span class="op">&lt;</span><span class="st"> </span>xerror_cap <span class="op">~</span><span class="st"> &quot;under cap&quot;</span>,</span>
+<span id="cb621-10"><a href="classification-tree.html#cb621-10"></a>                       <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;&quot;</span>)</span>
+<span id="cb621-11"><a href="classification-tree.html#cb621-11"></a>   ) <span class="op">%&gt;%</span></span>
+<span id="cb621-12"><a href="classification-tree.html#cb621-12"></a><span class="st">   </span><span class="kw">select</span>(<span class="op">-</span>rownum, <span class="op">-</span>min_idx) </span></code></pre></div>
+<pre><code>##      CP nsplit rel.error xerror  xstd xerror_cap       eval
+## 1 0.479      0      1.00   1.00 0.043        0.5           
+## 2 0.033      1      0.52   0.54 0.036        0.5           
+## 3 0.013      3      0.46   0.47 0.034        0.5  under cap
+## 4 0.010      5      0.43   0.46 0.034        0.5 min xerror</code></pre>
+<p>The simplest tree using the 1-SE rule is $c_p = 0.01347305, CV error = 0.18). Fortunately, <code>plotcp()</code> presents a nice graphical representation of the relationship between <code>xerror</code> and <code>cp</code>.</p>
+<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="classification-tree.html#cb623-1"></a><span class="kw">plotcp</span>(oj_mdl_cart_full, <span class="dt">upper =</span> <span class="st">&quot;splits&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-279-1.png" width="672" /></p>
 <p>The dashed line is set at the minimum <code>xerror</code> + <code>xstd</code>. The top axis shows the number of splits in the tree. I’m not sure why the CP values are not the same as in the table (they are close, but not the same). The figure suggests I should prune to 5 or 3 splits. I see this curve never really hits a minimum - it is still decreasing at 5 splits. The default tuning parameter value <code>cp = 0.01</code> may be too large, so I’ll set it to <code>cp = 0.001</code> and start over.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="classification-tree.html#cb13-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb13-2"><a href="classification-tree.html#cb13-2"></a>oj_mdl_cart_full &lt;-<span class="st"> </span><span class="kw">rpart</span>(</span>
-<span id="cb13-3"><a href="classification-tree.html#cb13-3"></a>   <span class="dt">formula =</span> Purchase <span class="op">~</span><span class="st"> </span>.,</span>
-<span id="cb13-4"><a href="classification-tree.html#cb13-4"></a>   <span class="dt">data =</span> oj_train,</span>
-<span id="cb13-5"><a href="classification-tree.html#cb13-5"></a>   <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>,</span>
-<span id="cb13-6"><a href="classification-tree.html#cb13-6"></a>   <span class="dt">cp =</span> <span class="fl">0.001</span></span>
-<span id="cb13-7"><a href="classification-tree.html#cb13-7"></a>   )</span>
-<span id="cb13-8"><a href="classification-tree.html#cb13-8"></a><span class="kw">print</span>(oj_mdl_cart_full)</span></code></pre></div>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="classification-tree.html#cb624-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb624-2"><a href="classification-tree.html#cb624-2"></a>oj_mdl_cart_full &lt;-<span class="st"> </span><span class="kw">rpart</span>(</span>
+<span id="cb624-3"><a href="classification-tree.html#cb624-3"></a>   <span class="dt">formula =</span> Purchase <span class="op">~</span><span class="st"> </span>.,</span>
+<span id="cb624-4"><a href="classification-tree.html#cb624-4"></a>   <span class="dt">data =</span> oj_train,</span>
+<span id="cb624-5"><a href="classification-tree.html#cb624-5"></a>   <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>,</span>
+<span id="cb624-6"><a href="classification-tree.html#cb624-6"></a>   <span class="dt">cp =</span> <span class="fl">0.001</span></span>
+<span id="cb624-7"><a href="classification-tree.html#cb624-7"></a>   )</span>
+<span id="cb624-8"><a href="classification-tree.html#cb624-8"></a><span class="kw">print</span>(oj_mdl_cart_full)</span></code></pre></div>
 <pre><code>## n= 857 
 ## 
 ## node), split, n, loss, yval, (yprob)
 ##       * denotes terminal node
 ## 
-##   1) root 857 334 CH (0.61026838 0.38973162)  
-##     2) LoyalCH&gt;=0.48285 537  94 CH (0.82495345 0.17504655)  
-##       4) LoyalCH&gt;=0.7648795 271  13 CH (0.95202952 0.04797048) *
-##       5) LoyalCH&lt; 0.7648795 266  81 CH (0.69548872 0.30451128)  
-##        10) PriceDiff&gt;=-0.165 226  50 CH (0.77876106 0.22123894)  
-##          20) ListPriceDiff&gt;=0.255 115  11 CH (0.90434783 0.09565217) *
-##          21) ListPriceDiff&lt; 0.255 111  39 CH (0.64864865 0.35135135)  
-##            42) PriceMM&gt;=2.155 19   2 CH (0.89473684 0.10526316) *
-##            43) PriceMM&lt; 2.155 92  37 CH (0.59782609 0.40217391)  
-##              86) DiscCH&gt;=0.115 7   0 CH (1.00000000 0.00000000) *
-##              87) DiscCH&lt; 0.115 85  37 CH (0.56470588 0.43529412)  
-##               174) ListPriceDiff&gt;=0.215 45  15 CH (0.66666667 0.33333333) *
-##               175) ListPriceDiff&lt; 0.215 40  18 MM (0.45000000 0.55000000)  
-##                 350) LoyalCH&gt;=0.527571 28  13 CH (0.53571429 0.46428571)  
-##                   700) WeekofPurchase&lt; 266.5 21   8 CH (0.61904762 0.38095238) *
-##                   701) WeekofPurchase&gt;=266.5 7   2 MM (0.28571429 0.71428571) *
-##                 351) LoyalCH&lt; 0.527571 12   3 MM (0.25000000 0.75000000) *
-##        11) PriceDiff&lt; -0.165 40   9 MM (0.22500000 0.77500000) *
-##     3) LoyalCH&lt; 0.48285 320  80 MM (0.25000000 0.75000000)  
-##       6) LoyalCH&gt;=0.2761415 146  58 MM (0.39726027 0.60273973)  
-##        12) SalePriceMM&gt;=2.04 71  31 CH (0.56338028 0.43661972)  
-##          24) LoyalCH&lt; 0.303104 7   0 CH (1.00000000 0.00000000) *
-##          25) LoyalCH&gt;=0.303104 64  31 CH (0.51562500 0.48437500)  
-##            50) WeekofPurchase&gt;=246.5 52  22 CH (0.57692308 0.42307692)  
-##             100) PriceCH&lt; 1.94 35  11 CH (0.68571429 0.31428571)  
-##               200) StoreID&lt; 1.5 9   1 CH (0.88888889 0.11111111) *
-##               201) StoreID&gt;=1.5 26  10 CH (0.61538462 0.38461538)  
-##                 402) LoyalCH&lt; 0.410969 17   4 CH (0.76470588 0.23529412) *
-##                 403) LoyalCH&gt;=0.410969 9   3 MM (0.33333333 0.66666667) *
-##             101) PriceCH&gt;=1.94 17   6 MM (0.35294118 0.64705882) *
-##            51) WeekofPurchase&lt; 246.5 12   3 MM (0.25000000 0.75000000) *
-##        13) SalePriceMM&lt; 2.04 75  18 MM (0.24000000 0.76000000)  
-##          26) SpecialCH&gt;=0.5 14   6 CH (0.57142857 0.42857143) *
-##          27) SpecialCH&lt; 0.5 61  10 MM (0.16393443 0.83606557) *
-##       7) LoyalCH&lt; 0.2761415 174  22 MM (0.12643678 0.87356322)  
-##        14) LoyalCH&gt;=0.035047 117  21 MM (0.17948718 0.82051282)  
-##          28) WeekofPurchase&lt; 273.5 104  21 MM (0.20192308 0.79807692)  
-##            56) PriceCH&gt;=1.875 20   9 MM (0.45000000 0.55000000)  
-##             112) WeekofPurchase&gt;=252.5 12   5 CH (0.58333333 0.41666667) *
-##             113) WeekofPurchase&lt; 252.5 8   2 MM (0.25000000 0.75000000) *
-##            57) PriceCH&lt; 1.875 84  12 MM (0.14285714 0.85714286) *
-##          29) WeekofPurchase&gt;=273.5 13   0 MM (0.00000000 1.00000000) *
-##        15) LoyalCH&lt; 0.035047 57   1 MM (0.01754386 0.98245614) *</code></pre>
+##   1) root 857 330 CH (0.610 0.390)  
+##     2) LoyalCH&gt;=0.48 537  94 CH (0.825 0.175)  
+##       4) LoyalCH&gt;=0.76 271  13 CH (0.952 0.048) *
+##       5) LoyalCH&lt; 0.76 266  81 CH (0.695 0.305)  
+##        10) PriceDiff&gt;=-0.16 226  50 CH (0.779 0.221)  
+##          20) ListPriceDiff&gt;=0.26 115  11 CH (0.904 0.096) *
+##          21) ListPriceDiff&lt; 0.26 111  39 CH (0.649 0.351)  
+##            42) PriceMM&gt;=2.2 19   2 CH (0.895 0.105) *
+##            43) PriceMM&lt; 2.2 92  37 CH (0.598 0.402)  
+##              86) DiscCH&gt;=0.12 7   0 CH (1.000 0.000) *
+##              87) DiscCH&lt; 0.12 85  37 CH (0.565 0.435)  
+##               174) ListPriceDiff&gt;=0.22 45  15 CH (0.667 0.333) *
+##               175) ListPriceDiff&lt; 0.22 40  18 MM (0.450 0.550)  
+##                 350) LoyalCH&gt;=0.53 28  13 CH (0.536 0.464)  
+##                   700) WeekofPurchase&lt; 2.7e+02 21   8 CH (0.619 0.381) *
+##                   701) WeekofPurchase&gt;=2.7e+02 7   2 MM (0.286 0.714) *
+##                 351) LoyalCH&lt; 0.53 12   3 MM (0.250 0.750) *
+##        11) PriceDiff&lt; -0.16 40   9 MM (0.225 0.775) *
+##     3) LoyalCH&lt; 0.48 320  80 MM (0.250 0.750)  
+##       6) LoyalCH&gt;=0.28 146  58 MM (0.397 0.603)  
+##        12) SalePriceMM&gt;=2 71  31 CH (0.563 0.437)  
+##          24) LoyalCH&lt; 0.3 7   0 CH (1.000 0.000) *
+##          25) LoyalCH&gt;=0.3 64  31 CH (0.516 0.484)  
+##            50) WeekofPurchase&gt;=2.5e+02 52  22 CH (0.577 0.423)  
+##             100) PriceCH&lt; 1.9 35  11 CH (0.686 0.314)  
+##               200) StoreID&lt; 1.5 9   1 CH (0.889 0.111) *
+##               201) StoreID&gt;=1.5 26  10 CH (0.615 0.385)  
+##                 402) LoyalCH&lt; 0.41 17   4 CH (0.765 0.235) *
+##                 403) LoyalCH&gt;=0.41 9   3 MM (0.333 0.667) *
+##             101) PriceCH&gt;=1.9 17   6 MM (0.353 0.647) *
+##            51) WeekofPurchase&lt; 2.5e+02 12   3 MM (0.250 0.750) *
+##        13) SalePriceMM&lt; 2 75  18 MM (0.240 0.760)  
+##          26) SpecialCH&gt;=0.5 14   6 CH (0.571 0.429) *
+##          27) SpecialCH&lt; 0.5 61  10 MM (0.164 0.836) *
+##       7) LoyalCH&lt; 0.28 174  22 MM (0.126 0.874)  
+##        14) LoyalCH&gt;=0.035 117  21 MM (0.179 0.821)  
+##          28) WeekofPurchase&lt; 2.7e+02 104  21 MM (0.202 0.798)  
+##            56) PriceCH&gt;=1.9 20   9 MM (0.450 0.550)  
+##             112) WeekofPurchase&gt;=2.5e+02 12   5 CH (0.583 0.417) *
+##             113) WeekofPurchase&lt; 2.5e+02 8   2 MM (0.250 0.750) *
+##            57) PriceCH&lt; 1.9 84  12 MM (0.143 0.857) *
+##          29) WeekofPurchase&gt;=2.7e+02 13   0 MM (0.000 1.000) *
+##        15) LoyalCH&lt; 0.035 57   1 MM (0.018 0.982) *</code></pre>
 <p>This is a much larger tree. Did I find a <code>cp</code> value that produces a local min?</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="classification-tree.html#cb15-1"></a><span class="kw">plotcp</span>(oj_mdl_cart_full, <span class="dt">upper =</span> <span class="st">&quot;splits&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="classification-tree.html#cb626-1"></a><span class="kw">plotcp</span>(oj_mdl_cart_full, <span class="dt">upper =</span> <span class="st">&quot;splits&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-281-1.png" width="672" /></p>
 <p>Yes, the min is at CP = 0.011 with 5 splits. The min + 1 SE is at CP = 0.021 with 3 splits. I’ll prune the tree to 3 splits.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="classification-tree.html#cb16-1"></a>oj_mdl_cart &lt;-<span class="st"> </span><span class="kw">prune</span>(</span>
-<span id="cb16-2"><a href="classification-tree.html#cb16-2"></a>   oj_mdl_cart_full,</span>
-<span id="cb16-3"><a href="classification-tree.html#cb16-3"></a>   <span class="dt">cp =</span> oj_mdl_cart_full<span class="op">$</span>cptable[oj_mdl_cart_full<span class="op">$</span>cptable[, <span class="dv">2</span>] <span class="op">==</span><span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;CP&quot;</span>]</span>
-<span id="cb16-4"><a href="classification-tree.html#cb16-4"></a>)</span>
-<span id="cb16-5"><a href="classification-tree.html#cb16-5"></a><span class="kw">rpart.plot</span>(oj_mdl_cart, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="classification-tree.html#cb627-1"></a>oj_mdl_cart &lt;-<span class="st"> </span><span class="kw">prune</span>(</span>
+<span id="cb627-2"><a href="classification-tree.html#cb627-2"></a>   oj_mdl_cart_full,</span>
+<span id="cb627-3"><a href="classification-tree.html#cb627-3"></a>   <span class="dt">cp =</span> oj_mdl_cart_full<span class="op">$</span>cptable[oj_mdl_cart_full<span class="op">$</span>cptable[, <span class="dv">2</span>] <span class="op">==</span><span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;CP&quot;</span>]</span>
+<span id="cb627-4"><a href="classification-tree.html#cb627-4"></a>)</span>
+<span id="cb627-5"><a href="classification-tree.html#cb627-5"></a><span class="kw">rpart.plot</span>(oj_mdl_cart, <span class="dt">yesno =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-282-1.png" width="672" /></p>
 <p>The most “important” indicator of <code>Purchase</code> appears to be <code>LoyalCH</code>. From the <strong>rpart</strong> <a href="https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf">vignette</a> (page 12),</p>
 <blockquote>
 <p>“An overall measure of variable importance is the sum of the goodness of split measures for each split for which it was the primary variable, plus goodness (adjusted agreement) for all splits in which it was a surrogate.”</p>
 </blockquote>
 <p>Surrogates refer to alternative features for a node to handle missing data. For each split, CART evaluates a variety of alternative “surrogate” splits to use when the feature value for the primary split is NA. Surrogate splits are splits that produce results similar to the original split.</p>
 <p>A variable’s importance is the sum of the improvement in the overall Gini (or RMSE) measure produced by the nodes in which it appears. Here is the variable importance for this model.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="classification-tree.html#cb17-1"></a>oj_mdl_cart<span class="op">$</span>variable.importance <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb17-2"><a href="classification-tree.html#cb17-2"></a><span class="st">   </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span></span>
-<span id="cb17-3"><a href="classification-tree.html#cb17-3"></a><span class="st">   </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;Feature&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb17-4"><a href="classification-tree.html#cb17-4"></a><span class="st">   </span><span class="kw">rename</span>(<span class="dt">Overall =</span> <span class="st">&#39;.&#39;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb17-5"><a href="classification-tree.html#cb17-5"></a><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(Feature, Overall), <span class="dt">y =</span> Overall)) <span class="op">+</span></span>
-<span id="cb17-6"><a href="classification-tree.html#cb17-6"></a><span class="st">   </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> <span class="dv">0</span>, <span class="dt">ymax =</span> Overall), <span class="dt">color =</span> <span class="st">&quot;cadetblue&quot;</span>, <span class="dt">size =</span> <span class="fl">.3</span>) <span class="op">+</span></span>
-<span id="cb17-7"><a href="classification-tree.html#cb17-7"></a><span class="st">   </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
-<span id="cb17-8"><a href="classification-tree.html#cb17-8"></a><span class="st">   </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
-<span id="cb17-9"><a href="classification-tree.html#cb17-9"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Variable Importance with Simple Classication&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="classification-tree.html#cb628-1"></a>oj_mdl_cart<span class="op">$</span>variable.importance <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb628-2"><a href="classification-tree.html#cb628-2"></a><span class="st">   </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span></span>
+<span id="cb628-3"><a href="classification-tree.html#cb628-3"></a><span class="st">   </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;Feature&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb628-4"><a href="classification-tree.html#cb628-4"></a><span class="st">   </span><span class="kw">rename</span>(<span class="dt">Overall =</span> <span class="st">&#39;.&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb628-5"><a href="classification-tree.html#cb628-5"></a><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(Feature, Overall), <span class="dt">y =</span> Overall)) <span class="op">+</span></span>
+<span id="cb628-6"><a href="classification-tree.html#cb628-6"></a><span class="st">   </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> <span class="dv">0</span>, <span class="dt">ymax =</span> Overall), <span class="dt">color =</span> <span class="st">&quot;cadetblue&quot;</span>, <span class="dt">size =</span> <span class="fl">.3</span>) <span class="op">+</span></span>
+<span id="cb628-7"><a href="classification-tree.html#cb628-7"></a><span class="st">   </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
+<span id="cb628-8"><a href="classification-tree.html#cb628-8"></a><span class="st">   </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
+<span id="cb628-9"><a href="classification-tree.html#cb628-9"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Variable Importance with Simple Classication&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-283-1.png" width="672" /></p>
 <p><code>LoyalCH</code> is by far the most important variable, as expected from its position at the top of the tree, and one level down.</p>
 <p>You can see how the surrogates appear in the model with the <code>summary()</code> function.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="classification-tree.html#cb18-1"></a><span class="kw">summary</span>(oj_mdl_cart)</span></code></pre></div>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="classification-tree.html#cb629-1"></a><span class="kw">summary</span>(oj_mdl_cart)</span></code></pre></div>
 <pre><code>## Call:
 ## rpart(formula = Purchase ~ ., data = oj_train, method = &quot;class&quot;, 
 ##     cp = 0.001)
 ##   n= 857 
 ## 
-##           CP nsplit rel error    xerror       xstd
-## 1 0.47904192      0 1.0000000 1.0000000 0.04274518
-## 2 0.03293413      1 0.5209581 0.5419162 0.03577468
-## 3 0.01347305      3 0.4550898 0.4700599 0.03390486
+##      CP nsplit rel error xerror  xstd
+## 1 0.479      0      1.00   1.00 0.043
+## 2 0.033      1      0.52   0.54 0.036
+## 3 0.013      3      0.46   0.47 0.034
 ## 
 ## Variable importance
 ##        LoyalCH      PriceDiff    SalePriceMM        StoreID WeekofPurchase 
@@ -808,175 +816,177 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##         DiscMM        PriceMM      PctDiscMM        PriceCH 
 ##              3              3              3              1 
 ## 
-## Node number 1: 857 observations,    complexity param=0.4790419
-##   predicted class=CH  expected loss=0.3897316  P(node) =1
+## Node number 1: 857 observations,    complexity param=0.48
+##   predicted class=CH  expected loss=0.39  P(node) =1
 ##     class counts:   523   334
 ##    probabilities: 0.610 0.390 
 ##   left son=2 (537 obs) right son=3 (320 obs)
 ##   Primary splits:
-##       LoyalCH       &lt; 0.48285   to the right, improve=132.56800, (0 missing)
-##       StoreID       &lt; 3.5       to the right, improve= 40.12097, (0 missing)
-##       PriceDiff     &lt; 0.015     to the right, improve= 24.26552, (0 missing)
-##       ListPriceDiff &lt; 0.255     to the right, improve= 22.79117, (0 missing)
-##       SalePriceMM   &lt; 1.84      to the right, improve= 20.16447, (0 missing)
+##       LoyalCH       &lt; 0.48  to the right, improve=130, (0 missing)
+##       StoreID       &lt; 3.5   to the right, improve= 40, (0 missing)
+##       PriceDiff     &lt; 0.015 to the right, improve= 24, (0 missing)
+##       ListPriceDiff &lt; 0.26  to the right, improve= 23, (0 missing)
+##       SalePriceMM   &lt; 1.8   to the right, improve= 20, (0 missing)
 ##   Surrogate splits:
-##       StoreID        &lt; 3.5       to the right, agree=0.646, adj=0.053, (0 split)
-##       PriceMM        &lt; 1.89      to the right, agree=0.638, adj=0.031, (0 split)
-##       WeekofPurchase &lt; 229.5     to the right, agree=0.632, adj=0.016, (0 split)
-##       DiscMM         &lt; 0.77      to the left,  agree=0.629, adj=0.006, (0 split)
-##       SalePriceMM    &lt; 1.385     to the right, agree=0.629, adj=0.006, (0 split)
+##       StoreID        &lt; 3.5   to the right, agree=0.65, adj=0.053, (0 split)
+##       PriceMM        &lt; 1.9   to the right, agree=0.64, adj=0.031, (0 split)
+##       WeekofPurchase &lt; 230   to the right, agree=0.63, adj=0.016, (0 split)
+##       DiscMM         &lt; 0.77  to the left,  agree=0.63, adj=0.006, (0 split)
+##       SalePriceMM    &lt; 1.4   to the right, agree=0.63, adj=0.006, (0 split)
 ## 
-## Node number 2: 537 observations,    complexity param=0.03293413
-##   predicted class=CH  expected loss=0.1750466  P(node) =0.6266044
+## Node number 2: 537 observations,    complexity param=0.033
+##   predicted class=CH  expected loss=0.18  P(node) =0.63
 ##     class counts:   443    94
 ##    probabilities: 0.825 0.175 
 ##   left son=4 (271 obs) right son=5 (266 obs)
 ##   Primary splits:
-##       LoyalCH       &lt; 0.7648795 to the right, improve=17.669310, (0 missing)
-##       PriceDiff     &lt; 0.015     to the right, improve=15.475200, (0 missing)
-##       SalePriceMM   &lt; 1.84      to the right, improve=13.951730, (0 missing)
-##       ListPriceDiff &lt; 0.255     to the right, improve=11.407560, (0 missing)
-##       DiscMM        &lt; 0.15      to the left,  improve= 7.795122, (0 missing)
+##       LoyalCH       &lt; 0.76  to the right, improve=18.0, (0 missing)
+##       PriceDiff     &lt; 0.015 to the right, improve=15.0, (0 missing)
+##       SalePriceMM   &lt; 1.8   to the right, improve=14.0, (0 missing)
+##       ListPriceDiff &lt; 0.26  to the right, improve=11.0, (0 missing)
+##       DiscMM        &lt; 0.15  to the left,  improve= 7.8, (0 missing)
 ##   Surrogate splits:
-##       WeekofPurchase &lt; 257.5     to the right, agree=0.594, adj=0.180, (0 split)
-##       PriceCH        &lt; 1.775     to the right, agree=0.590, adj=0.173, (0 split)
-##       StoreID        &lt; 3.5       to the right, agree=0.587, adj=0.165, (0 split)
-##       PriceMM        &lt; 2.04      to the right, agree=0.587, adj=0.165, (0 split)
-##       SalePriceMM    &lt; 2.04      to the right, agree=0.587, adj=0.165, (0 split)
+##       WeekofPurchase &lt; 260   to the right, agree=0.59, adj=0.18, (0 split)
+##       PriceCH        &lt; 1.8   to the right, agree=0.59, adj=0.17, (0 split)
+##       StoreID        &lt; 3.5   to the right, agree=0.59, adj=0.16, (0 split)
+##       PriceMM        &lt; 2     to the right, agree=0.59, adj=0.16, (0 split)
+##       SalePriceMM    &lt; 2     to the right, agree=0.59, adj=0.16, (0 split)
 ## 
 ## Node number 3: 320 observations
-##   predicted class=MM  expected loss=0.25  P(node) =0.3733956
+##   predicted class=MM  expected loss=0.25  P(node) =0.37
 ##     class counts:    80   240
 ##    probabilities: 0.250 0.750 
 ## 
 ## Node number 4: 271 observations
-##   predicted class=CH  expected loss=0.04797048  P(node) =0.3162194
+##   predicted class=CH  expected loss=0.048  P(node) =0.32
 ##     class counts:   258    13
 ##    probabilities: 0.952 0.048 
 ## 
-## Node number 5: 266 observations,    complexity param=0.03293413
-##   predicted class=CH  expected loss=0.3045113  P(node) =0.3103851
+## Node number 5: 266 observations,    complexity param=0.033
+##   predicted class=CH  expected loss=0.3  P(node) =0.31
 ##     class counts:   185    81
 ##    probabilities: 0.695 0.305 
 ##   left son=10 (226 obs) right son=11 (40 obs)
 ##   Primary splits:
-##       PriceDiff     &lt; -0.165    to the right, improve=20.84307, (0 missing)
-##       ListPriceDiff &lt; 0.235     to the right, improve=20.82404, (0 missing)
-##       SalePriceMM   &lt; 1.84      to the right, improve=16.80587, (0 missing)
-##       DiscMM        &lt; 0.15      to the left,  improve=10.05120, (0 missing)
-##       PctDiscMM     &lt; 0.0729725 to the left,  improve=10.05120, (0 missing)
+##       PriceDiff     &lt; -0.16 to the right, improve=21, (0 missing)
+##       ListPriceDiff &lt; 0.24  to the right, improve=21, (0 missing)
+##       SalePriceMM   &lt; 1.8   to the right, improve=17, (0 missing)
+##       DiscMM        &lt; 0.15  to the left,  improve=10, (0 missing)
+##       PctDiscMM     &lt; 0.073 to the left,  improve=10, (0 missing)
 ##   Surrogate splits:
-##       SalePriceMM    &lt; 1.585     to the right, agree=0.906, adj=0.375, (0 split)
-##       DiscMM         &lt; 0.57      to the left,  agree=0.895, adj=0.300, (0 split)
-##       PctDiscMM      &lt; 0.264375  to the left,  agree=0.895, adj=0.300, (0 split)
-##       WeekofPurchase &lt; 274.5     to the left,  agree=0.872, adj=0.150, (0 split)
-##       SalePriceCH    &lt; 2.075     to the left,  agree=0.857, adj=0.050, (0 split)
+##       SalePriceMM    &lt; 1.6   to the right, agree=0.91, adj=0.38, (0 split)
+##       DiscMM         &lt; 0.57  to the left,  agree=0.90, adj=0.30, (0 split)
+##       PctDiscMM      &lt; 0.26  to the left,  agree=0.90, adj=0.30, (0 split)
+##       WeekofPurchase &lt; 270   to the left,  agree=0.87, adj=0.15, (0 split)
+##       SalePriceCH    &lt; 2.1   to the left,  agree=0.86, adj=0.05, (0 split)
 ## 
 ## Node number 10: 226 observations
-##   predicted class=CH  expected loss=0.2212389  P(node) =0.2637106
+##   predicted class=CH  expected loss=0.22  P(node) =0.26
 ##     class counts:   176    50
 ##    probabilities: 0.779 0.221 
 ## 
 ## Node number 11: 40 observations
-##   predicted class=MM  expected loss=0.225  P(node) =0.04667445
+##   predicted class=MM  expected loss=0.22  P(node) =0.047
 ##     class counts:     9    31
 ##    probabilities: 0.225 0.775</code></pre>
 <p>I’ll evaluate the predictions and record the accuracy (correct classification percentage) for comparison to other models. Two ways to evaluate the model are the confusion matrix, and the ROC curve.</p>
 <div id="measuring-performance" class="section level3">
-<h3><span class="header-section-number">9.1.1</span> Measuring Performance</h3>
+<h3><span class="header-section-number">8.1.1</span> Measuring Performance</h3>
 <div id="confusion-matrix" class="section level4">
-<h4><span class="header-section-number">9.1.1.1</span> Confusion Matrix</h4>
+<h4><span class="header-section-number">8.1.1.1</span> Confusion Matrix</h4>
 <p>Print the confusion matrix with <code>caret::confusionMatrix()</code> to see how well does this model performs against the holdout set.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="classification-tree.html#cb20-1"></a>oj_preds_cart &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(</span>
-<span id="cb20-2"><a href="classification-tree.html#cb20-2"></a>   <span class="kw">predict</span>(oj_mdl_cart, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>),</span>
-<span id="cb20-3"><a href="classification-tree.html#cb20-3"></a>   <span class="dt">predicted =</span> <span class="kw">predict</span>(oj_mdl_cart, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>),</span>
-<span id="cb20-4"><a href="classification-tree.html#cb20-4"></a>   <span class="dt">actual =</span> oj_test<span class="op">$</span>Purchase</span>
-<span id="cb20-5"><a href="classification-tree.html#cb20-5"></a>)</span>
-<span id="cb20-6"><a href="classification-tree.html#cb20-6"></a></span>
-<span id="cb20-7"><a href="classification-tree.html#cb20-7"></a>oj_cm_cart &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(oj_preds_cart<span class="op">$</span>predicted, <span class="dt">reference =</span> oj_preds_cart<span class="op">$</span>actual)</span>
-<span id="cb20-8"><a href="classification-tree.html#cb20-8"></a>oj_cm_cart</span></code></pre></div>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="classification-tree.html#cb631-1"></a>oj_preds_cart &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(</span>
+<span id="cb631-2"><a href="classification-tree.html#cb631-2"></a>   <span class="kw">predict</span>(oj_mdl_cart, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>),</span>
+<span id="cb631-3"><a href="classification-tree.html#cb631-3"></a>   <span class="dt">predicted =</span> <span class="kw">predict</span>(oj_mdl_cart, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>),</span>
+<span id="cb631-4"><a href="classification-tree.html#cb631-4"></a>   <span class="dt">actual =</span> oj_test<span class="op">$</span>Purchase</span>
+<span id="cb631-5"><a href="classification-tree.html#cb631-5"></a>)</span>
+<span id="cb631-6"><a href="classification-tree.html#cb631-6"></a></span>
+<span id="cb631-7"><a href="classification-tree.html#cb631-7"></a>oj_cm_cart &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(oj_preds_cart<span class="op">$</span>predicted, <span class="dt">reference =</span> oj_preds_cart<span class="op">$</span>actual)</span>
+<span id="cb631-8"><a href="classification-tree.html#cb631-8"></a>oj_cm_cart</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
 ## Prediction  CH  MM
 ##         CH 113  13
 ##         MM  17  70
-##                                           
-##                Accuracy : 0.8592          
-##                  95% CI : (0.8051, 0.9029)
-##     No Information Rate : 0.6103          
-##     P-Value [Acc &gt; NIR] : 1.265e-15       
-##                                           
-##                   Kappa : 0.7064          
-##                                           
-##  Mcnemar&#39;s Test P-Value : 0.5839          
-##                                           
-##             Sensitivity : 0.8692          
-##             Specificity : 0.8434          
-##          Pos Pred Value : 0.8968          
-##          Neg Pred Value : 0.8046          
-##              Prevalence : 0.6103          
-##          Detection Rate : 0.5305          
-##    Detection Prevalence : 0.5915          
-##       Balanced Accuracy : 0.8563          
-##                                           
-##        &#39;Positive&#39; Class : CH              
+##                                              
+##                Accuracy : 0.859              
+##                  95% CI : (0.805, 0.903)     
+##     No Information Rate : 0.61               
+##     P-Value [Acc &gt; NIR] : 0.00000000000000126
+##                                              
+##                   Kappa : 0.706              
+##                                              
+##  Mcnemar&#39;s Test P-Value : 0.584              
+##                                              
+##             Sensitivity : 0.869              
+##             Specificity : 0.843              
+##          Pos Pred Value : 0.897              
+##          Neg Pred Value : 0.805              
+##              Prevalence : 0.610              
+##          Detection Rate : 0.531              
+##    Detection Prevalence : 0.592              
+##       Balanced Accuracy : 0.856              
+##                                              
+##        &#39;Positive&#39; Class : CH                 
 ## </code></pre>
 <p>The confusion matrix is at the top. It also includes a lot of statistics. It’s worth getting familiar with the stats. The model accuracy and 95% CI are calculated from the binomial test.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="classification-tree.html#cb22-1"></a><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">113</span> <span class="op">+</span><span class="st"> </span><span class="dv">70</span>, <span class="dt">n =</span> <span class="dv">213</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="classification-tree.html#cb633-1"></a><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">113</span> <span class="op">+</span><span class="st"> </span><span class="dv">70</span>, <span class="dt">n =</span> <span class="dv">213</span>)</span></code></pre></div>
 <pre><code>## 
 ## 	Exact binomial test
 ## 
 ## data:  113 + 70 and 213
-## number of successes = 183, number of trials = 213, p-value &lt; 2.2e-16
+## number of successes = 183, number of trials = 213, p-value
+## &lt;0.0000000000000002
 ## alternative hypothesis: true probability of success is not equal to 0.5
 ## 95 percent confidence interval:
-##  0.8050785 0.9029123
+##  0.81 0.90
 ## sample estimates:
 ## probability of success 
-##              0.8591549</code></pre>
+##                   0.86</code></pre>
 <p>The “No Information Rate” (NIR) statistic is the class rate for the largest class. In this case CH is the largest class, so NIR = 130/213 = 0.6103. “P-Value [Acc &gt; NIR]” is the binomial test that the model accuracy is significantly better than the NIR (i.e., significantly better than just always guessing CH).</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="classification-tree.html#cb24-1"></a><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">113</span> <span class="op">+</span><span class="st"> </span><span class="dv">70</span>, <span class="dt">n =</span> <span class="dv">213</span>, <span class="dt">p =</span> <span class="dv">130</span><span class="op">/</span><span class="dv">213</span>, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="classification-tree.html#cb635-1"></a><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">113</span> <span class="op">+</span><span class="st"> </span><span class="dv">70</span>, <span class="dt">n =</span> <span class="dv">213</span>, <span class="dt">p =</span> <span class="dv">130</span><span class="op">/</span><span class="dv">213</span>, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## 	Exact binomial test
 ## 
 ## data:  113 + 70 and 213
-## number of successes = 183, number of trials = 213, p-value = 1.265e-15
-## alternative hypothesis: true probability of success is greater than 0.6103286
+## number of successes = 183, number of trials = 213, p-value =
+## 0.000000000000001
+## alternative hypothesis: true probability of success is greater than 0.61
 ## 95 percent confidence interval:
-##  0.8138446 1.0000000
+##  0.81 1.00
 ## sample estimates:
 ## probability of success 
-##              0.8591549</code></pre>
+##                   0.86</code></pre>
 <p>The “Accuracy” statistic indicates the model predicts 0.8590 of the observations correctly. That’s good, but less impressive when you consider the prevalence of CH is 0.6103 - you could achieve 61% accuracy just by predicting CH every time. A measure that controls for the prevalence is Cohen’s kappa statistic. The kappa statistic is explained <a href="https://standardwisdom.com/softwarejournal/2011/12/confusion-matrix-another-single-value-metric-kappa-statistic/">here</a>. It compares the accuracy to the accuracy of a “random system”. It is defined as</p>
 <p><span class="math display">\[\kappa = \frac{Acc - RA}{1-RA}\]</span></p>
 <p>where</p>
 <p><span class="math display">\[RA = \frac{ActFalse \times PredFalse + ActTrue \times PredTrue}{Total \times Total}\]</span></p>
 <p>is the hypothetical probability of a chance agreement. ActFalse will be the number of “MM” (13 + 70 = 83) and actual true will be the number of “CH” (113 + 17 = 130). The predicted counts are</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="classification-tree.html#cb26-1"></a><span class="kw">table</span>(oj_preds_cart<span class="op">$</span>predicted)</span></code></pre></div>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="classification-tree.html#cb637-1"></a><span class="kw">table</span>(oj_preds_cart<span class="op">$</span>predicted)</span></code></pre></div>
 <pre><code>## 
 ##  CH  MM 
 ## 126  87</code></pre>
 <p>So, <span class="math inline">\(RA = (83*87 + 130*126) / 213^2 = 0.5202\)</span> and <span class="math inline">\(\kappa = (0.8592 - 0.5202)/(1 - 0.5202) = 0.7064\)</span>. The kappa statistic varies from 0 to 1 where 0 means accurate predictions occur merely by chance, and 1 means the predictions are in perfect agreement with the observations. In this case, a kappa statistic of 0.7064 is “substantial”. See chart <a href="https://www.statisticshowto.datasciencecentral.com/cohens-kappa-statistic/">here</a>.</p>
 <p>The other measures from the <code>confusionMatrix()</code> output are various proportions and you can remind yourself of their definitions in the documentation with <code>?confusionMatrix</code>.</p>
 <p>Visuals are almost always helpful. Here is a plot of the confusion matrix.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="classification-tree.html#cb28-1"></a><span class="kw">plot</span>(oj_preds_cart<span class="op">$</span>actual, oj_preds_cart<span class="op">$</span>predicted, </span>
-<span id="cb28-2"><a href="classification-tree.html#cb28-2"></a>     <span class="dt">main =</span> <span class="st">&quot;Simple Classification: Predicted vs. Actual&quot;</span>,</span>
-<span id="cb28-3"><a href="classification-tree.html#cb28-3"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
-<span id="cb28-4"><a href="classification-tree.html#cb28-4"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="classification-tree.html#cb639-1"></a><span class="kw">plot</span>(oj_preds_cart<span class="op">$</span>actual, oj_preds_cart<span class="op">$</span>predicted, </span>
+<span id="cb639-2"><a href="classification-tree.html#cb639-2"></a>     <span class="dt">main =</span> <span class="st">&quot;Simple Classification: Predicted vs. Actual&quot;</span>,</span>
+<span id="cb639-3"><a href="classification-tree.html#cb639-3"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Actual&quot;</span>,</span>
+<span id="cb639-4"><a href="classification-tree.html#cb639-4"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Predicted&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-289-1.png" width="672" /></p>
 </div>
 <div id="roc-curve" class="section level4">
-<h4><span class="header-section-number">9.1.1.2</span> ROC Curve</h4>
+<h4><span class="header-section-number">8.1.1.2</span> ROC Curve</h4>
 <p>The ROC (receiver operating characteristics) curve <span class="citation">(Fawcett <a href="#ref-Fawcett2005" role="doc-biblioref">2005</a>)</span> is another measure of accuracy. The ROC curve is a plot of the true positive rate (TPR, sensitivity) versus the false positive rate (FPR, 1 - specificity) for a set of thresholds. By default, the threshold for predicting the default classification is 0.50, but it could be any threshold. <code>precrec::evalmod()</code> calculates the confusion matrix values from the model using the holdout data set. The AUC on the holdout set is 0.8848. <code>pRoc::plot.roc()</code>, <code>plotROC::geom_roc()</code>, and <code>yardstick::roc_curve()</code> are all options for plotting a ROC curve.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="classification-tree.html#cb29-1"></a>mdl_auc &lt;-<span class="st"> </span>Metrics<span class="op">::</span><span class="kw">auc</span>(<span class="dt">actual =</span> oj_preds_cart<span class="op">$</span>actual <span class="op">==</span><span class="st"> &quot;CH&quot;</span>, oj_preds_cart<span class="op">$</span>CH)</span>
-<span id="cb29-2"><a href="classification-tree.html#cb29-2"></a>yardstick<span class="op">::</span><span class="kw">roc_curve</span>(oj_preds_cart, actual, CH) <span class="op">%&gt;%</span></span>
-<span id="cb29-3"><a href="classification-tree.html#cb29-3"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
-<span id="cb29-4"><a href="classification-tree.html#cb29-4"></a><span class="st">  </span><span class="kw">labs</span>(</span>
-<span id="cb29-5"><a href="classification-tree.html#cb29-5"></a>    <span class="dt">title =</span> <span class="st">&quot;OJ CART ROC Curve&quot;</span>,</span>
-<span id="cb29-6"><a href="classification-tree.html#cb29-6"></a>    <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;AUC = &quot;</span>, <span class="kw">round</span>(mdl_auc, <span class="dv">4</span>))</span>
-<span id="cb29-7"><a href="classification-tree.html#cb29-7"></a>  )</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="classification-tree.html#cb640-1"></a>mdl_auc &lt;-<span class="st"> </span>Metrics<span class="op">::</span><span class="kw">auc</span>(<span class="dt">actual =</span> oj_preds_cart<span class="op">$</span>actual <span class="op">==</span><span class="st"> &quot;CH&quot;</span>, oj_preds_cart<span class="op">$</span>CH)</span>
+<span id="cb640-2"><a href="classification-tree.html#cb640-2"></a>yardstick<span class="op">::</span><span class="kw">roc_curve</span>(oj_preds_cart, actual, CH) <span class="op">%&gt;%</span></span>
+<span id="cb640-3"><a href="classification-tree.html#cb640-3"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
+<span id="cb640-4"><a href="classification-tree.html#cb640-4"></a><span class="st">  </span><span class="kw">labs</span>(</span>
+<span id="cb640-5"><a href="classification-tree.html#cb640-5"></a>    <span class="dt">title =</span> <span class="st">&quot;OJ CART ROC Curve&quot;</span>,</span>
+<span id="cb640-6"><a href="classification-tree.html#cb640-6"></a>    <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;AUC = &quot;</span>, <span class="kw">round</span>(mdl_auc, <span class="dv">4</span>))</span>
+<span id="cb640-7"><a href="classification-tree.html#cb640-7"></a>  )</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-290-1.png" width="672" /></p>
 <p>A few points on the ROC space are helpful for understanding how to use it.</p>
 <ul>
 <li>The lower left point (0, 0) is the result of <em>always</em> predicting “negative” or in this case “MM” if “CH” is taken as the default class. No false positives, but no true positives either.</li>
@@ -989,7 +999,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Points to the left of the diagonal with a low TPR can be thought of as “conservative” predictors - they only make positive (CH) predictions with strong evidence. Points to the left of the diagonal with a high TPR can be thought of as “liberal” predictors - they make positive (CH) predictions with weak evidence.</p>
 </div>
 <div id="gain-curve" class="section level4">
-<h4><span class="header-section-number">9.1.1.3</span> Gain Curve</h4>
+<h4><span class="header-section-number">8.1.1.3</span> Gain Curve</h4>
 <p>The gain curve plots the cumulative summed true outcome versus the fraction of items seen when sorted by the predicted value. The “wizard” curve is the gain curve when the data is sorted by the true outcome. If the model’s gain curve is close to the wizard curve, then the model predicted the response variable well. The gray area is the “gain” over a random prediction.</p>
 <p>130 of the 213 consumers in the holdout set purchased CH.</p>
 <ul>
@@ -997,41 +1007,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>It encountered all 130 CH purchasers on the 213th observation (100%).</p></li>
 <li><p>The bottom of the gray area is the outcome of a random model. Only half the CH purchasers would be observed within 50% of the observations. The top of the gray area is the outcome of the perfect model, the “wizard curve”. Half the CH purchasers would be observed in 65/213=31% of the observations.</p></li>
 </ul>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="classification-tree.html#cb30-1"></a>yardstick<span class="op">::</span><span class="kw">gain_curve</span>(oj_preds_cart, actual, CH) <span class="op">%&gt;%</span></span>
-<span id="cb30-2"><a href="classification-tree.html#cb30-2"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
-<span id="cb30-3"><a href="classification-tree.html#cb30-3"></a><span class="st">  </span><span class="kw">labs</span>(</span>
-<span id="cb30-4"><a href="classification-tree.html#cb30-4"></a>    <span class="dt">title =</span> <span class="st">&quot;OJ CART Gain Curve&quot;</span></span>
-<span id="cb30-5"><a href="classification-tree.html#cb30-5"></a>  )</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="classification-tree.html#cb641-1"></a>yardstick<span class="op">::</span><span class="kw">gain_curve</span>(oj_preds_cart, actual, CH) <span class="op">%&gt;%</span></span>
+<span id="cb641-2"><a href="classification-tree.html#cb641-2"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
+<span id="cb641-3"><a href="classification-tree.html#cb641-3"></a><span class="st">  </span><span class="kw">labs</span>(</span>
+<span id="cb641-4"><a href="classification-tree.html#cb641-4"></a>    <span class="dt">title =</span> <span class="st">&quot;OJ CART Gain Curve&quot;</span></span>
+<span id="cb641-5"><a href="classification-tree.html#cb641-5"></a>  )</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-291-1.png" width="672" /></p>
 </div>
 </div>
 <div id="training-with-caret" class="section level3">
-<h3><span class="header-section-number">9.1.2</span> Training with Caret</h3>
+<h3><span class="header-section-number">8.1.2</span> Training with Caret</h3>
 <p>I can also fit the model with <code>caret::train()</code>. There are two ways to tune hyperparameters in <code>train()</code>:</p>
 <ul>
 <li>set the number of tuning parameter values to consider by setting <code>tuneLength</code>, or</li>
 <li>set particular values to consider for each parameter by defining a <code>tuneGrid</code>.</li>
 </ul>
 <p>I’ll build the model using 10-fold cross-validation to optimize the hyperparameter CP. If you have no idea what is the optimal tuning parameter, start with <code>tuneLength</code> to get close, then fine-tune with <code>tuneGrid</code>. That’s what I’ll do. I’ll create a training control object that I can re-use in other model builds.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="classification-tree.html#cb31-1"></a>oj_trControl =<span class="st"> </span><span class="kw">trainControl</span>(</span>
-<span id="cb31-2"><a href="classification-tree.html#cb31-2"></a>   <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,</span>
-<span id="cb31-3"><a href="classification-tree.html#cb31-3"></a>   <span class="dt">number =</span> <span class="dv">10</span>,</span>
-<span id="cb31-4"><a href="classification-tree.html#cb31-4"></a>   <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save preds for the optimal tuning parameter</span></span>
-<span id="cb31-5"><a href="classification-tree.html#cb31-5"></a>   <span class="dt">classProbs =</span> <span class="ot">TRUE</span>,  <span class="co"># class probs in addition to preds</span></span>
-<span id="cb31-6"><a href="classification-tree.html#cb31-6"></a>   <span class="dt">summaryFunction =</span> twoClassSummary</span>
-<span id="cb31-7"><a href="classification-tree.html#cb31-7"></a>   )</span></code></pre></div>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="classification-tree.html#cb642-1"></a>oj_trControl =<span class="st"> </span><span class="kw">trainControl</span>(</span>
+<span id="cb642-2"><a href="classification-tree.html#cb642-2"></a>   <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,</span>
+<span id="cb642-3"><a href="classification-tree.html#cb642-3"></a>   <span class="dt">number =</span> <span class="dv">10</span>,</span>
+<span id="cb642-4"><a href="classification-tree.html#cb642-4"></a>   <span class="dt">savePredictions =</span> <span class="st">&quot;final&quot;</span>,       <span class="co"># save preds for the optimal tuning parameter</span></span>
+<span id="cb642-5"><a href="classification-tree.html#cb642-5"></a>   <span class="dt">classProbs =</span> <span class="ot">TRUE</span>,  <span class="co"># class probs in addition to preds</span></span>
+<span id="cb642-6"><a href="classification-tree.html#cb642-6"></a>   <span class="dt">summaryFunction =</span> twoClassSummary</span>
+<span id="cb642-7"><a href="classification-tree.html#cb642-7"></a>   )</span></code></pre></div>
 <p>Now fit the model.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="classification-tree.html#cb32-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb32-2"><a href="classification-tree.html#cb32-2"></a>oj_mdl_cart2 &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
-<span id="cb32-3"><a href="classification-tree.html#cb32-3"></a>   Purchase <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb32-4"><a href="classification-tree.html#cb32-4"></a>   <span class="dt">data =</span> oj_train, </span>
-<span id="cb32-5"><a href="classification-tree.html#cb32-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
-<span id="cb32-6"><a href="classification-tree.html#cb32-6"></a>   <span class="dt">tuneLength =</span> <span class="dv">5</span>,</span>
-<span id="cb32-7"><a href="classification-tree.html#cb32-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</span>
-<span id="cb32-8"><a href="classification-tree.html#cb32-8"></a>   <span class="dt">trControl =</span> oj_trControl</span>
-<span id="cb32-9"><a href="classification-tree.html#cb32-9"></a>   )</span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="classification-tree.html#cb643-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb643-2"><a href="classification-tree.html#cb643-2"></a>oj_mdl_cart2 &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
+<span id="cb643-3"><a href="classification-tree.html#cb643-3"></a>   Purchase <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb643-4"><a href="classification-tree.html#cb643-4"></a>   <span class="dt">data =</span> oj_train, </span>
+<span id="cb643-5"><a href="classification-tree.html#cb643-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
+<span id="cb643-6"><a href="classification-tree.html#cb643-6"></a>   <span class="dt">tuneLength =</span> <span class="dv">5</span>,</span>
+<span id="cb643-7"><a href="classification-tree.html#cb643-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</span>
+<span id="cb643-8"><a href="classification-tree.html#cb643-8"></a>   <span class="dt">trControl =</span> oj_trControl</span>
+<span id="cb643-9"><a href="classification-tree.html#cb643-9"></a>   )</span></code></pre></div>
 <p><code>caret</code> built a full tree using <code>rpart</code>’s default parameters: gini splitting index, at least 20 observations in a node in order to consider splitting it, and at least 6 observations in each node. Caret then calculated the accuracy for each candidate value of <span class="math inline">\(\alpha\)</span>. Here is the results.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="classification-tree.html#cb33-1"></a><span class="kw">print</span>(oj_mdl_cart2)</span></code></pre></div>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="classification-tree.html#cb644-1"></a><span class="kw">print</span>(oj_mdl_cart2)</span></code></pre></div>
 <pre><code>## CART 
 ## 
 ## 857 samples
@@ -1043,26 +1053,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Summary of sample sizes: 772, 772, 771, 770, 771, 771, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   cp           ROC        Sens       Spec     
-##   0.005988024  0.8539885  0.8605225  0.7274510
-##   0.008982036  0.8502309  0.8568578  0.7334225
-##   0.013473054  0.8459290  0.8473149  0.7397504
-##   0.032934132  0.7776483  0.8509071  0.6796791
-##   0.479041916  0.5878764  0.9201379  0.2556150
+##   cp     ROC   Sens  Spec
+##   0.006  0.85  0.86  0.73
+##   0.009  0.85  0.86  0.73
+##   0.013  0.85  0.85  0.74
+##   0.033  0.78  0.85  0.68
+##   0.479  0.59  0.92  0.26
 ## 
 ## ROC was used to select the optimal model using the largest value.
-## The final value used for the model was cp = 0.005988024.</code></pre>
+## The final value used for the model was cp = 0.006.</code></pre>
 <p>The second <code>cp</code> (0.008982036) produced the highest accuracy. I can drill into the best value of <code>cp</code> using a tuning grid.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="classification-tree.html#cb35-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb35-2"><a href="classification-tree.html#cb35-2"></a>oj_mdl_cart2 &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
-<span id="cb35-3"><a href="classification-tree.html#cb35-3"></a>   Purchase <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb35-4"><a href="classification-tree.html#cb35-4"></a>   <span class="dt">data =</span> oj_train, </span>
-<span id="cb35-5"><a href="classification-tree.html#cb35-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
-<span id="cb35-6"><a href="classification-tree.html#cb35-6"></a>   <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(<span class="dt">cp =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="fl">0.001</span>, <span class="dt">to =</span> <span class="fl">0.010</span>, <span class="dt">length =</span> <span class="dv">11</span>)),  </span>
-<span id="cb35-7"><a href="classification-tree.html#cb35-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</span>
-<span id="cb35-8"><a href="classification-tree.html#cb35-8"></a>   <span class="dt">trControl =</span> oj_trControl</span>
-<span id="cb35-9"><a href="classification-tree.html#cb35-9"></a>   )</span>
-<span id="cb35-10"><a href="classification-tree.html#cb35-10"></a><span class="kw">print</span>(oj_mdl_cart2)</span></code></pre></div>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="classification-tree.html#cb646-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb646-2"><a href="classification-tree.html#cb646-2"></a>oj_mdl_cart2 &lt;-<span class="st"> </span><span class="kw">train</span>(</span>
+<span id="cb646-3"><a href="classification-tree.html#cb646-3"></a>   Purchase <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb646-4"><a href="classification-tree.html#cb646-4"></a>   <span class="dt">data =</span> oj_train, </span>
+<span id="cb646-5"><a href="classification-tree.html#cb646-5"></a>   <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
+<span id="cb646-6"><a href="classification-tree.html#cb646-6"></a>   <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(<span class="dt">cp =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="fl">0.001</span>, <span class="dt">to =</span> <span class="fl">0.010</span>, <span class="dt">length =</span> <span class="dv">11</span>)),  </span>
+<span id="cb646-7"><a href="classification-tree.html#cb646-7"></a>   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</span>
+<span id="cb646-8"><a href="classification-tree.html#cb646-8"></a>   <span class="dt">trControl =</span> oj_trControl</span>
+<span id="cb646-9"><a href="classification-tree.html#cb646-9"></a>   )</span>
+<span id="cb646-10"><a href="classification-tree.html#cb646-10"></a><span class="kw">print</span>(oj_mdl_cart2)</span></code></pre></div>
 <pre><code>## CART 
 ## 
 ## 857 samples
@@ -1074,110 +1084,110 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Summary of sample sizes: 772, 772, 771, 770, 771, 771, ... 
 ## Resampling results across tuning parameters:
 ## 
-##   cp      ROC        Sens       Spec     
-##   0.0010  0.8513056  0.8529390  0.7182709
-##   0.0019  0.8528471  0.8529753  0.7213012
-##   0.0028  0.8524435  0.8510522  0.7302139
-##   0.0037  0.8533529  0.8510522  0.7421569
-##   0.0046  0.8540042  0.8491292  0.7333333
-##   0.0055  0.8543820  0.8567126  0.7334225
-##   0.0064  0.8539885  0.8605225  0.7274510
-##   0.0073  0.8521076  0.8625181  0.7335116
-##   0.0082  0.8521076  0.8625181  0.7335116
-##   0.0091  0.8502309  0.8568578  0.7334225
-##   0.0100  0.8507262  0.8510885  0.7424242
+##   cp      ROC   Sens  Spec
+##   0.0010  0.85  0.85  0.72
+##   0.0019  0.85  0.85  0.72
+##   0.0028  0.85  0.85  0.73
+##   0.0037  0.85  0.85  0.74
+##   0.0046  0.85  0.85  0.73
+##   0.0055  0.85  0.86  0.73
+##   0.0064  0.85  0.86  0.73
+##   0.0073  0.85  0.86  0.73
+##   0.0082  0.85  0.86  0.73
+##   0.0091  0.85  0.86  0.73
+##   0.0100  0.85  0.85  0.74
 ## 
 ## ROC was used to select the optimal model using the largest value.
 ## The final value used for the model was cp = 0.0055.</code></pre>
 <p>The best model is at cp = 0.0082. Here are the cross-validated accuracies for the candidate cp values.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="classification-tree.html#cb37-1"></a><span class="kw">plot</span>(oj_mdl_cart2)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="classification-tree.html#cb648-1"></a><span class="kw">plot</span>(oj_mdl_cart2)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-296-1.png" width="672" /></p>
 <p>Here are the rules in the final model.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="classification-tree.html#cb38-1"></a>oj_mdl_cart2<span class="op">$</span>finalModel</span></code></pre></div>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="classification-tree.html#cb649-1"></a>oj_mdl_cart2<span class="op">$</span>finalModel</span></code></pre></div>
 <pre><code>## n= 857 
 ## 
 ## node), split, n, loss, yval, (yprob)
 ##       * denotes terminal node
 ## 
-##   1) root 857 334 CH (0.61026838 0.38973162)  
-##     2) LoyalCH&gt;=0.48285 537  94 CH (0.82495345 0.17504655)  
-##       4) LoyalCH&gt;=0.7648795 271  13 CH (0.95202952 0.04797048) *
-##       5) LoyalCH&lt; 0.7648795 266  81 CH (0.69548872 0.30451128)  
-##        10) PriceDiff&gt;=-0.165 226  50 CH (0.77876106 0.22123894) *
-##        11) PriceDiff&lt; -0.165 40   9 MM (0.22500000 0.77500000) *
-##     3) LoyalCH&lt; 0.48285 320  80 MM (0.25000000 0.75000000)  
-##       6) LoyalCH&gt;=0.2761415 146  58 MM (0.39726027 0.60273973)  
-##        12) SalePriceMM&gt;=2.04 71  31 CH (0.56338028 0.43661972)  
-##          24) LoyalCH&lt; 0.303104 7   0 CH (1.00000000 0.00000000) *
-##          25) LoyalCH&gt;=0.303104 64  31 CH (0.51562500 0.48437500)  
-##            50) WeekofPurchase&gt;=246.5 52  22 CH (0.57692308 0.42307692)  
-##             100) PriceCH&lt; 1.94 35  11 CH (0.68571429 0.31428571) *
-##             101) PriceCH&gt;=1.94 17   6 MM (0.35294118 0.64705882) *
-##            51) WeekofPurchase&lt; 246.5 12   3 MM (0.25000000 0.75000000) *
-##        13) SalePriceMM&lt; 2.04 75  18 MM (0.24000000 0.76000000)  
-##          26) SpecialCH&gt;=0.5 14   6 CH (0.57142857 0.42857143) *
-##          27) SpecialCH&lt; 0.5 61  10 MM (0.16393443 0.83606557) *
-##       7) LoyalCH&lt; 0.2761415 174  22 MM (0.12643678 0.87356322) *</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="classification-tree.html#cb40-1"></a><span class="kw">rpart.plot</span>(oj_mdl_cart2<span class="op">$</span>finalModel)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+##   1) root 857 330 CH (0.610 0.390)  
+##     2) LoyalCH&gt;=0.48 537  94 CH (0.825 0.175)  
+##       4) LoyalCH&gt;=0.76 271  13 CH (0.952 0.048) *
+##       5) LoyalCH&lt; 0.76 266  81 CH (0.695 0.305)  
+##        10) PriceDiff&gt;=-0.16 226  50 CH (0.779 0.221) *
+##        11) PriceDiff&lt; -0.16 40   9 MM (0.225 0.775) *
+##     3) LoyalCH&lt; 0.48 320  80 MM (0.250 0.750)  
+##       6) LoyalCH&gt;=0.28 146  58 MM (0.397 0.603)  
+##        12) SalePriceMM&gt;=2 71  31 CH (0.563 0.437)  
+##          24) LoyalCH&lt; 0.3 7   0 CH (1.000 0.000) *
+##          25) LoyalCH&gt;=0.3 64  31 CH (0.516 0.484)  
+##            50) WeekofPurchase&gt;=2.5e+02 52  22 CH (0.577 0.423)  
+##             100) PriceCH&lt; 1.9 35  11 CH (0.686 0.314) *
+##             101) PriceCH&gt;=1.9 17   6 MM (0.353 0.647) *
+##            51) WeekofPurchase&lt; 2.5e+02 12   3 MM (0.250 0.750) *
+##        13) SalePriceMM&lt; 2 75  18 MM (0.240 0.760)  
+##          26) SpecialCH&gt;=0.5 14   6 CH (0.571 0.429) *
+##          27) SpecialCH&lt; 0.5 61  10 MM (0.164 0.836) *
+##       7) LoyalCH&lt; 0.28 174  22 MM (0.126 0.874) *</code></pre>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="classification-tree.html#cb651-1"></a><span class="kw">rpart.plot</span>(oj_mdl_cart2<span class="op">$</span>finalModel)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-298-1.png" width="672" /></p>
 <p>Let’s look at the performance on the holdout data set.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="classification-tree.html#cb41-1"></a>oj_preds_cart2 &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(</span>
-<span id="cb41-2"><a href="classification-tree.html#cb41-2"></a>   <span class="kw">predict</span>(oj_mdl_cart2, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>),</span>
-<span id="cb41-3"><a href="classification-tree.html#cb41-3"></a>   <span class="dt">Predicted =</span> <span class="kw">predict</span>(oj_mdl_cart2, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>),</span>
-<span id="cb41-4"><a href="classification-tree.html#cb41-4"></a>   <span class="dt">Actual =</span> oj_test<span class="op">$</span>Purchase</span>
-<span id="cb41-5"><a href="classification-tree.html#cb41-5"></a>)</span>
-<span id="cb41-6"><a href="classification-tree.html#cb41-6"></a></span>
-<span id="cb41-7"><a href="classification-tree.html#cb41-7"></a>oj_cm_cart2 &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(oj_preds_cart2<span class="op">$</span>Predicted, oj_preds_cart2<span class="op">$</span>Actual)</span>
-<span id="cb41-8"><a href="classification-tree.html#cb41-8"></a>oj_cm_cart2</span></code></pre></div>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="classification-tree.html#cb652-1"></a>oj_preds_cart2 &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(</span>
+<span id="cb652-2"><a href="classification-tree.html#cb652-2"></a>   <span class="kw">predict</span>(oj_mdl_cart2, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>),</span>
+<span id="cb652-3"><a href="classification-tree.html#cb652-3"></a>   <span class="dt">Predicted =</span> <span class="kw">predict</span>(oj_mdl_cart2, <span class="dt">newdata =</span> oj_test, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>),</span>
+<span id="cb652-4"><a href="classification-tree.html#cb652-4"></a>   <span class="dt">Actual =</span> oj_test<span class="op">$</span>Purchase</span>
+<span id="cb652-5"><a href="classification-tree.html#cb652-5"></a>)</span>
+<span id="cb652-6"><a href="classification-tree.html#cb652-6"></a></span>
+<span id="cb652-7"><a href="classification-tree.html#cb652-7"></a>oj_cm_cart2 &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(oj_preds_cart2<span class="op">$</span>Predicted, oj_preds_cart2<span class="op">$</span>Actual)</span>
+<span id="cb652-8"><a href="classification-tree.html#cb652-8"></a>oj_cm_cart2</span></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
 ## Prediction  CH  MM
 ##         CH 117  18
 ##         MM  13  65
-##                                           
-##                Accuracy : 0.8545          
-##                  95% CI : (0.7998, 0.8989)
-##     No Information Rate : 0.6103          
-##     P-Value [Acc &gt; NIR] : 4.83e-15        
-##                                           
-##                   Kappa : 0.6907          
-##                                           
-##  Mcnemar&#39;s Test P-Value : 0.4725          
-##                                           
-##             Sensitivity : 0.9000          
-##             Specificity : 0.7831          
-##          Pos Pred Value : 0.8667          
-##          Neg Pred Value : 0.8333          
-##              Prevalence : 0.6103          
-##          Detection Rate : 0.5493          
-##    Detection Prevalence : 0.6338          
-##       Balanced Accuracy : 0.8416          
-##                                           
-##        &#39;Positive&#39; Class : CH              
+##                                              
+##                Accuracy : 0.854              
+##                  95% CI : (0.8, 0.899)       
+##     No Information Rate : 0.61               
+##     P-Value [Acc &gt; NIR] : 0.00000000000000483
+##                                              
+##                   Kappa : 0.691              
+##                                              
+##  Mcnemar&#39;s Test P-Value : 0.472              
+##                                              
+##             Sensitivity : 0.900              
+##             Specificity : 0.783              
+##          Pos Pred Value : 0.867              
+##          Neg Pred Value : 0.833              
+##              Prevalence : 0.610              
+##          Detection Rate : 0.549              
+##    Detection Prevalence : 0.634              
+##       Balanced Accuracy : 0.842              
+##                                              
+##        &#39;Positive&#39; Class : CH                 
 ## </code></pre>
 <p>The accuracy is 0.8451 - a little worse than the 0.8592 from the direct method. The AUC is 0.9102.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="classification-tree.html#cb43-1"></a>mdl_auc &lt;-<span class="st"> </span>Metrics<span class="op">::</span><span class="kw">auc</span>(<span class="dt">actual =</span> oj_preds_cart2<span class="op">$</span>Actual <span class="op">==</span><span class="st"> &quot;CH&quot;</span>, oj_preds_cart2<span class="op">$</span>CH)</span>
-<span id="cb43-2"><a href="classification-tree.html#cb43-2"></a>yardstick<span class="op">::</span><span class="kw">roc_curve</span>(oj_preds_cart2, Actual, CH) <span class="op">%&gt;%</span></span>
-<span id="cb43-3"><a href="classification-tree.html#cb43-3"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
-<span id="cb43-4"><a href="classification-tree.html#cb43-4"></a><span class="st">  </span><span class="kw">labs</span>(</span>
-<span id="cb43-5"><a href="classification-tree.html#cb43-5"></a>    <span class="dt">title =</span> <span class="st">&quot;OJ CART ROC Curve (caret)&quot;</span>,</span>
-<span id="cb43-6"><a href="classification-tree.html#cb43-6"></a>    <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;AUC = &quot;</span>, <span class="kw">round</span>(mdl_auc, <span class="dv">4</span>))</span>
-<span id="cb43-7"><a href="classification-tree.html#cb43-7"></a>  )</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="classification-tree.html#cb44-1"></a>yardstick<span class="op">::</span><span class="kw">gain_curve</span>(oj_preds_cart2, Actual, CH) <span class="op">%&gt;%</span></span>
-<span id="cb44-2"><a href="classification-tree.html#cb44-2"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
-<span id="cb44-3"><a href="classification-tree.html#cb44-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;OJ CART Gain Curve (caret)&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="classification-tree.html#cb654-1"></a>mdl_auc &lt;-<span class="st"> </span>Metrics<span class="op">::</span><span class="kw">auc</span>(<span class="dt">actual =</span> oj_preds_cart2<span class="op">$</span>Actual <span class="op">==</span><span class="st"> &quot;CH&quot;</span>, oj_preds_cart2<span class="op">$</span>CH)</span>
+<span id="cb654-2"><a href="classification-tree.html#cb654-2"></a>yardstick<span class="op">::</span><span class="kw">roc_curve</span>(oj_preds_cart2, Actual, CH) <span class="op">%&gt;%</span></span>
+<span id="cb654-3"><a href="classification-tree.html#cb654-3"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
+<span id="cb654-4"><a href="classification-tree.html#cb654-4"></a><span class="st">  </span><span class="kw">labs</span>(</span>
+<span id="cb654-5"><a href="classification-tree.html#cb654-5"></a>    <span class="dt">title =</span> <span class="st">&quot;OJ CART ROC Curve (caret)&quot;</span>,</span>
+<span id="cb654-6"><a href="classification-tree.html#cb654-6"></a>    <span class="dt">subtitle =</span> <span class="kw">paste0</span>(<span class="st">&quot;AUC = &quot;</span>, <span class="kw">round</span>(mdl_auc, <span class="dv">4</span>))</span>
+<span id="cb654-7"><a href="classification-tree.html#cb654-7"></a>  )</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-300-1.png" width="672" /></p>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="classification-tree.html#cb655-1"></a>yardstick<span class="op">::</span><span class="kw">gain_curve</span>(oj_preds_cart2, Actual, CH) <span class="op">%&gt;%</span></span>
+<span id="cb655-2"><a href="classification-tree.html#cb655-2"></a><span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span></span>
+<span id="cb655-3"><a href="classification-tree.html#cb655-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;OJ CART Gain Curve (caret)&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-301-1.png" width="672" /></p>
 <p>Finally, here is the variable importance plot. Brand loyalty is most important, followed by price difference.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="classification-tree.html#cb45-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(oj_mdl_cart2), <span class="dt">main=</span><span class="st">&quot;Variable Importance with CART (caret)&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="classification-tree.html#cb656-1"></a><span class="kw">plot</span>(<span class="kw">varImp</span>(oj_mdl_cart2), <span class="dt">main=</span><span class="st">&quot;Variable Importance with CART (caret)&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-302-1.png" width="672" /></p>
 <p>Looks like the manual effort fared best. Here is a summary the accuracy rates of the two models.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="classification-tree.html#cb46-1"></a>oj_scoreboard &lt;-<span class="st"> </span><span class="kw">rbind</span>(</span>
-<span id="cb46-2"><a href="classification-tree.html#cb46-2"></a>   <span class="kw">data.frame</span>(<span class="dt">Model =</span> <span class="st">&quot;Single Tree&quot;</span>, <span class="dt">Accuracy =</span> oj_cm_cart<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]),</span>
-<span id="cb46-3"><a href="classification-tree.html#cb46-3"></a>   <span class="kw">data.frame</span>(<span class="dt">Model =</span> <span class="st">&quot;Single Tree (caret)&quot;</span>, <span class="dt">Accuracy =</span> oj_cm_cart2<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
-<span id="cb46-4"><a href="classification-tree.html#cb46-4"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Accuracy))</span>
-<span id="cb46-5"><a href="classification-tree.html#cb46-5"></a><span class="kw">scoreboard</span>(oj_scoreboard)</span></code></pre></div>
+<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="classification-tree.html#cb657-1"></a>oj_scoreboard &lt;-<span class="st"> </span><span class="kw">rbind</span>(</span>
+<span id="cb657-2"><a href="classification-tree.html#cb657-2"></a>   <span class="kw">data.frame</span>(<span class="dt">Model =</span> <span class="st">&quot;Single Tree&quot;</span>, <span class="dt">Accuracy =</span> oj_cm_cart<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]),</span>
+<span id="cb657-3"><a href="classification-tree.html#cb657-3"></a>   <span class="kw">data.frame</span>(<span class="dt">Model =</span> <span class="st">&quot;Single Tree (caret)&quot;</span>, <span class="dt">Accuracy =</span> oj_cm_cart2<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>])</span>
+<span id="cb657-4"><a href="classification-tree.html#cb657-4"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Accuracy))</span>
+<span id="cb657-5"><a href="classification-tree.html#cb657-5"></a><span class="kw">scoreboard</span>(oj_scoreboard)</span></code></pre></div>
 <div class="tabwid"><table style='border-collapse:collapse;'><thead><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 2.00px solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Model</span></p></td><td style="width:66px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 2.00px solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Accuracy</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Single Tree</span></p></td><td style="width:66px;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">0.8592</span></p></td></tr><tr style="overflow-wrap:break-word;"><td style="width:112px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">Single Tree (caret)</span></p></td><td style="width:66px;background-color:transparent;vertical-align: middle;border-bottom: 2.00px solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;"><p style="margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:2px;padding-top:2px;padding-left:5px;padding-right:5px;background-color:transparent;"><span style="font-family:'Arial';font-size:11px;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(17, 17, 17, 1.00);background-color:transparent;">0.8545</span></p></td></tr></tbody></table></div>
 </div>
 </div>

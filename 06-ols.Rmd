@@ -890,7 +890,7 @@ GainCurvePlot(d, xvar = "fitted", truthVar = "mpg", title = "Model Gain Curve")
 ```
 
 
-## Reference
+## OLS Reference
 
 Penn State University, STAT 501, Lesson 12: Multicollinearity & Other Regression Pitfalls. [https://newonlinecourses.science.psu.edu/stat501/lesson/12](https://newonlinecourses.science.psu.edu/stat501/lesson/12).
 

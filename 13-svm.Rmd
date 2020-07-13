@@ -1,15 +1,15 @@
 # Support Vector Machines
 
-These notes rely on [@James2013], [@Hastie2017], and [@Kuhn2016]. I also reviewed the material in PSU's Applied Data Mining and Statistical Learning ([STAT 508](https://online.stat.psu.edu/stat508/)), and the *e1071* [Support Vector Machines](https://cran.r-project.org/web/packages/e1071/vignettes/svmdoc.pdf) vignette.
+These notes rely on [@James2013], [@Hastie2017], and [@Kuhn2016], [PSU STAT 508](https://online.stat.psu.edu/stat508/), and the [e1071 SVM vignette](https://cran.r-project.org/web/packages/e1071/vignettes/svmdoc.pdf).
 
-The Support Vector Machines (SVM) algorithm finds the optimal separating hyperplane between members of two classes using an appropriate nonlinear mapping to a sufficiently high dimension. The hyperplane is defined by the observations that lie within a margin optimized by a cost hyperparameter. These observations are called the *support vectors*.
+Support Vector Machines (SVM) is a classification model ^[Other classification models include LDA, logistic regression, and tree-based models such as bagging, random forests, and gradient boosting.] that maps observations as points in space so that the categories are divided by as wide a gap as possible. New observations can then be mapped into that same space for prediction. The SVM algorithm finds the optimal separating hyperplane using a nonlinear mapping to a sufficiently high dimension. The hyperplane is defined by the observations that lie within a margin optimized by a cost hyperparameter. These observations are called the *support vectors*.
 
-SVM is an extension of the *support vector classifier* which in turn is a generalization of the simple and intuitive *maximal margin classifier*.  
+SVM is an extension of the *support vector classifier* which in turn is a generalization of the simple and intuitive *maximal margin classifier*.  The best way to understand the SVM is to start with the maximal margin classifier and work up.
 
 
 ## Maximal Margin Classifier
 
-The maximal margin classifier is the optimal hyperplane defined in the (rare) case where two classes are *linearly separable*.  Given an $n \times p$ data matrix $X$ with binary response variable defined as $y \in [-1, 1]$ it *may* be possible to define a *p*-dimensional hyperplane $h(X) = \beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = x_i^T \beta + \beta_0 = 0$ such that all observations of each class fall on opposite sides of the hyperplane. This "separating hyperplane" has the property that if $\beta$ is constrained to be a unit vector, $||\beta|| = \sum\beta^2 = 1$, then the product of the hyperplane and response variables are positive perpendicular distances from the hyperplane, the smallest of which may be termed the hyperplane *margin*, $M$,  
+The maximal margin classifier is the optimal hyperplane defined in the (rare) case where two classes are *linearly separable*.  Given an $n \times p$ data matrix $X$ with binary response variable defined as $y \in [-1, 1]$ it *might* be possible to define a *p*-dimensional hyperplane $h(X) = \beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = x_i^T \beta + \beta_0 = 0$ such that all observations of each class fall on opposite sides of the hyperplane. This *separating hyperplane* has the property that if $\beta$ is constrained to be a unit vector, $||\beta|| = \sum\beta^2 = 1$, then the product of the hyperplane and response variables are positive perpendicular distances from the hyperplane, the smallest of which may be termed the hyperplane *margin*, $M$,  
 
 $$y_i (x_i^{'} \beta + \beta_0) \ge M.$$
 
@@ -18,7 +18,7 @@ The maximal margin classifier is the hyperplane with the maximum margin.  That i
 
 ## Support Vector Classifier
 
-The maximal margin classifier can be generalized to non-separable cases using a so-called "soft margin".  The generalization is called the *support vector classifier*.  The soft margin allows some misclassification in the interest of greater robustness to individual observations. The support vector classifier optimizes 
+The maximal margin classifier can be generalized to non-separable cases using a so-called *soft margin*.  The generalization is called the *support vector classifier*.  The soft margin allows some misclassification in the interest of greater robustness to individual observations. The support vector classifier optimizes 
 
 $$y_i (x_i^{'} \beta + \beta_0) \ge M(1 - \xi_i)$$
 
