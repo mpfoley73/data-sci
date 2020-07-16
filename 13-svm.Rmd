@@ -1,20 +1,46 @@
 # Support Vector Machines
 
-These notes rely on [@James2013], [@Hastie2017], and [@Kuhn2016], [PSU STAT 508](https://online.stat.psu.edu/stat508/), and the [e1071 SVM vignette](https://cran.r-project.org/web/packages/e1071/vignettes/svmdoc.pdf).
+These notes rely on [@James2013], [@Hastie2017], [@Kuhn2016], [PSU STAT 508](https://online.stat.psu.edu/stat508/), and the [e1071 SVM vignette](https://cran.r-project.org/web/packages/e1071/vignettes/svmdoc.pdf).
 
-Support Vector Machines (SVM) is a classification model ^[Other classification models include LDA, logistic regression, and tree-based models such as bagging, random forests, and gradient boosting.] that maps observations as points in space so that the categories are divided by as wide a gap as possible. New observations can then be mapped into that same space for prediction. The SVM algorithm finds the optimal separating hyperplane using a nonlinear mapping to a sufficiently high dimension. The hyperplane is defined by the observations that lie within a margin optimized by a cost hyperparameter. These observations are called the *support vectors*.
+Support Vector Machines (SVM) is a classification model that maps observations as points in space so that the categories are divided by as wide a gap as possible. New observations can then be mapped into the space for prediction. The SVM algorithm finds the optimal separating hyperplane using a nonlinear mapping to a sufficiently high dimension. The hyperplane is defined by the observations that lie within a margin optimized by a cost hyperparameter. These observations are called the *support vectors*.
 
 SVM is an extension of the *support vector classifier* which in turn is a generalization of the simple and intuitive *maximal margin classifier*.  The best way to understand the SVM is to start with the maximal margin classifier and work up.
 
 
 ## Maximal Margin Classifier
 
-The maximal margin classifier is the optimal hyperplane defined in the (rare) case where two classes are *linearly separable*.  Given an $n \times p$ data matrix $X$ with binary response variable defined as $y \in [-1, 1]$ it *might* be possible to define a *p*-dimensional hyperplane $h(X) = \beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = x_i^T \beta + \beta_0 = 0$ such that all observations of each class fall on opposite sides of the hyperplane. This *separating hyperplane* has the property that if $\beta$ is constrained to be a unit vector, $||\beta|| = \sum\beta^2 = 1$, then the product of the hyperplane and response variables are positive perpendicular distances from the hyperplane, the smallest of which may be termed the hyperplane *margin*, $M$,  
+The maximal margin classifier is the optimal hyperplane defined in the (rare) case where two classes are *linearly separable*.  Given an $n \times p$ data matrix $X$ with a binary response variable defined as $y \in [-1, 1]$ it *might* be possible to define a *p*-dimensional hyperplane $h(X) = \beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = x_i^T \beta + \beta_0 = 0$ such that all observations of each class fall on opposite sides of the hyperplane. This *separating hyperplane* has the property that if $\beta$ is constrained to be a unit vector, $||\beta|| = \sum\beta^2 = 1$, then the product of the hyperplane and response variables are positive perpendicular distances from the hyperplane, the smallest of which may be termed the hyperplane *margin*, $M$,  
 
 $$y_i (x_i^{'} \beta + \beta_0) \ge M.$$
 
-The maximal margin classifier is the hyperplane with the maximum margin.  That is, $\max \{M\}$ subject to $||\beta|| = 1$.  A separating hyperplane rarely exists.  In fact, even if a separating hyperplane does exist, its resulting margin is probably undesirably narrow. 
+The maximal margin classifier is the hyperplane with the maximum margin, $\max \{M\}$ subject to $||\beta|| = 1$.  A separating hyperplane rarely exists.  In fact, even if a separating hyperplane does exist, its resulting margin is probably undesirably narrow. Here is the maximal margin classifier.^[Image from https://nlp.stanford.edu/IR-book/pdf/15svm.pdf.]
 
+![Maximum marginal classifier](images/svm_mmc.png)
+
+The data set has two linearly separable classes, $y \in [-1, 1]$ described by two features, $X1$ and $X2$^[Any more features and we won't be able to visualize it]. The code is unimportant - just trying to produce the visualization.
+
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+library(tidyverse)
+
+# Make a data set
+set.seed(1)
+x <- matrix(rnorm (20*2), ncol=2)
+y <- c(rep(-1, 10), rep(1, 10))
+x[y==1, ] <- x[y==1, ] + 1
+train_data <- data.frame(x, y)
+train_data$y <- as.factor(y)
+
+# Push out the x values to make linearly separable
+dat <- train_data %>% 
+  mutate(
+    X1 = X1 + ifelse(y==1, 1.0, 0),
+    X2 = X2 + ifelse(y==1, 1.0, 0)
+  )
+
+library(e1071)
+m <- svm(y ~ ., data = dat, kernel = "linear", cost = 1e5, scale = FALSE)
+plot(m, dat)
+```
 
 ## Support Vector Classifier
 
@@ -22,7 +48,7 @@ The maximal margin classifier can be generalized to non-separable cases using a 
 
 $$y_i (x_i^{'} \beta + \beta_0) \ge M(1 - \xi_i)$$
 
-where the $\xi_i$ are positive *slack variables* whose sum is bounded by some constant tuning parameter $\sum{\xi_i} \le constant$.  The slack variable values indicate where the observation lies:  $\xi_i = 0$ observations lie on the correct side of the margin;  $\xi_i > 0$ observation lie on the wrong side of the margin;  $\xi_i > 1$ observations lie on the wrong side of the hyperplane.  The constant sets the tolerance for margin violation.  If $constant = 0$, then all observations must reside on the correct side of the margin, as in the maximal margin classifier.  The $constant$ controls the bias-variance trade-off.  As the $constant$ increases, the margin widens and allows more violations.  The classifier bias increases but its variance decreases.
+where the $\xi_i$ are positive *slack variables* whose sum is bounded by some constant tuning parameter $\sum{\xi_i} \le \Xi$.  The slack variable values indicate where the observation lies:  $\xi_i = 0$ observations lie on the correct side of the margin;  $\xi_i > 0$ observation lie on the wrong side of the margin;  $\xi_i > 1$ observations lie on the wrong side of the hyperplane.  $\Xi$ sets the tolerance for margin violation.  If $\Xi = 0$, then all observations must reside on the correct side of the margin, as in the maximal margin classifier.  $\Xi$ controls the bias-variance trade-off: as $\Xi$ increases, the margin widens and allows more violations, increasing bias and decreasing variance.
 
 The support vector classifier is usually defined by dropping the $||\beta|| = 1$ constraint, and defining $M = 1 / ||\beta||$.  The optimization problem then becomes
 
@@ -30,7 +56,7 @@ $$
  \min ||\beta|| \hspace{2mm} s.t. \hspace{2mm}  
   \begin{cases} 
    y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i &  \\
-   \xi_i \ge 0, \hspace{2mm} \sum \xi_i \le constant.      
+   \xi_i \ge 0, \hspace{2mm} \sum \xi_i \le \Xi.      
   \end{cases}
 $$
 
@@ -75,7 +101,7 @@ or radial
 $$K(x, x') = \exp\{-\gamma ||x - x'||^2\}.$$
 
 
-## Example
+## My svm Example
 
 Here is a data set of two classes $y \in [-1, 1]$ described by two features $X1$ and $X2$.
 
@@ -101,7 +127,6 @@ ggplot(train_data, aes(x = X1, y = X2, color = y)) +
 No, they are not linearly separable.  Now fit a support vector machine. The **e1071** library implements the SVM algorithm.   `svm(..., kernel="linear")` fits a support vector classifier. Change the kernal to `c("polynomial", "radial")` for SVM.  Try a cost of 10.
 
 ```{r}
-library(e1071)
 m <- svm(
   y ~ ., 
   data = train_data,
@@ -167,34 +192,13 @@ There are 16 support vectors, 8 in each class.  This is a pretty wide margin.
 plot(m_best, train_data)
 ```
 
-What if the classes had been linearly separable?  Then we could create a maximal margin classifier.  
 
-```{r}
-train_data_2 <- train_data %>% 
-  mutate(
-    X1 = X1 + ifelse(y==1, 1.0, 0),
-    X2 = X2 + ifelse(y==1, 1.0, 0)
-  )
-ggplot(train_data_2, aes(x = X1, y = X2, color = y)) +
-  geom_point(size = 2) +
-  labs(title = "Binary response with two features, linearly separable")
-```
 
-Specify a huge cost = 1e5 so that no support vectors violate the margin.  
 
-```{r}
-m2 <- svm(
-  y ~ ., 
-  data = train_data_2,
-  kernel = "linear",
-  cost = 1e5,
-  scale = FALSE  # do not standardize features
-)
-plot(m2, train_data_2)
-summary(m2)
-```
 
-This model will have very low bias, but very high variance.  To fit an SVM, use a different kernel.  You can use `kernal = c("polynomial", "radial", "sigmoid")`.  For a polynomial model, also specify the polynomial degree. For a radial model, include the gamma value.
+
+
+To fit an SVM, use a different kernel.  You can use `kernal = c("polynomial", "radial", "sigmoid")`.  For a polynomial model, also specify the polynomial degree. For a radial model, include the gamma value.
 
 ```{r}
 set.seed(1)

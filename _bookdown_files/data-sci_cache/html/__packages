@@ -49,3 +49,6 @@ VGAM
 rpart
 rpart.plot
 kernlab
+dendextend
+cluster
+factoextra
