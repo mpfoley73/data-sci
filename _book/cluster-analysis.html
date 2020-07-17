@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-07-16" />
+<meta name="date" content="2020-07-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="principal-components-analysis.html"/>
-<link rel="next" href="distances.html"/>
+<link rel="next" href="k-means.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -263,12 +263,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>10</b> Principal Components Analysis</a></li>
 <li class="chapter" data-level="11" data-path="cluster-analysis.html"><a href="cluster-analysis.html#cluster-analysis"><i class="fa fa-check"></i><b>11</b> Cluster Analysis</a><ul>
-<li class="chapter" data-level="11.1" data-path="distances.html"><a href="distances.html"><i class="fa fa-check"></i><b>11.1</b> Distances</a></li>
-<li class="chapter" data-level="11.2" data-path="hca-clustering.html"><a href="hca-clustering.html"><i class="fa fa-check"></i><b>11.2</b> HCA Clustering</a></li>
+<li class="chapter" data-level="11.1" data-path="k-means.html"><a href="k-means.html"><i class="fa fa-check"></i><b>11.1</b> K-Means</a></li>
+<li class="chapter" data-level="11.2" data-path="hca.html"><a href="hca.html"><i class="fa fa-check"></i><b>11.2</b> HCA</a></li>
 <li class="chapter" data-level="11.3" data-path="cluster-analysis-with-time-series-data.html"><a href="cluster-analysis-with-time-series-data.html"><i class="fa fa-check"></i><b>11.3</b> Cluster Analysis with Time-Series Data</a></li>
-<li class="chapter" data-level="11.4" data-path="k-means.html"><a href="k-means.html"><i class="fa fa-check"></i><b>11.4</b> K-Means</a></li>
-<li class="chapter" data-level="11.5" data-path="k-means-algorithm.html"><a href="k-means-algorithm.html"><i class="fa fa-check"></i><b>11.5</b> K-means Algorithm</a></li>
-<li class="chapter" data-level="11.6" data-path="k-means-vs-hca.html"><a href="k-means-vs-hca.html"><i class="fa fa-check"></i><b>11.6</b> K-Means vs HCA</a></li>
+<li class="chapter" data-level="11.4" data-path="k-means-vs-hca.html"><a href="k-means-vs-hca.html"><i class="fa fa-check"></i><b>11.4</b> K-Means vs HCA</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a><ul>
 <li class="chapter" data-level="12.1" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>12.1</b> Tidy Text</a></li>
@@ -330,20 +328,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Unsupervised machine learning searches for structure in unlabeled data (data without a response variable). The goal of unsupervised learning is clustering into homogenous subgroups, and dimensionality reduction. Examples of cluster analysis are k-means clustering and hierarchical cluster analysis (HCA) (others <a href="https://theappsolutions.com/blog/development/unsupervised-machine-learning/#:~:text=Unsupervised%20learning%20is%20a%20type%20of%20machine%20learning,in%20the%20dataset.%20The%20term%20%E2%80%9Cunsupervised%E2%80%9D%20refers%20to">here</a>). Clustering is used for audience segmentation, creating personas, detecting anomalies, and pattern recognition in images.</p>
 <p>I will learn by example, using the <a href="https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset">IBM HR Analytics Employee Attrition &amp; Performance</a> data set from Kaggle to discover what factors are associated with employee turnover and whether distinct clusters of employees are more susceptible to turnover. The clusters can help personalize <a href="https://www.digitalhrtech.com/employee-experience-guide/?_ga=2.197559791.13240713.1594804554-1792658053.1594804554">employee experience</a> (AIHR). This data set includes 1,470 employee records consisting of the <code>EmployeeNumber</code>, a flag for <code>Attrition</code> during some timeframe, and 32 other descriptive variables.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="cluster-analysis.html#cb1-1"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="cluster-analysis.html#cb1-2"></a><span class="kw">library</span>(correlationfunnel) <span class="co"># rapid exploratory data analysis</span></span></code></pre></div>
-<pre><code>## Warning: package &#39;correlationfunnel&#39; was built under R version 4.0.2</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="cluster-analysis.html#cb3-1"></a><span class="kw">library</span>(cluster)           <span class="co"># daisy and pam</span></span>
-<span id="cb3-2"><a href="cluster-analysis.html#cb3-2"></a><span class="kw">library</span>(Rtsne)             <span class="co"># dimensionality reduction and visualization</span></span></code></pre></div>
-<pre><code>## Warning: package &#39;Rtsne&#39; was built under R version 4.0.2</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="cluster-analysis.html#cb5-1"></a><span class="kw">library</span>(plotly)            <span class="co"># interactive graphing</span></span></code></pre></div>
-<pre><code>## Warning: package &#39;plotly&#39; was built under R version 4.0.2</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="cluster-analysis.html#cb7-1"></a><span class="kw">library</span>(dendextend)        <span class="co"># color_branches</span></span></code></pre></div>
-<pre><code>## Warning: package &#39;dendextend&#39; was built under R version 4.0.2</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="cluster-analysis.html#cb9-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)  <span class="co"># reproducibility</span></span>
-<span id="cb9-2"><a href="cluster-analysis.html#cb9-2"></a></span>
-<span id="cb9-3"><a href="cluster-analysis.html#cb9-3"></a>dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;./input/WA_Fn-UseC_-HR-Employee-Attrition.csv&quot;</span>)</span>
-<span id="cb9-4"><a href="cluster-analysis.html#cb9-4"></a>my_skim &lt;-<span class="st"> </span>skimr<span class="op">::</span><span class="kw">skim_with</span>(<span class="dt">numeric =</span> skimr<span class="op">::</span><span class="kw">sfl</span>(<span class="dt">p25 =</span> <span class="ot">NULL</span>, <span class="dt">p50 =</span> <span class="ot">NULL</span>, <span class="dt">p75 =</span> <span class="ot">NULL</span>, <span class="dt">hist =</span> <span class="ot">NULL</span>))</span>
-<span id="cb9-5"><a href="cluster-analysis.html#cb9-5"></a><span class="kw">my_skim</span>(dat)</span></code></pre></div>
+<span id="cb1-2"><a href="cluster-analysis.html#cb1-2"></a><span class="kw">library</span>(correlationfunnel) <span class="co"># binary correlation analysis</span></span>
+<span id="cb1-3"><a href="cluster-analysis.html#cb1-3"></a><span class="kw">library</span>(cluster)           <span class="co"># daisy and pam</span></span>
+<span id="cb1-4"><a href="cluster-analysis.html#cb1-4"></a><span class="kw">library</span>(Rtsne)             <span class="co"># dimensionality reduction and visualization</span></span>
+<span id="cb1-5"><a href="cluster-analysis.html#cb1-5"></a><span class="kw">library</span>(plotly)            <span class="co"># interactive graphing</span></span>
+<span id="cb1-6"><a href="cluster-analysis.html#cb1-6"></a><span class="kw">library</span>(dendextend)        <span class="co"># color_branches</span></span>
+<span id="cb1-7"><a href="cluster-analysis.html#cb1-7"></a></span>
+<span id="cb1-8"><a href="cluster-analysis.html#cb1-8"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)  <span class="co"># reproducibility</span></span>
+<span id="cb1-9"><a href="cluster-analysis.html#cb1-9"></a></span>
+<span id="cb1-10"><a href="cluster-analysis.html#cb1-10"></a>dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;./input/WA_Fn-UseC_-HR-Employee-Attrition.csv&quot;</span>)</span>
+<span id="cb1-11"><a href="cluster-analysis.html#cb1-11"></a>dat &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></span>
+<span id="cb1-12"><a href="cluster-analysis.html#cb1-12"></a><span class="st">  </span><span class="kw">mutate_if</span>(is.character, as_factor) <span class="op">%&gt;%</span></span>
+<span id="cb1-13"><a href="cluster-analysis.html#cb1-13"></a><span class="st">  </span><span class="kw">select</span>(EmployeeNumber, Attrition, <span class="kw">everything</span>())</span>
+<span id="cb1-14"><a href="cluster-analysis.html#cb1-14"></a>my_skim &lt;-<span class="st"> </span>skimr<span class="op">::</span><span class="kw">skim_with</span>(<span class="dt">numeric =</span> skimr<span class="op">::</span><span class="kw">sfl</span>(<span class="dt">p25 =</span> <span class="ot">NULL</span>, <span class="dt">p50 =</span> <span class="ot">NULL</span>, <span class="dt">p75 =</span> <span class="ot">NULL</span>, <span class="dt">hist =</span> <span class="ot">NULL</span>))</span>
+<span id="cb1-15"><a href="cluster-analysis.html#cb1-15"></a><span class="kw">my_skim</span>(dat)</span></code></pre></div>
 <table>
 <caption><span id="tab:unnamed-chunk-2">Table 11.1: </span>Data summary</caption>
 <tbody>
@@ -368,7 +366,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left"></td>
 </tr>
 <tr class="even">
-<td align="left">character</td>
+<td align="left">factor</td>
 <td align="left">9</td>
 </tr>
 <tr class="odd">
@@ -385,18 +383,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p><strong>Variable type: character</strong></p>
+<p><strong>Variable type: factor</strong></p>
 <table>
 <thead>
 <tr class="header">
 <th align="left">skim_variable</th>
 <th align="right">n_missing</th>
 <th align="right">complete_rate</th>
-<th align="right">min</th>
-<th align="right">max</th>
-<th align="right">empty</th>
+<th align="left">ordered</th>
 <th align="right">n_unique</th>
-<th align="right">whitespace</th>
+<th align="left">top_counts</th>
 </tr>
 </thead>
 <tbody>
@@ -404,91 +400,73 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left">Attrition</td>
 <td align="right">0</td>
 <td align="right">1</td>
+<td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">0</td>
+<td align="left">No: 1233, Yes: 237</td>
 </tr>
 <tr class="even">
 <td align="left">BusinessTravel</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">10</td>
-<td align="right">17</td>
-<td align="right">0</td>
+<td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="right">0</td>
+<td align="left">Tra: 1043, Tra: 277, Non: 150</td>
 </tr>
 <tr class="odd">
 <td align="left">Department</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">5</td>
-<td align="right">22</td>
-<td align="right">0</td>
+<td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="right">0</td>
+<td align="left">Res: 961, Sal: 446, Hum: 63</td>
 </tr>
 <tr class="even">
 <td align="left">EducationField</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">5</td>
-<td align="right">16</td>
-<td align="right">0</td>
+<td align="left">FALSE</td>
 <td align="right">6</td>
-<td align="right">0</td>
+<td align="left">Lif: 606, Med: 464, Mar: 159, Tec: 132</td>
 </tr>
 <tr class="odd">
 <td align="left">Gender</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">4</td>
-<td align="right">6</td>
-<td align="right">0</td>
+<td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="right">0</td>
+<td align="left">Mal: 882, Fem: 588</td>
 </tr>
 <tr class="even">
 <td align="left">JobRole</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">7</td>
-<td align="right">25</td>
-<td align="right">0</td>
+<td align="left">FALSE</td>
 <td align="right">9</td>
-<td align="right">0</td>
+<td align="left">Sal: 326, Res: 292, Lab: 259, Man: 145</td>
 </tr>
 <tr class="odd">
 <td align="left">MaritalStatus</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">6</td>
-<td align="right">8</td>
-<td align="right">0</td>
+<td align="left">FALSE</td>
 <td align="right">3</td>
-<td align="right">0</td>
+<td align="left">Mar: 673, Sin: 470, Div: 327</td>
 </tr>
 <tr class="even">
 <td align="left">Over18</td>
 <td align="right">0</td>
 <td align="right">1</td>
+<td align="left">FALSE</td>
 <td align="right">1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
+<td align="left">Y: 1470</td>
 </tr>
 <tr class="odd">
 <td align="left">OverTime</td>
 <td align="right">0</td>
 <td align="right">1</td>
+<td align="left">FALSE</td>
 <td align="right">2</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">0</td>
+<td align="left">No: 1054, Yes: 416</td>
 </tr>
 </tbody>
 </table>
@@ -507,6 +485,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">EmployeeNumber</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1024.87</td>
+<td align="right">602.02</td>
+<td align="right">1</td>
+<td align="right">2068</td>
+</tr>
+<tr class="even">
 <td align="left">Age</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -515,7 +502,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">18</td>
 <td align="right">60</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">DailyRate</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -524,7 +511,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">102</td>
 <td align="right">1499</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">DistanceFromHome</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -533,7 +520,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">1</td>
 <td align="right">29</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Education</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -542,7 +529,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">1</td>
 <td align="right">5</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">EmployeeCount</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -550,15 +537,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">0.00</td>
 <td align="right">1</td>
 <td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">EmployeeNumber</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1024.87</td>
-<td align="right">602.02</td>
-<td align="right">1</td>
-<td align="right">2068</td>
 </tr>
 <tr class="odd">
 <td align="left">EnvironmentSatisfaction</td>
@@ -742,6 +720,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
+<p>You would normally start a cluster analysis with an exploration of the data to determine which variables are interesting and relevant to your goal. I’ll bypass that rigor with a simple correlation funnel <a href="https://github.com/business-science/correlationfunnel">GitHub README</a> using binary correlation and include just the variables with a correlation coefficient of at least 0.10.</p>
+<p>Binary correlation analysis converts features into binary format by binning the continuous features and one-hot encoding the binary features. <code>correlate()</code> calculates the correlation coefficient for each binary feature to the response variable. A Correlation Funnel is an tornado plot that lists the highest correlation features (based on absolute magnitude) at the top of the and the lowest correlation features at the bottom. For our data set, <code>OverTime</code> (Y|N) has the largest correlation, <code>JobLevel = 1</code>, <code>MonthlyIncome &lt;= 2,695.80</code>, etc.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="cluster-analysis.html#cb2-1"></a>dat <span class="op">%&gt;%</span></span>
+<span id="cb2-2"><a href="cluster-analysis.html#cb2-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>EmployeeNumber) <span class="op">%&gt;%</span></span>
+<span id="cb2-3"><a href="cluster-analysis.html#cb2-3"></a><span class="st">  </span><span class="kw">binarize</span>(<span class="dt">n_bins =</span> <span class="dv">5</span>, <span class="dt">thresh_infreq =</span> <span class="fl">0.01</span>) <span class="op">%&gt;%</span></span>
+<span id="cb2-4"><a href="cluster-analysis.html#cb2-4"></a><span class="st">  </span><span class="kw">correlate</span>(Attrition__Yes) <span class="op">%&gt;%</span></span>
+<span id="cb2-5"><a href="cluster-analysis.html#cb2-5"></a><span class="st">  </span><span class="kw">plot_correlation_funnel</span>(<span class="dt">interactive =</span> <span class="ot">FALSE</span>) <span class="co">#%&gt;%</span></span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-3-1.png" width="768" /></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="cluster-analysis.html#cb3-1"></a><span class="co">#  ggplotly()  # Makes prettier, but drops the labels</span></span></code></pre></div>
+<p>Using the cutoff of 0.1, we get 14 features to use in the analysis.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="cluster-analysis.html#cb4-1"></a>vars &lt;-<span class="st"> </span><span class="kw">c</span>(</span>
+<span id="cb4-2"><a href="cluster-analysis.html#cb4-2"></a>  <span class="st">&quot;EmployeeNumber&quot;</span>, <span class="st">&quot;Attrition&quot;</span>, </span>
+<span id="cb4-3"><a href="cluster-analysis.html#cb4-3"></a>  <span class="st">&quot;OverTime&quot;</span>, <span class="st">&quot;JobLevel&quot;</span>, <span class="st">&quot;MonthlyIncome&quot;</span>, <span class="st">&quot;YearsAtCompany&quot;</span>, <span class="st">&quot;StockOptionLevel&quot;</span>,</span>
+<span id="cb4-4"><a href="cluster-analysis.html#cb4-4"></a>  <span class="st">&quot;YearsWithCurrManager&quot;</span>, <span class="st">&quot;TotalWorkingYears&quot;</span>, <span class="st">&quot;MaritalStatus&quot;</span>, <span class="st">&quot;Age&quot;</span>, </span>
+<span id="cb4-5"><a href="cluster-analysis.html#cb4-5"></a>  <span class="st">&quot;YearsInCurrentRole&quot;</span>, <span class="st">&quot;JobRole&quot;</span>, <span class="st">&quot;EnvironmentSatisfaction&quot;</span>, <span class="st">&quot;JobInvolvement&quot;</span>, </span>
+<span id="cb4-6"><a href="cluster-analysis.html#cb4-6"></a>  <span class="st">&quot;BusinessTravel&quot;</span></span>
+<span id="cb4-7"><a href="cluster-analysis.html#cb4-7"></a>)</span>
+<span id="cb4-8"><a href="cluster-analysis.html#cb4-8"></a></span>
+<span id="cb4-9"><a href="cluster-analysis.html#cb4-9"></a>dat_<span class="dv">2</span> &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></span>
+<span id="cb4-10"><a href="cluster-analysis.html#cb4-10"></a><span class="st">  </span><span class="kw">select</span>(<span class="kw">one_of</span>(vars))</span></code></pre></div>
+<p>Central to clustering is the concept of distance. Two observations are similar if the distance between their features is relatively small. There are many ways to define distance (see options in <code>?dist</code>), but the two most common are Euclidean, <span class="math inline">\(d = \sqrt{\sum{(x_i - y_i)^2}}\)</span>, and binary, 1 minus the proportion of shared features (<a href="https://en.wikipedia.org/wiki/Jaccard_index">Wikipedia</a>). If a data set contains both numerica and categorical data, there is a third distance measure, the Gower Distance.</p>
+<p>When calculating a Euclidean distance, the features should be on similar scales. Standardize their values as <span class="math inline">\((x - \bar{x})) / sd(x)\)</span> so that each feature has a mean of 0 and standard deviation of 1. Check if scaling is necessary with <code>colmeans()</code> function and <code>apply(df, 2, sd)</code>. The <code>scale()</code> function is a generic function that scales the columns of a matrix. When calculating a binary distance, the categorical features should be binary. Create dummy variables with <code>dummies::dummy.data.frame()</code>. The clustering algorithm may calculate the distances, but standardizing is up to you.</p>
+<p>R function <code>dist()</code> calculates distances between observations. <code>daisy()</code> is an alternative that calculates the Gower distance after standardizing.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="cluster-analysis.html#cb5-1"></a>gower_dist &lt;-<span class="st"> </span><span class="kw">daisy</span>(dat_<span class="dv">2</span>[, <span class="dv">2</span><span class="op">:</span><span class="dv">16</span>], <span class="dt">metric =</span> <span class="st">&quot;gower&quot;</span>)</span></code></pre></div>
+<p>As a sanity check, we can check the most similar and dissimilar pair of employees according to their Gower Distance score. Here are the most similar employees.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="cluster-analysis.html#cb6-1"></a>gower_mat &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(gower_dist)</span>
+<span id="cb6-2"><a href="cluster-analysis.html#cb6-2"></a>dat_<span class="dv">2</span>[<span class="kw">which</span>(gower_mat <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(gower_mat[gower_mat <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>]), <span class="dt">arr.ind =</span> <span class="ot">TRUE</span>)[<span class="dv">1</span>, ], ]</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 16
+##   EmployeeNumber Attrition OverTime JobLevel MonthlyIncome YearsAtCompany
+##            &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt;       &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;
+## 1           1624 Yes       Yes             1          1569              0
+## 2            614 Yes       Yes             1          1878              0
+## # ... with 10 more variables: StockOptionLevel &lt;dbl&gt;,
+## #   YearsWithCurrManager &lt;dbl&gt;, TotalWorkingYears &lt;dbl&gt;, MaritalStatus &lt;fct&gt;,
+## #   Age &lt;dbl&gt;, YearsInCurrentRole &lt;dbl&gt;, JobRole &lt;fct&gt;,
+## #   EnvironmentSatisfaction &lt;dbl&gt;, JobInvolvement &lt;dbl&gt;, BusinessTravel &lt;fct&gt;</code></pre>
+<p>And here are the most dissimilar employees.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="cluster-analysis.html#cb8-1"></a>dat_<span class="dv">2</span>[<span class="kw">which</span>(gower_mat <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(gower_mat), <span class="dt">arr.ind =</span> <span class="ot">TRUE</span>)[<span class="dv">1</span>, ], ]</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 16
+##   EmployeeNumber Attrition OverTime JobLevel MonthlyIncome YearsAtCompany
+##            &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt;       &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;
+## 1           1094 No        No              1          4621              3
+## 2            825 Yes       Yes             5         19246             31
+## # ... with 10 more variables: StockOptionLevel &lt;dbl&gt;,
+## #   YearsWithCurrManager &lt;dbl&gt;, TotalWorkingYears &lt;dbl&gt;, MaritalStatus &lt;fct&gt;,
+## #   Age &lt;dbl&gt;, YearsInCurrentRole &lt;dbl&gt;, JobRole &lt;fct&gt;,
+## #   EnvironmentSatisfaction &lt;dbl&gt;, JobInvolvement &lt;dbl&gt;, BusinessTravel &lt;fct&gt;</code></pre>
 </div>
             </section>
 
@@ -749,7 +774,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="principal-components-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="distances.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="k-means.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

@@ -18,6 +18,9 @@ library(dendextend)        # color_branches
 set.seed(1234)  # reproducibility
 
 dat <- read_csv("./input/WA_Fn-UseC_-HR-Employee-Attrition.csv")
+dat <- dat %>%
+  mutate_if(is.character, as_factor) %>%
+  select(EmployeeNumber, Attrition, everything())
 my_skim <- skimr::skim_with(numeric = skimr::sfl(p25 = NULL, p50 = NULL, p75 = NULL, hist = NULL))
 my_skim(dat)
 ```
@@ -26,12 +29,12 @@ You would normally start a cluster analysis with an exploration of the data to d
 
 Binary correlation analysis converts features into binary format by binning the continuous features and one-hot encoding the binary features. `correlate()` calculates the correlation coefficient for each binary feature to the response variable. A Correlation Funnel is an tornado plot that lists the highest correlation features (based on absolute magnitude) at the top of the and the lowest correlation features at the bottom. For our data set, `OverTime` (Y|N) has the largest correlation, `JobLevel = 1`, `MonthlyIncome <= 2,695.80`, etc.
 
-```{r warning=FALSE}
+```{r warning=FALSE, fig.height=8, fig.width=8}
 dat %>%
   select(-EmployeeNumber) %>%
   binarize(n_bins = 5, thresh_infreq = 0.01) %>%
   correlate(Attrition__Yes) %>%
-  plot_correlation_funnel(interactive = FALSE) %>%
+  plot_correlation_funnel(interactive = FALSE) #%>%
 #  ggplotly()  # Makes prettier, but drops the labels
 ```
 
@@ -46,105 +49,41 @@ vars <- c(
   "BusinessTravel"
 )
 
-
+dat_2 <- dat %>%
+  select(one_of(vars))
 ```
 
+Central to clustering is the concept of distance. Two observations are similar if the distance between their features is relatively small. There are many ways to define distance (see options in `?dist`), but the two most common are Euclidean, $d = \sqrt{\sum{(x_i - y_i)^2}}$, and binary, 1 minus the proportion of shared features ([Wikipedia](https://en.wikipedia.org/wiki/Jaccard_index)). If a data set contains both numerica and categorical data, there is a third distance measure, the Gower Distance.
 
-## Distances
+When calculating a Euclidean distance, the features should be on similar scales. Standardize their values as $(x - \bar{x})) / sd(x)$ so that each feature has a mean of 0 and standard deviation of 1. Check if scaling is necessary with `colmeans()` function and `apply(df, 2, sd)`. The `scale()` function is a generic function that scales the columns of a matrix.  When calculating a binary distance, the categorical features should be binary.  Create dummy variables with `dummies::dummy.data.frame()`. The clustering algorithm may calculate the distances, but standardizing is up to you.
 
-Central to clustering is the concept of distance. Two observations are similar if the distance between their features is relatively small. There are many ways to define distance^[See the options in the Distance Matrix Computation (`dist`) documentation.], but the two most common are **Euclidean** and **binary**.
+R function `dist()` calculates distances between observations. `daisy()` is an alternative that calculates the Gower distance after standardizing.
 
-Euclidean distance is the distance between two quantitative vectors: $d = \sqrt{\sum{(x_i - y_i)^2}}$.  Binary distance is the distance between two binary vectors.  It is 1 minus the proportion of shared features.^[The binary distance is also called the Jaccard distance.  See [Wikipedia aricle](https://en.wikipedia.org/wiki/Jaccard_index).] 
-
-In R, the `dist(df, method = c("euclidean", "binary", ...))` function calculates the distances between observations.  When calculating a Euclidean distance, the features should be on similar scales.  If they are not, standardize their values as $(x - \bar{x})) / sd(x)$ so that each feature has a mean of 0 and standard deviation of 1.  ^[Not only should the metrics be of the same units, but also the means and standard deviations should be similar.]  A quick way to check if scaling is necesary is the `colmeans()` function and `apply(df, 2, sd)`. The `scale()` function is a generic function that scales the columns of a matrix.  When calculating a binary distance, the categorical features should be binary.  If they are not, create dummy variables.  The `dummy.data.frame()` function from the `dummies` package converts factor variables into dummy representations.^[Question: What if observations contain both quantitative and categorical features?]  In practice, the clustering algorithm will calculate the distances, so you will not use `dist()`.  However, the conditions on scales at binary features still apply.
-
-
-## HCA Clustering
-
-Hierarchical clustering (also called hierarchical cluster analysis or HCA) is a method of cluster analysis which builds a hierarchy of clusters.  One usually presents the HCA results in a dendrogram.  The HCA process is:
-
-1. Calculate the distance between each observation with `dist(df, method = c("euclidean", "binary")`.  `dist()` returns an object of class `dist`.
-
-2. Cluster the distances with `hclust(dist, method = c("complete", "single", "average", "centroid")`.  `hclust` groups the two closest observations into a cluster.  `hclust` then calculates the cluster distance to the remaining observations.  If the shortest distance is between two observations, `hclust` defines a second cluster, otherwise `hclust` adds the observation as a new level to the cluster.  The process repeats until all observations belong to a single cluster.  The "distance" to a cluster requires definition.  The "complete" distance is the distance to the furthest member of the cluster.  The "single" distance is the distance to the closest member of the cluster.  The "average" distance is the average distance to all members of the cluster.  The "centroid" distance is the distance between the centroids of each cluster.^[As a rule of thumb, "complete" and "average" tend to produce more balanced trees and are most common.  Pruning an unbalanced tree can result in most observations assigned to one cluster and only a few observations assigned to other clusters.  This is useful for identifying outliers. `hclust()` returns a value of class `hclust`.
-
-3. Evaluate the `hclust` tree with a dendogram, principal component analysis (PCA), and/or summary statistics. The vertical lines in a dendogram indicate the distance between nodes and their associated cluster.  Dendograms are difficult to visualize When the number of features is greater than two.^[One work-around is to plot just two dimensions at a time.]
-
-4. "Cut" the hierarchical tree into the desired number of clusters (`k`) or height `h` with `cutree(hclust, k = NULL, h = NULL)`.  `cutree()` returns a vector of cluster memberships.  Attach this vector back to the original dataframe for visualization and summary statistics.
-
-5. Calculate summary statistics and draw conclusions.  Useful summary statistics are typically membership count, and feature averages (or proportions).
-
-
- Example
-The `pokemon` dataset contains observations of 800 pokemons^[More information on the dataset at [https://www.kaggle.com/abcsds/pokemon](https://www.kaggle.com/abcsds/pokemon)] on 6 dimensions.  The data is unlabeled, meaning there is no response variable, just features.  The features here are six pokeon ability measures.
-```{r warning=FALSE, message=FALSE}
-pokemon <- read_csv(url("https://assets.datacamp.com/production/course_1815/datasets/Pokemon.csv"))
-pokemon$Name <- NULL
-pokemon$Type1 <- NULL
-pokemon$Type2 <- NULL
-pokemon$Total <- NULL
-pokemon$Generation <- NULL
-pokemon$Legendary <- NULL
-
-head(pokemon)
+```{r}
+gower_dist <- daisy(dat_2[, 2:16], metric = "gower")
 ```
 
-Before conducting k-means, check whether any preprocessing is required:  Are there any NAs?  If so, drop these observations, or impute values.  Are all of the features comparable?  If not, standardize the variables.  Are the features multi-nomial?  If so, create binary variables.  In this case, the means and standard deviations are similar, but I am scaling anyway for the exercise.
+As a sanity check, we can check the most similar and dissimilar pair of employees according to their Gower Distance score. Here are the most similar employees.
 
-```{r warning=FALSE, message=FALSE}
-# Means and SDs
-colMeans(pokemon[, -c(1)])
-apply(pokemon[, -c(1)], MARGIN = 2, FUN = sd)
-
-# Scale the data
-pokemon.scaled <- scale(pokemon)
-
-# Create the full tree
-hc_model <- hclust(dist(pokemon.scaled), method = "complete")
-
-# Inspect the tree to choose a size.
-plot(color_branches(as.dendrogram(hc_model), 
-                    k = 7))
-abline(h = 7, col = "red")
+```{r}
+gower_mat <- as.matrix(gower_dist)
+dat_2[which(gower_mat == min(gower_mat[gower_mat != 0]), arr.ind = TRUE)[1, ], ] %>% glimpse()
 ```
 
-The dendogram suggests the optimal number of clusters is seven.  Build a cluster with `k = 7` means.  Attach the cluster assignment vector back to the original dataframe for visualization and/or summary statistics.
-```{r warning=FALSE, message=FALSE}
-pokemon <- mutate(pokemon, cluster = cutree(hc_model, k = 7))
+And here are the most dissimilar employees.
 
-# View the resulting model
-pokemon %>% 
-  group_by(cluster) %>% 
-  summarise_all(funs(mean(.))) %>%
-  select(-c(2)) %>%
-  knitr::kable(caption = "Cluster Centers")
-
-pokemon %>%
-  gather(key = "Ability", 
-         value = "Score", 
-         c(HitPoints, Attack, Defense, 
-           SpecialAttack, SpecialDefense, Speed)) %>%
-  ggplot(aes(x = factor(Ability), y = Score, color = factor(cluster))) + 
-  geom_point(aes(group = Number))
+```{r}
+dat_2[which(gower_mat == max(gower_mat), arr.ind = TRUE)[1, ], ] %>% glimpse()
 ```
 
-Cluster 1 has the lowest values in all features.  Cluster 5 has very high HitPoints.  Cluster 3 has very high Special Attack.
-
-## Cluster Analysis with Time-Series Data
-
-Cluster analysis is useful for spacial data, qualitative data, and time-series data.  With time series data, the time periods are the features.  Typically, this requires the transposition of the data set so that the dates are columns.  Otherwise, the same rules apply.
 
 ## K-Means
 
-K-means clustering is a type of unsupervised machine learning.  Unsupervised machine learning searches for structure (homogenous subgroups) within unlabeled data.^[Unlabeled data has no defined predefined classification.  I.e., unlabeled data has no response variable]  [Hierarchical cluster analysis (HCA)](http://rpubs.com/mpfoley73/489493), and [principal component analysis (PCA)](http://rpubs.com/mpfoley73/489503) are other types of unsupervised machine learning.  Unsupervised machine learning contrasts with supervised machine learning.  Supervised machine learning makes predictions with labeled data.  Decision trees, random forests, and lasso regression are examples of supervised machine learning.
+The K-means clustering algorithm randomly assigns all observations to one of `k` clusters. K-means then iteratively calculates the cluster centroids and reassigns the observations to their nearest centroid.  The centroid is the mean of the points in the cluster (Hence the name "k-means"). The iterations continue until either the centroid values stabilize or the iterations reach a set maximum, `iter.max` (typically 50). The result is `k` clusters with the minimum total intra-cluster variation.
 
-## K-means Algorithm
-The K-means clustering algorithm randomly assigns all observations to one of `k` cluster identifiers.  K-means then iteratively calculates the cluster centroids and reassigns the observations to their nearest centroid.  The centroid is the mean of the points in the cluster^[Hence the name "k-means".]  The iterations continue until the centroid values stabilize or until the algorithm iterates a set maximum number of times, `iter.max`.  A typical maximum is `iter.max = 50`.  The result is `k` clusters with the minimum number of total intra-cluster variation.  
+The centroid of cluster $c_i \in C$ is the mean of the cluster observations $S_i$: $c_i = \frac{1}{|S_i|} \sum_{x_i \in S_i}{x_i}$.  The nearest centroid is the minimum squared Euclidean distance, $\underset{c_i \in C}{\operatorname{arg min}} dist(c_i, x)^2$.^[Euclidean distances are appropriate for quantitative variables.  What about categorical variables?  [This discussion](https://datascience.stackexchange.com/questions/22/k-means-clustering-for-mixed-numeric-and-categorical-data) at StackExchange explains that **k-modes** is suitable for categorical data.  It may be okay to convert categorical variables into binary values and treating them as numeric.]
 
-The centroid of cluster $c_i \in C$ is the mean of the set of cluster observations $S_i$: $c_i = \frac{1}{|S_i|} \sum_{x_i \in S_i}{x_i}$.  The nearest centroid is the minimum squared Euclidean distance, $\underset{c_i \in C}{\operatorname{arg min}} dist(c_i, x)^2$.^[Euclidean distances are appropriate for quantitative variables.  What about categorical variables?  [This discussion](https://datascience.stackexchange.com/questions/22/k-means-clustering-for-mixed-numeric-and-categorical-data) at StackExchange explains that **k-modes** is suitable for categorical data.  It may be okay to convert categorical variables into binary values and treating them as numeric.]   Euclidean distance is the distance between two quantitative vectors: $dist(c_i, x) = \sqrt{\sum{(x_j - c_{i_j})^2}}$.^[An alternative to Euclidean distance is binary distance, 1 minus the proportion of shared features in a vector of binary variables. See [Wikipedia](https://en.wikipedia.org/wiki/Jaccard_index).]
-
-The algorithm will converge to a result, but the result may only be a local optimum.  Other random starting centroids may yield a different local optimum.  The best set of clusters is the one with the lowest within-cluster sum of squared distances among the cluster members.  Common practice is to run the k-means algorithm `nstart` times and selecting the best result.  A typical number of runs is `nstart = 20`.
-
- Learning by Example
+The algorithm will converge to a result, but the result may only be a local optimum. Other random starting centroids may yield a different local optimum. Common practice is to run the k-means algorithm `nstart` times and select the lowest within-cluster sum of squared distances among the cluster members.  A typical number of runs is `nstart = 20`.
 
 The general methodology is to 1) prepare the data, 2) choose the optimal number of clusters, 3) run the k-means algorithm, and 4) interpret the results.  A good way to learn the methodology is by example.  The `WisconsinCancer` data set contains 30 features of tumors (10 attributes with mean, se, and "worst" values) in `n = 569` patients as well as the `diagnosis` (`B` = benign, `M` = malignant). 
 
@@ -287,6 +226,80 @@ wisc.df %>%
 ```
 
 
+
+## HCA
+
+Hierarchical clustering (also called hierarchical cluster analysis or HCA) is a method of cluster analysis which builds a hierarchy of clusters.  One usually presents the HCA results in a dendrogram.  The HCA process is:
+
+1. Calculate the distance between each observation with `dist(df, method = c("euclidean", "binary")`.  `dist()` returns an object of class `dist`.
+
+2. Cluster the distances with `hclust(dist, method = c("complete", "single", "average", "centroid")`.  `hclust` groups the two closest observations into a cluster.  `hclust` then calculates the cluster distance to the remaining observations.  If the shortest distance is between two observations, `hclust` defines a second cluster, otherwise `hclust` adds the observation as a new level to the cluster.  The process repeats until all observations belong to a single cluster.  The "distance" to a cluster requires definition.  The "complete" distance is the distance to the furthest member of the cluster.  The "single" distance is the distance to the closest member of the cluster.  The "average" distance is the average distance to all members of the cluster.  The "centroid" distance is the distance between the centroids of each cluster.^[As a rule of thumb, "complete" and "average" tend to produce more balanced trees and are most common.  Pruning an unbalanced tree can result in most observations assigned to one cluster and only a few observations assigned to other clusters.  This is useful for identifying outliers. `hclust()` returns a value of class `hclust`.
+
+3. Evaluate the `hclust` tree with a dendogram, principal component analysis (PCA), and/or summary statistics. The vertical lines in a dendogram indicate the distance between nodes and their associated cluster.  Dendograms are difficult to visualize When the number of features is greater than two.^[One work-around is to plot just two dimensions at a time.]
+
+4. "Cut" the hierarchical tree into the desired number of clusters (`k`) or height `h` with `cutree(hclust, k = NULL, h = NULL)`.  `cutree()` returns a vector of cluster memberships.  Attach this vector back to the original dataframe for visualization and summary statistics.
+
+5. Calculate summary statistics and draw conclusions.  Useful summary statistics are typically membership count, and feature averages (or proportions).
+
+
+ Example
+The `pokemon` dataset contains observations of 800 pokemons^[More information on the dataset at [https://www.kaggle.com/abcsds/pokemon](https://www.kaggle.com/abcsds/pokemon)] on 6 dimensions.  The data is unlabeled, meaning there is no response variable, just features.  The features here are six pokeon ability measures.
+```{r warning=FALSE, message=FALSE}
+pokemon <- read_csv(url("https://assets.datacamp.com/production/course_1815/datasets/Pokemon.csv"))
+pokemon$Name <- NULL
+pokemon$Type1 <- NULL
+pokemon$Type2 <- NULL
+pokemon$Total <- NULL
+pokemon$Generation <- NULL
+pokemon$Legendary <- NULL
+
+head(pokemon)
+```
+
+Before conducting k-means, check whether any preprocessing is required:  Are there any NAs?  If so, drop these observations, or impute values.  Are all of the features comparable?  If not, standardize the variables.  Are the features multi-nomial?  If so, create binary variables.  In this case, the means and standard deviations are similar, but I am scaling anyway for the exercise.
+
+```{r warning=FALSE, message=FALSE}
+# Means and SDs
+colMeans(pokemon[, -c(1)])
+apply(pokemon[, -c(1)], MARGIN = 2, FUN = sd)
+
+# Scale the data
+pokemon.scaled <- scale(pokemon)
+
+# Create the full tree
+hc_model <- hclust(dist(pokemon.scaled), method = "complete")
+
+# Inspect the tree to choose a size.
+plot(color_branches(as.dendrogram(hc_model), 
+                    k = 7))
+abline(h = 7, col = "red")
+```
+
+The dendogram suggests the optimal number of clusters is seven.  Build a cluster with `k = 7` means.  Attach the cluster assignment vector back to the original dataframe for visualization and/or summary statistics.
+```{r warning=FALSE, message=FALSE}
+pokemon <- mutate(pokemon, cluster = cutree(hc_model, k = 7))
+
+# View the resulting model
+pokemon %>% 
+  group_by(cluster) %>% 
+  summarise_all(funs(mean(.))) %>%
+  select(-c(2)) %>%
+  knitr::kable(caption = "Cluster Centers")
+
+pokemon %>%
+  gather(key = "Ability", 
+         value = "Score", 
+         c(HitPoints, Attack, Defense, 
+           SpecialAttack, SpecialDefense, Speed)) %>%
+  ggplot(aes(x = factor(Ability), y = Score, color = factor(cluster))) + 
+  geom_point(aes(group = Number))
+```
+
+Cluster 1 has the lowest values in all features.  Cluster 5 has very high HitPoints.  Cluster 3 has very high Special Attack.
+
+## Cluster Analysis with Time-Series Data
+
+Cluster analysis is useful for spacial data, qualitative data, and time-series data.  With time series data, the time periods are the features.  Typically, this requires the transposition of the data set so that the dates are columns.  Otherwise, the same rules apply.
 
 ## K-Means vs HCA
 Hierarchical clustering has some advantages over k-means.  It can use any distance method - not just euclidean.  The results are stable - k-means can produce different results each time.  While they can both be evaluated with the silhouette and elbow plots, hierachical clustering can also be evaluated with a dendogram.  But hierarchical clusters has one significant drawback: it is computationally complex compared to k-means.  For this last reason, k-means is more common.
