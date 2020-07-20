@@ -38,7 +38,7 @@ dat %>%
 #  ggplotly()  # Makes prettier, but drops the labels
 ```
 
-Using the cutoff of 0.1, we get 14 features to use in the analysis.
+Using the cutoff of 0.1 leaves 14 features for the analysis.
 
 ```{r}
 vars <- c(
@@ -49,156 +49,124 @@ vars <- c(
   "BusinessTravel"
 )
 
-dat_2 <- dat %>%
-  select(one_of(vars))
+dat_2 <- dat %>% select(one_of(vars))
 ```
 
-Central to clustering is the concept of distance. Two observations are similar if the distance between their features is relatively small. There are many ways to define distance (see options in `?dist`), but the two most common are Euclidean, $d = \sqrt{\sum{(x_i - y_i)^2}}$, and binary, 1 minus the proportion of shared features ([Wikipedia](https://en.wikipedia.org/wiki/Jaccard_index)). If a data set contains both numerica and categorical data, there is a third distance measure, the Gower Distance.
+#### Data Preparation
 
-When calculating a Euclidean distance, the features should be on similar scales. Standardize their values as $(x - \bar{x})) / sd(x)$ so that each feature has a mean of 0 and standard deviation of 1. Check if scaling is necessary with `colmeans()` function and `apply(df, 2, sd)`. The `scale()` function is a generic function that scales the columns of a matrix.  When calculating a binary distance, the categorical features should be binary.  Create dummy variables with `dummies::dummy.data.frame()`. The clustering algorithm may calculate the distances, but standardizing is up to you.
+Central to clustering is the concept of distance. Two observations are similar if the distance between their features is relatively small. Features should be on a similar scale. There are many ways to define distance (see options in `?dist`), but the two most common are Euclidean, $d = \sqrt{\sum{(x_i - y_i)^2}}$, and binary, 1 minus the proportion of shared features ([Wikipedia](https://en.wikipedia.org/wiki/Jaccard_index)). If your data set has a mix a feature types (and it usually will), then you'll want to use a third distance measure, the *Gower* distance. Gower ([tutorial](https://medium.com/analytics-vidhya/concept-of-gowers-distance-and-it-s-application-using-python-b08cf6139ac2)) range-normalizes the quantitative variables, one-hot encodes the nominal variables, and ranks the ordinal variables. Then it calculates distances using the Manhattan distance for quantative and ordinal variables, and the Dice coefficient for nominal variables.
 
-R function `dist()` calculates distances between observations. `daisy()` is an alternative that calculates the Gower distance after standardizing.
+Gower's distance can be computationally expensive, so you could one-hot encode the data and standardize the variables as $(x - \bar{x}) / sd(x)$ so that each feature has a mean of 0 and standard deviation of 1.
 
 ```{r}
-gower_dist <- daisy(dat_2[, 2:16], metric = "gower")
+dat_2_mtrx <- mltools::one_hot(data.table::as.data.table(dat_2[, 2:16])) %>% as.matrix()
+row.names(dat_2_mtrx) <- dat_2$EmployeeNumber
+dat_2_mtrx <- na.omit(dat_2_mtrx)
+dat_2_mtrx <- scale(dat_2_mtrx)
+
+dat_2_dist <- dist(dat_2_mtrx)
+```
+
+But normally you would go ahead and calculate Gower's distance using `daisy()`.
+
+```{r}
+dat_2_gwr <- daisy(dat_2[, 2:16], metric = "gower")
 ```
 
 As a sanity check, we can check the most similar and dissimilar pair of employees according to their Gower Distance score. Here are the most similar employees.
 
 ```{r}
-gower_mat <- as.matrix(gower_dist)
-dat_2[which(gower_mat == min(gower_mat[gower_mat != 0]), arr.ind = TRUE)[1, ], ] %>% glimpse()
+x <- as.matrix(dat_2_gwr)
+dat_2[which(x == min(x[x != 0]), arr.ind = TRUE)[1, ], ] %>% glimpse()
 ```
 
 And here are the most dissimilar employees.
 
 ```{r}
-dat_2[which(gower_mat == max(gower_mat), arr.ind = TRUE)[1, ], ] %>% glimpse()
+dat_2[which(x == max(x), arr.ind = TRUE)[1, ], ] %>% glimpse()
 ```
-
 
 ## K-Means
 
-The K-means clustering algorithm randomly assigns all observations to one of `k` clusters. K-means then iteratively calculates the cluster centroids and reassigns the observations to their nearest centroid.  The centroid is the mean of the points in the cluster (Hence the name "k-means"). The iterations continue until either the centroid values stabilize or the iterations reach a set maximum, `iter.max` (typically 50). The result is `k` clusters with the minimum total intra-cluster variation.
+The K-means clustering algorithm randomly assigns all observations to one of `k` clusters. K-means then iteratively calculates the cluster centroids and reassigns the observations to their nearest centroid.  The centroid is the mean of the points in the cluster (Hence the name "k-means"). The iterations continue until either the centroids stabilize or the iterations reach a set maximum, `iter.max` (typically 50). The result is `k` clusters with the minimum total intra-cluster variation.
 
 The centroid of cluster $c_i \in C$ is the mean of the cluster observations $S_i$: $c_i = \frac{1}{|S_i|} \sum_{x_i \in S_i}{x_i}$.  The nearest centroid is the minimum squared Euclidean distance, $\underset{c_i \in C}{\operatorname{arg min}} dist(c_i, x)^2$.^[Euclidean distances are appropriate for quantitative variables.  What about categorical variables?  [This discussion](https://datascience.stackexchange.com/questions/22/k-means-clustering-for-mixed-numeric-and-categorical-data) at StackExchange explains that **k-modes** is suitable for categorical data.  It may be okay to convert categorical variables into binary values and treating them as numeric.]
 
 The algorithm will converge to a result, but the result may only be a local optimum. Other random starting centroids may yield a different local optimum. Common practice is to run the k-means algorithm `nstart` times and select the lowest within-cluster sum of squared distances among the cluster members.  A typical number of runs is `nstart = 20`.
 
-The general methodology is to 1) prepare the data, 2) choose the optimal number of clusters, 3) run the k-means algorithm, and 4) interpret the results.  A good way to learn the methodology is by example.  The `WisconsinCancer` data set contains 30 features of tumors (10 attributes with mean, se, and "worst" values) in `n = 569` patients as well as the `diagnosis` (`B` = benign, `M` = malignant). 
+#### Choosing K
 
-```{r warning=FALSE, message=FALSE}
-wisc.df <- read_csv(file = "http://s3.amazonaws.com/assets.datacamp.com/production/course_1903/datasets/WisconsinCancer.csv")
-glimpse(wisc.df)
-```
-
-Exclude the `diagnosis` column from the cluster analysis because it is more of a response variable than a feature.  Set it aside for reference though.  The data set contains 357 benign tumors (`diagnosis = B`) and 212 malignant tumors (`diagnosis = M`).
-```{r}
-table(wisc.df$diagnosis)
-diagnosis <- as.numeric(wisc.df$diagnosis == "M")
-```
-
-
- Step 1: Prepare Data
-It is possible to perform k-means on a dataframe, but it is a little easier to extract the feature columns into a matrix.
+What is the best number of clusters? You may have a preference in advance, but more likely you will use a *scree plot* or use the *silhouette method*. The scree plot is a plot of the total within-cluster sum of squared distances as a function of *k*. The sum of squares always decreases as *k* increases, but at a declining rate. The optimal *k* is at the "elbow" in the curve - the point at which the curve flattens. `kmeans()` returns an object of class `kmeans`, a list in which one of the components is the model sum of squares `tot.withinss`.  In the scree plot below, the elbow may be *k = 5*.
 
 ```{r}
-wisc.data <- as.matrix(wisc.df[, c(3:32)])
-row.names(wisc.data) <- wisc.df$id
-```
-
-Before conducting k-means, check whether any preprocessing is required.  If there are NAs, drop the observations or impute values.  There are no `NA`s in this data set.
-```{r}
-wisc.data <- na.omit(wisc.data)
-```
-
-If not all of the features are of comparable scale, standardize the variables as $(x - \bar{x}) / sd(x)$ so that each feature has a mean of 0 and standard deviation of 1.  The `scale()` function scales columns of a matrix.  
-```{r}
-paste("Means")
-summary(colMeans(wisc.data))
-paste("Std Dev")
-summary(apply(X = wisc.data, MARGIN = 2, FUN = sd))
-
-wisc.data.scaled <- scale(wisc.data)
-```
-
-If any of the features multi-nomial, create binary variables.  K-means is designed for quantitative data, so it may be better to just not include categorical variables.  There are no categorical variables here.
-
- Step 2: Choose K
-Perform k-means clustering with base function `kmeans(df, centers, nstart, iter.max)`.  `centers` is the defined number of clusters.  K-means is a random process, so it may produce a different set of clusters each time it runs.  `nstart` sets the number of times to cluster the observations.  `kmeans()` chooses the best set of clusters from the `nstart` runs.  A good value for `nstart` is 20.  It is possible that the clustering iterations do not completely stabilize.  If so, you will probably want to cap the number of iterations.  `iter.max` sets the maximum number of times to iterate through the re-assignment process.  A good value for `iter.max` is 50.
-
-What is the right number of clusters (`centers`)?  You may have a preference in advance.  Or more likely, you need to use judgement from observing the results.  There are two common methods for choosing `centers`: constructing a **scree plot** or using the **silhouette method**.  The scree plot is a plot of the total within-cluster sum of squared distances resulting from candidate values of `centers`.  The sum of squares decreases as `k` increases, but at a declining rate.  The optimal number of clusters is at the "elbow" in the curve - the point at which the curve flattens.^[Finding the elbow is a matter of judgement.]  `kmeans()` returns an object of class `kmeans`, a list in which one of the components is the model sum of squares `tot.withinss`.  In the scree plot below, the elbow may be at `k = 2` or `k = 3`.      
-
-```{r warning=FALSE, message=FALSE}
-set.seed(1)
-
-wss <- 0
-for (k in 1:15) {
-  # within sum of squares
-  wss[k] <- kmeans(wisc.data.scaled, 
-                   centers = k, 
-                   nstart = 20, 
-                   iter.max = 50)$tot.withinss
-}
-
-data.frame(k = 1:15,
-           wss = wss) %>%
-  ggplot(aes(x = k, y = wss)) +
+wss <- map_dbl(2:10, ~ kmeans(dat_2_gwr, centers = .x)$tot.withinss)
+wss_tbl <- tibble(k = 2:10, wss)
+ggplot(wss_tbl, aes(x = k, y = wss)) +
+  geom_point(size = 2) +
   geom_line() +
-  geom_point(shape = 21) +
-  scale_x_continuous(breaks = 1:15) +
-  labs(title = "K-means Scree Plot",
-       x = "Number of Clusters", 
-       y = "Within groups sum of squares")
+  scale_x_continuous(breaks = 2:10) +
+  labs(title = "Scree Plot")
 ```
 
-The silhouette method calculates the within-cluster distance $C(i)$ for each observation, and its distance to the nearest cluster $N(i)$.  The silhouette width is $S = 1 - C(i) / N(i)$ for $C(i) < N(i)$ and $S = N(i) / C(i) - 1$ for $C(i) > N(i)$.  A value close to 1 means the observation is well-matched to its current cluster; A value near 0 means the observation is on the border between the two clusters; and a value near -1 means the observation is better-matched to the other cluster.  The optimal number of clusters is the number that maximizes the total silhouette width.  The `pam()` function from the `cluster` package returns an object of class `pam`, a list in which one of the components is the average width `silinfo$avg.width`.  In the silhoette plot below, the maximum silhoette width is at `k = 2` with `k = 3` a close second.
+The silhouette method calculates the within-cluster distance $C(i)$ for each observation, and its distance to the nearest cluster $N(i)$. The silhouette width is $S = 1 - C(i) / N(i)$ for $C(i) < N(i)$ and $S = N(i) / C(i) - 1$ for $C(i) > N(i)$. A value close to 1 means the observation is well-matched to its current cluster; A value near 0 means the observation is on the border between the two clusters; and a value near -1 means the observation is better-matched to the other cluster.  The optimal number of clusters is the number that maximizes the total silhouette width. `cluster::pam()` returns a list in which one of the components is the average width `silinfo$avg.width`. In the silhouette plot below, the maximum width is at *k = 6*.
 
 ```{r warning=FALSE, message=FALSE}
-set.seed(1)
+sil <- map_dbl(2:10, ~ pam(dat_2_gwr, k = .x)$silinfo$avg.width)
+sil_tbl <- tibble(k = 2:10, sil)
+ggplot(sil_tbl, aes(x = k, y = sil)) +
+  geom_point(size = 2) +
+  geom_line() +
+  scale_x_continuous(breaks = 2:10) +
+  labs(title = "Silhouette Plot")
+```
 
-sil_width <- 0
-for (k in 2:15) {
-    sil_width[k] <- pam(wisc.data.scaled, 
-                   k = k)$silinfo$avg.width
-}
+Run `pam()` again and attach the results to the original table.
 
-data.frame(k = 1:15,
-           sil_width = sil_width) %>%
-  ggplot(aes(x = k, y = sil_width)) +
-  geom_col() +
-  scale_x_continuous(breaks = 1:15) +
-  labs(title = "K-means Silhoette Plot",
-       x = "Number of Clusters", 
-       y = "Average Silhoette Width")
+```{r}
+mdl <- pam(dat_2_gwr, k = 6)
+dat_3 <- dat_2 %>% mutate(cluster = mdl$clustering)
+```
+
+Here are the six medoids from our data set.
+
+```{r}
+dat_2[mdl$medoids, ]
+```
+
+We're most concerned about attrition. Do high-attrition employees fall into a particular cluster? Yes!
+
+```{r}
+dat_3 %>%
+  count(cluster, Attrition) %>%
+  ungroup() %>%
+  group_by(cluster) %>%
+  mutate(size = sum(n),
+         rate = scales::percent(n / sum(n), accuracy = 0.1)) %>%
+  ungroup() %>%
+  mutate(prop = scales::percent(size / sum(size), accuracy = 0.1)) %>%
+  filter(Attrition == "Yes") %>%
+  select(cluster, size, prop, attrition = n, rate)
+  pivot_wider(names_from = Attrition, values_from = c(n, rate))
 
 ```
 
-The initial cluster assignment is random, so the process may yield different results each time.  Use r function `set.seed(seed)`to create consistent reproducible results.   
+
 ```{r}
-set.seed(1)
-wisc.k2 <- kmeans(wisc.data.scaled, 
-                  centers = 2, 
-                  nstart = 20, 
-                  iter.max = 50)
-wisc.df$cluster <- wisc.k2$cluster
+tsne_obj <- Rtsne(gower_mat, is_distance = TRUE)
 
-```
+tsne_tbl <- tsne_obj$Y %>%
+  as_tibble() %>%
+  setNames(c("X", "Y")) %>%
+  bind_cols(dat_3) %>%
+  mutate(cluster = as_factor(cluster))
 
-
-An intuitive way to interpret the results of k-means models is by plotting the data as a scatter plot and using color to label the samples' cluster membership.  Function `fviz_cluster()` from the `factoextra` package illustrates the clusters.  Of course, this only works if there are only two features. More likely, create summary statistics of the features grouped by cluster.
-```{r}
-# wisc.df %>%
-#   gather(key = "Feature", 
-#          value = "Value", 
-#          c(HitPoints, Attack, Defense, 
-#            SpecialAttack, SpecialDefense, Speed)) %>%
-#   ggplot(aes(x = factor(Ability), y = Score, color = factor(cluster))) + 
-#   geom_point(aes(group = Number))
+tsne_tbl %>%
+  ggplot(aes(x = X, y = Y, colour = cluster)) +
+  geom_point()
 ```
 
 ```{r}
-factoextra::fviz_cluster(wisc.k2, data = wisc.data)
+factoextra::fviz_cluster(mdl, dat_3_mtrx, ellipse.type = "norm")
 ```
 
 
