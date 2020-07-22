@@ -52,3 +52,5 @@ kernlab
 dendextend
 cluster
 factoextra
+plotly
+Rtsne

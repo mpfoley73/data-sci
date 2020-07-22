@@ -5,8 +5,8 @@ account: mpfoley1973
 server: bookdown.org
 hostUrl: https://bookdown.org/__api__
 appId: 3464
-bundleId: 25018
+bundleId: 25534
 url: https://bookdown.org/mpfoley1973/data-sci/
-when: 1594639525.49587
+when: 1595415363.35058
 asMultiple: FALSE
 asStatic: TRUE

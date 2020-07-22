@@ -24,14 +24,14 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-07-13" />
+<meta name="date" content="2020-07-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="principal-components-analysis.html"/>
+<link rel="prev" href="k-means-vs-hca.html"/>
 <link rel="next" href="tidy-text.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -53,6 +53,13 @@
 <script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="assets/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
 <script src="assets/tabwid-1.0.0/tabwid.js"></script>
+<script src="assets/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="assets/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="assets/typedarray-0.1/typedarray.min.js"></script>
+<link href="assets/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="assets/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="assets/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="assets/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -222,10 +229,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2" data-path="manova.html"><a href="manova.html"><i class="fa fa-check"></i><b>6.2</b> MANOVA</a></li>
 <li class="chapter" data-level="6.3" data-path="repeated-measures.html"><a href="repeated-measures.html"><i class="fa fa-check"></i><b>6.3</b> Repeated Measures</a></li>
 <li class="chapter" data-level="6.4" data-path="lda.html"><a href="lda.html"><i class="fa fa-check"></i><b>6.4</b> LDA</a></li>
-<li class="chapter" data-level="6.5" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>6.5</b> PCA</a></li>
-<li class="chapter" data-level="6.6" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>6.6</b> Factor Analysis</a></li>
-<li class="chapter" data-level="6.7" data-path="canonical-correlation.html"><a href="canonical-correlation.html"><i class="fa fa-check"></i><b>6.7</b> Canonical Correlation</a></li>
-<li class="chapter" data-level="6.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>6.8</b> Cluster Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>7</b> Regularization</a><ul>
 <li class="chapter" data-level="7.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>7.1</b> Ridge</a></li>
@@ -261,10 +264,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>10.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="10.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>10.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="10.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>10.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="10.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>10.4</b> Example</a></li>
+<li class="chapter" data-level="10.4" data-path="my-svm-example.html"><a href="my-svm-example.html"><i class="fa fa-check"></i><b>10.4</b> My svm Example</a></li>
 <li class="chapter" data-level="10.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>10.5</b> Using Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>11</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="" data-path="part-3-unupervised-machine-learning.html"><a href="part-3-unupervised-machine-learning.html"><i class="fa fa-check"></i>PART 3: Unupervised Machine Learning</a><ul>
+<li class="chapter" data-level="10.6" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>10.6</b> PCA</a></li>
+<li class="chapter" data-level="10.7" data-path="t-sne.html"><a href="t-sne.html"><i class="fa fa-check"></i><b>10.7</b> t-SNE</a></li>
+<li class="chapter" data-level="10.8" data-path="svd.html"><a href="svd.html"><i class="fa fa-check"></i><b>10.8</b> SVD</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>11</b> Cluster Analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="k-means.html"><a href="k-means.html"><i class="fa fa-check"></i><b>11.1</b> K-Means</a></li>
+<li class="chapter" data-level="11.2" data-path="hca.html"><a href="hca.html"><i class="fa fa-check"></i><b>11.2</b> HCA</a></li>
+<li class="chapter" data-level="11.3" data-path="k-means-vs-hca.html"><a href="k-means-vs-hca.html"><i class="fa fa-check"></i><b>11.3</b> K-Means vs HCA</a></li>
+</ul></li>
 <li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a><ul>
 <li class="chapter" data-level="12.1" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>12.1</b> Tidy Text</a></li>
 <li class="chapter" data-level="12.2" data-path="bag-of-words.html"><a href="bag-of-words.html"><i class="fa fa-check"></i><b>12.2</b> Bag of Words</a></li>
@@ -324,9 +336,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Text mining may be thought of as the process of distilling actionable insights from text, typically by identifying patterns with statistical pattern learning. Typical text mining tasks include text categorization, sentiment analysis, and topic modeling.</p>
 <p>There are two approaches to text mining. <em>Semantic parsing</em> identifies words by type and order (sentences, phrases, nouns/verbs, proper nouns, etc.). <em>Bag of Words</em> treats words as simply attributes of the document. Bag of words is obviously the simpler way to go.</p>
 <p>The <strong>qdap</strong> package provides parsing tools for preparing transcript data.</p>
-<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="text-mining.html#cb797-1"></a><span class="kw">library</span>(qdap)</span></code></pre></div>
+<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="text-mining.html#cb818-1"></a><span class="kw">library</span>(qdap)</span></code></pre></div>
 <p>For example, <code>freq_terms()</code> parses text and counts the terms.</p>
-<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="text-mining.html#cb798-1"></a><span class="kw">freq_terms</span>(DATA<span class="op">$</span>state, <span class="dt">top =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="text-mining.html#cb819-1"></a><span class="kw">freq_terms</span>(DATA<span class="op">$</span>state, <span class="dt">top =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   WORD FREQ
 ## 1 you     4
 ## 2 we      3
@@ -338,10 +350,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 8 not     2
 ## 9 what    2</code></pre>
 <p>You can also plot the terms.</p>
-<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="text-mining.html#cb800-1"></a><span class="kw">plot</span>(<span class="kw">freq_terms</span>(DATA<span class="op">$</span>state, <span class="dt">top =</span> <span class="dv">5</span>))</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-390-1.png" width="672" /></p>
+<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="text-mining.html#cb821-1"></a><span class="kw">plot</span>(<span class="kw">freq_terms</span>(DATA<span class="op">$</span>state, <span class="dt">top =</span> <span class="dv">5</span>))</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-407-1.png" width="672" /></p>
 <p>There are two kinds of the corpus data types, the permanent corpus, <strong>PCorpus</strong>, and the volatile corpus, <strong>VCorpus</strong>. The volatile corpus is held in RAM rather than saved to disk. Create a volatile corpus with <code>tm::vCorpous()</code>. vCorpous() takes either a text source created with <code>tm::VectorSource()</code> or a dataframe source created with <code>Dataframe Source()</code> where the input dataframe has cols <code>doc_id</code>, <code>text_id</code> and zero or more metadata columns.</p>
-<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="text-mining.html#cb801-1"></a>tweets &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;https://assets.datacamp.com/production/repositories/19/datasets/27a2a8587eff17add54f4ba288e770e235ea3325/coffee.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="text-mining.html#cb822-1"></a>tweets &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;https://assets.datacamp.com/production/repositories/19/datasets/27a2a8587eff17add54f4ba288e770e235ea3325/coffee.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   num = col_double(),
@@ -360,84 +372,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   longitude = col_logical(),
 ##   latitude = col_logical()
 ## )</code></pre>
-<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb803-1"><a href="text-mining.html#cb803-1"></a>coffee_tweets &lt;-<span class="st"> </span>tweets<span class="op">$</span>text</span>
-<span id="cb803-2"><a href="text-mining.html#cb803-2"></a></span>
-<span id="cb803-3"><a href="text-mining.html#cb803-3"></a>coffee_source &lt;-<span class="st"> </span><span class="kw">VectorSource</span>(coffee_tweets)</span>
-<span id="cb803-4"><a href="text-mining.html#cb803-4"></a>coffee_corpus &lt;-<span class="st"> </span><span class="kw">VCorpus</span>(coffee_source)</span>
-<span id="cb803-5"><a href="text-mining.html#cb803-5"></a></span>
-<span id="cb803-6"><a href="text-mining.html#cb803-6"></a><span class="co"># Text of first tweet</span></span>
-<span id="cb803-7"><a href="text-mining.html#cb803-7"></a>coffee_corpus[[<span class="dv">1</span>]][<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb824-1"><a href="text-mining.html#cb824-1"></a>coffee_tweets &lt;-<span class="st"> </span>tweets<span class="op">$</span>text</span>
+<span id="cb824-2"><a href="text-mining.html#cb824-2"></a></span>
+<span id="cb824-3"><a href="text-mining.html#cb824-3"></a>coffee_source &lt;-<span class="st"> </span><span class="kw">VectorSource</span>(coffee_tweets)</span>
+<span id="cb824-4"><a href="text-mining.html#cb824-4"></a>coffee_corpus &lt;-<span class="st"> </span><span class="kw">VCorpus</span>(coffee_source)</span>
+<span id="cb824-5"><a href="text-mining.html#cb824-5"></a></span>
+<span id="cb824-6"><a href="text-mining.html#cb824-6"></a><span class="co"># Text of first tweet</span></span>
+<span id="cb824-7"><a href="text-mining.html#cb824-7"></a>coffee_corpus[[<span class="dv">1</span>]][<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## $content
 ## [1] &quot;@ayyytylerb that is so true drink lots of coffee&quot;</code></pre>
 <p>In bag of words text mining, cleaning helps aggregate terms, especially words with common stems like “miner” and “mining”. There are several functions useful for preprocessing: <code>tolower()</code>, <code>tm::removePunctuation()</code>, <code>tm::removeNumbers()</code>, <code>tm::stripWhiteSpace()</code>, and <code>removeWords()</code>. Apply these functions to the documents in a <code>VCorpus</code> object with <code>tm_map()</code>. If the function is not one of the pre-defined functions, wrap it in <code>content_transformer()</code>. Another preprocessing function is <code>stemDocument()</code>.</p>
-<div class="sourceCode" id="cb805"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb805-1"><a href="text-mining.html#cb805-1"></a><span class="co"># Create the object: text</span></span>
-<span id="cb805-2"><a href="text-mining.html#cb805-2"></a>text &lt;-<span class="st"> &quot;&lt;b&gt;She&lt;/b&gt; woke up at       6 A.M. It</span><span class="ch">\&#39;</span><span class="st">s so early!  She was only 10% awake and began drinking coffee in front of her computer.&quot;</span></span>
-<span id="cb805-3"><a href="text-mining.html#cb805-3"></a><span class="kw">tolower</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb826-1"><a href="text-mining.html#cb826-1"></a><span class="co"># Create the object: text</span></span>
+<span id="cb826-2"><a href="text-mining.html#cb826-2"></a>text &lt;-<span class="st"> &quot;&lt;b&gt;She&lt;/b&gt; woke up at       6 A.M. It</span><span class="ch">\&#39;</span><span class="st">s so early!  She was only 10% awake and began drinking coffee in front of her computer.&quot;</span></span>
+<span id="cb826-3"><a href="text-mining.html#cb826-3"></a><span class="kw">tolower</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;she&lt;/b&gt; woke up at       6 a.m. it&#39;s so early!  she was only 10% awake and began drinking coffee in front of her computer.&quot;</code></pre>
-<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="text-mining.html#cb807-1"></a><span class="kw">removePunctuation</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="text-mining.html#cb828-1"></a><span class="kw">removePunctuation</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;bSheb woke up at       6 AM Its so early  She was only 10 awake and began drinking coffee in front of her computer&quot;</code></pre>
-<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb809-1"><a href="text-mining.html#cb809-1"></a><span class="kw">removeNumbers</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb830-1"><a href="text-mining.html#cb830-1"></a><span class="kw">removeNumbers</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke up at        A.M. It&#39;s so early!  She was only % awake and began drinking coffee in front of her computer.&quot;</code></pre>
-<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb811-1"><a href="text-mining.html#cb811-1"></a><span class="kw">stripWhitespace</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="text-mining.html#cb832-1"></a><span class="kw">stripWhitespace</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke up at 6 A.M. It&#39;s so early! She was only 10% awake and began drinking coffee in front of her computer.&quot;</code></pre>
 <p>The <strong>qdap</strong> package offers other preprocessing functions.</p>
-<div class="sourceCode" id="cb813"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb813-1"><a href="text-mining.html#cb813-1"></a>text &lt;-<span class="st"> &quot;&lt;b&gt;She&lt;/b&gt; woke up at       6 A.M. It</span><span class="ch">\&#39;</span><span class="st">s so early!  She was only 10% awake and began drinking coffee in front of her computer.&quot;</span></span>
-<span id="cb813-2"><a href="text-mining.html#cb813-2"></a><span class="kw">bracketX</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="text-mining.html#cb834-1"></a>text &lt;-<span class="st"> &quot;&lt;b&gt;She&lt;/b&gt; woke up at       6 A.M. It</span><span class="ch">\&#39;</span><span class="st">s so early!  She was only 10% awake and began drinking coffee in front of her computer.&quot;</span></span>
+<span id="cb834-2"><a href="text-mining.html#cb834-2"></a><span class="kw">bracketX</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;She woke up at 6 A.M. It&#39;s so early! She was only 10% awake and began drinking coffee in front of her computer.&quot;</code></pre>
-<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb815-1"><a href="text-mining.html#cb815-1"></a><span class="kw">replace_number</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="text-mining.html#cb836-1"></a><span class="kw">replace_number</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke up at six A.M. It&#39;s so early! She was only ten% awake and began drinking coffee in front of her computer.&quot;</code></pre>
-<div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="text-mining.html#cb817-1"></a><span class="kw">replace_abbreviation</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="text-mining.html#cb838-1"></a><span class="kw">replace_abbreviation</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke up at 6 AM It&#39;s so early! She was only 10% awake and began drinking coffee in front of her computer.&quot;</code></pre>
-<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="text-mining.html#cb819-1"></a><span class="kw">replace_contraction</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb840"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb840-1"><a href="text-mining.html#cb840-1"></a><span class="kw">replace_contraction</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke up at 6 A.M. it is so early! She was only 10% awake and began drinking coffee in front of her computer.&quot;</code></pre>
-<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="text-mining.html#cb821-1"></a><span class="kw">replace_symbol</span>(text)</span></code></pre></div>
+<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="text-mining.html#cb842-1"></a><span class="kw">replace_symbol</span>(text)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke up at 6 A.M. It&#39;s so early! She was only 10 percent awake and began drinking coffee in front of her computer.&quot;</code></pre>
 <p><code>tm::stopwords("en")</code> returns a vector of stop words. You can add to the list with concatenation.</p>
-<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="text-mining.html#cb823-1"></a>new_stops &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;coffee&quot;</span>, <span class="st">&quot;bean&quot;</span>, <span class="kw">stopwords</span>(<span class="st">&quot;en&quot;</span>))</span>
-<span id="cb823-2"><a href="text-mining.html#cb823-2"></a><span class="kw">removeWords</span>(text, new_stops)</span></code></pre></div>
+<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="text-mining.html#cb844-1"></a>new_stops &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;coffee&quot;</span>, <span class="st">&quot;bean&quot;</span>, <span class="kw">stopwords</span>(<span class="st">&quot;en&quot;</span>))</span>
+<span id="cb844-2"><a href="text-mining.html#cb844-2"></a><span class="kw">removeWords</span>(text, new_stops)</span></code></pre></div>
 <pre><code>## [1] &quot;&lt;b&gt;She&lt;/b&gt; woke         6 A.M. It&#39;s  early!  She   10% awake  began drinking   front   computer.&quot;</code></pre>
 <p><code>tm::stemDocument()</code> and <code>tm::stemCompletion()</code> reduce the variation in terms.</p>
-<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="text-mining.html#cb825-1"></a>complicate &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;complicated&quot;</span>, <span class="st">&quot;complication&quot;</span>, <span class="st">&quot;complicatedly&quot;</span>)</span>
-<span id="cb825-2"><a href="text-mining.html#cb825-2"></a></span>
-<span id="cb825-3"><a href="text-mining.html#cb825-3"></a>stem_doc &lt;-<span class="st"> </span><span class="kw">stemDocument</span>(complicate)</span>
-<span id="cb825-4"><a href="text-mining.html#cb825-4"></a></span>
-<span id="cb825-5"><a href="text-mining.html#cb825-5"></a>comp_dict &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;complicate&quot;</span>)</span>
-<span id="cb825-6"><a href="text-mining.html#cb825-6"></a></span>
-<span id="cb825-7"><a href="text-mining.html#cb825-7"></a>complete_text &lt;-<span class="st"> </span><span class="kw">stemCompletion</span>(stem_doc, comp_dict)</span>
-<span id="cb825-8"><a href="text-mining.html#cb825-8"></a>complete_text</span></code></pre></div>
+<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="text-mining.html#cb846-1"></a>complicate &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;complicated&quot;</span>, <span class="st">&quot;complication&quot;</span>, <span class="st">&quot;complicatedly&quot;</span>)</span>
+<span id="cb846-2"><a href="text-mining.html#cb846-2"></a></span>
+<span id="cb846-3"><a href="text-mining.html#cb846-3"></a>stem_doc &lt;-<span class="st"> </span><span class="kw">stemDocument</span>(complicate)</span>
+<span id="cb846-4"><a href="text-mining.html#cb846-4"></a></span>
+<span id="cb846-5"><a href="text-mining.html#cb846-5"></a>comp_dict &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;complicate&quot;</span>)</span>
+<span id="cb846-6"><a href="text-mining.html#cb846-6"></a></span>
+<span id="cb846-7"><a href="text-mining.html#cb846-7"></a>complete_text &lt;-<span class="st"> </span><span class="kw">stemCompletion</span>(stem_doc, comp_dict)</span>
+<span id="cb846-8"><a href="text-mining.html#cb846-8"></a>complete_text</span></code></pre></div>
 <pre><code>##      complic      complic      complic 
 ## &quot;complicate&quot; &quot;complicate&quot; &quot;complicate&quot;</code></pre>
-<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="text-mining.html#cb827-1"></a>clean_corpus &lt;-<span class="st"> </span><span class="cf">function</span>(corpus){</span>
-<span id="cb827-2"><a href="text-mining.html#cb827-2"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, removePunctuation)</span>
-<span id="cb827-3"><a href="text-mining.html#cb827-3"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, <span class="kw">content_transformer</span>(tolower))</span>
-<span id="cb827-4"><a href="text-mining.html#cb827-4"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, removeWords, <span class="dt">words =</span> <span class="kw">c</span>(<span class="kw">stopwords</span>(<span class="st">&quot;en&quot;</span>), <span class="st">&quot;coffee&quot;</span>, <span class="st">&quot;mug&quot;</span>))</span>
-<span id="cb827-5"><a href="text-mining.html#cb827-5"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, stripWhitespace)</span>
-<span id="cb827-6"><a href="text-mining.html#cb827-6"></a>  <span class="kw">return</span>(corpus)</span>
-<span id="cb827-7"><a href="text-mining.html#cb827-7"></a>}</span>
-<span id="cb827-8"><a href="text-mining.html#cb827-8"></a>clean_corp &lt;-<span class="st"> </span><span class="kw">clean_corpus</span>(coffee_corpus)</span>
-<span id="cb827-9"><a href="text-mining.html#cb827-9"></a><span class="kw">content</span>(clean_corp[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="text-mining.html#cb848-1"></a>clean_corpus &lt;-<span class="st"> </span><span class="cf">function</span>(corpus){</span>
+<span id="cb848-2"><a href="text-mining.html#cb848-2"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, removePunctuation)</span>
+<span id="cb848-3"><a href="text-mining.html#cb848-3"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, <span class="kw">content_transformer</span>(tolower))</span>
+<span id="cb848-4"><a href="text-mining.html#cb848-4"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, removeWords, <span class="dt">words =</span> <span class="kw">c</span>(<span class="kw">stopwords</span>(<span class="st">&quot;en&quot;</span>), <span class="st">&quot;coffee&quot;</span>, <span class="st">&quot;mug&quot;</span>))</span>
+<span id="cb848-5"><a href="text-mining.html#cb848-5"></a>  corpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(corpus, stripWhitespace)</span>
+<span id="cb848-6"><a href="text-mining.html#cb848-6"></a>  <span class="kw">return</span>(corpus)</span>
+<span id="cb848-7"><a href="text-mining.html#cb848-7"></a>}</span>
+<span id="cb848-8"><a href="text-mining.html#cb848-8"></a>clean_corp &lt;-<span class="st"> </span><span class="kw">clean_corpus</span>(coffee_corpus)</span>
+<span id="cb848-9"><a href="text-mining.html#cb848-9"></a><span class="kw">content</span>(clean_corp[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## [1] &quot;ayyytylerb true drink lots &quot;</code></pre>
-<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="text-mining.html#cb829-1"></a><span class="co"># compare to original</span></span>
-<span id="cb829-2"><a href="text-mining.html#cb829-2"></a><span class="kw">content</span>(coffee_corpus[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="text-mining.html#cb850-1"></a><span class="co"># compare to original</span></span>
+<span id="cb850-2"><a href="text-mining.html#cb850-2"></a><span class="kw">content</span>(coffee_corpus[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## [1] &quot;@ayyytylerb that is so true drink lots of coffee&quot;</code></pre>
 <p>To perform the analysis of the tweets, convert the corpus into either a document term matrix (DTM, documents as rows, terms as cols), or a term document matrix (TDM, terms as rows, documents as cols).</p>
-<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="text-mining.html#cb831-1"></a>coffee_tdm &lt;-<span class="st"> </span><span class="kw">TermDocumentMatrix</span>(clean_corp)</span>
-<span id="cb831-2"><a href="text-mining.html#cb831-2"></a></span>
-<span id="cb831-3"><a href="text-mining.html#cb831-3"></a><span class="co"># Print coffee_tdm data</span></span>
-<span id="cb831-4"><a href="text-mining.html#cb831-4"></a>coffee_tdm</span></code></pre></div>
+<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="text-mining.html#cb852-1"></a>coffee_tdm &lt;-<span class="st"> </span><span class="kw">TermDocumentMatrix</span>(clean_corp)</span>
+<span id="cb852-2"><a href="text-mining.html#cb852-2"></a></span>
+<span id="cb852-3"><a href="text-mining.html#cb852-3"></a><span class="co"># Print coffee_tdm data</span></span>
+<span id="cb852-4"><a href="text-mining.html#cb852-4"></a>coffee_tdm</span></code></pre></div>
 <pre><code>## &lt;&lt;TermDocumentMatrix (terms: 3075, documents: 1000)&gt;&gt;
 ## Non-/sparse entries: 7384/3067616
 ## Sparsity           : 100%
 ## Maximal term length: 27
 ## Weighting          : term frequency (tf)</code></pre>
-<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="text-mining.html#cb833-1"></a><span class="co"># Convert coffee_tdm to a matrix</span></span>
-<span id="cb833-2"><a href="text-mining.html#cb833-2"></a>coffee_m &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(coffee_tdm)</span>
-<span id="cb833-3"><a href="text-mining.html#cb833-3"></a></span>
-<span id="cb833-4"><a href="text-mining.html#cb833-4"></a><span class="co"># Print the dimensions of the matrix</span></span>
-<span id="cb833-5"><a href="text-mining.html#cb833-5"></a><span class="kw">dim</span>(coffee_m)</span></code></pre></div>
+<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="text-mining.html#cb854-1"></a><span class="co"># Convert coffee_tdm to a matrix</span></span>
+<span id="cb854-2"><a href="text-mining.html#cb854-2"></a>coffee_m &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(coffee_tdm)</span>
+<span id="cb854-3"><a href="text-mining.html#cb854-3"></a></span>
+<span id="cb854-4"><a href="text-mining.html#cb854-4"></a><span class="co"># Print the dimensions of the matrix</span></span>
+<span id="cb854-5"><a href="text-mining.html#cb854-5"></a><span class="kw">dim</span>(coffee_m)</span></code></pre></div>
 <pre><code>## [1] 3075 1000</code></pre>
-<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb835-1"><a href="text-mining.html#cb835-1"></a><span class="co"># Review a portion of the matrix</span></span>
-<span id="cb835-2"><a href="text-mining.html#cb835-2"></a>coffee_m[<span class="kw">c</span>(<span class="st">&quot;star&quot;</span>, <span class="st">&quot;starbucks&quot;</span>), <span class="dv">25</span><span class="op">:</span><span class="dv">35</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="text-mining.html#cb856-1"></a><span class="co"># Review a portion of the matrix</span></span>
+<span id="cb856-2"><a href="text-mining.html#cb856-2"></a>coffee_m[<span class="kw">c</span>(<span class="st">&quot;star&quot;</span>, <span class="st">&quot;starbucks&quot;</span>), <span class="dv">25</span><span class="op">:</span><span class="dv">35</span>]</span></code></pre></div>
 <pre><code>##            Docs
 ## Terms       25 26 27 28 29 30 31 32 33 34 35
 ##   star       0  0  0  0  0  0  0  0  0  0  0
@@ -448,7 +460,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="principal-components-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="k-means-vs-hca.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="tidy-text.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

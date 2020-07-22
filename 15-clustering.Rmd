@@ -1,18 +1,16 @@
 # Cluster Analysis
 
-These note are primarily taken from the DataCamp courses [Cluster Analysis in R](https://www.datacamp.com/courses/cluster-analysis-in-r) and [Unsupervised Learning in R](https://campus.datacamp.com/courses/unsupervised-learning-in-r),  [AIHR](https://www.analyticsinhr.com/blog/people-analytics-r-clustering), and the [UC Business Analytics R Programming Guide](https://uc-r.github.io/kmeans_clustering). 
+These notes are primarily taken from studying DataCamp courses [Cluster Analysis in R](https://www.datacamp.com/courses/cluster-analysis-in-r) and [Unsupervised Learning in R](https://campus.datacamp.com/courses/unsupervised-learning-in-r),  [AIHR](https://www.analyticsinhr.com/blog/people-analytics-r-clustering), [UC Business Analytics R Programming Guide](https://uc-r.github.io/kmeans_clustering), and [PSU STAT-505](https://online.stat.psu.edu/stat505). 
 
+Cluster analysis is a data exploration (mining) tool for dividing features into clusters, distinct populations with no a priori defining characteristics. Your goal is to describe those populations with the observed data. Popular uses of clustering are audience segmentation, creating personas, detecting anomalies, and pattern recognition in images.
 
-Unsupervised machine learning searches for structure in unlabeled data (data without a response variable).  The goal of unsupervised learning is clustering into homogenous subgroups, and dimensionality reduction.  Examples of cluster analysis are k-means clustering and hierarchical cluster analysis (HCA) (others [here](https://theappsolutions.com/blog/development/unsupervised-machine-learning/#:~:text=Unsupervised%20learning%20is%20a%20type%20of%20machine%20learning,in%20the%20dataset.%20The%20term%20%E2%80%9Cunsupervised%E2%80%9D%20refers%20to)). Clustering is used for audience segmentation, creating personas, detecting anomalies, and pattern recognition in images.
-
-I will learn by example, using the [IBM HR Analytics Employee Attrition & Performance](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset) data set from Kaggle to discover what factors are associated with employee turnover and whether distinct clusters of employees are more susceptible to turnover. The clusters can help personalize [employee experience](https://www.digitalhrtech.com/employee-experience-guide/?_ga=2.197559791.13240713.1594804554-1792658053.1594804554) (AIHR). This data set includes 1,470 employee records consisting of the `EmployeeNumber`, a flag for `Attrition` during some timeframe, and 32 other descriptive variables.
+I will learn by example, using the [IBM HR Analytics Employee Attrition & Performance](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset) data set from Kaggle to discover which factors are associated with employee turnover and whether distinct clusters of employees are more susceptible to turnover. The clusters can help personalize [employee experience](https://www.digitalhrtech.com/employee-experience-guide/?_ga=2.197559791.13240713.1594804554-1792658053.1594804554) (AIHR). This data set includes 1,470 employee records consisting of the `EmployeeNumber`, a flag for `Attrition` during some time frame, and 32 other descriptive variables.
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
-library(correlationfunnel) # binary correlation analysis
+library(plotly)            # interactive graphing
 library(cluster)           # daisy and pam
 library(Rtsne)             # dimensionality reduction and visualization
-library(plotly)            # interactive graphing
 library(dendextend)        # color_branches
 
 set.seed(1234)  # reproducibility
@@ -25,20 +23,20 @@ my_skim <- skimr::skim_with(numeric = skimr::sfl(p25 = NULL, p50 = NULL, p75 = N
 my_skim(dat)
 ```
 
-You would normally start a cluster analysis with an exploration of the data to determine which variables are interesting and relevant to your goal. I'll bypass that rigor with a simple correlation funnel [GitHub README](https://github.com/business-science/correlationfunnel) using binary correlation and include just the variables with a correlation coefficient of at least 0.10.
+You would normally start a cluster analysis with an exploration of the data to determine which variables are interesting and relevant to your goal. I'll bypass that rigor and just use a binary correlation analysis. Binary correlation analysis converts features into binary format by binning the continuous features and one-hot encoding the binary features. `correlate()` calculates the correlation coefficient for each binary feature to the response variable. A Correlation Funnel is an tornado plot that lists the highest correlation features (based on absolute magnitude) at the top of the and the lowest correlation features at the bottom. Read more on the [correlationfunel](https://github.com/business-science/correlationfunnel) GitHub README.
 
-Binary correlation analysis converts features into binary format by binning the continuous features and one-hot encoding the binary features. `correlate()` calculates the correlation coefficient for each binary feature to the response variable. A Correlation Funnel is an tornado plot that lists the highest correlation features (based on absolute magnitude) at the top of the and the lowest correlation features at the bottom. For our data set, `OverTime` (Y|N) has the largest correlation, `JobLevel = 1`, `MonthlyIncome <= 2,695.80`, etc.
+Using binary correlation, I'll include just the variables with a correlation coefficient of at least 0.10. For our employee attrition data set, `OverTime` (Y|N) has the largest correlation, `JobLevel = 1`, `MonthlyIncome <= 2,695.80`, etc.
 
 ```{r warning=FALSE, fig.height=8, fig.width=8}
 dat %>%
   select(-EmployeeNumber) %>%
-  binarize(n_bins = 5, thresh_infreq = 0.01) %>%
-  correlate(Attrition__Yes) %>%
-  plot_correlation_funnel(interactive = FALSE) #%>%
-#  ggplotly()  # Makes prettier, but drops the labels
+  correlationfunnel::binarize(n_bins = 5, thresh_infreq = 0.01) %>%
+  correlationfunnel::correlate(Attrition__Yes) %>%
+  correlationfunnel::plot_correlation_funnel(interactive = FALSE) %>%
+  ggplotly()  # Makes prettier, but drops the labels
 ```
 
-Using the cutoff of 0.1 leaves 14 features for the analysis.
+Using the cutoff of 0.1 leaves 14 features for the analysis. 
 
 ```{r}
 vars <- c(
@@ -52,43 +50,50 @@ vars <- c(
 dat_2 <- dat %>% select(one_of(vars))
 ```
 
-#### Data Preparation
 
-Central to clustering is the concept of distance. Two observations are similar if the distance between their features is relatively small. Features should be on a similar scale. There are many ways to define distance (see options in `?dist`), but the two most common are Euclidean, $d = \sqrt{\sum{(x_i - y_i)^2}}$, and binary, 1 minus the proportion of shared features ([Wikipedia](https://en.wikipedia.org/wiki/Jaccard_index)). If your data set has a mix a feature types (and it usually will), then you'll want to use a third distance measure, the *Gower* distance. Gower ([tutorial](https://medium.com/analytics-vidhya/concept-of-gowers-distance-and-it-s-application-using-python-b08cf6139ac2)) range-normalizes the quantitative variables, one-hot encodes the nominal variables, and ranks the ordinal variables. Then it calculates distances using the Manhattan distance for quantative and ordinal variables, and the Dice coefficient for nominal variables.
+#### Data Preparation {-}
 
-Gower's distance can be computationally expensive, so you could one-hot encode the data and standardize the variables as $(x - \bar{x}) / sd(x)$ so that each feature has a mean of 0 and standard deviation of 1.
+The concept of distance is central to clustering. Two observations are similar if the distance between their features is relatively small. To compare feature distances, they should be on a similar scale. There are many ways to define distance (see options in `?dist`), but the two most common are Euclidean, $d = \sqrt{\sum{(x_i - y_i)^2}}$, and binary, 1 minus the proportion of shared features ([Wikipedia](https://en.wikipedia.org/wiki/Jaccard_index)). If you have a mix a feature types, use the *Gower* distance ([Analytics Vidhya](https://medium.com/analytics-vidhya/concept-of-gowers-distance-and-it-s-application-using-python-b08cf6139ac2)) range-normalizes the quantitative variables, one-hot encodes the nominal variables, and ranks the ordinal variables. Then it calculates distances using the Manhattan distance for quantitative and ordinal variables, and the Dice coefficient for nominal variables. 
 
-```{r}
+Gower's distance is computationally expensive, so you could one-hot encode the data and standardize the variables as $(x - \bar{x}) / sd(x)$ so that each feature has a mean of 0 and standard deviation of 1, like this:
+
+```{r eval=FALSE}
 dat_2_mtrx <- mltools::one_hot(data.table::as.data.table(dat_2[, 2:16])) %>% as.matrix()
 row.names(dat_2_mtrx) <- dat_2$EmployeeNumber
 dat_2_mtrx <- na.omit(dat_2_mtrx)
 dat_2_mtrx <- scale(dat_2_mtrx)
-
 dat_2_dist <- dist(dat_2_mtrx)
 ```
 
 But normally you would go ahead and calculate Gower's distance using `daisy()`.
 
 ```{r}
-dat_2_gwr <- daisy(dat_2[, 2:16], metric = "gower")
+dat_2_gwr <- cluster::daisy(dat_2[, 2:16], metric = "gower")
 ```
 
-As a sanity check, we can check the most similar and dissimilar pair of employees according to their Gower Distance score. Here are the most similar employees.
+As a sanity check, let's see the most similar and dissimilar pairs of employees according to their Gower distance. Here are the most similar employees.
 
 ```{r}
 x <- as.matrix(dat_2_gwr)
-dat_2[which(x == min(x[x != 0]), arr.ind = TRUE)[1, ], ] %>% glimpse()
+dat_2[which(x == min(x[x != 0]), arr.ind = TRUE)[1, ], ] %>% 
+  t() %>% as.data.frame() %>% rownames_to_column() %>% 
+  flextable::flextable() %>% flextable::autofit()
 ```
 
-And here are the most dissimilar employees.
+They are identical except for `MonthlyIncome`. Here are the most dissimilar employees.
 
 ```{r}
-dat_2[which(x == max(x), arr.ind = TRUE)[1, ], ] %>% glimpse()
+dat_2[which(x == max(x), arr.ind = TRUE)[1, ], ] %>% 
+  t() %>% as.data.frame() %>% rownames_to_column() %>% 
+  flextable::flextable() %>% flextable::autofit()
 ```
+
+These two employees have nothing in common. With the data preparation complete, we can finally perform our cluster analysis. I'll try K-means and HCA.
+
 
 ## K-Means
 
-The K-means clustering algorithm randomly assigns all observations to one of `k` clusters. K-means then iteratively calculates the cluster centroids and reassigns the observations to their nearest centroid.  The centroid is the mean of the points in the cluster (Hence the name "k-means"). The iterations continue until either the centroids stabilize or the iterations reach a set maximum, `iter.max` (typically 50). The result is `k` clusters with the minimum total intra-cluster variation.
+The k-means clustering algorithm randomly assigns all observations to one of $k$ clusters. K-means then iteratively calculates the cluster centroids and reassigns the observations to their nearest centroid.  The centroid is the mean of the points in the cluster (Hence the name "k-means"). The iterations continue until either the centroids stabilize or the iterations reach a set maximum, `iter.max` (typically 50). The result is `k` clusters with the minimum total intra-cluster variation.
 
 The centroid of cluster $c_i \in C$ is the mean of the cluster observations $S_i$: $c_i = \frac{1}{|S_i|} \sum_{x_i \in S_i}{x_i}$.  The nearest centroid is the minimum squared Euclidean distance, $\underset{c_i \in C}{\operatorname{arg min}} dist(c_i, x)^2$.^[Euclidean distances are appropriate for quantitative variables.  What about categorical variables?  [This discussion](https://datascience.stackexchange.com/questions/22/k-means-clustering-for-mixed-numeric-and-categorical-data) at StackExchange explains that **k-modes** is suitable for categorical data.  It may be okay to convert categorical variables into binary values and treating them as numeric.]
 
@@ -120,7 +125,7 @@ ggplot(sil_tbl, aes(x = k, y = sil)) +
   labs(title = "Silhouette Plot")
 ```
 
-Run `pam()` again and attach the results to the original table.
+Run `pam()` again and attach the results to the original table for visualization and summary statistics.  
 
 ```{r}
 mdl <- pam(dat_2_gwr, k = 6)
@@ -133,143 +138,114 @@ Here are the six medoids from our data set.
 dat_2[mdl$medoids, ]
 ```
 
-We're most concerned about attrition. Do high-attrition employees fall into a particular cluster? Yes!
+We're most concerned about attrition. Do high-attrition employees fall into a particular cluster? Yes! 79.7% of cluster 3 left the company - that's 59.5% of all turnover in the company.
 
 ```{r}
-dat_3 %>%
+dat_3_smry <- dat_3 %>%
   count(cluster, Attrition) %>%
-  ungroup() %>%
   group_by(cluster) %>%
-  mutate(size = sum(n),
-         rate = scales::percent(n / sum(n), accuracy = 0.1)) %>%
+  mutate(cluster_n = sum(n),
+         turnover_rate = scales::percent(n / sum(n), accuracy = 0.1)) %>%
   ungroup() %>%
-  mutate(prop = scales::percent(size / sum(size), accuracy = 0.1)) %>%
   filter(Attrition == "Yes") %>%
-  select(cluster, size, prop, attrition = n, rate)
-  pivot_wider(names_from = Attrition, values_from = c(n, rate))
-
+  mutate(pct_of_turnover = scales::percent(n / sum(n), accuracy = 0.1)) %>%
+  select(cluster, turnover_rate, turnover_n = n, cluster_n, pct_of_turnover)
+dat_3_smry
 ```
 
+You can get some sense of the quality of clustering by constructing the Barnes-Hut t-Distributed Stochastic Neighbor Embedding (t-SNE).
 
-```{r}
-tsne_obj <- Rtsne(gower_mat, is_distance = TRUE)
+```{r warning=FALSE}
+dat_4 <- dat_3 %>%
+  left_join(dat_3_smry, by = "cluster") %>%
+  rename(Cluster = cluster) %>%
+  mutate(
+    MonthlyIncome = MonthlyIncome %>% scales::dollar(),
+    description = str_glue("Turnover = {Attrition}
+                                  MaritalDesc = {MaritalStatus}
+                                  Age = {Age}
+                                  Job Role = {JobRole}
+                                  Job Level {JobLevel}
+                                  Overtime = {OverTime}
+                                  Current Role Tenure = {YearsInCurrentRole}
+                                  Professional Tenure = {TotalWorkingYears}
+                                  Monthly Income = {MonthlyIncome}
+                                 
+                                  Cluster: {Cluster}
+                                  Cluster Size: {cluster_n}
+                                  Cluster Turnover Rate: {turnover_rate}
+                                  Cluster Turnover Count: {turnover_n}
+                                  "))
+
+tsne_obj <- Rtsne(dat_2_gwr, is_distance = TRUE)
 
 tsne_tbl <- tsne_obj$Y %>%
   as_tibble() %>%
   setNames(c("X", "Y")) %>%
-  bind_cols(dat_3) %>%
-  mutate(cluster = as_factor(cluster))
+  bind_cols(dat_4) %>%
+  mutate(Cluster = as_factor(Cluster))
 
-tsne_tbl %>%
-  ggplot(aes(x = X, y = Y, colour = cluster)) +
+g <- tsne_tbl %>%
+  ggplot(aes(x = X, y = Y, colour = Cluster, text = description)) +
   geom_point()
+
+ggplotly(g)
+  
 ```
 
-```{r}
-factoextra::fviz_cluster(mdl, dat_3_mtrx, ellipse.type = "norm")
-```
-
-
-Attach the cluster assignment vector back to the original dataframe for visualization and/or summary statistics.  Draw conclusions about the clusters by calculating summary statistics of the resulting cluster assigments, typically membership count, and feature averages (or proportions).
-```{r}
-
-# View the resulting model
-knitr::kable(round(wisc.k2$size, 0),
-             caption = "Cluster Size")
-knitr::kable(round(wisc.k2$centers, 0),
-             caption = "Cluster Centers")
-
-```
-
-
+Another common approach is to take summary statistics and draw your own conclusions.
 
 ```{r warning=FALSE, message=FALSE}
-library(dplyr)
-wisc.df %>%
-  group_by(diagnosis, cluster) %>%
-  summarise(n = n())
-wisc.df %>%
-  group_by(diagnosis, cluster) %>%
-  summarise_all("mean")
+dat_3 %>%
+  group_by(cluster, Attrition) %>%
+  summarise_if(is.numeric, "mean")
 ```
 
 
 
 ## HCA
 
-Hierarchical clustering (also called hierarchical cluster analysis or HCA) is a method of cluster analysis which builds a hierarchy of clusters.  One usually presents the HCA results in a dendrogram.  The HCA process is:
+Hierarchical clustering (also called hierarchical cluster analysis or HCA) is a method of cluster analysis which builds a hierarchy of clusters.  One usually presents the HCA results in a dendrogram. The HCA process is:
 
-1. Calculate the distance between each observation with `dist(df, method = c("euclidean", "binary")`.  `dist()` returns an object of class `dist`.
+1. Calculate the distance between each observation with `dist()` or `daisy()`. We did that above when we created `dat_2_gwr`.
 
-2. Cluster the distances with `hclust(dist, method = c("complete", "single", "average", "centroid")`.  `hclust` groups the two closest observations into a cluster.  `hclust` then calculates the cluster distance to the remaining observations.  If the shortest distance is between two observations, `hclust` defines a second cluster, otherwise `hclust` adds the observation as a new level to the cluster.  The process repeats until all observations belong to a single cluster.  The "distance" to a cluster requires definition.  The "complete" distance is the distance to the furthest member of the cluster.  The "single" distance is the distance to the closest member of the cluster.  The "average" distance is the average distance to all members of the cluster.  The "centroid" distance is the distance between the centroids of each cluster.^[As a rule of thumb, "complete" and "average" tend to produce more balanced trees and are most common.  Pruning an unbalanced tree can result in most observations assigned to one cluster and only a few observations assigned to other clusters.  This is useful for identifying outliers. `hclust()` returns a value of class `hclust`.
+2. Cluster the distances with `hclust(dist, method = c("complete", "single", "average", "centroid")`.  `hclust` groups the two closest observations into a cluster, then calculates the cluster's distance to the remaining observations.  If the shortest distance is between two observations, `hclust` defines a second cluster, otherwise `hclust` adds the observation as a new level to the cluster.  The process repeats until all observations belong to a single cluster. The "distance" to a cluster can be defined as:
 
-3. Evaluate the `hclust` tree with a dendogram, principal component analysis (PCA), and/or summary statistics. The vertical lines in a dendogram indicate the distance between nodes and their associated cluster.  Dendograms are difficult to visualize When the number of features is greater than two.^[One work-around is to plot just two dimensions at a time.]
+* complete: distance to the furthest member of the cluster,
+* single: distance to the closest member of the cluster,
+* average: average distance to all members of the cluster, or
+* centroid: distance between the centroids of each cluster.
 
-4. "Cut" the hierarchical tree into the desired number of clusters (`k`) or height `h` with `cutree(hclust, k = NULL, h = NULL)`.  `cutree()` returns a vector of cluster memberships.  Attach this vector back to the original dataframe for visualization and summary statistics.
+Complete and average distances tend to produce more balanced trees and are most common. Pruning an unbalanced tree can result in most observations assigned to one cluster and only a few observations assigned to other clusters.  This is useful for identifying outliers. `hclust()` returns a value of class `hclust`.
+
+```{r}
+mdl_hc <- hclust(dat_2_gwr, method = "complete")
+```
+
+3. Evaluate the `hclust` tree with a dendogram, principal component analysis (PCA), and/or summary statistics. The vertical lines in a dendogram indicate the distance between nodes and their associated cluster. Dendograms are difficult to visualize When the number of features is greater than two. One work-around is to plot just two dimensions at a time.
+
+```{r warning=FALSE, message=FALSE}
+# Inspect the tree to choose a size.
+plot(color_branches(as.dendrogram(mdl_hc), k = 7))
+abline(h = .65, col = "red")
+```
+
+4. "Cut" the hierarchical tree into the desired number of clusters (`k`) or height `h` with `cutree(hclust, k = NULL, h = NULL)`.  `cutree()` returns a vector of cluster memberships.  Attach this vector back to the original dataframe for visualization and summary statistics. The dendogram suggests the optimal number of clusters is six.  Build a cluster with `k = 6` means.  Attach the cluster assignment vector back to the original dataframe for visualization and/or summary statistics.
+
+```{r}
+dat_2_clstr_hca <- dat_2 %>% mutate(cluster = cutree(mdl_hc, k = 6))
+```
 
 5. Calculate summary statistics and draw conclusions.  Useful summary statistics are typically membership count, and feature averages (or proportions).
 
-
- Example
-The `pokemon` dataset contains observations of 800 pokemons^[More information on the dataset at [https://www.kaggle.com/abcsds/pokemon](https://www.kaggle.com/abcsds/pokemon)] on 6 dimensions.  The data is unlabeled, meaning there is no response variable, just features.  The features here are six pokeon ability measures.
 ```{r warning=FALSE, message=FALSE}
-pokemon <- read_csv(url("https://assets.datacamp.com/production/course_1815/datasets/Pokemon.csv"))
-pokemon$Name <- NULL
-pokemon$Type1 <- NULL
-pokemon$Type2 <- NULL
-pokemon$Total <- NULL
-pokemon$Generation <- NULL
-pokemon$Legendary <- NULL
-
-head(pokemon)
-```
-
-Before conducting k-means, check whether any preprocessing is required:  Are there any NAs?  If so, drop these observations, or impute values.  Are all of the features comparable?  If not, standardize the variables.  Are the features multi-nomial?  If so, create binary variables.  In this case, the means and standard deviations are similar, but I am scaling anyway for the exercise.
-
-```{r warning=FALSE, message=FALSE}
-# Means and SDs
-colMeans(pokemon[, -c(1)])
-apply(pokemon[, -c(1)], MARGIN = 2, FUN = sd)
-
-# Scale the data
-pokemon.scaled <- scale(pokemon)
-
-# Create the full tree
-hc_model <- hclust(dist(pokemon.scaled), method = "complete")
-
-# Inspect the tree to choose a size.
-plot(color_branches(as.dendrogram(hc_model), 
-                    k = 7))
-abline(h = 7, col = "red")
-```
-
-The dendogram suggests the optimal number of clusters is seven.  Build a cluster with `k = 7` means.  Attach the cluster assignment vector back to the original dataframe for visualization and/or summary statistics.
-```{r warning=FALSE, message=FALSE}
-pokemon <- mutate(pokemon, cluster = cutree(hc_model, k = 7))
-
-# View the resulting model
-pokemon %>% 
+dat_2_clstr_hca %>% 
   group_by(cluster) %>% 
-  summarise_all(funs(mean(.))) %>%
-  select(-c(2)) %>%
-  knitr::kable(caption = "Cluster Centers")
-
-pokemon %>%
-  gather(key = "Ability", 
-         value = "Score", 
-         c(HitPoints, Attack, Defense, 
-           SpecialAttack, SpecialDefense, Speed)) %>%
-  ggplot(aes(x = factor(Ability), y = Score, color = factor(cluster))) + 
-  geom_point(aes(group = Number))
+  summarise_if(is.numeric, funs(mean(.)))
 ```
-
-Cluster 1 has the lowest values in all features.  Cluster 5 has very high HitPoints.  Cluster 3 has very high Special Attack.
-
-## Cluster Analysis with Time-Series Data
-
-Cluster analysis is useful for spacial data, qualitative data, and time-series data.  With time series data, the time periods are the features.  Typically, this requires the transposition of the data set so that the dates are columns.  Otherwise, the same rules apply.
 
 ## K-Means vs HCA
+
 Hierarchical clustering has some advantages over k-means.  It can use any distance method - not just euclidean.  The results are stable - k-means can produce different results each time.  While they can both be evaluated with the silhouette and elbow plots, hierachical clustering can also be evaluated with a dendogram.  But hierarchical clusters has one significant drawback: it is computationally complex compared to k-means.  For this last reason, k-means is more common.
 
 

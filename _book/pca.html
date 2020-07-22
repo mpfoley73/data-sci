@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.5 PCA | My Data Science Notes</title>
+  <title>10.6 PCA | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.5 PCA | My Data Science Notes" />
+  <meta property="og:title" content="10.6 PCA | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.5 PCA | My Data Science Notes" />
+  <meta name="twitter:title" content="10.6 PCA | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,15 +24,15 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-07-13" />
+<meta name="date" content="2020-07-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="lda.html"/>
-<link rel="next" href="factor-analysis.html"/>
+<link rel="prev" href="part-3-unupervised-machine-learning.html"/>
+<link rel="next" href="t-sne.html"/>
 <script src="assets/jquery-2.2.3/jquery.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -53,6 +53,13 @@
 <script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="assets/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
 <script src="assets/tabwid-1.0.0/tabwid.js"></script>
+<script src="assets/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="assets/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="assets/typedarray-0.1/typedarray.min.js"></script>
+<link href="assets/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="assets/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="assets/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="assets/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -222,10 +229,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2" data-path="manova.html"><a href="manova.html"><i class="fa fa-check"></i><b>6.2</b> MANOVA</a></li>
 <li class="chapter" data-level="6.3" data-path="repeated-measures.html"><a href="repeated-measures.html"><i class="fa fa-check"></i><b>6.3</b> Repeated Measures</a></li>
 <li class="chapter" data-level="6.4" data-path="lda.html"><a href="lda.html"><i class="fa fa-check"></i><b>6.4</b> LDA</a></li>
-<li class="chapter" data-level="6.5" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>6.5</b> PCA</a></li>
-<li class="chapter" data-level="6.6" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>6.6</b> Factor Analysis</a></li>
-<li class="chapter" data-level="6.7" data-path="canonical-correlation.html"><a href="canonical-correlation.html"><i class="fa fa-check"></i><b>6.7</b> Canonical Correlation</a></li>
-<li class="chapter" data-level="6.8" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>6.8</b> Cluster Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>7</b> Regularization</a><ul>
 <li class="chapter" data-level="7.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>7.1</b> Ridge</a></li>
@@ -261,10 +264,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>10.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="10.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>10.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="10.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>10.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="10.4" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>10.4</b> Example</a></li>
+<li class="chapter" data-level="10.4" data-path="my-svm-example.html"><a href="my-svm-example.html"><i class="fa fa-check"></i><b>10.4</b> My svm Example</a></li>
 <li class="chapter" data-level="10.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>10.5</b> Using Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="principal-components-analysis.html"><a href="principal-components-analysis.html"><i class="fa fa-check"></i><b>11</b> Principal Components Analysis</a></li>
+<li class="chapter" data-level="" data-path="part-3-unupervised-machine-learning.html"><a href="part-3-unupervised-machine-learning.html"><i class="fa fa-check"></i>PART 3: Unupervised Machine Learning</a><ul>
+<li class="chapter" data-level="10.6" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>10.6</b> PCA</a></li>
+<li class="chapter" data-level="10.7" data-path="t-sne.html"><a href="t-sne.html"><i class="fa fa-check"></i><b>10.7</b> t-SNE</a></li>
+<li class="chapter" data-level="10.8" data-path="svd.html"><a href="svd.html"><i class="fa fa-check"></i><b>10.8</b> SVD</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>11</b> Cluster Analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="k-means.html"><a href="k-means.html"><i class="fa fa-check"></i><b>11.1</b> K-Means</a></li>
+<li class="chapter" data-level="11.2" data-path="hca.html"><a href="hca.html"><i class="fa fa-check"></i><b>11.2</b> HCA</a></li>
+<li class="chapter" data-level="11.3" data-path="k-means-vs-hca.html"><a href="k-means-vs-hca.html"><i class="fa fa-check"></i><b>11.3</b> K-Means vs HCA</a></li>
+</ul></li>
 <li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a><ul>
 <li class="chapter" data-level="12.1" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>12.1</b> Tidy Text</a></li>
 <li class="chapter" data-level="12.2" data-path="bag-of-words.html"><a href="bag-of-words.html"><i class="fa fa-check"></i><b>12.2</b> Bag of Words</a></li>
@@ -320,15 +332,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="pca" class="section level2">
-<h2><span class="header-section-number">6.5</span> PCA</h2>
+<h2><span class="header-section-number">10.6</span> PCA</h2>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="lda.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="factor-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="part-3-unupervised-machine-learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="t-sne.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

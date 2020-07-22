@@ -40,13 +40,3 @@ Fisher’s formulation is intuitive, easy to solve mathematically, and, unlike W
 
 In practice, it is best to center and scale predictors and remove near-zero-variance predictors.  If the matrix is still not invertible, use PLS or regularization.
 
-
-## PCA
-
-## Factor Analysis
-
-## Canonical Correlation
-
-## Cluster Analysis
-
-This section is based on [PSU STAT 504](https://online.stat.psu.edu/stat505/) and [PSU STAT 508](https://online.stat.psu.edu/stat508/lesson/12).
