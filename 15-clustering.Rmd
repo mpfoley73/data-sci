@@ -2,7 +2,15 @@
 
 These notes are primarily taken from studying DataCamp courses [Cluster Analysis in R](https://www.datacamp.com/courses/cluster-analysis-in-r) and [Unsupervised Learning in R](https://campus.datacamp.com/courses/unsupervised-learning-in-r),  [AIHR](https://www.analyticsinhr.com/blog/people-analytics-r-clustering), [UC Business Analytics R Programming Guide](https://uc-r.github.io/kmeans_clustering), and [PSU STAT-505](https://online.stat.psu.edu/stat505). 
 
-Cluster analysis is a data exploration (mining) tool for dividing features into clusters, distinct populations with no a priori defining characteristics. Your goal is to describe those populations with the observed data. Popular uses of clustering are audience segmentation, creating personas, detecting anomalies, and pattern recognition in images.
+Cluster analysis is a data exploration (mining) tool for dividing features into clusters, distinct populations with no a priori defining characteristics. The goal is to describe those populations with the observed data. Popular uses of clustering are audience segmentation, creating personas, detecting anomalies, and pattern recognition in images.
+
+There are two common approaches to cluster analysis.
+
+* Agglomerative **hierarchical** algorithms start by defining each data point as a cluster, then repeatedly combine the two closest clusters into a new cluster until all data points are merged into a single cluster.
+
+* **Non-hierarchical** methods such as K-means initially randomly partitions the data into a set of K clusters, then iteratively moves observations into different clusters until there is no sensible reassignment possible.
+
+#### Setup {-}
 
 I will learn by example, using the [IBM HR Analytics Employee Attrition & Performance](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset) data set from Kaggle to discover which factors are associated with employee turnover and whether distinct clusters of employees are more susceptible to turnover. The clusters can help personalize [employee experience](https://www.digitalhrtech.com/employee-experience-guide/?_ga=2.197559791.13240713.1594804554-1792658053.1594804554) (AIHR). This data set includes 1,470 employee records consisting of the `EmployeeNumber`, a flag for `Attrition` during some time frame, and 32 other descriptive variables.
 
@@ -53,7 +61,7 @@ dat_2 <- dat %>% select(one_of(vars))
 
 #### Data Preparation {-}
 
-The concept of distance is central to clustering. Two observations are similar if the distance between their features is relatively small. To compare feature distances, they should be on a similar scale. There are many ways to define distance (see options in `?dist`), but the two most common are Euclidean, $d = \sqrt{\sum{(x_i - y_i)^2}}$, and binary, 1 minus the proportion of shared features ([Wikipedia](https://en.wikipedia.org/wiki/Jaccard_index)). If you have a mix a feature types, use the *Gower* distance ([Analytics Vidhya](https://medium.com/analytics-vidhya/concept-of-gowers-distance-and-it-s-application-using-python-b08cf6139ac2)) range-normalizes the quantitative variables, one-hot encodes the nominal variables, and ranks the ordinal variables. Then it calculates distances using the Manhattan distance for quantitative and ordinal variables, and the Dice coefficient for nominal variables. 
+The concept of distance is central to clustering. Two observations are similar if the distance between their features is relatively small. To compare feature distances, they should be on a similar scale. There are many ways to define distance (see options in `?dist`), but the two most common are Euclidean, $d = \sqrt{\sum{(x_i - y_i)^2}}$, and binary, 1 minus the proportion of shared features ([Wikipedia](https://en.wikipedia.org/wiki/Jaccard_index), [PSU-505](https://online.stat.psu.edu/stat505/lesson/14/14.3)). If you have a mix a feature types, use the *Gower* distance ([Analytics Vidhya](https://medium.com/analytics-vidhya/concept-of-gowers-distance-and-it-s-application-using-python-b08cf6139ac2)) range-normalizes the quantitative variables, one-hot encodes the nominal variables, and ranks the ordinal variables. Then it calculates distances using the Manhattan distance for quantitative and ordinal variables, and the Dice coefficient for nominal variables. 
 
 Gower's distance is computationally expensive, so you could one-hot encode the data and standardize the variables as $(x - \bar{x}) / sd(x)$ so that each feature has a mean of 0 and standard deviation of 1, like this:
 
@@ -99,7 +107,7 @@ The centroid of cluster $c_i \in C$ is the mean of the cluster observations $S_i
 
 The algorithm will converge to a result, but the result may only be a local optimum. Other random starting centroids may yield a different local optimum. Common practice is to run the k-means algorithm `nstart` times and select the lowest within-cluster sum of squared distances among the cluster members.  A typical number of runs is `nstart = 20`.
 
-#### Choosing K
+#### Choosing K {-}
 
 What is the best number of clusters? You may have a preference in advance, but more likely you will use a *scree plot* or use the *silhouette method*. The scree plot is a plot of the total within-cluster sum of squared distances as a function of *k*. The sum of squares always decreases as *k* increases, but at a declining rate. The optimal *k* is at the "elbow" in the curve - the point at which the curve flattens. `kmeans()` returns an object of class `kmeans`, a list in which one of the components is the model sum of squares `tot.withinss`.  In the scree plot below, the elbow may be *k = 5*.
 
@@ -129,7 +137,7 @@ Run `pam()` again and attach the results to the original table for visualization
 
 ```{r}
 mdl <- pam(dat_2_gwr, k = 6)
-dat_3 <- dat_2 %>% mutate(cluster = mdl$clustering)
+dat_3 <- dat_2 %>% mutate(cluster = as.factor(mdl$clustering))
 ```
 
 Here are the six medoids from our data set.
@@ -196,33 +204,47 @@ ggplotly(g)
 Another common approach is to take summary statistics and draw your own conclusions.
 
 ```{r warning=FALSE, message=FALSE}
-dat_3 %>%
+dat_3[, 2:17] %>%
   group_by(cluster, Attrition) %>%
-  summarise_if(is.numeric, "mean")
+  summarise_if(is.numeric, mean)
+```
+
+
+```{r}
+dat_3 %>%
+  ggplot(aes(x = cluster, y = TotalWorkingYears)) +
+  geom_boxplot() +
+  geom_jitter(data = dat_3, aes(x = cluster, y = TotalWorkingYears, color = Attrition), alpha = 0.2)
+```
+
+```{r}
+km_aov <- aov(MonthlyIncome ~ cluster, data = dat_3)
+anova(km_aov)
+#TukeyHSD(km_aov)
 ```
 
 
 
 ## HCA
 
-Hierarchical clustering (also called hierarchical cluster analysis or HCA) is a method of cluster analysis which builds a hierarchy of clusters.  One usually presents the HCA results in a dendrogram. The HCA process is:
+Hierarchical clustering (also called hierarchical cluster analysis or HCA) is a method of cluster analysis which builds a hierarchy of clusters (usually presented in a dendrogram). The HCA process is:
 
 1. Calculate the distance between each observation with `dist()` or `daisy()`. We did that above when we created `dat_2_gwr`.
 
-2. Cluster the distances with `hclust(dist, method = c("complete", "single", "average", "centroid")`.  `hclust` groups the two closest observations into a cluster, then calculates the cluster's distance to the remaining observations.  If the shortest distance is between two observations, `hclust` defines a second cluster, otherwise `hclust` adds the observation as a new level to the cluster.  The process repeats until all observations belong to a single cluster. The "distance" to a cluster can be defined as:
+2. Cluster the two closest observations into a cluster with `hclust()`. Then calculate the cluster's distance to the remaining observations.  If the shortest distance is between two observations, define a second cluster, otherwise adds the observation as a new level to the cluster. The process repeats until all observations belong to a single cluster. The "distance" to a cluster can be defined as:
 
 * complete: distance to the furthest member of the cluster,
 * single: distance to the closest member of the cluster,
 * average: average distance to all members of the cluster, or
 * centroid: distance between the centroids of each cluster.
 
-Complete and average distances tend to produce more balanced trees and are most common. Pruning an unbalanced tree can result in most observations assigned to one cluster and only a few observations assigned to other clusters.  This is useful for identifying outliers. `hclust()` returns a value of class `hclust`.
+Complete and average distances tend to produce more balanced trees and are most common. Pruning an unbalanced tree can result in most observations assigned to one cluster and only a few observations assigned to other clusters.  This is useful for identifying outliers.
 
 ```{r}
 mdl_hc <- hclust(dat_2_gwr, method = "complete")
 ```
 
-3. Evaluate the `hclust` tree with a dendogram, principal component analysis (PCA), and/or summary statistics. The vertical lines in a dendogram indicate the distance between nodes and their associated cluster. Dendograms are difficult to visualize When the number of features is greater than two. One work-around is to plot just two dimensions at a time.
+3. Evaluate the `hclust` tree with a dendogram, principal component analysis (PCA), and/or summary statistics. The vertical lines in a dendogram indicate the distance between nodes and their associated cluster. Choose the number of clusters to keep by identifying a cut point that creates a reasonable number of clusters with a substantial number of observations per cluster (I know, "reasonable" and "substantial" are squishy terms). Below, cutting at height 0.65 to create 7 clusters seems good.
 
 ```{r warning=FALSE, message=FALSE}
 # Inspect the tree to choose a size.
@@ -230,10 +252,10 @@ plot(color_branches(as.dendrogram(mdl_hc), k = 7))
 abline(h = .65, col = "red")
 ```
 
-4. "Cut" the hierarchical tree into the desired number of clusters (`k`) or height `h` with `cutree(hclust, k = NULL, h = NULL)`.  `cutree()` returns a vector of cluster memberships.  Attach this vector back to the original dataframe for visualization and summary statistics. The dendogram suggests the optimal number of clusters is six.  Build a cluster with `k = 6` means.  Attach the cluster assignment vector back to the original dataframe for visualization and/or summary statistics.
+4. "Cut" the hierarchical tree into the desired number of clusters (`k`) or height `h` with `cutree(hclust, k = NULL, h = NULL)`.  `cutree()` returns a vector of cluster memberships.  Attach this vector back to the original dataframe for visualization and summary statistics.
 
 ```{r}
-dat_2_clstr_hca <- dat_2 %>% mutate(cluster = cutree(mdl_hc, k = 6))
+dat_2_clstr_hca <- dat_2 %>% mutate(cluster = cutree(mdl_hc, k = 7))
 ```
 
 5. Calculate summary statistics and draw conclusions.  Useful summary statistics are typically membership count, and feature averages (or proportions).
@@ -244,7 +266,7 @@ dat_2_clstr_hca %>%
   summarise_if(is.numeric, funs(mean(.)))
 ```
 
-## K-Means vs HCA
+#### K-Means vs HCA
 
 Hierarchical clustering has some advantages over k-means.  It can use any distance method - not just euclidean.  The results are stable - k-means can produce different results each time.  While they can both be evaluated with the silhouette and elbow plots, hierachical clustering can also be evaluated with a dendogram.  But hierarchical clusters has one significant drawback: it is computationally complex compared to k-means.  For this last reason, k-means is more common.
 

@@ -2,6 +2,7 @@
 
 Unsupervised machine learning searches for structure in unlabeled data (data without a response variable).  The goal of unsupervised learning is clustering into homogenous subgroups, and dimensionality reduction.  Examples of cluster analysis are k-means clustering, hierarchical cluster analysis (HCA), and PCA (others [here](https://theappsolutions.com/blog/development/unsupervised-machine-learning/#:~:text=Unsupervised%20learning%20is%20a%20type%20of%20machine%20learning,in%20the%20dataset.%20The%20term%20%E2%80%9Cunsupervised%E2%80%9D%20refers%20to)). 
 
+# Dimensionality Reduction
 
 ## PCA
 
