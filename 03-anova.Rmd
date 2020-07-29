@@ -3,23 +3,13 @@ library(tidyverse)
 library(mfstylr)
 ```
 
-# Experiment Design
+# ANOVA, MANOVA, ANCOVA
 
-These notes are structured from the [PSU STAT 503](https://online.stat.psu.edu/stat503/) course.
-
-## Single Factor
-
-## Blocking
-
-## Nested
-
-## Split Plot
-
-
+These notes are primarily taken from studying [PSU STAT-502](https://online.stat.psu.edu/stat502).
 
 Analysis of variance (ANOVA) is a method to compare mean responses grouped by the levels of an experimental treatment factor. The null hypothesis is $H_0: \mu_1 = \mu_2 = \dots = \mu_k$ for the $k$ levels, and the alternative hypothesis is that at least one treatment level mean differs from the others.
 
-# Background
+## Background
 
 The ANOVA method decomposes the deviation of the $j^{th}$ observation of the $i^{th}$ treatment level around the overall mean $(Y_{ij} - \bar{Y}_{..})$ into the deviation of the factor level mean around the overall mean $(\bar{Y}_{i.} - \bar{Y}_{..})$ plus the deviation of the observation around its factor level mean $(Y_{ij} - \bar{Y}_{i.})$ (aka, the "error" $\epsilon_{ij}$).  
 
@@ -54,7 +44,7 @@ ANOVA returns reliable results if the following conditions hold:
 3. **Equal Variance**.  Each group's variance should be rougly equal (homoscedastic groups).  This condition is especially important when sample sizes differ between groups.   The IQR of the box plot is a good way to visually assess this condition.^[A general rule of thumb for equal variances is to compare the smallest and largest sample standard deviation.  If the ratio of these two sample standard deviations fall within 0.5 to 2, then assume equal variances.  More formal tests include the Bartlett test, and Levene test^[See [Homogeneity of variance].(http://www.cookbook-r.com/Statistical_analysis/Homogeneity_of_variance/) in Cookbook for R])]
 
 
-# Example
+## Example
 
 A study compares the growth of plants using one of three fertilizers as well as a control group using no fertilizer.  Dataset `greeenhouse` contains 6 observations per each of the *k* = 4 treatment levels (*N* = 24).  
 
@@ -133,7 +123,7 @@ Now that the conditions are checked, conduct a post-hoc test to see which groups
 plot(TukeyHSD(greenhouse.aov))
 ```
 
-# Handling Non-Constant Variance
+## Handling Non-Constant Variance
 
 The statistical tests for the model conditions (e.g. Bartlett's test for homogeneity) are often too sensitive. ANOVA is robust to small violations of the conditions.  However, heterogeneity is a common problem in ANOVA.  Tranforming the response variable can often remove the heterogeneity.  Finding the correct transformation can be challenging, but the Box-Cox procedure can help. The MASS::boxcox() function calculates the profile log-likelihoods for a power transformation of the response variable $Y^\lambda$.
 
@@ -224,7 +214,7 @@ $$Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} +  \epsilon_{ijk}$$
 $\alpha_i 
 
 
-## Multiple Variance Comparison F Test
+### Multiple Variance Comparison F Test
 
 
 ### Example
@@ -256,7 +246,7 @@ anova(lm_oxy)
 ```
 
 
-# References
+## References
 
 [PSU STAT502](https://newonlinecourses.science.psu.edu/stat502/node/152/)
 
