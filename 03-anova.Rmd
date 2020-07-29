@@ -1,0 +1,264 @@
+```{r include=FALSE}
+library(tidyverse)
+library(mfstylr)
+```
+
+# Experiment Design
+
+These notes are structured from the [PSU STAT 503](https://online.stat.psu.edu/stat503/) course.
+
+## Single Factor
+
+## Blocking
+
+## Nested
+
+## Split Plot
+
+
+
+Analysis of variance (ANOVA) is a method to compare mean responses grouped by the levels of an experimental treatment factor. The null hypothesis is $H_0: \mu_1 = \mu_2 = \dots = \mu_k$ for the $k$ levels, and the alternative hypothesis is that at least one treatment level mean differs from the others.
+
+# Background
+
+The ANOVA method decomposes the deviation of the $j^{th}$ observation of the $i^{th}$ treatment level around the overall mean $(Y_{ij} - \bar{Y}_{..})$ into the deviation of the factor level mean around the overall mean $(\bar{Y}_{i.} - \bar{Y}_{..})$ plus the deviation of the observation around its factor level mean $(Y_{ij} - \bar{Y}_{i.})$ (aka, the "error" $\epsilon_{ij}$).  
+
+You can express an ANOVA model as an *effects* model or a *means* model.  The effects model equates $Y_{ij}$ to the grand mean $\mu$ plus deviations from the grand mean due to the treatment levels $\tau_i$ plus deviations around the mean of its factor level $\epsilon_{ij}$.
+
+$$Y_{ij} = \mu + \tau_i + \epsilon_{ij}$$
+
+The cell means model equates $Y_{ij}$ to its factor level mean $\mu_i$ plus deviations around its factor level mean $\epsilon_{ij}$.
+
+$$Y_{ij} = \mu_i + \epsilon_{ij}$$
+
+The ratio of the variance between treatments to the variance within treatments
+
+treatment mean square $MS_{Trt}$ to the error mean square $MS_{Err}$ has an $F$ distribution with $k - 1$ numerator degrees of freedom and $N - k$ denominator degrees of freedom.
+
+$$F = \frac{MS_{Trt}}{MS_{Err}} = \frac{SS_{Trt}/(k - 1)}{SS_{Err} / (n - k)}$$
+
+Under $H_0$, both $MS_{Trt}$ and $MS_{Err}$ estimate $\sigma^2$, the variance common to all $k$ populations.  Under the alternative hypothesis, $MS_{Trt}$ estimates $\sigma^2 + \theta$, whereas $MS_{Err}$ still estimates $\sigma^2$.  The larger is $F$, the less likely $H_0$ is true.  Summarize the results in an ANOVA table.  
+
+|SS |	df | MS | F |
+|---|----|----|---|
+|$SS_{Trt} = \sum{n_i(\bar{Y}_{i.} - \bar{Y}_{..})^2}$ | $k - 1$ | $\frac{SS_{Trt}}{k - 1}$ | $\frac{MS_{Trt}}{MS_{Err}}$ |
+|$SS_{Err} = \sum(Y_{ij} - \bar{Y}_{i.})^2$	| $N - k$	| $\frac{SS_{Err}}{N - k}$ | |
+|$SS_{Tot} = \sum(Y_{ij} - \bar{Y}_{..})^2$ | $N - 1$	| | |	
+
+The *F* test does not indicate which populations cause the rejection of $H_0$.  Identify which groups differ from the others with a post-hoc test.  Post-hoc test options include Tukey, Fisher's Least Significant Difference (LSD), Bonferroni, Scheffe, and Dunnett.
+
+ANOVA returns reliable results if the following conditions hold:
+
+1. **Independence**.  The sampled observations must be independent *within* groups. The observations should be from a random sample, or from an experiment using random assignment.  Each group's size, *n*, should be less than 10% of its population size.  The groups must also be independent of each other (non-paired).  A repeated measures experiment design requires a different test.
+2. **Normality**.  Each group's values should be nearly normally distributed.  This condition is especially important with small sample sizes.^[Use a nonparametric statistical method such as the Kruskal-Wallis test when the population distributions are very non-normal.]
+3. **Equal Variance**.  Each group's variance should be rougly equal (homoscedastic groups).  This condition is especially important when sample sizes differ between groups.   The IQR of the box plot is a good way to visually assess this condition.^[A general rule of thumb for equal variances is to compare the smallest and largest sample standard deviation.  If the ratio of these two sample standard deviations fall within 0.5 to 2, then assume equal variances.  More formal tests include the Bartlett test, and Levene test^[See [Homogeneity of variance].(http://www.cookbook-r.com/Statistical_analysis/Homogeneity_of_variance/) in Cookbook for R])]
+
+
+# Example
+
+A study compares the growth of plants using one of three fertilizers as well as a control group using no fertilizer.  Dataset `greeenhouse` contains 6 observations per each of the *k* = 4 treatment levels (*N* = 24).  
+
+The dataset is formatted as a matrix with the four treatment levels as columns with 6 rows of observations.  The first task is to "gather" the dataset into 24 name-value pair observations.
+
+```{r message=FALSE}
+library(readr)
+library(dplyr)
+library(tidyr)  # for gather()
+
+greenhouse <- read_tsv(file = url("https://newonlinecourses.science.psu.edu/stat502/sites/onlinecourses.science.psu.edu.stat502/files/lesson02/lesson1_data/index.txt"))
+greenhouse <- greenhouse %>%
+  gather(key = group, value = growth) %>%
+  mutate(group = factor(group))
+
+glimpse(greenhouse)
+```
+
+The figures below show that all three fertilizers produced more growth than the control group.  Fertilizers `F1` and `F3` appear to be about tied for most growth, but it is unclear if the fertilizers are significantly different from each other.  The barchart includes a one-standard error error bar.  The boxplot may be the better choice for simplicity in generating.^[PSU STATS501 recommends presenting this as a bar chart, but the box plot seems more useful.  Which is more common in literature?]  The boxplot also indicates the variances may differ among the groups.
+
+```{r message=FALSE}
+library(ggplot2)
+library(gridExtra)
+
+p1 <- greenhouse %>%
+  group_by(group) %>%
+  summarize(mean_growth = mean(growth),
+            se = sd(growth) / n()) %>%
+  ggplot(aes(x = group, y = mean_growth)) + 
+  geom_col(fill = "grey") +
+  geom_errorbar(aes(ymin = mean_growth - se, ymax = mean_growth + se, width = .2)) +
+  labs(title = "Greenhouse Experiment",
+       x = "Fertilizer Treatment",
+       y = "Plant Height (cm)") +
+  scale_y_continuous(limits = c(0, 35))
+
+p2<-ggplot(data = greenhouse, aes(x = group, y = growth)) +
+  geom_boxplot() +
+  labs(title = "Greenhouse Experiment",
+       x = "Fertilizer Treatment",
+       y = "Plant Height (cm)") +
+  scale_y_continuous(limits = c(0, 35))
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+Conduct a one-way ANOVA of the $k = 4$ factor levels.  The ANOVA *F*-test indicates the factor levels differ (*F* = 27.5, *p* < 0.001), so reject $H_0$ that the $k = 4$ factor means are identical.
+
+```{r}
+greenhouse.aov <- aov(growth ~ group, data = greenhouse)
+anova(greenhouse.aov)
+```
+
+Before conducting a post-hoc test to determine which factor levels differ, check whether the model conditions hold.  The measurements are *independent* because this is a completely randomized experiment.  The individual populations could be assumed normally distributed if $n_j >= 30$, but $n_j = 6$ for each group, so check for normality.  The QQ plots below appear to be approximately normal.
+
+```{r}
+par(mfrow = c(2, 2))
+split(greenhouse$growth, f = greenhouse$group) %>% sapply(function(x) {qqnorm(x); qqline(x)})
+```
+
+The sample sizes are similar (6 per each of the 4 factor levels), so the equality of sample variances is less critical, but check anyway for demonstration.  A rule of them check is to compare group standard deviations.  None should be more than double the value of any other.  In this case `F1` is more than double `Control`.
+
+```{r}
+greenhouse %>% group_by(group) %>% summarize(sd = sd(growth))
+```
+
+Bartlett's test of homogeneity fails to reject $H_0$ of homogeity (*p* = 0.2494).  
+
+```{r}
+bartlett.test(growth ~ group, data = greenhouse)
+```
+
+Now that the conditions are checked, conduct a post-hoc test to see which groups differ.  Here is the Tukey test.  As expected, all three fertilizer factor levels differ from the control.  `F3` differed from `F2`, but `F1` was not significantly different from either `F2` or `F3`.
+
+```{r}
+plot(TukeyHSD(greenhouse.aov))
+```
+
+# Handling Non-Constant Variance
+
+The statistical tests for the model conditions (e.g. Bartlett's test for homogeneity) are often too sensitive. ANOVA is robust to small violations of the conditions.  However, heterogeneity is a common problem in ANOVA.  Tranforming the response variable can often remove the heterogeneity.  Finding the correct transformation can be challenging, but the Box-Cox procedure can help. The MASS::boxcox() function calculates the profile log-likelihoods for a power transformation of the response variable $Y^\lambda$.
+
+|$\lambda$ | $Y^\lambda$ | Transformation |
+|---|---|---|
+|2 | $Y^2$ | Square |
+|1 | $Y^1$ | (no transformation) |
+|.5 | $Y^{.5}$ | Square Root |
+|0 | $\ln(Y)$ | Log |
+|-.5 | $Y^{-.5}$ | Inverse Square Root |
+|-1 | $Y^{-1}$ | Inverse|
+
+The Box-Cox procedure does not recommend any particular transformation of the data in this case.
+
+```{r message=FALSE}
+library(MASS)
+boxcox(greenhouse.aov, plotit = TRUE)
+```
+
+
+### Example
+*In a completely randomized design experiment, 20 young pigs are assigned at random among 4 experimental groups, and each group is fed a different diet. The response variable is the pig's weight in kg after consuming the diet for 10 months.  Are the mean pig weights the same for all 4 diets?*
+
+```{r}
+pig <- read.delim(file = "Data/pig_weight.txt", header = TRUE, sep = ",")
+pig <- pig %>%
+  gather(key = diet, value = weight) %>%
+  mutate(diet = factor(diet))
+
+glimpse(pig)
+
+ggplot(data = pig, aes(x = diet, y = weight)) +
+  geom_boxplot()
+```
+
+The measurements are independent because this is a completely randomized experiment.  The individual populations could be assumed normally distributed if $n >= 30$, but $n = 20$, so we need to check for normality.  The sample sizes are similar (5 per each of the 4 factor levels), so the equality of sample variances is less critical, but we can check anyway.
+
+First a check of the normality condition.  Test for normality by starting with the assumption that the distribution are normal, $H_0: normal$, then falsifying the assumption if sufficient evidence exists.  In these normal Q-Q plots, look for substantial deviations from a straight line.  These plots looks good.
+```{r}
+layout(rbind(c(1, 2), c(3, 4)))
+qqnorm(pig[pig$diet == "Feed.1",]$weight)
+qqline(pig[pig$diet == "Feed.1",]$weight)
+qqnorm(pig[pig$diet == "Feed.2",]$weight)
+qqline(pig[pig$diet == "Feed.2",]$weight)
+qqnorm(pig[pig$diet == "Feed.3",]$weight)
+qqline(pig[pig$diet == "Feed.3",]$weight)
+qqnorm(pig[pig$diet == "Feed.4",]$weight)
+qqline(pig[pig$diet == "Feed.4",]$weight)
+```
+
+There are statistical tests for that provide a quantitative evaluation, but the sample sizes are two small for them to be useful.
+
+Now check for equal variances with Bartlett's test of homogeneity of variances.  The p-value is >>.05, so do not reject $H_0$ of equal variances.
+```{r}
+bartlett.test(weight ~ diet, data = pig)
+```
+
+Now we are ready for the one-way ANOVA test.  The null hypothesis is that all means are equal.  The p-value is <.0001, so we reject $H_0$.
+```{r}
+summary(pig.aov <- aov(weight ~ diet, data = pig))
+```
+
+Perform a post-hoc test to see which of the groups differ.  Here we use Tukey's test.  All pairs differed from each other.
+```{r}
+TukeyHSD(pig.aov)
+plot(TukeyHSD(pig.aov))
+```
+
+
+
+
+
+
+
+
+
+In a multi-factor experiment each level of m
+Multi-factor ANOVA (MANOVA) is a method to compare mean responses by treatment factor level of two or more treatments applied in combination. The null hypotheses are $H_0: \mu_{1.} = \mu_{2.} = \dots = \mu_{a.}$ for the $a$ levels of factor 1, $H_0: \mu_{.1} = \mu_{.2} = \dots = \mu_{.b}$ for the $b$ levels of factor 2, etc. for all the factors in the experiment, and $H_0: $ no interaction for all the factor interactions.
+
+There are two equivalent ways to state the MANOVA model:
+
+$$Y_{ijk} = \mu_{ij} + \epsilon_{ijk}$$
+
+In this notation $Y_{ijk}$ refers to the $k^{th}$ observation in the $j^{th}$ level of factor two and the $i^{th}$ level of factor 1.  Potentially there could be additional factors.  This model formulation decomposes the response into a cell mean and an error term.  The second makes the factor effect more explicit and is thus more common:
+
+$$Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} +  \epsilon_{ijk}$$
+
+$\alpha_i 
+
+
+## Multiple Variance Comparison F Test
+
+
+### Example
+*A study investigates the relationship between oxygen update and two explanatory variables: smoking, and type of stress test.  A sample of* $n = 27$ *persons, 9 non-smoking, 9 moderately-smoking, and 9 heavy-smoking are divided into three stress tests, bicycle, treadmill, and steps and their oxygen uptake was measured.  Is oxygen uptake related to smoking status and type of stress test?  Is there an interaction effect between smoking status and type of stress test?*
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2)
+library(nortest)  # for Anderson-Darling test
+library(stats)  # for anova
+
+smoker <- c(1, 1, 1, 1, 1, 1, 1, 1, 1, 
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 
+            3, 3, 3, 3, 3, 3, 3, 3, 3)
+stress <- c(1, 1, 1, 2, 2, 2, 3, 3, 3,
+            1, 1, 1, 2, 2, 2, 3, 3, 3,
+            1, 1, 1, 2, 2, 2, 3, 3, 3)
+oxytime <- c(12.8, 13.5, 11.2, 16.2, 18.1, 17.8, 22.6, 19.3, 18.9,
+             10.9, 11.1, 9.8, 15.5, 13.8, 16.2, 20.1, 21.0, 15.9,
+             8.7, 9.2, 7.5, 14.7, 13.2, 8.1, 16.2, 16.1, 17.8)
+oxy <- data.frame(oxytime, smoker, stress)
+oxy$smoker <- ordered(oxy$smoker,
+                      levels = c(1, 2, 3),
+                      labels = c("non-smoker", "moderate", "heavy"))
+oxy$stress <- factor(oxy$stress,
+                     labels = c("bicycle", "treadmill", "steps"))
+
+lm_oxy <- lm(oxytime~smoker+stress+smoker*stress, data = oxy)
+anova(lm_oxy)
+```
+
+
+# References
+
+[PSU STAT502](https://newonlinecourses.science.psu.edu/stat502/node/152/)
+
+[SFU BIO710](http://online.sfsu.edu/efc/classes/biol710/manova/MANOVAnewest.pdf)
+
