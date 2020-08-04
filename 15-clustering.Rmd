@@ -1,8 +1,8 @@
 # Cluster Analysis
 
-These notes are primarily taken from studying DataCamp courses [Cluster Analysis in R](https://www.datacamp.com/courses/cluster-analysis-in-r) and [Unsupervised Learning in R](https://campus.datacamp.com/courses/unsupervised-learning-in-r),  [AIHR](https://www.analyticsinhr.com/blog/people-analytics-r-clustering), UC Business Analytics R Programming Guide for [K-Means](https://uc-r.github.io/kmeans_clustering) and [HCA](https://uc-r.github.io/hc_clustering), and [PSU STAT-505](https://online.stat.psu.edu/stat505). 
+These notes are primarily taken from studying DataCamp courses [Cluster Analysis in R](https://www.datacamp.com/courses/cluster-analysis-in-r) and [Unsupervised Learning in R](https://campus.datacamp.com/courses/unsupervised-learning-in-r),  [AIHR](https://www.analyticsinhr.com/blog/people-analytics-r-clustering), [UC Business Analytics R Programming Guide](https://uc-r.github.io/kmeans_clustering), and [PSU STAT-505](https://online.stat.psu.edu/stat505). 
 
-Cluster analysis is a data mining tool for dividing features into clusters, distinct populations with no a priori defining characteristics. The goal is to describe those populations with the observed data. Popular uses of clustering are audience segmentation, creating personas, detecting anomalies, and pattern recognition in images.
+Cluster analysis is a data exploration (mining) tool for dividing features into clusters, distinct populations with no a priori defining characteristics. The goal is to describe those populations with the observed data. Popular uses of clustering are audience segmentation, creating personas, detecting anomalies, and pattern recognition in images.
 
 There are two common approaches to cluster analysis.
 
