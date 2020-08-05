@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-08-04" />
+<meta name="date" content="2020-08-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -335,6 +335,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[K(x, x&#39;) = (\gamma \langle x, x&#39; \rangle + c_0)^d\]</span></p>
 <p>or radial</p>
 <p><span class="math display">\[K(x, x&#39;) = \exp\{-\gamma ||x - x&#39;||^2\}.\]</span></p>
+<div id="section" class="section level5 unnumbered">
+<h5></h5>
+<p>The support vector classifier is usually defined by dropping the <span class="math inline">\(||\beta|| = 1\)</span> constraint, and defining <span class="math inline">\(M = 1 / ||\beta||\)</span>. The optimization problem then becomes</p>
+<p><span class="math display">\[
+ \min ||\beta|| \hspace{2mm} s.t. \hspace{2mm}  
+  \begin{cases} 
+   y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i &amp;  \\
+   \xi_i \ge 0, \hspace{2mm} \sum \xi_i \le \Xi.      
+  \end{cases}
+\]</span></p>
+<p>This is a quadratic equation with linear inequality constraints, so it is a convex optimization problem which can be solved using Lagrange multipliers. Re-express the optimization problem as</p>
+<p><span class="math display">\[
+\min_{\beta_0, \beta} \frac{1}{2}||\beta||^2 = C\sum_{i = 1}^N \xi_i \\
+s.t. \xi_i \ge 0, \hspace{2mm} y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i
+\]</span></p>
+<p>where the “cost” parameter <span class="math inline">\(C\)</span> replaces the constant and penalizes large residuals. This optimization problem is equivalent to <em>another</em> optimization problem, the familiar <em>loss + penalty</em> formulation:</p>
+<p><span class="math display">\[\min_{\beta_0, \beta} \sum_{i=1}^N{[1 - y_if(x_i)]_+} + \frac{\lambda}{2} ||\beta||^2 \]</span></p>
+<p>where <span class="math inline">\(\lambda = 1 / C\)</span> and <span class="math inline">\([1 - y_if(x_i)]_+\)</span> is a “hinge” loss function with <span class="math inline">\(f(x_i) = sign[Pr(Y = +1|x) - 1 / 2]\)</span>.<br />
+The parameter estimates can be written as functions of a set of unknown parameters <span class="math inline">\((\alpha_i)\)</span> and data points. The solution to the optimization problem requires only the inner products of the observations, represented as <span class="math inline">\(\langle x_i, x_j \rangle\)</span>,</p>
+<p><span class="math display">\[f(x) = \beta_0 + \sum_{i = 1}^n {\alpha_i \langle x, x_i \rangle}\]</span>
+The solution has the interesting property that only observations on or within the margin affect the hyperplane. These observations are known as support vectors. As the constant increases, the number of violating observations increase, and thus the number of support vectors increases. This property makes the algorithm robust to the extreme observations far away from the hyperplane.</p>
+<p>The parameter estimators for <span class="math inline">\(\alpha_i\)</span> are nonzero only for the support vectors in the solution—that is, if a training observation is not a support vector, then its <span class="math inline">\(\alpha_i\)</span> equals zero.</p>
+<p>The only shortcoming with the algorithm is that it presumes a linear decision boundary.</p>
+</div>
 </div>
             </section>
 

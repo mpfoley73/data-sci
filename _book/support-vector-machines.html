@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-08-04" />
+<meta name="date" content="2020-08-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -329,7 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 9</span> Support Vector Machines</h1>
 <p>These notes rely on <span class="citation">(James et al. <a href="#ref-James2013" role="doc-biblioref">2013</a>)</span>, <span class="citation">(Hastie, Tibshirani, and Friedman <a href="#ref-Hastie2017" role="doc-biblioref">2017</a>)</span>, <span class="citation">(Kuhn and Johnson <a href="#ref-Kuhn2016" role="doc-biblioref">2016</a>)</span>, <a href="https://online.stat.psu.edu/stat508/">PSU STAT 508</a>, and the <a href="https://cran.r-project.org/web/packages/e1071/vignettes/svmdoc.pdf">e1071 SVM vignette</a>.</p>
 <p>Support Vector Machines (SVM) is a classification model that maps observations as points in space so that the categories are divided by as wide a gap as possible. New observations can then be mapped into the space for prediction. The SVM algorithm finds the optimal separating hyperplane using a nonlinear mapping to a sufficiently high dimension. The hyperplane is defined by the observations that lie within a margin optimized by a cost hyperparameter. These observations are called the <em>support vectors</em>.</p>
-<p>SVM is an extension of the <em>support vector classifier</em> which in turn is a generalization of the simple and intuitive <em>maximal margin classifier</em>. The best way to understand the SVM is to start with the maximal margin classifier and work up.</p>
+<p>SVM is an extension of the <em>support vector classifier</em> which in turn is a generalization of the simple and intuitive <em>maximal margin classifier</em>. The maximal margin classifier is defined for cases where the data can be separated by a linear boundary (uncommon). The support vector classifier generalizes the maximal margin classifier by introducing a margin around that hyperplane which permits some observations to land on wrong side of the hyperplane. The support vector machine generalizes still more by introducing non-linear hyperplanes. The best way to understand the SVM is to start with the maximal margin classifier and work up.</p>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">

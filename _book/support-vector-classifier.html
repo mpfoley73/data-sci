@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-08-04" />
+<meta name="date" content="2020-08-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -327,30 +327,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="support-vector-classifier" class="section level2">
 <h2><span class="header-section-number">9.2</span> Support Vector Classifier</h2>
-<p>The maximal margin classifier can be generalized to non-separable cases using a so-called <em>soft margin</em>. The generalization is called the <em>support vector classifier</em>. The soft margin allows some misclassification in the interest of greater robustness to individual observations. The support vector classifier optimizes</p>
-<p><span class="math display">\[y_i (x_i^{&#39;} \beta + \beta_0) \ge M(1 - \xi_i)\]</span></p>
-<p>where the <span class="math inline">\(\xi_i\)</span> are positive <em>slack variables</em> whose sum is bounded by some constant tuning parameter <span class="math inline">\(\sum{\xi_i} \le \Xi\)</span>. The slack variable values indicate where the observation lies: <span class="math inline">\(\xi_i = 0\)</span> observations lie on the correct side of the margin; <span class="math inline">\(\xi_i &gt; 0\)</span> observation lie on the wrong side of the margin; <span class="math inline">\(\xi_i &gt; 1\)</span> observations lie on the wrong side of the hyperplane. <span class="math inline">\(\Xi\)</span> sets the tolerance for margin violation. If <span class="math inline">\(\Xi = 0\)</span>, then all observations must reside on the correct side of the margin, as in the maximal margin classifier. <span class="math inline">\(\Xi\)</span> controls the bias-variance trade-off: as <span class="math inline">\(\Xi\)</span> increases, the margin widens and allows more violations, increasing bias and decreasing variance.</p>
-<p>The support vector classifier is usually defined by dropping the <span class="math inline">\(||\beta|| = 1\)</span> constraint, and defining <span class="math inline">\(M = 1 / ||\beta||\)</span>. The optimization problem then becomes</p>
-<p><span class="math display">\[
- \min ||\beta|| \hspace{2mm} s.t. \hspace{2mm}  
-  \begin{cases} 
-   y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i &amp;  \\
-   \xi_i \ge 0, \hspace{2mm} \sum \xi_i \le \Xi.      
-  \end{cases}
-\]</span></p>
-<p>This is a quadratic equation with linear inequality constraints, so it is a convex optimization problem which can be solved using Lagrange multipliers. Re-express the optimization problem as</p>
-<p><span class="math display">\[
-\min_{\beta_0, \beta} \frac{1}{2}||\beta||^2 = C\sum_{i = 1}^N \xi_i \\
-s.t. \xi_i \ge 0, \hspace{2mm} y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i
-\]</span></p>
-<p>where the “cost” parameter <span class="math inline">\(C\)</span> replaces the constant and penalizes large residuals. This optimization problem is equivalent to <em>another</em> optimization problem, the familiar <em>loss + penalty</em> formulation:</p>
-<p><span class="math display">\[\min_{\beta_0, \beta} \sum_{i=1}^N{[1 - y_if(x_i)]_+} + \frac{\lambda}{2} ||\beta||^2 \]</span></p>
-<p>where <span class="math inline">\(\lambda = 1 / C\)</span> and <span class="math inline">\([1 - y_if(x_i)]_+\)</span> is a “hinge” loss function with <span class="math inline">\(f(x_i) = sign[Pr(Y = +1|x) - 1 / 2]\)</span>.<br />
-The parameter estimates can be written as functions of a set of unknown parameters <span class="math inline">\((\alpha_i)\)</span> and data points. The solution to the optimization problem requires only the inner products of the observations, represented as <span class="math inline">\(\langle x_i, x_j \rangle\)</span>,</p>
-<p><span class="math display">\[f(x) = \beta_0 + \sum_{i = 1}^n {\alpha_i \langle x, x_i \rangle}\]</span>
-The solution has the interesting property that only observations on or within the margin affect the hyperplane. These observations are known as support vectors. As the constant increases, the number of violating observations increase, and thus the number of support vectors increases. This property makes the algorithm robust to the extreme observations far away from the hyperplane.</p>
-<p>The parameter estimators for <span class="math inline">\(\alpha_i\)</span> are nonzero only for the support vectors in the solution—that is, if a training observation is not a support vector, then its <span class="math inline">\(\alpha_i\)</span> equals zero.</p>
-<p>The only shortcoming with the algorithm is that it presumes a linear decision boundary.</p>
+<p>The maximal margin classifier can be generalized to non-separable cases using a so-called <em>soft margin</em>. The generalization is called the <em>support vector classifier</em>. The soft margin allows some misclassification in the interest of greater robustness to individual observations.</p>
+<p>The support vector classifier maximizes <span class="math inline">\(M\)</span> subject to <span class="math inline">\(||\beta|| = 1\)</span> and <span class="math inline">\(y_i (x_i^{&#39;} \beta + \beta_0) \ge M(1 - \xi_i)\)</span> and <span class="math inline">\(\sum \xi_i \le \Xi\)</span> for all <span class="math inline">\(i\)</span>. The <span class="math inline">\(\xi_i\)</span> are <em>slack variables</em> whose sum is bounded by some constant tuning parameter <span class="math inline">\(\Xi\)</span>. The slack variable values indicate where the observation lies: <span class="math inline">\(\xi_i = 0\)</span> observations lie on the correct side of the margin; <span class="math inline">\(\xi_i &gt; 0\)</span> observation lie on the wrong side of the margin; <span class="math inline">\(\xi_i &gt; 1\)</span> observations lie on the wrong side of the hyperplane. <span class="math inline">\(\Xi\)</span> sets the tolerance for margin violation. If <span class="math inline">\(\Xi = 0\)</span>, then all observations must reside on the correct side of the margin, as in the maximal margin classifier. <span class="math inline">\(\Xi\)</span> controls the bias-variance trade-off: as <span class="math inline">\(\Xi\)</span> increases, the margin widens and allows more violations, increasing bias and decreasing variance. Similar to the maximal margin classifier, only the observations that are on the margin or that violate the margin factor into the determination of the support vector classifier. These observations are the support vectors.</p>
+<p>The figure below (figure 9.7 from <span class="citation">(James et al. <a href="#ref-James2013" role="doc-biblioref">2013</a>)</span>) shows two support vector classifiers. The one on the left uses a large <span class="math inline">\(\Xi\)</span> and as a result includes many support vectors. The one on the right uses a smaller <span class="math inline">\(\Xi.\)</span></p>
+<div class="figure">
+<img src="images/svm_svc.png" alt="" />
+<p class="caption">FIGURE 9.7 from An Introduction to Statistical Learning</p>
+</div>
+<p>As <span class="math inline">\(\Xi\)</span> increases, the number of violating observations increase, and thus the number of support vectors increases. This property makes the algorithm robust to the extreme observations far away from the hyperplane. The only shortcoming with the algorithm is that it presumes a linear decision boundary.</p>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-James2013">
+<p>James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning: With Applications in R</em>. 1st ed. New York, NY: Springer. <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/book.html">http://faculty.marshall.usc.edu/gareth-james/ISL/book.html</a>.</p>
+</div>
 </div>
             </section>
 
