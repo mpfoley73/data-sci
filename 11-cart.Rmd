@@ -10,6 +10,8 @@ scoreboard <- function(dat){
 
 # Decision Trees
 
+These notes rely on [PSU STAT 508](https://online.stat.psu.edu/stat508/).
+
 Decision trees, also known as classification and regression tree (CART) models, are tree-based methods for supervised machine learning.  Simple classification trees and regression trees are easy to use and interpret, but are not competitive with the best machine learning methods. However, they form the foundation for ensemble models such as bagged trees, random forests, and boosted trees, which although less interpretable, are very accurate.
 
 CART models segment the predictor space into $K$ non-overlapping terminal nodes (leaves).  Each node is described by a set of rules which can be used to predict new responses. The predicted value $\hat{y}$ for each node is the mode (classification) or mean (regression).

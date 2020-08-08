@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>10.2 Support Vector Classifier | My Data Science Notes</title>
+  <title>9.2 Support Vector Classifier | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="10.2 Support Vector Classifier | My Data Science Notes" />
+  <meta property="og:title" content="9.2 Support Vector Classifier | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="10.2 Support Vector Classifier | My Data Science Notes" />
+  <meta name="twitter:title" content="9.2 Support Vector Classifier | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-07-26" />
+<meta name="date" content="2020-08-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,15 +51,6 @@
 
 
 <script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="assets/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
-<script src="assets/tabwid-1.0.0/tabwid.js"></script>
-<script src="assets/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="assets/plotly-binding-4.9.2.1/plotly.js"></script>
-<script src="assets/typedarray-0.1/typedarray.min.js"></script>
-<link href="assets/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="assets/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
-<link href="assets/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="assets/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -185,119 +176,122 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>2.5.1</b> Correlation</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>3</b> Experiment Design</a><ul>
-<li class="chapter" data-level="3.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>3.1</b> Single Factor</a></li>
-<li class="chapter" data-level="3.2" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3.2</b> Blocking</a></li>
-<li class="chapter" data-level="3.3" data-path="nested.html"><a href="nested.html"><i class="fa fa-check"></i><b>3.3</b> Nested</a></li>
-<li class="chapter" data-level="3.4" data-path="split-plot.html"><a href="split-plot.html"><i class="fa fa-check"></i><b>3.4</b> Split Plot</a></li>
+<li class="chapter" data-level="3" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html"><i class="fa fa-check"></i><b>3</b> ANOVA, MANOVA, ANCOVA</a><ul>
+<li class="chapter" data-level="3.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>3.1</b> Background</a></li>
+<li class="chapter" data-level="3.2" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>3.2</b> Example</a></li>
+<li class="chapter" data-level="3.3" data-path="handling-non-constant-variance.html"><a href="handling-non-constant-variance.html"><i class="fa fa-check"></i><b>3.3</b> Handling Non-Constant Variance</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="cont-dist.html"><a href="cont-dist.html#example-1"><i class="fa fa-check"></i><b>3.3.1</b> Example</a></li>
+<li class="chapter" data-level="3.3.2" data-path="handling-non-constant-variance.html"><a href="handling-non-constant-variance.html#multiple-variance-comparison-f-test"><i class="fa fa-check"></i><b>3.3.2</b> Multiple Variance Comparison F Test</a></li>
+<li class="chapter" data-level="3.3.3" data-path="cont-dist.html"><a href="cont-dist.html#example-2"><i class="fa fa-check"></i><b>3.3.3</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a></li>
-<li class="chapter" data-level="4" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>4</b> Ordinary Least Squares</a><ul>
-<li class="chapter" data-level="4.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>4.1</b> Linear Regression Model</a></li>
-<li class="chapter" data-level="4.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>4.2</b> Parameter Estimation</a></li>
-<li class="chapter" data-level="4.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>4.3</b> Model Assumptions</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>4.3.1</b> Linearity</a></li>
-<li class="chapter" data-level="4.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>4.3.2</b> Multicollinearity</a></li>
-<li class="chapter" data-level="4.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>4.3.3</b> Normality</a></li>
-<li class="chapter" data-level="4.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>4.3.4</b> Equal Variances</a></li>
+<li class="chapter" data-level="3.4" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>3.4</b> References</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>4.4</b> Prediction</a></li>
-<li class="chapter" data-level="4.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>4.5</b> Inference</a><ul>
-<li class="chapter" data-level="4.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>4.5.1</b> <em>t</em>-Test</a></li>
-<li class="chapter" data-level="4.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>4.5.2</b> <em>F</em>-Test</a></li>
+<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a><ul>
+<li class="chapter" data-level="3.5" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>3.5</b> Linear Regression Model</a></li>
+<li class="chapter" data-level="3.6" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>3.6</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="3.7" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>3.7</b> Model Assumptions</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>3.7.1</b> Linearity</a></li>
+<li class="chapter" data-level="3.7.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>3.7.2</b> Multicollinearity</a></li>
+<li class="chapter" data-level="3.7.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>3.7.3</b> Normality</a></li>
+<li class="chapter" data-level="3.7.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>3.7.4</b> Equal Variances</a></li>
 </ul></li>
-<li class="chapter" data-level="4.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>4.6</b> Interpretation</a></li>
-<li class="chapter" data-level="4.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>4.7</b> Model Validation</a><ul>
-<li class="chapter" data-level="4.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>4.7.1</b> Accuracy Metrics</a></li>
-<li class="chapter" data-level="4.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>4.7.2</b> Cross-Validation</a></li>
-<li class="chapter" data-level="4.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>4.7.3</b> Gain Curve</a></li>
+<li class="chapter" data-level="3.8" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>3.8</b> Prediction</a></li>
+<li class="chapter" data-level="3.9" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>3.9</b> Inference</a><ul>
+<li class="chapter" data-level="3.9.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>3.9.1</b> <em>t</em>-Test</a></li>
+<li class="chapter" data-level="3.9.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>3.9.2</b> <em>F</em>-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="4.8" data-path="ols-reference.html"><a href="ols-reference.html"><i class="fa fa-check"></i><b>4.8</b> OLS Reference</a></li>
+<li class="chapter" data-level="3.10" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>3.10</b> Interpretation</a></li>
+<li class="chapter" data-level="3.11" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>3.11</b> Model Validation</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>3.11.1</b> Accuracy Metrics</a></li>
+<li class="chapter" data-level="3.11.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>3.11.2</b> Cross-Validation</a></li>
+<li class="chapter" data-level="3.11.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>3.11.3</b> Gain Curve</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>5</b> Generalized Linear Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>5.1</b> Logistic Regression</a></li>
-<li class="chapter" data-level="5.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>5.2</b> Multinomial Logistic Regression</a></li>
-<li class="chapter" data-level="5.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>5.3</b> Ordinal Logistic Regression</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>5.3.1</b> Assumptions</a></li>
-<li class="chapter" data-level="5.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>5.3.2</b> Modeling</a></li>
-<li class="chapter" data-level="5.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>5.3.3</b> Case Study</a></li>
+<li class="chapter" data-level="3.12" data-path="ols-reference.html"><a href="ols-reference.html"><i class="fa fa-check"></i><b>3.12</b> OLS Reference</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>5.4</b> Poisson Regression</a></li>
+<li class="chapter" data-level="4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>4</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="4.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>4.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="4.2" data-path="multinomial-logistic-regression.html"><a href="multinomial-logistic-regression.html"><i class="fa fa-check"></i><b>4.2</b> Multinomial Logistic Regression</a></li>
+<li class="chapter" data-level="4.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html"><i class="fa fa-check"></i><b>4.3</b> Ordinal Logistic Regression</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>4.3.1</b> Assumptions</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#modeling"><i class="fa fa-check"></i><b>4.3.2</b> Modeling</a></li>
+<li class="chapter" data-level="4.3.3" data-path="ordinal-logistic-regression.html"><a href="ordinal-logistic-regression.html#case-study"><i class="fa fa-check"></i><b>4.3.3</b> Case Study</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html"><i class="fa fa-check"></i><b>6</b> Multivariate Statistical Analysis</a><ul>
-<li class="chapter" data-level="6.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>6.1</b> Background</a></li>
-<li class="chapter" data-level="6.2" data-path="manova.html"><a href="manova.html"><i class="fa fa-check"></i><b>6.2</b> MANOVA</a></li>
-<li class="chapter" data-level="6.3" data-path="repeated-measures.html"><a href="repeated-measures.html"><i class="fa fa-check"></i><b>6.3</b> Repeated Measures</a></li>
-<li class="chapter" data-level="6.4" data-path="lda.html"><a href="lda.html"><i class="fa fa-check"></i><b>6.4</b> LDA</a></li>
+<li class="chapter" data-level="4.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>4.4</b> Poisson Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>7</b> Regularization</a><ul>
-<li class="chapter" data-level="7.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>7.1</b> Ridge</a></li>
-<li class="chapter" data-level="7.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>7.2</b> Lasso</a></li>
-<li class="chapter" data-level="7.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>7.3</b> Elastic Net</a></li>
+<li class="chapter" data-level="5" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate Statistical Analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="background.html"><a href="background.html#background"><i class="fa fa-check"></i><b>5.1</b> Background</a></li>
+<li class="chapter" data-level="5.2" data-path="manova.html"><a href="manova.html"><i class="fa fa-check"></i><b>5.2</b> MANOVA</a></li>
+<li class="chapter" data-level="5.3" data-path="repeated-measures.html"><a href="repeated-measures.html"><i class="fa fa-check"></i><b>5.3</b> Repeated Measures</a></li>
+<li class="chapter" data-level="5.4" data-path="lda.html"><a href="lda.html"><i class="fa fa-check"></i><b>5.4</b> LDA</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>6</b> Regularization</a><ul>
+<li class="chapter" data-level="6.1" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>6.1</b> Ridge</a></li>
+<li class="chapter" data-level="6.2" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>6.2</b> Lasso</a></li>
+<li class="chapter" data-level="6.3" data-path="elastic-net.html"><a href="elastic-net.html"><i class="fa fa-check"></i><b>6.3</b> Elastic Net</a></li>
 <li class="chapter" data-level="" data-path="model-summary.html"><a href="model-summary.html"><i class="fa fa-check"></i>Model Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>8</b> Decision Trees</a><ul>
-<li class="chapter" data-level="8.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>8.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>8.1.1</b> Measuring Performance</a></li>
-<li class="chapter" data-level="8.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>8.1.2</b> Training with Caret</a></li>
+<li class="chapter" data-level="7" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>7</b> Decision Trees</a><ul>
+<li class="chapter" data-level="7.1" data-path="classification-tree.html"><a href="classification-tree.html"><i class="fa fa-check"></i><b>7.1</b> Classification Tree</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="classification-tree.html"><a href="classification-tree.html#measuring-performance"><i class="fa fa-check"></i><b>7.1.1</b> Measuring Performance</a></li>
+<li class="chapter" data-level="7.1.2" data-path="classification-tree.html"><a href="classification-tree.html#training-with-caret"><i class="fa fa-check"></i><b>7.1.2</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>8.2</b> Regression Tree</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>8.2.1</b> Training with Caret</a></li>
+<li class="chapter" data-level="7.2" data-path="regression-tree.html"><a href="regression-tree.html"><i class="fa fa-check"></i><b>7.2</b> Regression Tree</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="regression-tree.html"><a href="regression-tree.html#training-with-caret-1"><i class="fa fa-check"></i><b>7.2.1</b> Training with Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>8.3</b> Bagged Trees</a><ul>
-<li class="chapter" data-level="8.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>8.3.1</b> Bagged Classification Tree</a></li>
-<li class="chapter" data-level="8.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>8.3.2</b> Bagging Regression Tree</a></li>
+<li class="chapter" data-level="7.3" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>7.3</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>7.3.1</b> Bagged Classification Tree</a></li>
+<li class="chapter" data-level="7.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>7.3.2</b> Bagging Regression Tree</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>8.4</b> Random Forests</a></li>
-<li class="chapter" data-level="8.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>8.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="8.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>8.6</b> Summary</a><ul>
-<li class="chapter" data-level="8.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>8.6.1</b> Classification Trees</a></li>
-<li class="chapter" data-level="8.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>8.6.2</b> Regression Trees</a></li>
+<li class="chapter" data-level="7.4" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>7.4</b> Random Forests</a></li>
+<li class="chapter" data-level="7.5" data-path="gradient-boosting.html"><a href="gradient-boosting.html"><i class="fa fa-check"></i><b>7.5</b> Gradient Boosting</a></li>
+<li class="chapter" data-level="7.6" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>7.6</b> Summary</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="summary.html"><a href="summary.html#classification-trees"><i class="fa fa-check"></i><b>7.6.1</b> Classification Trees</a></li>
+<li class="chapter" data-level="7.6.2" data-path="summary.html"><a href="summary.html#regression-trees"><i class="fa fa-check"></i><b>7.6.2</b> Regression Trees</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>9</b> Non-linear Models</a><ul>
-<li class="chapter" data-level="9.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>9.1</b> Splines</a></li>
-<li class="chapter" data-level="9.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>9.2</b> MARS</a></li>
-<li class="chapter" data-level="9.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>9.3</b> GAM</a></li>
+<li class="chapter" data-level="8" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>8</b> Non-linear Models</a><ul>
+<li class="chapter" data-level="8.1" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>8.1</b> Splines</a></li>
+<li class="chapter" data-level="8.2" data-path="mars.html"><a href="mars.html"><i class="fa fa-check"></i><b>8.2</b> MARS</a></li>
+<li class="chapter" data-level="8.3" data-path="gam.html"><a href="gam.html"><i class="fa fa-check"></i><b>8.3</b> GAM</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>10</b> Support Vector Machines</a><ul>
-<li class="chapter" data-level="10.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>10.1</b> Maximal Margin Classifier</a></li>
-<li class="chapter" data-level="10.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>10.2</b> Support Vector Classifier</a></li>
-<li class="chapter" data-level="10.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>10.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="10.4" data-path="my-svm-example.html"><a href="my-svm-example.html"><i class="fa fa-check"></i><b>10.4</b> My svm Example</a></li>
-<li class="chapter" data-level="10.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>10.5</b> Using Caret</a></li>
+<li class="chapter" data-level="9" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>9</b> Support Vector Machines</a><ul>
+<li class="chapter" data-level="9.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>9.1</b> Maximal Margin Classifier</a></li>
+<li class="chapter" data-level="9.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>9.2</b> Support Vector Classifier</a></li>
+<li class="chapter" data-level="9.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>9.3</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="9.4" data-path="my-svm-example.html"><a href="my-svm-example.html"><i class="fa fa-check"></i><b>9.4</b> My svm Example</a></li>
+<li class="chapter" data-level="9.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>9.5</b> Using Caret</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-3-unupervised-machine-learning.html"><a href="part-3-unupervised-machine-learning.html"><i class="fa fa-check"></i>PART 3: Unupervised Machine Learning</a></li>
-<li class="chapter" data-level="11" data-path="dimensionality-reduction.html"><a href="dimensionality-reduction.html"><i class="fa fa-check"></i><b>11</b> Dimensionality Reduction</a><ul>
-<li class="chapter" data-level="11.1" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>11.1</b> PCA</a></li>
-<li class="chapter" data-level="11.2" data-path="t-sne.html"><a href="t-sne.html"><i class="fa fa-check"></i><b>11.2</b> t-SNE</a></li>
-<li class="chapter" data-level="11.3" data-path="svd.html"><a href="svd.html"><i class="fa fa-check"></i><b>11.3</b> SVD</a></li>
+<li class="chapter" data-level="10" data-path="dimensionality-reduction.html"><a href="dimensionality-reduction.html"><i class="fa fa-check"></i><b>10</b> Dimensionality Reduction</a><ul>
+<li class="chapter" data-level="10.1" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>10.1</b> PCA</a></li>
+<li class="chapter" data-level="10.2" data-path="t-sne.html"><a href="t-sne.html"><i class="fa fa-check"></i><b>10.2</b> t-SNE</a></li>
+<li class="chapter" data-level="10.3" data-path="svd.html"><a href="svd.html"><i class="fa fa-check"></i><b>10.3</b> SVD</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>12</b> Cluster Analysis</a><ul>
-<li class="chapter" data-level="12.1" data-path="k-means.html"><a href="k-means.html"><i class="fa fa-check"></i><b>12.1</b> K-Means</a></li>
-<li class="chapter" data-level="12.2" data-path="hca.html"><a href="hca.html"><i class="fa fa-check"></i><b>12.2</b> HCA</a></li>
+<li class="chapter" data-level="11" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>11</b> Cluster Analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="k-means.html"><a href="k-means.html"><i class="fa fa-check"></i><b>11.1</b> K-Means</a></li>
+<li class="chapter" data-level="11.2" data-path="hca.html"><a href="hca.html"><i class="fa fa-check"></i><b>11.2</b> HCA</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>13</b> Text Mining</a><ul>
-<li class="chapter" data-level="13.1" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>13.1</b> Tidy Text</a></li>
-<li class="chapter" data-level="13.2" data-path="bag-of-words.html"><a href="bag-of-words.html"><i class="fa fa-check"></i><b>13.2</b> Bag of Words</a></li>
-<li class="chapter" data-level="13.3" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>13.3</b> Sentiment Analysis</a><ul>
-<li class="chapter" data-level="13.3.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#n-grams"><i class="fa fa-check"></i><b>13.3.1</b> N-Grams</a></li>
-<li class="chapter" data-level="13.3.2" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#converting-to-and-from-non-tidy-formats"><i class="fa fa-check"></i><b>13.3.2</b> Converting to and from non-tidy formats</a></li>
-<li class="chapter" data-level="13.3.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>13.3.3</b> Example</a></li>
+<li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a><ul>
+<li class="chapter" data-level="12.1" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>12.1</b> Tidy Text</a></li>
+<li class="chapter" data-level="12.2" data-path="bag-of-words.html"><a href="bag-of-words.html"><i class="fa fa-check"></i><b>12.2</b> Bag of Words</a></li>
+<li class="chapter" data-level="12.3" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>12.3</b> Sentiment Analysis</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#n-grams"><i class="fa fa-check"></i><b>12.3.1</b> N-Grams</a></li>
+<li class="chapter" data-level="12.3.2" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#converting-to-and-from-non-tidy-formats"><i class="fa fa-check"></i><b>12.3.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="12.3.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>12.3.3</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="topic-modeling.html"><a href="topic-modeling.html"><i class="fa fa-check"></i><b>13.4</b> Topic Modeling</a></li>
-<li class="chapter" data-level="13.5" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html"><i class="fa fa-check"></i><b>13.5</b> Appendix: String Manipulation</a><ul>
-<li class="chapter" data-level="13.5.1" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#stringr-package"><i class="fa fa-check"></i><b>13.5.1</b> stringr package</a></li>
-<li class="chapter" data-level="13.5.2" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#regular-expressions"><i class="fa fa-check"></i><b>13.5.2</b> Regular Expressions</a></li>
+<li class="chapter" data-level="12.4" data-path="topic-modeling.html"><a href="topic-modeling.html"><i class="fa fa-check"></i><b>12.4</b> Topic Modeling</a></li>
+<li class="chapter" data-level="12.5" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html"><i class="fa fa-check"></i><b>12.5</b> Appendix: String Manipulation</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#stringr-package"><i class="fa fa-check"></i><b>12.5.1</b> stringr package</a></li>
+<li class="chapter" data-level="12.5.2" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#regular-expressions"><i class="fa fa-check"></i><b>12.5.2</b> Regular Expressions</a></li>
 </ul></li>
-<li class="chapter" data-level="13.6" data-path="reference-links.html"><a href="reference-links.html"><i class="fa fa-check"></i><b>13.6</b> Reference Links</a></li>
+<li class="chapter" data-level="12.6" data-path="reference-links.html"><a href="reference-links.html"><i class="fa fa-check"></i><b>12.6</b> Reference Links</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>14</b> Survival Analysis</a><ul>
-<li class="chapter" data-level="14.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>14.1</b> Basic Concepts</a></li>
-<li class="chapter" data-level="14.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>14.2</b> Survival Curve Estimation</a><ul>
-<li class="chapter" data-level="14.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>14.2.1</b> Kaplan-Meier</a></li>
-<li class="chapter" data-level="14.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>14.2.2</b> Weibull</a></li>
-<li class="chapter" data-level="14.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>14.2.3</b> Cox</a></li>
+<li class="chapter" data-level="13" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>13</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>13.1</b> Basic Concepts</a></li>
+<li class="chapter" data-level="13.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>13.2</b> Survival Curve Estimation</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>13.2.1</b> Kaplan-Meier</a></li>
+<li class="chapter" data-level="13.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>13.2.2</b> Weibull</a></li>
+<li class="chapter" data-level="13.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>13.2.3</b> Cox</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
@@ -305,12 +299,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="14.2.4" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>14.2.4</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="13.2.4" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>13.2.4</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html#references"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -332,31 +326,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="support-vector-classifier" class="section level2">
-<h2><span class="header-section-number">10.2</span> Support Vector Classifier</h2>
-<p>The maximal margin classifier can be generalized to non-separable cases using a so-called <em>soft margin</em>. The generalization is called the <em>support vector classifier</em>. The soft margin allows some misclassification in the interest of greater robustness to individual observations. The support vector classifier optimizes</p>
-<p><span class="math display">\[y_i (x_i^{&#39;} \beta + \beta_0) \ge M(1 - \xi_i)\]</span></p>
-<p>where the <span class="math inline">\(\xi_i\)</span> are positive <em>slack variables</em> whose sum is bounded by some constant tuning parameter <span class="math inline">\(\sum{\xi_i} \le \Xi\)</span>. The slack variable values indicate where the observation lies: <span class="math inline">\(\xi_i = 0\)</span> observations lie on the correct side of the margin; <span class="math inline">\(\xi_i &gt; 0\)</span> observation lie on the wrong side of the margin; <span class="math inline">\(\xi_i &gt; 1\)</span> observations lie on the wrong side of the hyperplane. <span class="math inline">\(\Xi\)</span> sets the tolerance for margin violation. If <span class="math inline">\(\Xi = 0\)</span>, then all observations must reside on the correct side of the margin, as in the maximal margin classifier. <span class="math inline">\(\Xi\)</span> controls the bias-variance trade-off: as <span class="math inline">\(\Xi\)</span> increases, the margin widens and allows more violations, increasing bias and decreasing variance.</p>
-<p>The support vector classifier is usually defined by dropping the <span class="math inline">\(||\beta|| = 1\)</span> constraint, and defining <span class="math inline">\(M = 1 / ||\beta||\)</span>. The optimization problem then becomes</p>
-<p><span class="math display">\[
- \min ||\beta|| \hspace{2mm} s.t. \hspace{2mm}  
-  \begin{cases} 
-   y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i &amp;  \\
-   \xi_i \ge 0, \hspace{2mm} \sum \xi_i \le \Xi.      
-  \end{cases}
-\]</span></p>
-<p>This is a quadratic equation with linear inequality constraints, so it is a convex optimization problem which can be solved using Lagrange multipliers. Re-express the optimization problem as</p>
-<p><span class="math display">\[
-\min_{\beta_0, \beta} \frac{1}{2}||\beta||^2 = C\sum_{i = 1}^N \xi_i \\
-s.t. \xi_i \ge 0, \hspace{2mm} y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i
-\]</span></p>
-<p>where the “cost” parameter <span class="math inline">\(C\)</span> replaces the constant and penalizes large residuals. This optimization problem is equivalent to <em>another</em> optimization problem, the familiar <em>loss + penalty</em> formulation:</p>
-<p><span class="math display">\[\min_{\beta_0, \beta} \sum_{i=1}^N{[1 - y_if(x_i)]_+} + \frac{\lambda}{2} ||\beta||^2 \]</span></p>
-<p>where <span class="math inline">\(\lambda = 1 / C\)</span> and <span class="math inline">\([1 - y_if(x_i)]_+\)</span> is a “hinge” loss function with <span class="math inline">\(f(x_i) = sign[Pr(Y = +1|x) - 1 / 2]\)</span>.<br />
-The parameter estimates can be written as functions of a set of unknown parameters <span class="math inline">\((\alpha_i)\)</span> and data points. The solution to the optimization problem requires only the inner products of the observations, represented as <span class="math inline">\(\langle x_i, x_j \rangle\)</span>,</p>
-<p><span class="math display">\[f(x) = \beta_0 + \sum_{i = 1}^n {\alpha_i \langle x, x_i \rangle}\]</span>
-The solution has the interesting property that only observations on or within the margin affect the hyperplane. These observations are known as support vectors. As the constant increases, the number of violating observations increase, and thus the number of support vectors increases. This property makes the algorithm robust to the extreme observations far away from the hyperplane.</p>
-<p>The parameter estimators for <span class="math inline">\(\alpha_i\)</span> are nonzero only for the support vectors in the solution—that is, if a training observation is not a support vector, then its <span class="math inline">\(\alpha_i\)</span> equals zero.</p>
-<p>The only shortcoming with the algorithm is that it presumes a linear decision boundary.</p>
+<h2><span class="header-section-number">9.2</span> Support Vector Classifier</h2>
+<p>The maximal margin classifier can be generalized to non-separable cases using a so-called <em>soft margin</em>. The generalization is called the <em>support vector classifier</em>. The soft margin allows some misclassification in the interest of greater robustness to individual observations.</p>
+<p>The support vector classifier maximizes <span class="math inline">\(M\)</span> subject to <span class="math inline">\(||\beta|| = 1\)</span> and <span class="math inline">\(y_i (x_i^{&#39;} \beta + \beta_0) \ge M(1 - \xi_i)\)</span> and <span class="math inline">\(\sum \xi_i \le \Xi\)</span> for all <span class="math inline">\(i\)</span>. The <span class="math inline">\(\xi_i\)</span> are <em>slack variables</em> whose sum is bounded by some constant tuning parameter <span class="math inline">\(\Xi\)</span>. The slack variable values indicate where the observation lies: <span class="math inline">\(\xi_i = 0\)</span> observations lie on the correct side of the margin; <span class="math inline">\(\xi_i &gt; 0\)</span> observation lie on the wrong side of the margin; <span class="math inline">\(\xi_i &gt; 1\)</span> observations lie on the wrong side of the hyperplane. <span class="math inline">\(\Xi\)</span> sets the tolerance for margin violation. If <span class="math inline">\(\Xi = 0\)</span>, then all observations must reside on the correct side of the margin, as in the maximal margin classifier. <span class="math inline">\(\Xi\)</span> controls the bias-variance trade-off: as <span class="math inline">\(\Xi\)</span> increases, the margin widens and allows more violations, increasing bias and decreasing variance. Similar to the maximal margin classifier, only the observations that are on the margin or that violate the margin factor into the determination of the support vector classifier. These observations are the support vectors.</p>
+<p>The figure below (figure 9.7 from <span class="citation">(James et al. <a href="#ref-James2013" role="doc-biblioref">2013</a>)</span>) shows two support vector classifiers. The one on the left uses a large <span class="math inline">\(\Xi\)</span> and as a result includes many support vectors. The one on the right uses a smaller <span class="math inline">\(\Xi.\)</span></p>
+<div class="figure">
+<img src="images/svm_svc.png" alt="" />
+<p class="caption">FIGURE 9.7 from An Introduction to Statistical Learning</p>
+</div>
+<p>As <span class="math inline">\(\Xi\)</span> increases, the number of violating observations increase, and thus the number of support vectors increases. This property makes the algorithm robust to the extreme observations far away from the hyperplane. The only shortcoming with the algorithm is that it presumes a linear decision boundary.</p>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-James2013">
+<p>James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning: With Applications in R</em>. 1st ed. New York, NY: Springer. <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/book.html">http://faculty.marshall.usc.edu/gareth-james/ISL/book.html</a>.</p>
+</div>
 </div>
             </section>
 

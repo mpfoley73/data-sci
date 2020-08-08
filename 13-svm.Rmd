@@ -4,109 +4,82 @@ These notes rely on [@James2013], [@Hastie2017], [@Kuhn2016], [PSU STAT 508](htt
 
 Support Vector Machines (SVM) is a classification model that maps observations as points in space so that the categories are divided by as wide a gap as possible. New observations can then be mapped into the space for prediction. The SVM algorithm finds the optimal separating hyperplane using a nonlinear mapping to a sufficiently high dimension. The hyperplane is defined by the observations that lie within a margin optimized by a cost hyperparameter. These observations are called the *support vectors*.
 
-SVM is an extension of the *support vector classifier* which in turn is a generalization of the simple and intuitive *maximal margin classifier*.  The best way to understand the SVM is to start with the maximal margin classifier and work up.
+SVM is an extension of the *support vector classifier* which in turn is a generalization of the simple and intuitive *maximal margin classifier*.  The maximal margin classifier is defined for cases where the data can be separated by a linear boundary (uncommon). The support vector classifier generalizes the maximal margin classifier by introducing a margin around that hyperplane which permits some observations to land on wrong side of the hyperplane. The support vector machine generalizes still more by introducing non-linear hyperplanes. The best way to understand the SVM is to start with the maximal margin classifier and work up.
 
 
 ## Maximal Margin Classifier
 
-The maximal margin classifier is the optimal hyperplane defined in the (rare) case where two classes are *linearly separable*.  Given an $n \times p$ data matrix $X$ with a binary response variable defined as $y \in [-1, 1]$ it *might* be possible to define a *p*-dimensional hyperplane $h(X) = \beta_0 + \beta_1X_1 + \beta_2X_2 \dots + \beta_pX_p = x_i^T \beta + \beta_0 = 0$ such that all observations of each class fall on opposite sides of the hyperplane. This *separating hyperplane* has the property that if $\beta$ is constrained to be a unit vector, $||\beta|| = \sum\beta^2 = 1$, then the product of the hyperplane and response variables are positive perpendicular distances from the hyperplane, the smallest of which may be termed the hyperplane *margin*, $M$,  
+The maximal margin classifier is the optimal hyperplane defined in the (rare) case where two classes are *linearly separable*. Given an $n \times p$ predictor matrix $X$ with a binary response variable $y \in \{-1, 1\}$ it *might* be possible to define a *p*-dimensional hyperplane $h(x) = \beta_0 + \beta_1x_1 + \beta_2x_2 \dots + \beta_px_p = X_i^{'} \beta + \beta_0 = 0$ such that all of the $y_i = -1$ observations fall on the negative side of the hyperplane and the $y_i = +1$ observations fall on the positive side:
 
-$$y_i (x_i^{'} \beta + \beta_0) \ge M.$$
+$$y_i \left(x_i^{'} \beta + \beta_0 \right) > 0$$
 
-The maximal margin classifier is the hyperplane with the maximum margin, $\max \{M\}$ subject to $||\beta|| = 1$.  A separating hyperplane rarely exists.  In fact, even if a separating hyperplane does exist, its resulting margin is probably undesirably narrow. Here is the maximal margin classifier.^[Image from https://nlp.stanford.edu/IR-book/pdf/15svm.pdf.]
+This *separating hyperplane* is a simple classifier, and the magnitude of $\left(x_i^{'} \beta + \beta_0 \right)$ is an indicator of confidence in the predicted classification.
 
-![Maximum marginal classifier](images/svm_mmc.png)
+If you constrain $\beta$ to be a unit vector, $||\beta|| = \sum\beta^2 = 1$, then the products of the hyperplane and response variables, $\left(x_i^{'} \beta + \beta_0 \right)$, are the positive perpendicular distances from the hyperplane. If a separating hyperplane exists, there are probably an infinite number of possible hyperplanes. One way to evaluate a hyperplane is to measure its *margin*, $M$, the perpendicular distance to the closest observation. 
 
-The data set has two linearly separable classes, $y \in [-1, 1]$ described by two features, $X1$ and $X2$^[Any more features and we won't be able to visualize it]. The code is unimportant - just trying to produce the visualization.
+$$M = \min \left\{y_i (x_i^{'} \beta + \beta_0) \right\}.$$
 
-```{r message=FALSE, warning=FALSE, echo=FALSE}
-library(tidyverse)
+The *maximal margin classifier* is the hyperplane that maximizes $M.$ The figure below (figure 9.3 from [@James2013]) shows a maximal marginal classifier. The three vectors shown in the figure anchor the hyperplane and are called the *support vectors*. Interestingly, it is only these three observations that factor into the determination of the maximal marginal classifier.
 
-# Make a data set
-set.seed(1)
-x <- matrix(rnorm (20*2), ncol=2)
-y <- c(rep(-1, 10), rep(1, 10))
-x[y==1, ] <- x[y==1, ] + 1
-train_data <- data.frame(x, y)
-train_data$y <- as.factor(y)
+![FIGURE 9.3 from An Introduction to Statistical Learning](./images/svm_mmc.png)
 
-# Push out the x values to make linearly separable
-dat <- train_data %>% 
-  mutate(
-    X1 = X1 + ifelse(y==1, 1.0, 0),
-    X2 = X2 + ifelse(y==1, 1.0, 0)
-  )
+So, to put it all together, if a separating hyperplane exists, one could calculate it by maximizing $M$  subject to $||\beta|| = 1$ and $y_i (x_i^{'} \beta + \beta_0) \ge M$ for all $i$. However, a separating hyperplane rarely exists. In fact, even if a separating hyperplane does exist, its maximal margin classifier is probably undesirably narrow. A maximal margin classifier is sensitive to outliers so it tends to overfit data.
 
-library(e1071)
-m <- svm(y ~ ., data = dat, kernel = "linear", cost = 1e5, scale = FALSE)
-plot(m, dat)
-```
 
 ## Support Vector Classifier
 
-The maximal margin classifier can be generalized to non-separable cases using a so-called *soft margin*.  The generalization is called the *support vector classifier*.  The soft margin allows some misclassification in the interest of greater robustness to individual observations. The support vector classifier optimizes 
+The maximal margin classifier can be generalized to non-separable cases using a so-called *soft margin*.  The generalization is called the *support vector classifier*.  The soft margin allows some misclassification in the interest of greater robustness to individual observations. 
 
-$$y_i (x_i^{'} \beta + \beta_0) \ge M(1 - \xi_i)$$
+The support vector classifier maximizes $M$ subject to $||\beta|| = 1$ and $y_i (x_i^{'} \beta + \beta_0) \ge M(1 - \xi_i)$ and $\sum \xi_i \le \Xi$ for all $i$. The $\xi_i$ are *slack variables* whose sum is bounded by some constant tuning parameter $\Xi$. The slack variable values indicate where the observation lies:  $\xi_i = 0$ observations lie on the correct side of the margin;  $\xi_i > 0$ observation lie on the wrong side of the margin;  $\xi_i > 1$ observations lie on the wrong side of the hyperplane.  $\Xi$ sets the tolerance for margin violation.  If $\Xi = 0$, then all observations must reside on the correct side of the margin, as in the maximal margin classifier.  $\Xi$ controls the bias-variance trade-off: as $\Xi$ increases, the margin widens and allows more violations, increasing bias and decreasing variance. Similar to the maximal margin classifier, only the observations that are on the margin or that violate the margin factor into the determination of the support vector classifier. These observations are the support vectors.
 
-where the $\xi_i$ are positive *slack variables* whose sum is bounded by some constant tuning parameter $\sum{\xi_i} \le \Xi$.  The slack variable values indicate where the observation lies:  $\xi_i = 0$ observations lie on the correct side of the margin;  $\xi_i > 0$ observation lie on the wrong side of the margin;  $\xi_i > 1$ observations lie on the wrong side of the hyperplane.  $\Xi$ sets the tolerance for margin violation.  If $\Xi = 0$, then all observations must reside on the correct side of the margin, as in the maximal margin classifier.  $\Xi$ controls the bias-variance trade-off: as $\Xi$ increases, the margin widens and allows more violations, increasing bias and decreasing variance.
+The figure below (figure 9.7 from [@James2013]) shows two support vector classifiers. The one on the left uses a large $\Xi$ and as a result includes many support vectors. The one on the right uses a smaller $\Xi.$
 
-The support vector classifier is usually defined by dropping the $||\beta|| = 1$ constraint, and defining $M = 1 / ||\beta||$.  The optimization problem then becomes
+![FIGURE 9.7 from An Introduction to Statistical Learning](./images/svm_svc.png)
 
-$$
- \min ||\beta|| \hspace{2mm} s.t. \hspace{2mm}  
-  \begin{cases} 
-   y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i &  \\
-   \xi_i \ge 0, \hspace{2mm} \sum \xi_i \le \Xi.      
-  \end{cases}
-$$
-
-This is a quadratic equation with linear inequality constraints, so it is a convex optimization problem which can be solved using Lagrange multipliers. Re-express the optimization problem as
-
-$$
-\min_{\beta_0, \beta} \frac{1}{2}||\beta||^2 = C\sum_{i = 1}^N \xi_i \\
-s.t. \xi_i \ge 0, \hspace{2mm} y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i
-$$
-
-where the "cost" parameter $C$ replaces the constant and penalizes large residuals.  This optimization problem is equivalent to *another* optimization problem, the familiar *loss + penalty* formulation:
-
-$$\min_{\beta_0, \beta} \sum_{i=1}^N{[1 - y_if(x_i)]_+} + \frac{\lambda}{2} ||\beta||^2 $$
-
-where $\lambda = 1 / C$ and $[1 - y_if(x_i)]_+$ is a "hinge" loss function with $f(x_i) = sign[Pr(Y = +1|x) - 1 / 2]$.  
-The parameter estimates can be written as functions of a set of unknown parameters $(\alpha_i)$ and data points. The solution to the optimization problem requires only the inner products of the observations, represented as $\langle x_i, x_j \rangle$,
-
-$$f(x) = \beta_0 + \sum_{i = 1}^n {\alpha_i \langle x, x_i \rangle}$$
-The solution has the interesting property that only observations on or within the margin affect the hyperplane.  These observations are known as support vectors.  As the constant increases, the number of violating observations increase, and thus the number of support vectors increases.  This property makes the algorithm robust to the extreme observations far away from the hyperplane.
-
-The parameter estimators for $\alpha_i$ are nonzero only for the support vectors in the solution—that is, if a training observation is not a support vector, then its $\alpha_i$ equals zero.
- 
-The only shortcoming with the algorithm is that it presumes a linear decision boundary.  
+As $\Xi$ increases, the number of violating observations increase, and thus the number of support vectors increases. This property makes the algorithm robust to the extreme observations far away from the hyperplane. The only shortcoming with the algorithm is that it presumes a linear decision boundary.
 
 
 ## Support Vector Machines
 
-Enlarging the feature space of the support vector classifier accommodates nonlinar relationships.  Support vector machines do this in a specific way, using *kernals*.  The kernal is a generalization of the inner product with form $K(x_i, x_i^{'})$.  So the linear kernal is simply 
+Enlarging the feature space of the support vector classifier accommodates nonlinear relationships.  Support vector machines do this in a specific way, using *kernels*. Before you dive into kernels, you need to understand (somewhat) the solution to the support vector classifier optimization problem.
+
+The linear support vector classifier can be represented as 
+
+$$f(x) = \beta_0 + \sum_i^n \alpha_i \langle x, x_i \rangle.$$
+
+That is, the classification of test observation $x$ is the sum of the dot products of $x$ with all the $n$ observations in the training set, multiplied by the vector $\alpha$ (plus the constant $\beta_0$). The $\alpha$ vector is calculated from the $n \choose 2$ dot products of the training data set. Actually, the classification is simpler than that because $\alpha_i = 0$ for all observation that are not support vectors, so you can actually represent the solution as
+
+$$f(x) = \beta_0 + \sum_{i \in S} \alpha_i \langle x, x_i \rangle$$
+where $S$ is the set of support vector indices.
+
+Now, you can generalize the inner dot product with a wrapper function, called a *kernel*, $K(x_i, x_{i^{'}})$. 
+
+$$f(x) = \beta_0 + \sum_{i \in S} \alpha_i K(x, x_i)$$
+
+To get the the support vector, you'd defined $K$ to be a *linear* kernel: 
 
 $$K(x_i, x_i^{'}) = \langle x, x_i \rangle$$
 
-and the solution is 
+But you could also use other kernels, like the polynomial of degree $d$, 
 
-$$f(x) = \beta_0 + \sum_{i = 1}^n {\alpha_i K(x_i, x_i^{'})}$$
-
-$K$ can take onother form instead, such as polynomial 
-
-$$K(x, x') = (\gamma \langle x, x' \rangle + c_0)^d$$ 
+$$K(x, x') = (1 + \langle x, x' \rangle)^d$$ 
 
 or radial 
 
 $$K(x, x') = \exp\{-\gamma ||x - x'||^2\}.$$
 
+The figure below (figure 9.9 from [@James2013]) shows two support vector classifiers. The one on the left uses a polynomial kernel and the one on the right uses a radial kernel.
 
-## My svm Example
+![FIGURE 9.9 from An Introduction to Statistical Learning](./images/svm_svm.png)
+
+
+##SVM Example
 
 Here is a data set of two classes $y \in [-1, 1]$ described by two features $X1$ and $X2$.
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
+library(e1071)
 set.seed(1)
 x <- matrix(rnorm (20*2), ncol=2)
 y <- c(rep(-1, 10), rep(1, 10))
@@ -259,4 +232,43 @@ m4$bestTune
 ```{r svm_plot_m4}
 #plot(m4)
 ```
+
+
+
+
+
+
+##### {-}
+
+The support vector classifier is usually defined by dropping the $||\beta|| = 1$ constraint, and defining $M = 1 / ||\beta||$.  The optimization problem then becomes
+
+$$
+ \min ||\beta|| \hspace{2mm} s.t. \hspace{2mm}  
+  \begin{cases} 
+   y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i &  \\
+   \xi_i \ge 0, \hspace{2mm} \sum \xi_i \le \Xi.      
+  \end{cases}
+$$
+
+This is a quadratic equation with linear inequality constraints, so it is a convex optimization problem which can be solved using Lagrange multipliers. Re-express the optimization problem as
+
+$$
+\min_{\beta_0, \beta} \frac{1}{2}||\beta||^2 = C\sum_{i = 1}^N \xi_i \\
+s.t. \xi_i \ge 0, \hspace{2mm} y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i
+$$
+
+where the "cost" parameter $C$ replaces the constant and penalizes large residuals.  This optimization problem is equivalent to *another* optimization problem, the familiar *loss + penalty* formulation:
+
+$$\min_{\beta_0, \beta} \sum_{i=1}^N{[1 - y_if(x_i)]_+} + \frac{\lambda}{2} ||\beta||^2 $$
+
+where $\lambda = 1 / C$ and $[1 - y_if(x_i)]_+$ is a "hinge" loss function with $f(x_i) = sign[Pr(Y = +1|x) - 1 / 2]$.  
+The parameter estimates can be written as functions of a set of unknown parameters $(\alpha_i)$ and data points. The solution to the optimization problem requires only the inner products of the observations, represented as $\langle x_i, x_j \rangle$,
+
+$$f(x) = \beta_0 + \sum_{i = 1}^n {\alpha_i \langle x, x_i \rangle}$$
+The solution has the interesting property that only observations on or within the margin affect the hyperplane.  These observations are known as support vectors.  As the constant increases, the number of violating observations increase, and thus the number of support vectors increases.  This property makes the algorithm robust to the extreme observations far away from the hyperplane.
+
+The parameter estimators for $\alpha_i$ are nonzero only for the support vectors in the solution—that is, if a training observation is not a support vector, then its $\alpha_i$ equals zero.
+ 
+The only shortcoming with the algorithm is that it presumes a linear decision boundary.  
+
 
