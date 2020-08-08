@@ -72,46 +72,52 @@ The figure below (figure 9.9 from [@James2013]) shows two support vector classif
 
 ![FIGURE 9.9 from An Introduction to Statistical Learning](./images/svm_svm.png)
 
+The SVM model can be expressed in the familiar "loss + penalty" minimization structure, $\min_{\beta} \left \{ L(X,y,\beta) + \lambda P(\beta) \right \}$ as
 
-##SVM Example
+$$\min_\beta \left \{ \sum_{i=1}^n \max [0, 1-y_i f(x_i)] + \lambda \sum_{j=1}^p \beta_j^2 \right \}$$
 
-Here is a data set of two classes $y \in [-1, 1]$ described by two features $X1$ and $X2$.
+Increasing $\lambda$, shrinks $\beta$ and more violations to the margin are tolerated, resulting in a lower-variance/higher-bias model. The loss function above is known as a *hinge loss*.
+
+
+## SVM Example
+
+Here is a contrived data set of two classes $y \in [-1, 1]$ described by two features $X1$ and $X2$. From the plot below you can see the classes are not linearly separable.
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
-library(e1071)
+
 set.seed(1)
-x <- matrix(rnorm (20*2), ncol=2)
-y <- c(rep(-1, 10), rep(1, 10))
-x[y==1, ] <- x[y==1, ] + 1
-train_data <- data.frame(x, y)
-train_data$y <- as.factor(y)
-```
+dat <- data.frame(
+  X1 = c(rnorm(20), rnorm(20) + 1),
+  X2 = c(rnorm(20), rnorm(20) + 1),
+  y = factor(c(rep(-1, 20), rep(1, 20)))
+)
+train_idx <- createDataPartition(dat$y, p = 0.60, list = FALSE)[, 1]
+dat_train <- dat[train_idx, ]
+dat_test <- dat[-train_idx, ]
 
-A scatter plot reveals whether the classes are linearly separable.
-
-```{r}
-ggplot(train_data, aes(x = X1, y = X2, color = y)) +
+ggplot(training, aes(x = X1, y = X2, color = y)) +
   geom_point(size = 2) +
   labs(title = "Binary response with two features") +
   theme(legend.position = "top")
 ```
 
-No, they are not linearly separable.  Now fit a support vector machine. The **e1071** library implements the SVM algorithm.   `svm(..., kernel="linear")` fits a support vector classifier. Change the kernal to `c("polynomial", "radial")` for SVM.  Try a cost of 10.
+Fit a support vector classifier with `e1071::svm(kernel="linear")`. (Change the kernel to `c("polynomial", "radial")` for SVM). `svm` requires the response variable be a factor (which we've already done). The tuning parameter for the support vector classifier is $\Xi$. `svm()` uses something similar, `\cost`, which the documentation notes is the "*cost of constraints violation (default: 1)—it is the ‘C’-constant of the regularization term in the Lagrange formulation.*" Try a `cost = 10`.
 
 ```{r}
+library(e1071)
 m <- svm(
   y ~ ., 
-  data = train_data,
+  data = dat_train,
   kernel = "linear",
   type = "C-classification",  # (default) for classification
   cost = 10,  # default is 1
   scale = FALSE  # do not standardize features
 )
-plot(m, train_data)
+plot(m, dat_train)
 ```
 
-The support vectors are plotted as "x's".  There are seven of them.
+There are `r length(m$index)` support vectors, plotted as "x's". 
 
 ```{r}
 m$index
@@ -123,12 +129,12 @@ The summary shows adds additional information, including the distribution of the
 summary(m)
 ```
 
-The seven support vectors are comprised of four in one class, three in the other. What if we lower the cost of margin violations?  This will increase bias and lower variance.
+10 of the 19 support vectors are one class, and 9 are in the other. What if we lower the cost of margin violations? This will increase bias and lower variance.
 
 ```{r}
 m <- svm(
   y ~ ., 
-  data = train_data,
+  data = dat_train,
   kernel = "linear",
   type = "C-classification",  
   cost = 0.1,
@@ -137,39 +143,38 @@ m <- svm(
 plot(m, train_data)
 ```
 
-There are many more support vectors now.  *(In case you hoped to see the linear decision boundary formulation, or at least a graphical representation of the margins, keep hoping. The model is generalized beyond two features, so it evidently does not worry too much about supporting sanitized two-feature demos.)*
-
-Which cost level yields the *best* predictive performance on holdout data?  Use cross validation to find out. SVM defaults to 10-fold CV.  I'll try seven candidate values for `cost`.
+There are more support vectors now (`r length(m$index)`). Which cost level yields the *best* predictive performance on holdout data?  Use cross validation to find out. SVM defaults to 10-fold CV.  Try seven candidate values for `cost`.
 
 ```{r}
 set.seed(1)
 m_tune <- tune(
   svm,
   y ~ .,
-  data = train_data,
+  data = dat_train,
   kernel ="linear",
   ranges = list(cost = c(0.001, 0.01, 0.1, 1, 5, 10, 100))
 )
 summary(m_tune)
 ```
 
-The lowest cross-validation error rate is 0.10 with cost = 0.1.  `tune()` saves the best tuning parameter value.
+The lowest cross-validation error rate is 0.32 with cost = 1.  `tune()` saves the best tuning parameter value.
 ```{r}
 m_best <- m_tune$best.model
 summary(m_best)
 ```
 
-There are 16 support vectors, 8 in each class.  This is a pretty wide margin.
+There are 19 support vectors, 10 in one class, 9 in the other.  This is a pretty wide margin.
 
 ```{r}
 plot(m_best, train_data)
 ```
 
+How does the model perform on the holdout data set? 87.5% accuracy.
 
-
-
-
-
+```{r}
+ypred <- predict(m_best, dat_test)
+caret::confusionMatrix(data = ypred, reference  = dat_test$y)
+```
 
 To fit an SVM, use a different kernel.  You can use `kernal = c("polynomial", "radial", "sigmoid")`.  For a polynomial model, also specify the polynomial degree. For a radial model, include the gamma value.
 
@@ -178,7 +183,7 @@ set.seed(1)
 m3_tune <- tune(
   svm,
   y ~ .,
-  data = train_data,
+  data = dat_train,
   kernel ="polynomial",
   ranges = list(
     cost = c(0.001, 0.01, 0.1, 1, 5, 10, 100),
@@ -189,38 +194,40 @@ summary(m3_tune)
 ```
 
 
-The lowest cross-validation error rate is 0.10 with cost = 1, polynomial degree 1.
+Oh, that's funny, it chose a linear kernel anyway. The lowest cross-validation error rate is 0.35 with cost = 5, polynomial degree 1.
 
 ```{r}
 m3_best <- m3_tune$best.model
 summary(m3_best)
 ```
 
-There are 12 support vectors, 6 in each class.  This is a pretty wide margin.
+There are 19 support vectors. How did the SVM perform?
 
 ```{r}
-plot(m3_best, train_data)
+ypred <- predict(m3_best, dat_test)
+caret::confusionMatrix(data = ypred, reference  = dat_test$y)
 ```
 
-## Using Caret
 
-The model can also be fit using **caret**.  I'll used LOOCV since the data set is so small.  Normalize the variables to make their scale comparable.
+The model can also be fit using **caret**.  I'll used LOOCV since the data set is so small, and standardize the variables to make their scale comparable (they are already since the data is from a random number generator, but I'm practicing good form). Also, I need to change the level names from -1, 1 to something that will translate into valid variable names.
 
-```{r message=FALSE, warning=FALSE}
+```{r svm-caret, message=FALSE, warning=FALSE}
 library(caret)
 library(kernlab)
 
-train_data_3 <- train_data %>%
-  mutate(y = factor(y, labels = c("A", "B")))
+#train_data_3 <- train_data %>%
+#  mutate(y = factor(y, labels = c("A", "B")))
+dat_train$y <- factor(dat_train$y, labels = c("A", "B"))
+dat_test$y <- factor(dat_test$y, labels = c("A", "B"))
 
 m4 <- train(
   y ~ .,
-  data = train_data_3,
+  data = dat_train,
   method = "svmPoly",
   preProcess = c("center", "scale"),
   trControl = trainControl(
-    method = "cv",
-    number = 5,
+    method = "LOOCV",
+#    number = 5,
     summaryFunction = twoClassSummary,	# Use AUC to pick the best model
     classProbs=TRUE
   )
@@ -229,46 +236,67 @@ m4 <- train(
 m4$bestTune
 ```
 
-```{r svm_plot_m4}
-#plot(m4)
+Caret optimized to a degree 3 polynomial and cost 1.0. How did the SVM perform?
+
+```{r}
+ypred <- predict(m4, dat_test)
+caret::confusionMatrix(data = ypred, reference  = dat_test$y)
 ```
 
+## Full SVM Example
 
+I'll learn by example, using the `ISLR::Default` data set to predict which customers will default on their credit card deb from its 3 predictor variables. I'm using this  [Dataaspirant](https://dataaspirant.com/support-vector-machine-classifier-implementation-r-caret-package/#:~:text=For%20machine%20learning%2C%20caret%20package%20is%20a%20nice,build%20a%20hyperplane%20separating%20data%20for%20different%20classes.) tutorial for guidance.
 
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+library(caret)
 
+dat <- ISLR::Default
+skimr::skim(dat)
+```
 
+For an SVM model, caret will expect the response variable to be a factor with labels that can double as R variable names. We're okay: `default` is a factor with labels "No" and "Yes". You also want the predictor variables to be of comparable scale, and that is *not* the case here: `student` is binary, `balance` has a range of \$0 - \$2654, and `income` has a range of \$772 - \$73,554. I'll standardized the features in the `train(preProcess)` argument.
 
-##### {-}
+Split `dat` (n = 10,000) into `dat_train` (80%, n = 800) to fit models, and `dat_test` (20%, n = 200) to compare performance on new data.
 
-The support vector classifier is usually defined by dropping the $||\beta|| = 1$ constraint, and defining $M = 1 / ||\beta||$.  The optimization problem then becomes
+```{r}
+set.seed(202008)
+train_index <- createDataPartition(y = dat$default, p = 0.8, list = FALSE)
+dat_train <- dat[train_index, ]
+dat_test <- dat[-train_index, ]
+```
 
-$$
- \min ||\beta|| \hspace{2mm} s.t. \hspace{2mm}  
-  \begin{cases} 
-   y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i &  \\
-   \xi_i \ge 0, \hspace{2mm} \sum \xi_i \le \Xi.      
-  \end{cases}
-$$
+I'll build the model using 10-fold cross-validation to optimize the hyperparameter CP. 
 
-This is a quadratic equation with linear inequality constraints, so it is a convex optimization problem which can be solved using Lagrange multipliers. Re-express the optimization problem as
+```{r}
+mdl_ctrl = trainControl(
+   method = "cv",
+   number = 5,
+   savePredictions = "final"       # save predictions for the optimal tuning parameter
+)
+```
 
-$$
-\min_{\beta_0, \beta} \frac{1}{2}||\beta||^2 = C\sum_{i = 1}^N \xi_i \\
-s.t. \xi_i \ge 0, \hspace{2mm} y_i(x_i^T\beta + \beta_0) \ge 1 - \xi_i, \hspace{2mm} \forall i
-$$
+Train an SVM model with polynomial kernel by specifying `method = "svmPoly"`. `svmPoly` has the following tuneable hyperparameters (see `modelLookup("svmPoly")`).
 
-where the "cost" parameter $C$ replaces the constant and penalizes large residuals.  This optimization problem is equivalent to *another* optimization problem, the familiar *loss + penalty* formulation:
+* `degree`: polynomial degree
+* `scale`: scale
+* `C`: cost
 
-$$\min_{\beta_0, \beta} \sum_{i=1}^N{[1 - y_if(x_i)]_+} + \frac{\lambda}{2} ||\beta||^2 $$
+```{r}
+caret::modelLookup("svmPoly")
+```
 
-where $\lambda = 1 / C$ and $[1 - y_if(x_i)]_+$ is a "hinge" loss function with $f(x_i) = sign[Pr(Y = +1|x) - 1 / 2]$.  
-The parameter estimates can be written as functions of a set of unknown parameters $(\alpha_i)$ and data points. The solution to the optimization problem requires only the inner products of the observations, represented as $\langle x_i, x_j \rangle$,
-
-$$f(x) = \beta_0 + \sum_{i = 1}^n {\alpha_i \langle x, x_i \rangle}$$
-The solution has the interesting property that only observations on or within the margin affect the hyperplane.  These observations are known as support vectors.  As the constant increases, the number of violating observations increase, and thus the number of support vectors increases.  This property makes the algorithm robust to the extreme observations far away from the hyperplane.
-
-The parameter estimators for $\alpha_i$ are nonzero only for the support vectors in the solution—that is, if a training observation is not a support vector, then its $\alpha_i$ equals zero.
- 
-The only shortcoming with the algorithm is that it presumes a linear decision boundary.  
-
-
+```{r svm-1, cache=TRUE}
+set.seed(1234)
+#garbage <- capture.output(
+mdl_svmpoly <- train(
+  default ~ ., 
+  data = dat_train, 
+  method = "svmPoly",
+#   metric = "ROC",
+  tuneLength = 3,
+  trControl = mdl_ctrl
+#  preProcess = c("center", "scale"),
+)
+mdl_svmpoly
+```
