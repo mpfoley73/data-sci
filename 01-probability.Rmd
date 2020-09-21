@@ -399,7 +399,7 @@ For example, suppose a baseball player has a p=.03 chance of hitting a homerun. 
 pbinom(q = 20, size = 500, prob = 0.03, lower.tail = FALSE)
 ```
 
-But $n$ is large and $\pi$ is small, so the Poission distribution will work well too.
+But $n$ is large and $\pi$ is small, so the Poisson distribution will work well too.
 
 ```{r}
 ppois(q = 20, lambda = 0.03 * 500, lower.tail = FALSE)
@@ -674,107 +674,64 @@ var(rgeom(n = 100000, prob = p))
 
 ### Hypergeometric
 
-If $X$ is the count of successful events in a sample of size $n$ *without replacement* from a population of size $N$ containing $K$ successes and $N-K$ non-successes, then $X$ is a random variable with a hypergeometric distribution
+If $X = k$ is the count of successful events in a sample of size $n$ *without replacement* from a population of size $N$ containing $K$ successes, then $X$ is a random variable with a hypergeometric distribution
 
-$$f(x|N,K,n) = \frac{{{K}\choose{k}}{{N-K}\choose{n-k}}}{{N}\choose{n}}.$$
+$$f_X(k|N, K, n) = \frac{{{K}\choose{k}}{{N-K}\choose{n-k}}}{{N}\choose{n}}.$$
 
-with $E(X) = n\frac{K}{N}$ and $Var(X) = n \frac{K}{N} \cdot \frac{N-n}{N} \cdot \frac{N-K}{N-1}$.  
+with $E(X)=n\frac{K}{N}$ and $Var(X) = n\frac{K}{N}\cdot\frac{N-k}{N}\cdot\frac{N-n}{N-1}$.  
 
 The formula follows from the frequency table of the possible outcomes.
 
-| |Sampled |Not Sampled |Total |
-|---|---|---|---|
-|success|k|K-k|K|
-|non-success|n-k|(N-K)-(n-k)|N-K|
-|Total|n|N-n|N|
+|           |Sampled |Not Sampled |Total |
+|-----------|--------|------------|------|
+|success    |k       |K-k         |K     |
+|non-success|n-k     |(N-K)-(n-k) |N-K   |
+|Total      |n       |N-n         |N     |
 
+Here is a simple analysis of data from a hypergeometric process. What is the probability of selecting $k = 14$ red marbles from a sample of $n = 20$ taken from an urn containing $K = 70$ red marbles and $N-K = 30$ green marbles?
 
-If $X$ is the count of successful events in a sample of size $k$ *without replacement* from a population containing $M$ successes and $N$ non-successes, then $X$ is a random variable with a hypergeometric distribution
+Function `choose()` returns the binomial coefficient ${{n}\choose{k}} = \frac{n!}{k!(n-k)!}$.
+```{r}
+k <- 14; n <- 20; N <- 100; K <- 70
+choose(K, k) * choose(N-K, n-k) / choose(N, n)
+```
 
-$$f(x|m,n,k) = \frac{{{m}\choose{x}}{{n}\choose{k-x}}}{{m+n}\choose{k}}.$$
-
-with $E(X)=k\frac{m}{m+n}$ and $Var(X) = k\frac{m}{m+n}\cdot\frac{m+n-k}{m+n}\cdot\frac{n}{m+n-1}$.  
-
-`phyper` returns the cumulative probability (percentile) `p` at the specified value (quantile) `q`.  `qhyper` returns the value (quantile) `q` at the specified cumulative probability (percentile) `p`.
-
-
-#### Example {-}
-
-What is the probability of selecting $X = 14$ red marbles from a sample of $k = 20$ taken from an urn containing $m = 70$ red marbles and $n = 30$ green marbles?
-
-Function `dhyper()` calculates the hypergeometric probability.
+But of course you would never have to do it that way.
 
 ```{r}
-x = 14
-m = 70
-n = 30
-k = 20
-
-dhyper(x = x, m = m, n = n, k = k)
+dhyper(x = k, m = K, n = N-K, k = n)
 ```
 
-The expected value is `r k * m / (m + n)` and variance is `r k * m / (m + n) * (m + n - k) / (m + n) * n / (m + n - 1)`. 
+The expected value is `r n * K / N` and variance is `r n * K / N * (N - k) / N * (N - n) / (N - 1)`. 
 
-```{r message=FALSE, warning=FALSE, echo=FALSE, fig.height=3, fig.width=5}
-options(scipen = 999, digits = 2) # sig digits
-
-density = dhyper(x = 1:20, m = m, n = n, k = k)
-data.frame(red = 1:20, density) %>%
-  mutate(red14 = ifelse(red == 14, "x = 14", "other")) %>%
-ggplot(aes(x = factor(red), y = density, fill = red14)) +
-  geom_col() +
-  geom_text(
-    aes(label = round(density,2), y = density + 0.01),
-    position = position_dodge(0.9),
-    size = 3,
-    vjust = 0
-  ) +
-  theme_mf() +
-  scale_fill_mf() +
-  labs(title = "PMF of X = x Red Balls",
-       subtitle = "Hypergeometric(k = 20, M = 70, N = 30)",
-       x = "Number of red balls (x)",
-       y = "Density",
-       fill = "")
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+data.frame(x = 1:20) %>%
+  mutate(density = dhyper(x = 1:20, m = K, n = N-K, k = n)) %>%
+  ggplot() +
+  geom_col(aes(x = x, y = density)) +
+  theme_minimal() +
+  labs(title = "P(X = k) when X ~ Hypergeometric(100, 70, 20")
 ```
 
-The hypergeometric random variable is similar to the binomial random variable except that it applies to situations of sampling *without* replacement from a small population.  As the population size increases, sampling without replacement converges to sampling *with* replacement, and the hypergeometric distribution converges to the binomial. What if the total population size is 250? 500? 1000?
+The hypergeometric random variable is similar to the binomial random variable except that it applies to situations of sampling *without* replacement from a small population.  As the population size increases, sampling without replacement converges to sampling *with* replacement, and the hypergeometric distribution converges to the binomial. What if the total population size had been 250? 500? 1000?
 
-```{r message=FALSE, warning=FALSE, echo=FALSE, fig.height=3, fig.width=5}
-library(tidyr)
-library(ggplot2)
-library(dplyr)
-options(scipen = 999, digits = 2) # sig digits
+```{r}
+p <- data.frame(x = 1:20) %>%
+  mutate(density = dbinom(x = 1:20, size = n, prob = K / N)) %>%
+  ggplot() +
+  geom_col(aes(x = x, y = density))
+hyper <- data.frame(
+  x = 1:20,
+  N_100 = dhyper(x = 1:20, m = K*1.0, n = (N-K)*1.0, k = n),
+  N_250 = dhyper(x = 1:20, m = K*2.5, n = (N-K)*2.5, k = n),
+  N_500 = dhyper(x = 1:20, m = K*5.0, n = (N-K)*5.0, k = n)
+) %>% pivot_longer(-x)
+p + geom_line(data = hyper, aes(x = x, y = value, color = name)) +
+  labs() +
+  theme_minimal() +
+  theme(legend.position = "top") +
+  labs(title = "P(X = k) when X ~ Hypergeometric(N, .7N, 20)", color = "", x = "k")
 
-x = 14
-m = 7000
-n = 3000
-k = 20
-
-d_binom <- dbinom(x = 1:20, size = k, prob = m / (m + n))
-df_binom <- data.frame(x = 1:20, Binomial = d_binom)
-p <- ggplot(df_binom, aes(x = x, y = Binomial)) +
-  geom_col()
-
-d_hyper_100 <- dhyper(x = 1:20, m = 70, n = 30, k = k)
-d_hyper_250 <- dhyper(x = 1:20, m = 175, n = 75, k = k)
-d_hyper_500 <- dhyper(x = 1:20, m = 350, n = 150, k = k)
-d_hyper_1000 <- dhyper(x = 1:20, m = 700, n = 300, k = k)
-df_hyper = data.frame(x = 1:20, 
-                Hyper_0100 = d_hyper_100, 
-                Hyper_0250 = d_hyper_250, 
-                Hyper_0500 = d_hyper_500, 
-                Hyper_1000 = d_hyper_1000)
-df_hyper_tidy <- gather(df_hyper, key = "dist", value = "density", -c(x))
-p + 
-  geom_line(data = df_hyper_tidy, aes(x = x, y = density, color = dist)) +
-  theme_mf() +
-  scale_color_mf() +
-  labs(title = "Hypergeometric Appox. to Binomial",
-       subtitle = "Hypergeometric approaches Binomial as population size increases.",
-       x = "Number of successful observations (x)",
-       y = "Density",
-       color = "")
 ```
 
 
@@ -820,242 +777,183 @@ Random variable $X$ is distributed $X \sim N(\mu, \sigma^2)$ if
 
 $$f(X)=\frac{{1}}{{\sigma \sqrt{{2\pi}}}}e^{-.5(\frac{{x-\mu}}{{\sigma}})^2}$$.
 
-#### Example {-}
+Suppose IQ scores are distributed $X \sim N(100, 16^2$. What is the probability a randomly selected person's IQ is <90?*
 
-*IQ scores are distributed $X \sim N(100, 16^2$. What is the probability a randomly selected person's IQ is <90?*
-
-```{r message=FALSE, warning=FALSE}
-my_mean = 100
-my_sd = 16
-my_x = 90
-# exact
-pnorm(q = my_x, mean = my_mean, sd = my_sd, lower.tail = TRUE)
-# simulated
-mean(rnorm(n = 10000, mean = my_mean, sd = my_sd) <= my_x)
-
-library(dplyr)
-library(ggplot2)
-
-data.frame(x = 0:1500 / 10, 
-           prob = pnorm(q = 0:1500 / 10, 
-                        mean = my_mean, 
-                        sd = my_sd, 
-                        lower.tail = TRUE)) %>%
-  mutate(cdf = ifelse(x > 0 & x <= my_x, prob, 0)) %>%
-ggplot() +
-  geom_line(aes(x = x, y = prob)) +
-  geom_area(aes(x = x, y = cdf), alpha = 0.3) +
-  labs(title = bquote('X~N('~mu==.(my_mean)~','~sigma^{2}==.(my_sd)^{2}~')'),
-       subtitle = bquote('P(X<='~.(my_x)~') when mean is'~.(my_mean)~' and variance is'~.(my_sd)^{2}~'.'),
-       x = "x",
-       y = "Probability") 
+```{r}
+pnorm(q = 90, mean = 100, sd = 16, lower.tail = TRUE)
 ```
 
+Or simulate this by taking the mean of 10,000 random trials.
 
-#### Example
-*IQ scores are distributed *$X \sim N(100, 16^2$*. What is the probability a randomly selected person's IQ is >140?*
-```{r message=FALSE, warning=FALSE}
-my_mean = 100
-my_sd = 16
-my_x = 140
-# exact
-pnorm(q = my_x, mean = my_mean, sd = my_sd, lower.tail = FALSE)
-# simulated
-mean(rnorm(n = 10000, mean = my_mean, sd = my_sd) > my_x)
-
-library(dplyr)
-library(ggplot2)
-
-data.frame(x = 0:1500 / 10, 
-           prob = pnorm(q = 0:1500 / 10, 
-                        mean = my_mean, 
-                        sd = my_sd, 
-                        lower.tail = TRUE)) %>%
-  mutate(cdf = ifelse(x > my_x & x < 1000, prob, 0)) %>%
-ggplot() +
-  geom_line(aes(x = x, y = prob)) +
-  geom_area(aes(x = x, y = cdf), alpha = 0.3) +
-  labs(title = bquote('X~N('~mu==.(my_mean)~','~sigma^{2}==.(my_sd)^{2}~')'),
-       subtitle = bquote('P(X<='~.(my_x)~') when mean is'~.(my_mean)~' and variance is'~.(my_sd)^{2}~'.'),
-       x = "x",
-       y = "Probability") 
+```{r}
+mean(rnorm(n = 10000, mean = 100, sd = 16) <= 90)
 ```
 
-#### Example
-*IQ scores are distributed *$X \sim N(100, 16^2$*. What is the probability a randomly selected person's IQ is between 92 and 114?*
-```{r message=FALSE, warning=FALSE}
-my_mean = 100
-my_sd = 16
-my_x_l = 92
-my_x_h = 114
-# exact
-pnorm(q = my_x_h, mean = my_mean, sd = my_sd, lower.tail = TRUE) -
-  pnorm(q = my_x_l, mean = my_mean, sd = my_sd, lower.tail = TRUE)
-
-library(dplyr)
-library(ggplot2)
-
-data.frame(x = 0:1500 / 10, 
-           prob = pnorm(q = 0:1500 / 10, 
-                        mean = my_mean, 
-                        sd = my_sd, 
-                        lower.tail = TRUE)) %>%
-  mutate(cdf = ifelse(x > my_x_l & x <= my_x_h, prob, 0)) %>%
-ggplot() +
-  geom_line(aes(x = x, y = prob)) +
+```{r warning=FALSE}
+data.frame(x = 0:1500 / 10) %>%
+  mutate(density = pnorm(x, mean = 100, sd = 16, lower.tail = TRUE),
+         cdf = if_else(x > 0 & x <= 90, density, as.numeric(NA))) %>%
+  ggplot() +
+  geom_line(aes(x = x, y = density)) +
   geom_area(aes(x = x, y = cdf), alpha = 0.3) +
-  labs(title = bquote('X~N('~mu==.(my_mean)~','~sigma^{2}==.(my_sd)^{2}~')'),
-       subtitle = bquote('P(X<='~.(my_x)~') when mean is'~.(my_mean)~' and variance is'~.(my_sd)^{2}~'.'),
-       x = "x",
-       y = "Probability") 
+  theme_minimal() +
+  labs(title = "P(X < 90) when X ~ N(100, 16^2)")
 ```
 
+What is the probability a randomly selected person's IQ is >140?
 
-#### Example
-*Class scores are distributed *$X \sim N(70, 10^2$*. If the instructor wants to give A's to >=85th percentile and B's to 75th-85th percentile, what are the cutoffs?*
-```{r message=FALSE, warning=FALSE}
-my_mean = 70
-my_sd = 10
-my_pct_l = .75
-my_pct_h = .85
-
-qnorm(p = my_pct_l, mean = my_mean, sd = my_sd, lower.tail = TRUE)
-qnorm(p = my_pct_h, mean = my_mean, sd = my_sd, lower.tail = TRUE)
-
-library(dplyr)
-library(ggplot2)
-
-data.frame(x = 0:1000 / 10, 
-           prob = pnorm(q = 0:1000 / 10, 
-                        mean = my_mean, 
-                        sd = my_sd, 
-                        lower.tail = TRUE)) %>%
-  mutate(cdf = ifelse(prob > my_pct_l & prob <= my_pct_h, prob, 0)) %>%
-ggplot() +
-  geom_line(aes(x = x, y = prob)) +
-  geom_area(aes(x = x, y = cdf), alpha = 0.3) +
-  labs(title = bquote('X~N('~mu==.(my_mean)~','~sigma^{2}==.(my_sd)^{2}~')'),
-       subtitle = bquote('P(X<=x) = ['~.(my_pct_l)~','~.(my_pct_h)~'] when mean is'~.(my_mean)~' and variance is'~.(my_sd)^{2}~'.'),
-       x = "x",
-       y = "Probability") 
+```{r}
+pnorm(q = 90, mean = 100, sd = 16, lower.tail = FALSE)
 ```
 
+```{r warning=FALSE}
+data.frame(x = 0:1500 / 10) %>%
+  mutate(density = pnorm(x, mean = 100, sd = 16, lower.tail = TRUE),
+         cdf = if_else(x > 140 & x <= Inf, density, as.numeric(NA))) %>%
+  ggplot() +
+  geom_line(aes(x = x, y = density)) +
+  geom_area(aes(x = x, y = cdf), alpha = 0.3) +
+  theme_minimal() +
+  labs(title = "P(X > 140) when X ~ N(100, 16^2)")
+```
 
-#### Normal Approximation to Binomial
+What is the probability a randomly selected person's IQ is between 92 and 114?*
 
-The CLT implies that certain distributions can be approximated by the normal distribution.  
+```{r}
+pnorm(q = 114, mean = 100, sd = 16, lower.tail = TRUE) -
+  pnorm(q = 92, mean = 100, sd = 16, lower.tail = TRUE)
+```
 
-The binomial distribution $X \sim B(n,p)$ is approximately normal with mean $\mu = n p$ and variance $\sigma^2=np(1-p)$.  The approximation is useful when the expected number of successes and failures is at least 5:  $np>=5$ and $n(1-p)>=5$.
+```{r warning=FALSE}
+data.frame(x = 0:1500 / 10) %>%
+  mutate(density = pnorm(x, mean = 100, sd = 16, lower.tail = TRUE),
+         cdf = if_else(x > 92 & x < 114, density, as.numeric(NA))) %>%
+  ggplot() +
+  geom_line(aes(x = x, y = density)) +
+  geom_area(aes(x = x, y = cdf), alpha = 0.3) +
+  theme_minimal() +
+  labs(title = "P(X > 92 & X < 114) when X ~ N(100, 16^2)")
+```
 
-#### Example
-*A measure requires p>=50% popular to pass.  A sample of n=1,000 yields x=460 approvals. What is the probability that the overall population approves, P(X)>0.5?*
-```{r message=FALSE, warning=FALSE}
-my_x = 460
-my_p = 0.50
-my_n = 1000
+What IQ is the 90th percentile?
 
-my_mean = my_p * my_n
-my_sd = round(sqrt(my_n * my_p * (1 - my_p)), 1)
+```{r}
+qnorm(p = 0.90, mean = 100, sd = 16, lower.tail = TRUE)
+```
 
+By the central limit theorem (CLT) the binomial distribution $X \sim B(n,p)$ approaches the normal distribution with mean $\mu = n p$ and variance $\sigma^2=np(1-p)$ as $n \rightarrow \infty$. The approximation is useful when the expected number of successes and failures is at least 5, $np>=5$ and $n(1-p)>=5$.
+
+Suppose a measure requires p>=50% popular to pass.  A sample of n=1,000 yields x=460 approvals. What is the probability that the overall population approves, P(X)>0.5?
+
+```{r}
 # Exact binomial
-pbinom(q = my_x, size = my_n, prob = my_p, lower.tail = TRUE)
+pbinom(q = 460, size = 1000, prob = 0.50, lower.tail = TRUE)
 
 # Normal approximation
-pnorm(q = my_x, mean = my_p * my_n, sd = sqrt(my_n * my_p * (1 - my_p)), lower.tail = TRUE)
+pnorm(q = 460, mean = 0.50 * 1000, sd = sqrt(1000 * 0.50 * (1 - 0.50)), lower.tail = TRUE)
+```
 
-library(dplyr)
-library(ggplot2)
-library(tidyr)
-
-data.frame(x = 400:600, 
-           Normal = pnorm(q = 400:600, 
-                        mean = my_p * my_n, 
-                        sd = sqrt(my_n * my_p * (1 - my_p)), 
-                        lower.tail = TRUE),
-           Binomial = pbinom(q = 400:600, 
-                        size = my_n, 
-                        prob = my_p, 
-                        lower.tail = TRUE)) %>%
-  gather(key = "Distribution", value = "cdf", c(-x)) %>%
+```{r warning=FALSE}
+sd <- sqrt(1000 * 0.50 * (1 - 0.50))
+data.frame(x = 400:600) %>%
+  mutate(Normal = pnorm(q = x, mean = 0.50 * 1000, sd = sd, lower.tail = TRUE),
+         Binomial = pbinom(q = x, size = 1000, prob = 0.50, lower.tail = TRUE)) %>%
+  pivot_longer(-x, names_to = "Distribution", values_to = "cdf") %>%
   ggplot(aes(x = x, y = cdf, color = Distribution)) +
   geom_line() +
-  labs(title = bquote('X~B(n='~.(my_n)~', p='~.(my_p)~'),  '~'X~N('~mu==.(my_mean)~','~sigma^{2}==.(my_sd)^{2}~')'),
-       subtitle = "Normal approximation to the binomial",
-       x = "x",
-       y = "Probability") 
+  theme_minimal() +
+  theme(legend.position = "top") +
+  labs(title = "Normal Approximation to the Binomial", 
+       x = "x", y = "Probability", color = "")
 ```
 
 
-The Poisson distribution $x~P(\lambda)$ is approximately normal with mean $\mu = \lambda$ and variance $\sigma^2 = \lambda$, for large values of $\lambda$.
+By the central limit theorem (CLT) the Poisson distribution $x~P(\lambda)$ approaches the normal distribution with mean $\mu = \lambda$ and variance $\sigma^2 = \lambda$ as $n \rightarrow \infty$. The approximation is useful for large values of $\lambda$.
 
-#### Example
-*The annual number of earthquakes registering at least 2.5 on the Richter Scale and having an epicenter within 40 miles of downtown Memphis follows a Poisson distribution with mean *$\lambda=6.5$*. What is the probability that at least *$x>=9$* such earthquakes will strike next year?*
-```{r message=FALSE, warning=FALSE}
-my_x = 9
-my_lambda = 6.5
-my_sd = round(sqrt(my_lambda), 2)
+Suppose the annual number of earthquakes registering at least 2.5 on the Richter Scale and having an epicenter within 40 miles of downtown Memphis follows a Poisson distribution with mean $\lambda=6.5$. What is the probability that at least $x>=9$ such earthquakes will strike next year?
 
+```{r}
 # Exact Poisson
-ppois(q = my_x - 1, lambda = my_lambda, lower.tail = FALSE)
+ppois(q = 9 - 1, lambda = 6.5, lower.tail = FALSE)
 
 # Normal approximation
-pnorm(q = my_x - 0.5, mean = my_lambda, sd = my_sd, lower.tail = FALSE)
-
-library(dplyr)
-library(ggplot2)
-library(tidyr)
-
-data.frame(x = 0:200 / 10, 
-           Normal = pnorm(q = 0:200 / 10, 
-                        mean = my_lambda, 
-                        sd = my_sd, 
-                        lower.tail = TRUE),
-           Poisson = ppois(q = 0:200 / 10, 
-                        lambda = my_lambda, 
-                        lower.tail = TRUE)) %>%
-  gather(key = "Distribution", value = "cdf", c(-x)) %>%
+pnorm(q = 9 - 0.5, mean = 6.5, sd = sqrt(6.5), lower.tail = FALSE)
+```
+```{r warning=FALSE}
+sd <- sqrt(1000 * 0.50 * (1 - 0.50))
+data.frame(x = 0:200 / 10) %>%
+  mutate(Normal = pnorm(q = x, mean = 6.5, sd = sqrt(6.5), lower.tail = TRUE),
+         Poisson = ppois(q = x, lambda = 6.5, lower.tail = TRUE)) %>%
+  pivot_longer(-x, names_to = "Distribution", values_to = "cdf") %>%
   ggplot(aes(x = x, y = cdf, color = Distribution)) +
   geom_line() +
-  labs(title = bquote('X~P('~lambda~'='~.(my_lambda)~'),  '~'X~N('~mu==.(my_lambda)~','~sigma^{2}==.(my_lambda)~')'),
-       subtitle = "Normal approximation to the Poisson",
-       x = "x",
-       y = "Probability") 
+  theme_minimal() +
+  theme(legend.position = "top") +
+  labs(title = "Normal Approximation to the Poisson", 
+       x = "x", y = "Probability", color = "")
 ```
 
-#### From Sample to Population
+Estimate the population from the sample using the CLT.
 
-*Suppose a person's blood pressure typically measures 160?20 mm.  If one takes n=5 blood pressure readings, what is the probability the average will be <=150?*
-```{r message=FALSE, warning=FALSE}
-my_mu = 160
-my_sigma = 20
-my_n = 5
-my_x = 150
+Suppose a person's blood pressure typically measures $160 \pm 20$ mm.  If one takes n=5 blood pressure readings, what is the probability the average will be <=150?*
 
-my_se = round(my_sigma / sqrt(my_n), 1)
-
-pnorm(q = my_x, mean = my_mu, sd = my_sigma / sqrt(my_n), lower.tail = TRUE)
-
-library(dplyr)
-library(ggplot2)
-
-data.frame(x = 1000:2000 / 10, 
-           prob = pnorm(q = 1000:2000 / 10, 
-                        mean = my_mu, 
-                        sd = my_sigma / sqrt(my_n), 
-                        lower.tail = TRUE)) %>%
-  mutate(cdf = ifelse(x > 0 & x <= my_x, prob, 0)) %>%
-ggplot() +
-  geom_line(aes(x = x, y = prob)) +
-  geom_area(aes(x = x, y = cdf), alpha = 0.3) +
-  labs(title = bquote('X~N('~mu==.(my_mu)~','~sigma^{2}==.(my_se)^{2}~')'),
-       subtitle = bquote('P(X<='~.(my_x)~') when mean is'~.(my_mu)~' and variance is'~sigma~'/sqrt(n)'~.(my_se)^{2}~'.'),
-       x = "x",
-       y = "Probability") 
+```{r}
+pnorm(q = 150, mean = 160, sd = 20 / sqrt(5), lower.tail = TRUE)
 ```
 
 ```{r}
 knitr::include_app("https://mpfoley73.shinyapps.io/shiny_dist/", 
   height = "600px")
+```
+
+### Chi-Squared
+
+Random variable $X$ is distributed $X \sim \chi^2_k$ if
+
+$$f(X)=\frac{1}{2^{k/2}\Gamma (k/2)} x^{k/2-1} e^{-x/2}$$
+
+with $E(X)=k$ and $Var(X) = 2k$.  
+
+Suppose a researcher crosses tall cut-leaf tomatoes with dwarf potato-leaf tomatoes, then classifies the (*n* = 1,611) offspring phenotypes. The four phenotypes are expected to occur with relative frequencies 9:3:3:1. What is the probability of observing frequencies 926, 288, 293, 104?
+
+```{r}
+cell_names <- c("tall cut-leaf", "tall potato-leaf", "dwarf cut-leaf", "dwarf potato-leaf")
+
+o <- c(926, 288, 293, 104)
+names(o) <- cell_names
+
+pi <- c(9, 3, 3, 1) / (9 + 3 + 3 + 1)
+e <- sum(o) * pi
+names(e) <- cell_names
+```
+
+```{r}
+(dof <- length(o) - 1)
+(x2 <- sum((o - e)^2 / e))
+(p_value <- pchisq(q = x2, df = dof, lower.tail = FALSE))
+```
+
+Or simulate this by taking the mean of 10,000 random trials.
+
+```{r}
+mean(rchisq(n = 10000, df = dof) >= x2)
+```
+
+```{r warning=FALSE}
+data.frame(x = 0:100 / 10) %>%
+  mutate(density = pchisq(x, df = dof, lower.tail = FALSE),
+         cdf = if_else(x > x2, density, as.numeric(NA))) %>%
+  ggplot() +
+  geom_line(aes(x = x, y = density)) +
+  geom_area(aes(x = x, y = cdf), alpha = 0.3) +
+  theme_minimal() +
+  labs(title = "P(X^2 > 1.47) when X ~ ChiSq(3)")
+```
+
+How large would $X^2$ have to be to conclude the observed were not in agreement with expectations?
+
+```{r}
+qchisq(p = .05, df = 3, lower.tail = FALSE)
 ```
 
 

@@ -4,6 +4,65 @@ Unsupervised machine learning searches for structure in unlabeled data (data wit
 
 # Dimensionality Reduction
 
+## Exploratory Factor Analysis
+
+```{r setup}
+library(tidyverse)
+library(corrplot)
+```
+
+
+These notes are based on this [UCLA seminar](https://stats.idre.ucla.edu/spss/seminars/introduction-to-factor-analysis/a-practical-introduction-to-factor-analysis/).
+
+Factor analysis identifies a set of underlying variables called factors that can explain the interrelationships among variables.
+
+I'll learn by example with a subset of questions from the SPSS Anxiety Questionnaire (SAQ-8). The SAQ-8 consists of the following questions:
+
+1. Statistics makes me cry
+2. My friends will think I’m stupid for not being able to cope with SPSS
+3. Standard deviations excite me
+4. I dream that Pearson is attacking me with correlation coefficients
+5. I don’t understand statistics
+6. I have little experience of computers
+7. All computers hate me
+8. I have never been good at mathematics
+
+```{r}
+saq8 <- foreign::read.spss("./input/SAQ8.sav", to.data.frame=TRUE)
+skimr::skim(saq8)
+```
+
+The correlation table indicates most items have some correlation with each other ranging from *r* = −
+0.382 to *r* = 0.514. Due to relatively high correlations among items, this would be a good candidate for factor analysis. Recall that the goal of factor analysis is to model the interrelationships between items with fewer (latent) variables. These interrelationships can be broken up into multiple components.
+
+```{r}
+make_likert <- function(x){
+  x = case_when(
+    x == "Strongly disagree" ~ 1,
+    x == "Strongly Disagree" ~ 1,
+    x == "Disagree" ~ 2,
+    x == "Neither" ~ 3,
+    x == "Agree" ~ 4,
+    x == "Strongly agree" ~ 5
+  )
+  # x = factor(
+  #   x, 
+  #   levels = c(1:5),
+  #   labels = c("Strongly disagree", "Disagree", "Neither", "Agree", "Strongly agree"),
+  #   ordered = TRUE
+  # )
+  x
+}
+saq8_2 <- saq8 %>% mutate_at(vars(everything()), make_likert)
+corr <- cor(saq8_2)
+corrplot::corrplot(corr, method = "number", type = "lower")
+```
+
+
+ 
+
+## Confirmatory Factor Analysis
+
 ## PCA
 
 ## t-SNE
