@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.3 Two-Way Tables | My Data Science Notes</title>
+  <title>2.2 Two-Way Tables | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.3 Two-Way Tables | My Data Science Notes" />
+  <meta property="og:title" content="2.2 Two-Way Tables | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.3 Two-Way Tables | My Data Science Notes" />
+  <meta name="twitter:title" content="2.2 Two-Way Tables | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-07-26" />
+<meta name="date" content="2020-09-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,13 +53,6 @@
 <script src="assets/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="assets/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
 <script src="assets/tabwid-1.0.0/tabwid.js"></script>
-<script src="assets/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="assets/plotly-binding-4.9.2.1/plotly.js"></script>
-<script src="assets/typedarray-0.1/typedarray.min.js"></script>
-<link href="assets/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="assets/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
-<link href="assets/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="assets/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -158,61 +151,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="cont-dist.html"><a href="cont-dist.html"><i class="fa fa-check"></i><b>1.3</b> Continuous Distributions</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="cont-dist.html"><a href="cont-dist.html#normal"><i class="fa fa-check"></i><b>1.3.1</b> Normal</a></li>
+<li class="chapter" data-level="1.3.2" data-path="cont-dist.html"><a href="cont-dist.html#chi-squared"><i class="fa fa-check"></i><b>1.3.2</b> Chi-Squared</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="join-distributions.html"><a href="join-distributions.html"><i class="fa fa-check"></i><b>1.4</b> Join Distributions</a></li>
 <li class="chapter" data-level="1.5" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>1.5</b> Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>2</b> Statistical Tests</a><ul>
-<li class="chapter" data-level="2.1" data-path="chi-square-test.html"><a href="chi-square-test.html"><i class="fa fa-check"></i><b>2.1</b> Chi-Square Test</a></li>
-<li class="chapter" data-level="2.2" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>2.2</b> One-Way Tables</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-square-goodness-of-fit-test"><i class="fa fa-check"></i><b>2.2.1</b> Chi-Square Goodness-of-Fit Test</a></li>
-<li class="chapter" data-level="2.2.2" data-path="one-way-tables.html"><a href="one-way-tables.html#proportion-test"><i class="fa fa-check"></i><b>2.2.2</b> Proportion Test</a></li>
+<li class="chapter" data-level="2" data-path="contingency-tables.html"><a href="contingency-tables.html"><i class="fa fa-check"></i><b>2</b> Contingency Tables</a><ul>
+<li class="chapter" data-level="2.1" data-path="one-way-tables.html"><a href="one-way-tables.html"><i class="fa fa-check"></i><b>2.1</b> One-Way Tables</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="one-way-tables.html"><a href="one-way-tables.html#one-proportion-z-test"><i class="fa fa-check"></i><b>2.1.1</b> One-Proportion Z-Test</a></li>
+<li class="chapter" data-level="2.1.2" data-path="one-way-tables.html"><a href="one-way-tables.html#exact-binomial-test"><i class="fa fa-check"></i><b>2.1.2</b> Exact Binomial Test</a></li>
+<li class="chapter" data-level="2.1.3" data-path="one-way-tables.html"><a href="one-way-tables.html#exact-tests"><i class="fa fa-check"></i><b>2.1.3</b> Exact Tests</a></li>
+<li class="chapter" data-level="2.1.4" data-path="one-way-tables.html"><a href="one-way-tables.html#chi-squared-goodness-of-fit-test"><i class="fa fa-check"></i><b>2.1.4</b> Chi-Squared Goodness-of-Fit Test</a></li>
+<li class="chapter" data-level="2.1.5" data-path="one-way-tables.html"><a href="one-way-tables.html#g-test"><i class="fa fa-check"></i><b>2.1.5</b> G-Test</a></li>
+<li class="chapter" data-level="2.1.6" data-path="one-way-tables.html"><a href="one-way-tables.html#fisher-exact-test"><i class="fa fa-check"></i><b>2.1.6</b> Fisher Exact Test</a></li>
+<li class="chapter" data-level="2.1.7" data-path="one-way-tables.html"><a href="one-way-tables.html#special-case-proportion-test-and-exact-binomial-test"><i class="fa fa-check"></i><b>2.1.7</b> Special Case: Proportion Test and Exact Binomial Test</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>2.3</b> Two-Way Tables</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-square-independence-test"><i class="fa fa-check"></i><b>2.3.1</b> Chi-Square Independence Test</a></li>
-<li class="chapter" data-level="2.3.2" data-path="two-way-tables.html"><a href="two-way-tables.html#residuals-analysis"><i class="fa fa-check"></i><b>2.3.2</b> Residuals Analysis</a></li>
-<li class="chapter" data-level="2.3.3" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>2.3.3</b> Difference in Proportions</a></li>
-<li class="chapter" data-level="2.3.4" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>2.3.4</b> Relative Risk</a></li>
-<li class="chapter" data-level="2.3.5" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>2.3.5</b> Odds Ratio</a></li>
-<li class="chapter" data-level="2.3.6" data-path="two-way-tables.html"><a href="two-way-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>2.3.6</b> Partitioning Chi-Square</a></li>
-<li class="chapter" data-level="2.3.7" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>2.3.7</b> Correlation</a></li>
+<li class="chapter" data-level="2.2" data-path="two-way-tables.html"><a href="two-way-tables.html"><i class="fa fa-check"></i><b>2.2</b> Two-Way Tables</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="two-way-tables.html"><a href="two-way-tables.html#proportion-difference-test"><i class="fa fa-check"></i><b>2.2.1</b> Proportion Difference Test</a></li>
+<li class="chapter" data-level="2.2.2" data-path="two-way-tables.html"><a href="two-way-tables.html#chi-square-independence-test"><i class="fa fa-check"></i><b>2.2.2</b> Chi-Square Independence Test</a></li>
+<li class="chapter" data-level="2.2.3" data-path="two-way-tables.html"><a href="two-way-tables.html#residuals-analysis"><i class="fa fa-check"></i><b>2.2.3</b> Residuals Analysis</a></li>
+<li class="chapter" data-level="2.2.4" data-path="two-way-tables.html"><a href="two-way-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>2.2.4</b> Difference in Proportions</a></li>
+<li class="chapter" data-level="2.2.5" data-path="two-way-tables.html"><a href="two-way-tables.html#relative-risk"><i class="fa fa-check"></i><b>2.2.5</b> Relative Risk</a></li>
+<li class="chapter" data-level="2.2.6" data-path="two-way-tables.html"><a href="two-way-tables.html#odds-ratio"><i class="fa fa-check"></i><b>2.2.6</b> Odds Ratio</a></li>
+<li class="chapter" data-level="2.2.7" data-path="two-way-tables.html"><a href="two-way-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>2.2.7</b> Partitioning Chi-Square</a></li>
+<li class="chapter" data-level="2.2.8" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>2.2.8</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>2.4</b> K-Way Tables</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>2.4.1</b> Odds Ratio</a></li>
-<li class="chapter" data-level="2.4.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>2.4.2</b> Chi-Square Independence Test</a></li>
-</ul></li>
-<li class="chapter" data-level="2.5" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>2.5</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="continuous-analysis.html"><a href="continuous-analysis.html#correlation-1"><i class="fa fa-check"></i><b>2.5.1</b> Correlation</a></li>
+<li class="chapter" data-level="2.3" data-path="k-way-tables.html"><a href="k-way-tables.html"><i class="fa fa-check"></i><b>2.3</b> K-Way Tables</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="k-way-tables.html"><a href="k-way-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>2.3.1</b> Odds Ratio</a></li>
+<li class="chapter" data-level="2.3.2" data-path="k-way-tables.html"><a href="k-way-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>2.3.2</b> Chi-Square Independence Test</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="experiment-design.html"><a href="experiment-design.html"><i class="fa fa-check"></i><b>3</b> Experiment Design</a><ul>
-<li class="chapter" data-level="3.1" data-path="single-factor.html"><a href="single-factor.html"><i class="fa fa-check"></i><b>3.1</b> Single Factor</a></li>
-<li class="chapter" data-level="3.2" data-path="blocking.html"><a href="blocking.html"><i class="fa fa-check"></i><b>3.2</b> Blocking</a></li>
-<li class="chapter" data-level="3.3" data-path="nested.html"><a href="nested.html"><i class="fa fa-check"></i><b>3.3</b> Nested</a></li>
-<li class="chapter" data-level="3.4" data-path="split-plot.html"><a href="split-plot.html"><i class="fa fa-check"></i><b>3.4</b> Split Plot</a></li>
+<li class="chapter" data-level="3" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html"><i class="fa fa-check"></i><b>3</b> ANOVA, MANOVA, ANCOVA</a><ul>
+<li class="chapter" data-level="3.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>3.1</b> Background</a></li>
+<li class="chapter" data-level="3.2" data-path="example.html"><a href="example.html"><i class="fa fa-check"></i><b>3.2</b> Example</a></li>
+<li class="chapter" data-level="3.3" data-path="handling-non-constant-variance.html"><a href="handling-non-constant-variance.html"><i class="fa fa-check"></i><b>3.3</b> Handling Non-Constant Variance</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="handling-non-constant-variance.html"><a href="handling-non-constant-variance.html#example-1"><i class="fa fa-check"></i><b>3.3.1</b> Example</a></li>
+<li class="chapter" data-level="3.3.2" data-path="handling-non-constant-variance.html"><a href="handling-non-constant-variance.html#multiple-variance-comparison-f-test"><i class="fa fa-check"></i><b>3.3.2</b> Multiple Variance Comparison F Test</a></li>
+<li class="chapter" data-level="3.3.3" data-path="handling-non-constant-variance.html"><a href="handling-non-constant-variance.html#example-2"><i class="fa fa-check"></i><b>3.3.3</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a></li>
-<li class="chapter" data-level="4" data-path="ordinary-least-squares.html"><a href="ordinary-least-squares.html"><i class="fa fa-check"></i><b>4</b> Ordinary Least Squares</a><ul>
-<li class="chapter" data-level="4.1" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>4.1</b> Linear Regression Model</a></li>
-<li class="chapter" data-level="4.2" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>4.2</b> Parameter Estimation</a></li>
-<li class="chapter" data-level="4.3" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>4.3</b> Model Assumptions</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>4.3.1</b> Linearity</a></li>
-<li class="chapter" data-level="4.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>4.3.2</b> Multicollinearity</a></li>
-<li class="chapter" data-level="4.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>4.3.3</b> Normality</a></li>
-<li class="chapter" data-level="4.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>4.3.4</b> Equal Variances</a></li>
+<li class="chapter" data-level="3.4" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>3.4</b> References</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>4.4</b> Prediction</a></li>
-<li class="chapter" data-level="4.5" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>4.5</b> Inference</a><ul>
-<li class="chapter" data-level="4.5.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>4.5.1</b> <em>t</em>-Test</a></li>
-<li class="chapter" data-level="4.5.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>4.5.2</b> <em>F</em>-Test</a></li>
+<li class="chapter" data-level="4" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>4</b> Continuous Variable Analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="two-way-tables.html"><a href="two-way-tables.html#correlation"><i class="fa fa-check"></i><b>4.1</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="4.6" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>4.6</b> Interpretation</a></li>
-<li class="chapter" data-level="4.7" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>4.7</b> Model Validation</a><ul>
-<li class="chapter" data-level="4.7.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>4.7.1</b> Accuracy Metrics</a></li>
-<li class="chapter" data-level="4.7.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>4.7.2</b> Cross-Validation</a></li>
-<li class="chapter" data-level="4.7.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>4.7.3</b> Gain Curve</a></li>
+<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a><ul>
+<li class="chapter" data-level="4.2" data-path="linear-regression-model.html"><a href="linear-regression-model.html"><i class="fa fa-check"></i><b>4.2</b> Linear Regression Model</a></li>
+<li class="chapter" data-level="4.3" data-path="parameter-estimation.html"><a href="parameter-estimation.html"><i class="fa fa-check"></i><b>4.3</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="4.4" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>4.4</b> Model Assumptions</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="model-assumptions.html"><a href="model-assumptions.html#linearity"><i class="fa fa-check"></i><b>4.4.1</b> Linearity</a></li>
+<li class="chapter" data-level="4.4.2" data-path="model-assumptions.html"><a href="model-assumptions.html#multicollinearity"><i class="fa fa-check"></i><b>4.4.2</b> Multicollinearity</a></li>
+<li class="chapter" data-level="4.4.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normality"><i class="fa fa-check"></i><b>4.4.3</b> Normality</a></li>
+<li class="chapter" data-level="4.4.4" data-path="model-assumptions.html"><a href="model-assumptions.html#equal-variances"><i class="fa fa-check"></i><b>4.4.4</b> Equal Variances</a></li>
 </ul></li>
-<li class="chapter" data-level="4.8" data-path="ols-reference.html"><a href="ols-reference.html"><i class="fa fa-check"></i><b>4.8</b> OLS Reference</a></li>
+<li class="chapter" data-level="4.5" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>4.5</b> Prediction</a></li>
+<li class="chapter" data-level="4.6" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>4.6</b> Inference</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="inference.html"><a href="inference.html#t-test"><i class="fa fa-check"></i><b>4.6.1</b> <em>t</em>-Test</a></li>
+<li class="chapter" data-level="4.6.2" data-path="inference.html"><a href="inference.html#f-test"><i class="fa fa-check"></i><b>4.6.2</b> <em>F</em>-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="interpretation.html"><a href="interpretation.html"><i class="fa fa-check"></i><b>4.7</b> Interpretation</a></li>
+<li class="chapter" data-level="4.8" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i><b>4.8</b> Model Validation</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="model-validation.html"><a href="model-validation.html#accuracy-metrics"><i class="fa fa-check"></i><b>4.8.1</b> Accuracy Metrics</a></li>
+<li class="chapter" data-level="4.8.2" data-path="model-validation.html"><a href="model-validation.html#cross-validation"><i class="fa fa-check"></i><b>4.8.2</b> Cross-Validation</a></li>
+<li class="chapter" data-level="4.8.3" data-path="model-validation.html"><a href="model-validation.html#gain-curve"><i class="fa fa-check"></i><b>4.8.3</b> Gain Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="ols-reference.html"><a href="ols-reference.html"><i class="fa fa-check"></i><b>4.9</b> OLS Reference</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>5</b> Generalized Linear Models</a><ul>
 <li class="chapter" data-level="5.1" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>5.1</b> Logistic Regression</a></li>
@@ -225,7 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>5.4</b> Poisson Regression</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html"><i class="fa fa-check"></i><b>6</b> Multivariate Statistical Analysis</a><ul>
-<li class="chapter" data-level="6.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>6.1</b> Background</a></li>
+<li class="chapter" data-level="6.1" data-path="background.html"><a href="background.html#background"><i class="fa fa-check"></i><b>6.1</b> Background</a></li>
 <li class="chapter" data-level="6.2" data-path="manova.html"><a href="manova.html"><i class="fa fa-check"></i><b>6.2</b> MANOVA</a></li>
 <li class="chapter" data-level="6.3" data-path="repeated-measures.html"><a href="repeated-measures.html"><i class="fa fa-check"></i><b>6.3</b> Repeated Measures</a></li>
 <li class="chapter" data-level="6.4" data-path="lda.html"><a href="lda.html"><i class="fa fa-check"></i><b>6.4</b> LDA</a></li>
@@ -264,40 +266,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.1" data-path="maximal-margin-classifier.html"><a href="maximal-margin-classifier.html"><i class="fa fa-check"></i><b>10.1</b> Maximal Margin Classifier</a></li>
 <li class="chapter" data-level="10.2" data-path="support-vector-classifier.html"><a href="support-vector-classifier.html"><i class="fa fa-check"></i><b>10.2</b> Support Vector Classifier</a></li>
 <li class="chapter" data-level="10.3" data-path="support-vector-machines-1.html"><a href="support-vector-machines-1.html"><i class="fa fa-check"></i><b>10.3</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="10.4" data-path="my-svm-example.html"><a href="my-svm-example.html"><i class="fa fa-check"></i><b>10.4</b> My svm Example</a></li>
-<li class="chapter" data-level="10.5" data-path="using-caret.html"><a href="using-caret.html"><i class="fa fa-check"></i><b>10.5</b> Using Caret</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="part-3-unupervised-machine-learning.html"><a href="part-3-unupervised-machine-learning.html"><i class="fa fa-check"></i>PART 3: Unupervised Machine Learning</a></li>
-<li class="chapter" data-level="11" data-path="dimensionality-reduction.html"><a href="dimensionality-reduction.html"><i class="fa fa-check"></i><b>11</b> Dimensionality Reduction</a><ul>
-<li class="chapter" data-level="11.1" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>11.1</b> PCA</a></li>
-<li class="chapter" data-level="11.2" data-path="t-sne.html"><a href="t-sne.html"><i class="fa fa-check"></i><b>11.2</b> t-SNE</a></li>
-<li class="chapter" data-level="11.3" data-path="svd.html"><a href="svd.html"><i class="fa fa-check"></i><b>11.3</b> SVD</a></li>
+<li class="chapter" data-level="" data-path="part-3-unupervised-machine-learning.html"><a href="part-3-unupervised-machine-learning.html"><i class="fa fa-check"></i>PART 3: Unupervised Machine Learning</a><ul>
+<li class="chapter" data-level="10.4" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>10.4</b> Exploratory Factor Analysis</a></li>
+<li class="chapter" data-level="10.5" data-path="confirmatory-factor-analysis.html"><a href="confirmatory-factor-analysis.html"><i class="fa fa-check"></i><b>10.5</b> Confirmatory Factor Analysis</a></li>
+<li class="chapter" data-level="10.6" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>10.6</b> PCA</a></li>
+<li class="chapter" data-level="10.7" data-path="t-sne.html"><a href="t-sne.html"><i class="fa fa-check"></i><b>10.7</b> t-SNE</a></li>
+<li class="chapter" data-level="10.8" data-path="svd.html"><a href="svd.html"><i class="fa fa-check"></i><b>10.8</b> SVD</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>12</b> Cluster Analysis</a><ul>
-<li class="chapter" data-level="12.1" data-path="k-means.html"><a href="k-means.html"><i class="fa fa-check"></i><b>12.1</b> K-Means</a></li>
-<li class="chapter" data-level="12.2" data-path="hca.html"><a href="hca.html"><i class="fa fa-check"></i><b>12.2</b> HCA</a></li>
+<li class="chapter" data-level="11" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>11</b> Cluster Analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="k-means.html"><a href="k-means.html"><i class="fa fa-check"></i><b>11.1</b> K-Means</a></li>
+<li class="chapter" data-level="11.2" data-path="hca.html"><a href="hca.html"><i class="fa fa-check"></i><b>11.2</b> HCA</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>13</b> Text Mining</a><ul>
-<li class="chapter" data-level="13.1" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>13.1</b> Tidy Text</a></li>
-<li class="chapter" data-level="13.2" data-path="bag-of-words.html"><a href="bag-of-words.html"><i class="fa fa-check"></i><b>13.2</b> Bag of Words</a></li>
-<li class="chapter" data-level="13.3" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>13.3</b> Sentiment Analysis</a><ul>
-<li class="chapter" data-level="13.3.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#n-grams"><i class="fa fa-check"></i><b>13.3.1</b> N-Grams</a></li>
-<li class="chapter" data-level="13.3.2" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#converting-to-and-from-non-tidy-formats"><i class="fa fa-check"></i><b>13.3.2</b> Converting to and from non-tidy formats</a></li>
-<li class="chapter" data-level="13.3.3" data-path="disc-dist.html"><a href="disc-dist.html#example"><i class="fa fa-check"></i><b>13.3.3</b> Example</a></li>
+<li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a><ul>
+<li class="chapter" data-level="12.1" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>12.1</b> Tidy Text</a></li>
+<li class="chapter" data-level="12.2" data-path="bag-of-words.html"><a href="bag-of-words.html"><i class="fa fa-check"></i><b>12.2</b> Bag of Words</a></li>
+<li class="chapter" data-level="12.3" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>12.3</b> Sentiment Analysis</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#n-grams"><i class="fa fa-check"></i><b>12.3.1</b> N-Grams</a></li>
+<li class="chapter" data-level="12.3.2" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#converting-to-and-from-non-tidy-formats"><i class="fa fa-check"></i><b>12.3.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="12.3.3" data-path="example.html"><a href="example.html#example"><i class="fa fa-check"></i><b>12.3.3</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="topic-modeling.html"><a href="topic-modeling.html"><i class="fa fa-check"></i><b>13.4</b> Topic Modeling</a></li>
-<li class="chapter" data-level="13.5" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html"><i class="fa fa-check"></i><b>13.5</b> Appendix: String Manipulation</a><ul>
-<li class="chapter" data-level="13.5.1" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#stringr-package"><i class="fa fa-check"></i><b>13.5.1</b> stringr package</a></li>
-<li class="chapter" data-level="13.5.2" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#regular-expressions"><i class="fa fa-check"></i><b>13.5.2</b> Regular Expressions</a></li>
+<li class="chapter" data-level="12.4" data-path="topic-modeling.html"><a href="topic-modeling.html"><i class="fa fa-check"></i><b>12.4</b> Topic Modeling</a></li>
+<li class="chapter" data-level="12.5" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html"><i class="fa fa-check"></i><b>12.5</b> Appendix: String Manipulation</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#stringr-package"><i class="fa fa-check"></i><b>12.5.1</b> stringr package</a></li>
+<li class="chapter" data-level="12.5.2" data-path="appendix-string-manipulation.html"><a href="appendix-string-manipulation.html#regular-expressions"><i class="fa fa-check"></i><b>12.5.2</b> Regular Expressions</a></li>
 </ul></li>
-<li class="chapter" data-level="13.6" data-path="reference-links.html"><a href="reference-links.html"><i class="fa fa-check"></i><b>13.6</b> Reference Links</a></li>
+<li class="chapter" data-level="12.6" data-path="reference-links.html"><a href="reference-links.html"><i class="fa fa-check"></i><b>12.6</b> Reference Links</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>14</b> Survival Analysis</a><ul>
-<li class="chapter" data-level="14.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>14.1</b> Basic Concepts</a></li>
-<li class="chapter" data-level="14.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>14.2</b> Survival Curve Estimation</a><ul>
-<li class="chapter" data-level="14.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>14.2.1</b> Kaplan-Meier</a></li>
-<li class="chapter" data-level="14.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>14.2.2</b> Weibull</a></li>
-<li class="chapter" data-level="14.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>14.2.3</b> Cox</a></li>
+<li class="chapter" data-level="13" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>13</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="basic-concepts.html"><a href="basic-concepts.html"><i class="fa fa-check"></i><b>13.1</b> Basic Concepts</a></li>
+<li class="chapter" data-level="13.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html"><i class="fa fa-check"></i><b>13.2</b> Survival Curve Estimation</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#kaplan-meier"><i class="fa fa-check"></i><b>13.2.1</b> Kaplan-Meier</a></li>
+<li class="chapter" data-level="13.2.2" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#weibull"><i class="fa fa-check"></i><b>13.2.2</b> Weibull</a></li>
+<li class="chapter" data-level="13.2.3" data-path="survival-curve-estimation.html"><a href="survival-curve-estimation.html#cox"><i class="fa fa-check"></i><b>13.2.3</b> Cox</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
@@ -305,12 +306,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="shiny-apps.html"><a href="shiny-apps.html"><i class="fa fa-check"></i>Shiny Apps</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i>Packages</a><ul>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="14.2.4" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>14.2.4</b> Document Functions with roxygen</a></li>
+<li class="chapter" data-level="13.2.4" data-path="packages.html"><a href="packages.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>13.2.4</b> Document Functions with roxygen</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
 <li class="chapter" data-level="" data-path="packages.html"><a href="packages.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html#references"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -332,192 +333,312 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="two-way-tables" class="section level2">
-<h2><span class="header-section-number">2.3</span> Two-Way Tables</h2>
+<h2><span class="header-section-number">2.2</span> Two-Way Tables</h2>
+<div id="proportion-difference-test" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Proportion Difference Test</h3>
+<p>The proportion difference test uses the difference in sample proportions <span class="math inline">\(\hat{d} = p_X - p_Y\)</span> as an estimate of the difference in population proportions <span class="math inline">\(d = \pi_X - \pi_Y\)</span> to evaluate an hypothesized difference in population proportions <span class="math inline">\(d_0 = \pi_{X_0} - \pi_{Y_0}\)</span> under a null hypothesis <span class="math inline">\(H_0: d = d_0\)</span>. You can also construct a <span class="math inline">\((1 - \alpha)\%\)</span> confidence interval around <span class="math inline">\(\hat{d}\)</span> to estimate <span class="math inline">\(d\)</span> within a margin of error <span class="math inline">\(\epsilon\)</span>.</p>
+<p>The normal approximation method applies when the central limit theorem conditions hold:</p>
+<ul>
+<li>the sample is independently drawn, meaning random sampling without replacement from <span class="math inline">\(n &lt; 10\%\)</span> of the population in observational studies, or random assignment in experiments,</li>
+<li>there are at least <span class="math inline">\(n_i p_i &gt;= 5\)</span> successes and <span class="math inline">\(n_i (1 - p_i) &gt;= 5\)</span> failures for each group <span class="math inline">\(i \in (X,Y)\)</span>,</li>
+<li>the sample sizes are both <span class="math inline">\(&gt;=30\)</span>, and</li>
+<li>the probability of success for each group is not extreme, <span class="math inline">\((0.2, 0.8)\)</span>.</li>
+</ul>
+<p><em>In an experiment on the effectiveness of computer training,</em> <span class="math inline">\(n_X = 125\)</span> <em>students were assigned to computer training and</em> <span class="math inline">\(n_Y = 175\)</span> <em>were assigned to traditional training.</em> <span class="math inline">\(x = 94 (75.2 \%)\)</span> <em>of the computer training students passed the certification exam and</em> <span class="math inline">\(y = 113 (64.6 \%)\)</span> <em>of the tradition training students passed the certification exam, a difference of $ = .752 - .646 = .1063. At an</em> <span class="math inline">\(\alpha = 0.05\)</span> <em>level of significance, does computer training produce higher success rates than traditional training? What is the</em> <span class="math inline">\((1 - \alpha) = 95%\)</span> <em>confidence interval of the difference in success rates?</em></p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="two-way-tables.html#cb67-1"></a>x &lt;-<span class="st"> </span><span class="dv">94</span></span>
+<span id="cb67-2"><a href="two-way-tables.html#cb67-2"></a>n_x &lt;-<span class="st"> </span><span class="dv">125</span></span>
+<span id="cb67-3"><a href="two-way-tables.html#cb67-3"></a>y &lt;-<span class="st"> </span><span class="dv">113</span></span>
+<span id="cb67-4"><a href="two-way-tables.html#cb67-4"></a>n_y &lt;-<span class="st"> </span><span class="dv">175</span></span>
+<span id="cb67-5"><a href="two-way-tables.html#cb67-5"></a>(p_x &lt;-<span class="st"> </span>x <span class="op">/</span><span class="st"> </span>n_x)</span></code></pre></div>
+<pre><code>## [1] 0.752</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="two-way-tables.html#cb69-1"></a>(p_y &lt;-<span class="st"> </span>y <span class="op">/</span><span class="st"> </span>n_y)</span></code></pre></div>
+<pre><code>## [1] 0.6457143</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="two-way-tables.html#cb71-1"></a>(d &lt;-<span class="st"> </span>(p_x <span class="op">-</span><span class="st"> </span>p_y))</span></code></pre></div>
+<pre><code>## [1] 0.1062857</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="two-way-tables.html#cb73-1"></a>(d_hat &lt;-<span class="st"> </span>p_x <span class="op">-</span><span class="st"> </span>p_y)</span></code></pre></div>
+<pre><code>## [1] 0.1062857</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="two-way-tables.html#cb75-1"></a>alpha &lt;-<span class="st"> </span><span class="fl">0.05</span></span></code></pre></div>
+<p>The samples are independently drawn because the experiment is random assignment. There are <span class="math inline">\(&gt;= 5\)</span> success, <span class="math inline">\(&gt;= 5\)</span> failures, <span class="math inline">\(&gt;= 30\)</span> observations, and <span class="math inline">\(.2 &lt; p &lt;.8\)</span> probability of success for both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, so we can use the difference in proportions test.</p>
+<p>The null hypothesis is <span class="math inline">\(H_0: d = d_0 = (\pi_x - \pi_y) = 0\)</span> with alternative hypothesis <span class="math inline">\(H_a: d &gt; 0\)</span>. This is a right-tail test. The test statistic is <span class="math inline">\(Z = \frac{d - d_0}{se_{d_0}}\)</span> where <span class="math inline">\(se_{d_0} = \sqrt{p (1 - p) \frac{{1}}{{n_X}} + \frac{{1}}{{n_Y}}}\)</span> with <span class="math inline">\(p = \frac{{x+y}}{{n_X + n_Y}} = \frac{94 + 113}{125 + 175} = 0.69\)</span>. <span class="math inline">\(se_{d_0} = \sqrt{.69 (1 - .69) \frac{{1}}{{125}} + \frac{{1}}{{175}}} = .0542\)</span>. <span class="math inline">\(Z = \frac{.1063 - 0}{.0542} = 1.96\)</span>. <span class="math inline">\(P(z &gt; 1.96) = .0249\)</span>, so reject <span class="math inline">\(H_0\)</span> at the <span class="math inline">\(\alpha = 0.05\)</span> level of significance.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="two-way-tables.html#cb76-1"></a>d_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb76-2"><a href="two-way-tables.html#cb76-2"></a></span>
+<span id="cb76-3"><a href="two-way-tables.html#cb76-3"></a>(p &lt;-<span class="st"> </span>(x <span class="op">+</span><span class="st"> </span>y) <span class="op">/</span><span class="st"> </span>(n_x <span class="op">+</span><span class="st"> </span>n_y))</span></code></pre></div>
+<pre><code>## [1] 0.69</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="two-way-tables.html#cb78-1"></a>(se_d0 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n_x <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n_y)))</span></code></pre></div>
+<pre><code>## [1] 0.05416166</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="two-way-tables.html#cb80-1"></a>(<span class="dt">z =</span> (d_hat <span class="op">-</span><span class="st"> </span>d_<span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>se_d0)</span></code></pre></div>
+<pre><code>## [1] 1.962379</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="two-way-tables.html#cb82-1"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> d, </span>
+<span id="cb82-2"><a href="two-way-tables.html#cb82-2"></a>      <span class="dt">mean =</span> d_<span class="dv">0</span>, </span>
+<span id="cb82-3"><a href="two-way-tables.html#cb82-3"></a>      <span class="dt">sd =</span> se_d0, </span>
+<span id="cb82-4"><a href="two-way-tables.html#cb82-4"></a>      <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.02485918</code></pre>
+<p>R package <code>stats</code> function <code>prop.test</code> does this same calculation.</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="two-way-tables.html#cb84-1"></a>(prop.test.result &lt;-<span class="st"> </span><span class="kw">prop.test</span>(<span class="dt">x =</span> <span class="kw">c</span>(x, y), </span>
+<span id="cb84-2"><a href="two-way-tables.html#cb84-2"></a>                               <span class="dt">n =</span> <span class="kw">c</span>(n_x, n_y), </span>
+<span id="cb84-3"><a href="two-way-tables.html#cb84-3"></a>                               <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>, </span>
+<span id="cb84-4"><a href="two-way-tables.html#cb84-4"></a>                               <span class="dt">conf.level =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha, </span>
+<span id="cb84-5"><a href="two-way-tables.html#cb84-5"></a>                               <span class="dt">correct =</span> <span class="ot">FALSE</span>))</span></code></pre></div>
+<pre><code>## 
+## 	2-sample test for equality of proportions without continuity
+## 	correction
+## 
+## data:  c(x, y) out of c(n_x, n_y)
+## X-squared = 3.8509, df = 1, p-value = 0.02486
+## alternative hypothesis: greater
+## 95 percent confidence interval:
+##  0.01926052 1.00000000
+## sample estimates:
+##    prop 1    prop 2 
+## 0.7520000 0.6457143</code></pre>
+<p>Graph the hypothesis test with rejection range in red.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="two-way-tables.html#cb86-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb86-2"><a href="two-way-tables.html#cb86-2"></a><span class="kw">library</span>(dplyr)  <span class="co"># for %&gt;%</span></span>
+<span id="cb86-3"><a href="two-way-tables.html#cb86-3"></a></span>
+<span id="cb86-4"><a href="two-way-tables.html#cb86-4"></a>lrr =<span class="st"> </span><span class="op">-</span><span class="ot">Inf</span></span>
+<span id="cb86-5"><a href="two-way-tables.html#cb86-5"></a>urr =<span class="st"> </span><span class="kw">qnorm</span>(<span class="dt">p =</span> alpha, <span class="dt">mean =</span> d_<span class="dv">0</span>, <span class="dt">sd =</span> se_d0, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb86-6"><a href="two-way-tables.html#cb86-6"></a><span class="kw">data.frame</span>(<span class="dt">d =</span> <span class="dv">-300</span><span class="op">:</span><span class="dv">300</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>) <span class="op">%&gt;%</span></span>
+<span id="cb86-7"><a href="two-way-tables.html#cb86-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">dnorm</span>(<span class="dt">x =</span> d, <span class="dt">mean =</span> d_<span class="dv">0</span>, <span class="dt">sd =</span> se_d0)) <span class="op">%&gt;%</span></span>
+<span id="cb86-8"><a href="two-way-tables.html#cb86-8"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rr =</span> <span class="kw">ifelse</span>(d <span class="op">&lt;</span><span class="st"> </span>lrr <span class="op">|</span><span class="st"> </span>d <span class="op">&gt;</span><span class="st"> </span>urr, density, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb86-9"><a href="two-way-tables.html#cb86-9"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb86-10"><a href="two-way-tables.html#cb86-10"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> d, <span class="dt">y =</span> density)) <span class="op">+</span></span>
+<span id="cb86-11"><a href="two-way-tables.html#cb86-11"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> d, <span class="dt">y =</span> rr, <span class="dt">fill =</span> <span class="st">&quot;red&quot;</span>), <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb86-12"><a href="two-way-tables.html#cb86-12"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> d_hat), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></span>
+<span id="cb86-13"><a href="two-way-tables.html#cb86-13"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> d_<span class="dv">0</span>), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
+<span id="cb86-14"><a href="two-way-tables.html#cb86-14"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&quot;Hypothesis Test of Difference in Proportions&quot;</span>),</span>
+<span id="cb86-15"><a href="two-way-tables.html#cb86-15"></a>       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&#39;p_X =&#39;</span><span class="op">~</span>.(<span class="kw">round</span>(p_x,<span class="dv">3</span>))<span class="op">~</span><span class="st">&#39;p_Y =&#39;</span><span class="op">~</span>.(<span class="kw">round</span>(p_y,<span class="dv">3</span>))),</span>
+<span id="cb86-16"><a href="two-way-tables.html#cb86-16"></a>       <span class="dt">x =</span> <span class="st">&quot;d&quot;</span>,</span>
+<span id="cb86-17"><a href="two-way-tables.html#cb86-17"></a>       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span></span>
+<span id="cb86-18"><a href="two-way-tables.html#cb86-18"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>Define a <span class="math inline">\((1 - \alpha)\%\)</span> confidence interval as <span class="math inline">\(\hat{d} \pm z_{\alpha {/} 2} se\)</span> where <span class="math inline">\(z_{\alpha {/} 2} se = \epsilon\)</span> is the margin of error. <span class="math inline">\(se = \sqrt{\frac{p_X (1 - p_X)}{n_X} + \frac{p_Y (1 - p_Y)}{n_Y}} = \sqrt{\frac{.752 (1 - .752)}{125} + \frac{.646 (1 - .646)}{175}} = .0529\)</span> and <span class="math inline">\(z_{\alpha {/} 2} = 1.96\)</span>.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="two-way-tables.html#cb87-1"></a>(se &lt;-<span class="st"> </span><span class="kw">sqrt</span>(p_x <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p_x) <span class="op">/</span><span class="st"> </span>n_x <span class="op">+</span><span class="st"> </span>p_y <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p_y) <span class="op">/</span><span class="st"> </span>n_y))</span></code></pre></div>
+<pre><code>## [1] 0.05290756</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="two-way-tables.html#cb89-1"></a>(z_crit &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dt">p =</span> alpha <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>))</span></code></pre></div>
+<pre><code>## [1] 1.959964</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="two-way-tables.html#cb91-1"></a>lcl &lt;-<span class="st"> </span>d_hat <span class="op">-</span><span class="st"> </span>z_crit <span class="op">*</span><span class="st"> </span>se</span>
+<span id="cb91-2"><a href="two-way-tables.html#cb91-2"></a>ucl &lt;-<span class="st"> </span>d_hat <span class="op">+</span><span class="st"> </span>z_crit <span class="op">*</span><span class="st"> </span>se</span>
+<span id="cb91-3"><a href="two-way-tables.html#cb91-3"></a><span class="kw">cat</span>(<span class="st">&quot;95% CI: &quot;</span>, <span class="kw">round</span>(d_hat, <span class="dv">4</span>), <span class="st">&quot;+/-&quot;</span>, <span class="kw">round</span>(se <span class="op">*</span><span class="st"> </span>z_crit, <span class="dv">4</span>), <span class="st">&quot;= (&quot;</span>, <span class="kw">round</span>(lcl, <span class="dv">4</span>), <span class="st">&quot;, &quot;</span>, <span class="kw">round</span>(ucl, <span class="dv">4</span>), <span class="st">&quot;)&quot;</span>)</span></code></pre></div>
+<pre><code>## 95% CI:  0.1063 +/- 0.1037 = ( 0.0026 ,  0.21 )</code></pre>
+<p>R function <code>prop.test</code> can calculate a confidence interval around a proportion. In this case, use a two-tail distribution.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="two-way-tables.html#cb93-1"></a>(prop.test.result &lt;-<span class="st"> </span><span class="kw">prop.test</span>(<span class="dt">x =</span> <span class="kw">c</span>(x, y), </span>
+<span id="cb93-2"><a href="two-way-tables.html#cb93-2"></a>                               <span class="dt">n =</span> <span class="kw">c</span>(n_x, n_y), </span>
+<span id="cb93-3"><a href="two-way-tables.html#cb93-3"></a>                               <span class="dt">conf.level =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha, </span>
+<span id="cb93-4"><a href="two-way-tables.html#cb93-4"></a>                               <span class="dt">correct =</span> <span class="ot">FALSE</span>))</span></code></pre></div>
+<pre><code>## 
+## 	2-sample test for equality of proportions without continuity
+## 	correction
+## 
+## data:  c(x, y) out of c(n_x, n_y)
+## X-squared = 3.8509, df = 1, p-value = 0.04972
+## alternative hypothesis: two.sided
+## 95 percent confidence interval:
+##  0.002588801 0.209982628
+## sample estimates:
+##    prop 1    prop 2 
+## 0.7520000 0.6457143</code></pre>
+<p>Graph the 95% CI.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="two-way-tables.html#cb95-1"></a>lcl &lt;-<span class="st"> </span><span class="kw">round</span>(prop.test.result<span class="op">$</span>conf.int[<span class="dv">1</span>], <span class="dv">3</span>)</span>
+<span id="cb95-2"><a href="two-way-tables.html#cb95-2"></a>ucl &lt;-<span class="st"> </span><span class="kw">round</span>(prop.test.result<span class="op">$</span>conf.int[<span class="dv">2</span>], <span class="dv">3</span>)</span>
+<span id="cb95-3"><a href="two-way-tables.html#cb95-3"></a><span class="kw">data.frame</span>(<span class="dt">d =</span> <span class="dv">-300</span><span class="op">:</span><span class="dv">300</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>) <span class="op">%&gt;%</span></span>
+<span id="cb95-4"><a href="two-way-tables.html#cb95-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">dnorm</span>(<span class="dt">x =</span> d, <span class="dt">mean =</span> d_hat, <span class="dt">sd =</span> se)) <span class="op">%&gt;%</span></span>
+<span id="cb95-5"><a href="two-way-tables.html#cb95-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rr =</span> <span class="kw">ifelse</span>(d <span class="op">&lt;</span><span class="st"> </span>lcl <span class="op">|</span><span class="st"> </span>d <span class="op">&gt;</span><span class="st"> </span>ucl, density, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb95-6"><a href="two-way-tables.html#cb95-6"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb95-7"><a href="two-way-tables.html#cb95-7"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> d, <span class="dt">y =</span> density)) <span class="op">+</span></span>
+<span id="cb95-8"><a href="two-way-tables.html#cb95-8"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> d, <span class="dt">y =</span> rr), <span class="dt">fill =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb95-9"><a href="two-way-tables.html#cb95-9"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> d_hat), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></span>
+<span id="cb95-10"><a href="two-way-tables.html#cb95-10"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&quot;Difference in Proportions Confidence Interval&quot;</span>),</span>
+<span id="cb95-11"><a href="two-way-tables.html#cb95-11"></a>       <span class="dt">subtitle =</span> <span class="kw">bquote</span>(<span class="st">&#39;p_X =&#39;</span><span class="op">~</span>.(<span class="kw">round</span>(p_x,<span class="dv">3</span>))<span class="op">~</span><span class="st">&#39;p_Y =&#39;</span><span class="op">~</span>.(<span class="kw">round</span>(p_y,<span class="dv">3</span>))),</span>
+<span id="cb95-12"><a href="two-way-tables.html#cb95-12"></a>       <span class="dt">x =</span> <span class="st">&quot;d&quot;</span>,</span>
+<span id="cb95-13"><a href="two-way-tables.html#cb95-13"></a>       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span></span>
+<span id="cb95-14"><a href="two-way-tables.html#cb95-14"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <p>These notes rely on PSU STATS 504 <a href="https://online.stat.psu.edu/stat504/node/69/">course notes</a>.</p>
 <p>A two-way frequency table is a frequency table for <em>two</em> categorical variables. You usually construct a two-way table to test whether the frequency counts in one categorical variable differ from the other categorical variable using the chi-square independence test. If there is a significant difference (i.e., the variables are related), then describe the relationship with an analysis of the residuals, calculations of measures of association (difference in proportions, relative risk, or odds ratio), and partition tests.</p>
 <p>Here are three case studies that illustrate the concepts. The first is a simple 2x2 table. The second is a 3x2 table that extends some of the concepts. The third is a 2x4 table where one factor is <em>ordinal</em>.</p>
 <p><strong>Study 1: “Vitamin C” 2x2 Table</strong>. A double blind study investigated whether vitamin C prevents common colds on a sample of <em>n</em> = 279 persons. This study has two categorical variables each with two levels, a 2x2 two way table.</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="two-way-tables.html#cb158-1"></a>vitc_o &lt;-<span class="st"> </span><span class="kw">matrix</span>(</span>
-<span id="cb158-2"><a href="two-way-tables.html#cb158-2"></a>  <span class="kw">c</span>(<span class="dv">31</span>, <span class="dv">17</span>, <span class="dv">109</span>, <span class="dv">122</span>), </span>
-<span id="cb158-3"><a href="two-way-tables.html#cb158-3"></a>  <span class="dt">ncol =</span> <span class="dv">2</span>, </span>
-<span id="cb158-4"><a href="two-way-tables.html#cb158-4"></a>  <span class="dt">dimnames =</span> <span class="kw">list</span>(</span>
-<span id="cb158-5"><a href="two-way-tables.html#cb158-5"></a>    <span class="dt">treat =</span> <span class="kw">c</span>(<span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;VitaminC&quot;</span>), </span>
-<span id="cb158-6"><a href="two-way-tables.html#cb158-6"></a>    <span class="dt">resp =</span> <span class="kw">c</span>(<span class="st">&quot;Cold&quot;</span>, <span class="st">&quot;NoCold&quot;</span>)</span>
-<span id="cb158-7"><a href="two-way-tables.html#cb158-7"></a>  )</span>
-<span id="cb158-8"><a href="two-way-tables.html#cb158-8"></a>)</span>
-<span id="cb158-9"><a href="two-way-tables.html#cb158-9"></a>vitc_o <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot; &quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb158-10"><a href="two-way-tables.html#cb158-10"></a>janitor<span class="op">::</span><span class="kw">adorn_totals</span>(<span class="dt">where =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="two-way-tables.html#cb96-1"></a>vitc_o &lt;-<span class="st"> </span><span class="kw">matrix</span>(</span>
+<span id="cb96-2"><a href="two-way-tables.html#cb96-2"></a>  <span class="kw">c</span>(<span class="dv">31</span>, <span class="dv">17</span>, <span class="dv">109</span>, <span class="dv">122</span>), </span>
+<span id="cb96-3"><a href="two-way-tables.html#cb96-3"></a>  <span class="dt">ncol =</span> <span class="dv">2</span>, </span>
+<span id="cb96-4"><a href="two-way-tables.html#cb96-4"></a>  <span class="dt">dimnames =</span> <span class="kw">list</span>(</span>
+<span id="cb96-5"><a href="two-way-tables.html#cb96-5"></a>    <span class="dt">treat =</span> <span class="kw">c</span>(<span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;VitaminC&quot;</span>), </span>
+<span id="cb96-6"><a href="two-way-tables.html#cb96-6"></a>    <span class="dt">resp =</span> <span class="kw">c</span>(<span class="st">&quot;Cold&quot;</span>, <span class="st">&quot;NoCold&quot;</span>)</span>
+<span id="cb96-7"><a href="two-way-tables.html#cb96-7"></a>  )</span>
+<span id="cb96-8"><a href="two-way-tables.html#cb96-8"></a>)</span>
+<span id="cb96-9"><a href="two-way-tables.html#cb96-9"></a>vitc_o <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot; &quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb96-10"><a href="two-way-tables.html#cb96-10"></a>janitor<span class="op">::</span><span class="kw">adorn_totals</span>(<span class="dt">where =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</span></code></pre></div>
 <pre><code>##           Cold NoCold Total
 ##   Placebo   31    109   140
 ##  VitaminC   17    122   139
 ##     Total   48    231   279</code></pre>
 <p><strong>Study 2: “Smoking” 3x2 Table</strong>. An analysis classifies <em>n</em> = 5375 high school students by their smoking behavior and the smoking behavior of their parents.</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="two-way-tables.html#cb160-1"></a>smoke_o &lt;-<span class="st"> </span><span class="kw">matrix</span>(</span>
-<span id="cb160-2"><a href="two-way-tables.html#cb160-2"></a>  <span class="kw">c</span>(<span class="dv">400</span>, <span class="dv">416</span>, <span class="dv">188</span>, <span class="dv">1380</span>, <span class="dv">1823</span>, <span class="dv">1168</span>), </span>
-<span id="cb160-3"><a href="two-way-tables.html#cb160-3"></a>  <span class="dt">ncol =</span> <span class="dv">2</span>,</span>
-<span id="cb160-4"><a href="two-way-tables.html#cb160-4"></a>  <span class="dt">dimnames =</span> <span class="kw">list</span>(</span>
-<span id="cb160-5"><a href="two-way-tables.html#cb160-5"></a>    <span class="dt">parents =</span> <span class="kw">c</span>(<span class="st">&quot;Both&quot;</span>, <span class="st">&quot;One&quot;</span>, <span class="st">&quot;Neither&quot;</span>),</span>
-<span id="cb160-6"><a href="two-way-tables.html#cb160-6"></a>    <span class="dt">student =</span> <span class="kw">c</span>(<span class="st">&quot;Smoker&quot;</span>, <span class="st">&quot;Non-smoker&quot;</span>))</span>
-<span id="cb160-7"><a href="two-way-tables.html#cb160-7"></a>)</span>
-<span id="cb160-8"><a href="two-way-tables.html#cb160-8"></a>smoke_o <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot; &quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb160-9"><a href="two-way-tables.html#cb160-9"></a>janitor<span class="op">::</span><span class="kw">adorn_totals</span>(<span class="dt">where =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="two-way-tables.html#cb98-1"></a>smoke_o &lt;-<span class="st"> </span><span class="kw">matrix</span>(</span>
+<span id="cb98-2"><a href="two-way-tables.html#cb98-2"></a>  <span class="kw">c</span>(<span class="dv">400</span>, <span class="dv">416</span>, <span class="dv">188</span>, <span class="dv">1380</span>, <span class="dv">1823</span>, <span class="dv">1168</span>), </span>
+<span id="cb98-3"><a href="two-way-tables.html#cb98-3"></a>  <span class="dt">ncol =</span> <span class="dv">2</span>,</span>
+<span id="cb98-4"><a href="two-way-tables.html#cb98-4"></a>  <span class="dt">dimnames =</span> <span class="kw">list</span>(</span>
+<span id="cb98-5"><a href="two-way-tables.html#cb98-5"></a>    <span class="dt">parents =</span> <span class="kw">c</span>(<span class="st">&quot;Both&quot;</span>, <span class="st">&quot;One&quot;</span>, <span class="st">&quot;Neither&quot;</span>),</span>
+<span id="cb98-6"><a href="two-way-tables.html#cb98-6"></a>    <span class="dt">student =</span> <span class="kw">c</span>(<span class="st">&quot;Smoker&quot;</span>, <span class="st">&quot;Non-smoker&quot;</span>))</span>
+<span id="cb98-7"><a href="two-way-tables.html#cb98-7"></a>)</span>
+<span id="cb98-8"><a href="two-way-tables.html#cb98-8"></a>smoke_o <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot; &quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb98-9"><a href="two-way-tables.html#cb98-9"></a>janitor<span class="op">::</span><span class="kw">adorn_totals</span>(<span class="dt">where =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</span></code></pre></div>
 <pre><code>##          Smoker Non.smoker Total
 ##     Both    400       1380  1780
 ##      One    416       1823  2239
 ##  Neither    188       1168  1356
 ##    Total   1004       4371  5375</code></pre>
 <p><strong>Study 3: “CHD” Ordinal Table</strong>. A study of classified <em>n</em> = 1329 patients by cholesterol level and whether they had been diagnosed with coronary heart disease (CHD).</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="two-way-tables.html#cb162-1"></a><span class="co"># tribble() is a little easier.</span></span>
-<span id="cb162-2"><a href="two-way-tables.html#cb162-2"></a>chd_o &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
-<span id="cb162-3"><a href="two-way-tables.html#cb162-3"></a>  <span class="op">~</span>L_<span class="dv">0</span>_<span class="dv">199</span>, <span class="op">~</span>L_<span class="dv">200</span>_<span class="dv">219</span>, <span class="op">~</span>L_<span class="dv">220</span>_<span class="dv">259</span>, <span class="op">~</span>L_260p,</span>
-<span id="cb162-4"><a href="two-way-tables.html#cb162-4"></a>  <span class="dv">12</span>, <span class="dv">8</span>, <span class="dv">31</span>, <span class="dv">41</span>,</span>
-<span id="cb162-5"><a href="two-way-tables.html#cb162-5"></a>  <span class="dv">307</span>, <span class="dv">246</span>, <span class="dv">439</span>, <span class="dv">245</span></span>
-<span id="cb162-6"><a href="two-way-tables.html#cb162-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</span>
-<span id="cb162-7"><a href="two-way-tables.html#cb162-7"></a><span class="kw">rownames</span>(chd_o) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CHD&quot;</span>, <span class="st">&quot;No CHD&quot;</span>)</span>
-<span id="cb162-8"><a href="two-way-tables.html#cb162-8"></a>chd_o <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot; &quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb162-9"><a href="two-way-tables.html#cb162-9"></a>janitor<span class="op">::</span><span class="kw">adorn_totals</span>(<span class="dt">where =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="two-way-tables.html#cb100-1"></a><span class="co"># tribble() is a little easier.</span></span>
+<span id="cb100-2"><a href="two-way-tables.html#cb100-2"></a>chd_o &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
+<span id="cb100-3"><a href="two-way-tables.html#cb100-3"></a>  <span class="op">~</span>L_<span class="dv">0</span>_<span class="dv">199</span>, <span class="op">~</span>L_<span class="dv">200</span>_<span class="dv">219</span>, <span class="op">~</span>L_<span class="dv">220</span>_<span class="dv">259</span>, <span class="op">~</span>L_260p,</span>
+<span id="cb100-4"><a href="two-way-tables.html#cb100-4"></a>  <span class="dv">12</span>, <span class="dv">8</span>, <span class="dv">31</span>, <span class="dv">41</span>,</span>
+<span id="cb100-5"><a href="two-way-tables.html#cb100-5"></a>  <span class="dv">307</span>, <span class="dv">246</span>, <span class="dv">439</span>, <span class="dv">245</span></span>
+<span id="cb100-6"><a href="two-way-tables.html#cb100-6"></a>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</span>
+<span id="cb100-7"><a href="two-way-tables.html#cb100-7"></a><span class="kw">rownames</span>(chd_o) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CHD&quot;</span>, <span class="st">&quot;No CHD&quot;</span>)</span>
+<span id="cb100-8"><a href="two-way-tables.html#cb100-8"></a>chd_o <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot; &quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb100-9"><a href="two-way-tables.html#cb100-9"></a>janitor<span class="op">::</span><span class="kw">adorn_totals</span>(<span class="dt">where =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</span></code></pre></div>
 <pre><code>##         L_0_199 L_200_219 L_220_259 L_260p Total
 ##     CHD      12         8        31     41    92
 ##  No CHD     307       246       439    245  1237
 ##   Total     319       254       470    286  1329</code></pre>
+</div>
 <div id="chi-square-independence-test" class="section level3">
-<h3><span class="header-section-number">2.3.1</span> Chi-Square Independence Test</h3>
+<h3><span class="header-section-number">2.2.2</span> Chi-Square Independence Test</h3>
 <p>The <strong>chi-square independence test</strong> tests whether observed joint frequency counts <span class="math inline">\(O_{ij}\)</span> differ from expected frequency counts <span class="math inline">\(E_{ij}\)</span> under the <em>independence model</em> (the model of independent explanatory variables, <span class="math inline">\(\pi_{ij} = \pi_{i+} \pi_{+j}\)</span>. <span class="math inline">\(H_0\)</span> is <span class="math inline">\(O_{ij} = E_{ij}\)</span>.</p>
 <p>There are two possible test statistics for this test, Pearson <span class="math inline">\(X^2\)</span> (and the continuity adjusted <span class="math inline">\(X^2\)</span>), and deviance <span class="math inline">\(G^2\)</span>. As <span class="math inline">\(n \rightarrow \infty\)</span> their sampling distributions approach <span class="math inline">\(\chi_{df}^2\)</span> with degrees of freedom (df) equal to the saturated model df <span class="math inline">\(I \times J - 1\)</span> minus the independence model df <span class="math inline">\((I - 1) + (J - 1)\)</span>, which you can algebraically solve for <span class="math inline">\(df = (I - 1)(J - 1)\)</span>.</p>
 <p>The Pearson goodness-of-fit statistic is</p>
 <p><span class="math display">\[X^2 = \sum \frac{(O_{ij} - E_{ij})^2}{E_{ij}}\]</span></p>
 <p>where <span class="math inline">\(O_{ij}\)</span> is the observed count, and <span class="math inline">\(E_{ij}\)</span> is the product of the row and column marginal probabilities. For the Vitamin C study, <span class="math inline">\(X^2\)</span> is</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="two-way-tables.html#cb164-1"></a>vitc_e &lt;-<span class="st"> </span><span class="kw">sum</span>(vitc_o) <span class="op">*</span><span class="st"> </span><span class="kw">prop.table</span>(vitc_o, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">prop.table</span>(vitc_o, <span class="dv">2</span>)</span>
-<span id="cb164-2"><a href="two-way-tables.html#cb164-2"></a>X2 &lt;-<span class="st"> </span><span class="kw">sum</span>((vitc_o <span class="op">-</span><span class="st"> </span>vitc_e)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>vitc_e)</span>
-<span id="cb164-3"><a href="two-way-tables.html#cb164-3"></a><span class="kw">print</span>(X2)</span></code></pre></div>
-<pre><code>## [1] 4.8</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="two-way-tables.html#cb102-1"></a>vitc_e &lt;-<span class="st"> </span><span class="kw">sum</span>(vitc_o) <span class="op">*</span><span class="st"> </span><span class="kw">prop.table</span>(vitc_o, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">prop.table</span>(vitc_o, <span class="dv">2</span>)</span>
+<span id="cb102-2"><a href="two-way-tables.html#cb102-2"></a>X2 &lt;-<span class="st"> </span><span class="kw">sum</span>((vitc_o <span class="op">-</span><span class="st"> </span>vitc_e)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>vitc_e)</span>
+<span id="cb102-3"><a href="two-way-tables.html#cb102-3"></a><span class="kw">print</span>(X2)</span></code></pre></div>
+<pre><code>## [1] 4.811413</code></pre>
 <p>and the deviance statistic is</p>
 <p><span class="math display">\[G^2 = 2 \sum_{ij} O_{ij} \log \left( \frac{O_{ij}}{E_{ij}} \right)\]</span></p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="two-way-tables.html#cb166-1"></a>G2 &lt;-<span class="st"> </span><span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(vitc_o <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(vitc_o <span class="op">/</span><span class="st"> </span>vitc_e))</span>
-<span id="cb166-2"><a href="two-way-tables.html#cb166-2"></a><span class="kw">print</span>(G2)</span></code></pre></div>
-<pre><code>## [1] 4.9</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="two-way-tables.html#cb104-1"></a>G2 &lt;-<span class="st"> </span><span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(vitc_o <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(vitc_o <span class="op">/</span><span class="st"> </span>vitc_e))</span>
+<span id="cb104-2"><a href="two-way-tables.html#cb104-2"></a><span class="kw">print</span>(G2)</span></code></pre></div>
+<pre><code>## [1] 4.871697</code></pre>
 <p><span class="math inline">\(X^2\)</span> and <span class="math inline">\(G^2\)</span> increase with the disagreement between the saturated model proportions <span class="math inline">\(p_{ij}\)</span> and the independence model proportions <span class="math inline">\(\pi_{ij}\)</span>.</p>
 <p>The degrees of freedom is</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="two-way-tables.html#cb168-1"></a>vitc_dof &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(vitc_o) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(<span class="kw">ncol</span>(vitc_o) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
-<span id="cb168-2"><a href="two-way-tables.html#cb168-2"></a><span class="kw">print</span>(vitc_dof)</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="two-way-tables.html#cb106-1"></a>vitc_dof &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(vitc_o) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(<span class="kw">ncol</span>(vitc_o) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb106-2"><a href="two-way-tables.html#cb106-2"></a><span class="kw">print</span>(vitc_dof)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>The associated p-values are</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="two-way-tables.html#cb170-1"></a><span class="kw">pchisq</span>(<span class="dt">q =</span> G2, <span class="dt">df =</span> vitc_dof, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 0.027</code></pre>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="two-way-tables.html#cb172-1"></a><span class="kw">pchisq</span>(<span class="dt">q =</span> X2, <span class="dt">df =</span> vitc_dof, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 0.028</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="two-way-tables.html#cb108-1"></a><span class="kw">pchisq</span>(<span class="dt">q =</span> G2, <span class="dt">df =</span> vitc_dof, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.02730064</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="two-way-tables.html#cb110-1"></a><span class="kw">pchisq</span>(<span class="dt">q =</span> X2, <span class="dt">df =</span> vitc_dof, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.02827186</code></pre>
 <p>The <code>chisq.test()</code> function applies the Yates continuity correcton by default to correct for situations with small cell counts. The Yates continuity correction subtracts 0.5 from the <span class="math inline">\(O_{ij} - E_{ij}\)</span> differences. Set <code>correct = FALSE</code> to suppress Yates.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="two-way-tables.html#cb174-1"></a>vitc_chisq_test &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(vitc_o, <span class="dt">correct =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb174-2"><a href="two-way-tables.html#cb174-2"></a><span class="kw">print</span>(vitc_chisq_test)</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="two-way-tables.html#cb112-1"></a>vitc_chisq_test &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(vitc_o, <span class="dt">correct =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb112-2"><a href="two-way-tables.html#cb112-2"></a><span class="kw">print</span>(vitc_chisq_test)</span></code></pre></div>
 <pre><code>## 
 ## 	Pearson&#39;s Chi-squared test
 ## 
 ## data:  vitc_o
-## X-squared = 5, df = 1, p-value = 0.03</code></pre>
+## X-squared = 4.8114, df = 1, p-value = 0.02827</code></pre>
 <p>The Yates correction yields more conservative p-values.</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="two-way-tables.html#cb176-1"></a><span class="kw">chisq.test</span>(vitc_o)</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="two-way-tables.html#cb114-1"></a><span class="kw">chisq.test</span>(vitc_o)</span></code></pre></div>
 <pre><code>## 
 ## 	Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  vitc_o
-## X-squared = 4, df = 1, p-value = 0.04</code></pre>
+## X-squared = 4.1407, df = 1, p-value = 0.04186</code></pre>
 <p>These p-values are evidence for rejecting the independence model.</p>
 <p>Here is the chi-square test applied to the CHD data. Recall this data set is 4x2, so the degrees of freedom are <span class="math inline">\((4-1)(2-1) = 3\)</span>. The Yates continuity correction does not apply to data other than 2x2, so the <code>correct = c(TRUE, FALSE)</code> has no effect in <code>chisq.test()</code>.</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="two-way-tables.html#cb178-1"></a>(chd_chisq_test &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(chd_o))</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="two-way-tables.html#cb116-1"></a>(chd_chisq_test &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(chd_o))</span></code></pre></div>
 <pre><code>## 
 ## 	Pearson&#39;s Chi-squared test
 ## 
 ## data:  chd_o
-## X-squared = 35, df = 3, p-value = 0.0000001</code></pre>
+## X-squared = 35.028, df = 3, p-value = 1.202e-07</code></pre>
 <p>The p-value is very low, so reject the null hypothesis of independence. This demonstrates that a relationship exists between cholesterol and CHD. Now you should describe that relationship by evaluating the (i) residuals, (ii) measures of association, and (iii) partitioning chi-square.</p>
 </div>
 <div id="residuals-analysis" class="section level3">
-<h3><span class="header-section-number">2.3.2</span> Residuals Analysis</h3>
-<p>If the chi-squared independence test rejects <span class="math inline">\(H_0\)</span> of identical frequency distributions, the next step is to identify <em>which</em> cells may be driving the lack of fit. The Pearson residuals in the two-way table are</p>
+<h3><span class="header-section-number">2.2.3</span> Residuals Analysis</h3>
+<p>If the chi-square independence test rejects <span class="math inline">\(H_0\)</span> of identical frequency distributions, the next step is to identify <em>which</em> cells may be driving the lack of fit. The Pearson residuals in the two-way table are</p>
 <p><span class="math display">\[r_{ij} = \frac{O_{ij} - E_{ij}}{\sqrt{E_{ij}}}\]</span></p>
 <p>where <span class="math inline">\(X^2 = \sum{r_{ij}}\)</span>. The <span class="math inline">\(r_{ij}\)</span> values have a normal distribution with mean 0, but with <em>unequal</em> variances. The <em>standardized</em> Pearson residual for a two-way table is</p>
 <p><span class="math display">\[r_{ij} = \frac{O_{ij} - E_{ij}}{\sqrt{E_{ij}(1 - p_{i+})(1 - p_{+j})}}\]</span></p>
 <p>and the <span class="math inline">\(r_{ij}\)</span> values <em>do</em> have a <span class="math inline">\(\sim N(0, 1)\)</span> distribution. <span class="math inline">\(r_{ij}^2 &gt; 4\)</span> is a sign of lack of fit. The <code>chissq.test()</code> object includes <code>residuals</code> that match the manual calculation.</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="two-way-tables.html#cb180-1"></a>(vitc_o <span class="op">-</span><span class="st"> </span>vitc_e) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(vitc_e)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="two-way-tables.html#cb118-1"></a>(vitc_o <span class="op">-</span><span class="st"> </span>vitc_e) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(vitc_e)</span></code></pre></div>
 <pre><code>##           resp
-## treat      Cold NoCold
-##   Placebo  -1.4   0.64
-##   VitaminC  1.4  -0.64</code></pre>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="two-way-tables.html#cb182-1"></a>vitc_chisq_test<span class="op">$</span>residuals</span></code></pre></div>
+## treat           Cold     NoCold
+##   Placebo  -1.408787  0.6421849
+##   VitaminC  1.413846 -0.6444908</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="two-way-tables.html#cb120-1"></a>vitc_chisq_test<span class="op">$</span>residuals</span></code></pre></div>
 <pre><code>##           resp
-## treat      Cold NoCold
-##   Placebo   1.4  -0.64
-##   VitaminC -1.4   0.64</code></pre>
+## treat           Cold     NoCold
+##   Placebo   1.408787 -0.6421849
+##   VitaminC -1.413846  0.6444908</code></pre>
 <p>It also includes <code>stdres</code> that match the manual standardized calculation. (<em>well, no it doesn’t, but I don’t know what my mistake is.</em>)</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="two-way-tables.html#cb184-1"></a>(vitc_e <span class="op">-</span><span class="st"> </span>vitc_o) <span class="op">/</span><span class="st"> </span></span>
-<span id="cb184-2"><a href="two-way-tables.html#cb184-2"></a><span class="st">  </span><span class="kw">sqrt</span>(vitc_e <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">prop.table</span>(vitc_o, <span class="dt">margin =</span> <span class="dv">1</span>)) </span>
-<span id="cb184-3"><a href="two-way-tables.html#cb184-3"></a>              <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">prop.table</span>(vitc_o, <span class="dt">margin =</span> <span class="dv">2</span>))</span>
-<span id="cb184-4"><a href="two-way-tables.html#cb184-4"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="two-way-tables.html#cb122-1"></a>(vitc_e <span class="op">-</span><span class="st"> </span>vitc_o) <span class="op">/</span><span class="st"> </span></span>
+<span id="cb122-2"><a href="two-way-tables.html#cb122-2"></a><span class="st">  </span><span class="kw">sqrt</span>(vitc_e <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">prop.table</span>(vitc_o, <span class="dt">margin =</span> <span class="dv">1</span>)) </span>
+<span id="cb122-3"><a href="two-way-tables.html#cb122-3"></a>              <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">prop.table</span>(vitc_o, <span class="dt">margin =</span> <span class="dv">2</span>))</span>
+<span id="cb122-4"><a href="two-way-tables.html#cb122-4"></a>  )</span></code></pre></div>
 <pre><code>##           resp
-## treat      Cold NoCold
-##   Placebo   2.7   -1.9
-##   VitaminC -1.9    2.7</code></pre>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="two-way-tables.html#cb186-1"></a>vitc_chisq_test<span class="op">$</span>stdres</span></code></pre></div>
+## treat           Cold    NoCold
+##   Placebo   2.682825 -1.877887
+##   VitaminC -1.877887  2.682825</code></pre>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="two-way-tables.html#cb124-1"></a>vitc_chisq_test<span class="op">$</span>stdres</span></code></pre></div>
 <pre><code>##           resp
-## treat      Cold NoCold
-##   Placebo   2.2   -2.2
-##   VitaminC -2.2    2.2</code></pre>
+## treat           Cold    NoCold
+##   Placebo   2.193493 -2.193493
+##   VitaminC -2.193493  2.193493</code></pre>
 <p>Here are the squared Pearson residuals for the CHD data. The squared Pearson residuals for CHD 0-199, 200-219, and 260+ are greater than 4, and seem to be driving the lack of independence.</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="two-way-tables.html#cb188-1"></a>chd_chisq_test<span class="op">$</span>residuals<span class="op">^</span><span class="dv">2</span></span></code></pre></div>
-<pre><code>##        L_0_199 L_200_219 L_220_259 L_260p
-## CHD       4.60      5.22    0.0725   22.7
-## No CHD    0.34      0.39    0.0054    1.7</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="two-way-tables.html#cb126-1"></a>chd_chisq_test<span class="op">$</span>residuals<span class="op">^</span><span class="dv">2</span></span></code></pre></div>
+<pre><code>##          L_0_199 L_200_219  L_220_259    L_260p
+## CHD    4.6036904 5.2229946 0.07248954 22.704433
+## No CHD 0.3423925 0.3884523 0.00539130  1.688608</code></pre>
 </div>
 <div id="difference-in-proportions" class="section level3">
-<h3><span class="header-section-number">2.3.3</span> Difference in Proportions</h3>
+<h3><span class="header-section-number">2.2.4</span> Difference in Proportions</h3>
 <p>The difference in proportions measure is the difference in the probabilities of characteristic <span class="math inline">\(Z\)</span> conditioned on two groups <span class="math inline">\(Y = 1\)</span> and <span class="math inline">\(Y = 2\)</span>: <span class="math inline">\(\delta = \pi_{1|1} - \pi_{1|2}\)</span>. In social sciences and epidemiology <span class="math inline">\(\pi_{1|1}\)</span> and <span class="math inline">\(\pi_{1|2}\)</span> are sometimes referred to as “risk” values. The point estimate for <span class="math inline">\(\delta\)</span> is <span class="math inline">\(r = p_{1|1} - p_{1|2}\)</span>.</p>
 <p>Under the normal approximation method, the sampling distribution of the difference in population proportions has a normal distribution centered at <span class="math inline">\(d\)</span> with variance <span class="math inline">\(Var(\delta)\)</span>. The point estimate for <span class="math inline">\(Var(\delta)\)</span> is <span class="math inline">\(Var(d)\)</span>.</p>
 <p><span class="math display">\[Var(d) = \frac{p_{1|1} (1 - p_{1|1})}{n_{1+}} + \frac{p_{1|2} (1 - p_{1|2})}{n_{2+}}\]</span></p>
 <p>In the vitamin C acid example, <span class="math inline">\(\delta\)</span> is the difference in the row conditional frequencies.</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="two-way-tables.html#cb190-1"></a>p &lt;-<span class="st"> </span><span class="kw">prop.table</span>(vitc_o, <span class="dt">margin =</span> <span class="dv">1</span>)</span>
-<span id="cb190-2"><a href="two-way-tables.html#cb190-2"></a>d &lt;-<span class="st"> </span>p[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>p[<span class="dv">1</span>, <span class="dv">1</span>]</span>
-<span id="cb190-3"><a href="two-way-tables.html#cb190-3"></a><span class="kw">print</span>(d)</span></code></pre></div>
-<pre><code>## [1] -0.099</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="two-way-tables.html#cb128-1"></a>p &lt;-<span class="st"> </span><span class="kw">prop.table</span>(vitc_o, <span class="dt">margin =</span> <span class="dv">1</span>)</span>
+<span id="cb128-2"><a href="two-way-tables.html#cb128-2"></a>d &lt;-<span class="st"> </span>p[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>p[<span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb128-3"><a href="two-way-tables.html#cb128-3"></a><span class="kw">print</span>(d)</span></code></pre></div>
+<pre><code>## [1] -0.09912641</code></pre>
 <p>The variance is</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="two-way-tables.html#cb192-1"></a>var_d &lt;-<span class="st"> </span>(p[<span class="dv">2</span>, <span class="dv">1</span>])<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p[<span class="dv">2</span>, <span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o[<span class="dv">2</span>, ]) <span class="op">+</span></span>
-<span id="cb192-2"><a href="two-way-tables.html#cb192-2"></a><span class="st">  </span>(p[<span class="dv">1</span>, <span class="dv">1</span>])<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p[<span class="dv">1</span>, <span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o[<span class="dv">1</span>, ])</span>
-<span id="cb192-3"><a href="two-way-tables.html#cb192-3"></a><span class="kw">print</span>(var_d)</span></code></pre></div>
-<pre><code>## [1] 0.002</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="two-way-tables.html#cb130-1"></a>var_d &lt;-<span class="st"> </span>(p[<span class="dv">2</span>, <span class="dv">1</span>])<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p[<span class="dv">2</span>, <span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o[<span class="dv">2</span>, ]) <span class="op">+</span></span>
+<span id="cb130-2"><a href="two-way-tables.html#cb130-2"></a><span class="st">  </span>(p[<span class="dv">1</span>, <span class="dv">1</span>])<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p[<span class="dv">1</span>, <span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o[<span class="dv">1</span>, ])</span>
+<span id="cb130-3"><a href="two-way-tables.html#cb130-3"></a><span class="kw">print</span>(var_d)</span></code></pre></div>
+<pre><code>## [1] 0.002003675</code></pre>
 <p>The 95% CI is</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="two-way-tables.html#cb194-1"></a>d <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">qnorm</span>(.<span class="dv">975</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(var_d)</span></code></pre></div>
-<pre><code>## [1] -0.187 -0.011</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="two-way-tables.html#cb132-1"></a>d <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">qnorm</span>(.<span class="dv">975</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(var_d)</span></code></pre></div>
+<pre><code>## [1] -0.18685917 -0.01139366</code></pre>
 <p>This is how <code>prop.test()</code> without the continuity correction calculates the confidence interval.</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="two-way-tables.html#cb196-1"></a>(prop.test.result &lt;-<span class="st"> </span><span class="kw">prop.test</span>(vitc_o, <span class="dt">correct =</span> <span class="ot">FALSE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="two-way-tables.html#cb134-1"></a>(prop.test.result &lt;-<span class="st"> </span><span class="kw">prop.test</span>(vitc_o, <span class="dt">correct =</span> <span class="ot">FALSE</span>))</span></code></pre></div>
 <pre><code>## 
 ## 	2-sample test for equality of proportions without continuity
 ## 	correction
 ## 
 ## data:  vitc_o
-## X-squared = 5, df = 1, p-value = 0.03
+## X-squared = 4.8114, df = 1, p-value = 0.02827
 ## alternative hypothesis: two.sided
 ## 95 percent confidence interval:
-##  0.011 0.187
+##  0.01139366 0.18685917
 ## sample estimates:
-## prop 1 prop 2 
-##   0.22   0.12</code></pre>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="two-way-tables.html#cb198-1"></a>lcl &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">round</span>(prop.test.result<span class="op">$</span>conf.int[<span class="dv">2</span>], <span class="dv">3</span>)</span>
-<span id="cb198-2"><a href="two-way-tables.html#cb198-2"></a>ucl &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">round</span>(prop.test.result<span class="op">$</span>conf.int[<span class="dv">1</span>], <span class="dv">3</span>)</span>
-<span id="cb198-3"><a href="two-way-tables.html#cb198-3"></a><span class="kw">data.frame</span>(<span class="dt">d_i =</span> <span class="dv">-300</span><span class="op">:</span><span class="dv">300</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>) <span class="op">%&gt;%</span></span>
-<span id="cb198-4"><a href="two-way-tables.html#cb198-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">dnorm</span>(<span class="dt">x =</span> d_i, <span class="dt">mean =</span> d, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_d))) <span class="op">%&gt;%</span></span>
-<span id="cb198-5"><a href="two-way-tables.html#cb198-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rr =</span> <span class="kw">ifelse</span>(d_i <span class="op">&lt;</span><span class="st"> </span>lcl <span class="op">|</span><span class="st"> </span>d_i <span class="op">&gt;</span><span class="st"> </span>ucl, density, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb198-6"><a href="two-way-tables.html#cb198-6"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
-<span id="cb198-7"><a href="two-way-tables.html#cb198-7"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> d_i, <span class="dt">y =</span> density)) <span class="op">+</span></span>
-<span id="cb198-8"><a href="two-way-tables.html#cb198-8"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> d_i, <span class="dt">y =</span> rr, <span class="dt">fill =</span> <span class="kw">mf_pal</span>(<span class="dv">12</span>)(<span class="dv">12</span>)[<span class="dv">2</span>]), <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
-<span id="cb198-9"><a href="two-way-tables.html#cb198-9"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> d), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></span>
-<span id="cb198-10"><a href="two-way-tables.html#cb198-10"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
-<span id="cb198-11"><a href="two-way-tables.html#cb198-11"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&quot;Difference in Proportions Confidence Interval&quot;</span>),</span>
-<span id="cb198-12"><a href="two-way-tables.html#cb198-12"></a>       <span class="dt">subtitle =</span> <span class="kw">paste0</span>(</span>
-<span id="cb198-13"><a href="two-way-tables.html#cb198-13"></a>         <span class="st">&quot;d = &quot;</span>, <span class="kw">round</span>(d, <span class="dv">3</span>) </span>
-<span id="cb198-14"><a href="two-way-tables.html#cb198-14"></a>        ),</span>
-<span id="cb198-15"><a href="two-way-tables.html#cb198-15"></a>       <span class="dt">x =</span> <span class="st">&quot;d&quot;</span>,</span>
-<span id="cb198-16"><a href="two-way-tables.html#cb198-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span></span>
-<span id="cb198-17"><a href="two-way-tables.html#cb198-17"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
+##    prop 1    prop 2 
+## 0.2214286 0.1223022</code></pre>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="two-way-tables.html#cb136-1"></a>lcl &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">round</span>(prop.test.result<span class="op">$</span>conf.int[<span class="dv">2</span>], <span class="dv">3</span>)</span>
+<span id="cb136-2"><a href="two-way-tables.html#cb136-2"></a>ucl &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">round</span>(prop.test.result<span class="op">$</span>conf.int[<span class="dv">1</span>], <span class="dv">3</span>)</span>
+<span id="cb136-3"><a href="two-way-tables.html#cb136-3"></a><span class="kw">data.frame</span>(<span class="dt">d_i =</span> <span class="dv">-300</span><span class="op">:</span><span class="dv">300</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>) <span class="op">%&gt;%</span></span>
+<span id="cb136-4"><a href="two-way-tables.html#cb136-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">dnorm</span>(<span class="dt">x =</span> d_i, <span class="dt">mean =</span> d, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_d))) <span class="op">%&gt;%</span></span>
+<span id="cb136-5"><a href="two-way-tables.html#cb136-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rr =</span> <span class="kw">ifelse</span>(d_i <span class="op">&lt;</span><span class="st"> </span>lcl <span class="op">|</span><span class="st"> </span>d_i <span class="op">&gt;</span><span class="st"> </span>ucl, density, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb136-6"><a href="two-way-tables.html#cb136-6"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb136-7"><a href="two-way-tables.html#cb136-7"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> d_i, <span class="dt">y =</span> density)) <span class="op">+</span></span>
+<span id="cb136-8"><a href="two-way-tables.html#cb136-8"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> d_i, <span class="dt">y =</span> rr, <span class="dt">fill =</span> <span class="kw">mf_pal</span>(<span class="dv">12</span>)(<span class="dv">12</span>)[<span class="dv">2</span>]), <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
+<span id="cb136-9"><a href="two-way-tables.html#cb136-9"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> d), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></span>
+<span id="cb136-10"><a href="two-way-tables.html#cb136-10"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb136-11"><a href="two-way-tables.html#cb136-11"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">bquote</span>(<span class="st">&quot;Difference in Proportions Confidence Interval&quot;</span>),</span>
+<span id="cb136-12"><a href="two-way-tables.html#cb136-12"></a>       <span class="dt">subtitle =</span> <span class="kw">paste0</span>(</span>
+<span id="cb136-13"><a href="two-way-tables.html#cb136-13"></a>         <span class="st">&quot;d = &quot;</span>, <span class="kw">round</span>(d, <span class="dv">3</span>) </span>
+<span id="cb136-14"><a href="two-way-tables.html#cb136-14"></a>        ),</span>
+<span id="cb136-15"><a href="two-way-tables.html#cb136-15"></a>       <span class="dt">x =</span> <span class="st">&quot;d&quot;</span>,</span>
+<span id="cb136-16"><a href="two-way-tables.html#cb136-16"></a>       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span></span>
+<span id="cb136-17"><a href="two-way-tables.html#cb136-17"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
 <p>The normal approximation method applies when the central limit theorem conditions hold:</p>
 <ul>
 <li>the sample is independently drawn (random sampling without replacement from <span class="math inline">\(n &lt; 10\%\)</span> of the population in observational studies, or random assignment in experiments),</li>
@@ -531,85 +652,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[se_{d} = \sqrt{p (1 - p) \left( \frac{1}{n_{1+}} + \frac{1}{n_{2+}} \right)}\]</span></p>
 <p>approximates <span class="math inline">\(se_{\delta_0}\)</span> where <span class="math inline">\(p\)</span> is the pooled proportion</p>
 <p><span class="math display">\[p = \frac{n_{11} + n_{21}}{n_{1+} + n_{2+}}.\]</span></p>
-<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="two-way-tables.html#cb199-1"></a>p_pool &lt;-<span class="st"> </span>(vitc_o[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>vitc_o[<span class="dv">2</span>, <span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o)</span>
-<span id="cb199-2"><a href="two-way-tables.html#cb199-2"></a>se_d &lt;-<span class="st"> </span><span class="kw">sqrt</span>(p_pool <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p_pool) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o[<span class="dv">1</span>, ]) <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o[<span class="dv">2</span>, ])))</span>
-<span id="cb199-3"><a href="two-way-tables.html#cb199-3"></a>z &lt;-<span class="st"> </span>(d <span class="op">-</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>se_d</span>
-<span id="cb199-4"><a href="two-way-tables.html#cb199-4"></a><span class="kw">pnorm</span>(z) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
-<pre><code>## [1] 0.028</code></pre>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="two-way-tables.html#cb201-1"></a>lrr =<span class="st"> </span><span class="kw">qnorm</span>(<span class="dt">p =</span> <span class="fl">.05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> se_d, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb201-2"><a href="two-way-tables.html#cb201-2"></a>urr =<span class="st"> </span><span class="kw">qnorm</span>(<span class="dt">p =</span> <span class="fl">.05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> se_d, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb201-3"><a href="two-way-tables.html#cb201-3"></a><span class="kw">data.frame</span>(<span class="dt">d_i =</span> <span class="dv">-300</span><span class="op">:</span><span class="dv">300</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>) <span class="op">%&gt;%</span></span>
-<span id="cb201-4"><a href="two-way-tables.html#cb201-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">dnorm</span>(<span class="dt">x =</span> d_i, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> se_d)) <span class="op">%&gt;%</span></span>
-<span id="cb201-5"><a href="two-way-tables.html#cb201-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rr =</span> <span class="kw">ifelse</span>(d_i <span class="op">&lt;</span><span class="st"> </span>lrr <span class="op">|</span><span class="st"> </span>d_i <span class="op">&gt;</span><span class="st"> </span>urr, density, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb201-6"><a href="two-way-tables.html#cb201-6"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
-<span id="cb201-7"><a href="two-way-tables.html#cb201-7"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> d_i, <span class="dt">y =</span> density)) <span class="op">+</span></span>
-<span id="cb201-8"><a href="two-way-tables.html#cb201-8"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> d_i, <span class="dt">y =</span> rr, <span class="dt">fill =</span> <span class="kw">mf_pal</span>(<span class="dv">12</span>)(<span class="dv">12</span>)[<span class="dv">2</span>]), <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
-<span id="cb201-9"><a href="two-way-tables.html#cb201-9"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> d), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></span>
-<span id="cb201-10"><a href="two-way-tables.html#cb201-10"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
-<span id="cb201-11"><a href="two-way-tables.html#cb201-11"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
-<span id="cb201-12"><a href="two-way-tables.html#cb201-12"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Hypothesis Test of Difference in Proportions&quot;</span>,</span>
-<span id="cb201-13"><a href="two-way-tables.html#cb201-13"></a>       <span class="dt">subtitle =</span> <span class="kw">paste0</span>(</span>
-<span id="cb201-14"><a href="two-way-tables.html#cb201-14"></a>         <span class="st">&quot;d = &quot;</span>, <span class="kw">round</span>(d, <span class="dv">3</span>), </span>
-<span id="cb201-15"><a href="two-way-tables.html#cb201-15"></a>         <span class="st">&quot; (Z = &quot;</span>, <span class="kw">round</span>(z, <span class="dv">2</span>), </span>
-<span id="cb201-16"><a href="two-way-tables.html#cb201-16"></a>         <span class="st">&quot;, p = &quot;</span>, <span class="kw">round</span>(<span class="kw">pnorm</span>(z) <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dv">4</span>), <span class="st">&quot;).&quot;</span></span>
-<span id="cb201-17"><a href="two-way-tables.html#cb201-17"></a>        ),</span>
-<span id="cb201-18"><a href="two-way-tables.html#cb201-18"></a>       <span class="dt">x =</span> <span class="st">&quot;d&quot;</span>,</span>
-<span id="cb201-19"><a href="two-way-tables.html#cb201-19"></a>       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span></span>
-<span id="cb201-20"><a href="two-way-tables.html#cb201-20"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) </span></code></pre></div>
-<p><img src="data-sci_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="two-way-tables.html#cb137-1"></a>p_pool &lt;-<span class="st"> </span>(vitc_o[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>vitc_o[<span class="dv">2</span>, <span class="dv">1</span>]) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o)</span>
+<span id="cb137-2"><a href="two-way-tables.html#cb137-2"></a>se_d &lt;-<span class="st"> </span><span class="kw">sqrt</span>(p_pool <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p_pool) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o[<span class="dv">1</span>, ]) <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o[<span class="dv">2</span>, ])))</span>
+<span id="cb137-3"><a href="two-way-tables.html#cb137-3"></a>z &lt;-<span class="st"> </span>(d <span class="op">-</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>se_d</span>
+<span id="cb137-4"><a href="two-way-tables.html#cb137-4"></a><span class="kw">pnorm</span>(z) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
+<pre><code>## [1] 0.02827186</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="two-way-tables.html#cb139-1"></a>lrr =<span class="st"> </span><span class="kw">qnorm</span>(<span class="dt">p =</span> <span class="fl">.05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> se_d, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb139-2"><a href="two-way-tables.html#cb139-2"></a>urr =<span class="st"> </span><span class="kw">qnorm</span>(<span class="dt">p =</span> <span class="fl">.05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> se_d, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb139-3"><a href="two-way-tables.html#cb139-3"></a><span class="kw">data.frame</span>(<span class="dt">d_i =</span> <span class="dv">-300</span><span class="op">:</span><span class="dv">300</span> <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>) <span class="op">%&gt;%</span></span>
+<span id="cb139-4"><a href="two-way-tables.html#cb139-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">density =</span> <span class="kw">dnorm</span>(<span class="dt">x =</span> d_i, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> se_d)) <span class="op">%&gt;%</span></span>
+<span id="cb139-5"><a href="two-way-tables.html#cb139-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rr =</span> <span class="kw">ifelse</span>(d_i <span class="op">&lt;</span><span class="st"> </span>lrr <span class="op">|</span><span class="st"> </span>d_i <span class="op">&gt;</span><span class="st"> </span>urr, density, <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb139-6"><a href="two-way-tables.html#cb139-6"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb139-7"><a href="two-way-tables.html#cb139-7"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> d_i, <span class="dt">y =</span> density)) <span class="op">+</span></span>
+<span id="cb139-8"><a href="two-way-tables.html#cb139-8"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="kw">aes</span>(<span class="dt">x =</span> d_i, <span class="dt">y =</span> rr, <span class="dt">fill =</span> <span class="kw">mf_pal</span>(<span class="dv">12</span>)(<span class="dv">12</span>)[<span class="dv">2</span>]), <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
+<span id="cb139-9"><a href="two-way-tables.html#cb139-9"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> d), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></span>
+<span id="cb139-10"><a href="two-way-tables.html#cb139-10"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
+<span id="cb139-11"><a href="two-way-tables.html#cb139-11"></a><span class="st">  </span><span class="kw">theme_mf</span>() <span class="op">+</span></span>
+<span id="cb139-12"><a href="two-way-tables.html#cb139-12"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Hypothesis Test of Difference in Proportions&quot;</span>,</span>
+<span id="cb139-13"><a href="two-way-tables.html#cb139-13"></a>       <span class="dt">subtitle =</span> <span class="kw">paste0</span>(</span>
+<span id="cb139-14"><a href="two-way-tables.html#cb139-14"></a>         <span class="st">&quot;d = &quot;</span>, <span class="kw">round</span>(d, <span class="dv">3</span>), </span>
+<span id="cb139-15"><a href="two-way-tables.html#cb139-15"></a>         <span class="st">&quot; (Z = &quot;</span>, <span class="kw">round</span>(z, <span class="dv">2</span>), </span>
+<span id="cb139-16"><a href="two-way-tables.html#cb139-16"></a>         <span class="st">&quot;, p = &quot;</span>, <span class="kw">round</span>(<span class="kw">pnorm</span>(z) <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dv">4</span>), <span class="st">&quot;).&quot;</span></span>
+<span id="cb139-17"><a href="two-way-tables.html#cb139-17"></a>        ),</span>
+<span id="cb139-18"><a href="two-way-tables.html#cb139-18"></a>       <span class="dt">x =</span> <span class="st">&quot;d&quot;</span>,</span>
+<span id="cb139-19"><a href="two-way-tables.html#cb139-19"></a>       <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="op">+</span></span>
+<span id="cb139-20"><a href="two-way-tables.html#cb139-20"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) </span></code></pre></div>
+<p><img src="data-sci_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
 <p>The null hypothesis <span class="math inline">\(H_0: \delta_0 = 0\)</span> is equivalent to saying that two variables are independent, <span class="math inline">\(\pi_{1|1} = \pi_{1|2}\)</span>, so you can also use the <span class="math inline">\(\chi^2\)</span> or <span class="math inline">\(G^2\)</span> test for independence in a 2 × 2. That’s what <code>prop.test()</code> is doing. The square of the z-statistic is algebraically equal to <span class="math inline">\(\chi^2\)</span>. The two-sided test comparing <span class="math inline">\(Z\)</span> to a <span class="math inline">\(N(0, 1)\)</span> is identical to comparing <span class="math inline">\(\chi^2\)</span> to a chi-square distribution with df = 1. Compare the <span class="math inline">\(Z^2\)</span> to the output from <code>prop.test()</code>.</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="two-way-tables.html#cb202-1"></a>z<span class="op">^</span><span class="dv">2</span></span></code></pre></div>
-<pre><code>## [1] 4.8</code></pre>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="two-way-tables.html#cb204-1"></a>prop.test.result<span class="op">$</span>statistic</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="two-way-tables.html#cb140-1"></a>z<span class="op">^</span><span class="dv">2</span></span></code></pre></div>
+<pre><code>## [1] 4.811413</code></pre>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="two-way-tables.html#cb142-1"></a>prop.test.result<span class="op">$</span>statistic</span></code></pre></div>
 <pre><code>## X-squared 
-##       4.8</code></pre>
+##  4.811413</code></pre>
 <p>The difference in proportions is easy to interpret, but when <span class="math inline">\(Z = 1\)</span> is a rare event, the individual probabilities <span class="math inline">\(\pi_{1|1}\)</span> and <span class="math inline">\(\pi_{1|2}\)</span> are both small and <span class="math inline">\(\delta\)</span> is nearly zero even when the effect is strong.</p>
 <p>In the CHD study, two of the conditional probabilities of CHD within the four cholesterol groups are similar, 0-199 (0.038) and 200-219 (.031).</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="two-way-tables.html#cb206-1"></a><span class="kw">round</span>(<span class="kw">prop.table</span>(chd_o, <span class="dt">margin =</span> <span class="dv">2</span>), <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="two-way-tables.html#cb144-1"></a><span class="kw">round</span>(<span class="kw">prop.table</span>(chd_o, <span class="dt">margin =</span> <span class="dv">2</span>), <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##        L_0_199 L_200_219 L_220_259 L_260p
-## CHD      0.038     0.031     0.066   0.14
-## No CHD   0.962     0.969     0.934   0.86</code></pre>
+## CHD      0.038     0.031     0.066  0.143
+## No CHD   0.962     0.969     0.934  0.857</code></pre>
 <p>Is the difference in these proportions statistically signficant? You can test this with the difference in proportions test or a chisq test.</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="two-way-tables.html#cb208-1"></a><span class="kw">prop.test</span>(<span class="kw">t</span>(chd_o[, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)]))</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="two-way-tables.html#cb146-1"></a><span class="kw">prop.test</span>(<span class="kw">t</span>(chd_o[, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)]))</span></code></pre></div>
 <pre><code>## 
 ## 	2-sample test for equality of proportions with continuity correction
 ## 
 ## data:  t(chd_o[, c(1:2)])
-## X-squared = 0.03, df = 1, p-value = 0.9
+## X-squared = 0.028064, df = 1, p-value = 0.867
 ## alternative hypothesis: two.sided
 ## 95 percent confidence interval:
-##  -0.027  0.040
+##  -0.02736931  0.03961229
 ## sample estimates:
-## prop 1 prop 2 
-##  0.038  0.031</code></pre>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="two-way-tables.html#cb210-1"></a><span class="kw">chisq.test</span>(<span class="kw">t</span>(chd_o[, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)]))</span></code></pre></div>
+##     prop 1     prop 2 
+## 0.03761755 0.03149606</code></pre>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="two-way-tables.html#cb148-1"></a><span class="kw">chisq.test</span>(<span class="kw">t</span>(chd_o[, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)]))</span></code></pre></div>
 <pre><code>## 
 ## 	Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  t(chd_o[, c(1:2)])
-## X-squared = 0.03, df = 1, p-value = 0.9</code></pre>
+## X-squared = 0.028064, df = 1, p-value = 0.867</code></pre>
 <p>You could go on to try other pairwise tests to establish which levels differ from the others.</p>
 </div>
 <div id="relative-risk" class="section level3">
-<h3><span class="header-section-number">2.3.4</span> Relative Risk</h3>
+<h3><span class="header-section-number">2.2.5</span> Relative Risk</h3>
 <p>The relative risk measure is the ratio of the probabilities of characteristic <span class="math inline">\(Z\)</span> conditioned on two groups <span class="math inline">\(Y = 1\)</span> and <span class="math inline">\(Y = 2\)</span>: <span class="math inline">\(\rho = \pi_{1|1} / \pi_{1|2}\)</span>. In social sciences and epidemiology <span class="math inline">\(\rho\)</span> is sometimes referred to as the “relative risk”. The point estimate for <span class="math inline">\(\rho\)</span> is <span class="math inline">\(r = p_{1|1} / p_{1|2}\)</span>.</p>
 <p>Because <span class="math inline">\(\rho\)</span> is non-negative, a normal approximation for <span class="math inline">\(\log \rho\)</span> has a less skewed distribution than <span class="math inline">\(\rho\)</span>. The approximate variance of <span class="math inline">\(\log \rho\)</span> is</p>
 <p><span class="math display">\[Var(\log \rho) = \frac{1 - \pi_{11}/\pi_{1+}}{n_{1+}\pi_{11}/\pi_{1+}} + \frac{1 - \pi_{21}/\pi_{2+}}{n_{2+}\pi_{21}/\pi_{2+}}\]</span></p>
 <p>and is estimated by</p>
 <p><span class="math display">\[Var(\log r) = \left( \frac{1}{n_{11}} - \frac{1}{n_{1+}} \right) + \left( \frac{1}{n_{21}} - \frac{1}{n_{2+}} \right)\]</span></p>
 <p>In the vitamin C acid example, <span class="math inline">\(r\)</span> is the ratio of the row conditional frequencies.</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="two-way-tables.html#cb212-1"></a>vitc_prop &lt;-<span class="st"> </span><span class="kw">prop.table</span>(vitc_o, <span class="dt">margin =</span> <span class="dv">1</span>)</span>
-<span id="cb212-2"><a href="two-way-tables.html#cb212-2"></a>vitc_risk &lt;-<span class="st"> </span>vitc_prop[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>vitc_prop[<span class="dv">1</span>, <span class="dv">1</span>]</span>
-<span id="cb212-3"><a href="two-way-tables.html#cb212-3"></a><span class="kw">print</span>(vitc_risk)</span></code></pre></div>
-<pre><code>## [1] 0.55</code></pre>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="two-way-tables.html#cb150-1"></a>vitc_prop &lt;-<span class="st"> </span><span class="kw">prop.table</span>(vitc_o, <span class="dt">margin =</span> <span class="dv">1</span>)</span>
+<span id="cb150-2"><a href="two-way-tables.html#cb150-2"></a>vitc_risk &lt;-<span class="st"> </span>vitc_prop[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>vitc_prop[<span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb150-3"><a href="two-way-tables.html#cb150-3"></a><span class="kw">print</span>(vitc_risk)</span></code></pre></div>
+<pre><code>## [1] 0.5523323</code></pre>
 <p>The variance is</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="two-way-tables.html#cb214-1"></a>vitc_risk_var &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>vitc_o[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o[<span class="dv">1</span>, ]) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb214-2"><a href="two-way-tables.html#cb214-2"></a><span class="st">  </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>vitc_o[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o[<span class="dv">2</span>, ])</span>
-<span id="cb214-3"><a href="two-way-tables.html#cb214-3"></a><span class="kw">print</span>(vitc_risk_var)</span></code></pre></div>
-<pre><code>## [1] 0.077</code></pre>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="two-way-tables.html#cb152-1"></a>vitc_risk_var &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>vitc_o[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o[<span class="dv">1</span>, ]) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb152-2"><a href="two-way-tables.html#cb152-2"></a><span class="st">  </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>vitc_o[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(vitc_o[<span class="dv">2</span>, ])</span>
+<span id="cb152-3"><a href="two-way-tables.html#cb152-3"></a><span class="kw">print</span>(vitc_risk_var)</span></code></pre></div>
+<pre><code>## [1] 0.07674449</code></pre>
 <p>The 95% CI is</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="two-way-tables.html#cb216-1"></a><span class="kw">exp</span>(<span class="kw">log</span>(vitc_risk) <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">qnorm</span>(.<span class="dv">975</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(vitc_risk_var))</span></code></pre></div>
-<pre><code>## [1] 0.32 0.95</code></pre>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="two-way-tables.html#cb154-1"></a><span class="kw">exp</span>(<span class="kw">log</span>(vitc_risk) <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">qnorm</span>(.<span class="dv">975</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(vitc_risk_var))</span></code></pre></div>
+<pre><code>## [1] 0.3209178 0.9506203</code></pre>
 <p>Thus, at 0.05 level, you can reject the independence model. People taking vitamin C are half as likely to catch a cold.</p>
 <p>In the CHD study, you could summarize the relationship between CHD and cholesterol level by a set of three relative risks using 0-199 as the baseline:</p>
 <ul>
@@ -617,16 +738,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>220–259 versus 0–199, and</li>
 <li>260+ versus 0–199.</li>
 </ul>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="two-way-tables.html#cb218-1"></a>(chd_prop &lt;-<span class="st"> </span><span class="kw">prop.table</span>(chd_o, <span class="dt">margin =</span> <span class="dv">2</span>))</span></code></pre></div>
-<pre><code>##        L_0_199 L_200_219 L_220_259 L_260p
-## CHD      0.038     0.031     0.066   0.14
-## No CHD   0.962     0.969     0.934   0.86</code></pre>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="two-way-tables.html#cb220-1"></a>(chd_risk &lt;-<span class="st"> </span>chd_prop[<span class="dv">1</span>, ] <span class="op">/</span><span class="st"> </span>chd_prop[<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="two-way-tables.html#cb156-1"></a>(chd_prop &lt;-<span class="st"> </span><span class="kw">prop.table</span>(chd_o, <span class="dt">margin =</span> <span class="dv">2</span>))</span></code></pre></div>
+<pre><code>##           L_0_199  L_200_219  L_220_259    L_260p
+## CHD    0.03761755 0.03149606 0.06595745 0.1433566
+## No CHD 0.96238245 0.96850394 0.93404255 0.8566434</code></pre>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="two-way-tables.html#cb158-1"></a>(chd_risk &lt;-<span class="st"> </span>chd_prop[<span class="dv">1</span>, ] <span class="op">/</span><span class="st"> </span>chd_prop[<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div>
 <pre><code>##   L_0_199 L_200_219 L_220_259    L_260p 
-##      1.00      0.84      1.75      3.81</code></pre>
+## 1.0000000 0.8372703 1.7533688 3.8108974</code></pre>
 </div>
 <div id="odds-ratio" class="section level3">
-<h3><span class="header-section-number">2.3.5</span> Odds Ratio</h3>
+<h3><span class="header-section-number">2.2.6</span> Odds Ratio</h3>
 <p>The odds ratio is the most commonly used measure of association. It is also a natural parameter for many of the log-linear and logistic models. The odds is the ratio of probabilities of “success” and “failure”. When conditioned on a variable, the odds ratio is</p>
 <p><span class="math display">\[\theta = \frac{\pi_{1|1} / \pi_{2|1}} {\pi_{1|2} / \pi_{2|2}}\]</span></p>
 <p>and is estimated by the sample frequencies</p>
@@ -634,22 +755,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The log-odds ratio has a better normal approximation than the odds ratio, so define the confidence interval on the log scale.</p>
 <p><span class="math display">\[Var(\log \hat{\theta}) = \frac{1}{n_{11}} + \frac{1}{n_{12}} + \frac{1}{n_{21}} + \frac{1}{n_{22}}\]</span></p>
 <p>For the Vitamin C example, the odds of getting a cold after taking a placebo pill are <span class="math inline">\(0.22 / 0.78 = 0.28\)</span> and the odds of getting a cold after taking Vitamin C are <span class="math inline">\(0.12 / 0.88 = 0.14\)</span>.</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="two-way-tables.html#cb222-1"></a>vitc_odds &lt;-<span class="st"> </span>vitc_prop[, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>vitc_prop[, <span class="dv">2</span>]</span>
-<span id="cb222-2"><a href="two-way-tables.html#cb222-2"></a><span class="kw">print</span>(vitc_odds)</span></code></pre></div>
-<pre><code>##  Placebo VitaminC 
-##     0.28     0.14</code></pre>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="two-way-tables.html#cb160-1"></a>vitc_odds &lt;-<span class="st"> </span>vitc_prop[, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>vitc_prop[, <span class="dv">2</span>]</span>
+<span id="cb160-2"><a href="two-way-tables.html#cb160-2"></a><span class="kw">print</span>(vitc_odds)</span></code></pre></div>
+<pre><code>##   Placebo  VitaminC 
+## 0.2844037 0.1393443</code></pre>
 <p>The odds of getting a cold given vitamin C are <span class="math inline">\(0.14 / 0.28 = 0.49\)</span> times the odds of getting cold given a placebo.</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="two-way-tables.html#cb224-1"></a>vitc_theta_hat &lt;-<span class="st"> </span>vitc_odds[<span class="dv">2</span>] <span class="op">/</span><span class="st"> </span>vitc_odds[<span class="dv">1</span>]</span>
-<span id="cb224-2"><a href="two-way-tables.html#cb224-2"></a><span class="kw">print</span>(vitc_theta_hat)</span></code></pre></div>
-<pre><code>## VitaminC 
-##     0.49</code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="two-way-tables.html#cb162-1"></a>vitc_theta_hat &lt;-<span class="st"> </span>vitc_odds[<span class="dv">2</span>] <span class="op">/</span><span class="st"> </span>vitc_odds[<span class="dv">1</span>]</span>
+<span id="cb162-2"><a href="two-way-tables.html#cb162-2"></a><span class="kw">print</span>(vitc_theta_hat)</span></code></pre></div>
+<pre><code>##  VitaminC 
+## 0.4899524</code></pre>
 <p>with variance</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="two-way-tables.html#cb226-1"></a>(var_vitc_theta_hat &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>vitc_o))</span></code></pre></div>
-<pre><code>## [1] 0.11</code></pre>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="two-way-tables.html#cb164-1"></a>(var_vitc_theta_hat &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>vitc_o))</span></code></pre></div>
+<pre><code>## [1] 0.1084526</code></pre>
 <p>The 95% CI is</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="two-way-tables.html#cb228-1"></a>z_alpha &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dt">p =</span> <span class="fl">0.975</span>)</span>
-<span id="cb228-2"><a href="two-way-tables.html#cb228-2"></a><span class="kw">exp</span>(<span class="kw">log</span>(vitc_theta_hat) <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>z_alpha <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(var_vitc_theta_hat))</span></code></pre></div>
-<pre><code>## [1] 0.26 0.93</code></pre>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="two-way-tables.html#cb166-1"></a>z_alpha &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="dt">p =</span> <span class="fl">0.975</span>)</span>
+<span id="cb166-2"><a href="two-way-tables.html#cb166-2"></a><span class="kw">exp</span>(<span class="kw">log</span>(vitc_theta_hat) <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>z_alpha <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(var_vitc_theta_hat))</span></code></pre></div>
+<pre><code>## [1] 0.2569419 0.9342709</code></pre>
 <p>Keep in mind the following properties of odds ratios.</p>
 <ul>
 <li><p>You can convert an odds pack to probabilities by solving <span class="math inline">\(\pi / (1 - \pi)\)</span> for <span class="math inline">\(\pi = odds / (1 + odds)\)</span>.</p></li>
@@ -660,50 +781,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <div id="partitioning-chi-square" class="section level3">
-<h3><span class="header-section-number">2.3.6</span> Partitioning Chi-Square</h3>
+<h3><span class="header-section-number">2.2.7</span> Partitioning Chi-Square</h3>
 <p>Besides looking at the residuals or the measures of association, another way to describe the effects is to form a sequence of smaller tables by combining or collapsing rows and/or columns in a meaningful way.</p>
-<p>For the smoking study, you might ask whether a student is more likely to smoke if <em>either</em> parent smokes. Collapse the first two rows (1 parent smokes, both parents smoke) and run the chi-squared test.</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="two-way-tables.html#cb230-1"></a>smoke_clps_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rbind</span>(smoke_o[<span class="dv">1</span>, ] <span class="op">+</span><span class="st"> </span>smoke_o[<span class="dv">2</span>, ], smoke_o[<span class="dv">3</span>, ])</span>
-<span id="cb230-2"><a href="two-way-tables.html#cb230-2"></a>smoke_clps_<span class="dv">1</span>_theta &lt;-<span class="st"> </span>(smoke_clps_<span class="dv">1</span>[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>smoke_clps_<span class="dv">1</span>[<span class="dv">1</span>, <span class="dv">2</span>]) <span class="op">/</span></span>
-<span id="cb230-3"><a href="two-way-tables.html#cb230-3"></a><span class="st">  </span>(smoke_clps_<span class="dv">1</span>[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>smoke_clps_<span class="dv">1</span>[<span class="dv">2</span>, <span class="dv">2</span>])</span>
-<span id="cb230-4"><a href="two-way-tables.html#cb230-4"></a>(smoke_clps_<span class="dv">1</span>_chisq &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(smoke_clps_<span class="dv">1</span>))</span></code></pre></div>
+<p>For the smoking study, you might ask whether a student is more likely to smoke if <em>either</em> parent smokes. Collapse the first two rows (1 parent smokes, both parents smoke) and run the chi-square test.</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="two-way-tables.html#cb168-1"></a>smoke_clps_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">rbind</span>(smoke_o[<span class="dv">1</span>, ] <span class="op">+</span><span class="st"> </span>smoke_o[<span class="dv">2</span>, ], smoke_o[<span class="dv">3</span>, ])</span>
+<span id="cb168-2"><a href="two-way-tables.html#cb168-2"></a>smoke_clps_<span class="dv">1</span>_theta &lt;-<span class="st"> </span>(smoke_clps_<span class="dv">1</span>[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>smoke_clps_<span class="dv">1</span>[<span class="dv">1</span>, <span class="dv">2</span>]) <span class="op">/</span></span>
+<span id="cb168-3"><a href="two-way-tables.html#cb168-3"></a><span class="st">  </span>(smoke_clps_<span class="dv">1</span>[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>smoke_clps_<span class="dv">1</span>[<span class="dv">2</span>, <span class="dv">2</span>])</span>
+<span id="cb168-4"><a href="two-way-tables.html#cb168-4"></a>(smoke_clps_<span class="dv">1</span>_chisq &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(smoke_clps_<span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## 
 ## 	Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  smoke_clps_1
-## X-squared = 27, df = 1, p-value = 0.0000002</code></pre>
-<p>The estimated odds a student smokes if at least one parent smokes is 1.58 (X^2 = 27.3, p = 0.</p>
+## X-squared = 27.254, df = 1, p-value = 1.784e-07</code></pre>
+<p>The estimated odds a student smokes if at least one parent smokes is 1.58 (X^2 = 27.3, p = 1.783791410^{-7}.</p>
 <p>Or you may ask, whether among students with at least one smoking parent, there is a difference between those with one smoking parent and those with two smoking parents. Answer this by running a chi-square test on the first two rows of the data table, discarding the row where neither parent smokes.</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="two-way-tables.html#cb232-1"></a>smoke_clps_<span class="dv">2</span>_theta &lt;-<span class="st"> </span>(smoke_o[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>smoke_o[<span class="dv">1</span>, <span class="dv">2</span>]) <span class="op">/</span></span>
-<span id="cb232-2"><a href="two-way-tables.html#cb232-2"></a><span class="st">  </span>(smoke_o[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>smoke_o[<span class="dv">2</span>, <span class="dv">2</span>])</span>
-<span id="cb232-3"><a href="two-way-tables.html#cb232-3"></a>(smoke_clps_<span class="dv">2</span>_chisq &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(smoke_o[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), ]))</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="two-way-tables.html#cb170-1"></a>smoke_clps_<span class="dv">2</span>_theta &lt;-<span class="st"> </span>(smoke_o[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>smoke_o[<span class="dv">1</span>, <span class="dv">2</span>]) <span class="op">/</span></span>
+<span id="cb170-2"><a href="two-way-tables.html#cb170-2"></a><span class="st">  </span>(smoke_o[<span class="dv">2</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>smoke_o[<span class="dv">2</span>, <span class="dv">2</span>])</span>
+<span id="cb170-3"><a href="two-way-tables.html#cb170-3"></a>(smoke_clps_<span class="dv">2</span>_chisq &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(smoke_o[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), ]))</span></code></pre></div>
 <pre><code>## 
 ## 	Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
 ## data:  smoke_o[c(1:2), ]
-## X-squared = 9, df = 1, p-value = 0.003</code></pre>
-<p>The estimated odds a student smokes if both parents smoke compared to one parent is 1.27 (X^2 = 9, p = 0.</p>
+## X-squared = 9.045, df = 1, p-value = 0.002634</code></pre>
+<p>The estimated odds a student smokes if both parents smoke compared to one parent is 1.27 (X^2 = 9, p = 0.0026342.</p>
 </div>
 <div id="correlation" class="section level3">
-<h3><span class="header-section-number">2.3.7</span> Correlation</h3>
+<h3><span class="header-section-number">2.2.8</span> Correlation</h3>
 <p>When classification is ordinal, there may exist a linear trend among the levels of the characteristics. Measure the linear relationship with Pearson’s correlation coefficient, or its nonparametric alternatives, Spearman’s correlation coefficient and Kendall’s tau.</p>
 <p>In the CHD study, the four levels of cholesterol (0-199, 200-219, 220-259, and 260+) may be treated as ordinal data. You can also treat the presence of heart disease as ordinal. The Pearson correlation,</p>
 <p><span class="math display">\[r = \frac{cov(X, Y)}{s_X s_Y}\]</span></p>
 <p>is</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="two-way-tables.html#cb234-1"></a><span class="co">#dim=dim(table) </span></span>
-<span id="cb234-2"><a href="two-way-tables.html#cb234-2"></a>rbar &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">margin.table</span>(chd_o, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(chd_o) </span>
-<span id="cb234-3"><a href="two-way-tables.html#cb234-3"></a>rdif &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">-</span><span class="st"> </span>rbar </span>
-<span id="cb234-4"><a href="two-way-tables.html#cb234-4"></a>cbar &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">margin.table</span>(chd_o, <span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(chd_o) </span>
-<span id="cb234-5"><a href="two-way-tables.html#cb234-5"></a>cdif &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>) <span class="op">-</span><span class="st"> </span>cbar </span>
-<span id="cb234-6"><a href="two-way-tables.html#cb234-6"></a>ssr &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">margin.table</span>(chd_o, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(rdif<span class="op">^</span><span class="dv">2</span>)) </span>
-<span id="cb234-7"><a href="two-way-tables.html#cb234-7"></a>ssc &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">margin.table</span>(chd_o, <span class="dv">2</span>) <span class="op">*</span><span class="st"> </span>(cdif<span class="op">^</span><span class="dv">2</span>)) </span>
-<span id="cb234-8"><a href="two-way-tables.html#cb234-8"></a>ssrc &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">t</span>(chd_o <span class="op">*</span><span class="st"> </span>rdif) <span class="op">*</span><span class="st"> </span>cdif) </span>
-<span id="cb234-9"><a href="two-way-tables.html#cb234-9"></a>pcor &lt;-<span class="st"> </span>ssrc <span class="op">/</span><span class="st"> </span>(<span class="kw">sqrt</span>(ssr <span class="op">*</span><span class="st"> </span>ssc)) </span>
-<span id="cb234-10"><a href="two-way-tables.html#cb234-10"></a>pcor </span></code></pre></div>
-<pre><code>## [1] -0.14</code></pre>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="two-way-tables.html#cb236-1"></a>M2 &lt;-<span class="st"> </span>(<span class="kw">sum</span>(chd_o) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>pcor<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb236-2"><a href="two-way-tables.html#cb236-2"></a>M2</span></code></pre></div>
-<pre><code>## [1] 26</code></pre>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="two-way-tables.html#cb172-1"></a><span class="co">#dim=dim(table) </span></span>
+<span id="cb172-2"><a href="two-way-tables.html#cb172-2"></a>rbar &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">margin.table</span>(chd_o, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(chd_o) </span>
+<span id="cb172-3"><a href="two-way-tables.html#cb172-3"></a>rdif &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">-</span><span class="st"> </span>rbar </span>
+<span id="cb172-4"><a href="two-way-tables.html#cb172-4"></a>cbar &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">margin.table</span>(chd_o, <span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(chd_o) </span>
+<span id="cb172-5"><a href="two-way-tables.html#cb172-5"></a>cdif &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>) <span class="op">-</span><span class="st"> </span>cbar </span>
+<span id="cb172-6"><a href="two-way-tables.html#cb172-6"></a>ssr &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">margin.table</span>(chd_o, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>(rdif<span class="op">^</span><span class="dv">2</span>)) </span>
+<span id="cb172-7"><a href="two-way-tables.html#cb172-7"></a>ssc &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">margin.table</span>(chd_o, <span class="dv">2</span>) <span class="op">*</span><span class="st"> </span>(cdif<span class="op">^</span><span class="dv">2</span>)) </span>
+<span id="cb172-8"><a href="two-way-tables.html#cb172-8"></a>ssrc &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">t</span>(chd_o <span class="op">*</span><span class="st"> </span>rdif) <span class="op">*</span><span class="st"> </span>cdif) </span>
+<span id="cb172-9"><a href="two-way-tables.html#cb172-9"></a>pcor &lt;-<span class="st"> </span>ssrc <span class="op">/</span><span class="st"> </span>(<span class="kw">sqrt</span>(ssr <span class="op">*</span><span class="st"> </span>ssc)) </span>
+<span id="cb172-10"><a href="two-way-tables.html#cb172-10"></a>pcor </span></code></pre></div>
+<pre><code>## [1] -0.1403189</code></pre>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="two-way-tables.html#cb174-1"></a>M2 &lt;-<span class="st"> </span>(<span class="kw">sum</span>(chd_o) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>pcor<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb174-2"><a href="two-way-tables.html#cb174-2"></a>M2</span></code></pre></div>
+<pre><code>## [1] 26.14753</code></pre>
 </div>
 </div>
             </section>

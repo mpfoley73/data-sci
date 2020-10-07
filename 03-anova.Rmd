@@ -55,7 +55,35 @@ library(readr)
 library(dplyr)
 library(tidyr)  # for gather()
 
-greenhouse <- read_tsv(file = url("https://newonlinecourses.science.psu.edu/stat502/sites/onlinecourses.science.psu.edu.stat502/files/lesson02/lesson1_data/index.txt"))
+#greenhouse <- read_tsv(file = url("https://newonlinecourses.science.psu.edu/stat502/sites/onlinecourses.science.psu.edu.stat502/files/lesson02/lesson1_data/index.txt"))
+
+greenhouse <- tribble(
+  ~group, ~growth,
+"Control",      21,
+"Control",      19.5,
+"Control",      22.5,
+"Control",      21.5,
+"Control",      20.5,
+"Control",      21,
+"F1",      32,
+"F1",      30.5,
+"F1",      25,
+"F1",      27.5,
+"F1",      28,
+"F1",      28.6,
+"F2",      22.5,
+"F2",      26,
+"F2",      28,
+"F2",      27,
+"F2",      26.5,
+'F2',      25.2,
+"F3",      28,
+"F3",      27.5,
+"F3",      31,
+"F3",      29.5,
+"F3",      30,
+"F3",      29.2
+)
 greenhouse <- greenhouse %>%
   gather(key = group, value = growth) %>%
   mutate(group = factor(group))
@@ -148,7 +176,7 @@ boxcox(greenhouse.aov, plotit = TRUE)
 *In a completely randomized design experiment, 20 young pigs are assigned at random among 4 experimental groups, and each group is fed a different diet. The response variable is the pig's weight in kg after consuming the diet for 10 months.  Are the mean pig weights the same for all 4 diets?*
 
 ```{r}
-pig <- read.delim(file = "Data/pig_weight.txt", header = TRUE, sep = ",")
+pig <- read.delim(file = "input/pig_weight.txt", header = TRUE, sep = ",")
 pig <- pig %>%
   gather(key = diet, value = weight) %>%
   mutate(diet = factor(diet))
