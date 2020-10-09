@@ -19,11 +19,11 @@ These notes on text mining are taken from the following resources:
 * Text Mining with R [@Silge2019]
 * [Introduction to Natural Language Processing in R](https://campus.datacamp.com/courses/introduction-to-natural-language-processing-in-r) (DataCamp)
 * [Dotson, Marc.  "]Introduction to Text Analysis in R"](https://www.datacamp.com/courses/introduction-to-text-analysis-in-r) (DataCamp)
-* String Manipulation in R with stringr,
-* Text Mining: Bag of Words, 
-* Sentiment Analysis in R.
-* Sentiment Analysis in R: The Tidy Way, 
-* Topic Modeling in R,
+* [String Manipulation in R with stringr](https://www.datacamp.com/courses/string-manipulation-with-stringr-in-r) (DataCamp)
+* [Text Mining with Bag-of-Words in R](https://www.datacamp.com/courses/text-mining-with-bag-of-words-in-r) (DataCamp)
+* [Sentiment Analysis in R](https://www.datacamp.com/courses/sentiment-analysis-in-r) (DataCamp)
+* [Tidy Sentiment Analysis in R](https://www.datacamp.com/community/tutorials/sentiment-analysis-R) (DataCamp)
+* [Topic Modeling in R](https://www.datacamp.com/courses/topic-modeling-in-r) (DataCamp)
 
 
 Text mining may be thought of as the process of distilling actionable insights from text, typically by identifying patterns with statistical pattern learning. Typical text mining tasks include text categorization, sentiment analysis, and topic modeling.  
