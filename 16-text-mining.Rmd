@@ -1123,7 +1123,9 @@ table(who)
 
 ## Appendix: tidytext
 
-The tidy text format is a table with one token (meaningful unit of text, such as a word) per row.  The **tidytext** package assists with the major tasks in text analysis.  A typical text analysis using tidy data principles unnests tokens with `unnest_tokens()`, removes unimportant "stop words" tokens with `anti_join(stop_words)`, and summarizes token counts `count()`.
+The tidy text format is a table with one token (meaningful unit of text, such as a word) per row.  The **tidytext** package assists with the major tasks in text analysis. 
+
+A typical text analysis using tidy data principles unnests tokens with `unnest_tokens()`, anti-joins unimportant "stop words" from `tidytext::stop_words`, and summarizes token counts `count()`. In between you might also reduce words to their stems with `SnowballC::wordStem()`.
 
 The **janeaustenr** package contains Jane Austen's complete novels. Each novel is a character vector of ~70 characters. Here are the first few elements of Emma.
 
@@ -1141,20 +1143,62 @@ Unnest tokens with `unnest_tokens()` and specify the type of token with `token =
 ```{r}
 # minimum
 austen %>% 
+  filter(book == "Emma") %>%
   unnest_tokens(output = "sentence", input = text, token = "sentences") %>%
+  select(-book) %>%
   head()
 
 # clever
 # [] mean any of, \\d is any number, v, x, l, c are just roman numerals
 chapter_regex <- stringr::regex("^chapter [\\divxlc]", ignore_case = TRUE)
 austen %>%
-  group_by(book) %>%
+  filter(book == "Emma") %>%
   mutate(linenumber = row_number(),
-         new_chapter = cumsum(str_detect(text, chapter_regex))) %>%
+         chapter = cumsum(str_detect(text, chapter_regex))) %>%
   ungroup() %>%
-  unnest_tokens(output = "sentence", input = text, token = "sentences") 
+  unnest_tokens(output = "sentence", input = text, token = "sentences") %>%
+  select(-book)
+
+
+
+mutate(word = SnowballC::wordStem(word)) %>%
 ```
 
+If you have free-form text in a column with other descriptive columns you can group word counts by dimension. An example of a data set like this is the Russion tweet data set.
+
+```{r cache=TRUE, message=FALSE, warning=FALSE}
+tweets <- read_csv(url("https://github.com/fivethirtyeight/russian-troll-tweets/raw/master/IRAhandle_tweets_1.csv")) %>%
+  head(n = 20000)
+glimpse(tweets)
+```
+
+```{r}
+tweets %>%
+  unnest_tokens(word, content) %>%
+  anti_join(stop_words) %>%
+  count(word, sort = TRUE)
+```
+
+Get rid of other garbage words by adding custom stop_words.
+
+```{r}
+custom_stop_words <- tribble(
+  ~word, ~lexicon,
+  "t.co", "custom",
+  "https", "custom",
+  "http", "custom",
+  "di", "custom",
+  "il", "custom",
+  "la", "custom"
+)
+
+tweets %>%
+  unnest_tokens(word, content) %>%
+  anti_join(stop_words, by = "word") %>%
+  anti_join(custom_stop_words, by = "word") %>%
+  mutate(word = SnowballC::wordStem(word)) %>%
+  count(word, sort = TRUE)
+```
 
 
 `print()` outputs strings as you might enter them, so embedded quotes are escaped.  Use `writeLines()` to see text as you might prefer to read them. `writeLines()` is similar to `cat()`, but does not attempt to convert non-character objects to strings.
