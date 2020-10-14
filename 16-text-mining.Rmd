@@ -3,15 +3,15 @@
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 library(tidyverse)
 library(tidytext)
-library(janeaustenr)
-library(gutenbergr)
-library(scales)
-library(wordcloud)
-library(igraph)
-library(ggraph)
-library(widyr)
-library(tm)
-library(gridExtra)
+# library(janeaustenr)
+# library(gutenbergr)
+# library(scales)
+# library(wordcloud)
+# library(igraph)
+# library(ggraph)
+# library(widyr)
+# library(tm)
+# library(gridExtra)
 ```
 
 These notes on text mining are taken from the following resources:
@@ -48,132 +48,154 @@ austen <- janeaustenr::austen_books()
 
 The `tweets` data set contains politically charged tweets. Can you train a model to predict the `account_type` (Left or Right) from the tweet text? 
 
-Prepare the data by filtering to just the relevant tweets, tokenizing, and creatiing a document-term matrix with TFIDF weighting. If resources are an issue, you may want to reduce terms from the sparse matrix. User `dt::removeSparseTerms()` and experiment with values of parameter `sparse` until you get a term count that is respectable. Below, `sparse = 0.9999` finally gets a respectable term count 25% the size of the orginal count. 
+Prepare the data by filtering to just the relevant tweets, tokenizing, and creatiing a document-term matrix with TFIDF weighting. If resources are an issue, experiment with values of parameter `sparse` in `dt::removeSparseTerms()` to get less terms. Below, `sparse = 0.9999` finally gets a respectable term count 14% the size of the orginal count. 
 
 ```{r}
-tweets_lr <- tweets %>%
-  filter(account_type %in% c("Left", "Right"))
-
-# tokenize by sentences
-tweets_sentences <- tweets %>%
-  unnest_tokens(output = "sentence", token = "sentences", input = "content")
-
-# label data
-tweets_sentences_2 <- tweets_sentences %>%
-  mutate(
-    clinton = str_detect(sentence, "clinton"),
-    trump = str_detect(sentence, "trump"),
-    sentence = str_replace_all(sentence, "clinton", "person X"),
-    sentence = str_replace_all(sentence, "trump", "person X"),
-    name = as.factor(if_else(clinton, "clinton", "trump")),
-    sentence_id = row_number()
-  ) %>%
-  filter(clinton + trump == 1) %>%
-  select(name, sentence_id, external_author_id, region, language, following, followers)
-
-set.seed(1012)
-train_ind <- caret::createDataPartition(tweets_sentences_2$name, p = 0.80, list = FALSE)
-tweets_train <- tweets_sentences_2[as.integer(train_ind), ]
-tweets_test <- tweets_sentences_2[-as.integer(train_ind), ]
-
-rfc <- randomForest::randomForest(x = as.data.frame(as.matrix(tweets_train %>% select(-name))),
-                                  y = tweets_train$name,
-                                  nTree = 50)
-
-skimr::skim(tweets_train)
-```
-
-
-
-```{r}
-tweets_words <- tweets %>%
+tweets_words <- tweets[1:1000, ] %>%
   unnest_tokens(output = "word", input = content, token = "words") %>%
   anti_join(stop_words, by = "word") %>%
   mutate(word = SnowballC::wordStem(word))
 
 tweets_dtm <- tweets_words %>%
   count(tweet_id, word) %>%
-  cast_dtm(document = tweet_id, term = word, value = n, weighting = tm::weightTfIdf)
+  cast_dtm(document = tweet_id, term = word, value = n, weighting = tm::weightTfIdf) %>%
+  tm::removeSparseTerms(sparse = 0.999)
 print(tweets_dtm)
-
-tweets_dtm_2 <- tweets_dtm %>%
-  tm::removeSparseTerms(sparse = 0.9999)
 ```
 
-Split the data set into training and test and model.
+Split the data into an 80:20 train:test split and fit a random forest model.
 
 ```{r}
-train_ind <- caret::createDataPartition(tweets_dtm$)
+set.seed(1012)
+train_ind <- sample(nrow(tweets_dtm), floor(0.75*nrow(tweets_dtm)))
+tweets_train <- tweets_dtm[train_ind, ]
+tweets_test <- tweets_dtm[-train_ind, ]
+
+rfc <- randomForest::randomForest(x = as.data.frame(as.matrix(tweets_train)),
+                                  y = as.numeric(tweets_train$dimnames$Docs),
+                                  nTree = 50)
+
+rfc
+plot(caret::varImp(rfc), main="Variable Importance with Random Forest")
 ```
-
-
 
 
 ## Topic Modeling
 
 Topic modeling is a method for unsupervised classification of documents, similar to clustering on numeric data, which finds natural groups of items.  Latent Dirichlet allocation (LDA) is a popular topic modeling algorithm. LDA treats each document as a mixture of topics (X% topic A, Y% topic B, etc.), and each topic as a mixture of words.  Each topic is a collection of word probabilities for all of the unique words used in the corpus. LDA is implemented in the `topicmodels` package.
 
-```{r message=FALSE, warning=FALSE}
-library(topicmodels)
-```
-
-Create a topic model with the `LDA` function.  Parameter `k` specifieds the number of topics.  Here is an example using the `AssociatedPress` data set.
-
-```{r cache=TRUE}
-data("AssociatedPress")
-
-ap_lda <- LDA(AssociatedPress, k = 2, control = list(seed = 1234))
-```
-
-The tidytext package provides a tidy method for extracting the per-topic/word probabilities, called $\beta$ from the model.
+Here is an example using the Russian Troll tweets data set. What are the common themes of tweets that mention "clinton"? Prepare the data by filtering to just the relevant tweets, tokenizing, and creating a document-term matrix with TF (term frequency) weighting. 
 
 ```{r}
-library(tidytext)
+custom_stop_words <- tribble(
+  ~word, ~lexicon,
+  "t.co", "custom",
+  "https", "custom",
+  "http", "custom",
+  "di", "custom",
+  "il", "custom",
+  "la", "custom",
+  "clinton", "custom"
+)
 
-ap_topics <- tidy(ap_lda, matrix = "beta")
+tweets_words <- tweets %>%
+  filter(str_detect(str_to_lower(content), "clinton")) %>%
+  unnest_tokens(output = "word", input = content, token = "words") %>%
+  filter(xfun::is_ascii(word) == TRUE) %>%  # garbage chars
+  anti_join(stop_words, by = "word") %>%
+  anti_join(custom_stop_words, by = "word") %>%
+  mutate(word = SnowballC::wordStem(word))
 
-ap_topics %>% arrange(-beta)
+tweets_dtm <- tweets_words %>%
+  count(tweet_id, word) %>%
+  cast_dtm(document = tweet_id, term = word, value = n, weighting = tm::weightTf) %>%
+  tm::removeSparseTerms(sparse = 0.999)
+
+print(tweets_dtm)
 ```
 
-The tidied format lends itself to plotting.
+Create a topic model with the `topicmodels::LDA` function.  Parameter `k` specifieds the number of topics. To decide on the number of topics, you can construct a scree plot of the perplexity using the test data set. In general, you only want as many topics as are clearly distinct and that you can easily communicate to others. Here are models with 2:15 topics.
+
+```{r message=FALSE}
+set.seed(1012)
+train_ind <- sample(nrow(tweets_dtm), floor(0.75*nrow(tweets_dtm)))
+tweets_train <- tweets_dtm[train_ind, ]
+tweets_test <- tweets_dtm[-train_ind, ]
+
+k = c(2:15)
+perp <- k %>% 
+  map(~ topicmodels::LDA(tweets_train, k = .x, method = "Gibbs", control = list(seed = 1234))) %>%
+  map(~topicmodels::perplexity(.x, newdata = tweets_test)) %>%
+  as.numeric()
+data.frame(k = k, y = perp) %>%
+  ggplot(aes(x = k, y = y)) + geom_point()
+```
+
+The elbow is not obvious, but maybe it is in the range of 4-8 topics. Let's go with 4 topics. 
 
 ```{r}
-ap_topics %>%
+tweets_lda <- topicmodels::LDA(tweets_dtm, k = 4, method = "Gibbs", control = list(seed = 1234))
+```
+
+The tidytext package provides a `tidy()` method for extracting the per-topic/word probabilities, called $\beta$ from the model.
+
+```{r}
+tweets_lda %>%
+  tidy(matrix = "beta") %>%
   group_by(topic) %>%
   top_n(n = 10, wt = beta) %>%
   ungroup() %>%
-  arrange(topic, -beta) %>%
+#  arrange(topic, -beta) %>%
   mutate(term = reorder_within(term, beta, topic)) %>%
   ggplot(aes(x = term, y = beta, fill = factor(topic))) +
   geom_col(show.legend = FALSE) +
-  facet_wrap(~ topic, scales = "free") +
+  scale_x_reordered() +
   coord_flip() +
-  scale_x_reordered()
+  facet_wrap(~ topic, scales = "free")
 ```
 
-Topic 1 appears to be related to the economy; topic 2 to politics.  What is the right number of topics?  That's a matter of subjectivity, but when the topics appear to be duplicative, then you've modeled too many topics.  
-
-Another way to look at the data is to identify terms that had the greatest difference in beta between topic 1 and topic 2. A good way to do this is with the log ratio of the two, $log_2(\beta_2 / \beta_1)$.  Log ratios are useful because the differences are symmetrical ($log_2(2) = 1$, and $log_2(.5) = -1$).  To constrain the analysis to a set of especially relevant words, filter for relatively common words having a beta greater than 1/1000 in at least one topic.
+Topic 1 focuses on the black lives matter movement; topic two on lynching; topic 3 on the elecdtion, and topic 4 on Trump. Another way to look at the betas is to identify terms that had the greatest difference in beta between one topic and the next most probable topic. A good way to do this is with the log ratio of the two, $log_2(\beta_2 / \beta_1)$.  Log ratios are useful because the differences are symmetrical ($log_2(2) = 1$, and $log_2(.5) = -1$).  To constrain the analysis to a set of especially relevant words, filter for relatively common words having a beta greater than 1/1000 in at least one topic.
   
 ```{r}
-ap_topics %>% 
+tweets_lda %>% 
+  tidy(matrix = "beta") %>%
   mutate(topic = paste0("topic", topic)) %>%
-  pivot_wider(names_from = topic, values_from = beta) %>%
-  filter(topic1 > 0.001 | topic2 > 0.001) %>%
-  mutate(log_ratio = log2(topic2 / topic1)) %>%
+  group_by(term) %>%
+  arrange(desc(beta)) %>%
+  slice_head(n = 2) %>%
+  summarize(.groups = "drop", min_beta = min(beta), max_beta = max(beta)) %>%
+#  ungroup() %>%
+#  pivot_wider(names_from = topic, values_from = beta) %>%
+  filter(min_beta > 0.001 | max_beta > 0.001) %>%
+  mutate(log_ratio = log2(max_beta / min_beta)) %>%
   top_n(n = 20, w = abs(log_ratio)) %>%
   arrange(-log_ratio) %>%
   ggplot(aes(x = fct_rev(fct_inorder(term)), y = log_ratio)) +
   geom_col() +
   coord_flip()
 ```
-  
 
-Examine the per-document-per-topic probabilities, called gamma with the `matrix = "gamma"` argument to `tidy()`.
+You can summarize how the documents (tweets) mapped to the topics using the gamma matrix, the per-document-per-topic probabilities.
 
 ```{r}
-(ap_documents <- tidy(ap_lda, matrix = "gamma"))
+tweets_lda %>%
+  tidy(matrix = "gamma") %>%
+  group_by(document) %>%
+  arrange(desc(gamma)) %>%
+  slice(1) %>%
+  ungroup() %>%
+  group_by(topic) %>%
+  summarize(.groups = "drop", n = n(), avg = mean(gamma))
 ```
+
+Only 7 tweets mapped most strongly to topic 3, but the average weights per topic were similar. For further analysis, you can attach topics to the original data with `augment()`.
+
+```{r}
+tweets_words_aug <- augment(tweets_lda, data = tweets_dtm)
+```
+
+
+If you already have 
 
 As an example, use topic modeling to see whether the chapters for four books cluster into the right books.
 
