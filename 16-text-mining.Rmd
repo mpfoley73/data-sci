@@ -37,7 +37,7 @@ These notes use the [Russian Troll Tweets](https://www.kaggle.com/vikasg/russian
 ```{r cache=TRUE, message=FALSE, warning=FALSE}
 tweets_url <- "https://github.com/fivethirtyeight/russian-troll-tweets/raw/master/IRAhandle_tweets_1.csv"
 tweets <- read_csv(url(tweets_url)) %>%
-  head(n = 20000)
+  head(n = 5000)
 glimpse(tweets)
 
 austen <- janeaustenr::austen_books()
@@ -51,7 +51,7 @@ The `tweets` data set contains politically charged tweets. Can you train a model
 Prepare the data by filtering to just the relevant tweets, tokenizing, and creatiing a document-term matrix with TFIDF weighting. If resources are an issue, experiment with values of parameter `sparse` in `dt::removeSparseTerms()` to get less terms. Below, `sparse = 0.9999` finally gets a respectable term count 14% the size of the orginal count. 
 
 ```{r}
-tweets_words <- tweets[1:1000, ] %>%
+tweets_words <- tweets[1:500, ] %>%
   unnest_tokens(output = "word", input = content, token = "words") %>%
   anti_join(stop_words, by = "word") %>%
   mutate(word = SnowballC::wordStem(word))

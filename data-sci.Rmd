@@ -317,15 +317,15 @@ Placeholder
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 library(tidyverse)
 library(tidytext)
-library(janeaustenr)
-library(gutenbergr)
-library(scales)
-library(wordcloud)
-library(igraph)
-library(ggraph)
-library(widyr)
-library(tm)
-library(gridExtra)
+# library(janeaustenr)
+# library(gutenbergr)
+# library(scales)
+# library(wordcloud)
+# library(igraph)
+# library(ggraph)
+# library(widyr)
+# library(tm)
+# library(gridExtra)
 ```
 
 These notes on text mining are taken from the following resources:
@@ -333,237 +333,343 @@ These notes on text mining are taken from the following resources:
 * Text Mining with R [@Silge2019]
 * [Introduction to Natural Language Processing in R](https://campus.datacamp.com/courses/introduction-to-natural-language-processing-in-r) (DataCamp)
 * [Dotson, Marc.  "]Introduction to Text Analysis in R"](https://www.datacamp.com/courses/introduction-to-text-analysis-in-r) (DataCamp)
-* String Manipulation in R with stringr,
-* Text Mining: Bag of Words, 
-* Sentiment Analysis in R.
-* Sentiment Analysis in R: The Tidy Way, 
-* Topic Modeling in R,
+* [String Manipulation in R with stringr](https://www.datacamp.com/courses/string-manipulation-with-stringr-in-r) (DataCamp)
+* [Text Mining with Bag-of-Words in R](https://www.datacamp.com/courses/text-mining-with-bag-of-words-in-r) (DataCamp)
+* [Sentiment Analysis in R](https://www.datacamp.com/courses/sentiment-analysis-in-r) (DataCamp)
+* [Tidy Sentiment Analysis in R](https://www.datacamp.com/community/tutorials/sentiment-analysis-R) (DataCamp)
+* [Topic Modeling in R](https://www.datacamp.com/courses/topic-modeling-in-r) (DataCamp)
 
 
-Text mining may be thought of as the process of distilling actionable insights from text, typically by identifying patterns with statistical pattern learning. Typical text mining tasks include text categorization, sentiment analysis, and topic modeling.  
+Text mining is the process of distilling actionable insights from text, typically by identifying patterns with statistical pattern learning. Typical text mining tasks include classification modeling, topic modeling, and sentiment analysis.
 
-There are two approaches to text mining.  *Semantic parsing* identifies words by type and order (sentences, phrases, nouns/verbs, proper nouns, etc.).  *Bag of Words* treats words as simply attributes of the document.  Bag of words is obviously the simpler way to go.
+There are two approaches to text mining.  *Semantic parsing* identifies words by type and order (sentences, phrases, nouns/verbs, proper nouns, etc.).  *Bag of Words* treats words as simply attributes of the document.  Bag of words is the simpler way to go and is what I use below.
 
-## Classifying Text
-## Named Entity Recognition
+There are two packages with text mining frameworks. These notes mostly use the **tidytext** package because that appears to be the more popular of the two, but there is an appendex section with **tm** package basics too.
 
-The **qdap** package provides parsing tools for preparing transcript data. 
-```{r warning=FALSE, message=FALSE}
-library(qdap)
+These notes use the [Russian Troll Tweets](https://www.kaggle.com/vikasg/russian-troll-tweets) data set for examples of analyzing a single document of text with many entries, and the `janeaustenr::austen_books()` data set to analyze a corpus of documents.
+
+```{r cache=TRUE, message=FALSE, warning=FALSE}
+tweets_url <- "https://github.com/fivethirtyeight/russian-troll-tweets/raw/master/IRAhandle_tweets_1.csv"
+tweets <- read_csv(url(tweets_url)) %>%
+  head(n = 5000)
+glimpse(tweets)
+
+austen <- janeaustenr::austen_books()
 ```
 
-For example, `freq_terms()` parses text and counts the terms.
+
+## Text Classification Modeling
+
+The `tweets` data set contains politically charged tweets. Can you train a model to predict the `account_type` (Left or Right) from the tweet text? 
+
+Prepare the data by filtering to just the relevant tweets, tokenizing, and creatiing a document-term matrix with TFIDF weighting. If resources are an issue, experiment with values of parameter `sparse` in `dt::removeSparseTerms()` to get less terms. Below, `sparse = 0.9999` finally gets a respectable term count 14% the size of the orginal count. 
 
 ```{r}
-freq_terms(DATA$state, top = 5)
+tweets_words <- tweets[1:500, ] %>%
+  unnest_tokens(output = "word", input = content, token = "words") %>%
+  anti_join(stop_words, by = "word") %>%
+  mutate(word = SnowballC::wordStem(word))
+
+tweets_dtm <- tweets_words %>%
+  count(tweet_id, word) %>%
+  cast_dtm(document = tweet_id, term = word, value = n, weighting = tm::weightTfIdf) %>%
+  tm::removeSparseTerms(sparse = 0.999)
+print(tweets_dtm)
 ```
 
-You can also plot the terms.
+Split the data into an 80:20 train:test split and fit a random forest model.
 
 ```{r}
-plot(freq_terms(DATA$state, top = 5))
-```
+set.seed(1012)
+train_ind <- sample(nrow(tweets_dtm), floor(0.75*nrow(tweets_dtm)))
+tweets_train <- tweets_dtm[train_ind, ]
+tweets_test <- tweets_dtm[-train_ind, ]
 
-There are two kinds of the corpus data types, the permanent corpus, **PCorpus**, and the volatile corpus, **VCorpus**. The volatile corpus is held in RAM rather than saved to disk.  Create a volatile corpus with `tm::vCorpous()`. vCorpous() takes either a text source created with `tm::VectorSource()` or a dataframe source created with `Dataframe Source()` where the input dataframe has cols `doc_id`, `text_id` and zero or more metadata columns.
+rfc <- randomForest::randomForest(x = as.data.frame(as.matrix(tweets_train)),
+                                  y = as.numeric(tweets_train$dimnames$Docs),
+                                  nTree = 50)
 
-```{r}
-tweets <- read_csv(file = "https://assets.datacamp.com/production/repositories/19/datasets/27a2a8587eff17add54f4ba288e770e235ea3325/coffee.csv")
-coffee_tweets <- tweets$text
-
-coffee_source <- VectorSource(coffee_tweets)
-coffee_corpus <- VCorpus(coffee_source)
-
-# Text of first tweet
-coffee_corpus[[1]][1]
-```
-
-In bag of words text mining, cleaning helps aggregate terms, especially words with common stems like "miner" and "mining".  There are several functions useful for preprocessing: `tolower()`, `tm::removePunctuation()`, `tm::removeNumbers()`, `tm::stripWhiteSpace()`, and `removeWords()`.  Apply these functions to the documents in a `VCorpus` object with `tm_map()`.  If the function is not one of the pre-defined functions, wrap it in `content_transformer()`.  Another preprocessing function is `stemDocument()`.
-
-```{r}
-# Create the object: text
-text <- "<b>She</b> woke up at       6 A.M. It\'s so early!  She was only 10% awake and began drinking coffee in front of her computer."
-tolower(text)
-removePunctuation(text)
-removeNumbers(text)
-stripWhitespace(text)
-```
-
-The **qdap** package offers other preprocessing functions.
-
-```{r}
-text <- "<b>She</b> woke up at       6 A.M. It\'s so early!  She was only 10% awake and began drinking coffee in front of her computer."
-bracketX(text)
-replace_number(text)
-replace_abbreviation(text)
-replace_contraction(text)
-replace_symbol(text)
-```
-
-`tm::stopwords("en")` returns a vector of stop words.  You can add to the list with concatenation.
-
-```{r}
-new_stops <- c("coffee", "bean", stopwords("en"))
-removeWords(text, new_stops)
-```
-
-`tm::stemDocument()` and `tm::stemCompletion()` reduce the variation in terms.
-
-```{r}
-complicate <- c("complicated", "complication", "complicatedly")
-
-stem_doc <- stemDocument(complicate)
-
-comp_dict <- c("complicate")
-
-complete_text <- stemCompletion(stem_doc, comp_dict)
-complete_text
+rfc
+plot(caret::varImp(rfc), main="Variable Importance with Random Forest")
 ```
 
 
-```{r}
-clean_corpus <- function(corpus){
-  corpus <- tm_map(corpus, removePunctuation)
-  corpus <- tm_map(corpus, content_transformer(tolower))
-  corpus <- tm_map(corpus, removeWords, words = c(stopwords("en"), "coffee", "mug"))
-  corpus <- tm_map(corpus, stripWhitespace)
-  return(corpus)
-}
-clean_corp <- clean_corpus(coffee_corpus)
-content(clean_corp[[1]])
+## Topic Modeling
 
-# compare to original
-content(coffee_corpus[[1]])
-```
+Topic modeling is a method for unsupervised classification of documents, similar to clustering on numeric data, which finds natural groups of items.  Latent Dirichlet allocation (LDA) is a popular topic modeling algorithm. LDA treats each document as a mixture of topics (X% topic A, Y% topic B, etc.), and each topic as a mixture of words.  Each topic is a collection of word probabilities for all of the unique words used in the corpus. LDA is implemented in the `topicmodels` package.
 
-To perform the analysis of the tweets, convert the corpus into either a document term matrix (DTM, documents as rows, terms as cols), or a term document matrix (TDM, terms as rows, documents as cols). 
-
-```{r}
-coffee_tdm <- TermDocumentMatrix(clean_corp)
-
-# Print coffee_tdm data
-coffee_tdm
-
-# Convert coffee_tdm to a matrix
-coffee_m <- as.matrix(coffee_tdm)
-
-# Print the dimensions of the matrix
-dim(coffee_m)
-
-# Review a portion of the matrix
-coffee_m[c("star", "starbucks"), 25:35]
-```
-
-## Tidy Text
-
-Here are four Jane Austin books from the `janeaustenr`. "Sense & Sensibility" acts as the baseline count, and the other books are faceted for comparison.
+Here is an example using the Russian Troll tweets data set. What are the common themes of tweets that mention "clinton"? Prepare the data by filtering to just the relevant tweets, tokenizing, and creating a document-term matrix with TF (term frequency) weighting. 
 
 ```{r}
 custom_stop_words <- tribble(
   ~word, ~lexicon,
-  "edward", "CUSTOM",
-  "frank", "CUSTOM",
-  "thomas", "CUSTOM",
-  "fanny", "CUSTOM",
-  "anne", "CUSTOM"
+  "t.co", "custom",
+  "https", "custom",
+  "http", "custom",
+  "di", "custom",
+  "il", "custom",
+  "la", "custom",
+  "clinton", "custom"
 )
 
-austin_tidy <- austen_books() %>%
-  group_by(book) %>%
-  mutate(
-    linenumber = row_number(),
-    chapter = cumsum(str_detect(text, regex("^chapter [\\divxlc]", ignore_case = TRUE)))
-    ) %>%
+tweets_words <- tweets %>%
+  filter(str_detect(str_to_lower(content), "clinton")) %>%
+  unnest_tokens(output = "word", input = content, token = "words") %>%
+  filter(xfun::is_ascii(word) == TRUE) %>%  # garbage chars
+  anti_join(stop_words, by = "word") %>%
+  anti_join(custom_stop_words, by = "word") %>%
+  mutate(word = SnowballC::wordStem(word))
+
+tweets_dtm <- tweets_words %>%
+  count(tweet_id, word) %>%
+  cast_dtm(document = tweet_id, term = word, value = n, weighting = tm::weightTf) %>%
+  tm::removeSparseTerms(sparse = 0.999)
+
+print(tweets_dtm)
+```
+
+Create a topic model with the `topicmodels::LDA` function.  Parameter `k` specifieds the number of topics. To decide on the number of topics, you can construct a scree plot of the perplexity using the test data set. In general, you only want as many topics as are clearly distinct and that you can easily communicate to others. Here are models with 2:15 topics.
+
+```{r message=FALSE}
+set.seed(1012)
+train_ind <- sample(nrow(tweets_dtm), floor(0.75*nrow(tweets_dtm)))
+tweets_train <- tweets_dtm[train_ind, ]
+tweets_test <- tweets_dtm[-train_ind, ]
+
+k = c(2:15)
+perp <- k %>% 
+  map(~ topicmodels::LDA(tweets_train, k = .x, method = "Gibbs", control = list(seed = 1234))) %>%
+  map(~topicmodels::perplexity(.x, newdata = tweets_test)) %>%
+  as.numeric()
+data.frame(k = k, y = perp) %>%
+  ggplot(aes(x = k, y = y)) + geom_point()
+```
+
+The elbow is not obvious, but maybe it is in the range of 4-8 topics. Let's go with 4 topics. 
+
+```{r}
+tweets_lda <- topicmodels::LDA(tweets_dtm, k = 4, method = "Gibbs", control = list(seed = 1234))
+```
+
+The tidytext package provides a `tidy()` method for extracting the per-topic/word probabilities, called $\beta$ from the model.
+
+```{r}
+tweets_lda %>%
+  tidy(matrix = "beta") %>%
+  group_by(topic) %>%
+  top_n(n = 10, wt = beta) %>%
   ungroup() %>%
-  unnest_tokens(output = word, input = text) %>%
+#  arrange(topic, -beta) %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(x = term, y = beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  scale_x_reordered() +
+  coord_flip() +
+  facet_wrap(~ topic, scales = "free")
+```
+
+Topic 1 focuses on the black lives matter movement; topic two on lynching; topic 3 on the elecdtion, and topic 4 on Trump. Another way to look at the betas is to identify terms that had the greatest difference in beta between one topic and the next most probable topic. A good way to do this is with the log ratio of the two, $log_2(\beta_2 / \beta_1)$.  Log ratios are useful because the differences are symmetrical ($log_2(2) = 1$, and $log_2(.5) = -1$).  To constrain the analysis to a set of especially relevant words, filter for relatively common words having a beta greater than 1/1000 in at least one topic.
+  
+```{r}
+tweets_lda %>% 
+  tidy(matrix = "beta") %>%
+  mutate(topic = paste0("topic", topic)) %>%
+  group_by(term) %>%
+  arrange(desc(beta)) %>%
+  slice_head(n = 2) %>%
+  summarize(.groups = "drop", min_beta = min(beta), max_beta = max(beta)) %>%
+#  ungroup() %>%
+#  pivot_wider(names_from = topic, values_from = beta) %>%
+  filter(min_beta > 0.001 | max_beta > 0.001) %>%
+  mutate(log_ratio = log2(max_beta / min_beta)) %>%
+  top_n(n = 20, w = abs(log_ratio)) %>%
+  arrange(-log_ratio) %>%
+  ggplot(aes(x = fct_rev(fct_inorder(term)), y = log_ratio)) +
+  geom_col() +
+  coord_flip()
+```
+
+You can summarize how the documents (tweets) mapped to the topics using the gamma matrix, the per-document-per-topic probabilities.
+
+```{r}
+tweets_lda %>%
+  tidy(matrix = "gamma") %>%
+  group_by(document) %>%
+  arrange(desc(gamma)) %>%
+  slice(1) %>%
+  ungroup() %>%
+  group_by(topic) %>%
+  summarize(.groups = "drop", n = n(), avg = mean(gamma))
+```
+
+Only 7 tweets mapped most strongly to topic 3, but the average weights per topic were similar. For further analysis, you can attach topics to the original data with `augment()`.
+
+```{r}
+tweets_words_aug <- augment(tweets_lda, data = tweets_dtm)
+```
+
+
+If you already have 
+
+As an example, use topic modeling to see whether the chapters for four books cluster into the right books.
+
+```{r}
+library(gutenbergr)
+
+books <- gutenberg_works(title %in% c("Twenty Thousand Leagues under the Sea", 
+                                      "The War of the Worlds",
+                                      "Pride and Prejudice", 
+                                      "Great Expectations")) %>%
+  gutenberg_download(meta_fields = "title")
+
+by_chapter <- books %>%
+  group_by(title) %>%
+  mutate(chapter = cumsum(str_detect(text, regex("^chapter ", ignore_case = TRUE)))) %>%
+  ungroup() %>%
+  filter(chapter > 0) %>%
+  unite(document, title, chapter)
+
+by_chapter_word <- by_chapter %>%
+  unnest_tokens(output = word, input = text, token = "words")
+
+word_counts <- by_chapter_word %>%
   anti_join(stop_words) %>%
-  anti_join(custom_stop_words)
+  count(document, word, sort = TRUE) %>%
+  ungroup()
 
-austin_tidy %>%
-  count(book, word) %>%
-  group_by(book) %>%
-  mutate(proportion = n / sum(n)) %>% 
-  select(-n) %>% 
-  pivot_wider(names_from = book, values_from = proportion) %>%
-  pivot_longer(cols = `Pride & Prejudice`:`Persuasion`, names_to = "book", values_to = "proportion") %>%
-  ggplot(aes(x = proportion, 
-             y = `Sense & Sensibility`,
-             color = abs(`Sense & Sensibility` - proportion))) +
-  geom_abline(color = "gray40", lty = 2) +
-  geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3) +
-  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1.5) +
-  scale_x_log10(labels = percent_format()) +
-  scale_y_log10(labels = percent_format()) +
-  scale_color_gradient(limits = c(0, 0.001), low = "darkslategray4", high = "gray75") +
-  facet_wrap(~book, ncol = 2) +
-  theme(legend.position = "none") +
-  labs(y = "Sense & Sensibility", x = NULL)
+word_counts
 ```
 
-Words close to the 45-degree lines have similar frequencies in both books.  Words far from the line are found more in one book more than the other.  If there are few points near the low frequencies, then few infrequent words are shared.  Emma is similar to Sense & Sensibility because the points are fairly narrow on the 45-degree line, and they extend all the way to the origin.
-
-A common way to visualize words is with a word cloud.  The `wordcloud` library is helpful.  NOte that word clouds do not contain any information not already in a bar plot.
+The `topmodels` library requires `DocumentTermMatrix` objects, so cast `word_counts`.
 
 ```{r}
-austin_word_cnt <- austin_tidy %>%
-  filter(book == "Sense & Sensibility") %>%
-  count(word)
-pal <- brewer.pal(9,"BuGn")
-pal <- pal[-(1:4)]
-wordcloud(
-  words = austin_word_cnt$word,
-  freq = austin_word_cnt$n,
-  max.words = 30,
-  colors = pal
-)
+chapters_dtm <- word_counts %>%
+  cast_dtm(document = document, term = word, value = n)
+
+chapters_dtm
 ```
+
+Create a four-topic model.
 
 ```{r}
-# pa_file <- readxl::read_excel("./../../PeoplaAnalyticsCloud.xlsx")
-# pa_tidy <- pa_file %>%
-#   mutate(
-#     linenumber = row_number(),
-#     ) %>%
-#   ungroup() %>%
-#   unnest_tokens(output = word, input = comment) %>%
-# #  unnest_tokens(output = bigram, input = comment, token = "ngrams", n = 2) 
-#   anti_join(stop_words) %>%
-#   anti_join(custom_stop_words)
-# pa_tidy_n <- pa_tidy %>%
-#   count(word)
-# pal <- brewer.pal(9,"BuGn")
-# pal <- pal[-(1:4)]
-# wordcloud(
-#   words = pa_tidy_n$word,
-#   freq = pa_tidy_n$n,
-#   max.words = 30,
-#   colors = pal
-# )
-# 
-# pa_2gram <- pa_tidy %>%
-#   separate(bigram, c("word1", "word2"), sep = " ") %>%
-#   filter(!word1 %in% stop_words$word &
-#            !word2 %in% stop_words$word &
-#            !is.na(word1) & !is.na(word2)) %>%
-#   unite(bigram, word1, word2, sep = " ")
-# 
-# 
-# pa_2gram %>%
-#   count(book, bigram, sort = TRUE)
-# 
-# pa_2gram2 <- pa_2gram %>%
-#   count(bigram)
-# pal <- brewer.pal(9,"BuGn")
-# pal <- pal[-(1:4)]
-# wordcloud(
-#   words = pa_2gram2$bigram,
-#   freq = pa_2gram2$n,
-#   max.words = 30,
-#   colors = pal
-# )
+chapters_lda <- LDA(chapters_dtm, k = 4, control = list(seed = 1234))
+chapters_lda
+```
+
+What are the per-topic/word probabilities?
+
+```{r}
+chapter_topics <- tidy(chapters_lda, matrix = "beta")
+chapter_topics
+```
+
+For each combination, the model computes the probability of that term being generated from that topic. The top 5 terms per topic are:
+
+```{r}
+top_terms <- chapter_topics %>%
+  group_by(topic) %>%
+  top_n(n = 5, wt = beta) %>%
+  ungroup() %>%
+  arrange(topic, -beta)
+
+top_terms %>%
+  ggplot(aes(x = reorder_within(term, beta, topic), y = beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  coord_flip() +
+  scale_x_reordered()
+```
+
+These topics are pretty clearly associated with the four books!  Each "document" in this analysis was a single chapter. Which topics are associated with each document - can we put the chapters back together into the correct books? Examining the per-document-per-topic probabilities, (gamma).
+
+Separate the document name into title and chapter, then visualize the per-document-per-topic probability for each. 
+
+```{r}
+chapters_gamma <- tidy(chapters_lda, matrix = "gamma") %>%
+  separate(document, c("title", "chapter"), sep = "_", convert = TRUE)
+
+chapters_gamma %>%
+  mutate(title = reorder(title, gamma * topic)) %>%
+  ggplot(aes(factor(topic), y = gamma)) + 
+  geom_boxplot() +
+  facet_wrap(~ title)
+
+```
+
+Almost all chapters from Pride and Prejudice, War of the Worlds, and Twenty Thousand Leagues Under the Sea were uniquely identified as a single topic each.  Some chapters from Great Expectations (topic 4) were somewhat associated with other topics. 
+
+Are there any cases where the topic most associated with a chapter belonged to another book? First we’d find the topic that was most associated with each chapter using top_n(), which is effectively the “classification” of that chapter.  We can then compare each to the “consensus” topic for each book (the most common topic among its chapters), and see which were most often misidentified.
+
+```{r}
+chapter_classifications <- chapters_gamma %>%
+  group_by(title, chapter) %>%
+  top_n(1, gamma) %>%
+  ungroup()
+
+chapter_classifications
+
+book_topics <- chapter_classifications %>%
+  count(title, topic) %>%
+  group_by(title) %>%
+  top_n(1, n) %>%
+  ungroup() %>%
+  transmute(consensus = title, topic)
+
+chapter_classifications %>%
+  inner_join(book_topics, by = "topic") %>%
+  filter(title != consensus)
+```
+
+Only two chapters from Great Expectations were misclassified.
+
+The `augment()` function adds model output (token count and topic classification) to the original observations. 
+
+```{r}
+assignments <- augment(chapters_lda, data = chapters_dtm)
+assignments
+```
+
+Combine with the book_topics summarization to assess the misclassifications.
+
+```{r}
+assignments <- assignments %>%
+  separate(document, c("title", "chapter"), sep = "_", convert = TRUE) %>%
+  inner_join(book_topics, by = c(".topic" = "topic"))
+```
+
+A good way to visualize the misclassifications is with a confusion matrix.
+
+```{r}
+library(scales)
+
+assignments %>%
+  count(title, consensus, wt = count) %>%
+  group_by(title) %>%
+  mutate(percent = n / sum(n)) %>%
+  ggplot(aes(consensus, title, fill = percent)) +
+  geom_tile() +
+  scale_fill_gradient2(high = "red", label = percent_format()) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        panel.grid = element_blank()) +
+  labs(x = "Book words were assigned to",
+       y = "Book words came from",
+       fill = "% of assignments")
+```
+
+We notice that almost all the words for Pride and Prejudice, Twenty Thousand Leagues Under the Sea, and War of the Worlds were correctly assigned, while Great Expectations had a fair number of misassigned words (which, as we saw above, led to two chapters getting misclassified).  What were the most commmonly mistaken words?
+
+```{r}
+wrong_words <- assignments %>%
+  filter(title != consensus)
+
+wrong_words %>%
+  count(title, consensus, term, wt = count) %>%
+  ungroup() %>%
+  arrange(desc(n))
 ```
 
 
-## Bag of Words
 ## Sentiment Analysis
 
 A typical sentiment analysis involves unnesting tokens with `unnest_tokens()`, assigning sentiments with `inner_join(sentiments)`, counting tokens with `count()`, and summarizing and visualizing.
@@ -763,8 +869,19 @@ austin.2gram %>%
   count(book, word1, sort = TRUE)
 ```
 
+Use the TFIDF statistic to compare words among documents. The term's frequency (TF) is its proportion of the words in the document. The inverse document frequence (IDF) is the log of the inverse ratio of documents in which the term appears. The product of TF and IDF (TFIDF) indicates how important a word is to a document in a collection or corpus. A term's TFIDF increases with its frequency in the document and decreases with the number of documents in the corpus that contain it.
 
-Bind the tf-idf statistics.  Tf-idf is short for term frequency–inverse document frequency.  It is a statistic that indicates how important a word is to a document in a collection or corpus. Tf–idf increases with the number of times a word appears in the document and decreases with the number of documents in the corpus that contain the word.  The idf adjusts for the fact that some words appear more frequently in general.
+Calculate the cosine similarity, the angle in multidimensional space between two vectors ($cos(\theta) = (A \cdot B) / ||A||||B||)$), to determine how similar two items are. Use `widyr::pairwise_similarity()` to calculate the cosine similarity of all pairs of items in a tidy table.
+
+```{r}
+austen %>%
+  unnest_tokens(output = "word", input = "text", token = "words") %>%
+  anti_join(stop_words, by = "word") %>%
+  count(book, word) %>%
+  bind_tf_idf(term = word, document = book, n = n) %>%
+  pairwise_similarity(item = book, feature = word, value = tf_idf) %>%
+  arrange(desc(similarity))
+```
 
 ```{r}
 austen_books() %>%
@@ -1002,230 +1119,223 @@ download_articles <- function(symbol) {
 #corpus <- Corpus(GoogleFinanceSource("NASDAQ:MSFT"))
 ```
 
-## Topic Modeling
+## Named Entity Recognition
 
-Topic modeling is a method for unsupervised classification of documents, similar to clustering on numeric data, which finds natural groups of items.  Latent Dirichlet allocation (LDA) is a popular topic modeling algorithm. LDA treats each document as a mixture of topics (X% topic A, Y% topic B, etc.), and each topic as a mixture of words.  Each topic is a collection of word probabilities for all of the unique words used in the corpus. LDA is implemented in the `topicmodels` package.
-
-```{r message=FALSE, warning=FALSE}
-library(topicmodels)
+The **qdap** package provides parsing tools for preparing transcript data. 
+```{r warning=FALSE, message=FALSE}
+library(qdap)
 ```
 
-Create a topic model with the `LDA` function.  Parameter `k` specifieds the number of topics.  Here is an example using the `AssociatedPress` data set.
-
-```{r cache=TRUE}
-data("AssociatedPress")
-
-ap_lda <- LDA(AssociatedPress, k = 2, control = list(seed = 1234))
-```
-
-The tidytext package provides a tidy method for extracting the per-topic/word probabilities, called $\beta$ from the model.
+For example, `freq_terms()` parses text and counts the terms.
 
 ```{r}
-library(tidytext)
-
-ap_topics <- tidy(ap_lda, matrix = "beta")
-
-ap_topics %>% arrange(-beta)
+freq_terms(DATA$state, top = 5)
 ```
 
-The tidied format lends itself to plotting.
+You can also plot the terms.
 
 ```{r}
-ap_topics %>%
-  group_by(topic) %>%
-  top_n(n = 10, wt = beta) %>%
+plot(freq_terms(DATA$state, top = 5))
+```
+
+There are two kinds of the corpus data types, the permanent corpus, **PCorpus**, and the volatile corpus, **VCorpus**. The volatile corpus is held in RAM rather than saved to disk.  Create a volatile corpus with `tm::vCorpous()`. vCorpous() takes either a text source created with `tm::VectorSource()` or a dataframe source created with `Dataframe Source()` where the input dataframe has cols `doc_id`, `text_id` and zero or more metadata columns.
+
+```{r}
+tweets <- read_csv(file = "https://assets.datacamp.com/production/repositories/19/datasets/27a2a8587eff17add54f4ba288e770e235ea3325/coffee.csv")
+coffee_tweets <- tweets$text
+
+coffee_source <- VectorSource(coffee_tweets)
+coffee_corpus <- VCorpus(coffee_source)
+
+# Text of first tweet
+coffee_corpus[[1]][1]
+```
+
+In bag of words text mining, cleaning helps aggregate terms, especially words with common stems like "miner" and "mining".  There are several functions useful for preprocessing: `tolower()`, `tm::removePunctuation()`, `tm::removeNumbers()`, `tm::stripWhiteSpace()`, and `removeWords()`.  Apply these functions to the documents in a `VCorpus` object with `tm_map()`.  If the function is not one of the pre-defined functions, wrap it in `content_transformer()`.  Another preprocessing function is `stemDocument()`.
+
+```{r}
+# Create the object: text
+text <- "<b>She</b> woke up at       6 A.M. It\'s so early!  She was only 10% awake and began drinking coffee in front of her computer."
+tolower(text)
+removePunctuation(text)
+removeNumbers(text)
+stripWhitespace(text)
+```
+
+The **qdap** package offers other preprocessing functions.
+
+```{r}
+text <- "<b>She</b> woke up at       6 A.M. It\'s so early!  She was only 10% awake and began drinking coffee in front of her computer."
+bracketX(text)
+replace_number(text)
+replace_abbreviation(text)
+replace_contraction(text)
+replace_symbol(text)
+```
+
+`tm::stopwords("en")` returns a vector of stop words.  You can add to the list with concatenation.
+
+```{r}
+new_stops <- c("coffee", "bean", stopwords("en"))
+removeWords(text, new_stops)
+```
+
+`tm::stemDocument()` and `tm::stemCompletion()` reduce the variation in terms.
+
+```{r}
+complicate <- c("complicated", "complication", "complicatedly")
+
+stem_doc <- stemDocument(complicate)
+
+comp_dict <- c("complicate")
+
+complete_text <- stemCompletion(stem_doc, comp_dict)
+complete_text
+```
+
+
+```{r}
+clean_corpus <- function(corpus){
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, content_transformer(tolower))
+  corpus <- tm_map(corpus, removeWords, words = c(stopwords("en"), "coffee", "mug"))
+  corpus <- tm_map(corpus, stripWhitespace)
+  return(corpus)
+}
+clean_corp <- clean_corpus(coffee_corpus)
+content(clean_corp[[1]])
+
+# compare to original
+content(coffee_corpus[[1]])
+```
+
+To perform the analysis of the tweets, convert the corpus into either a document term matrix (DTM, documents as rows, terms as cols), or a term document matrix (TDM, terms as rows, documents as cols). 
+
+```{r}
+coffee_tdm <- TermDocumentMatrix(clean_corp)
+
+# Print coffee_tdm data
+coffee_tdm
+
+# Convert coffee_tdm to a matrix
+coffee_m <- as.matrix(coffee_tdm)
+
+# Print the dimensions of the matrix
+dim(coffee_m)
+
+# Review a portion of the matrix
+coffee_m[c("star", "starbucks"), 25:35]
+```
+
+
+## Tidy Text
+
+Here are four Jane Austin books from the `janeaustenr`. "Sense & Sensibility" acts as the baseline count, and the other books are faceted for comparison.
+
+```{r}
+custom_stop_words <- tribble(
+  ~word, ~lexicon,
+  "edward", "CUSTOM",
+  "frank", "CUSTOM",
+  "thomas", "CUSTOM",
+  "fanny", "CUSTOM",
+  "anne", "CUSTOM"
+)
+
+austin_tidy <- austen_books() %>%
+  group_by(book) %>%
+  mutate(
+    linenumber = row_number(),
+    chapter = cumsum(str_detect(text, regex("^chapter [\\divxlc]", ignore_case = TRUE)))
+    ) %>%
   ungroup() %>%
-  arrange(topic, -beta) %>%
-  mutate(term = reorder_within(term, beta, topic)) %>%
-  ggplot(aes(x = term, y = beta, fill = factor(topic))) +
-  geom_col(show.legend = FALSE) +
-  facet_wrap(~ topic, scales = "free") +
-  coord_flip() +
-  scale_x_reordered()
-```
-
-Topic 1 appears to be related to the economy; topic 2 to politics.  What is the right number of topics?  That's a matter of subjectivity, but when the topics appear to be duplicative, then you've modeled too many topics.  
-
-Another way to look at the data is to identify terms that had the greatest difference in beta between topic 1 and topic 2. A good way to do this is with the log ratio of the two, $log_2(\beta_2 / \beta_1)$.  Log ratios are useful because the differences are symmetrical ($log_2(2) = 1$, and $log_2(.5) = -1$).  To constrain the analysis to a set of especially relevant words, filter for relatively common words having a beta greater than 1/1000 in at least one topic.
-  
-```{r}
-ap_topics %>% 
-  mutate(topic = paste0("topic", topic)) %>%
-  pivot_wider(names_from = topic, values_from = beta) %>%
-  filter(topic1 > 0.001 | topic2 > 0.001) %>%
-  mutate(log_ratio = log2(topic2 / topic1)) %>%
-  top_n(n = 20, w = abs(log_ratio)) %>%
-  arrange(-log_ratio) %>%
-  ggplot(aes(x = fct_rev(fct_inorder(term)), y = log_ratio)) +
-  geom_col() +
-  coord_flip()
-```
-  
-
-Examine the per-document-per-topic probabilities, called gamma with the `matrix = "gamma"` argument to `tidy()`.
-
-```{r}
-(ap_documents <- tidy(ap_lda, matrix = "gamma"))
-```
-
-As an example, use topic modeling to see whether the chapters for four books cluster into the right books.
-
-```{r}
-library(gutenbergr)
-
-books <- gutenberg_works(title %in% c("Twenty Thousand Leagues under the Sea", 
-                                      "The War of the Worlds",
-                                      "Pride and Prejudice", 
-                                      "Great Expectations")) %>%
-  gutenberg_download(meta_fields = "title")
-
-by_chapter <- books %>%
-  group_by(title) %>%
-  mutate(chapter = cumsum(str_detect(text, regex("^chapter ", ignore_case = TRUE)))) %>%
-  ungroup() %>%
-  filter(chapter > 0) %>%
-  unite(document, title, chapter)
-
-by_chapter_word <- by_chapter %>%
-  unnest_tokens(output = word, input = text, token = "words")
-
-word_counts <- by_chapter_word %>%
+  unnest_tokens(output = word, input = text) %>%
   anti_join(stop_words) %>%
-  count(document, word, sort = TRUE) %>%
-  ungroup()
+  anti_join(custom_stop_words)
 
-word_counts
+austin_tidy %>%
+  count(book, word) %>%
+  group_by(book) %>%
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = book, values_from = proportion) %>%
+  pivot_longer(cols = `Pride & Prejudice`:`Persuasion`, names_to = "book", values_to = "proportion") %>%
+  ggplot(aes(x = proportion, 
+             y = `Sense & Sensibility`,
+             color = abs(`Sense & Sensibility` - proportion))) +
+  geom_abline(color = "gray40", lty = 2) +
+  geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3) +
+  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1.5) +
+  scale_x_log10(labels = percent_format()) +
+  scale_y_log10(labels = percent_format()) +
+  scale_color_gradient(limits = c(0, 0.001), low = "darkslategray4", high = "gray75") +
+  facet_wrap(~book, ncol = 2) +
+  theme(legend.position = "none") +
+  labs(y = "Sense & Sensibility", x = NULL)
 ```
 
-The `topmodels` library requires `DocumentTermMatrix` objects, so cast `word_counts`.
+
+
+A common way to visualize words is with a word cloud.  The `wordcloud` library is helpful.  NOte that word clouds do not contain any information not already in a bar plot.
 
 ```{r}
-chapters_dtm <- word_counts %>%
-  cast_dtm(document = document, term = word, value = n)
-
-chapters_dtm
+austin_word_cnt <- austin_tidy %>%
+  filter(book == "Sense & Sensibility") %>%
+  count(word)
+pal <- brewer.pal(9,"BuGn")
+pal <- pal[-(1:4)]
+wordcloud(
+  words = austin_word_cnt$word,
+  freq = austin_word_cnt$n,
+  max.words = 30,
+  colors = pal
+)
 ```
-
-Create a four-topic model.
 
 ```{r}
-chapters_lda <- LDA(chapters_dtm, k = 4, control = list(seed = 1234))
-chapters_lda
+# pa_file <- readxl::read_excel("./../../PeoplaAnalyticsCloud.xlsx")
+# pa_tidy <- pa_file %>%
+#   mutate(
+#     linenumber = row_number(),
+#     ) %>%
+#   ungroup() %>%
+#   unnest_tokens(output = word, input = comment) %>%
+# #  unnest_tokens(output = bigram, input = comment, token = "ngrams", n = 2) 
+#   anti_join(stop_words) %>%
+#   anti_join(custom_stop_words)
+# pa_tidy_n <- pa_tidy %>%
+#   count(word)
+# pal <- brewer.pal(9,"BuGn")
+# pal <- pal[-(1:4)]
+# wordcloud(
+#   words = pa_tidy_n$word,
+#   freq = pa_tidy_n$n,
+#   max.words = 30,
+#   colors = pal
+# )
+# 
+# pa_2gram <- pa_tidy %>%
+#   separate(bigram, c("word1", "word2"), sep = " ") %>%
+#   filter(!word1 %in% stop_words$word &
+#            !word2 %in% stop_words$word &
+#            !is.na(word1) & !is.na(word2)) %>%
+#   unite(bigram, word1, word2, sep = " ")
+# 
+# 
+# pa_2gram %>%
+#   count(book, bigram, sort = TRUE)
+# 
+# pa_2gram2 <- pa_2gram %>%
+#   count(bigram)
+# pal <- brewer.pal(9,"BuGn")
+# pal <- pal[-(1:4)]
+# wordcloud(
+#   words = pa_2gram2$bigram,
+#   freq = pa_2gram2$n,
+#   max.words = 30,
+#   colors = pal
+# )
 ```
-
-What are the per-topic/word probabilities?
-
-```{r}
-chapter_topics <- tidy(chapters_lda, matrix = "beta")
-chapter_topics
-```
-
-For each combination, the model computes the probability of that term being generated from that topic. The top 5 terms per topic are:
-
-```{r}
-top_terms <- chapter_topics %>%
-  group_by(topic) %>%
-  top_n(n = 5, wt = beta) %>%
-  ungroup() %>%
-  arrange(topic, -beta)
-
-top_terms %>%
-  ggplot(aes(x = reorder_within(term, beta, topic), y = beta, fill = factor(topic))) +
-  geom_col(show.legend = FALSE) +
-  facet_wrap(~ topic, scales = "free") +
-  coord_flip() +
-  scale_x_reordered()
-```
-
-These topics are pretty clearly associated with the four books!  Each "document" in this analysis was a single chapter. Which topics are associated with each document - can we put the chapters back together into the correct books? Examining the per-document-per-topic probabilities, (gamma).
-
-Separate the document name into title and chapter, then visualize the per-document-per-topic probability for each. 
-
-```{r}
-chapters_gamma <- tidy(chapters_lda, matrix = "gamma") %>%
-  separate(document, c("title", "chapter"), sep = "_", convert = TRUE)
-
-chapters_gamma %>%
-  mutate(title = reorder(title, gamma * topic)) %>%
-  ggplot(aes(factor(topic), y = gamma)) + 
-  geom_boxplot() +
-  facet_wrap(~ title)
-
-```
-
-Almost all chapters from Pride and Prejudice, War of the Worlds, and Twenty Thousand Leagues Under the Sea were uniquely identified as a single topic each.  Some chapters from Great Expectations (topic 4) were somewhat associated with other topics. 
-
-Are there any cases where the topic most associated with a chapter belonged to another book? First we’d find the topic that was most associated with each chapter using top_n(), which is effectively the “classification” of that chapter.  We can then compare each to the “consensus” topic for each book (the most common topic among its chapters), and see which were most often misidentified.
-
-```{r}
-chapter_classifications <- chapters_gamma %>%
-  group_by(title, chapter) %>%
-  top_n(1, gamma) %>%
-  ungroup()
-
-chapter_classifications
-
-book_topics <- chapter_classifications %>%
-  count(title, topic) %>%
-  group_by(title) %>%
-  top_n(1, n) %>%
-  ungroup() %>%
-  transmute(consensus = title, topic)
-
-chapter_classifications %>%
-  inner_join(book_topics, by = "topic") %>%
-  filter(title != consensus)
-```
-
-Only two chapters from Great Expectations were misclassified.
-
-The `augment()` function adds model output (token count and topic classification) to the original observations. 
-
-```{r}
-assignments <- augment(chapters_lda, data = chapters_dtm)
-assignments
-```
-
-Combine with the book_topics summarization to assess the misclassifications.
-
-```{r}
-assignments <- assignments %>%
-  separate(document, c("title", "chapter"), sep = "_", convert = TRUE) %>%
-  inner_join(book_topics, by = c(".topic" = "topic"))
-```
-
-A good way to visualize the misclassifications is with a confusion matrix.
-
-```{r}
-library(scales)
-
-assignments %>%
-  count(title, consensus, wt = count) %>%
-  group_by(title) %>%
-  mutate(percent = n / sum(n)) %>%
-  ggplot(aes(consensus, title, fill = percent)) +
-  geom_tile() +
-  scale_fill_gradient2(high = "red", label = percent_format()) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),
-        panel.grid = element_blank()) +
-  labs(x = "Book words were assigned to",
-       y = "Book words came from",
-       fill = "% of assignments")
-```
-
-We notice that almost all the words for Pride and Prejudice, Twenty Thousand Leagues Under the Sea, and War of the Worlds were correctly assigned, while Great Expectations had a fair number of misassigned words (which, as we saw above, led to two chapters getting misclassified).  What were the most commmonly mistaken words?
-
-```{r}
-wrong_words <- assignments %>%
-  filter(title != consensus)
-
-wrong_words %>%
-  count(title, consensus, term, wt = count) %>%
-  ungroup() %>%
-  arrange(desc(n))
-```
-
 
 ## Appendix: Regular Expressions
 
@@ -1247,7 +1357,22 @@ grep("\\.", str) # . anything, so \. for period
 
 ### stringr
 
-The **stringr** package is a simple wrapper around the more complete **stringi** package.  There are a ton of functions (see `help(package = "stringr")`), but here are some particularly useful ones.
+The **stringr** package is a simple wrapper around the more complete **stringi** package.
+
+Example of finding rows in data frame of book text with "chapter [#]". In `regex()`, "[]" means "any of", "\\d" is any number, and "v", "x", "l", and "c" are just roman numerals. Here is the word-count per chapter.
+
+```{r}
+austen <- janeaustenr::austen_books()
+chapter_regex <- stringr::regex("^chapter [\\divxlc]", ignore_case = TRUE)
+austen %>%
+  filter(book == "Emma") %>%
+  mutate(linenumber = row_number(),
+         chapter = cumsum(str_detect(text, chapter_regex))) %>%
+  ungroup() %>%
+  unnest_tokens(output = "word", input = text, token = "words") %>%
+  count(chapter)
+```
+
 
 * `str_c()` concatenates strings, similar to with `paste()` and `paste0()`.  
 ```{r}
@@ -1437,50 +1562,128 @@ table(who)
 
 ## Appendix: tidytext
 
-The tidy text format is a table with one token (meaningful unit of text, such as a word) per row.  The **tidytext** package assists with the major tasks in text analysis.  A typical text analysis using tidy data principles unnests tokens with `unnest_tokens()`, removes unimportant "stop words" tokens with `anti_join(stop_words)`, and summarizes token counts `count()`.
+The tidy text format is a table with one token (meaningful unit of text, such as a word) per row.  The **tidytext** package assists with the major tasks in text analysis. 
 
-The **janeaustenr** package contains Jane Austen's complete novels. Each novel is a character vector of ~70 characters. Here are the first few elements of Emma.
+A typical text analysis using tidy data principles unnests tokens with `unnest_tokens()`, anti-joins unimportant "stop words" from `tidytext::stop_words`, and summarizes token counts `count()`. In between you might also reduce words to their stems with `SnowballC::wordStem()`.
 
 ```{r}
-library(tidytext)
+custom_stop_words <- tribble(
+  ~word, ~lexicon,
+  "t.co", "custom",
+  "https", "custom",
+  "http", "custom",
+  "di", "custom",
+  "il", "custom",
+  "la", "custom"
+)
 
-austen <- janeaustenr::austen_books()
-austen %>%
-  filter(book == "Emma") %>%
-  head(n = 20)
+tweets_tidy <- tweets %>%
+  unnest_tokens(output = "word", input = content, token = "words") %>%
+  filter(xfun::is_ascii(word) == TRUE) %>%  # garbage chars
+  anti_join(stop_words, by = "word") %>%
+  anti_join(custom_stop_words, by = "word") %>%
+  mutate(word = SnowballC::wordStem(word))
 ```
 
-Unnest tokens with `unnest_tokens()` and specify the type of token with `token = c("words", "sentences", "paragraphs")` and a host of other options.
+Summarize the tidy text into a "bag of words" by counting the words. Once in a bag-of-words format, you can feed into a word cloud or other ggplot geom.
+
+```{r fig.width=6.5, fig.height=5}
+tweets_bow <- tweets_tidy %>%
+  count(word)
+
+wordcloud(
+  words = tweets_bow$word,
+  freq = tweets_bow$n,
+  max.words = 30,
+  colors = brewer.pal(9,"BuGn")[-(1:4)]
+)
+```
+
+
+Words close to the 45-degree lines have similar frequencies in both books.  Words far from the line are found more in one book more than the other.  If there are few points near the low frequencies, then few infrequent words are shared.  Emma is similar to Sense & Sensibility because the points are fairly narrow on the 45-degree line, and they extend all the way to the origin.
 
 ```{r}
-# minimum
-austen %>% 
-  unnest_tokens(output = "sentence", input = text, token = "sentences") %>%
-  head()
-
-# clever
-# [] mean any of, \\d is any number, v, x, l, c are just roman numerals
-chapter_regex <- stringr::regex("^chapter [\\divxlc]", ignore_case = TRUE)
-austen %>%
+tweets_bow %>%
+  count(book, word) %>%
   group_by(book) %>%
-  mutate(linenumber = row_number(),
-         new_chapter = cumsum(str_detect(text, chapter_regex))) %>%
-  ungroup() %>%
-  unnest_tokens(output = "sentence", input = text, token = "sentences") 
+  mutate(proportion = n / sum(n)) %>% 
+  select(-n) %>% 
+  pivot_wider(names_from = book, values_from = proportion) %>%
+  pivot_longer(cols = `Pride & Prejudice`:`Persuasion`, names_to = "book", values_to = "proportion") %>%
+  ggplot(aes(x = proportion, 
+             y = `Sense & Sensibility`,
+             color = abs(`Sense & Sensibility` - proportion))) +
+  geom_abline(color = "gray40", lty = 2) +
+  geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3) +
+  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1.5) +
+  scale_x_log10(labels = percent_format()) +
+  scale_y_log10(labels = percent_format()) +
+  scale_color_gradient(limits = c(0, 0.001), low = "darkslategray4", high = "gray75") +
+  facet_wrap(~book, ncol = 2) +
+  theme(legend.position = "none") +
+  labs(y = "Sense & Sensibility", x = NULL)
 ```
-
-
-
-`print()` outputs strings as you might enter them, so embedded quotes are escaped.  Use `writeLines()` to see text as you might prefer to read them. `writeLines()` is similar to `cat()`, but does not attempt to convert non-character objects to strings.
-
-Unicode is a standard for representing characters that might not be on your keyboard. Each available character has a Unicode code point: a number that uniquely identifies it. These code points are generally written in hex notation, that is, using base 16 and the digits 0-9 and A-F. You can find the code point for a particular character by looking up a [code chart](http://www.unicode.org/charts/).
-
-Format numbers with `format`.  Here is how to format with comma-separations.  `digits` is *not* the number of decimal places; it's the number of significant digits
 
 ```{r}
-x <- c(72.19, 1030.18, 102091.93, 1189192.18)
-format(x, digits = 2, big.mark = ",", trim = TRUE, scientific = FALSE)
+austin_word_cnt <- austin_tidy %>%
+  filter(book == "Sense & Sensibility") %>%
+  count(word)
+pal <- brewer.pal(9,"BuGn")
+pal <- pal[-(1:4)]
+wordcloud(
+  words = austin_word_cnt$word,
+  freq = austin_word_cnt$n,
+  max.words = 30,
+  colors = pal
+)
 ```
+
+## Appendix: tm
+
+The Text Mining package **tm** is a text mining framework for importing data, handling a corpus, and creating term-document matrices.
+
+The main structure document structure is a corpus, implemented either as an in-memory *volatile corpus* `VCorpus()` or on-disk *permanent corpus* `Pcorpus()`. Create a corpus from a directory of text documents
+
+```{r eval=FALSE}
+my_rmd_corpus <- VCorpus(DirSource(pattern = "*.Rmd"))
+```
+
+or from a data frame using helper function `VectorSource()`.
+
+```{r}
+docs <- c("This is a text.", "This another one.")
+my_vctr_corpus <- VCorpus(VectorSource(docs))
+```
+
+A corpus is a list of document objects, each containing `meta` data and `content`. Here is the first document of the one I just created.
+
+```{r}
+my_vctr_corpus[[1]]$meta
+my_vctr_corpus[[1]]$content
+```
+
+You can perform transformations on your `tm` object, including removing extra whitespace `tm_map(x, stripWhitespace)`, converting to lowercase `tm_map(x, content_transformer(tolower))`, removing stopwords `tm_map(x, removeWords, stopwords("english"))`, and stemming `tm_map(x stemDocument)`.
+
+Some packages (e.g., **topicmodels**) use a "bag of words" term matrix. Convert the *tm* object into a matrix with `TermDocumentMatrix()` or `DocumentTermMatrix()` (the first presents terms as rows and documents as columns).
+
+```{r}
+dtm <- DocumentTermMatrix(my_vctr_corpus)
+inspect(dtm)
+```
+
+Here is a quick analysis of the Russian Tweets data loaded at the beginning of the chapter.
+
+```{r collaps=TRUE}
+tweets_dtm <- VCorpus(VectorSource(tweets$content))
+tweets_dtm[[1]]$meta
+inspect(tweets_dtm[[1]])  # first "document"
+
+# Add the following and followers cols as metadata
+meta(tweets_dtm, 'following') <- tweets$following
+meta(tweets_dtm, 'followers') <- tweets$followers
+head(meta(tweets_dtm))
+```
+
 
 <!--chapter:end:16-text-mining.Rmd-->
 
