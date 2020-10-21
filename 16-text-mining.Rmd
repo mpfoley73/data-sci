@@ -3,18 +3,19 @@
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 library(tidyverse)
 library(tidytext)
+library(gutenbergr)
 ```
 
 These notes on text mining are taken from the following resources:
 
 * Text Mining with R [@Silge2019]
 * [Introduction to Natural Language Processing in R](https://campus.datacamp.com/courses/introduction-to-natural-language-processing-in-r) (DataCamp)
+* [Topic Modeling in R](https://www.datacamp.com/courses/topic-modeling-in-r) (DataCamp)
 * [Introduction to Text Analysis in R"](https://www.datacamp.com/courses/introduction-to-text-analysis-in-r) (DataCamp)
 * [String Manipulation in R with stringr](https://www.datacamp.com/courses/string-manipulation-with-stringr-in-r) (DataCamp)
 * [Text Mining with Bag-of-Words in R](https://www.datacamp.com/courses/text-mining-with-bag-of-words-in-r) (DataCamp)
 * [Sentiment Analysis in R](https://www.datacamp.com/courses/sentiment-analysis-in-r) (DataCamp)
 * [Tidy Sentiment Analysis in R](https://www.datacamp.com/community/tutorials/sentiment-analysis-R) (DataCamp)
-* [Topic Modeling in R](https://www.datacamp.com/courses/topic-modeling-in-r) (DataCamp)
 
 
 Text mining is the process of distilling actionable insights from text, typically by identifying patterns with statistical pattern learning. Typical text mining tasks include classification modeling, topic modeling, and sentiment analysis.
@@ -42,26 +43,46 @@ skimr::skim(sawyer)
 
 ## Topic Modeling
 
-Topic modeling is a method for unsupervised classification of documents, similar to clustering on numeric data, which finds natural groups of items.  Latent Dirichlet Allocation (LDA) is a popular topic modeling algorithm. LDA treats each document as a mixture of topics (X% topic A, Y% topic B, etc.), and each topic as a mixture of words.  Each topic is a collection of word probabilities for all of the unique words used in the corpus. LDA is implemented in the `topicmodels` package.
+Topic modeling is a method for unsupervised classification of documents, similar to clustering on numeric data, which finds natural groups of items.  Latent Dirichlet Allocation (LDA) is a popular topic modeling algorithm. LDA treats each document as a mixture of topics (X% topic A, Y% topic B, etc.), and each topic as a mixture of words.  Each topic is a collection of word probabilities for all of the unique words used in the corpus. LDA is implemented in the **topicmodels** package.
 
-Prepare the data by filtering to just the relevant tweets, tokenizing, and creating a document-term matrix with TF (term frequency) weighting. 
+Prepare the data by tokenizing, and creating a document-term matrix with TF (term frequency) weighting. 
 
 ```{r}
-sawyer_bow <- sawyer %>%
+sawyer_tokens <- sawyer %>%
   unnest_tokens(output = "word", input = text, token = "words") %>%
   anti_join(stop_words, by = "word")
 #  mutate(word = SnowballC::wordStem(word))
 
-sawyer_dtm <- sawyer_bow %>%
+sawyer_dtm <- sawyer_tokens %>%
   count(chapter, word) %>%
-  cast_dtm(document = chapter, term = word, value = n, weighting = tm::weightTf) 
-#  tm::removeSparseTerms(sparse = 0.999)
+  cast_dtm(document = chapter, term = word, value = n, weighting = tm::weightTf) %>%
+  tm::removeSparseTerms(sparse = 0.9)
+sawyer_dtm
 ```
  
 LDA is an optimization algorithm that performs a random search through the parameter space to find the model with the largest log-likelihood. There are multiple search algorithms, but the preferred one appears to be Gibbs sampling, a type of MOnte Carlo Markov Chain (MCMC) algorithm.
 
-Create a topic model with `topicmodels::LDA()`.  Parameter `k` specifies the number of topics. To decide on the number of topics, you can construct a scree plot of the perplexity using the test data set. In general, you only want as many topics as are clearly distinct and that you can easily communicate to others. Here are models with 2:15 topics.
+Create a topic model with `topicmodels::LDA()`.  Parameter `k` specifies the number of topics. In general, you only want as many topics as are clearly distinct and that you can easily communicate to others. A scree plot of the perplexity using a test data set helps identify the optimal `k`. Here are models with 2:10 topics.
 
+```{r message=FALSE, fig.height=3, fig.width=5}
+set.seed(1012)
+train_ind <- sample(nrow(sawyer_dtm), floor(0.75*nrow(sawyer_dtm)))
+sawyer_train <- sawyer_dtm[train_ind, ]
+sawyer_test <- sawyer_dtm[-train_ind, ]
+
+k = c(2:10)
+perp <- k %>% 
+  map(~ topicmodels::LDA(sawyer_train, k = .x, method = "Gibbs", control = list(seed = 1234))) %>%
+  map(~ topicmodels::perplexity(.x, newdata = sawyer_test)) %>%
+  as.numeric()
+
+data.frame(k = k, perplexity = perp) %>%
+  ggplot(aes(x = k, y = perplexity)) + 
+  geom_point() + 
+  labs(title = "Perplexity Plot")
+```
+
+There may be an elbow at *k* = 4 topics. 
 `topicmodels::LDA()` returns two outputs: a "beta" matrix of probabilities of terms belonging to topics; a "gamma" matrix of probabilities of documents belonging to topics.
 
 ```{r}
@@ -117,20 +138,7 @@ print(tweets_dtm)
 ```
 
 
-```{r message=FALSE}
-set.seed(1012)
-train_ind <- sample(nrow(tweets_dtm), floor(0.75*nrow(tweets_dtm)))
-tweets_train <- tweets_dtm[train_ind, ]
-tweets_test <- tweets_dtm[-train_ind, ]
 
-k = c(2:15)
-perp <- k %>% 
-  map(~ topicmodels::LDA(tweets_train, k = .x, method = "Gibbs", control = list(seed = 1234))) %>%
-  map(~topicmodels::perplexity(.x, newdata = tweets_test)) %>%
-  as.numeric()
-data.frame(k = k, y = perp) %>%
-  ggplot(aes(x = k, y = y)) + geom_point()
-```
 
 The elbow is not obvious, but maybe it is in the range of 4-8 topics. Let's go with 4 topics. 
 
