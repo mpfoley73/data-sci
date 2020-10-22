@@ -3,6 +3,7 @@
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 library(tidyverse)
 library(tidytext)
+library(textstem)
 library(gutenbergr)
 ```
 
@@ -45,17 +46,20 @@ skimr::skim(sawyer)
 
 Topic modeling is a method for unsupervised classification of documents, similar to clustering on numeric data, which finds natural groups of items.  Latent Dirichlet Allocation (LDA) is a popular topic modeling algorithm. LDA treats each document as a mixture of topics (X% topic A, Y% topic B, etc.), and each topic as a mixture of words.  Each topic is a collection of word probabilities for all of the unique words used in the corpus. LDA is implemented in the **topicmodels** package.
 
-Prepare the data by tokenizing, and creating a document-term matrix with TF (term frequency) weighting. 
+Prepare the data by tokenizing, and creating a document-term matrix with TF (term frequency) weighting. In the chunk below, I'm lemmatizing the words to stems, and I'm removing my own list of stop words (e.g., "tom" is so common that I don't want to include it in anything.)
 
 ```{r}
+my_stop_words <- c("tom")
 sawyer_tokens <- sawyer %>%
   unnest_tokens(output = "word", input = text, token = "words") %>%
-  anti_join(stop_words, by = "word")
+  mutate(word_stem = lemmatize_words(word)) %>%
+  anti_join(stop_words, by = "word") %>%
+  filter(!word %in% my_stop_words)
 #  mutate(word = SnowballC::wordStem(word))
 
 sawyer_dtm <- sawyer_tokens %>%
-  count(chapter, word) %>%
-  cast_dtm(document = chapter, term = word, value = n, weighting = tm::weightTf) %>%
+  count(chapter, word_stem) %>%
+  cast_dtm(document = chapter, term = word_stem, value = n, weighting = tm::weightTf) %>%
   tm::removeSparseTerms(sparse = 0.9)
 sawyer_dtm
 ```
@@ -82,75 +86,22 @@ data.frame(k = k, perplexity = perp) %>%
   labs(title = "Perplexity Plot")
 ```
 
-There may be an elbow at *k* = 4 topics. 
-`topicmodels::LDA()` returns two outputs: a "beta" matrix of probabilities of terms belonging to topics; a "gamma" matrix of probabilities of documents belonging to topics.
+There may be an elbow at *k* = 3 topics. Let's assume you've played with different sizes of *k* and 3 is what you settle on. 
 
 ```{r}
 sawyer_lda <- topicmodels::LDA(sawyer_dtm, 
-                               k = 4, 
+                               k = 3, 
                                method = "Gibbs", 
-                               control = list(seed = 1234,
-                                              alpha = 1,
-                                              delta = 0.1))
+                               control = list(seed = 1234))
 ```
 
-```{r}
-sawyer_lda %>% tidy(matrix = "gamma") %>%
-  ggplot(aes(x = as.numeric(document), y = gamma, color = factor(topic))) +
-  geom_line() +
-  scale_color_manual(values = RColorBrewer::brewer.pal(n = 4, name = "Set1"),
-                     name = "Topic") +
-  labs(x = "Chapter", y = "Topic Probability", title = "LDA Gamma Matrix")
-```
+`topicmodels::LDA()` returns two outputs: a "beta" matrix of probabilities of terms belonging to topics; a "gamma" matrix of probabilities of documents belonging to topics. The tidytext package provides a `tidy()` method for extracting these matrices.
 
 ```{r}
-with(wordcloud(word, n, max.words = 100))
-```
+sawyer_beta <- sawyer_lda %>%
+  tidy(matrix = "beta") 
 
-<!--
-
-```{r}
-custom_stop_words <- tribble(
-  ~word, ~lexicon,
-  "t.co", "custom",
-  "https", "custom",
-  "http", "custom",
-  "di", "custom",
-  "il", "custom",
-  "la", "custom",
-  "clinton", "custom"
-)
-
-tweets_words <- tweets %>%
-  filter(str_detect(str_to_lower(content), "clinton")) %>%
-  unnest_tokens(output = "word", input = content, token = "words") %>%
-  filter(xfun::is_ascii(word) == TRUE) %>%  # garbage chars
-  anti_join(stop_words, by = "word") %>%
-  anti_join(custom_stop_words, by = "word") %>%
-  mutate(word = SnowballC::wordStem(word))
-
-tweets_dtm <- tweets_words %>%
-  count(tweet_id, word) %>%
-  cast_dtm(document = tweet_id, term = word, value = n, weighting = tm::weightTf) %>%
-  tm::removeSparseTerms(sparse = 0.999)
-
-print(tweets_dtm)
-```
-
-
-
-
-The elbow is not obvious, but maybe it is in the range of 4-8 topics. Let's go with 4 topics. 
-
-```{r}
-tweets_lda <- topicmodels::LDA(tweets_dtm, k = 4, method = "Gibbs", control = list(seed = 1234))
-```
-
-The tidytext package provides a `tidy()` method for extracting the per-topic/word probabilities, called $\beta$ from the model.
-
-```{r}
-tweets_lda %>%
-  tidy(matrix = "beta") %>%
+sawyer_beta %>%
   group_by(topic) %>%
   top_n(n = 10, wt = beta) %>%
   ungroup() %>%
@@ -158,23 +109,40 @@ tweets_lda %>%
   mutate(term = reorder_within(term, beta, topic)) %>%
   ggplot(aes(x = term, y = beta, fill = factor(topic))) +
   geom_col(show.legend = FALSE) +
+  scale_fill_manual(values = RColorBrewer::brewer.pal(n = 3, name = "Set2"), name = "Topic") +
   scale_x_reordered() +
   coord_flip() +
-  facet_wrap(~ topic, scales = "free")
+  facet_wrap(~ topic, scales = "free") +
+  labs(title = "LDA Beta Matrix")
 ```
 
-Topic 1 focuses on the black lives matter movement; topic two on lynching; topic 3 on the elecdtion, and topic 4 on Trump. Another way to look at the betas is to identify terms that had the greatest difference in beta between one topic and the next most probable topic. A good way to do this is with the log ratio of the two, $log_2(\beta_2 / \beta_1)$.  Log ratios are useful because the differences are symmetrical ($log_2(2) = 1$, and $log_2(.5) = -1$).  To constrain the analysis to a set of especially relevant words, filter for relatively common words having a beta greater than 1/1000 in at least one topic.
+```{r results='hide'}
+colors3 <- RColorBrewer::brewer.pal(n = 3, name = "Set2")
+x <- map(c(1:3), ~ with(sawyer_beta %>% filter(topic == .x), 
+                        wordcloud::wordcloud(term, beta, max.words = 20,
+                                             colors = colors3[.x])))
+```
+
+
+```{r}
+sawyer_lda %>% tidy(matrix = "gamma") %>%
+  ggplot(aes(x = as.numeric(document), 
+             y = gamma, 
+             fill = factor(topic, labels = c("huck", "sid", "joe")))) +
+  geom_col() +
+  scale_fill_manual(values = RColorBrewer::brewer.pal(n = 3, name = "Set2"), name = "Topic") +
+  labs(x = "Chapter", y = "Topic Probability", title = "LDA Gamma Matrix")
+```
+
+Topic 1 focuses on Huck; topic 2 on Tom's brother Sid; and topic 3 on Injun Joe. Another way to look at the betas is to identify terms that had the greatest difference in beta between one topic and the next most probable topic. A good way to do this is with the log ratio of the two, $log_2(\beta_2 / \beta_1)$.  Log ratios are useful because the differences are symmetrical ($log_2(2) = 1$, and $log_2(.5) = -1$).  To constrain the analysis to a set of especially relevant words, filter for relatively common words having a beta greater than 1/1000 in at least one topic.
   
 ```{r}
-tweets_lda %>% 
-  tidy(matrix = "beta") %>%
+sawyer_beta %>% 
   mutate(topic = paste0("topic", topic)) %>%
   group_by(term) %>%
   arrange(desc(beta)) %>%
   slice_head(n = 2) %>%
   summarize(.groups = "drop", min_beta = min(beta), max_beta = max(beta)) %>%
-#  ungroup() %>%
-#  pivot_wider(names_from = topic, values_from = beta) %>%
   filter(min_beta > 0.001 | max_beta > 0.001) %>%
   mutate(log_ratio = log2(max_beta / min_beta)) %>%
   top_n(n = 20, w = abs(log_ratio)) %>%
@@ -182,25 +150,6 @@ tweets_lda %>%
   ggplot(aes(x = fct_rev(fct_inorder(term)), y = log_ratio)) +
   geom_col() +
   coord_flip()
-```
-
-You can summarize how the documents (tweets) mapped to the topics using the gamma matrix, the per-document-per-topic probabilities.
-
-```{r}
-tweets_lda %>%
-  tidy(matrix = "gamma") %>%
-  group_by(document) %>%
-  arrange(desc(gamma)) %>%
-  slice(1) %>%
-  ungroup() %>%
-  group_by(topic) %>%
-  summarize(.groups = "drop", n = n(), avg = mean(gamma))
-```
-
-Only 7 tweets mapped most strongly to topic 3, but the average weights per topic were similar. For further analysis, you can attach topics to the original data with `augment()`.
-
-```{r}
-tweets_words_aug <- augment(tweets_lda, data = tweets_dtm)
 ```
 
 
@@ -1370,4 +1319,3 @@ glimpse(tweets)
 austen <- janeaustenr::austen_books()
 ```
 
--->
