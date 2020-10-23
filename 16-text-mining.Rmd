@@ -1056,127 +1056,30 @@ str_extract(c("We're the ones", "who have to fly"), pattern = " t..")
 
 ### Regular Expressions
 
-The **rebus** package is a good resource for building regular expressions.
+The **stringr** package functions use [ICU regular expressions](https://unicode-org.github.io/icu/). Here are common regular expressions.
 
-```{r}
-library(rebus)
+```{r eval=FALSE}
+str_subset(sawyer$text, "^tom")  # starts with "tom"
+str_subset(sawyer$text, "[0-9]")  # contains a digit
+str_subset(sawyer$text, "^[0-9]")  # begins with a digit
+str_subset(sawyer$text, "[^0-9]")  # does not contain a digit
+str_subset(sawyer$text, ".handsome.")  # contains "handsome"
+sawyer %>% filter(str_detect(sawyer$text, "handsome"))  # rows with "handsome"
+sawyer %>% filter(str_detect(sawyer$text, ".handsome."))  # same thing
+
+# Using perl-style regexp, 
+# "(.)" is a subexpression (defined with parens) consisting of any character 
+# defined with a dot. "\\U" makes the next character uppercase. \\1 is a 
+# reference to subexpression 1
+sub("(.)", ("\\U\\1"), sawyer_tokens$word, perl=TRUE)
+str_to_title(sawyer_tokens$word)  # nearly the same - converts first letter, not char
+str_to_title(sawyer$text)
+
+# [] defines a set of chars
+str_subset(sawyer$text, "^[qQ]")  # starts with "q" or "Q"
+str_subset(sawyer$text, "(^[\\_])(.*-)")  # starts with "_" and contains "-"
+str_subset(sawyer$text, "dog.*tricks|tricks.*dog")  # contains "dog" & "tricks"
 ```
-
-The `%R%` operator concatenates the regular expression.  `START` represents regex "^" meaning "starting with".  `END` represents regex "$" meaning "ending with".
-```{r}
-x <- austen_books() %>% 
-  filter(book == "Sense & Sensibility") %>%
-  select(text) %>%
-  head(100) %>%
-  pull()
-```
-
-Here are lines from Sense & Sensibility that start with "Mr".
-```{r}
-str_subset(x, pattern = START %R% "Mr")
-```
-
-`ANY_CHAR` represents regex "."  Here are lines from Sense & Sensibility with pattern "*handsome*"
-```{r}
-str_subset(x, pattern = ANY_CHAR %R% "handsome" %R% ANY_CHAR)
-```
-
-`char_class()` is similar to `ANY_CHAR` except that it matches any character from the string parameter.  It is the same as regex "[]".  The opposite is `negated_char_class()`, which is the same as "[^]".  `char_class()` can accept ranges, such as "0-9", and "a-z".  `DGT` is the same thing as "0-9".  
-```{r}
-str_subset(c("apple", "Aardvark", "Orukidn"), char_class("Aa"))
-```
-
-
-`DOT`, `CARAT`, and `DOLLAR` represent special characters, "\.", "\%", and "\$".  Function `or()` provides alteration.
-
-```{r}
-str_match(c("kittycat", "doggone"), pattern = or("dog", "cat"))
-```
-
-Look for repeating patterns with `optional()`, `zero_or_more()`, `one_or_more()`, and `repeated()`.
-
-Wrap a rebus expression in `capture()` to create a column in the output for the match to each captured part of the regex.
-```{r}
-phone_string <- c("555-123-4567", 
-                  "(555)123-4567", 
-                  "555.123.4567", 
-                  "555-123-4567 (M), 555-123-7654 (H)")
-phone_pattern <- 
-  capture(DGT %R% DGT %R% DGT) %R% zero_or_more(char_class("()-.")) %R% 
-  capture(DGT %R% DGT %R% DGT) %R% zero_or_more(char_class("()-.")) %R%
-  capture(DGT %R% DGT %R% DGT %R% DGT)
-
-# first match with str_match()
-phone_match <- str_match(phone_string, pattern = phone_pattern)
-str_c("(", phone_match[, 2], ")", phone_match[, 3], "-", phone_match[, 4])
-
-# all matches with str_match_all() and lapply()
-phone_match_all <- str_match_all(phone_string, pattern = phone_pattern)
-lapply(phone_match_all, function(x){str_c("(", x[, 2], ")", x[, 3], "-", x[, 4])}) %>% unlist()
-```
-
-You can refer to captured patterns with `REF[0-9]`.
-```{r}
-str_match(c("hello", "sweet", "kitten"), 
-  pattern = capture(LOWER) %R% REF1)
-```
-
-Here is an exercise working with the Oscal Wilde play "The Importance of Being Earnest".
-
-```{r}
-earnest <- read_lines("http://s3.amazonaws.com/assets.datacamp.com/production/course_2922/datasets/importance-of-being-earnest.txt")
-```
-
-The text is between the lines with "START OF THE PROJECT" and "END OF THE PROJECT".  `str_which()` returns the indices where the string contains the pattern. The text consists of an introduction and the play itself.  The play starts at "FIRST ACT".
-```{r}
-start <- str_which(earnest, fixed("START OF THE PROJECT"))
-end <- str_which(earnest, fixed("END OF THE PROJECT"))
-earnest_sub <- earnest[(start+1):(end-1)]
-
-play_start <- str_which(earnest_sub, "FIRST ACT")
-intro_line_index <- 1:(play_start - 1)
-intro_text <- earnest_sub[intro_line_index]
-play_text <- earnest_sub[-intro_line_index]
-
-# remove the emptly lines
-play_lines <- play_text[str_length(play_text) > 0] %>% as.character()
-
-# print first 20 lines
-writeLines(play_lines[1:20])
-```
-
-How would you identify lines where the character is starting to speak?  You might look for a capitalized word followed by a ".".
-```{r}
-pattern <- START %R% ascii_upper() %R% one_or_more(WRD) %R% DOT
-
-lines <- str_subset(play_lines, pattern)
-
-# Extract the matching string (the character speaking)
-who <- str_extract(lines, pattern)
-
-# Let's see what we have
-unique(who)
-```
-
-Close, but not perfect.  If you know the characters, just search for them directly.  `or1()` is like `or()` but lets you supply a vector of strings.
-```{r}
-characters <- c("Algernon", "Jack", "Lane", "Cecily", "Gwendolen", "Chasuble", 
-  "Merriman", "Lady Bracknell", "Miss Prism")
-
-pattern <- START %R% or1(characters) %R% DOT
-
-lines <- str_subset(play_lines, pattern)
-
-# Extract the matching string (the character speaking)
-who <- str_extract(lines, pattern)
-
-# Let's see what we have
-unique(who)
-
-# Lines per character 
-table(who)
-```
-
 
 ## Appendix: tidytext
 
