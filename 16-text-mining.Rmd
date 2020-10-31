@@ -7,7 +7,7 @@ library(textstem)
 library(gutenbergr)
 ```
 
-I compiled these notes on text mining while learning from the following resources:
+These notes on text mining are taken from the following resources:
 
 * Text Mining with R [@Silge2019]
 * [Introduction to Natural Language Processing in R](https://campus.datacamp.com/courses/introduction-to-natural-language-processing-in-r) (DataCamp)
@@ -17,16 +17,16 @@ I compiled these notes on text mining while learning from the following resource
 * [Text Mining with Bag-of-Words in R](https://www.datacamp.com/courses/text-mining-with-bag-of-words-in-r) (DataCamp)
 * [Sentiment Analysis in R](https://www.datacamp.com/courses/sentiment-analysis-in-r) (DataCamp)
 * [Tidy Sentiment Analysis in R](https://www.datacamp.com/community/tutorials/sentiment-analysis-R) (DataCamp)
-* Julia Silge's [Training, evaluating, and interpreting topic models](https://juliasilge.com/blog/evaluating-stm/)
 
-Text mining is the process of distilling actionable insights from text, typically by identifying patterns with statistical pattern learning. Commont text mining tasks include topic modeling, sentiment analysis, and classification modeling.
 
-Be aware that there are two main approaches to text mining.  *Semantic parsing* identifies words by type and order (sentences, phrases, nouns/verbs, proper nouns, etc.). *Bag of words* simply treats words as attributes of the document. Bag of words is the simpler way to go, the only one used in any of these resources, and the one used throughout these notes.
+Text mining is the process of distilling actionable insights from text, typically by identifying patterns with statistical pattern learning. Typical text mining tasks include classification modeling, topic modeling, and sentiment analysis.
 
-There are three packages with text mining frameworks: **tidytext**, **stm**, and **tm**. These notes mostly use **tidytext**, but I made an appendix with **tm** basics because **tidytext** uses its class structure (see `cast_dtm()`).
+There are two approaches to text mining.  *Semantic parsing* identifies words by type and order (sentences, phrases, nouns/verbs, proper nouns, etc.).  *Bag of words* treats words as simply attributes of the document.  Bag of words is the simpler way to go and is what these course notes cover.
 
-As much as possible, I will build examples using the text from <u>The Adventures of Tom Sawyer</u>, available on https://gutenberg.org and made available in the **gutenbergr** package. I added the chapter identifier and dropped the book id column. Each row is a line of text <=80 characters long.
+There are two packages with text mining frameworks. These notes mostly use the **tidytext** package because that appears to be the more popular of the two, but there is an appendex section with **tm** package basics too. Modeling packages often rely on the document text matrix (DTM) class from the **tm** package, but **tidytext** has a method (`cast_dtm()`) to create a DTM object when needed.
 
+Most examples in this section use the text from <u>The Adventures of Tom Sawyer</u> which is housed on https://gutenberg.org and made available in the **gutenbergr** library. I added the chapter identifier and dropped the book id column. Each row is a line of text <=80 characters long.
+l
 ```{r cache=TRUE}
 sawyer_raw <- gutenbergr::gutenberg_works(title == "The Adventures of Tom Sawyer") %>%
   gutenbergr::gutenberg_download()
