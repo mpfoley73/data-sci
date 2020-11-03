@@ -49,7 +49,11 @@ skimr::skim(sawyer)
 
 ## Topic Modeling
 
-Topic modeling is an unsupervised learning approach to discovering abstract "topics" in a collection of documents (tweets, emails, chapters, books, etc.). The most common algorithm is Latent Dirichlet Allocation (LDA). An increasingly popular alternative is Structured Topic Modeling (STM). Most of the preparation and analysis is the same regardless of the algorithm, so these notes present the analysis using both methods side-by-side.
+Topic models are generative probabilistic models to quantitatively investigate a large text corpora. In generative probability models, the researcher postulates a model of a data-generating process, then uses the corpus data to find the most likely values for the parameters within the model.
+
+Topic models such as LDA and STM treat documents within a corpora as a "bags of words" and identifies groups of words that tend to co-occur. These groups of words are the topics, formally conceptualized as probability distributions over vocabulary. While the topics are a product of model estimation, the topic name and interpretation are assigned by the researcher by examining the most important words for each topic and the particular texts featuring a topic most prominently. They are not produced to match words and documents to concrete issues specified in advance by the researcher as they would be in a supervised model.
+
+The most common algorithm is Latent Dirichlet Allocation (LDA). An increasingly popular alternative is Structured Topic Modeling (STM).  The key innovation of STM vis-a-vis earlier topic models is to use information on the documents, rather than just the words in the documents, in the estimation process. 
 
 Whether you use LDA or STM, you'll start by creating a bag-of-words representation of the data. In the chunk below, I [lemmatize](https://en.wikipedia.org/wiki/Lemmatisation) the tokens and remove my own list of stop words (e.g., "tom" is so common that I don't want to include it in anything.) 
 
