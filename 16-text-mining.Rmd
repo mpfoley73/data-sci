@@ -19,6 +19,7 @@ I compiled these notes on text mining while learning from the following resource
 * [Sentiment Analysis in R](https://www.datacamp.com/courses/sentiment-analysis-in-r) (DataCamp)
 * [Tidy Sentiment Analysis in R](https://www.datacamp.com/community/tutorials/sentiment-analysis-R) (DataCamp)
 * Julia Silge's [The game is afoot! Topic modeling of Sherlock Holmes stories](https://juliasilge.com/blog/sherlock-holmes-stm/)
+* Julia Silge's [Training, evaluating, and interpreting topic models](https://juliasilge.com/blog/evaluating-stm/)
 * [Toward understanding 17th century English culture: A structural
 topic model of Francis Bacon's ideas](https://www.econ.umd.edu/sites/www.econ.umd.edu/files/users/pmurrell/Bacon_Grajzl-MurrellJCE2019.pdf)
 
@@ -52,11 +53,7 @@ Topic models are generative probabilistic models to quantitatively investigate a
 
 Topic models such as Latent Dirichlet Allocation (LDA) and Structural Topic Modeling (STM) treat documents within a corpora as a "bags of words" and identifies groups of words that tend to co-occur. These groups of words are the topics, formally conceptualized as probability distributions over vocabulary. While the topics are a product of model estimation, the topic name and interpretation are assigned by the researcher by examining the most important words for each topic and the particular texts featuring a topic most prominently. They are not produced to match words and documents to concrete issues specified in advance by the researcher as they would be in a supervised model.
 
-LDA and STM are generative models, meaning you define a data generating process for each document then use the document text to find the most likely values for the model parameters. The generative model defines document-topic and word-topic distributions generating documents. The sum of topic proportions (topical prevalence) in each document is one, and the sum of word probabilities in each topic (topical content) is one.
-
-STM differs from LDA in that it uses document metadata as covariates to explain prevalence and topical content. 
-
-
+LDA and STM are generative models, meaning you define a data generating process for each document then use the document text to find the most likely values for the model parameters. The generative model defines document-topic and word-topic distributions generating documents. The sum of topic proportions (topical prevalence) in each document is one, and the sum of word probabilities in each topic (topical content) is one. STM differs from LDA in that it uses document metadata as covariates to explain prevalence and topical content. 
 
 Whether you use LDA or STM, you'll start by creating a bag-of-words representation of the data. In the chunk below, I [lemmatize](https://en.wikipedia.org/wiki/Lemmatisation) the tokens and remove my own list of stop words (e.g., "tom" is so common that I don't want to include it in anything.) 
 
