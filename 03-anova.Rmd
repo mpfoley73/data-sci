@@ -1,17 +1,35 @@
+# Analysis of Variance
+
 ```{r include=FALSE}
 library(tidyverse)
-library(mfstylr)
 ```
 
-# ANOVA, MANOVA, ANCOVA
+These notes are primarily taken from studying [PSU STAT-502](https://online.stat.psu.edu/stat502) and [Laerd Statistics](https://statistics.laerd.com/premium/spss/owa/one-way-anova-in-spss.php).
 
-These notes are primarily taken from studying [PSU STAT-502](https://online.stat.psu.edu/stat502).
+Classic analysis of variance (ANOVA) compares the mean responses to *experimental* manipulations in controlled environments. However, ANOVA also compares the mean *observational* responses among independent groups. The conclusions are just not as rigorous for observational studies. 
 
-Analysis of variance (ANOVA) is a method to compare mean responses grouped by the levels of an experimental treatment factor. The null hypothesis is $H_0: \mu_1 = \mu_2 = \dots = \mu_k$ for the $k$ levels, and the alternative hypothesis is that at least one treatment level mean differs from the others.
+## One-Way ANOVA
 
-## Background
+Use the one-way ANOVA test to compare the mean response of a continuous dependent variable among the groups of a factor variable. (Researchers typically use the independent-samples t-test when a factor has only two groups). The observations must be independent, meaning the data generators cannot influence each other (e.g., same participant in different groups, or participants interact with each other to produce the observed outcome).
 
-The ANOVA method decomposes the deviation of the $j^{th}$ observation of the $i^{th}$ treatment level around the overall mean $(Y_{ij} - \bar{Y}_{..})$ into the deviation of the factor level mean around the overall mean $(\bar{Y}_{i.} - \bar{Y}_{..})$ plus the deviation of the observation around its factor level mean $(Y_{ij} - \bar{Y}_{i.})$ (aka, the "error" $\epsilon_{ij}$).  
+The ANOVA method decomposes the deviation of observation $Y_{ij}$ around the overall mean $\bar{Y}_{..}$ into three parts.
+
+```{r}
+dat <- data.frame(x = c("$SS_{Trt}$", 
+                       "$SS_{Err}$"),
+                 y = c("$\\frac{SS_{Trt}}{k - 1}$", "$N - k$"))
+knitr::kable(dat)
+```
+
+
+|SS |	df | MS | F |
+|---|----|----|---|
+|$SS_{Trt} = \sum{n_i(\bar{Y}_{i.} - \bar{Y}_{..})^2}$ | $k - 1$ | $\frac{SS_{Trt}}{k - 1}$ | $\frac{MS_{Trt}}{MS_{Err}}$ |
+|$SS_{Err} = \sum(Y_{ij} - \bar{Y}_{i.})^2$	| $N - k$	| $\frac{SS_{Err}}{N - k}$ | |
+|$SS_{Tot} = \sum(Y_{ij} - \bar{Y}_{..})^2$ | $N - 1$	| | |	
+
+
+The ANOVA method decomposes the deviation of the $j^{th}$ observation of the $i^{th}$ treatment level around the overall mean $(Y_{ij} - \bar{Y}_{..})$ into the deviation of the observation around its factor level mean (aka treatment mean) $(Y_{ij} - \bar{Y}_{i.})$ (aka, the "error" $\epsilon_{ij}$) plus the deviation of the factor level mean around the overall mean (aka grand mean) $(\bar{Y}_{i.} - \bar{Y}_{..})$.
 
 You can express an ANOVA model as an *effects* model or a *means* model.  The effects model equates $Y_{ij}$ to the grand mean $\mu$ plus deviations from the grand mean due to the treatment levels $\tau_i$ plus deviations around the mean of its factor level $\epsilon_{ij}$.
 
@@ -43,20 +61,11 @@ ANOVA returns reliable results if the following conditions hold:
 2. **Normality**.  Each group's values should be nearly normally distributed.  This condition is especially important with small sample sizes.^[Use a nonparametric statistical method such as the Kruskal-Wallis test when the population distributions are very non-normal.]
 3. **Equal Variance**.  Each group's variance should be rougly equal (homoscedastic groups).  This condition is especially important when sample sizes differ between groups.   The IQR of the box plot is a good way to visually assess this condition.^[A general rule of thumb for equal variances is to compare the smallest and largest sample standard deviation.  If the ratio of these two sample standard deviations fall within 0.5 to 2, then assume equal variances.  More formal tests include the Bartlett test, and Levene test^[See [Homogeneity of variance].(http://www.cookbook-r.com/Statistical_analysis/Homogeneity_of_variance/) in Cookbook for R])]
 
+The null hypothesis is $H_0: \mu_1 = \mu_2 = \dots = \mu_k$ for the $k$ groups. The alternative hypothesis is that at least one group mean differs from the others.
 
-## Example
+Here is an example where you might use an ANOVA test. A study compares the growth of plants using one of three fertilizers and a control group.  Dataset `greenhouse` contains 6 observations per each of the *k* = 4 treatment levels (*N* = 24).  
 
-A study compares the growth of plants using one of three fertilizers as well as a control group using no fertilizer.  Dataset `greeenhouse` contains 6 observations per each of the *k* = 4 treatment levels (*N* = 24).  
-
-The dataset is formatted as a matrix with the four treatment levels as columns with 6 rows of observations.  The first task is to "gather" the dataset into 24 name-value pair observations.
-
-```{r message=FALSE}
-library(readr)
-library(dplyr)
-library(tidyr)  # for gather()
-
-#greenhouse <- read_tsv(file = url("https://newonlinecourses.science.psu.edu/stat502/sites/onlinecourses.science.psu.edu.stat502/files/lesson02/lesson1_data/index.txt"))
-
+```{r include=FALSE}
 greenhouse <- tribble(
   ~group, ~growth,
 "Control",      21,
@@ -83,13 +92,11 @@ greenhouse <- tribble(
 "F3",      29.5,
 "F3",      30,
 "F3",      29.2
-)
-greenhouse <- greenhouse %>%
-  gather(key = group, value = growth) %>%
+) %>%
   mutate(group = factor(group))
-
-glimpse(greenhouse)
+skimr::skim(greenhouse)
 ```
+
 
 The figures below show that all three fertilizers produced more growth than the control group.  Fertilizers `F1` and `F3` appear to be about tied for most growth, but it is unclear if the fertilizers are significantly different from each other.  The barchart includes a one-standard error error bar.  The boxplot may be the better choice for simplicity in generating.^[PSU STATS501 recommends presenting this as a bar chart, but the box plot seems more useful.  Which is more common in literature?]  The boxplot also indicates the variances may differ among the groups.
 
