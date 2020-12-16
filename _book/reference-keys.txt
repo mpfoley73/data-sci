@@ -174,3 +174,4 @@ log-rank-test
 weibull
 cox
 document-functions-with-roxygen
+tab:unnamed-chunk-2

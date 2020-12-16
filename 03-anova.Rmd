@@ -6,64 +6,40 @@ library(tidyverse)
 
 These notes are primarily taken from studying [PSU STAT-502](https://online.stat.psu.edu/stat502) and [Laerd Statistics](https://statistics.laerd.com/premium/spss/owa/one-way-anova-in-spss.php).
 
-Classic analysis of variance (ANOVA) compares the mean responses to *experimental* manipulations in controlled environments. However, ANOVA also compares the mean *observational* responses among independent groups. The conclusions are just not as rigorous for observational studies. 
+Classic analysis of variance (ANOVA) compares the mean responses from *experimental* studies. However, ANOVA also compares the mean responses from *observational* studies, but conclusions are just less rigorous. 
 
 ## One-Way ANOVA
 
-Use the one-way ANOVA test to compare the mean response of a continuous dependent variable among the groups of a factor variable. (Researchers typically use the independent-samples t-test when a factor has only two groups). The observations must be independent, meaning the data generators cannot influence each other (e.g., same participant in different groups, or participants interact with each other to produce the observed outcome).
+Use the one-way ANOVA test to compare the mean response of a continuous dependent variable among the levels of a factor variable (if you only have two levels, use the independent-samples t-test). The observations must be independent, meaning the data generators cannot influence each other (e.g., same participant in different groups, or participants interact with each other to produce the observed outcome).
 
-The ANOVA method decomposes the deviation of observation $Y_{ij}$ around the overall mean $\bar{Y}_{..}$ into three parts.
+The ANOVA method decomposes the deviation of observation $Y_{ij}$ around the overall mean $\bar{Y}_{..}$ into two parts, the deviation of the observations around their treatment means, $SSE$, and the deviation of the treatment means around the overall mean, $SSR$. Their ratio, $F = SSR/SSE$ follows an *F*-distribution with $k-1$ numerator dof and $N-k$ denominator dof. The more observation variance captured by the treatments, the large is $F$, and the less likely that the null hypothesis, $H_0 = \mu_1 = \mu_2 = \cdots = \mu_k$ is true.
 
-```{r}
-dat <- data.frame(x = c("$SS_{Trt}$", 
-                       "$SS_{Err}$"),
-                 y = c("$\\frac{SS_{Trt}}{k - 1}$", "$N - k$"))
-knitr::kable(dat)
+```{r echo=FALSE}
+tmp <- tribble(
+  ~Source, ~SS, ~df, ~MS, ~F,
+  "SSR", "$\\sum{n_i(\\bar{Y}_{i.} - \\bar{Y}_{..})^2}$", "$k - 1$", "${SSR}/{(k - 1)}$", "${MSR}/{MSE}$", 
+  "SSE", "$\\sum(Y_{ij} - \\bar{Y}_{i.})^2$", "$N - k$", "${SSE}/{(N - k)}$", "",
+  "SST", "$\\sum(Y_{ij} - \\bar{Y}_{..})^2$", "$N - 1$", "", ""
+)
+
+tmp %>% 
+  knitr::kable(tmp, format = "html", caption = "ANOVA Table") %>%
+  kableExtra::kable_styling(full_width = TRUE) %>%
+  kableExtra::row_spec(row = 0, align = "c") %>%
+  kableExtra::footnote(
+    general_title = "Note.",
+    general = "Compare the *F*-statistic to the *F*-distribution with $k-1$ numerator degrees of freedom and $N-k$ denominator degrees of freedom",
+   footnote_as_chunk = TRUE
+    )
 ```
 
+The *F* test does not indicate which populations cause the rejection of $H_0$. For this, use one of the post-hoc tests:   Tukey, Fisher's Least Significant Difference (LSD), Bonferroni, Scheffe, or Dunnett.
 
-|SS |	df | MS | F |
-|---|----|----|---|
-|$SS_{Trt} = \sum{n_i(\bar{Y}_{i.} - \bar{Y}_{..})^2}$ | $k - 1$ | $\frac{SS_{Trt}}{k - 1}$ | $\frac{MS_{Trt}}{MS_{Err}}$ |
-|$SS_{Err} = \sum(Y_{ij} - \bar{Y}_{i.})^2$	| $N - k$	| $\frac{SS_{Err}}{N - k}$ | |
-|$SS_{Tot} = \sum(Y_{ij} - \bar{Y}_{..})^2$ | $N - 1$	| | |	
-
-
-The ANOVA method decomposes the deviation of the $j^{th}$ observation of the $i^{th}$ treatment level around the overall mean $(Y_{ij} - \bar{Y}_{..})$ into the deviation of the observation around its factor level mean (aka treatment mean) $(Y_{ij} - \bar{Y}_{i.})$ (aka, the "error" $\epsilon_{ij}$) plus the deviation of the factor level mean around the overall mean (aka grand mean) $(\bar{Y}_{i.} - \bar{Y}_{..})$.
-
-You can express an ANOVA model as an *effects* model or a *means* model.  The effects model equates $Y_{ij}$ to the grand mean $\mu$ plus deviations from the grand mean due to the treatment levels $\tau_i$ plus deviations around the mean of its factor level $\epsilon_{ij}$.
-
-$$Y_{ij} = \mu + \tau_i + \epsilon_{ij}$$
-
-The cell means model equates $Y_{ij}$ to its factor level mean $\mu_i$ plus deviations around its factor level mean $\epsilon_{ij}$.
-
-$$Y_{ij} = \mu_i + \epsilon_{ij}$$
-
-The ratio of the variance between treatments to the variance within treatments
-
-treatment mean square $MS_{Trt}$ to the error mean square $MS_{Err}$ has an $F$ distribution with $k - 1$ numerator degrees of freedom and $N - k$ denominator degrees of freedom.
-
-$$F = \frac{MS_{Trt}}{MS_{Err}} = \frac{SS_{Trt}/(k - 1)}{SS_{Err} / (n - k)}$$
-
-Under $H_0$, both $MS_{Trt}$ and $MS_{Err}$ estimate $\sigma^2$, the variance common to all $k$ populations.  Under the alternative hypothesis, $MS_{Trt}$ estimates $\sigma^2 + \theta$, whereas $MS_{Err}$ still estimates $\sigma^2$.  The larger is $F$, the less likely $H_0$ is true.  Summarize the results in an ANOVA table.  
-
-|SS |	df | MS | F |
-|---|----|----|---|
-|$SS_{Trt} = \sum{n_i(\bar{Y}_{i.} - \bar{Y}_{..})^2}$ | $k - 1$ | $\frac{SS_{Trt}}{k - 1}$ | $\frac{MS_{Trt}}{MS_{Err}}$ |
-|$SS_{Err} = \sum(Y_{ij} - \bar{Y}_{i.})^2$	| $N - k$	| $\frac{SS_{Err}}{N - k}$ | |
-|$SS_{Tot} = \sum(Y_{ij} - \bar{Y}_{..})^2$ | $N - 1$	| | |	
-
-The *F* test does not indicate which populations cause the rejection of $H_0$.  Identify which groups differ from the others with a post-hoc test.  Post-hoc test options include Tukey, Fisher's Least Significant Difference (LSD), Bonferroni, Scheffe, and Dunnett.
-
-ANOVA returns reliable results if the following conditions hold:
-
-1. **Independence**.  The sampled observations must be independent *within* groups. The observations should be from a random sample, or from an experiment using random assignment.  Each group's size, *n*, should be less than 10% of its population size.  The groups must also be independent of each other (non-paired).  A repeated measures experiment design requires a different test.
-2. **Normality**.  Each group's values should be nearly normally distributed.  This condition is especially important with small sample sizes.^[Use a nonparametric statistical method such as the Kruskal-Wallis test when the population distributions are very non-normal.]
-3. **Equal Variance**.  Each group's variance should be rougly equal (homoscedastic groups).  This condition is especially important when sample sizes differ between groups.   The IQR of the box plot is a good way to visually assess this condition.^[A general rule of thumb for equal variances is to compare the smallest and largest sample standard deviation.  If the ratio of these two sample standard deviations fall within 0.5 to 2, then assume equal variances.  More formal tests include the Bartlett test, and Levene test^[See [Homogeneity of variance].(http://www.cookbook-r.com/Statistical_analysis/Homogeneity_of_variance/) in Cookbook for R])]
+ANOVA returns reliable results if the following conditions hold: (a) there should be no significant outliers within the factor levels; (b) the response variable should be approximately normally distributed within each factor level; and (c) the the response variable variances within the factor levels should be equal.
 
 The null hypothesis is $H_0: \mu_1 = \mu_2 = \dots = \mu_k$ for the $k$ groups. The alternative hypothesis is that at least one group mean differs from the others.
 
-Here is an example where you might use an ANOVA test. A study compares the growth of plants using one of three fertilizers and a control group.  Dataset `greenhouse` contains 6 observations per each of the *k* = 4 treatment levels (*N* = 24).  
+Here is an example where you might use an ANOVA test. A study compares the growth of plants using one of three fertilizers and a control group. Data set `greenhouse` contains 6 observations per each of the *k* = 4 treatment levels (*N* = 24) - a balanced design.
 
 ```{r include=FALSE}
 greenhouse <- tribble(
@@ -132,6 +108,14 @@ Conduct a one-way ANOVA of the $k = 4$ factor levels.  The ANOVA *F*-test indica
 greenhouse.aov <- aov(growth ~ group, data = greenhouse)
 anova(greenhouse.aov)
 ```
+
+### Checking Conditions {-}
+
+1. **Independence**.  The sampled observations must be independent *within* groups. The observations should be from a random sample, or from an experiment using random assignment.  Each group's size, *n*, should be less than 10% of its population size.  The groups must also be independent of each other (non-paired).  A repeated measures experiment design requires a different test.
+2. **Normality**.  Each group's values should be nearly normally distributed.  This condition is especially important with small sample sizes.^[Use a nonparametric statistical method such as the Kruskal-Wallis test when the population distributions are very non-normal.]
+3. **Equal Variance**.  Each group's variance should be rougly equal (homoscedastic groups).  This condition is especially important when sample sizes differ between groups.   The IQR of the box plot is a good way to visually assess this condition.^[A general rule of thumb for equal variances is to compare the smallest and largest sample standard deviation.  If the ratio of these two sample standard deviations fall within 0.5 to 2, then assume equal variances.  More formal tests include the Bartlett test, and Levene test^[See [Homogeneity of variance].(http://www.cookbook-r.com/Statistical_analysis/Homogeneity_of_variance/) in Cookbook for R])]
+
+
 
 Before conducting a post-hoc test to determine which factor levels differ, check whether the model conditions hold.  The measurements are *independent* because this is a completely randomized experiment.  The individual populations could be assumed normally distributed if $n_j >= 30$, but $n_j = 6$ for each group, so check for normality.  The QQ plots below appear to be approximately normal.
 
