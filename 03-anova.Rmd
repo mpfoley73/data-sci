@@ -2,6 +2,8 @@
 
 ```{r include=FALSE}
 library(tidyverse)
+library(broom)
+library(flextable)
 ```
 
 These notes are primarily taken from studying [PSU STAT-502](https://online.stat.psu.edu/stat502) and [Laerd Statistics](https://statistics.laerd.com/premium/spss/owa/one-way-anova-in-spss.php).
@@ -37,8 +39,6 @@ The *F* test does not indicate which populations cause the rejection of $H_0$. F
 
 ANOVA returns reliable results if the following conditions hold: (a) there should be no significant outliers within the factor levels; (b) the response variable should be approximately normally distributed within each factor level; and (c) the the response variable variances within the factor levels should be equal.
 
-The null hypothesis is $H_0: \mu_1 = \mu_2 = \dots = \mu_k$ for the $k$ groups. The alternative hypothesis is that at least one group mean differs from the others.
-
 Here is an example where you might use an ANOVA test. A study compares the growth of plants using one of three fertilizers and a control group. Data set `greenhouse` contains 6 observations per each of the *k* = 4 treatment levels (*N* = 24) - a balanced design.
 
 ```{r include=FALSE}
@@ -73,41 +73,41 @@ greenhouse <- tribble(
 skimr::skim(greenhouse)
 ```
 
+Start with a column plot with 95% confidence intervals. All three fertilizers produced more growth than the control group.  Fertilizers *F1* and *F3* appear to be about tied for most growth, but it is unclear if the fertilizers are significantly different from each other.  
 
-The figures below show that all three fertilizers produced more growth than the control group.  Fertilizers `F1` and `F3` appear to be about tied for most growth, but it is unclear if the fertilizers are significantly different from each other.  The barchart includes a one-standard error error bar.  The boxplot may be the better choice for simplicity in generating.^[PSU STATS501 recommends presenting this as a bar chart, but the box plot seems more useful.  Which is more common in literature?]  The boxplot also indicates the variances may differ among the groups.
-
-```{r message=FALSE}
-library(ggplot2)
-library(gridExtra)
-
-p1 <- greenhouse %>%
+```{r echo=FALSE}
+greenhouse %>%
   group_by(group) %>%
-  summarize(mean_growth = mean(growth),
-            se = sd(growth) / n()) %>%
-  ggplot(aes(x = group, y = mean_growth)) + 
-  geom_col(fill = "grey") +
-  geom_errorbar(aes(ymin = mean_growth - se, ymax = mean_growth + se, width = .2)) +
-  labs(title = "Greenhouse Experiment",
-       x = "Fertilizer Treatment",
-       y = "Plant Height (cm)") +
-  scale_y_continuous(limits = c(0, 35))
-
-p2<-ggplot(data = greenhouse, aes(x = group, y = growth)) +
-  geom_boxplot() +
-  labs(title = "Greenhouse Experiment",
-       x = "Fertilizer Treatment",
-       y = "Plant Height (cm)") +
-  scale_y_continuous(limits = c(0, 35))
-
-grid.arrange(p1, p2, ncol = 2)
+  summarize(.groups = "drop",
+            mean_growth = mean(growth),
+            cl_025 = mean_growth + qnorm(.025) * sd(growth) / sqrt(n()),
+            cl_975 = mean_growth + qnorm(.975) * sd(growth) / sqrt(n())) %>%
+  ggplot(aes(x = group, y = mean_growth)) +
+  geom_col(fill = "snow3", color = "snow3", alpha = 0.6, width = 0.5) +
+  geom_errorbar(aes(ymin = cl_025, ymax = cl_975, width = 0.3)) +
+  theme_minimal() +
+  labs(title = "Mean Growth by Group",
+       x = NULL, y = "centimeters",
+       caption = "Error Bars: 95% CI")
 ```
-
-Conduct a one-way ANOVA of the $k = 4$ factor levels.  The ANOVA *F*-test indicates the factor levels differ (*F* = 27.5, *p* < 0.001), so reject $H_0$ that the $k = 4$ factor means are identical.
 
 ```{r}
-greenhouse.aov <- aov(growth ~ group, data = greenhouse)
-anova(greenhouse.aov)
 ```
+
+Conduct a one-way ANOVA. The amount of growth was statistically significantly different for different levels of fertilizer group, *F*(3, 20) = 27.5, *p* < .0001.
+
+```{r}
+greenhouse_aov <- aov(growth ~ group, data = greenhouse)
+greenhouse_anova <- anova(greenhouse_aov)
+
+greenhouse_anova %>% 
+  tidy() %>%
+  flextable() %>%
+  colformat_num(j = c(3, 4, 5), digits = 1) %>%
+  colformat_num(j = 6, digits = 4) %>%
+  set_caption("ANOVA: growth")
+```
+
 
 ### Checking Conditions {-}
 
@@ -139,7 +139,7 @@ bartlett.test(growth ~ group, data = greenhouse)
 Now that the conditions are checked, conduct a post-hoc test to see which groups differ.  Here is the Tukey test.  As expected, all three fertilizer factor levels differ from the control.  `F3` differed from `F2`, but `F1` was not significantly different from either `F2` or `F3`.
 
 ```{r}
-plot(TukeyHSD(greenhouse.aov))
+plot(TukeyHSD(greenhouse_aov))
 ```
 
 ## Handling Non-Constant Variance
@@ -159,7 +159,7 @@ The Box-Cox procedure does not recommend any particular transformation of the da
 
 ```{r message=FALSE}
 library(MASS)
-boxcox(greenhouse.aov, plotit = TRUE)
+boxcox(greenhouse_aov, plotit = TRUE)
 ```
 
 
