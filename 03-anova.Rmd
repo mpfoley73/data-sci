@@ -35,7 +35,7 @@ tmp %>%
     )
 ```
 
-The *F* test does not indicate which populations cause the rejection of $H_0$. For this, use one of the post-hoc tests:   Tukey, Fisher's Least Significant Difference (LSD), Bonferroni, Scheffe, or Dunnett.
+The *F* test does not indicate which populations cause the rejection of $H_0$. For this, use one of the post-hoc tests: Tukey, Fisher's Least Significant Difference (LSD), Bonferroni, Scheffe, or Dunnett.
 
 ANOVA returns reliable results if the following conditions hold: (a) there should be no significant outliers within the factor levels; (b) the response variable should be approximately normally distributed within each factor level; and (c) the the response variable variances within the factor levels should be equal.
 
@@ -69,7 +69,7 @@ greenhouse <- tribble(
 "F3",      30,
 "F3",      29.2
 ) %>%
-  mutate(group = factor(group))
+  mutate(group = factor(group), id = row_number())
 skimr::skim(greenhouse)
 ```
 
@@ -91,10 +91,7 @@ greenhouse %>%
        caption = "Error Bars: 95% CI")
 ```
 
-```{r}
-```
-
-Conduct a one-way ANOVA. The amount of growth was statistically significantly different for different levels of fertilizer group, *F*(3, 20) = 27.5, *p* < .0001.
+The one-way ANOVA indicates amount of growth was statistically significantly different for different levels of fertilizer group, *F*(3, 20) = 27.5, *p* < .0001.
 
 ```{r}
 greenhouse_aov <- aov(growth ~ group, data = greenhouse)
@@ -105,19 +102,66 @@ greenhouse_anova %>%
   flextable() %>%
   colformat_num(j = c(3, 4, 5), digits = 1) %>%
   colformat_num(j = 6, digits = 4) %>%
-  set_caption("ANOVA: growth")
+  set_caption("Results of ANOVA for Growth vs Fertilizer Group")
 ```
-
 
 ### Checking Conditions {-}
 
-1. **Independence**.  The sampled observations must be independent *within* groups. The observations should be from a random sample, or from an experiment using random assignment.  Each group's size, *n*, should be less than 10% of its population size.  The groups must also be independent of each other (non-paired).  A repeated measures experiment design requires a different test.
-2. **Normality**.  Each group's values should be nearly normally distributed.  This condition is especially important with small sample sizes.^[Use a nonparametric statistical method such as the Kruskal-Wallis test when the population distributions are very non-normal.]
-3. **Equal Variance**.  Each group's variance should be rougly equal (homoscedastic groups).  This condition is especially important when sample sizes differ between groups.   The IQR of the box plot is a good way to visually assess this condition.^[A general rule of thumb for equal variances is to compare the smallest and largest sample standard deviation.  If the ratio of these two sample standard deviations fall within 0.5 to 2, then assume equal variances.  More formal tests include the Bartlett test, and Levene test^[See [Homogeneity of variance].(http://www.cookbook-r.com/Statistical_analysis/Homogeneity_of_variance/) in Cookbook for R])]
+There are three conditions related to study design: 1) the dependent variable is continuous; 2) the independent variable is categorical; and 3) the observations are independent *within* groups. The observations should be from a random sample, or from an experiment using random assignment.  Each group's size should be less than 10% of its population size. The groups must also be independent of each other (non-paired, and non-repeated measures).
 
+There are three conditions related to the data distribution.
 
+1. **Outliers**. There should be no significant outliers in the groups. Outliers exert a large influence on the mean and standard deviation. Test with a box plot.
+2. **Normality**.  Each group's values should be *nearly* normally distributed ("nearly" because ANOVA is considered robust to the normality assumption). This condition is especially important with small sample sizes. Test with the Shapiro-Wilk test for normality. If the data is very non-normal, use a nonparametric test such as the Kruskal-Wallis test.
+3. **Equal Variances**.  The group variances should be roughly equal. This condition is especially important when sample sizes differ. The IQR of the box plot is a good way to visually assess this condition. A rule of thumb that the largest sample standard deviation should be less than twice the size of the smallest. More formal [homogeneity of variance](http://www.cookbook-r.com/Statistical_analysis/Homogeneity_of_variance/) tests include the Bartlett test, and Levene test. If the variances are very different, use a Games-Howell post hoc test for multiple comparisons instead of the Tukey post hoc test.
 
-Before conducting a post-hoc test to determine which factor levels differ, check whether the model conditions hold.  The measurements are *independent* because this is a completely randomized experiment.  The individual populations could be assumed normally distributed if $n_j >= 30$, but $n_j = 6$ for each group, so check for normality.  The QQ plots below appear to be approximately normal.
+#### Outliers {-}
+
+Assess outliers with a box plot. The whiskers extend no further than 1.5\*IQR from the upper and lower hinges. Any observations beyond the whiskers are outliers and are plotted individually. Our example includes an outlier in fertilizer group *F2*.
+
+```{r echo=FALSE}
+greenhouse %>%
+  ggplot(aes(x = group, y = growth)) +
+  geom_boxplot(fill = "snow3", color = "snow4", alpha = 0.6, width = 0.5, 
+               outlier.color = "goldenrod") +
+  theme_minimal() +
+  labs(title = "Boxplot of Growth vs Fertilizer Group",
+       y = "Growth (cm)", x = "Fertilizer Group")
+```
+
+Had the data passed this test, you would report
+
+> There were no outliers in the data, as assessed by inspection of a boxplot.
+
+The data did not pass the test, so what do you do? There are generally three reasons for outliers: data entry errors, measurement errors, and genuinely unusual values. If the problem's data entry - fix it! If it's measurement, throw it out. If it is genuine, you have some options.
+
+* Kruskal-Wallace *H* test. It is a non-parametric test. Be careful here, because it is not quite testing the same $H_0$.
+* Transform the dependent variable. Don't do this unless the data is also non-normal. It also has the downside of making interpretation more difficult.
+* Leave it in if it doesn't affect the conclusion (compared to taking it out).
+
+Here are the ANOVA results with the *F2* outlier removed. The conclusion is the same.
+
+```{r}
+greenhouse_aov <- aov(growth ~ group, data = greenhouse %>% filter(!id == 13))
+greenhouse_anova <- anova(greenhouse_aov)
+
+greenhouse_anova %>% 
+  tidy() %>%
+  flextable() %>%
+  colformat_num(j = c(3, 4, 5), digits = 1) %>%
+  colformat_num(j = 6, digits = 4) %>%
+  set_caption("Results of ANOVA for Growth vs Fertilizer Group") %>%
+  footnote(i = 1, j = 1,
+           value = as_paragraph("Note: One outlier in group F2 removed."),
+           ref_symbols = c(""),
+           part = "header", inline = TRUE)
+```
+
+#### Normality {-}
+
+#### Equal Variances {-}
+
+The individual populations could be assumed normally distributed if $n_j >= 30$, but $n_j = 6$ for each group, so check for normality.  The QQ plots below appear to be approximately normal.
 
 ```{r}
 par(mfrow = c(2, 2))
