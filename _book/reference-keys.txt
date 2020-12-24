@@ -181,3 +181,7 @@ outliers
 normality-1
 equal-variances-1
 tab:unnamed-chunk-7
+shapiro-wilk-test
+tab:unnamed-chunk-9
+tab:unnamed-chunk-8
+tab:unnamed-chunk-10

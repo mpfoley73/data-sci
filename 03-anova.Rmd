@@ -75,7 +75,7 @@ skimr::skim(greenhouse)
 
 Start with a column plot with 95% confidence intervals. All three fertilizers produced more growth than the control group.  Fertilizers *F1* and *F3* appear to be about tied for most growth, but it is unclear if the fertilizers are significantly different from each other.  
 
-```{r echo=FALSE}
+```{r echo=FALSE, fig.height=2.5}
 greenhouse %>%
   group_by(group) %>%
   summarize(.groups = "drop",
@@ -91,6 +91,27 @@ greenhouse %>%
        caption = "Error Bars: 95% CI")
 ```
 
+```{r echo=FALSE}
+greenhouse_desc <- greenhouse %>%
+  group_by(group) %>%
+  summarise(.groups = "drop",
+            n = n(),
+            mean = mean(growth),
+            sd = sd(growth),
+            se = sd / sqrt(n),
+            ci_l = mean - qnorm(0.975) * se,
+            ci_u = mean + qnorm(0.975) * se,
+            min = min(growth),
+            max = max(growth))
+
+greenhouse_desc %>%
+  flextable() %>% 
+  set_table_properties(width = 0.8, layout = "autofit") %>%
+  set_caption("Descriptive Statistics")
+```
+
+Data is presented as mean ± standard deviation. The ability to cope with workplace-related stress (CWWS score) increased from the sedentary (n = 7, 4.2 ± 0.8), to low (n = 9, 5.9 ± 1.7), to moderate (n = 8, 7.1 ± 1.6) to high (n = 7, 7.5 ± 1.2) physical activity groups, in that order.
+
 The one-way ANOVA indicates amount of growth was statistically significantly different for different levels of fertilizer group, *F*(3, 20) = 27.5, *p* < .0001.
 
 ```{r}
@@ -100,6 +121,7 @@ greenhouse_anova <- anova(greenhouse_aov)
 greenhouse_anova %>% 
   tidy() %>%
   flextable() %>%
+  set_table_properties(width = 0.8, layout = "autofit") %>%
   colformat_num(j = c(3, 4, 5), digits = 1) %>%
   colformat_num(j = 6, digits = 4) %>%
   set_caption("Results of ANOVA for Growth vs Fertilizer Group")
@@ -107,12 +129,10 @@ greenhouse_anova %>%
 
 ### Checking Conditions {-}
 
-There are three conditions related to study design: 1) the dependent variable is continuous; 2) the independent variable is categorical; and 3) the observations are independent *within* groups. The observations should be from a random sample, or from an experiment using random assignment.  Each group's size should be less than 10% of its population size. The groups must also be independent of each other (non-paired, and non-repeated measures).
+The ANOVA test applies when the dependent variable is continuous, the independent variable is categorical, and the observations are independent *within* groups. Independent means the observations should be from a random sample, or from an experiment using random assignment.  Each group's size should be less than 10% of its population size. The groups must also be independent of each other (non-paired, and non-repeated measures). Additionally, there are three conditions related to the data distribution.
 
-There are three conditions related to the data distribution.
-
-1. **Outliers**. There should be no significant outliers in the groups. Outliers exert a large influence on the mean and standard deviation. Test with a box plot.
-2. **Normality**.  Each group's values should be *nearly* normally distributed ("nearly" because ANOVA is considered robust to the normality assumption). This condition is especially important with small sample sizes. Test with the Shapiro-Wilk test for normality. If the data is very non-normal, use a nonparametric test such as the Kruskal-Wallis test.
+1. **No outliers**. There should be no significant outliers in the groups. Outliers exert a large influence on the mean and standard deviation. Test with a box plot. If it fails this condition, you might be able to drop the outliers or transform the data. Otherwise you'll need to switch to a non-parametric test.
+2. **Normality**.  Each group's values should be *nearly* normally distributed ("nearly" because ANOVA is considered robust to the normality assumption). This condition is especially important with small sample sizes. Test with the Q-Q plots or the Shapiro-Wilk test for normality. If the data is very non-normal, you might be able to transform your response variable, or use a nonparametric test such as Kruskal-Wallis.
 3. **Equal Variances**.  The group variances should be roughly equal. This condition is especially important when sample sizes differ. The IQR of the box plot is a good way to visually assess this condition. A rule of thumb that the largest sample standard deviation should be less than twice the size of the smallest. More formal [homogeneity of variance](http://www.cookbook-r.com/Statistical_analysis/Homogeneity_of_variance/) tests include the Bartlett test, and Levene test. If the variances are very different, use a Games-Howell post hoc test for multiple comparisons instead of the Tukey post hoc test.
 
 #### Outliers {-}
@@ -148,6 +168,7 @@ greenhouse_anova <- anova(greenhouse_aov)
 greenhouse_anova %>% 
   tidy() %>%
   flextable() %>%
+  set_table_properties(width = 0.8, layout = "autofit") %>%
   colformat_num(j = c(3, 4, 5), digits = 1) %>%
   colformat_num(j = 6, digits = 4) %>%
   set_caption("Results of ANOVA for Growth vs Fertilizer Group") %>%
@@ -159,19 +180,62 @@ greenhouse_anova %>%
 
 #### Normality {-}
 
-#### Equal Variances {-}
+You can assume the populations are normally distributed if $n_j >= 30$. Otherwise, try the Q-Q plot, or skewness and kurtosis values, or histograms. If you still don't feel confident about normality, run a [Shapiro-Wilk Test]. If $n_j >= 50$, stick with graphical methods because at larger sample sizes Shapiro-Wilk flags even minor deviations from normality.
 
-The individual populations could be assumed normally distributed if $n_j >= 30$, but $n_j = 6$ for each group, so check for normality.  The QQ plots below appear to be approximately normal.
+The QQ plots below appear to be approximately normal.
 
 ```{r}
-par(mfrow = c(2, 2))
-split(greenhouse$growth, f = greenhouse$group) %>% sapply(function(x) {qqnorm(x); qqline(x)})
+greenhouse %>%
+  ggplot(aes(sample = growth)) +
+  stat_qq() +
+  stat_qq_line(col = "goldenrod") +
+  facet_wrap(~group) +
+  theme_minimal() +
+  labs(title = "Normal Q-Q Plot")
 ```
 
-The sample sizes are similar (6 per each of the 4 factor levels), so the equality of sample variances is less critical, but check anyway for demonstration.  A rule of them check is to compare group standard deviations.  None should be more than double the value of any other.  In this case `F1` is more than double `Control`.
+And the Shapiro-Wilk test fails to reject the normality null hypothesis.
 
 ```{r}
-greenhouse %>% group_by(group) %>% summarize(sd = sd(growth))
+x <- by(greenhouse, greenhouse$group, function(x) shapiro.test(x$growth) %>% tidy())
+
+x[1:4] %>%
+  bind_rows() %>%
+  mutate(group = names(x)) %>%
+  dplyr::select(group, everything(), - method) %>%
+  flextable() %>% 
+  set_table_properties(width = 0.6, layout = "autofit") %>%
+  set_caption("Shapiro-Wilk Normality Test")
+```
+
+If the data passes the test, report 
+
+> Growth was normally distributed, as assessed by inspection of a Q-Q plot.
+
+or
+
+> Growth was normally distributed, as assessed by Shapiro-Wilk's test (p > .05).
+
+Had the data not been normally distributed, you would have three options: (a) transform the dependent variable; (b) use a non-parametric test such as Kruskal-Wallis; or (c) carry on regardless.
+
+Transformations will generally only work when the distribution of scores in all groups are the same shape. They also have the drawback of making the data less interpratable.
+
+You can also choose to carry on regardless. ANOVA is considered "robust" to normality violations.
+
+#### Equal Variances {-}
+
+The equality of sample variances condition is less critical when sample sizes are similar among the groups. One rule of thumb is that no group's standard deviation should be more than double that of any other.  In this case `F1` is more than double `Control`.
+
+```{r}
+greenhouse %>% 
+  group_by(group) %>% 
+  summarize(.groups = "drop", sd = sd(growth)) %>%
+  flextable() %>%
+  set_table_properties(width = 0.5, layout = "autofit")
+```
+
+```{r}
+
 ```
 
 Bartlett's test of homogeneity fails to reject $H_0$ of homogeity (*p* = 0.2494).  
