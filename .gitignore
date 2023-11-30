@@ -3,9 +3,7 @@
 .RData
 .Ruserdata
 *.dcf
-*.html
 *.json
-*.png
 *.txt
 .Rapp.history
 .Rproj.user/

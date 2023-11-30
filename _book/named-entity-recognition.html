@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.3 Named Entity Recognition | My Data Science Notes</title>
+  <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.3 Named Entity Recognition | My Data Science Notes" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.3 Named Entity Recognition | My Data Science Notes" />
+  
+  <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+<meta name="author" content="Michael Foley" />
+
+
+<meta name="date" content="2023-11-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="text-classification-modeling.html"/>
+<link rel="next" href="tidy-text.html"/>
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Intro</a></li>
+<li class="chapter" data-level="1" data-path="topic-modeling.html"><a href="topic-modeling.html"><i class="fa fa-check"></i><b>1</b> Topic Modeling</a>
+<ul>
+<li class="chapter" data-level="1.0.1" data-path="topic-modeling.html"><a href="topic-modeling.html#lda"><i class="fa fa-check"></i><b>1.0.1</b> LDA</a></li>
+<li class="chapter" data-level="1.0.2" data-path="topic-modeling.html"><a href="topic-modeling.html#stm"><i class="fa fa-check"></i><b>1.0.2</b> STM</a></li>
+<li class="chapter" data-level="1.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>1.1</b> Sentiment Analysis</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#n-grams"><i class="fa fa-check"></i><b>1.1.1</b> N-Grams</a></li>
+<li class="chapter" data-level="1.1.2" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#converting-to-and-from-non-tidy-formats"><i class="fa fa-check"></i><b>1.1.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="1.1.3" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#example"><i class="fa fa-check"></i><b>1.1.3</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="text-classification-modeling.html"><a href="text-classification-modeling.html"><i class="fa fa-check"></i><b>1.2</b> Text Classification Modeling</a></li>
+<li class="chapter" data-level="1.3" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i><b>1.3</b> Named Entity Recognition</a></li>
+<li class="chapter" data-level="1.4" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>1.4</b> Tidy Text</a></li>
+<li class="chapter" data-level="1.5" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html"><i class="fa fa-check"></i><b>1.5</b> Appendix: Regular Expressions</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#base-r"><i class="fa fa-check"></i><b>1.5.1</b> Base R</a></li>
+<li class="chapter" data-level="1.5.2" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#stringr"><i class="fa fa-check"></i><b>1.5.2</b> stringr</a></li>
+<li class="chapter" data-level="1.5.3" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#regular-expressions"><i class="fa fa-check"></i><b>1.5.3</b> Regular Expressions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="appendix-tidytext.html"><a href="appendix-tidytext.html"><i class="fa fa-check"></i><b>1.6</b> Appendix: tidytext</a></li>
+<li class="chapter" data-level="1.7" data-path="appendix-tm.html"><a href="appendix-tm.html"><i class="fa fa-check"></i><b>1.7</b> Appendix: tm</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">My Data Science Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="named-entity-recognition" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Named Entity Recognition<a href="named-entity-recognition.html#named-entity-recognition" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <strong>qdap</strong> package provides parsing tools for preparing transcript data.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="named-entity-recognition.html#cb34-1" tabindex="-1"></a><span class="fu">library</span>(qdap)</span></code></pre></div>
+<p>For example, <code>freq_terms()</code> parses text and counts the terms.</p>
+<p>You can also plot the terms.</p>
+<p>There are two kinds of the corpus data types, the permanent corpus, <strong>PCorpus</strong>, and the volatile corpus, <strong>VCorpus</strong>. The volatile corpus is held in RAM rather than saved to disk. Create a volatile corpus with <code>tm::vCorpous()</code>. vCorpous() takes either a text source created with <code>tm::VectorSource()</code> or a dataframe source created with <code>Dataframe Source()</code> where the input dataframe has cols <code>doc_id</code>, <code>text_id</code> and zero or more metadata columns.</p>
+<p>In bag of words text mining, cleaning helps aggregate terms, especially words with common stems like “miner” and “mining”. There are several functions useful for preprocessing: <code>tolower()</code>, <code>tm::removePunctuation()</code>, <code>tm::removeNumbers()</code>, <code>tm::stripWhiteSpace()</code>, and <code>removeWords()</code>. Apply these functions to the documents in a <code>VCorpus</code> object with <code>tm_map()</code>. If the function is not one of the pre-defined functions, wrap it in <code>content_transformer()</code>. Another preprocessing function is <code>stemDocument()</code>.</p>
+<p>The <strong>qdap</strong> package offers other preprocessing functions.</p>
+<p><code>tm::stopwords("en")</code> returns a vector of stop words. You can add to the list with concatenation.</p>
+<p><code>tm::stemDocument()</code> and <code>tm::stemCompletion()</code> reduce the variation in terms.</p>
+<p>To perform the analysis of the tweets, convert the corpus into either a document term matrix (DTM, documents as rows, terms as cols), or a term document matrix (TDM, terms as rows, documents as cols).</p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="text-classification-modeling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tidy-text.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["data-sci.pdf", "data-sci.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.5 Appendix: Regular Expressions | My Data Science Notes</title>
+  <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.5 Appendix: Regular Expressions | My Data Science Notes" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.5 Appendix: Regular Expressions | My Data Science Notes" />
+  
+  <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
+  
+
+<meta name="author" content="Michael Foley" />
+
+
+<meta name="date" content="2023-11-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="tidy-text.html"/>
+<link rel="next" href="appendix-tidytext.html"/>
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Intro</a></li>
+<li class="chapter" data-level="1" data-path="topic-modeling.html"><a href="topic-modeling.html"><i class="fa fa-check"></i><b>1</b> Topic Modeling</a>
+<ul>
+<li class="chapter" data-level="1.0.1" data-path="topic-modeling.html"><a href="topic-modeling.html#lda"><i class="fa fa-check"></i><b>1.0.1</b> LDA</a></li>
+<li class="chapter" data-level="1.0.2" data-path="topic-modeling.html"><a href="topic-modeling.html#stm"><i class="fa fa-check"></i><b>1.0.2</b> STM</a></li>
+<li class="chapter" data-level="1.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>1.1</b> Sentiment Analysis</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#n-grams"><i class="fa fa-check"></i><b>1.1.1</b> N-Grams</a></li>
+<li class="chapter" data-level="1.1.2" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#converting-to-and-from-non-tidy-formats"><i class="fa fa-check"></i><b>1.1.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="1.1.3" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#example"><i class="fa fa-check"></i><b>1.1.3</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="text-classification-modeling.html"><a href="text-classification-modeling.html"><i class="fa fa-check"></i><b>1.2</b> Text Classification Modeling</a></li>
+<li class="chapter" data-level="1.3" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i><b>1.3</b> Named Entity Recognition</a></li>
+<li class="chapter" data-level="1.4" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>1.4</b> Tidy Text</a></li>
+<li class="chapter" data-level="1.5" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html"><i class="fa fa-check"></i><b>1.5</b> Appendix: Regular Expressions</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#base-r"><i class="fa fa-check"></i><b>1.5.1</b> Base R</a></li>
+<li class="chapter" data-level="1.5.2" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#stringr"><i class="fa fa-check"></i><b>1.5.2</b> stringr</a></li>
+<li class="chapter" data-level="1.5.3" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#regular-expressions"><i class="fa fa-check"></i><b>1.5.3</b> Regular Expressions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="appendix-tidytext.html"><a href="appendix-tidytext.html"><i class="fa fa-check"></i><b>1.6</b> Appendix: tidytext</a></li>
+<li class="chapter" data-level="1.7" data-path="appendix-tm.html"><a href="appendix-tm.html"><i class="fa fa-check"></i><b>1.7</b> Appendix: tm</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">My Data Science Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="appendix-regular-expressions" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Appendix: Regular Expressions<a href="appendix-regular-expressions.html#appendix-regular-expressions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are two choices for string manipulation. Base R has <code>grep()</code> and <code>gsub()</code>. Or you can use the <strong>stringr</strong> package. Both will use the same regular expression patterns. Here are some important ones.</p>
+<div id="base-r" class="section level3 hasAnchor" number="1.5.1">
+<h3><span class="header-section-number">1.5.1</span> Base R<a href="appendix-regular-expressions.html#base-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>grep()</code> returns the indices of pattern matches in a vector of strings. Specify parameter <code>value = TRUE</code> to get the strings that match the pattern.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="appendix-regular-expressions.html#cb35-1" tabindex="-1"></a>str <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;abc123&quot;</span>, <span class="st">&quot;xyz   789.&quot;</span>)</span>
+<span id="cb35-2"><a href="appendix-regular-expressions.html#cb35-2" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">w+123&quot;</span>, str)   <span class="co"># \w any alphanumeric, + for any length</span></span>
+<span id="cb35-3"><a href="appendix-regular-expressions.html#cb35-3" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb35-4"><a href="appendix-regular-expressions.html#cb35-4" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;abc</span><span class="sc">\\</span><span class="st">d&quot;</span>, str)  <span class="co"># \d any digit</span></span>
+<span id="cb35-5"><a href="appendix-regular-expressions.html#cb35-5" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb35-6"><a href="appendix-regular-expressions.html#cb35-6" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>, str) <span class="co"># s spaces, \S non-spaces</span></span>
+<span id="cb35-7"><a href="appendix-regular-expressions.html#cb35-7" tabindex="-1"></a><span class="do">## [1] 2</span></span>
+<span id="cb35-8"><a href="appendix-regular-expressions.html#cb35-8" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>, str) <span class="co"># . anything, so \. for period</span></span>
+<span id="cb35-9"><a href="appendix-regular-expressions.html#cb35-9" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
+</div>
+<div id="stringr" class="section level3 hasAnchor" number="1.5.2">
+<h3><span class="header-section-number">1.5.2</span> stringr<a href="appendix-regular-expressions.html#stringr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <strong>stringr</strong> package is a simple wrapper around the more complete <strong>stringi</strong> package.</p>
+<p>Example of finding rows in data frame of book text with “chapter [#]”. In <code>regex()</code>, “[]” means “any of”, “\d” is any number, and “v”, “x”, “l”, and “c” are just roman numerals. Here is the word-count per chapter.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="appendix-regular-expressions.html#cb36-1" tabindex="-1"></a>austen <span class="ot">&lt;-</span> janeaustenr<span class="sc">::</span><span class="fu">austen_books</span>()</span>
+<span id="cb36-2"><a href="appendix-regular-expressions.html#cb36-2" tabindex="-1"></a>chapter_regex <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">regex</span>(<span class="st">&quot;^chapter [</span><span class="sc">\\</span><span class="st">divxlc]&quot;</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-3"><a href="appendix-regular-expressions.html#cb36-3" tabindex="-1"></a>austen <span class="sc">%&gt;%</span></span>
+<span id="cb36-4"><a href="appendix-regular-expressions.html#cb36-4" tabindex="-1"></a>  <span class="fu">filter</span>(book <span class="sc">==</span> <span class="st">&quot;Emma&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-5"><a href="appendix-regular-expressions.html#cb36-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">linenumber =</span> <span class="fu">row_number</span>(),</span>
+<span id="cb36-6"><a href="appendix-regular-expressions.html#cb36-6" tabindex="-1"></a>         <span class="at">chapter =</span> <span class="fu">cumsum</span>(<span class="fu">str_detect</span>(text, chapter_regex))) <span class="sc">%&gt;%</span></span>
+<span id="cb36-7"><a href="appendix-regular-expressions.html#cb36-7" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb36-8"><a href="appendix-regular-expressions.html#cb36-8" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> <span class="st">&quot;word&quot;</span>, <span class="at">input =</span> text, <span class="at">token =</span> <span class="st">&quot;words&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-9"><a href="appendix-regular-expressions.html#cb36-9" tabindex="-1"></a>  <span class="fu">count</span>(chapter)</span></code></pre></div>
+<ul>
+<li><code>str_c()</code> concatenates strings, similar to with <code>paste()</code> and <code>paste0()</code>.</li>
+</ul>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="appendix-regular-expressions.html#cb37-1" tabindex="-1"></a><span class="fu">str_c</span>(<span class="st">&quot;hello&quot;</span>, <span class="st">&quot;world&quot;</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;hello world&quot;</code></pre>
+<ul>
+<li><code>str_replace(string, pattern, replacment)</code> replaces <code>pattern</code> with <code>replacement</code>.</li>
+</ul>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="appendix-regular-expressions.html#cb39-1" tabindex="-1"></a><span class="fu">str_replace</span>(<span class="st">&quot;If the future&#39;s looking bleek&quot;</span>, <span class="at">pattern =</span> <span class="fu">fixed</span>(<span class="st">&quot;bleek&quot;</span>), <span class="at">replacement =</span> <span class="st">&quot;dark&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;If the future&#39;s looking dark&quot;</code></pre>
+<ul>
+<li><code>str_replace_na(string, replacement)</code> replaces NAs.</li>
+</ul>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="appendix-regular-expressions.html#cb41-1" tabindex="-1"></a><span class="fu">str_replace_na</span>(<span class="fu">c</span>(<span class="st">&quot;We&#39;re the ones &quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;have to shine&quot;</span>), <span class="at">replacement =</span> <span class="st">&quot;who &quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;We&#39;re the ones &quot; &quot;who &quot;            &quot;have to shine&quot;</code></pre>
+<ul>
+<li><code>str_split(string, pattern, simplify = FALSE)</code> splits <code>string</code> by <code>pattern</code> into a list of vectors, or matrix if <code>simplify = TRUE</code>.</li>
+</ul>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="appendix-regular-expressions.html#cb43-1" tabindex="-1"></a><span class="fu">str_split</span>(<span class="st">&quot;If there&#39;s no one in control&quot;</span>, <span class="at">pattern =</span> <span class="st">&quot; &quot;</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##      [,1] [,2]      [,3] [,4]  [,5] [,6]     
+## [1,] &quot;If&quot; &quot;there&#39;s&quot; &quot;no&quot; &quot;one&quot; &quot;in&quot; &quot;control&quot;</code></pre>
+<ul>
+<li><code>str_c(..., sep)</code> concatenates a vector of strings, separated by <code>sep</code>.</li>
+</ul>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="appendix-regular-expressions.html#cb45-1" tabindex="-1"></a><span class="fu">str_c</span>(<span class="st">&quot;we&#39;re&quot;</span>, <span class="st">&quot;the&quot;</span>, <span class="st">&quot;ones&quot;</span>, <span class="st">&quot;who&quot;</span>, <span class="st">&quot;draw&quot;</span>, <span class="st">&quot;the&quot;</span>, <span class="st">&quot;line&quot;</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;we&#39;re the ones who draw the line&quot;</code></pre>
+<p><code>str_sub(string, start, end)</code> returns substring of <code>string</code> from <code>start</code> to <code>end</code>. Use negatives to start from the end of the string.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="appendix-regular-expressions.html#cb47-1" tabindex="-1"></a>my_str <span class="ot">&lt;-</span> <span class="st">&quot;Although we live in trying times&quot;</span></span>
+<span id="cb47-2"><a href="appendix-regular-expressions.html#cb47-2" tabindex="-1"></a><span class="fu">str_sub</span>(my_str, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Altho&quot;</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="appendix-regular-expressions.html#cb49-1" tabindex="-1"></a><span class="fu">str_sub</span>(my_str, <span class="at">start =</span> <span class="sc">-</span><span class="dv">4</span>, <span class="at">end =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;imes&quot;</code></pre>
+<ul>
+<li><code>str_length(string)</code> returns the number of characters in a string.</li>
+</ul>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="appendix-regular-expressions.html#cb51-1" tabindex="-1"></a><span class="fu">str_length</span>(<span class="st">&quot;We&#39;re the ones who have to try&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] 30</code></pre>
+<ul>
+<li><code>str_detect(string, pattern)</code> returns booleans where <code>string</code> matches <code>pattern</code>.</li>
+</ul>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="appendix-regular-expressions.html#cb53-1" tabindex="-1"></a><span class="fu">str_detect</span>(<span class="fu">c</span>(<span class="st">&quot;Although we know&quot;</span>, <span class="st">&quot;that time&quot;</span>,  <span class="st">&quot;has wings&quot;</span>), <span class="at">pattern =</span> <span class="fu">fixed</span>(<span class="st">&quot;wings&quot;</span>))</span></code></pre></div>
+<pre><code>## [1] FALSE FALSE  TRUE</code></pre>
+<ul>
+<li><code>str_match(string, pattern)</code> returns matching strings where <code>string</code> matches <code>pattern</code>.</li>
+</ul>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="appendix-regular-expressions.html#cb55-1" tabindex="-1"></a><span class="fu">str_match</span>(<span class="fu">c</span>(<span class="st">&quot;Although we know&quot;</span>, <span class="st">&quot;that time&quot;</span>,  <span class="st">&quot;has wings&quot;</span>), <span class="at">pattern =</span> <span class="st">&quot;wings&quot;</span>)</span></code></pre></div>
+<pre><code>##      [,1]   
+## [1,] NA     
+## [2,] NA     
+## [3,] &quot;wings&quot;</code></pre>
+<ul>
+<li><code>str_subset(string, pattern)</code> returns string matches where <code>string</code> matches <code>pattern</code>.</li>
+</ul>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="appendix-regular-expressions.html#cb57-1" tabindex="-1"></a><span class="fu">str_subset</span>(<span class="fu">c</span>(<span class="st">&quot;Although we know&quot;</span>, <span class="st">&quot;that time&quot;</span>,  <span class="st">&quot;has wings&quot;</span>), <span class="at">pattern =</span> <span class="fu">fixed</span>(<span class="st">&quot;wings&quot;</span>))</span></code></pre></div>
+<pre><code>## [1] &quot;has wings&quot;</code></pre>
+<ul>
+<li><code>str_count(string, pattern)</code> returns a count of matches where <code>string</code> matches <code>pattern</code>.</li>
+</ul>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="appendix-regular-expressions.html#cb59-1" tabindex="-1"></a><span class="fu">str_count</span>(<span class="fu">c</span>(<span class="st">&quot;Although we know&quot;</span>, <span class="st">&quot;that time&quot;</span>,  <span class="st">&quot;has wings&quot;</span>), <span class="at">pattern =</span> <span class="fu">fixed</span>(<span class="st">&quot;wings&quot;</span>))</span></code></pre></div>
+<pre><code>## [1] 0 0 1</code></pre>
+<ul>
+<li><code>str_extract(string, pattern)</code> returns the part of the <code>string</code> matching <code>pattern</code>.</li>
+</ul>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="appendix-regular-expressions.html#cb61-1" tabindex="-1"></a><span class="fu">str_extract</span>(<span class="fu">c</span>(<span class="st">&quot;We&#39;re the ones&quot;</span>, <span class="st">&quot;who have to fly&quot;</span>), <span class="at">pattern =</span> <span class="st">&quot; t..&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot; the&quot; &quot; to &quot;</code></pre>
+</div>
+<div id="regular-expressions" class="section level3 hasAnchor" number="1.5.3">
+<h3><span class="header-section-number">1.5.3</span> Regular Expressions<a href="appendix-regular-expressions.html#regular-expressions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <strong>stringr</strong> package functions use <a href="https://unicode-org.github.io/icu/">ICU regular expressions</a>. Here are common regular expressions.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="appendix-regular-expressions.html#cb63-1" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;^tom&quot;</span>)  <span class="co"># starts with &quot;tom&quot;</span></span>
+<span id="cb63-2"><a href="appendix-regular-expressions.html#cb63-2" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;[0-9]&quot;</span>)  <span class="co"># contains a digit</span></span>
+<span id="cb63-3"><a href="appendix-regular-expressions.html#cb63-3" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;^[0-9]&quot;</span>)  <span class="co"># begins with a digit</span></span>
+<span id="cb63-4"><a href="appendix-regular-expressions.html#cb63-4" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;[^0-9]&quot;</span>)  <span class="co"># does not contain a digit</span></span>
+<span id="cb63-5"><a href="appendix-regular-expressions.html#cb63-5" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;.handsome.&quot;</span>)  <span class="co"># contains &quot;handsome&quot;</span></span>
+<span id="cb63-6"><a href="appendix-regular-expressions.html#cb63-6" tabindex="-1"></a>sawyer <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;handsome&quot;</span>))  <span class="co"># rows with &quot;handsome&quot;</span></span>
+<span id="cb63-7"><a href="appendix-regular-expressions.html#cb63-7" tabindex="-1"></a>sawyer <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;.handsome.&quot;</span>))  <span class="co"># same thing</span></span>
+<span id="cb63-8"><a href="appendix-regular-expressions.html#cb63-8" tabindex="-1"></a></span>
+<span id="cb63-9"><a href="appendix-regular-expressions.html#cb63-9" tabindex="-1"></a><span class="co"># Using perl-style regexp, </span></span>
+<span id="cb63-10"><a href="appendix-regular-expressions.html#cb63-10" tabindex="-1"></a><span class="co"># &quot;(.)&quot; is a subexpression (defined with parens) consisting of any character </span></span>
+<span id="cb63-11"><a href="appendix-regular-expressions.html#cb63-11" tabindex="-1"></a><span class="co"># defined with a dot. &quot;\\U&quot; makes the next character uppercase. \\1 is a </span></span>
+<span id="cb63-12"><a href="appendix-regular-expressions.html#cb63-12" tabindex="-1"></a><span class="co"># reference to subexpression 1</span></span>
+<span id="cb63-13"><a href="appendix-regular-expressions.html#cb63-13" tabindex="-1"></a><span class="fu">sub</span>(<span class="st">&quot;(.)&quot;</span>, (<span class="st">&quot;</span><span class="sc">\\</span><span class="st">U</span><span class="sc">\\</span><span class="st">1&quot;</span>), sawyer_tokens<span class="sc">$</span>word, <span class="at">perl=</span><span class="cn">TRUE</span>)</span>
+<span id="cb63-14"><a href="appendix-regular-expressions.html#cb63-14" tabindex="-1"></a><span class="fu">str_to_title</span>(sawyer_tokens<span class="sc">$</span>word)  <span class="co"># nearly the same - converts first letter, not char</span></span>
+<span id="cb63-15"><a href="appendix-regular-expressions.html#cb63-15" tabindex="-1"></a><span class="fu">str_to_title</span>(sawyer<span class="sc">$</span>text)</span>
+<span id="cb63-16"><a href="appendix-regular-expressions.html#cb63-16" tabindex="-1"></a></span>
+<span id="cb63-17"><a href="appendix-regular-expressions.html#cb63-17" tabindex="-1"></a><span class="co"># [] defines a set of chars</span></span>
+<span id="cb63-18"><a href="appendix-regular-expressions.html#cb63-18" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;^[qQ]&quot;</span>)  <span class="co"># starts with &quot;q&quot; or &quot;Q&quot;</span></span>
+<span id="cb63-19"><a href="appendix-regular-expressions.html#cb63-19" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;(^[</span><span class="sc">\\</span><span class="st">_])(.*-)&quot;</span>)  <span class="co"># starts with &quot;_&quot; and contains &quot;-&quot;</span></span>
+<span id="cb63-20"><a href="appendix-regular-expressions.html#cb63-20" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;dog.*tricks|tricks.*dog&quot;</span>)  <span class="co"># contains &quot;dog&quot; &amp; &quot;tricks&quot;</span></span></code></pre></div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tidy-text.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix-tidytext.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["data-sci.pdf", "data-sci.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
