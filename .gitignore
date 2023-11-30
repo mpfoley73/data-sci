@@ -7,3 +7,6 @@
 *.json
 *.png
 *.txt
+.Rapp.history
+.Rproj.user/
+.Renviron

@@ -1,4 +1,4 @@
-# Text Mining
+# Topic Modeling
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 library(tidyverse)
@@ -8,68 +8,9 @@ library(topicmodels)  # LDA
 library(stm)          # structure topic modeling
 ```
 
-I compiled these notes on text mining while learning from the following resources:
+It's a good idea to explore the data before modeling. One good way to do that is with the TF-IDF statistic. A term's frequency (TF) is its proportion of the words in the document. The inverse document frequency (IDF) is the log of the inverse ratio of documents in which the term appears. The product of TF and IDF (TF-IDF) indicates how important a word is to a document in a corpus. In our hotel review case study, the TF-IDF indicates how important a word is to the review. A term's TF-IDF increases with its frequency in the document (review) and decreases with the number of documents (reviews) in the corpus that contain it. Use `tidytext::bind_tf_idf()` to append the `tf`, `idf`, and `tf_idf` columns to your data frame.
 
-* Text Mining with R [@Silge2019]
-* [Introduction to Natural Language Processing in R](https://campus.datacamp.com/courses/introduction-to-natural-language-processing-in-r) (DataCamp)
-* [Topic Modeling in R](https://www.datacamp.com/courses/topic-modeling-in-r) (DataCamp)
-* [Introduction to Text Analysis in R"](https://www.datacamp.com/courses/introduction-to-text-analysis-in-r) (DataCamp)
-* [String Manipulation in R with stringr](https://www.datacamp.com/courses/string-manipulation-with-stringr-in-r) (DataCamp)
-* [Text Mining with Bag-of-Words in R](https://www.datacamp.com/courses/text-mining-with-bag-of-words-in-r) (DataCamp)
-* [Sentiment Analysis in R](https://www.datacamp.com/courses/sentiment-analysis-in-r) (DataCamp)
-* [Tidy Sentiment Analysis in R](https://www.datacamp.com/community/tutorials/sentiment-analysis-R) (DataCamp)
-* Julia Silge's [The game is afoot! Topic modeling of Sherlock Holmes stories](https://juliasilge.com/blog/sherlock-holmes-stm/)
-* Julia Silge's [Training, evaluating, and interpreting topic models](https://juliasilge.com/blog/evaluating-stm/)
-* [Toward understanding 17th century English culture: A structural
-topic model of Francis Bacon's ideas](https://www.econ.umd.edu/sites/www.econ.umd.edu/files/users/pmurrell/Bacon_Grajzl-MurrellJCE2019.pdf)
-
-Text mining is the process of distilling actionable insights from text, typically by identifying patterns with statistical pattern learning. Commong text mining tasks include topic modeling, sentiment analysis, classification modeling.
-
-Be aware that there are two main approaches to text mining.  *Semantic parsing* identifies words by type and order (sentences, phrases, nouns/verbs, proper nouns, etc.).  *Bag of words* simply treats words as attributes of the document. Bag of words is the simpler way to go, the only one I've encountered, and the one used throughout these notes.
-
-There are three packages with text mining frameworks: **tidytext**, **stm**, and **tm**. These notes mostly use **tidytext**, but I made an appendix with **tm** basics because **tidytext** uses its class structure (see `cast_dtm()`).
-
-As much as possible, I will build examples using the text from <u>The Adventures of Tom Sawyer</u>, available on https://gutenberg.org and accessible using the **gutenbergr** package. I added the chapter identifier and dropped the book id column. Each row is a line of text <=80 characters long.
-
-```{r warning=FALSE, message=FALSE}
-library(gutenbergr)
-sawyer_raw <- gutenberg_works(title == "The Adventures of Tom Sawyer") %>%
-  gutenberg_download()
-
-sawyer <- sawyer_raw %>%
-  tail(-455) %>%  # chapter 1 starts on line 456
-  mutate(
-    is_chap = str_detect(text, regex("^chapter [\\divxlc]", ignore_case = TRUE)),
-    chapter = cumsum(is_chap)
-  ) %>%
-  select(chapter, text)
-
-skimr::skim(sawyer)
-```
-
-## Topic Modeling
-
-Topic models are generative probabilistic models to quantitatively investigate a large text corpora. In generative probability models, the researcher postulates a model of a data-generating process, then uses the corpus data to find the most likely values for the parameters within the model.
-
-Topic models such as Latent Dirichlet Allocation (LDA) and Structural Topic Modeling (STM) treat documents within a corpora as a "bags of words" and identifies groups of words that tend to co-occur. These groups of words are the topics, formally conceptualized as probability distributions over vocabulary. While the topics are a product of model estimation, the topic name and interpretation are assigned by the researcher by examining the most important words for each topic and the particular texts featuring a topic most prominently. They are not produced to match words and documents to concrete issues specified in advance by the researcher as they would be in a supervised model.
-
-LDA and STM are generative models, meaning you define a data generating process for each document then use the document text to find the most likely values for the model parameters. The generative model defines document-topic and word-topic distributions generating documents. The sum of topic proportions (topical prevalence) in each document is one, and the sum of word probabilities in each topic (topical content) is one. STM differs from LDA in that it uses document metadata as covariates to explain prevalence and topical content. 
-
-Whether you use LDA or STM, you'll start by creating a bag-of-words representation of the data. In the chunk below, I [lemmatize](https://en.wikipedia.org/wiki/Lemmatisation) the tokens and remove my own list of stop words (e.g., "tom" is so common that I don't want to include it in anything.) 
-
-```{r}
-my_stop_words <- c("tom")
-
-sawyer_tokens <- sawyer %>%
-  unnest_tokens(output = "word", input = text, token = "words") %>%
-  mutate(word_stem = lemmatize_words(word)) %>%
-  anti_join(stop_words, by = "word") %>%
-  filter(!word %in% my_stop_words)
-```
-
-It's a good idea to explore the data before modeling. One good way to do that is with the TF-IDF statistic. A term's frequency (TF) is its proportion of the words in the document. The inverse document frequency (IDF) is the log of the inverse ratio of documents in which the term appears. The product of TF and IDF (TF-IDF) indicates how important a word is to a document in a collection or corpus. In this case, the TF-IDF indicates how important a word is to the chapter. A term's TF-IDF increases with its frequency in the document (chapter) and decreases with the number of documents (chapters) in the corpus that contain it. Use `tidytext::bind_tf_idf()` to append the `tf`, `idf`, and `tf_idf` columns to your data frame.
-
-```{r}
+```{r, eval=FALSE}
 sawywer_tf_idf <- sawyer_tokens %>%
   count(chapter, word_stem, sort = TRUE) %>%
   bind_tf_idf(word_stem, chapter, n) %>%
@@ -98,7 +39,7 @@ LDA treats each document as a mixture of topics (X% topic *A*, Y% topic *B*, etc
 
 Prepare the data by creating a document-term matrix. You will improve performance by removing infrequently appearing tokens with `tm::removeSparseTemrs()`. 
 
-```{r}
+```{r, eval=FALSE}
 sawyer_dtm <- sawyer_tokens %>%
   count(chapter, word_stem) %>%
   cast_dtm(document = chapter, term = word_stem, value = n) %>%
@@ -111,7 +52,7 @@ LDA is an optimization algorithm that performs a random search through the param
 
 Create a topic model with `topicmodels::LDA()`. Parameter `k` specifies the number of topics. In general, you only want as many topics as are clearly distinct and that you can easily communicate to others. You can use the perplexity statistic to help identify *k*. Perplexity is a measure of how well a probability model fits a new set of data. Look for the elbow in a scree plot. Here are models with 5 - 50 topics.
 
-```{r message=FALSE}
+```{r message=FALSE, eval=FALSE}
 set.seed(1012)
 train_ind <- sample(nrow(sawyer_dtm), floor(0.75*nrow(sawyer_dtm)))
 sawyer_train <- sawyer_dtm[train_ind, ]
@@ -133,13 +74,13 @@ data.frame(k = k, perplexity = perp) %>%
 
 There may be an elbow at *k* = 15 topics. Using STM, the optimal number of clusters was 30. That looks like an elbow to me too. Frankly, if my arm looked like that I would consult an orthopedic surgeon.
 
-```{r}
+```{r, eval=FALSE}
 sawyer_lda <- topicmodels::LDA(sawyer_dtm, k = 30, method = "Gibbs", control = list(seed = 1234))
 ```
 
 `LDA()` returns two outputs: a "beta" matrix of probabilities of terms belonging to topics; a "gamma" matrix of probabilities of topics contributing to documents. The tidytext package provides a `tidy()` method for extracting these matrices.
 
-```{r}
+```{r, eval=FALSE}
 sawyer_lda_beta <- tidy(sawyer_lda, matrix = "beta") 
 sawyer_lda_gamma <- tidy(sawyer_lda, matrix = "gamma", document_names = rownames(sawyer_dfm)) 
 
@@ -150,7 +91,7 @@ sawyer_lda_gamma <- tidy(sawyer_lda, matrix = "gamma", document_names = rownames
 
 I have 30 topics here, so it would be hard to show the top words per topic, but here are the first six topics. 
 
-```{r}
+```{r, eval=FALSE}
 sawyer_lda_beta %>%
   filter(topic <= 6) %>%
   group_by(topic) %>%
@@ -168,7 +109,7 @@ sawyer_lda_beta %>%
 
 You can use a Word cloud as an alternative to the bar chart. The advantage of the word cloud is that it creates an instantaneous impression rather than providing you the analytic means to construct the same conclusion. Here are word clouds for the first two topics.
 
-```{r results='hide'}
+```{r results='hide', eval=FALSE}
 colors6 <- RColorBrewer::brewer.pal(n = 6, name = "Set2")
 x <- map(c(1:2), ~ with(sawyer_lda_beta %>% filter(topic == .x), 
                         wordcloud::wordcloud(term, beta, max.words = 20,
@@ -177,7 +118,7 @@ x <- map(c(1:2), ~ with(sawyer_lda_beta %>% filter(topic == .x),
 
 And here are the most prevalent topics across chapters. The figure shows the average probability that the topic appears in the chapter for all chapters.
 
-```{r}
+```{r, eval=FALSE}
 top_terms <- sawyer_lda_beta %>%
   group_by(topic) %>%
   slice_max(order_by = beta, n = 7) %>%
@@ -208,7 +149,7 @@ sawyer_lda_gamma %>%
 
 Another way to look at the betas is to identify terms that had the greatest difference in beta between the first and second most probable topic. A good way to do this is with their log ratio, $log_2(\beta_2 / \beta_1)$. Filter for relatively common words having a beta greater than 1/100 in at least one topic.
   
-```{r}
+```{r, eval=FALSE}
 sawyer_lda_beta %>% 
   mutate(topic = paste0("topic", topic)) %>%
   group_by(term) %>%
@@ -233,7 +174,7 @@ sawyer_lda_beta %>%
 
 Prepare the data by creating a document-term matrix, just as you would with LDA, except this time use the `cast_dfm()` to create a document *feature* matrix for the **quanteda** package (the **stm** package uses **quanteda**). As LDA, you will improve performance by removing infrequently appearing tokens, this time with `tm::removeSparseTemrs()`. 
 
-```{r}
+```{r, eval=FALSE}
 sawyer_dfm <- sawyer_tokens %>%
   count(chapter, word_stem) %>%
   cast_dfm(document = chapter, term = word_stem, value = n) %>%
@@ -244,7 +185,7 @@ sawyer_dfm
 
 Create a topic model with `stm::stm()`. Parameter `K` specifies the number of topics. In LDA I used perplexity to determine the optimal number of clusters, in part because that is the only optimizing metric it `LDA()` offers. `stm` offers other metrics, including the held-out likelihood and coherence.  Here are models with 5 - 50 topics. This process can take a while, but the **furrr** package and `future_map()` function leverage parallel processing to make it quicker.
 
-```{r}
+```{r, eval=FALSE}
 library(furrr)
 plan(multiprocess)
 
@@ -281,7 +222,7 @@ k_result %>%
 ```
 The held-out likelihood is highest between 30 and 50, and the residuals are lowest at 20, so 30 might be the right number. Semantic coherence is maximized when the most probable words in a given topic frequently co-occur together. Coherence tends to fall as exclusivity increases. You'll want the topic size that balances the trade-off.
 
-```{r}
+```{r, eval=FALSE}
 k_result %>%
   select(K, exclusivity, semantic_coherence) %>%
   filter(K %in% c(20, 25, 30)) %>%
@@ -297,7 +238,7 @@ k_result %>%
 
 It looks like *k* = 30 may be optimal.
 
-```{r}
+```{r, eval=FALSE}
 sawyer_stm <- sawyer_stm_mdls %>%
   filter(K == 30) %>%
   pull(mdl) %>% 
@@ -306,14 +247,14 @@ sawyer_stm <- sawyer_stm_mdls %>%
 
 Like `LDA()`, `stm()` returns two outputs: a "beta" matrix of probabilities of terms belonging to topics; a "gamma" matrix of probabilities of topics contributing to documents. The tidytext package provides a `tidy()` method for extracting these matrices.
 
-```{r}
+```{r, eval=FALSE}
 sawyer_stm_beta <- tidy(sawyer_stm, matrix = "beta") 
 sawyer_stm_gamma <- tidy(sawyer_stm, matrix = "gamma", document_names = rownames(sawyer_dfm)) 
 ```
 
 I have 30 topics here, so it would be hard to show the top words per topic, but here are the first six topics. 
 
-```{r}
+```{r, eval=FALSE}
 sawyer_stm_beta %>%
   filter(topic <= 6) %>%
   group_by(topic) %>%
@@ -331,7 +272,7 @@ sawyer_stm_beta %>%
 
 Here is a Word cloud representation.
 
-```{r results='hide'}
+```{r results='hide', eval=FALSE}
 colors6 <- RColorBrewer::brewer.pal(n = 6, name = "Set2")
 x <- map(c(1:2), ~ with(sawyer_stm_beta %>% filter(topic == .x), 
                         wordcloud::wordcloud(term, beta, max.words = 20,
@@ -340,7 +281,7 @@ x <- map(c(1:2), ~ with(sawyer_stm_beta %>% filter(topic == .x),
 
 And here are the most prevalent topics across chapters.
 
-```{r}
+```{r, eval=FALSE}
 top_terms <- sawyer_stm_beta %>%
   group_by(topic) %>%
   slice_max(order_by = beta, n = 7) %>%
@@ -371,7 +312,7 @@ sawyer_stm_gamma %>%
 
 Another way to look at the betas is to identify terms that had the greatest difference in beta between the first and second most probable topic. A good way to do this is with their log ratio, $log_2(\beta_2 / \beta_1)$. Filter for relatively common words having a beta greater than 1/100 in at least one topic.
   
-```{r}
+```{r, eval=FALSE}
 sawyer_stm_beta %>% 
   mutate(topic = paste0("topic", topic)) %>%
   group_by(term) %>%
@@ -403,7 +344,7 @@ The tidytext package contains four sentiment lexicons, all based on unigrams.
 
 You can view the sentiment assignments with `get_sentiments(lexicon = c("afinn", "bing", nrc", "laughlin"))`
 
-```{r}
+```{r, eval=FALSE}
 x1 <- get_sentiments(lexicon = "nrc") %>%
   count(sentiment) %>%
   mutate(lexicon = "nrc")
@@ -429,7 +370,7 @@ ggplot(x, aes(x = fct_reorder(sentiment, n), y = n, fill = lexicon)) +
 
 Here is a sentiment analysis of sections of 80 lines of Jane Austin's books.  *(Small sections may not have enough words to get a good estimate of sentiment, and large sections can wash out the narrative structure.  80 lines seems about right.)*
 
-```{r}
+```{r, eval=FALSE}
 # austin_tidy %>%
 #   inner_join(get_sentiments("bing")) %>%
 #   count(book, index = linenumber %/% 80, sentiment) %>%
@@ -442,7 +383,7 @@ Here is a sentiment analysis of sections of 80 lines of Jane Austin's books.  *(
 
 Fair to say Jane Austin novels tend to have a happy ending?  The three sentiment lexicons provide different views of THE data.  Here is a comparison of the lexicons using one of Jane Austin's novels, "Pride and Prejudice".
 
-```{r}
+```{r, eval=FALSE}
 # # AFINN lexicon measures sentiment with a numeric score between -5 and 5.
 # afinn <- austin_tidy %>% 
 #   filter(book == "Pride & Prejudice") %>%
@@ -480,7 +421,7 @@ In this example, and in general, **NRC** sentiment tends to be high, **AFINN** s
 
 What are the top-10 positive and negative words?  Using the Bing lexicon, get the counts, then `group_by(sentiment)` and `top_n()` to the top 10 in each category.  
 
-```{r}
+```{r, eval=FALSE}
 # austin_tidy %>%
 #   filter(book == "Pride & Prejudice") %>%
 #   inner_join(get_sentiments("bing"), by = "word") %>% 
@@ -876,7 +817,7 @@ plot(caret::varImp(rfc), main="Variable Importance with Random Forest")
 ## Named Entity Recognition
 
 The **qdap** package provides parsing tools for preparing transcript data. 
-```{r warning=FALSE, message=FALSE}
+```{r warning=FALSE, message=FALSE, eval=FALSE}
 library(qdap)
 ```
 
@@ -1053,7 +994,7 @@ The **stringr** package is a simple wrapper around the more complete **stringi**
 
 Example of finding rows in data frame of book text with "chapter [#]". In `regex()`, "[]" means "any of", "\\d" is any number, and "v", "x", "l", and "c" are just roman numerals. Here is the word-count per chapter.
 
-```{r}
+```{r, eval=FALSE}
 austen <- janeaustenr::austen_books()
 chapter_regex <- stringr::regex("^chapter [\\divxlc]", ignore_case = TRUE)
 austen %>%
@@ -1270,28 +1211,3 @@ head(meta(tweets_dtm))
 ```
 
 
-
-# DROP
-These notes use the [Russian Troll Tweets](https://www.kaggle.com/vikasg/russian-troll-tweets) data set for examples of analyzing a single document of text with many entries, and the `janeaustenr::austen_books()` data set to analyze a corpus of documents.
-
-```{r}
-# library(janeaustenr)
-# library(gutenbergr)
-# library(scales)
-# library(wordcloud)
-# library(igraph)
-# library(ggraph)
-# library(widyr)
-# library(tm)
-# library(gridExtra)
-```
-
-
-```{r cache=TRUE, message=FALSE, warning=FALSE, eval=FALSE, include=FALSE}
-tweets_url <- "https://github.com/fivethirtyeight/russian-troll-tweets/raw/master/IRAhandle_tweets_1.csv"
-tweets <- read_csv(url(tweets_url)) %>%
-  head(n = 5000)
-glimpse(tweets)
-
-austen <- janeaustenr::austen_books()
-```

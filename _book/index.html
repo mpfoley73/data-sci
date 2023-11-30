@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
   <meta property="og:title" content="My Data Science Notes" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2020-09-04" />
+<meta name="date" content="2023-11-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,15 +31,16 @@
   
   
 
-<link rel="next" href="probability.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+<link rel="next" href="topic-modeling.html"/>
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -49,10 +49,80 @@
 
 
 
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -67,188 +137,30 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">My Data Science Notes</a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Intro</a></li>
-<li class="chapter" data-level="1" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>1</b> Probability</a><ul>
-<li class="chapter" data-level="1.1" data-path="probability.html"><a href="probability.html#principles"><i class="fa fa-check"></i><b>1.1</b> Principles</a></li>
-<li class="chapter" data-level="1.2" data-path="probability.html"><a href="probability.html#disc_dist"><i class="fa fa-check"></i><b>1.2</b> Discrete Distributions</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="probability.html"><a href="probability.html#bernoulli"><i class="fa fa-check"></i><b>1.2.1</b> Bernoulli</a></li>
-<li class="chapter" data-level="1.2.2" data-path="probability.html"><a href="probability.html#binomial"><i class="fa fa-check"></i><b>1.2.2</b> Binomial</a></li>
-<li class="chapter" data-level="1.2.3" data-path="probability.html"><a href="probability.html#poission"><i class="fa fa-check"></i><b>1.2.3</b> Poission</a></li>
-<li class="chapter" data-level="1.2.4" data-path="probability.html"><a href="probability.html#multinomial"><i class="fa fa-check"></i><b>1.2.4</b> Multinomial</a></li>
-<li class="chapter" data-level="1.2.5" data-path="probability.html"><a href="probability.html#negative-binomial"><i class="fa fa-check"></i><b>1.2.5</b> Negative-Binomial</a></li>
-<li class="chapter" data-level="1.2.6" data-path="probability.html"><a href="probability.html#geometric"><i class="fa fa-check"></i><b>1.2.6</b> Geometric</a></li>
-<li class="chapter" data-level="1.2.7" data-path="probability.html"><a href="probability.html#hypergeometric"><i class="fa fa-check"></i><b>1.2.7</b> Hypergeometric</a></li>
-<li class="chapter" data-level="1.2.8" data-path="probability.html"><a href="probability.html#gamma"><i class="fa fa-check"></i><b>1.2.8</b> Gamma</a></li>
+<li class="chapter" data-level="1" data-path="topic-modeling.html"><a href="topic-modeling.html"><i class="fa fa-check"></i><b>1</b> Topic Modeling</a>
+<ul>
+<li class="chapter" data-level="1.0.1" data-path="topic-modeling.html"><a href="topic-modeling.html#lda"><i class="fa fa-check"></i><b>1.0.1</b> LDA</a></li>
+<li class="chapter" data-level="1.0.2" data-path="topic-modeling.html"><a href="topic-modeling.html#stm"><i class="fa fa-check"></i><b>1.0.2</b> STM</a></li>
+<li class="chapter" data-level="1.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>1.1</b> Sentiment Analysis</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#n-grams"><i class="fa fa-check"></i><b>1.1.1</b> N-Grams</a></li>
+<li class="chapter" data-level="1.1.2" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#converting-to-and-from-non-tidy-formats"><i class="fa fa-check"></i><b>1.1.2</b> Converting to and from non-tidy formats</a></li>
+<li class="chapter" data-level="1.1.3" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#example"><i class="fa fa-check"></i><b>1.1.3</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="probability.html"><a href="probability.html#cont_dist"><i class="fa fa-check"></i><b>1.3</b> Continuous Distributions</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="probability.html"><a href="probability.html#normal"><i class="fa fa-check"></i><b>1.3.1</b> Normal</a></li>
-<li class="chapter" data-level="1.3.2" data-path="probability.html"><a href="probability.html#chi-squared"><i class="fa fa-check"></i><b>1.3.2</b> Chi-Squared</a></li>
+<li class="chapter" data-level="1.2" data-path="text-classification-modeling.html"><a href="text-classification-modeling.html"><i class="fa fa-check"></i><b>1.2</b> Text Classification Modeling</a></li>
+<li class="chapter" data-level="1.3" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i><b>1.3</b> Named Entity Recognition</a></li>
+<li class="chapter" data-level="1.4" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>1.4</b> Tidy Text</a></li>
+<li class="chapter" data-level="1.5" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html"><i class="fa fa-check"></i><b>1.5</b> Appendix: Regular Expressions</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#base-r"><i class="fa fa-check"></i><b>1.5.1</b> Base R</a></li>
+<li class="chapter" data-level="1.5.2" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#stringr"><i class="fa fa-check"></i><b>1.5.2</b> stringr</a></li>
+<li class="chapter" data-level="1.5.3" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#regular-expressions"><i class="fa fa-check"></i><b>1.5.3</b> Regular Expressions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="probability.html"><a href="probability.html#join-distributions"><i class="fa fa-check"></i><b>1.4</b> Join Distributions</a></li>
-<li class="chapter" data-level="1.5" data-path="probability.html"><a href="probability.html#likelihood"><i class="fa fa-check"></i><b>1.5</b> Likelihood</a></li>
+<li class="chapter" data-level="1.6" data-path="appendix-tidytext.html"><a href="appendix-tidytext.html"><i class="fa fa-check"></i><b>1.6</b> Appendix: tidytext</a></li>
+<li class="chapter" data-level="1.7" data-path="appendix-tm.html"><a href="appendix-tm.html"><i class="fa fa-check"></i><b>1.7</b> Appendix: tm</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="contingency-tables.html"><a href="contingency-tables.html"><i class="fa fa-check"></i><b>2</b> Contingency Tables</a><ul>
-<li class="chapter" data-level="2.1" data-path="contingency-tables.html"><a href="contingency-tables.html#one-way-tables"><i class="fa fa-check"></i><b>2.1</b> One-Way Tables</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="contingency-tables.html"><a href="contingency-tables.html#one-proportion-z-test"><i class="fa fa-check"></i><b>2.1.1</b> One-Proportion Z-Test</a></li>
-<li class="chapter" data-level="2.1.2" data-path="contingency-tables.html"><a href="contingency-tables.html#exact-binomial-test"><i class="fa fa-check"></i><b>2.1.2</b> Exact Binomial Test</a></li>
-<li class="chapter" data-level="2.1.3" data-path="contingency-tables.html"><a href="contingency-tables.html#exact-tests"><i class="fa fa-check"></i><b>2.1.3</b> Exact Tests</a></li>
-<li class="chapter" data-level="2.1.4" data-path="contingency-tables.html"><a href="contingency-tables.html#chi-squared-goodness-of-fit-test"><i class="fa fa-check"></i><b>2.1.4</b> Chi-Squared Goodness-of-Fit Test</a></li>
-<li class="chapter" data-level="2.1.5" data-path="contingency-tables.html"><a href="contingency-tables.html#g-test"><i class="fa fa-check"></i><b>2.1.5</b> G-Test</a></li>
-<li class="chapter" data-level="2.1.6" data-path="contingency-tables.html"><a href="contingency-tables.html#fisher-exact-test"><i class="fa fa-check"></i><b>2.1.6</b> Fisher Exact Test</a></li>
-<li class="chapter" data-level="2.1.7" data-path="contingency-tables.html"><a href="contingency-tables.html#special-case-proportion-test-and-exact-binomial-test"><i class="fa fa-check"></i><b>2.1.7</b> Special Case: Proportion Test and Exact Binomial Test</a></li>
-</ul></li>
-<li class="chapter" data-level="2.2" data-path="contingency-tables.html"><a href="contingency-tables.html#two-way-tables"><i class="fa fa-check"></i><b>2.2</b> Two-Way Tables</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="contingency-tables.html"><a href="contingency-tables.html#proportion-difference-test"><i class="fa fa-check"></i><b>2.2.1</b> Proportion Difference Test</a></li>
-<li class="chapter" data-level="2.2.2" data-path="contingency-tables.html"><a href="contingency-tables.html#chi-square-independence-test"><i class="fa fa-check"></i><b>2.2.2</b> Chi-Square Independence Test</a></li>
-<li class="chapter" data-level="2.2.3" data-path="contingency-tables.html"><a href="contingency-tables.html#residuals-analysis"><i class="fa fa-check"></i><b>2.2.3</b> Residuals Analysis</a></li>
-<li class="chapter" data-level="2.2.4" data-path="contingency-tables.html"><a href="contingency-tables.html#difference-in-proportions"><i class="fa fa-check"></i><b>2.2.4</b> Difference in Proportions</a></li>
-<li class="chapter" data-level="2.2.5" data-path="contingency-tables.html"><a href="contingency-tables.html#relative-risk"><i class="fa fa-check"></i><b>2.2.5</b> Relative Risk</a></li>
-<li class="chapter" data-level="2.2.6" data-path="contingency-tables.html"><a href="contingency-tables.html#odds-ratio"><i class="fa fa-check"></i><b>2.2.6</b> Odds Ratio</a></li>
-<li class="chapter" data-level="2.2.7" data-path="contingency-tables.html"><a href="contingency-tables.html#partitioning-chi-square"><i class="fa fa-check"></i><b>2.2.7</b> Partitioning Chi-Square</a></li>
-<li class="chapter" data-level="2.2.8" data-path="contingency-tables.html"><a href="contingency-tables.html#correlation"><i class="fa fa-check"></i><b>2.2.8</b> Correlation</a></li>
-</ul></li>
-<li class="chapter" data-level="2.3" data-path="contingency-tables.html"><a href="contingency-tables.html#k-way-tables"><i class="fa fa-check"></i><b>2.3</b> K-Way Tables</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="contingency-tables.html"><a href="contingency-tables.html#odds-ratio-1"><i class="fa fa-check"></i><b>2.3.1</b> Odds Ratio</a></li>
-<li class="chapter" data-level="2.3.2" data-path="contingency-tables.html"><a href="contingency-tables.html#chi-square-independence-test-1"><i class="fa fa-check"></i><b>2.3.2</b> Chi-Square Independence Test</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html"><i class="fa fa-check"></i><b>3</b> ANOVA, MANOVA, ANCOVA</a><ul>
-<li class="chapter" data-level="3.1" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html#background"><i class="fa fa-check"></i><b>3.1</b> Background</a></li>
-<li class="chapter" data-level="3.2" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html#example"><i class="fa fa-check"></i><b>3.2</b> Example</a></li>
-<li class="chapter" data-level="3.3" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html#handling-non-constant-variance"><i class="fa fa-check"></i><b>3.3</b> Handling Non-Constant Variance</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html#example-1"><i class="fa fa-check"></i><b>3.3.1</b> Example</a></li>
-<li class="chapter" data-level="3.3.2" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html#multiple-variance-comparison-f-test"><i class="fa fa-check"></i><b>3.3.2</b> Multiple Variance Comparison F Test</a></li>
-<li class="chapter" data-level="3.3.3" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html#example-2"><i class="fa fa-check"></i><b>3.3.3</b> Example</a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html#references"><i class="fa fa-check"></i><b>3.4</b> References</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="continuous-analysis.html"><a href="continuous-analysis.html"><i class="fa fa-check"></i><b>4</b> Continuous Variable Analysis</a><ul>
-<li class="chapter" data-level="4.1" data-path="contingency-tables.html"><a href="contingency-tables.html#correlation"><i class="fa fa-check"></i><b>4.1</b> Correlation</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html"><i class="fa fa-check"></i>PART 2: Supervised Machine Learning</a><ul>
-<li class="chapter" data-level="4.2" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#linear-regression-model"><i class="fa fa-check"></i><b>4.2</b> Linear Regression Model</a></li>
-<li class="chapter" data-level="4.3" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#parameter-estimation"><i class="fa fa-check"></i><b>4.3</b> Parameter Estimation</a></li>
-<li class="chapter" data-level="4.4" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#model-assumptions"><i class="fa fa-check"></i><b>4.4</b> Model Assumptions</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#linearity"><i class="fa fa-check"></i><b>4.4.1</b> Linearity</a></li>
-<li class="chapter" data-level="4.4.2" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#multicollinearity"><i class="fa fa-check"></i><b>4.4.2</b> Multicollinearity</a></li>
-<li class="chapter" data-level="4.4.3" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#normality"><i class="fa fa-check"></i><b>4.4.3</b> Normality</a></li>
-<li class="chapter" data-level="4.4.4" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#equal-variances"><i class="fa fa-check"></i><b>4.4.4</b> Equal Variances</a></li>
-</ul></li>
-<li class="chapter" data-level="4.5" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#prediction"><i class="fa fa-check"></i><b>4.5</b> Prediction</a></li>
-<li class="chapter" data-level="4.6" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#inference"><i class="fa fa-check"></i><b>4.6</b> Inference</a><ul>
-<li class="chapter" data-level="4.6.1" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#t-test"><i class="fa fa-check"></i><b>4.6.1</b> <em>t</em>-Test</a></li>
-<li class="chapter" data-level="4.6.2" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#f-test"><i class="fa fa-check"></i><b>4.6.2</b> <em>F</em>-Test</a></li>
-</ul></li>
-<li class="chapter" data-level="4.7" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#interpretation"><i class="fa fa-check"></i><b>4.7</b> Interpretation</a></li>
-<li class="chapter" data-level="4.8" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#model-validation"><i class="fa fa-check"></i><b>4.8</b> Model Validation</a><ul>
-<li class="chapter" data-level="4.8.1" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#accuracy-metrics"><i class="fa fa-check"></i><b>4.8.1</b> Accuracy Metrics</a></li>
-<li class="chapter" data-level="4.8.2" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#cross-validation"><i class="fa fa-check"></i><b>4.8.2</b> Cross-Validation</a></li>
-<li class="chapter" data-level="4.8.3" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#gain-curve"><i class="fa fa-check"></i><b>4.8.3</b> Gain Curve</a></li>
-</ul></li>
-<li class="chapter" data-level="4.9" data-path="part-2-supervised-machine-learning.html"><a href="part-2-supervised-machine-learning.html#ols-reference"><i class="fa fa-check"></i><b>4.9</b> OLS Reference</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>5</b> Generalized Linear Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#logistic-regression"><i class="fa fa-check"></i><b>5.1</b> Logistic Regression</a></li>
-<li class="chapter" data-level="5.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#multinomial-logistic-regression"><i class="fa fa-check"></i><b>5.2</b> Multinomial Logistic Regression</a></li>
-<li class="chapter" data-level="5.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#ordinal-logistic-regression"><i class="fa fa-check"></i><b>5.3</b> Ordinal Logistic Regression</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#assumptions"><i class="fa fa-check"></i><b>5.3.1</b> Assumptions</a></li>
-<li class="chapter" data-level="5.3.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#modeling"><i class="fa fa-check"></i><b>5.3.2</b> Modeling</a></li>
-<li class="chapter" data-level="5.3.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#case-study"><i class="fa fa-check"></i><b>5.3.3</b> Case Study</a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>5.4</b> Poisson Regression</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html"><i class="fa fa-check"></i><b>6</b> Multivariate Statistical Analysis</a><ul>
-<li class="chapter" data-level="6.1" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html#background"><i class="fa fa-check"></i><b>6.1</b> Background</a></li>
-<li class="chapter" data-level="6.2" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html#manova"><i class="fa fa-check"></i><b>6.2</b> MANOVA</a></li>
-<li class="chapter" data-level="6.3" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html#repeated-measures"><i class="fa fa-check"></i><b>6.3</b> Repeated Measures</a></li>
-<li class="chapter" data-level="6.4" data-path="multivariate-statistical-analysis.html"><a href="multivariate-statistical-analysis.html#lda"><i class="fa fa-check"></i><b>6.4</b> LDA</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="regularization.html"><a href="regularization.html"><i class="fa fa-check"></i><b>7</b> Regularization</a><ul>
-<li class="chapter" data-level="7.1" data-path="regularization.html"><a href="regularization.html#ridge"><i class="fa fa-check"></i><b>7.1</b> Ridge</a></li>
-<li class="chapter" data-level="7.2" data-path="regularization.html"><a href="regularization.html#lasso"><i class="fa fa-check"></i><b>7.2</b> Lasso</a></li>
-<li class="chapter" data-level="7.3" data-path="regularization.html"><a href="regularization.html#elastic-net"><i class="fa fa-check"></i><b>7.3</b> Elastic Net</a></li>
-<li class="chapter" data-level="" data-path="regularization.html"><a href="regularization.html#model-summary"><i class="fa fa-check"></i>Model Summary</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="decision-trees.html"><a href="decision-trees.html"><i class="fa fa-check"></i><b>8</b> Decision Trees</a><ul>
-<li class="chapter" data-level="8.1" data-path="decision-trees.html"><a href="decision-trees.html#classification-tree"><i class="fa fa-check"></i><b>8.1</b> Classification Tree</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="decision-trees.html"><a href="decision-trees.html#measuring-performance"><i class="fa fa-check"></i><b>8.1.1</b> Measuring Performance</a></li>
-<li class="chapter" data-level="8.1.2" data-path="decision-trees.html"><a href="decision-trees.html#training-with-caret"><i class="fa fa-check"></i><b>8.1.2</b> Training with Caret</a></li>
-</ul></li>
-<li class="chapter" data-level="8.2" data-path="decision-trees.html"><a href="decision-trees.html#regression-tree"><i class="fa fa-check"></i><b>8.2</b> Regression Tree</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="decision-trees.html"><a href="decision-trees.html#training-with-caret-1"><i class="fa fa-check"></i><b>8.2.1</b> Training with Caret</a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="decision-trees.html"><a href="decision-trees.html#bagged-trees"><i class="fa fa-check"></i><b>8.3</b> Bagged Trees</a><ul>
-<li class="chapter" data-level="8.3.1" data-path="decision-trees.html"><a href="decision-trees.html#bagged-classification-tree"><i class="fa fa-check"></i><b>8.3.1</b> Bagged Classification Tree</a></li>
-<li class="chapter" data-level="8.3.2" data-path="decision-trees.html"><a href="decision-trees.html#bagging-regression-tree"><i class="fa fa-check"></i><b>8.3.2</b> Bagging Regression Tree</a></li>
-</ul></li>
-<li class="chapter" data-level="8.4" data-path="decision-trees.html"><a href="decision-trees.html#random-forests"><i class="fa fa-check"></i><b>8.4</b> Random Forests</a></li>
-<li class="chapter" data-level="8.5" data-path="decision-trees.html"><a href="decision-trees.html#gradient-boosting"><i class="fa fa-check"></i><b>8.5</b> Gradient Boosting</a></li>
-<li class="chapter" data-level="8.6" data-path="decision-trees.html"><a href="decision-trees.html#summary"><i class="fa fa-check"></i><b>8.6</b> Summary</a><ul>
-<li class="chapter" data-level="8.6.1" data-path="decision-trees.html"><a href="decision-trees.html#classification-trees"><i class="fa fa-check"></i><b>8.6.1</b> Classification Trees</a></li>
-<li class="chapter" data-level="8.6.2" data-path="decision-trees.html"><a href="decision-trees.html#regression-trees"><i class="fa fa-check"></i><b>8.6.2</b> Regression Trees</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="non-linear-models.html"><a href="non-linear-models.html"><i class="fa fa-check"></i><b>9</b> Non-linear Models</a><ul>
-<li class="chapter" data-level="9.1" data-path="non-linear-models.html"><a href="non-linear-models.html#splines"><i class="fa fa-check"></i><b>9.1</b> Splines</a></li>
-<li class="chapter" data-level="9.2" data-path="non-linear-models.html"><a href="non-linear-models.html#mars"><i class="fa fa-check"></i><b>9.2</b> MARS</a></li>
-<li class="chapter" data-level="9.3" data-path="non-linear-models.html"><a href="non-linear-models.html#gam"><i class="fa fa-check"></i><b>9.3</b> GAM</a></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="support-vector-machines.html"><a href="support-vector-machines.html"><i class="fa fa-check"></i><b>10</b> Support Vector Machines</a><ul>
-<li class="chapter" data-level="10.1" data-path="support-vector-machines.html"><a href="support-vector-machines.html#maximal-margin-classifier"><i class="fa fa-check"></i><b>10.1</b> Maximal Margin Classifier</a></li>
-<li class="chapter" data-level="10.2" data-path="support-vector-machines.html"><a href="support-vector-machines.html#support-vector-classifier"><i class="fa fa-check"></i><b>10.2</b> Support Vector Classifier</a></li>
-<li class="chapter" data-level="10.3" data-path="support-vector-machines.html"><a href="support-vector-machines.html#support-vector-machines-1"><i class="fa fa-check"></i><b>10.3</b> Support Vector Machines</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="part-3-unupervised-machine-learning.html"><a href="part-3-unupervised-machine-learning.html"><i class="fa fa-check"></i>PART 3: Unupervised Machine Learning</a><ul>
-<li class="chapter" data-level="10.4" data-path="part-3-unupervised-machine-learning.html"><a href="part-3-unupervised-machine-learning.html#exploratory-factor-analysis"><i class="fa fa-check"></i><b>10.4</b> Exploratory Factor Analysis</a></li>
-<li class="chapter" data-level="10.5" data-path="part-3-unupervised-machine-learning.html"><a href="part-3-unupervised-machine-learning.html#confirmatory-factor-analysis"><i class="fa fa-check"></i><b>10.5</b> Confirmatory Factor Analysis</a></li>
-<li class="chapter" data-level="10.6" data-path="part-3-unupervised-machine-learning.html"><a href="part-3-unupervised-machine-learning.html#pca"><i class="fa fa-check"></i><b>10.6</b> PCA</a></li>
-<li class="chapter" data-level="10.7" data-path="part-3-unupervised-machine-learning.html"><a href="part-3-unupervised-machine-learning.html#t-sne"><i class="fa fa-check"></i><b>10.7</b> t-SNE</a></li>
-<li class="chapter" data-level="10.8" data-path="part-3-unupervised-machine-learning.html"><a href="part-3-unupervised-machine-learning.html#svd"><i class="fa fa-check"></i><b>10.8</b> SVD</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="cluster-analysis.html"><a href="cluster-analysis.html"><i class="fa fa-check"></i><b>11</b> Cluster Analysis</a><ul>
-<li class="chapter" data-level="11.1" data-path="cluster-analysis.html"><a href="cluster-analysis.html#k-means"><i class="fa fa-check"></i><b>11.1</b> K-Means</a></li>
-<li class="chapter" data-level="11.2" data-path="cluster-analysis.html"><a href="cluster-analysis.html#hca"><i class="fa fa-check"></i><b>11.2</b> HCA</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="text-mining.html"><a href="text-mining.html"><i class="fa fa-check"></i><b>12</b> Text Mining</a><ul>
-<li class="chapter" data-level="12.1" data-path="text-mining.html"><a href="text-mining.html#tidy-text"><i class="fa fa-check"></i><b>12.1</b> Tidy Text</a></li>
-<li class="chapter" data-level="12.2" data-path="text-mining.html"><a href="text-mining.html#bag-of-words"><i class="fa fa-check"></i><b>12.2</b> Bag of Words</a></li>
-<li class="chapter" data-level="12.3" data-path="text-mining.html"><a href="text-mining.html#sentiment-analysis"><i class="fa fa-check"></i><b>12.3</b> Sentiment Analysis</a><ul>
-<li class="chapter" data-level="12.3.1" data-path="text-mining.html"><a href="text-mining.html#n-grams"><i class="fa fa-check"></i><b>12.3.1</b> N-Grams</a></li>
-<li class="chapter" data-level="12.3.2" data-path="text-mining.html"><a href="text-mining.html#converting-to-and-from-non-tidy-formats"><i class="fa fa-check"></i><b>12.3.2</b> Converting to and from non-tidy formats</a></li>
-<li class="chapter" data-level="12.3.3" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html#example"><i class="fa fa-check"></i><b>12.3.3</b> Example</a></li>
-</ul></li>
-<li class="chapter" data-level="12.4" data-path="text-mining.html"><a href="text-mining.html#topic-modeling"><i class="fa fa-check"></i><b>12.4</b> Topic Modeling</a></li>
-<li class="chapter" data-level="12.5" data-path="text-mining.html"><a href="text-mining.html#appendix-string-manipulation"><i class="fa fa-check"></i><b>12.5</b> Appendix: String Manipulation</a><ul>
-<li class="chapter" data-level="12.5.1" data-path="text-mining.html"><a href="text-mining.html#stringr-package"><i class="fa fa-check"></i><b>12.5.1</b> stringr package</a></li>
-<li class="chapter" data-level="12.5.2" data-path="text-mining.html"><a href="text-mining.html#regular-expressions"><i class="fa fa-check"></i><b>12.5.2</b> Regular Expressions</a></li>
-</ul></li>
-<li class="chapter" data-level="12.6" data-path="text-mining.html"><a href="text-mining.html#reference-links"><i class="fa fa-check"></i><b>12.6</b> Reference Links</a></li>
-</ul></li>
-<li class="chapter" data-level="13" data-path="survival-analysis.html"><a href="survival-analysis.html"><i class="fa fa-check"></i><b>13</b> Survival Analysis</a><ul>
-<li class="chapter" data-level="13.1" data-path="survival-analysis.html"><a href="survival-analysis.html#basic-concepts"><i class="fa fa-check"></i><b>13.1</b> Basic Concepts</a></li>
-<li class="chapter" data-level="13.2" data-path="survival-analysis.html"><a href="survival-analysis.html#survival-curve-estimation"><i class="fa fa-check"></i><b>13.2</b> Survival Curve Estimation</a><ul>
-<li class="chapter" data-level="13.2.1" data-path="survival-analysis.html"><a href="survival-analysis.html#kaplan-meier"><i class="fa fa-check"></i><b>13.2.1</b> Kaplan-Meier</a></li>
-<li class="chapter" data-level="13.2.2" data-path="survival-analysis.html"><a href="survival-analysis.html#weibull"><i class="fa fa-check"></i><b>13.2.2</b> Weibull</a></li>
-<li class="chapter" data-level="13.2.3" data-path="survival-analysis.html"><a href="survival-analysis.html#cox"><i class="fa fa-check"></i><b>13.2.3</b> Cox</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html#publishing-to-bookdown"><i class="fa fa-check"></i>Publishing to BookDown</a></li>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html#shiny-apps"><i class="fa fa-check"></i>Shiny Apps</a></li>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html#packages"><i class="fa fa-check"></i>Packages</a><ul>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html#create-a-package"><i class="fa fa-check"></i>Create a package</a></li>
-<li class="chapter" data-level="13.2.4" data-path="appendix.html"><a href="appendix.html#document-functions-with-roxygen"><i class="fa fa-check"></i><b>13.2.4</b> Document Functions with roxygen</a></li>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html#create-data"><i class="fa fa-check"></i>Create Data</a></li>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html#create-vignette"><i class="fa fa-check"></i>Create Vignette</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="anova-manova-ancova.html"><a href="anova-manova-ancova.html#references"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
 
       </nav>
@@ -269,10 +181,10 @@
 <div id="header">
 <h1 class="title">My Data Science Notes</h1>
 <p class="author"><em>Michael Foley</em></p>
-<p class="date"><em>2020-09-04</em></p>
+<p class="date"><em>2023-11-30</em></p>
 </div>
-<div id="intro" class="section level1 unnumbered">
-<h1>Intro</h1>
+<div id="intro" class="section level1 unnumbered hasAnchor">
+<h1>Intro<a href="index.html#intro" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>These notes are pulled from various classes, tutorials, books, etc. and are intended for my own consumption. If you are finding this on the internet, I hope it is useful to you, but you should know that I am just a student and there’s a good chance whatever you’re reading here is mistaken.</p>
 
 </div>
@@ -282,18 +194,17 @@
         </div>
       </div>
 
-<a href="probability.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="topic-modeling.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -305,6 +216,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -325,13 +237,35 @@ gitbook.start({
 "text": null
 },
 "download": ["data-sci.pdf", "data-sci.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
-"collapse": "subsection"
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "static"
 }
 });
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
