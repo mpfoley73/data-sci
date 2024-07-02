@@ -23,7 +23,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2023-11-30" />
+<meta name="date" content="2023-12-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -140,8 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Intro</a></li>
 <li class="chapter" data-level="1" data-path="topic-modeling.html"><a href="topic-modeling.html"><i class="fa fa-check"></i><b>1</b> Topic Modeling</a>
 <ul>
-<li class="chapter" data-level="1.0.1" data-path="topic-modeling.html"><a href="topic-modeling.html#lda"><i class="fa fa-check"></i><b>1.0.1</b> LDA</a></li>
-<li class="chapter" data-level="1.0.2" data-path="topic-modeling.html"><a href="topic-modeling.html#stm"><i class="fa fa-check"></i><b>1.0.2</b> STM</a></li>
+<li class="chapter" data-level="1.0.1" data-path="topic-modeling.html"><a href="topic-modeling.html#stm"><i class="fa fa-check"></i><b>1.0.1</b> STM</a></li>
 <li class="chapter" data-level="1.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i><b>1.1</b> Sentiment Analysis</a>
 <ul>
 <li class="chapter" data-level="1.1.1" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html#n-grams"><i class="fa fa-check"></i><b>1.1.1</b> N-Grams</a></li>
@@ -151,14 +150,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="text-classification-modeling.html"><a href="text-classification-modeling.html"><i class="fa fa-check"></i><b>1.2</b> Text Classification Modeling</a></li>
 <li class="chapter" data-level="1.3" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i><b>1.3</b> Named Entity Recognition</a></li>
 <li class="chapter" data-level="1.4" data-path="tidy-text.html"><a href="tidy-text.html"><i class="fa fa-check"></i><b>1.4</b> Tidy Text</a></li>
-<li class="chapter" data-level="1.5" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html"><i class="fa fa-check"></i><b>1.5</b> Appendix: Regular Expressions</a>
-<ul>
-<li class="chapter" data-level="1.5.1" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#base-r"><i class="fa fa-check"></i><b>1.5.1</b> Base R</a></li>
-<li class="chapter" data-level="1.5.2" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#stringr"><i class="fa fa-check"></i><b>1.5.2</b> stringr</a></li>
-<li class="chapter" data-level="1.5.3" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#regular-expressions"><i class="fa fa-check"></i><b>1.5.3</b> Regular Expressions</a></li>
-</ul></li>
-<li class="chapter" data-level="1.6" data-path="appendix-tidytext.html"><a href="appendix-tidytext.html"><i class="fa fa-check"></i><b>1.6</b> Appendix: tidytext</a></li>
-<li class="chapter" data-level="1.7" data-path="appendix-tm.html"><a href="appendix-tm.html"><i class="fa fa-check"></i><b>1.7</b> Appendix: tm</a></li>
+<li class="chapter" data-level="1.5" data-path="appendix-tm.html"><a href="appendix-tm.html"><i class="fa fa-check"></i><b>1.5</b> Appendix: tm</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
@@ -181,7 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="named-entity-recognition" class="section level2 hasAnchor" number="1.3">
 <h2><span class="header-section-number">1.3</span> Named Entity Recognition<a href="named-entity-recognition.html#named-entity-recognition" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <strong>qdap</strong> package provides parsing tools for preparing transcript data.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="named-entity-recognition.html#cb34-1" tabindex="-1"></a><span class="fu">library</span>(qdap)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="named-entity-recognition.html#cb25-1" tabindex="-1"></a><span class="fu">library</span>(qdap)</span></code></pre></div>
 <p>For example, <code>freq_terms()</code> parses text and counts the terms.</p>
 <p>You can also plot the terms.</p>
 <p>There are two kinds of the corpus data types, the permanent corpus, <strong>PCorpus</strong>, and the volatile corpus, <strong>VCorpus</strong>. The volatile corpus is held in RAM rather than saved to disk. Create a volatile corpus with <code>tm::vCorpous()</code>. vCorpous() takes either a text source created with <code>tm::VectorSource()</code> or a dataframe source created with <code>Dataframe Source()</code> where the input dataframe has cols <code>doc_id</code>, <code>text_id</code> and zero or more metadata columns.</p>

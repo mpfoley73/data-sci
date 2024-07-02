@@ -1,198 +1,52 @@
-# Topic Modeling
+# Git
 
-```{r message=FALSE, warning=FALSE, echo=FALSE}
+```{r include=FALSE}
 library(tidyverse)
-library(tidytext)
-library(textstem)     # lemmatize words
-library(topicmodels)  # LDA
-library(stm)          # structure topic modeling
 ```
 
-It's a good idea to explore the data before modeling. One good way to do that is with the TF-IDF statistic. A term's frequency (TF) is its proportion of the words in the document. The inverse document frequency (IDF) is the log of the inverse ratio of documents in which the term appears. The product of TF and IDF (TF-IDF) indicates how important a word is to a document in a corpus. In our hotel review case study, the TF-IDF indicates how important a word is to the review. A term's TF-IDF increases with its frequency in the document (review) and decreases with the number of documents (reviews) in the corpus that contain it. Use `tidytext::bind_tf_idf()` to append the `tf`, `idf`, and `tf_idf` columns to your data frame.
+## Intro
+
+Install Git from [www.git-scm.com](https://www.git-scm.com/). After installing, open Git bash.
+
+> git -- version
+
+Navigate to your project folder.
+
+> cd ~/OneDrive/Documents/GitHub/nlp
+> ls
+
+As you work, you may add, edit, and delete files. When you reach a milestone, add the files to a Staging Environment. Staged files are ready to be committed to the repository. 
+
+:::rmdnote
+In GitHub, you stage a file by committing it to your branch.
+:::
+
+> git status
+> git add [<filename>, --all]
+
+Once the file(s) are staged, you can commit them to the branch. 
+
+> commit -m "Added new files."
+
+You can commit all fies without staging with -a
+
+> commit -a -m "Added new files."
+
+See a history of commits.
+
+> git log
+
+Need help?
+
+> git <command> -help
+> git help --all
+
+Create a branch
+> git branch chapter-on-git
+
+Create a topic model with `stm::stm()`. Parameter `K` specifies the number of topics.   Here are models with 5 - 50 topics. This process can take a while, but the **furrr** package and `future_map()` function leverage parallel processing to make it quicker.
 
 ```{r, eval=FALSE}
-sawywer_tf_idf <- sawyer_tokens %>%
-  count(chapter, word_stem, sort = TRUE) %>%
-  bind_tf_idf(word_stem, chapter, n) %>%
-  group_by(chapter) %>%
-  slice_max(order_by = tf_idf, n = 10) %>%
-  ungroup()
-
-sawywer_tf_idf %>%
-  filter(chapter <= 6) %>%
-  mutate(word_stem = reorder_within(word_stem, by = tf_idf, within = chapter)) %>%
-  ggplot(aes(word_stem, tf_idf, fill = as.factor(chapter))) +
-  geom_col(alpha = 0.8, show.legend = FALSE) +
-  scale_fill_manual(values = RColorBrewer::brewer.pal(n = 6, name = "Set2"), name = "Topic") +
-  facet_wrap(~ chapter, scales = "free", ncol = 3) +
-  scale_x_reordered() +
-  coord_flip() +
-  theme(strip.text=element_text(size=11)) +
-  labs(x = NULL, y = "tf-idf",
-       title = "Highest tf-idf words in The Adventures of Tom Sawyer (ch 1-6)",
-       subtitle = "Individual chapters focus on different characters and narrative elements")
-```
-
-### LDA 
-
-LDA treats each document as a mixture of topics (X% topic *A*, Y% topic *B*, etc.), and each topic as a mixture of word probabilities (x% word *a*, y% word *b*, etc.) for all words in the corpus. LDA is implemented in the **topicmodels** package.
-
-Prepare the data by creating a document-term matrix. You will improve performance by removing infrequently appearing tokens with `tm::removeSparseTemrs()`. 
-
-```{r, eval=FALSE}
-sawyer_dtm <- sawyer_tokens %>%
-  count(chapter, word_stem) %>%
-  cast_dtm(document = chapter, term = word_stem, value = n) %>%
-  tm::removeSparseTerms(sparse = 0.9)
-
-sawyer_dtm
-```
- 
-LDA is an optimization algorithm that performs a random search through the parameter space to find the model with the largest log-likelihood. There are multiple search algorithms, but the preferred one appears to be Gibbs sampling, a type of Monte Carlo Markov Chain (MCMC) algorithm.
-
-Create a topic model with `topicmodels::LDA()`. Parameter `k` specifies the number of topics. In general, you only want as many topics as are clearly distinct and that you can easily communicate to others. You can use the perplexity statistic to help identify *k*. Perplexity is a measure of how well a probability model fits a new set of data. Look for the elbow in a scree plot. Here are models with 5 - 50 topics.
-
-```{r message=FALSE, eval=FALSE}
-set.seed(1012)
-train_ind <- sample(nrow(sawyer_dtm), floor(0.75*nrow(sawyer_dtm)))
-sawyer_train <- sawyer_dtm[train_ind, ]
-sawyer_test <- sawyer_dtm[-train_ind, ]
-
-k = c(seq(from = 5, to = 50, by = 5))
-perp <- k %>% 
-  map(~ LDA(sawyer_train, k = .x, method = "Gibbs", control = list(seed = 1234))) %>%
-  map(~ perplexity(.x, newdata = sawyer_test)) %>%
-  as.numeric()
-
-data.frame(k = k, perplexity = perp) %>%
-  ggplot(aes(x = k, y = perplexity)) + 
-  geom_point() + 
-  geom_smooth(method = "loess", se = FALSE) +
-  labs(title = "Perplexity Plot for LDM model",
-       subtitle = "Elbow at k = 30?")
-```
-
-There may be an elbow at *k* = 15 topics. Using STM, the optimal number of clusters was 30. That looks like an elbow to me too. Frankly, if my arm looked like that I would consult an orthopedic surgeon.
-
-```{r, eval=FALSE}
-sawyer_lda <- topicmodels::LDA(sawyer_dtm, k = 30, method = "Gibbs", control = list(seed = 1234))
-```
-
-`LDA()` returns two outputs: a "beta" matrix of probabilities of terms belonging to topics; a "gamma" matrix of probabilities of topics contributing to documents. The tidytext package provides a `tidy()` method for extracting these matrices.
-
-```{r, eval=FALSE}
-sawyer_lda_beta <- tidy(sawyer_lda, matrix = "beta") 
-sawyer_lda_gamma <- tidy(sawyer_lda, matrix = "gamma", document_names = rownames(sawyer_dfm)) 
-
-# All sums equal 1
-# sawyer_lda_beta %>% group_by(topic) %>% summarize(.groups = "drop", sum_beta = sum(beta))
-# sawyer_lda_gamma %>% group_by(document) %>% summarize(.groups = "drop", sum_beta = sum(gamma))
-```
-
-I have 30 topics here, so it would be hard to show the top words per topic, but here are the first six topics. 
-
-```{r, eval=FALSE}
-sawyer_lda_beta %>%
-  filter(topic <= 6) %>%
-  group_by(topic) %>%
-  slice_max(order_by = beta, n = 10, with_ties = FALSE) %>%
-  mutate(term = reorder_within(term, beta, topic)) %>%
-  ggplot(aes(x = term, y = beta, fill = factor(topic))) +
-  geom_col(show.legend = FALSE) +
-  scale_fill_manual(values = RColorBrewer::brewer.pal(n = 6, name = "Set2"), name = "Topic") +
-  scale_x_reordered() +
-  coord_flip() +
-  facet_wrap(~ topic, scales = "free") +
-  labs(title = "LDA Beta Matrix for first six topics",
-       subtitle = "Showing top 10 word probabilities")
-```
-
-You can use a Word cloud as an alternative to the bar chart. The advantage of the word cloud is that it creates an instantaneous impression rather than providing you the analytic means to construct the same conclusion. Here are word clouds for the first two topics.
-
-```{r results='hide', eval=FALSE}
-colors6 <- RColorBrewer::brewer.pal(n = 6, name = "Set2")
-x <- map(c(1:2), ~ with(sawyer_lda_beta %>% filter(topic == .x), 
-                        wordcloud::wordcloud(term, beta, max.words = 20,
-                                             colors = colors6[.x])))
-```
-
-And here are the most prevalent topics across chapters. The figure shows the average probability that the topic appears in the chapter for all chapters.
-
-```{r, eval=FALSE}
-top_terms <- sawyer_lda_beta %>%
-  group_by(topic) %>%
-  slice_max(order_by = beta, n = 7) %>%
-  summarise(.groups = "drop", terms = list(term)) %>%
-  mutate(terms = map(terms, paste, collapse = ", ")) %>%
-  unnest(terms)
-
-sawyer_lda_gamma %>%
-  group_by(topic) %>%
-  summarize(.groups = "drop", gamma = mean(gamma)) %>%
-  left_join(top_terms, by = "topic") %>%
-  mutate(topic = paste("topic", topic),
-         topic = fct_reorder(topic, gamma)) %>%
-  slice_max(order_by = gamma, n = 10) %>%
-  ggplot(aes(x = topic, y = gamma, label = terms)) +
-  geom_col(fill = "#D8A7B1", show.legend = FALSE) +
-  geom_text(hjust = 0, nudge_y = 0.0005, size = 3) +
-  coord_flip() +
-  scale_y_continuous(expand = c(0,0),
-                     limits = c(0, 0.09),
-                     labels = scales::percent_format()) +
-  theme_minimal() +
-  theme(panel.grid = element_blank()) +
-  labs(x = NULL, y = expression(gamma),
-       title = "Top 10 LDA topics by prevalence in The Adentures of Tom Sawyer",
-       subtitle = "With top words in each topic")
-```
-
-Another way to look at the betas is to identify terms that had the greatest difference in beta between the first and second most probable topic. A good way to do this is with their log ratio, $log_2(\beta_2 / \beta_1)$. Filter for relatively common words having a beta greater than 1/100 in at least one topic.
-  
-```{r, eval=FALSE}
-sawyer_lda_beta %>% 
-  mutate(topic = paste0("topic", topic)) %>%
-  group_by(term) %>%
-  slice_max(order_by = beta, n = 2) %>%
-  summarize(.groups = "drop", min_beta = min(beta), max_beta = max(beta)) %>%
-  filter(max_beta > 0.01) %>%
-  mutate(log_ratio = log2(max_beta / min_beta)) %>%
-  top_n(n = 20, w = abs(log_ratio)) %>%
-  arrange(-log_ratio) %>%
-  ggplot(aes(x = fct_rev(fct_inorder(term)), y = log_ratio)) +
-  geom_col(fill = "#D8A7B1") +
-  theme_minimal() +
-  coord_flip() + 
-  labs(title = "LDA beta matrix log ratios",
-       subtitle = "showing greatest differences in beta values",
-       x = "", y = "log(beta ratio)")
-```
-
-### STM
-
-
-
-Prepare the data by creating a document-term matrix, just as you would with LDA, except this time use the `cast_dfm()` to create a document *feature* matrix for the **quanteda** package (the **stm** package uses **quanteda**). As LDA, you will improve performance by removing infrequently appearing tokens, this time with `tm::removeSparseTemrs()`. 
-
-```{r, eval=FALSE}
-sawyer_dfm <- sawyer_tokens %>%
-  count(chapter, word_stem) %>%
-  cast_dfm(document = chapter, term = word_stem, value = n) %>%
-  quanteda::dfm_trim(min_docfreq = 0.1, docfreq_type = "prop")
-
-sawyer_dfm
-```
-
-Create a topic model with `stm::stm()`. Parameter `K` specifies the number of topics. In LDA I used perplexity to determine the optimal number of clusters, in part because that is the only optimizing metric it `LDA()` offers. `stm` offers other metrics, including the held-out likelihood and coherence.  Here are models with 5 - 50 topics. This process can take a while, but the **furrr** package and `future_map()` function leverage parallel processing to make it quicker.
-
-```{r, eval=FALSE}
-library(furrr)
-plan(multiprocess)
-
-sawyer_stm_mdls <- data_frame(K = seq(from = 5, to = 50, by = 5)) %>%
-  mutate(mdl = future_map(K, ~stm(sawyer_dfm, K = ., verbose = FALSE),
-                          .options = furrr_options(seed = 123)))
-
 heldout <- make.heldout(sawyer_dfm)
 
 k_result <- sawyer_stm_mdls %>%
@@ -662,122 +516,6 @@ austen_books() %>%
 ```
 
 
-### Converting to and from non-tidy formats
-
-One of the most common objects in text mining packages is the document term matrix (DTM) where each row is a document, each column a term, and each value an appearance count.  The `broom` package contains functions to convert between DTM and tidy formats.
-
-Convert a DTM object into a tidy data frame with `tidy()`.  Convert a tidy object into a sparse matrix with `cast_sparse()`, into a DTM with `cast_dtm()`, and into a "dfm" for quanteda with `cast_dfm()`.  
-
-```{r eval=FALSE, include=FALSE}
-data("AssociatedPress", package = "topicmodels")
-AssociatedPress
-Terms(AssociatedPress) %>% head()
-```
-
-Create a tidy version of `AssociatedPress` with `tidy()`.
-
-```{r eval=FALSE, include=FALSE}
-ap_td <- tidy(AssociatedPress)
-ap_td %>% 
-  inner_join(get_sentiments("bing"), by = c(term = "word")) %>%
-  count(sentiment, term, wt = count) %>%
-  ungroup() %>%
-  filter(n >= 200) %>%
-  mutate(n = ifelse(sentiment == "negative", -n, n)) %>%
-  arrange(n) %>%
-  ggplot(aes(x = fct_inorder(term), y = n, fill = sentiment)) +
-  geom_bar(stat = "identity") +
-  labs(title = "Most Common AP Sentiment Words",
-       x = "",
-       y = "Contribution to Sentiment") +
-  theme(legend.position = "top", 
-        legend.title = element_blank()) +
-  coord_flip()
-```
-
-The document-feature matrix `dfm` class from the `quanteda` text-mining package is another implementation of a document-term matrix.  Here are the terms most specific (highest tf-idf) from each of four selected inaugural addresses.  
-
-```{r eval=FALSE, include=FALSE}
-data("data_corpus_inaugural", package = "quanteda")
-inaug_dfm <- quanteda::dfm(data_corpus_inaugural, verbose = FALSE)
-head(inaug_dfm)
-
-inaug_td <- tidy(inaug_dfm)
-head(inaug_td)
-
-inaug_td %>% 
-  bind_tf_idf(term = term, document = document, n = count) %>%
-  group_by(document) %>%
-  top_n(n = 10, wt = tf_idf) %>%
-  ungroup() %>%
-  filter(document %in% c("1861-Lincoln", "1933-Roosevelt", "1961-Kennedy", "2009-Obama")) %>%
-  arrange(document, desc(tf_idf)) %>%
-  ggplot(aes(x = fct_rev(fct_inorder(term)), y = tf_idf, fill = document)) +
-  geom_col() +
-  labs(x = "") +
-  theme(legend.position = "none") +
-  coord_flip() +
-  facet_wrap(~document, ncol = 2, scales = "free")
-```
-
-And here is word frequency trend ocer time for six selected terms. (problem with `extract()` below).
-
-```{r eval=FALSE, include=FALSE}
-# inaug_td %>%
-#   extract(document, "year", "(\\d+)", convert = TRUE) %>%
-#   complete(year, term, fill = list(count = 0)) %>%
-#   group_by(year) %>%
-#   mutate(year_total = sum(count)) %>%
-#   filter(term %in% c("god", "america", "foreign", "union", "constitution", "freedom")) %>%
-#   ggplot(aes(x = year, y = count / year_total)) + 
-#   geom_point() +
-#   geom_smooth() +
-#   facet_wrap(~ term, scales = "free_y") +
-#   scale_y_continuous(labels = scales::percent_format()) +
-#   labs(y = "",
-#        title = "% frequency of word in inaugural address")
-```
-
-Cast tidy data into document-term matrix with `cast_dtm()`, quanteda's dfm with `cast_dfm()`, and sparese matrix with `cast_sparse()`.
-
-```{r eval=FALSE, include=FALSE}
-inaug_dtm <- cast_dtm(data = inaug_td, document = document, term = term, value = count)
-inaug_dfm <- cast_dfm(data = inaug_td, document = document, term = term, value = count)
-inaug_sparse <- cast_sparse(data = inaug_td, row = document, column = term, value = count)
-```
-
-An untokenized document collection is called a *corpus*. The corpuse may include metadata, such as ID, date/time, title, language, etc.  Corpus metadata is usually stored as lists.  Use `tidy()` to construct a table, one row per document.
-
-```{r eval=FALSE, include=FALSE}
-data("acq")
-print(acq)
-acq[[1]]  # first document
-
-acq_td <- tidy(acq)
-acq_td
-```
-
-### Example
-
-Library `tm.plugin.webmining` connects to online feeds to retrieve news articles based on a keyword.
-
-```{r eval=FALSE, include=FALSE}
-library(tm.plugin.webmining)
-library(purrr)
-
-company <- c("Progressive", "Microsoft", "Apple")
-symbol <- c("PRG", "MSFT", "AAPL")
-download_articles <- function(symbol) {
-  WebCorpus(GoogleFinanceSource(paste0("NASDAQ:", symbol)))
-}
-#stock_articles <- tibble(company = company,
-#                         symbol = symbol) %>%
-#  mutate(corpus = map(symbol, download_articles))
-#download_articles("MSFT")
-#?GoogleFinanceSource()
-#corpus <- Corpus(GoogleFinanceSource("NASDAQ:MSFT"))
-```
-
 ## Text Classification Modeling
 
 The `tweets` data set contains politically charged tweets. Can you train a model to predict the `account_type` (Left or Right) from the tweet text? 
@@ -921,247 +659,6 @@ dim(coffee_m)
 # Review a portion of the matrix
 coffee_m[c("star", "starbucks"), 25:35]
 ```
-
-
-## Tidy Text
-
-Here are four Jane Austin books from the `janeaustenr`. "Sense & Sensibility" acts as the baseline count, and the other books are faceted for comparison.
-
-```{r eval=FALSE, include=FALSE}
-custom_stop_words <- tribble(
-  ~word, ~lexicon,
-  "edward", "CUSTOM",
-  "frank", "CUSTOM",
-  "thomas", "CUSTOM",
-  "fanny", "CUSTOM",
-  "anne", "CUSTOM"
-)
-
-austin_tidy <- austen_books() %>%
-  group_by(book) %>%
-  mutate(
-    linenumber = row_number(),
-    chapter = cumsum(str_detect(text, regex("^chapter [\\divxlc]", ignore_case = TRUE)))
-    ) %>%
-  ungroup() %>%
-  unnest_tokens(output = word, input = text) %>%
-  anti_join(stop_words) %>%
-  anti_join(custom_stop_words)
-
-austin_tidy %>%
-  count(book, word) %>%
-  group_by(book) %>%
-  mutate(proportion = n / sum(n)) %>% 
-  select(-n) %>% 
-  pivot_wider(names_from = book, values_from = proportion) %>%
-  pivot_longer(cols = `Pride & Prejudice`:`Persuasion`, names_to = "book", values_to = "proportion") %>%
-  ggplot(aes(x = proportion, 
-             y = `Sense & Sensibility`,
-             color = abs(`Sense & Sensibility` - proportion))) +
-  geom_abline(color = "gray40", lty = 2) +
-  geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3) +
-  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1.5) +
-  scale_x_log10(labels = percent_format()) +
-  scale_y_log10(labels = percent_format()) +
-  scale_color_gradient(limits = c(0, 0.001), low = "darkslategray4", high = "gray75") +
-  facet_wrap(~book, ncol = 2) +
-  theme(legend.position = "none") +
-  labs(y = "Sense & Sensibility", x = NULL)
-```
-
-
-## Appendix: Regular Expressions
-
-There are two choices for string manipulation. Base R has `grep()` and `gsub()`. Or you can use the **stringr** package. Both will use the same regular expression patterns. Here are some important ones.
-
-### Base R
-
-`grep()` returns the indices of pattern matches in a vector of strings. Specify parameter `value = TRUE` to get the strings that match the pattern. 
-
-```{r collapse=TRUE}
-str <- c("abc123", "xyz   789.")
-grep("\\w+123", str)   # \w any alphanumeric, + for any length
-grep("abc\\d", str)  # \d any digit
-grep("\\s", str) # s spaces, \S non-spaces
-grep("\\.", str) # . anything, so \. for period
-```
-
-
-
-### stringr
-
-The **stringr** package is a simple wrapper around the more complete **stringi** package.
-
-Example of finding rows in data frame of book text with "chapter [#]". In `regex()`, "[]" means "any of", "\\d" is any number, and "v", "x", "l", and "c" are just roman numerals. Here is the word-count per chapter.
-
-```{r, eval=FALSE}
-austen <- janeaustenr::austen_books()
-chapter_regex <- stringr::regex("^chapter [\\divxlc]", ignore_case = TRUE)
-austen %>%
-  filter(book == "Emma") %>%
-  mutate(linenumber = row_number(),
-         chapter = cumsum(str_detect(text, chapter_regex))) %>%
-  ungroup() %>%
-  unnest_tokens(output = "word", input = text, token = "words") %>%
-  count(chapter)
-```
-
-
-* `str_c()` concatenates strings, similar to with `paste()` and `paste0()`.  
-```{r}
-str_c("hello", "world", sep = " ")
-```
-
-* `str_replace(string, pattern, replacment)` replaces `pattern` with `replacement`.  
-```{r}
-str_replace("If the future's looking bleek", pattern = fixed("bleek"), replacement = "dark")
-```
-
-* `str_replace_na(string, replacement)` replaces NAs.
-```{r}
-str_replace_na(c("We're the ones ", NA, "have to shine"), replacement = "who ")
-```
-
-* `str_split(string, pattern, simplify = FALSE)` splits `string` by `pattern` into a list of vectors, or matrix if `simplify = TRUE`. 
-```{r}
-str_split("If there's no one in control", pattern = " ", simplify = TRUE)
-```
-
-* `str_c(..., sep)` concatenates a vector of strings, separated by `sep`.
-```{r}
-str_c("we're", "the", "ones", "who", "draw", "the", "line", sep = " ")
-```
-
-`str_sub(string, start, end)` returns substring of `string` from `start` to `end`.  Use negatives to start from the end of the string.
-```{r}
-my_str <- "Although we live in trying times"
-str_sub(my_str, start = 1, end = 5)
-str_sub(my_str, start = -4, end = -1)
-```
-
-* `str_length(string)` returns the number of characters in a string.
-```{r}
-str_length("We're the ones who have to try")
-```
-
-* `str_detect(string, pattern)` returns booleans where `string` matches `pattern`.
-```{r}
-str_detect(c("Although we know", "that time",  "has wings"), pattern = fixed("wings"))
-```
-
-* `str_match(string, pattern)` returns matching strings where `string` matches `pattern`.
-```{r}
-str_match(c("Although we know", "that time",  "has wings"), pattern = "wings")
-```
-
-* `str_subset(string, pattern)` returns string matches where `string` matches `pattern`.
-```{r}
-str_subset(c("Although we know", "that time",  "has wings"), pattern = fixed("wings"))
-```
-
-* `str_count(string, pattern)` returns a count of matches where `string` matches `pattern`.
-```{r}
-str_count(c("Although we know", "that time",  "has wings"), pattern = fixed("wings"))
-```
-
-* `str_extract(string, pattern)` returns the part of the `string` matching `pattern`.
-```{r}
-str_extract(c("We're the ones", "who have to fly"), pattern = " t..")
-```
-
-### Regular Expressions
-
-The **stringr** package functions use [ICU regular expressions](https://unicode-org.github.io/icu/). Here are common regular expressions.
-
-```{r eval=FALSE}
-str_subset(sawyer$text, "^tom")  # starts with "tom"
-str_subset(sawyer$text, "[0-9]")  # contains a digit
-str_subset(sawyer$text, "^[0-9]")  # begins with a digit
-str_subset(sawyer$text, "[^0-9]")  # does not contain a digit
-str_subset(sawyer$text, ".handsome.")  # contains "handsome"
-sawyer %>% filter(str_detect(sawyer$text, "handsome"))  # rows with "handsome"
-sawyer %>% filter(str_detect(sawyer$text, ".handsome."))  # same thing
-
-# Using perl-style regexp, 
-# "(.)" is a subexpression (defined with parens) consisting of any character 
-# defined with a dot. "\\U" makes the next character uppercase. \\1 is a 
-# reference to subexpression 1
-sub("(.)", ("\\U\\1"), sawyer_tokens$word, perl=TRUE)
-str_to_title(sawyer_tokens$word)  # nearly the same - converts first letter, not char
-str_to_title(sawyer$text)
-
-# [] defines a set of chars
-str_subset(sawyer$text, "^[qQ]")  # starts with "q" or "Q"
-str_subset(sawyer$text, "(^[\\_])(.*-)")  # starts with "_" and contains "-"
-str_subset(sawyer$text, "dog.*tricks|tricks.*dog")  # contains "dog" & "tricks"
-```
-
-## Appendix: tidytext
-
-The tidy text format is a table with one token (meaningful unit of text, such as a word) per row.  The **tidytext** package assists with the major tasks in text analysis. 
-
-A typical text analysis using tidy data principles unnests tokens with `unnest_tokens()`, anti-joins unimportant "stop words" from `tidytext::stop_words`, and summarizes token counts `count()`. In between you might also reduce words to their stems with `SnowballC::wordStem()`.
-
-```{r eval=FALSE, include=FALSE}
-custom_stop_words <- tribble(
-  ~word, ~lexicon,
-  "t.co", "custom",
-  "https", "custom",
-  "http", "custom",
-  "di", "custom",
-  "il", "custom",
-  "la", "custom"
-)
-
-tweets_tidy <- tweets %>%
-  unnest_tokens(output = "word", input = content, token = "words") %>%
-  filter(xfun::is_ascii(word) == TRUE) %>%  # garbage chars
-  anti_join(stop_words, by = "word") %>%
-  anti_join(custom_stop_words, by = "word") %>%
-  mutate(word = SnowballC::wordStem(word))
-```
-
-Summarize the tidy text into a "bag of words" (table of word frequencies). Once in a bag of words format, you can feed into a word cloud or other ggplot geom.
-
-```{r fig.width=6.5, fig.height=5, eval=FALSE, include=FALSE}
-tweets_bow <- tweets_tidy %>%
-  count(word)
-
-wordcloud(
-  words = tweets_bow$word,
-  freq = tweets_bow$n,
-  max.words = 30,
-  colors = brewer.pal(9,"BuGn")[-(1:4)]
-)
-```
-
-To perform topic modeling, cast the bag of words into a document term matrix with `cast_dtm()`.
-
-```{r eval=FALSE, include=FALSE}
-tweets_dtm <- tweets_bow %>%
-  cast_dtm(document = tweet_id, term = word, value = n, weighting = tm::weightTfIdf)
-```
-
-After performing a topic model, cast the output (either a beta matrix or gamma matrix) into tidy format with `tidy()`.
-
-```{r eval=FALSE, include=FALSE}
-tweets_lda <- topicmodels::LDA(tweets_dtm, k = 2, method = "Gibbs", control = list(seed = 1234))
-tweets_gamma <- tidy(tweets_lda, matrix = "gamma")
-tweets_beta <- tidy(tweets_lda, matrix = "beta")
-
-tweets_beta_1 <- tweets_beta %>%
-  filter(topic == 1) %>%
-  mutate(n = trunc(beta * 10000))
-
-# wordcloud requires integer frequencies, so convert betat
-wordcloud::wordcloud(
-  words = tweets_beta_1$term,
-  freq = trunc(tweets_beta_1$beta * 1000),
-  max.words = 30,
-  colors = RColorBrewer::brewer.pal(9,"BuGn")[-(1:4)]
-)
-```
-
 
 
 ## Appendix: tm

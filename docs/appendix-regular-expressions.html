@@ -23,7 +23,7 @@
 <meta name="author" content="Michael Foley" />
 
 
-<meta name="date" content="2023-11-30" />
+<meta name="date" content="2023-12-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -155,7 +155,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="1.5.1" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#base-r"><i class="fa fa-check"></i><b>1.5.1</b> Base R</a></li>
 <li class="chapter" data-level="1.5.2" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#stringr"><i class="fa fa-check"></i><b>1.5.2</b> stringr</a></li>
-<li class="chapter" data-level="1.5.3" data-path="appendix-regular-expressions.html"><a href="appendix-regular-expressions.html#regular-expressions"><i class="fa fa-check"></i><b>1.5.3</b> Regular Expressions</a></li>
 </ul></li>
 <li class="chapter" data-level="1.6" data-path="appendix-tidytext.html"><a href="appendix-tidytext.html"><i class="fa fa-check"></i><b>1.6</b> Appendix: tidytext</a></li>
 <li class="chapter" data-level="1.7" data-path="appendix-tm.html"><a href="appendix-tm.html"><i class="fa fa-check"></i><b>1.7</b> Appendix: tm</a></li>
@@ -184,75 +183,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="base-r" class="section level3 hasAnchor" number="1.5.1">
 <h3><span class="header-section-number">1.5.1</span> Base R<a href="appendix-regular-expressions.html#base-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><code>grep()</code> returns the indices of pattern matches in a vector of strings. Specify parameter <code>value = TRUE</code> to get the strings that match the pattern.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="appendix-regular-expressions.html#cb35-1" tabindex="-1"></a>str <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;abc123&quot;</span>, <span class="st">&quot;xyz   789.&quot;</span>)</span>
-<span id="cb35-2"><a href="appendix-regular-expressions.html#cb35-2" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">w+123&quot;</span>, str)   <span class="co"># \w any alphanumeric, + for any length</span></span>
-<span id="cb35-3"><a href="appendix-regular-expressions.html#cb35-3" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb35-4"><a href="appendix-regular-expressions.html#cb35-4" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;abc</span><span class="sc">\\</span><span class="st">d&quot;</span>, str)  <span class="co"># \d any digit</span></span>
-<span id="cb35-5"><a href="appendix-regular-expressions.html#cb35-5" tabindex="-1"></a><span class="do">## [1] 1</span></span>
-<span id="cb35-6"><a href="appendix-regular-expressions.html#cb35-6" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>, str) <span class="co"># s spaces, \S non-spaces</span></span>
-<span id="cb35-7"><a href="appendix-regular-expressions.html#cb35-7" tabindex="-1"></a><span class="do">## [1] 2</span></span>
-<span id="cb35-8"><a href="appendix-regular-expressions.html#cb35-8" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>, str) <span class="co"># . anything, so \. for period</span></span>
-<span id="cb35-9"><a href="appendix-regular-expressions.html#cb35-9" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="appendix-regular-expressions.html#cb34-1" tabindex="-1"></a>str <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;abc123&quot;</span>, <span class="st">&quot;xyz   789.&quot;</span>)</span>
+<span id="cb34-2"><a href="appendix-regular-expressions.html#cb34-2" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">w+123&quot;</span>, str)   <span class="co"># \w any alphanumeric, + for any length</span></span>
+<span id="cb34-3"><a href="appendix-regular-expressions.html#cb34-3" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb34-4"><a href="appendix-regular-expressions.html#cb34-4" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;abc</span><span class="sc">\\</span><span class="st">d&quot;</span>, str)  <span class="co"># \d any digit</span></span>
+<span id="cb34-5"><a href="appendix-regular-expressions.html#cb34-5" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb34-6"><a href="appendix-regular-expressions.html#cb34-6" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">s&quot;</span>, str) <span class="co"># s spaces, \S non-spaces</span></span>
+<span id="cb34-7"><a href="appendix-regular-expressions.html#cb34-7" tabindex="-1"></a><span class="do">## [1] 2</span></span>
+<span id="cb34-8"><a href="appendix-regular-expressions.html#cb34-8" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>, str) <span class="co"># . anything, so \. for period</span></span>
+<span id="cb34-9"><a href="appendix-regular-expressions.html#cb34-9" tabindex="-1"></a><span class="do">## [1] 2</span></span></code></pre></div>
 </div>
 <div id="stringr" class="section level3 hasAnchor" number="1.5.2">
 <h3><span class="header-section-number">1.5.2</span> stringr<a href="appendix-regular-expressions.html#stringr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <strong>stringr</strong> package is a simple wrapper around the more complete <strong>stringi</strong> package.</p>
 <p>Example of finding rows in data frame of book text with “chapter [#]”. In <code>regex()</code>, “[]” means “any of”, “\d” is any number, and “v”, “x”, “l”, and “c” are just roman numerals. Here is the word-count per chapter.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="appendix-regular-expressions.html#cb36-1" tabindex="-1"></a>austen <span class="ot">&lt;-</span> janeaustenr<span class="sc">::</span><span class="fu">austen_books</span>()</span>
-<span id="cb36-2"><a href="appendix-regular-expressions.html#cb36-2" tabindex="-1"></a>chapter_regex <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">regex</span>(<span class="st">&quot;^chapter [</span><span class="sc">\\</span><span class="st">divxlc]&quot;</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb36-3"><a href="appendix-regular-expressions.html#cb36-3" tabindex="-1"></a>austen <span class="sc">%&gt;%</span></span>
-<span id="cb36-4"><a href="appendix-regular-expressions.html#cb36-4" tabindex="-1"></a>  <span class="fu">filter</span>(book <span class="sc">==</span> <span class="st">&quot;Emma&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb36-5"><a href="appendix-regular-expressions.html#cb36-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">linenumber =</span> <span class="fu">row_number</span>(),</span>
-<span id="cb36-6"><a href="appendix-regular-expressions.html#cb36-6" tabindex="-1"></a>         <span class="at">chapter =</span> <span class="fu">cumsum</span>(<span class="fu">str_detect</span>(text, chapter_regex))) <span class="sc">%&gt;%</span></span>
-<span id="cb36-7"><a href="appendix-regular-expressions.html#cb36-7" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb36-8"><a href="appendix-regular-expressions.html#cb36-8" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> <span class="st">&quot;word&quot;</span>, <span class="at">input =</span> text, <span class="at">token =</span> <span class="st">&quot;words&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb36-9"><a href="appendix-regular-expressions.html#cb36-9" tabindex="-1"></a>  <span class="fu">count</span>(chapter)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="appendix-regular-expressions.html#cb35-1" tabindex="-1"></a>austen <span class="ot">&lt;-</span> janeaustenr<span class="sc">::</span><span class="fu">austen_books</span>()</span>
+<span id="cb35-2"><a href="appendix-regular-expressions.html#cb35-2" tabindex="-1"></a>chapter_regex <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">regex</span>(<span class="st">&quot;^chapter [</span><span class="sc">\\</span><span class="st">divxlc]&quot;</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb35-3"><a href="appendix-regular-expressions.html#cb35-3" tabindex="-1"></a>austen <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="appendix-regular-expressions.html#cb35-4" tabindex="-1"></a>  <span class="fu">filter</span>(book <span class="sc">==</span> <span class="st">&quot;Emma&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-5"><a href="appendix-regular-expressions.html#cb35-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">linenumber =</span> <span class="fu">row_number</span>(),</span>
+<span id="cb35-6"><a href="appendix-regular-expressions.html#cb35-6" tabindex="-1"></a>         <span class="at">chapter =</span> <span class="fu">cumsum</span>(<span class="fu">str_detect</span>(text, chapter_regex))) <span class="sc">%&gt;%</span></span>
+<span id="cb35-7"><a href="appendix-regular-expressions.html#cb35-7" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb35-8"><a href="appendix-regular-expressions.html#cb35-8" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> <span class="st">&quot;word&quot;</span>, <span class="at">input =</span> text, <span class="at">token =</span> <span class="st">&quot;words&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-9"><a href="appendix-regular-expressions.html#cb35-9" tabindex="-1"></a>  <span class="fu">count</span>(chapter)</span></code></pre></div>
 <ul>
 <li><code>str_c()</code> concatenates strings, similar to with <code>paste()</code> and <code>paste0()</code>.</li>
 </ul>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="appendix-regular-expressions.html#cb37-1" tabindex="-1"></a><span class="fu">str_c</span>(<span class="st">&quot;hello&quot;</span>, <span class="st">&quot;world&quot;</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="appendix-regular-expressions.html#cb36-1" tabindex="-1"></a><span class="fu">str_c</span>(<span class="st">&quot;hello&quot;</span>, <span class="st">&quot;world&quot;</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;hello world&quot;</code></pre>
 <ul>
 <li><code>str_replace(string, pattern, replacment)</code> replaces <code>pattern</code> with <code>replacement</code>.</li>
 </ul>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="appendix-regular-expressions.html#cb39-1" tabindex="-1"></a><span class="fu">str_replace</span>(<span class="st">&quot;If the future&#39;s looking bleek&quot;</span>, <span class="at">pattern =</span> <span class="fu">fixed</span>(<span class="st">&quot;bleek&quot;</span>), <span class="at">replacement =</span> <span class="st">&quot;dark&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="appendix-regular-expressions.html#cb38-1" tabindex="-1"></a><span class="fu">str_replace</span>(<span class="st">&quot;If the future&#39;s looking bleek&quot;</span>, <span class="at">pattern =</span> <span class="fu">fixed</span>(<span class="st">&quot;bleek&quot;</span>), <span class="at">replacement =</span> <span class="st">&quot;dark&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;If the future&#39;s looking dark&quot;</code></pre>
 <ul>
 <li><code>str_replace_na(string, replacement)</code> replaces NAs.</li>
 </ul>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="appendix-regular-expressions.html#cb41-1" tabindex="-1"></a><span class="fu">str_replace_na</span>(<span class="fu">c</span>(<span class="st">&quot;We&#39;re the ones &quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;have to shine&quot;</span>), <span class="at">replacement =</span> <span class="st">&quot;who &quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="appendix-regular-expressions.html#cb40-1" tabindex="-1"></a><span class="fu">str_replace_na</span>(<span class="fu">c</span>(<span class="st">&quot;We&#39;re the ones &quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;have to shine&quot;</span>), <span class="at">replacement =</span> <span class="st">&quot;who &quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;We&#39;re the ones &quot; &quot;who &quot;            &quot;have to shine&quot;</code></pre>
 <ul>
 <li><code>str_split(string, pattern, simplify = FALSE)</code> splits <code>string</code> by <code>pattern</code> into a list of vectors, or matrix if <code>simplify = TRUE</code>.</li>
 </ul>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="appendix-regular-expressions.html#cb43-1" tabindex="-1"></a><span class="fu">str_split</span>(<span class="st">&quot;If there&#39;s no one in control&quot;</span>, <span class="at">pattern =</span> <span class="st">&quot; &quot;</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="appendix-regular-expressions.html#cb42-1" tabindex="-1"></a><span class="fu">str_split</span>(<span class="st">&quot;If there&#39;s no one in control&quot;</span>, <span class="at">pattern =</span> <span class="st">&quot; &quot;</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>##      [,1] [,2]      [,3] [,4]  [,5] [,6]     
 ## [1,] &quot;If&quot; &quot;there&#39;s&quot; &quot;no&quot; &quot;one&quot; &quot;in&quot; &quot;control&quot;</code></pre>
 <ul>
 <li><code>str_c(..., sep)</code> concatenates a vector of strings, separated by <code>sep</code>.</li>
 </ul>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="appendix-regular-expressions.html#cb45-1" tabindex="-1"></a><span class="fu">str_c</span>(<span class="st">&quot;we&#39;re&quot;</span>, <span class="st">&quot;the&quot;</span>, <span class="st">&quot;ones&quot;</span>, <span class="st">&quot;who&quot;</span>, <span class="st">&quot;draw&quot;</span>, <span class="st">&quot;the&quot;</span>, <span class="st">&quot;line&quot;</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="appendix-regular-expressions.html#cb44-1" tabindex="-1"></a><span class="fu">str_c</span>(<span class="st">&quot;we&#39;re&quot;</span>, <span class="st">&quot;the&quot;</span>, <span class="st">&quot;ones&quot;</span>, <span class="st">&quot;who&quot;</span>, <span class="st">&quot;draw&quot;</span>, <span class="st">&quot;the&quot;</span>, <span class="st">&quot;line&quot;</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;we&#39;re the ones who draw the line&quot;</code></pre>
 <p><code>str_sub(string, start, end)</code> returns substring of <code>string</code> from <code>start</code> to <code>end</code>. Use negatives to start from the end of the string.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="appendix-regular-expressions.html#cb47-1" tabindex="-1"></a>my_str <span class="ot">&lt;-</span> <span class="st">&quot;Although we live in trying times&quot;</span></span>
-<span id="cb47-2"><a href="appendix-regular-expressions.html#cb47-2" tabindex="-1"></a><span class="fu">str_sub</span>(my_str, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="appendix-regular-expressions.html#cb46-1" tabindex="-1"></a>my_str <span class="ot">&lt;-</span> <span class="st">&quot;Although we live in trying times&quot;</span></span>
+<span id="cb46-2"><a href="appendix-regular-expressions.html#cb46-2" tabindex="-1"></a><span class="fu">str_sub</span>(my_str, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Altho&quot;</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="appendix-regular-expressions.html#cb49-1" tabindex="-1"></a><span class="fu">str_sub</span>(my_str, <span class="at">start =</span> <span class="sc">-</span><span class="dv">4</span>, <span class="at">end =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="appendix-regular-expressions.html#cb48-1" tabindex="-1"></a><span class="fu">str_sub</span>(my_str, <span class="at">start =</span> <span class="sc">-</span><span class="dv">4</span>, <span class="at">end =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;imes&quot;</code></pre>
 <ul>
 <li><code>str_length(string)</code> returns the number of characters in a string.</li>
 </ul>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="appendix-regular-expressions.html#cb51-1" tabindex="-1"></a><span class="fu">str_length</span>(<span class="st">&quot;We&#39;re the ones who have to try&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="appendix-regular-expressions.html#cb50-1" tabindex="-1"></a><span class="fu">str_length</span>(<span class="st">&quot;We&#39;re the ones who have to try&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] 30</code></pre>
 <ul>
 <li><code>str_detect(string, pattern)</code> returns booleans where <code>string</code> matches <code>pattern</code>.</li>
 </ul>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="appendix-regular-expressions.html#cb53-1" tabindex="-1"></a><span class="fu">str_detect</span>(<span class="fu">c</span>(<span class="st">&quot;Although we know&quot;</span>, <span class="st">&quot;that time&quot;</span>,  <span class="st">&quot;has wings&quot;</span>), <span class="at">pattern =</span> <span class="fu">fixed</span>(<span class="st">&quot;wings&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="appendix-regular-expressions.html#cb52-1" tabindex="-1"></a><span class="fu">str_detect</span>(<span class="fu">c</span>(<span class="st">&quot;Although we know&quot;</span>, <span class="st">&quot;that time&quot;</span>,  <span class="st">&quot;has wings&quot;</span>), <span class="at">pattern =</span> <span class="fu">fixed</span>(<span class="st">&quot;wings&quot;</span>))</span></code></pre></div>
 <pre><code>## [1] FALSE FALSE  TRUE</code></pre>
 <ul>
 <li><code>str_match(string, pattern)</code> returns matching strings where <code>string</code> matches <code>pattern</code>.</li>
 </ul>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="appendix-regular-expressions.html#cb55-1" tabindex="-1"></a><span class="fu">str_match</span>(<span class="fu">c</span>(<span class="st">&quot;Although we know&quot;</span>, <span class="st">&quot;that time&quot;</span>,  <span class="st">&quot;has wings&quot;</span>), <span class="at">pattern =</span> <span class="st">&quot;wings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="appendix-regular-expressions.html#cb54-1" tabindex="-1"></a><span class="fu">str_match</span>(<span class="fu">c</span>(<span class="st">&quot;Although we know&quot;</span>, <span class="st">&quot;that time&quot;</span>,  <span class="st">&quot;has wings&quot;</span>), <span class="at">pattern =</span> <span class="st">&quot;wings&quot;</span>)</span></code></pre></div>
 <pre><code>##      [,1]   
 ## [1,] NA     
 ## [2,] NA     
@@ -260,42 +259,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><code>str_subset(string, pattern)</code> returns string matches where <code>string</code> matches <code>pattern</code>.</li>
 </ul>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="appendix-regular-expressions.html#cb57-1" tabindex="-1"></a><span class="fu">str_subset</span>(<span class="fu">c</span>(<span class="st">&quot;Although we know&quot;</span>, <span class="st">&quot;that time&quot;</span>,  <span class="st">&quot;has wings&quot;</span>), <span class="at">pattern =</span> <span class="fu">fixed</span>(<span class="st">&quot;wings&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="appendix-regular-expressions.html#cb56-1" tabindex="-1"></a><span class="fu">str_subset</span>(<span class="fu">c</span>(<span class="st">&quot;Although we know&quot;</span>, <span class="st">&quot;that time&quot;</span>,  <span class="st">&quot;has wings&quot;</span>), <span class="at">pattern =</span> <span class="fu">fixed</span>(<span class="st">&quot;wings&quot;</span>))</span></code></pre></div>
 <pre><code>## [1] &quot;has wings&quot;</code></pre>
 <ul>
 <li><code>str_count(string, pattern)</code> returns a count of matches where <code>string</code> matches <code>pattern</code>.</li>
 </ul>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="appendix-regular-expressions.html#cb59-1" tabindex="-1"></a><span class="fu">str_count</span>(<span class="fu">c</span>(<span class="st">&quot;Although we know&quot;</span>, <span class="st">&quot;that time&quot;</span>,  <span class="st">&quot;has wings&quot;</span>), <span class="at">pattern =</span> <span class="fu">fixed</span>(<span class="st">&quot;wings&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="appendix-regular-expressions.html#cb58-1" tabindex="-1"></a><span class="fu">str_count</span>(<span class="fu">c</span>(<span class="st">&quot;Although we know&quot;</span>, <span class="st">&quot;that time&quot;</span>,  <span class="st">&quot;has wings&quot;</span>), <span class="at">pattern =</span> <span class="fu">fixed</span>(<span class="st">&quot;wings&quot;</span>))</span></code></pre></div>
 <pre><code>## [1] 0 0 1</code></pre>
 <ul>
 <li><code>str_extract(string, pattern)</code> returns the part of the <code>string</code> matching <code>pattern</code>.</li>
 </ul>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="appendix-regular-expressions.html#cb61-1" tabindex="-1"></a><span class="fu">str_extract</span>(<span class="fu">c</span>(<span class="st">&quot;We&#39;re the ones&quot;</span>, <span class="st">&quot;who have to fly&quot;</span>), <span class="at">pattern =</span> <span class="st">&quot; t..&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="appendix-regular-expressions.html#cb60-1" tabindex="-1"></a><span class="fu">str_extract</span>(<span class="fu">c</span>(<span class="st">&quot;We&#39;re the ones&quot;</span>, <span class="st">&quot;who have to fly&quot;</span>), <span class="at">pattern =</span> <span class="st">&quot; t..&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot; the&quot; &quot; to &quot;</code></pre>
-</div>
-<div id="regular-expressions" class="section level3 hasAnchor" number="1.5.3">
-<h3><span class="header-section-number">1.5.3</span> Regular Expressions<a href="appendix-regular-expressions.html#regular-expressions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The <strong>stringr</strong> package functions use <a href="https://unicode-org.github.io/icu/">ICU regular expressions</a>. Here are common regular expressions.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="appendix-regular-expressions.html#cb63-1" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;^tom&quot;</span>)  <span class="co"># starts with &quot;tom&quot;</span></span>
-<span id="cb63-2"><a href="appendix-regular-expressions.html#cb63-2" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;[0-9]&quot;</span>)  <span class="co"># contains a digit</span></span>
-<span id="cb63-3"><a href="appendix-regular-expressions.html#cb63-3" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;^[0-9]&quot;</span>)  <span class="co"># begins with a digit</span></span>
-<span id="cb63-4"><a href="appendix-regular-expressions.html#cb63-4" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;[^0-9]&quot;</span>)  <span class="co"># does not contain a digit</span></span>
-<span id="cb63-5"><a href="appendix-regular-expressions.html#cb63-5" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;.handsome.&quot;</span>)  <span class="co"># contains &quot;handsome&quot;</span></span>
-<span id="cb63-6"><a href="appendix-regular-expressions.html#cb63-6" tabindex="-1"></a>sawyer <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;handsome&quot;</span>))  <span class="co"># rows with &quot;handsome&quot;</span></span>
-<span id="cb63-7"><a href="appendix-regular-expressions.html#cb63-7" tabindex="-1"></a>sawyer <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;.handsome.&quot;</span>))  <span class="co"># same thing</span></span>
-<span id="cb63-8"><a href="appendix-regular-expressions.html#cb63-8" tabindex="-1"></a></span>
-<span id="cb63-9"><a href="appendix-regular-expressions.html#cb63-9" tabindex="-1"></a><span class="co"># Using perl-style regexp, </span></span>
-<span id="cb63-10"><a href="appendix-regular-expressions.html#cb63-10" tabindex="-1"></a><span class="co"># &quot;(.)&quot; is a subexpression (defined with parens) consisting of any character </span></span>
-<span id="cb63-11"><a href="appendix-regular-expressions.html#cb63-11" tabindex="-1"></a><span class="co"># defined with a dot. &quot;\\U&quot; makes the next character uppercase. \\1 is a </span></span>
-<span id="cb63-12"><a href="appendix-regular-expressions.html#cb63-12" tabindex="-1"></a><span class="co"># reference to subexpression 1</span></span>
-<span id="cb63-13"><a href="appendix-regular-expressions.html#cb63-13" tabindex="-1"></a><span class="fu">sub</span>(<span class="st">&quot;(.)&quot;</span>, (<span class="st">&quot;</span><span class="sc">\\</span><span class="st">U</span><span class="sc">\\</span><span class="st">1&quot;</span>), sawyer_tokens<span class="sc">$</span>word, <span class="at">perl=</span><span class="cn">TRUE</span>)</span>
-<span id="cb63-14"><a href="appendix-regular-expressions.html#cb63-14" tabindex="-1"></a><span class="fu">str_to_title</span>(sawyer_tokens<span class="sc">$</span>word)  <span class="co"># nearly the same - converts first letter, not char</span></span>
-<span id="cb63-15"><a href="appendix-regular-expressions.html#cb63-15" tabindex="-1"></a><span class="fu">str_to_title</span>(sawyer<span class="sc">$</span>text)</span>
-<span id="cb63-16"><a href="appendix-regular-expressions.html#cb63-16" tabindex="-1"></a></span>
-<span id="cb63-17"><a href="appendix-regular-expressions.html#cb63-17" tabindex="-1"></a><span class="co"># [] defines a set of chars</span></span>
-<span id="cb63-18"><a href="appendix-regular-expressions.html#cb63-18" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;^[qQ]&quot;</span>)  <span class="co"># starts with &quot;q&quot; or &quot;Q&quot;</span></span>
-<span id="cb63-19"><a href="appendix-regular-expressions.html#cb63-19" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;(^[</span><span class="sc">\\</span><span class="st">_])(.*-)&quot;</span>)  <span class="co"># starts with &quot;_&quot; and contains &quot;-&quot;</span></span>
-<span id="cb63-20"><a href="appendix-regular-expressions.html#cb63-20" tabindex="-1"></a><span class="fu">str_subset</span>(sawyer<span class="sc">$</span>text, <span class="st">&quot;dog.*tricks|tricks.*dog&quot;</span>)  <span class="co"># contains &quot;dog&quot; &amp; &quot;tricks&quot;</span></span></code></pre></div>
 </div>
 </div>
             </section>
