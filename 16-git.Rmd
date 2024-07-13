@@ -6,7 +6,7 @@ library(tidyverse)
 
 Unlike other version control systems that manage file changes, Git works as a managed system of file snapshots. 
 
-Git files reside in three main states: modified, staged, and committed. Modified files have changed but have not committed into the database yet. Staged files are marked in their current version to go into the next commit snapshot. Committed files are safely stored in the local database.
+Git files reside in three main states: *modified*, *staged*, and *committed*. Modified files have changed but have not committed into the database yet. Staged files are marked in their current version to go into the next commit snapshot. Committed files are safely stored in the local database.
 
 This leads to the three main sections of a Git project: the working tree, the staging area, and the Git directory. The working tree is a single checkout of one version of the project. These files are pulled out of the compressed database in the Git directory and placed on disk for you to use or modify. The staging area (index) is a file, generally contained in your Git directory, that stores information about what will go into your next commit. The Git directory is where Git stores the metadata and object database for your project. This is the most important part of Git, and it is what is copied when you clone a repository from another computer.
 
@@ -34,24 +34,39 @@ $ git --version
 
 ## Getting a Git Repository
 
-Create a git repository either by cloning and existing one, or converting a directory into one. Start by navigating to your GitHub parent directory.
+Create a git repository either by cloning an existing repo, or converting a directory into one. Start by navigating to your GitHub parent directory. Open Git Bash.
 
 ```
+mpfol@aspire-vero MINGW64 ~
 $ pwd
+/c/Users/mpfol
+
+mpfol@aspire-vero MINGW64 ~
 $ cd ~/OneDrive/Documents/GitHub/
+
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub
 ```
 
-To clone an existing repository, specify its url.
+Specify a url to clone an existing repository.
 
 ```
 $ git clone https://github.com/mpfoley73/data-sci
 ```
 
-To convert a directory, navigate to its folder, initialize it, add files, and commit.
+To convert a directory into a repository, navigate to its folder, initialize it, add files, and commit.
 
 ```
-$ cd data-sci/
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub
+$ cd data-sci
+
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (master)
 $ ls
+16-git.Rmd         _bookdown.yml     data-sci.log  images/       rsconnect/
+17-sentiment.Rmd   _bookdown_files/  data-sci.pdf  index.Rmd     style.css
+19-references.Rmd  _output.yml       data-sci.tex  input/        tomato_Results
+README.md          book.bib          docs/         packages.bib
+_book/             data-sci.Rproj    hide/         preamble.tex
+
 $ git init
 
 $ git add *.Rmd
@@ -59,10 +74,20 @@ $ git add README.md
 $ git commit -m 'Initial project version'
 ```
 
-When you first clone a repository, all of your files are tracked and unmodified. As you edit files, Git sees them as modified, because you’ve changed them since your last commit. As you work, selectively stage the modified files, then finally commit the staged changes. To see what status your files are in, use `git status`.
+## Recording Changes
+
+When you first clone a repository, all of your files are tracked and unmodified. As you edit files, Git classifies them as *modified*, because they’ve changed since the last commit. As you work, selectively stage the modified files, then finally commit the staged changes. To see what status your files are in, use `git status`.
 
 ```
 git status
+
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+
 ```
 
 As you work, you may add, edit, and delete files. When you reach a milestone, add the files to a Staging Environment. Staged files are ready to be committed to the repository. 
@@ -71,16 +96,19 @@ As you work, you may add, edit, and delete files. When you reach a milestone, ad
 In GitHub, you stage a file by committing it to your branch.
 :::
 
+
+`git add` is a general command that means "add to the next commit." If the file is not tracked, it will be *added* for commit. If the file is tracked and *modified*, `git add` will *stage* it.
+
 > git status
 > git add [<filename>, --all]
 
 Once the file(s) are staged, you can commit them to the branch. 
 
-> commit -m "Added new files."
+> git commit -m "Added new files."
 
 You can commit all files without staging with -a
 
-> commit -a -m "Added new files."
+> git commit -a -m "Added new files."
 
 See a history of commits.
 
