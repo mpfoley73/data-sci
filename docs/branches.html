@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.1 Text Classification Modeling | My Data Science Notes</title>
+  <title>1.2 Branches | My Data Science Notes</title>
   <meta name="description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.1 Text Classification Modeling | My Data Science Notes" />
+  <meta property="og:title" content="1.2 Branches | My Data Science Notes" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.1 Text Classification Modeling | My Data Science Notes" />
+  <meta name="twitter:title" content="1.2 Branches | My Data Science Notes" />
   
   <meta name="twitter:description" content="This is a compendium of notes from classes, tutorials, etc. that I reference from time to time." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="sentiment-analysis.html"/>
-<link rel="next" href="named-entity-recognition.html"/>
+<link rel="prev" href="getting-a-git-repository.html"/>
+<link rel="next" href="other-commands.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -169,19 +169,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="text-classification-modeling" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> Text Classification Modeling<a href="text-classification-modeling.html#text-classification-modeling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The <code>tweets</code> data set contains politically charged tweets. Can you train a model to predict the <code>account_type</code> (Left or Right) from the tweet text?</p>
-<p>Prepare the data by filtering to just the relevant tweets, tokenizing, and creatiing a document-term matrix with TFIDF weighting. If resources are an issue, experiment with values of parameter <code>sparse</code> in <code>dt::removeSparseTerms()</code> to get less terms. Below, <code>sparse = 0.9999</code> finally gets a respectable term count 14% the size of the orginal count.</p>
-<p>Split the data into an 80:20 train:test split and fit a random forest model.</p>
+<div id="branches" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Branches<a href="branches.html#branches" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Create a branch and switch to it.</p>
+<pre><code>mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (master)
+$ git checkout -b git-chapter
+Switched to a new branch &#39;git-chapter&#39;</code></pre>
+<p>Edit your files. Review the changes.</p>
+<pre><code>mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (master)
+$ git status
+On branch git-chapter
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+        modified:   16-git.Rmd
+        modified:   docs/404.html
+        modified:   docs/getting-a-git-repository.html
+        modified:   docs/git.html
+
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</code></pre>
+<p>Look at individual files.</p>
+<pre><code>mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (git-chapter)
+$ git diff docs/git.html</code></pre>
+<p>If you are happy with the change, stage it for committing.</p>
+<pre><code>mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (git-chapter)
+$ git add docs/git.html</code></pre>
+<div class="rmdnote">
+<p><code>git add</code> is a general command that means “add to the next commit.” If the file is not tracked, it will be <em>added</em> for commit. If the file is tracked and <em>modified</em>, <code>git add</code> will <em>stage</em> it.</p>
+</div>
+<p>Then commit with a message.</p>
+<pre><code>mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (git-chapter)
+$ git commit -m &quot;Initial git notes.&quot;</code></pre>
+<p>You can commit all files without staging with -a</p>
+<pre><code>mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (git-chapter)
+$ git commit -a -m &quot;Added new files.&quot;</code></pre>
+<p>Push the changes to the origin remote. First, publish the branch.</p>
+<pre><code>mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (git-chapter)
+$ git push --set-upstream origin git-chapter</code></pre>
+<p>Otherwise, <code>git push</code> is enough.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="sentiment-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="named-entity-recognition.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="getting-a-git-repository.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="other-commands.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

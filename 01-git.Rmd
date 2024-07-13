@@ -1,0 +1,153 @@
+# Git
+
+```{r include=FALSE}
+library(tidyverse)
+```
+
+Unlike other version control systems that manage file changes, Git works as a managed system of file snapshots. 
+
+Git files reside in three main states: *modified*, *staged*, and *committed*. Modified files have changed but have not committed into the database yet. Staged files are marked in their current version to go into the next commit snapshot. Committed files are safely stored in the local database.
+
+This leads to the three main sections of a Git project: the working tree, the staging area, and the Git directory. The working tree is a single checkout of one version of the project. These files are pulled out of the compressed database in the Git directory and placed on disk for you to use or modify. The staging area (index) is a file, generally contained in your Git directory, that stores information about what will go into your next commit. The Git directory is where Git stores the metadata and object database for your project. This is the most important part of Git, and it is what is copied when you clone a repository from another computer.
+
+The basic Git workflow goes like this:
+
+1. Modify files in the working tree.
+
+2. Selectively stage just the changes you want to include in the next commit.
+
+3. Commit the files from the staging area into the Git directory.
+
+Install Git from https://git-scm.com/download/win. After installing, set your user name and email address. Every Git commit uses this information.
+
+```
+$ git config --global user.name "Michael Foley"
+$ git config --global user.email mike@hotmail.com
+```
+
+Show your configuration settings and version with 
+
+```
+$ git config --list
+$ git --version
+```
+
+## Getting a Git Repository
+
+Create a git repository either by cloning an existing repo, or converting a directory into one. Navigate to your GitHub parent directory in Git Bash.
+
+```
+mpfol@aspire-vero MINGW64 ~
+$ pwd
+/c/Users/mpfol
+
+mpfol@aspire-vero MINGW64 ~
+$ cd ~/OneDrive/Documents/GitHub/
+
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub
+```
+
+Clone an existing repository with its URL.
+
+```
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub
+$ git clone https://github.com/mpfoley73/data-sci
+```
+
+Convert a directory into a repository by initializing, adding files, and committing.
+
+```
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci
+$ git init
+
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci
+$ git add *.Rmd
+
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci
+$ git add README.md
+
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci
+$ git commit -m 'Initial project version'
+```
+
+## Branches
+
+Create a branch and switch to it.
+
+```
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (master)
+$ git checkout -b git-chapter
+Switched to a new branch 'git-chapter'
+```
+
+Edit your files. Review the changes.
+
+```
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (master)
+$ git status
+On branch git-chapter
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   16-git.Rmd
+        modified:   docs/404.html
+        modified:   docs/getting-a-git-repository.html
+        modified:   docs/git.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Look at individual files.
+```
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (git-chapter)
+$ git diff docs/git.html
+```
+
+If you are happy with the change, stage it for committing.
+
+```
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (git-chapter)
+$ git add docs/git.html
+```
+
+:::rmdnote
+`git add` is a general command that means "add to the next commit." If the file is not tracked, it will be *added* for commit. If the file is tracked and *modified*, `git add` will *stage* it.
+:::
+
+Then commit with a message.
+
+```
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (git-chapter)
+$ git commit -m "Initial git notes."
+```
+
+You can commit all files without staging with -a
+
+```
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (git-chapter)
+$ git commit -a -m "Added new files."
+```
+
+Push the changes to the origin remote. First, publish the branch.
+
+```
+mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (git-chapter)
+$ git push --set-upstream origin git-chapter
+```
+
+Otherwise, `git push` is enough.
+
+## Other commands
+
+See a history of commits.
+
+```
+git log
+```
+
+Need help?
+
+```
+$ git <command> -help
+$ git help --all
+```
