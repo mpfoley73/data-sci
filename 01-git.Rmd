@@ -4,9 +4,9 @@
 library(tidyverse)
 ```
 
-Unlike other version control systems that manage file changes, Git works as a managed system of file snapshots. 
+These notes are primarily from the [git Reference](https://git-scm.com/docs).
 
-Git files reside in three main states: *modified*, *staged*, and *committed*. Modified files have changed but have not committed into the database yet. Staged files are marked in their current version to go into the next commit snapshot. Committed files are safely stored in the local database.
+Unlike other version control systems that manage file changes, Git is a managed system of file snapshots. Git files reside in three main states: *modified*, *staged*, and *committed*. Modified files have changed but have not committed into the database yet. Staged files are marked in their current version to go into the next commit snapshot. Committed files are safely stored in the local database.
 
 This leads to the three main sections of a Git project: the working tree, the staging area, and the Git directory. The working tree is a single checkout of one version of the project. These files are pulled out of the compressed database in the Git directory and placed on disk for you to use or modify. The staging area (index) is a file, generally contained in your Git directory, that stores information about what will go into your next commit. The Git directory is where Git stores the metadata and object database for your project. This is the most important part of Git, and it is what is copied when you clone a repository from another computer.
 
@@ -72,7 +72,7 @@ $ git commit -m 'Initial project version'
 
 ## Branches
 
-Create a branch and switch to it.
+Create a branch and switch to it with `git checkout`. `-b` creates the branch and checks it out. Clicking "New Branch" in RStudio executes `git checkout -B`. The `-B` resets the branch if it already exists. 
 
 ```
 mpfol@aspire-vero MINGW64 ~/OneDrive/Documents/GitHub/data-sci (master)
